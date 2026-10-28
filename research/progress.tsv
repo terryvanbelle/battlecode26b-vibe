@@ -23,3 +23,15 @@ s0z	2026-10-28 02:41	pts.top6	31.9
 s1g	2026-10-28 03:11	pts.top6.3m	21.2
 s1l	2026-10-28 04:39	pts.top6.3m	18.5
 s1n	2026-10-28 04:39	pts.top6.3m	20.7
+s1q	2026-10-28 05:10	pts.top6.3m	18.3
+s1s	2026-10-28 06:30	pts.top6.3m	17.0
+s1w	2026-10-28 06:30	pts.top6.3m	19.5
+s1x	2026-10-28 06:30	pts.top6.3m	17.2
+# kd.top6.3m = enemy rat deaths / our rat deaths over the same 3-map top-six panel
+s1g	2026-10-28 03:11	kd.top6.3m	1.26
+s1l	2026-10-28 04:39	kd.top6.3m	1.03
+s1n	2026-10-28 04:39	kd.top6.3m	0.77
+s1q	2026-10-28 05:10	kd.top6.3m	0.76
+s1s	2026-10-28 06:30	kd.top6.3m	0.78
+s1w	2026-10-28 06:30	kd.top6.3m	0.83
+s1x	2026-10-28 06:30	kd.top6.3m	1.52

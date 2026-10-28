@@ -70,3 +70,18 @@
 - s1n: under 8 babies every floor drops to 100. Vs Icarus still lost (transferred 860 vs 2500; mid-game they pick
   up more cheese on our side than we do). s1o: s1n with WAR_GATHER 1.
 - The ghi gauntlet was stopped at 48/144 (rift games run 2000 rounds, about 300 s each); s1g: 0/46, pts 30.0.
+
+## F6 (2026-10-28 03:51 PDT): kill ratio as the combat metric; traps win fights, the economy loses games
+- gauntlet summary now reports kills/deaths (enemy rat deaths / ours) and mean rounds. Same 3-map top-six panel:
+  s1g pts 21.2 kd 1.26; s1l 18.5 / 1.03; s1n 20.7 / 0.77; s1q 18.3 / 0.76; s1s 17.0 / 0.78; s1w 19.5 / 0.83;
+  s1x 17.2 / 1.52. The "aggressive" changes after s1g lowered the kill ratio; single-game impressions misled.
+- s1j bug (fixed in s1q): a king under attack bit with 225 cheese every turn and never spawned (knifefight: 2225 to
+  450 cheese in 10 rounds). The king now spawns first and pays bite cheese only for a kill.
+- s1w: throws discount targets beyond tile 2 (they move first) and hold the rat until a point-blank (42) throw.
+  Our throw damage went from mixed 10-38 to mostly 42, like the top bots.
+- s1x (rat traps down to 200 cheese) doubled the kill ratio; in diagnostics our traps dealt up to 2400 damage.
+- Cheese tracing (who picks up each spawn): through r100 each side collects its own half; after r100 the
+  opponent takes most of ours. Unopposed, our gathering rate equals Icarus's (about 690 cheese per 100 rounds).
+  We lose the economy by overbuilding early (26 rats by r50 vs 16), spending heavily on traps, then sitting on the
+  spawn floor while the army dies.
+- New: battle_report.py; standoff (hold against a watching, not weaker enemy); TRAP_CAP; s1y-s2f variants.
