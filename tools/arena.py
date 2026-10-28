@@ -16,6 +16,9 @@ Every game runs with no network (unshare -rn), a heap cap and a wall-clock cap, 
 """
 import argparse, fcntl, hashlib, json, os, re, shutil, subprocess, sys, tempfile, threading, time
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import score  # noqa: E402
+
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JDK = os.environ.get('BC_JDK', os.path.expanduser('~/opt/jdk21'))
 ENGINE = os.path.join(REPO, 'engine', 'battlecode26-java-1.2.6.jar')
@@ -121,14 +124,8 @@ REASON_RE = re.compile(r'\[server\] Reason: (.*)')
 
 
 def points(row):
-    """Score both teams with the spec's formulas from the final aggregates (integer percentages, rounded)."""
-    def pct(a, b):
-        return (100.0 * a / (a + b), 100.0 * b / (a + b)) if a + b > 0 else (0.0, 0.0)
-    ca, cb = pct(row.get('catDmgA', 0), row.get('catDmgB', 0))
-    ka, kb = pct(row.get('kingsA', 0), row.get('kingsB', 0))
-    xa, xb = pct(row.get('cheeseXferA', 0), row.get('cheeseXferB', 0))
-    w = (0.5, 0.3, 0.2) if row.get('backstabRound', -1) < 0 else (0.3, 0.5, 0.2)
-    return (round(w[0] * ca + w[1] * ka + w[2] * xa), round(w[0] * cb + w[1] * kb + w[2] * xb))
+    """The spec's points from the final aggregates (tools/score.py)."""
+    return score.points(row)
 
 
 def run_game(a, b, mapname, seed=0, out=None, keep=False, tsv=False):

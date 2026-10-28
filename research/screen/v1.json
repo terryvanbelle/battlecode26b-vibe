@@ -1,0 +1,28 @@
+{
+ "version": 1,
+ "drawn": "2026-10-28",
+ "seed": 20261028,
+ "why": "local screen v1: 12 field bots in our replica band (6 above, 6 below; the 8 ladder-panel bots left out) x 6 random maps x both sides; cell score = tools/score.py cell (wins when kings decide)",
+ "bots": [
+  "HugoIngelsson_Xzibit",
+  "AlexT101_finalsbot",
+  "thewaxmango_collegejunior",
+  "thewaxmango_PhD",
+  "HugoIngelsson_YokoOno",
+  "nzjt_TheComplexMerlin",
+  "XSercia_genies",
+  "GuzziFlipFlops_Hermesv8",
+  "bc26vibe_bot",
+  "awu7_awubot_quals",
+  "outercloudstudio_v_1_18",
+  "Gavdingo_v1"
+ ],
+ "maps": [
+  "whatsthecatdoin",
+  "Excavation",
+  "constrictinglattice",
+  "EscapeTheNight",
+  "tiny",
+  "averystrangespace"
+ ]
+}

@@ -4,15 +4,18 @@
   gauntlet.py cells OURS [--maps LIST|@file] [--seeds 0] [--only NAME,NAME] > cells.tsv
       every field bot vs OURS on every map, both sides
   gauntlet.py table RUN/results.jsonl [--ours HASH]
-      per-opponent wins/games and points share for our bot, worst first, plus totals
+      per-opponent wins/games and mean cell score (tools/score.py) for our bot, worst first, plus totals
   gauntlet.py summary RUN/results.jsonl
       one line per bot of ours (a bots/ spec) in a mixed run: wins/games and mean points, best first
   gauntlet.py paired BASE/results.jsonl CAND/results.jsonl [--base-also R ...] [--cand-also R ...]
       the local screen of TRAINING_ALGORITHM.md 2.6: per shared cell (opponent, map, our side, seed), d = the
-      candidate's points share minus the base's (/100); t = sum d / sqrt(sum d^2), D = cells with d != 0; win/loss net
+      candidate's cell score (tools/score.py) minus the base's (/100); t = sum d / sqrt(sum d^2), D = cells with d != 0; win/loss net
       and a one-sided sign test on per-cell wins; per-map mean d; the verdict (reject at t <= -1.5 or sign p < 0.05)
 """
 import argparse, collections, json, math, os, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import score  # noqa: E402
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIELD = os.path.join(REPO, 'research', 'field', 'FIELD.tsv')
@@ -65,7 +68,7 @@ def table(results, ours_hash=None, path=FIELD):
         a = agg[opp]
         a[1] += 1
         a[0] += 1 if r['winner'] == side else 0
-        a[2] += r['ptsA' if side == 'A' else 'ptsB']
+        a[2] += score.cell(r)[0 if side == 'A' else 1]
     return sorted(((o, w, g, p / g) for o, (w, g, p) in agg.items()), key=lambda t: (t[1] / t[2], t[3]))
 
 
@@ -84,7 +87,7 @@ def summary(results):
             a = agg[spec[5:].rstrip('/')]
             a[1] += 1
             a[0] += 1 if r['winner'] == side else 0
-            a[2] += r['ptsA' if side == 'A' else 'ptsB']
+            a[2] += score.cell(r)[0 if side == 'A' else 1]
             a[3] += (r.get(other) or {}).get('deathsRat', 0)
             a[4] += (r.get(side) or {}).get('deathsRat', 0)
             a[5] += r.get('rounds', 0)
@@ -93,7 +96,7 @@ def summary(results):
 
 
 def cell_scores(paths):
-    """{(opponent spec, map, our side, seed): (mean points share / 100, mean win)} for the one bots/ bot of the runs."""
+    """{(opponent spec, map, our side, seed): (mean cell score / 100, mean win)} for the one bots/ bot of the runs."""
     acc = collections.defaultdict(lambda: [0.0, 0.0, 0])
     for path in paths:
         for l in open(path):
@@ -105,7 +108,7 @@ def cell_scores(paths):
                 continue
             side, opp = ('A', b) if a.startswith('bots/') else ('B', a)
             c = acc[(opp, r['map'], side, r.get('seed', 0))]
-            c[0] += r['ptsA' if side == 'A' else 'ptsB'] / 100.0
+            c[0] += score.cell(r)[0 if side == 'A' else 1] / 100.0
             c[1] += 1.0 if r['winner'] == side else 0.0
             c[2] += 1
     return {k: (p / n, w / n) for k, (p, w, n) in acc.items()}

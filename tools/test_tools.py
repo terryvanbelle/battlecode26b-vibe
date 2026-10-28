@@ -17,10 +17,22 @@ def load(name):
 arena = load('arena')
 # points(): cooperation weights 50/30/20, backstab 30/50/20
 row = {'catDmgA': 300, 'catDmgB': 100, 'kingsA': 1, 'kingsB': 1, 'cheeseXferA': 0, 'cheeseXferB': 0, 'backstabRound': -1}
-check(arena.points(row) == (52, 28), f"points coop {arena.points(row)}")
+check(arena.points(row) == (52, 27), f"points coop (engine truncates) {arena.points(row)}")
 row['backstabRound'] = 500
-check(arena.points(row) == (48, 32), f"points backstab {arena.points(row)}")
+check(arena.points(row) == (47, 32), f"points backstab {arena.points(row)}")
 check(arena.points({}) == (0, 0), "points empty")
+# score: the replay's kings aggregate is 10 * cheese + kings; a game decided by kings scores 100/0
+sc = load('score')
+row = {'catDmgA': 2180, 'catDmgB': 70, 'kingsA': 890, 'kingsB': 4591, 'cheeseXferA': 420, 'cheeseXferB': 895,
+       'backstabRound': 27}
+check(sc.points(row) == (35, 64), f"score points: king count from the last digit {sc.points(row)}")
+check(sc.cell(dict(row, winner='B', winType='RATKING_DESTROYED')) == (0.0, 100.0), "score cell: king kill is a loss")
+c = sc.cell(dict(row, winner='B', winType='MORE_POINTS'))
+check(abs(c[0] - 3500 / 99) < 1e-9 and abs(sum(c) - 100) < 1e-9, f"score cell: points share when points decide {c}")
+check(sc.cell(dict(row, winner='A', winType='COIN_FLIP', catDmgA=0, catDmgB=0, cheeseXferA=0, cheeseXferB=0,
+                   kingsA=1, kingsB=1)) == (50.0, 50.0), "score cell: tied points")
+check(sc.cell({'winner': 'A', 'ptsA': 30, 'ptsB': 10}) == (75.0, 25.0), "score cell: stored points without a summary")
+check(sc.cell({'winner': None}) == (0.0, 0.0), "score cell: no result")
 check(arena.cell_key('a', 'b', 'm', 3) == arena.cell_key('a', 'b', 'm', 3), "cell key stable")
 check(arena.cell_key('a', 'b', 'm', 3) != arena.cell_key('b', 'a', 'm', 3), "cell key ordered by side")
 # tree_hash ignores non-java files and changes with content
@@ -96,11 +108,11 @@ check(gm.player('cls:/c/1/:pkg', fld) == 'opp1' and gm.player('bots/s2t/', fld) 
 with tempfile.TemporaryDirectory() as d:
     os.makedirs(os.path.join(d, 'r1'))
     open(os.path.join(d, 'r1', 'results.jsonl'), 'w').write(
-        json.dumps(dict(a_spec='bots/x', b_spec='cls:/c/1:p', map='M', winner='B', rounds=200, winType='K', seed=3, ptsA=30, ptsB=60)) + '\n'
+        json.dumps(dict(a_spec='bots/x', b_spec='cls:/c/1:p', map='M', winner='B', rounds=200, winType='RATKING_DESTROYED', seed=3, ptsA=30, ptsB=60)) + '\n'
         + 'not json\n' + json.dumps(dict(a_spec='bots/x', b_spec='cls:/c/1:p', winner=None)) + '\n')
     lr = gm.local_rows(d, fld)
     check(len(lr) == 1 and lr[0]['teamA'] == 'us:x' and lr[0]['teamB'] == 'opp1' and lr[0]['winner'] == 'B'
-          and (lr[0]['scoreA'], lr[0]['scoreB']) == (0, 1) and (lr[0]['ptsA'], lr[0]['ptsB']) == (30, 60), f"games local rows {lr}")
+          and (lr[0]['scoreA'], lr[0]['scoreB']) == (0, 1) and (lr[0]['ptsA'], lr[0]['ptsB']) == (0, 100), f"games local rows: cell score {lr}")
 P = lambda team, idx, score, sub=None: {'teamname': team, 'player_index': idx, 'score': score, 'submission': sub}
 ms = [{'id': 2, 'status': 'OK!', 'is_ranked': True, 'maps': ['M1', 'M2', 'M3'], 'created': '2026-10-28T09:00:00-04:00',
        'participants': [P('opp1', 0, 1), P(gm.TEAM, 1, 2)]},
@@ -287,6 +299,28 @@ if os.path.exists(fx) and os.path.isdir(os.path.join(REPO, 'build', 'tools', 'bc
           f"battle_report grabs {rep['grabs']}")
     check(all(v > 0 for tm in '12' for v in rep['hploss'][tm].values()) and 42 in rep['throws']['2'], "battle_report hploss/throws")
 # snapshot.sh refuses a source without java files and leaves nothing behind
+# econ_report: piles followed from spawn to pickup, mine sides, a drop, a pile never taken
+er = load('econ_report')
+with tempfile.TemporaryDirectory() as d:
+    json.dump({'map': 'M', 'teamA': 'a', 'teamB': 'b', 'width': 20, 'height': 10, 'symmetry': 2,
+               'mines': [[3, 5]], 'bodies': [{'id': 1, 'team': 1, 'type': 'KING', 'x': 1, 'y': 5},
+                                             {'id': 2, 'team': 2, 'type': 'KING', 'x': 18, 'y': 5}]},
+              open(os.path.join(d, 'g0.meta.json'), 'w'))
+    open(os.path.join(d, 'g0.turns.tsv'), 'w').write('round\tid\tteam\ttype\tx\ty\n')
+    open(os.path.join(d, 'g0.actions.tsv'), 'w').write('round\tid\tteam\ttype\taction\ta\tb\tc\n'
+        '3\t1\t0\tCAT\tcheesespawn\t4,5\t20\t\n3\t1\t0\tCAT\tcheesespawn\t15,5\t20\t\n'   # (16,5) mirrored: x -> 19-x
+        '7\t9\t1\tRAT\tpickup\t4,5\t\t\n9\t8\t2\tRAT\tpickup\t15,5\t\t\n'
+        '10\t1\t0\tCAT\tcheesespawn\t4,6\t20\t\n10\t1\t0\tCAT\tcheesespawn\t15,6\t20\t\n'
+        '14\t8\t2\tRAT\tpickup\t4,6\t\t\n'
+        '20\t9\t1\tRAT\tcheesespawn\t10,2\t7\t\n21\t8\t2\tRAT\tpickup\t10,2\t\t\n')
+    eo2 = er.analyse(d)
+    m1, m2 = eo2['mines']
+    check(m1['mine'] == [3, 5] and m1['side'] == 'A' and m1['gotA'] == 20 and m1['waitA'] == 4.0
+          and m1['gotB'] == 20 and m1['waitB'] == 4.0 and m1['firstB'] == 14, f"econ mine A {m1}")
+    check(m2['mine'] == [16, 5] and m2['side'] == 'B' and m2['gotB'] == 20 and m2['left'] == 20, f"econ mine B {m2}")
+    check(eo2['A']['own'] == 20 and eo2['B']['enemy'] == 20 and eo2['B']['own'] == 20 and eo2['B']['drops'] == 7
+          and eo2['A']['lostOwnSide'] == 20 and eo2['B']['lostOwnSide'] == 20, f"econ teams {eo2['A']} {eo2['B']}")
+    check('lost on own side' in er.render(eo2), "econ render")
 import subprocess as _sp
 _r = _sp.run([os.path.join(REPO, 'tools', 'snapshot.sh'), 'zz_selftest', os.path.join(REPO, 'no_such_dir')], capture_output=True, text=True)
 check(_r.returncode != 0 and not os.path.exists(os.path.join(REPO, 'bots', 'zz_selftest')), "snapshot.sh rejects a missing source")

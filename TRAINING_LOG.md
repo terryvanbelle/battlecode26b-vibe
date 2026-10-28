@@ -164,3 +164,24 @@
   nearest), Flow.follow fix (a path starting beside us threw ArrayIndexOutOfBounds every turn: 56 turns of one rat
   in one game), exception tags in the debug line (EXC=count:type@stage). Version41 still picks up ~2x our cheese on
   our own half of cheesefarm.
+
+## 2026-10-28 08:30 PDT: the screen metric was wrong; why we lose
+- s3c (s3b + centre-first explore) top-6 screen vs s3b: points t +0.4; worst-12 flat. s3d (+ king digs) stopped at
+  10/72 when the screen changed (below).
+- **Metric bug.** `arena.points` took the "kings" share from the replay's kingsA/kingsB aggregate, which is
+  10 * global cheese + kings (6391 = 639 cheese + 1 king). A game our king lost scored us ~25-45 "points" for cat
+  damage and leftover cheese (DefaultMedium vs Finals: king killed r193, scored 44-56). The screen therefore rewarded
+  cat farming as much as winning. New `tools/score.py`: points with the king count (last digit), and the cell score
+  = 100/0 when kings decide, the points share when points do (all cats dead in cooperation, round limit). gauntlet,
+  games and elo recompute it from raw fields. Milestone M3.
+- Re-scored, every top-6 cell of s3a/s3b/s3c is a loss: 144 games, 6 wins + 1 points win. A top-6 screen is blind on
+  win/loss. New local screen v1: 12 band bots (replica ranks 11-33, the 8 ladder-panel bots left out) x 6 random maps
+  x both sides (`research/screen/v1.json`). Running s2o, s3d, s3b on it (runs b1_*).
+- Why the top 6 beat us (s3a+s3b, 144 games): **bites on the enemy king 0.0-1.0 a game for us vs 3.5-37.5 for them**.
+  137 of 144 games end with our king destroyed; we never press theirs. Pickups 25-105 vs 133-227 a game, dirt dug
+  25-32 vs 46-91, rat traps triggered by us ~27 vs ~40 by them.
+- Economy trace (new `tools/econ_report.py`, DefaultMedium vs Finals): we harvested 1.5 of our 3 mines; (36,17) was
+  never visited (240 cheese left lying), (34,24) first reached r92 (220 left); Finals took 380 from our side and 1240
+  in all to our 460. Finals' king also walks to the middle (24,17) and is never bitten.
+- Backstab: Finals lays a rat trap at r25 during cooperation; our rat steps on it at r27, which ends cooperation with
+  Finals as the backstabber (the trap's owner). Our trap-risk mask is off during cooperation.

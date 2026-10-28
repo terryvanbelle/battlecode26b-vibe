@@ -11,12 +11,15 @@ Sources:
             match's maps joined by '+', scoreA/scoreB are its game counts (galaxy does not publish per-game winners).
 
 Columns: source,run,seq,teamA,teamB,map,scoreA,scoreB,winner,rounds,reason,seed,ptsA,ptsB. ptsA/ptsB: a local game's
-points (tools/arena.py points(): the spec's weighted shares, at most 100 together; empty for runs older than it), a
+cell score (tools/score.py cell(): 100/0 to the winner of a game decided by kings, else the spec's points share), a
 replica match's share of its games won (%).
 Players: our builds are us:<package> (a replica match's package is the submission it played), the stock
 examplefuncsplayer/lectureplayer keep their names, field bots use their research/field/FIELD.tsv name.
 """
 import argparse, csv, glob, json, os, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import score  # noqa: E402
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 COLS = ['source', 'run', 'seq', 'teamA', 'teamB', 'map', 'scoreA', 'scoreB', 'winner', 'rounds', 'reason', 'seed',
@@ -57,11 +60,12 @@ def local_rows(runs_dir, field):
             w = j.get('winner')
             if w not in ('A', 'B') or 'a_spec' not in j:
                 continue
+            sc = score.cell(j)
             rows.append({'source': 'local', 'run': run, 'seq': seq,
                          'teamA': player(j['a_spec'], field), 'teamB': player(j['b_spec'], field),
                          'map': j.get('map', ''), 'scoreA': int(w == 'A'), 'scoreB': int(w == 'B'), 'winner': w,
                          'rounds': j.get('rounds', ''), 'reason': j.get('winType', ''), 'seed': j.get('seed', ''),
-                         'ptsA': j.get('ptsA', ''), 'ptsB': j.get('ptsB', '')})
+                         'ptsA': round(sc[0], 1), 'ptsB': round(sc[1], 1)})
     return rows
 
 

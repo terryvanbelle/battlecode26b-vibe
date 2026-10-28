@@ -5,9 +5,9 @@
 
 Also writes progress/ratings.csv (player, rating, se, games, field_score; read by tools/plot_progress.py).
 
-Each of our builds (us:<package>) is its own player. A local game counts its points share (a 23-77 loss is 0.23 of
-a win: win/loss alone cannot tell a near miss from a rout, and we rarely beat the strongest bots), a replica match its
-game counts. Our builds were gauntleted on different map sets, so a game between one of our builds and a field bot
+Each of our builds (us:<package>) is its own player. A local game counts its cell score (tools/score.py: a win or
+loss when kings decide it, the spec's points share when points do, so a 45-55 points loss is 0.45 of a win), a replica
+match its game counts. Our builds were gauntleted on different map sets, so a game between one of our builds and a field bot
 carries the map as a handicap key (elolib): the fit learns how hard each map is for us, and a build's rating is its
 strength on an average map. Field score = expected score of a build against every field player (non-us), one game
 each. elo.png needs matplotlib (tools/.venv); without it only ELO.md is written.
@@ -28,7 +28,7 @@ def build_order(attempts_csv):
 
 
 def outcome(r):
-    """(credit A, credit B) of one games.csv row: a local game's points share, else its score (wins)."""
+    """(credit A, credit B) of one games.csv row: a local game's cell score, else its score (wins)."""
     if r.get('source') == 'local' and r.get('ptsA') not in (None, '') and r.get('ptsB') not in (None, ''):
         a, b = float(r['ptsA']), float(r['ptsB'])
         if a + b > 0:
@@ -76,7 +76,7 @@ def render(rt, field, fs, order, nrows, srcs, rec=None, h=None):
     L = ['# Ladder', '',
          f'{nrows} rows of progress/games.csv ({srcs.get("local", 0)} local games, {srcs.get("replica", 0)} replica '
          f'matches), rated by a batch Bradley-Terry fit on the Elo scale (`tools/elolib.py`). A local game counts its '
-         f'points share (a 23-77 loss is 0.23 of a win), a replica match its games won. A game between one of our builds '
+         f'cell score (`tools/score.py`: a win or loss when kings decide the game, the points share when points do), a replica match its games won. A game between one of our builds '
          f'and a field bot also fits how hard its map is for us (table at the end), so builds gauntleted on different '
          f'maps compare on an average map. Each pair of players counts at most {elolib.PAIR_CAP} games, every player carries one virtual win and loss against a fixed anchor, and '
          f'ratings are relative to a mean of 1500 over all {len(rt)} players. Each of our builds is its own player. '

@@ -37,11 +37,19 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   or cat seen, a arrived), `hm` home mine, `kd` king digs.
 - Snapshot: `tools/snapshot.sh NAME` (bots/NAME + SNAPSHOT with source hash and a reason line).
 - Field bots: `~/projects/vibe/bc26b-benchmarks` (scanned, source unread), `research/field/FIELD.tsv`.
-- **Local screen (rejects only)**: `gauntlet.py cells bots/NAME --maps DefaultSmall,DefaultMedium,cheesefarm,
-  UncomfortablyClose,Excavation,Stash --only <the six strongest>` (72 cells) and the worst-12 maps vs Version41 (24
-  cells), both on the VM (`build/g7_NAME.tsv`, `build/g7_NAMEw.tsv` are the cell files); then
-  `gauntlet.py paired runs/BASE/results.jsonl runs/CAND/results.jsonl` (cell score = points share; reject at t <=
-  -1.5 or sign p < 0.05). GAP: no seed axis beyond seed 0 and no identity-control run yet; no D-target extension.
+- **Cell score** (`tools/score.py`, used by gauntlet/games/elo): 100/0 to the winner when kings decide a game, else
+  the spec's points share. Before 2026-10-28 08:28 (milestone M3) screens used `arena.points`, whose "kings" share
+  read the replay's kingsA/kingsB aggregate, which is 10 * global cheese + kings: a king-kill loss scored ~25-45 for
+  cat damage and leftover cheese. Every score is now recomputed from the raw fields, old runs included.
+- **Local screen (rejects only)**, v1 (`research/screen/v1.json`): 12 field bots in our replica band (6 above, 6
+  below, the 8 ladder-panel bots left out) x 6 random maps x both sides = 144 cells: `gauntlet.py cells bots/NAME
+  --maps <v1 maps> --only <v1 bots> > build/b1_NAME.tsv`, run on the VM as `runs/b1_NAME`, then `gauntlet.py paired
+  runs/b1_BASE/results.jsonl runs/b1_CAND/results.jsonl` (reject at t <= -1.5 or sign p < 0.05). The old top-6 x 6
+  maps screen (`build/g7_NAME*.tsv`) is retired: at ~3% wins it carries no signal on win/loss. GAP: no seed axis
+  beyond seed 0, no identity-control run yet, no D-target extension.
+- Economy report: `tools/econ_report.py TSVDIR|REPLAY` (each cheese pile from spawn to pickup: per mine its side,
+  cheese spawned, taken by each team, wait, left on the ground; per team own/enemy/middle/drops and cheese lost on its
+  own side).
 - **Ladder panel (accepts)**: replica, `tools/galaxy26/contest.py`. Panel v1 = 8 field bots around our rating, 3 maps
   each (`research/panel/v1-setN.json`), both sides (`--vs NAME@+,NAME@-` per opponent: 48 games a block). Control:
   the incumbent's own block on the set; candidate: submit it, create its block, re-submit the incumbent; `contest.py
