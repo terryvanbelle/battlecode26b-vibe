@@ -49,6 +49,10 @@ with tempfile.TemporaryDirectory() as d:
     open(res, 'w').write('\n'.join(json.dumps(r) for r in rows) + '\n')
     t = g.table(res, path=f)
     check(t == [('opp1', 1, 2, 55.0), ('opp2', 1, 1, 80.0)], f"gauntlet table {t}")
+    open(res, 'a').write(json.dumps(dict(a_hash='Y', b_hash='H1', a_spec='bots/y', b_spec='cls:/c/1:p1', a='y', b='p1',
+                                         winner='B', ptsA=10, ptsB=90)) + '\n')
+    sm = g.summary(res)
+    check(sm == [('x', 2, 3, 190 / 3), ('y', 0, 1, 10.0)], f"gauntlet summary {sm}")
 # plot_progress: one svg per metric group, index lists them
 pp = load('plot_progress')
 with tempfile.TemporaryDirectory() as d:
