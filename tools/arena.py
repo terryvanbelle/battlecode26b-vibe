@@ -136,13 +136,14 @@ def run_game(a, b, mapname, seed=0, out=None, keep=False, tsv=False):
     tmpdir = None
     if out is None:
         tmpdir = out = tempfile.mkdtemp(prefix='game-')
+    out = os.path.abspath(out)
     os.makedirs(out, exist_ok=True)
     tag = f'{a.name}-{a.hash[:6]}_vs_{b.name}-{b.hash[:6]}_{mapname}_s{seed}'
     replay = os.path.join(out, tag + '.bc26')
     md = map_dir(seed)
     pkg_a, pkg_b = a.pkg, b.pkg
     cmd = ['timeout', str(GAME_TIMEOUT), os.path.join(JDK, 'bin', 'java'), f'-Xmx{XMX}', '-XX:+UseSerialGC', *ADD_OPENS,
-           '-cp', ENGINE, '-Dbc.server.mode=headless', f'-Dbc.server.map-path={md}',
+           '-cp', ENGINE, '-Dbc.server.mode=headless', f'-Dbc.game.map-path={md}',
            '-Dbc.server.robot-player-to-system-out=false', '-Dbc.server.debug=false',
            '-Dbc.engine.debug-methods=false', '-Dbc.engine.enable-profiler=false', '-Dbc.engine.show-indicators=true',
            f'-Dbc.game.team-a={pkg_a}', f'-Dbc.game.team-b={pkg_b}', f'-Dbc.game.team-a.url={a.cls}',

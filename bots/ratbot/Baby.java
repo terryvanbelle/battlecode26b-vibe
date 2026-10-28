@@ -289,7 +289,12 @@ public final class Baby {
         if (raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= 10))) {
             MapLocation k = Comms.nearestKing(G.me);
             if (k != null) {
-                if (G.me.distanceSquaredTo(k) <= 5) return; // close enough to transfer; avoid blocking the ring
+                if (G.me.distanceSquaredTo(k) <= 8) {
+                    // in transfer range of the king's body: face it so it is inside our cone
+                    Direction d = G.me.directionTo(k);
+                    if (d != Direction.CENTER && rc.getDirection() != d && rc.canTurn(d)) rc.turn(d);
+                    return;
+                }
                 Nav.goTo(k);
                 return;
             }

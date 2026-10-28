@@ -57,9 +57,13 @@ public final class King {
     }
 
     static void readSqueaks() {
-        Message[] ms = G.rc.readSqueaks(G.round);
-        int n = Math.min(ms.length, 12);
-        for (int i = 0; i < n; i++) {
+        // Kings act before the babies they spawned, so this round's squeaks mostly arrive after our turn:
+        // read last round's too.
+        Message[] ms = G.rc.readSqueaks(-1);
+        int n = ms.length, used = 0;
+        for (int i = 0; i < n && used < 16; i++) {
+            if (ms[i].getRound() < G.round - 1) continue;
+            used++;
             int m = ms[i].getBytes();
             switch (Comms.sqType(m)) {
                 case Comms.SQ_MINE: Comms.addMine(Comms.sqX(m), Comms.sqY(m)); break;
@@ -122,7 +126,7 @@ public final class King {
     /** Committed reserve: upkeep for every king for a horizon, never spent on spawns. */
     static int reserve() {
         int kings = Math.max(1, Comms.numKings);
-        int horizon = Math.min(150, Math.max(0, 2000 - G.round));
+        int horizon = Math.min(Cfg.RESERVE_ROUNDS, Math.max(0, 2000 - G.round));
         return 2 * kings * horizon;
     }
 
@@ -157,7 +161,29 @@ public final class King {
         if (best != null) {
             rc.buildRat(best);
             spawned++;
+        } else {
+            digRing(goal);
         }
+    }
+
+    public static int digs;
+
+    /** No spawn tile is open: dig the ring dirt tile nearest the goal (kings dig within range 8). */
+    static void digRing(MapLocation goal) throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady() || rc.getGlobalCheese() < 5 + 2 * 20) return;
+        MapLocation c = rc.getLocation();
+        MapLocation best = null;
+        int bs = Integer.MAX_VALUE;
+        for (int dx = -2; dx <= 2; dx++)
+            for (int dy = -2; dy <= 2; dy++) {
+                if (Math.abs(dx) < 2 && Math.abs(dy) < 2) continue;
+                MapLocation l = c.translate(dx, dy);
+                if (!rc.canRemoveDirt(l)) continue;
+                int s = l.distanceSquaredTo(goal) * 2 + (G.hand(c, c.directionTo(l)) > 0 ? 1 : 0);
+                if (s < bs) { bs = s; best = l; }
+            }
+        if (best != null) { rc.removeDirt(best); digs++; }
     }
 
     static void move(RobotInfo[] cats) throws GameActionException {

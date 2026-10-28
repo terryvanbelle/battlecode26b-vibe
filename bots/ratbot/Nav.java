@@ -48,6 +48,7 @@ public final class Nav {
         if (!G.rc.isMovementReady()) return false;
         int d0 = G.me.distanceSquaredTo(t);
         if (d0 < bestDist) { bestDist = d0; stall = 0; } else stall++;
+        if (digToward(t)) return false;
         Direction d = choose(t);
         if (d == null) {
             tryDig(t);
@@ -96,7 +97,8 @@ public final class Nav {
             bugging = true;
             bugStartDist = G.me.distanceSquaredTo(t);
             bugHand = G.hand(G.me, toT);
-            bugDir = toT;
+            // pretend we were already walking along the wall, so the first sweep starts at toT itself
+            bugDir = bugHand > 0 ? toT.rotateLeft().rotateLeft() : toT.rotateRight().rotateRight();
             bugTurns = 0;
         }
         bugTurns++;
@@ -112,6 +114,36 @@ public final class Nav {
             d = bugHand > 0 ? d.rotateLeft() : d.rotateRight();
         }
         return null;
+    }
+
+    static boolean isDirt(MapLocation l) {
+        return G.onMap(l.x, l.y) && (Sym.mem[G.idx(l)] & Sym.DIRT) != 0;
+    }
+
+    /**
+     * Dirt straight toward the target is dug at once unless a free side step still gets closer:
+     * a dig costs 5 cheese and 2.5 turns, a detour around a dirt field usually far more.
+     */
+    static boolean digToward(MapLocation t) throws GameActionException {
+        if (!Cfg.DIG || G.globalCheese + G.rawCheese < Cfg.DIG_MIN_CHEESE) return false;
+        RobotController rc = G.rc;
+        if (!rc.isActionReady()) return false;
+        Direction toT = G.me.directionTo(t);
+        MapLocation n = G.me.add(toT);
+        if (!isDirt(n) || free(toT)) return false;
+        int d0 = G.me.distanceSquaredTo(t);
+        Direction l = toT.rotateLeft(), r = toT.rotateRight();
+        if (free(l) && G.me.add(l).distanceSquaredTo(t) < d0) return false;
+        if (free(r) && G.me.add(r).distanceSquaredTo(t) < d0) return false;
+        if (rc.getDirection() != toT && rc.canTurn(toT)) rc.turn(toT);
+        if (rc.canRemoveDirt(n)) {
+            rc.removeDirt(n);
+            digs++;
+            Sym.mem[G.idx(n)] &= ~Sym.DIRT;
+            bugging = false;
+            return true;
+        }
+        return false;
     }
 
     /** Dig through dirt when stalled and the straight step is dirt. */
