@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Basics report for one game from a ReplayDump tsv directory (or a .bc26, dumped on the fly).
 
-  game_report.py REPLAY.bc26|TSVDIR [--team A|B] [--json]
+  game_report.py REPLAY.bc26|TSVDIR [--json] [--timeline N]
 
 Per team: global cheese curve (decoded from the round aggregate kings+10*cheese), starvation rounds,
 king HP floor, rat-turn stall statistics (same tile for N+ own turns while not within dist2 18 of an own king),
@@ -118,11 +118,43 @@ def analyse(d, game=0):
     return out
 
 
+def timeline(d, every, game=0):
+    """Rows every N rounds: per team rats alive (took a turn that round), king HP, global cheese."""
+    pre = os.path.join(d, f'g{game}')
+    cheese = {}
+    for r in rows(pre + '.rounds.tsv'):
+        cheese[int(r['round'])] = (int(r['kingsA']) // 10, int(r['kingsB']) // 10)
+    rats = collections.defaultdict(lambda: [0, 0])
+    khp = collections.defaultdict(lambda: [None, None])
+    seen = set()
+    for r in rows(pre + '.turns.tsv'):
+        t = int(r['team'])
+        if t not in (1, 2) or (r['round'], r['id']) in seen:
+            continue
+        seen.add((r['round'], r['id']))
+        rn = int(r['round'])
+        if r['type'] == 'RAT':
+            rats[rn][t - 1] += 1
+        elif r['type'] == 'KING':
+            cur = khp[rn][t - 1]
+            khp[rn][t - 1] = int(r['hp']) if cur is None else min(cur, int(r['hp']))
+    out = []
+    for rn in sorted(cheese):
+        if rn % every == 0 or rn == max(cheese):
+            out.append((rn, rats[rn][0], rats[rn][1], khp[rn][0], khp[rn][1], cheese[rn][0], cheese[rn][1]))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('src'); ap.add_argument('--json', action='store_true')
+    ap.add_argument('src'); ap.add_argument('--json', action='store_true'); ap.add_argument('--timeline', type=int, default=0)
     o = ap.parse_args()
     d = dump(o.src) if o.src.endswith('.bc26') else o.src
+    if o.timeline:
+        print('round  ratsA ratsB  kingHpA kingHpB  cheeseA cheeseB')
+        for t in timeline(d, o.timeline):
+            print('%5d  %5d %5d  %7s %7s  %7d %7d' % t)
+        return
     rep = analyse(d)
     if o.json:
         print(json.dumps(rep)); return

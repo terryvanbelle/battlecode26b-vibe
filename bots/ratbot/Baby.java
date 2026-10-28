@@ -247,7 +247,7 @@ public final class Baby {
     static boolean tryRatTrap() throws GameActionException {
         RobotController rc = G.rc;
         if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= 25) return false;
-        if (rc.getAllCheese() < Cfg.WAR_FLOOR + 20) return false;
+        if (rc.getAllCheese() < Cfg.RAT_TRAP_MIN_CHEESE) return false;
         int d0 = G.me.distanceSquaredTo(nearestEnemy.location);
         if (d0 <= 2 || d0 > Cfg.BABY_TRAP_DIST2) return false;
         MapLocation me = rc.getLocation();
@@ -430,6 +430,7 @@ public final class Baby {
             MapLocation cc = new MapLocation(cat.location.x, cat.location.y);
             if (Nav.flee(cc)) return;
         }
+        if (!G.coop && Cfg.FACE_ENEMY && faceEnemy()) return;
         if (role == ATTACK && attack()) return;
         if (!G.coop && war()) return;
         if (cat != null && role == FIGHT) {
@@ -507,6 +508,28 @@ public final class Baby {
         }
         if (best == null && noKing != 0) { noKing = 0; return null; }
         return best;
+    }
+
+    /**
+     * Anti-ratnap stance: an enemy within two tiles must stay in our cone (a rat can only be grabbed by an enemy it
+     * cannot see, or by a healthier one). Turn to face it instead of moving; once facing, advance only forward.
+     */
+    static boolean faceEnemy() throws GameActionException {
+        if (nearestEnemy == null) return false;
+        RobotController rc = G.rc;
+        MapLocation e = nearestEnemy.location;
+        int d = G.me.distanceSquaredTo(e);
+        if (d > 8) return false;
+        Direction to = G.me.directionTo(e);
+        if (!rc.canSenseLocation(e) || (d > 2 && rc.getDirection() != to)) {
+            if (rc.getDirection() != to && rc.canTurn(to)) { rc.turn(to); G.facing = to; }
+            return true;
+        }
+        if (d > 2 && rc.canMove(to) && (Nav.avoid & (1 << to.ordinal())) == 0) {
+            rc.move(to);
+            G.me = rc.getLocation();
+        }
+        return true;
     }
 
     /** War movement: close on a visible enemy king or nearby enemy rat, or answer a king's alert. */

@@ -142,7 +142,8 @@ public final class King {
         int babies = (cost - 10) / 10 * 4; // lower bound of live babies (cost step)
         // a few babies always (they pay for themselves on any map with cheese); beyond that the projected
         // end-of-game cheese at the measured income must stay positive after paying for this one
-        boolean boot = spawned < Cfg.BOOT_BABIES && rc.getGlobalCheese() >= cost + 600;
+        // a core population always (rats pay for themselves and are the army); beyond it, the income test
+        boolean boot = babies < Cfg.CORE_BABIES && rc.getGlobalCheese() >= cost + Cfg.CORE_FLOOR;
         // at war with enemies in sight, bodies now beat cheese later: spawn down to a short upkeep floor
         boolean war = !G.coop && enemies.length > 0 && rc.getGlobalCheese() >= cost + Cfg.WAR_FLOOR;
         if (!boot && !war && Econ.surplus() < cost + Cfg.SPAWN_MARGIN) return;
@@ -180,7 +181,7 @@ public final class King {
     /** War defense: a rat trap on the reachable tile nearest an approaching enemy rat (50 damage + stun). */
     static void ratTrap(RobotInfo[] enemies) throws GameActionException {
         RobotController rc = G.rc;
-        if (!rc.isActionReady() || rc.getGlobalCheese() < Cfg.WAR_FLOOR + 20 || rc.getNumberRatTraps() >= 25) return;
+        if (!rc.isActionReady() || rc.getGlobalCheese() < Cfg.RAT_TRAP_MIN_CHEESE || rc.getNumberRatTraps() >= 25) return;
         MapLocation c = rc.getLocation();
         MapLocation foe = null;
         int fd = Integer.MAX_VALUE;

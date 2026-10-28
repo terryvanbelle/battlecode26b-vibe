@@ -11,6 +11,10 @@ public final class Cfg {
     /** Babies at war grab adjacent enemies and throw them; lay rat traps toward enemies within BABY_TRAP_DIST2. */
     public static final boolean NAP = true, BABY_RAT_TRAPS = true;
     public static final int BABY_TRAP_DIST2 = 13;
+    /** Cheese (global, or raw+global for babies) below which no rat trap is placed. */
+    public static final int RAT_TRAP_MIN_CHEESE = 500;
+    /** Keep enemies within two tiles inside our cone (anti-ratnap) instead of moving. */
+    public static final boolean FACE_ENEMY = true;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;
     /** Raw cheese at which a gatherer heads home. */
@@ -27,8 +31,8 @@ public final class Cfg {
     public static final int GATHER_CAT_DIST = 20;
     public static final boolean DIG = true;
     public static final int DIG_MIN_CHEESE = 60;
-    /** Babies spawned unconditionally (while 600 cheese remain) before the income test applies. */
-    public static final int BOOT_BABIES = 8;
+    /** Live babies kept unconditionally (while CORE_FLOOR cheese remain) before the income test applies. */
+    public static final int CORE_BABIES = 12, CORE_FLOOR = 200;
     /** Projected end-of-game cheese a spawn must leave. */
     public static final int SPAWN_MARGIN = 100;
     /** Fraction (percent) of measured income trusted when projecting forward. */

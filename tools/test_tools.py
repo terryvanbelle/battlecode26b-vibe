@@ -59,5 +59,13 @@ with tempfile.TemporaryDirectory() as d:
     subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'plot_progress.py'), '--tsv', t, '--out', d], capture_output=True)
     check(os.path.exists(os.path.join(d, 'win.svg')) and os.path.exists(os.path.join(d, 'pts.svg')), "plot svgs written")
     check('polyline' in open(os.path.join(d, 'win.svg')).read(), "plot has a line")
+# game_report.timeline on a synthetic tsv dir
+gr = load('game_report')
+with tempfile.TemporaryDirectory() as d:
+    open(os.path.join(d, 'g0.rounds.tsv'), 'w').write('round\tkingsA\tkingsB\n1\t25001\t25001\n2\t24981\t24991\n')
+    open(os.path.join(d, 'g0.turns.tsv'), 'w').write('round\tid\tteam\ttype\tx\ty\thp\n'
+        '1\t3\t1\tKING\t0\t0\t600\n1\t4\t2\tKING\t9\t9\t600\n2\t3\t1\tKING\t0\t0\t590\n2\t50\t1\tRAT\t1\t1\t100\n2\t50\t1\tRAT\t1\t1\t100\n')
+    tl = gr.timeline(d, 1)
+    check(tl == [(1, 0, 0, 600, 600, 2500, 2500), (2, 1, 0, 590, None, 2498, 2499)], f"timeline {tl}")
 print(f"test_tools: {checks - fails}/{checks} passed")
 sys.exit(1 if fails else 0)
