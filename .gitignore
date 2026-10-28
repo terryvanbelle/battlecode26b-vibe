@@ -1,0 +1,7 @@
+build/
+tools/.venv/
+engine/*.jar
+matches/
+*.bc26
+__pycache__/
+*.class

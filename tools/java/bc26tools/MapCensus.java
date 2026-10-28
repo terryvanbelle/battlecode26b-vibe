@@ -1,0 +1,54 @@
+package bc26tools;
+
+import battlecode.common.*;
+import battlecode.world.*;
+import java.io.File;
+import java.util.*;
+
+/** Map census: one TSV row per .map26 file (or an ASCII board with --ascii NAME).
+ *  Usage: java -cp engine.jar:classes bc26tools.MapCensus MAPDIR [--ascii NAME] */
+public class MapCensus {
+    public static void main(String[] args) throws Exception {
+        File dir = new File(args[0]);
+        String ascii = args.length > 2 && args[1].equals("--ascii") ? args[2] : null;
+        if (ascii == null)
+            System.out.println("map\tw\th\tsym\tkingA\tkingB\tkingDist2\tcats\twallPct\tdirtPct\tmines\tcheese0\tseed\twaypoints");
+        File[] files = dir.listFiles((d, n) -> n.endsWith(".map26"));
+        Arrays.sort(files);
+        for (File f : files) {
+            String name = f.getName().replace(".map26", "");
+            if (ascii != null && !ascii.equals(name)) continue;
+            LiveMap m = GameMapIO.loadMap(name, dir, false);
+            int w = m.getWidth(), h = m.getHeight();
+            boolean[] wall = m.getWallArray(), dirt = m.getDirtArray(), mine = m.getCheeseMineArray();
+            int[] cheese = m.getCheeseArray();
+            int walls = 0, dirts = 0, mines = 0, ch = 0;
+            for (int i = 0; i < w * h; i++) { if (wall[i]) walls++; if (dirt[i]) dirts++; if (mine[i]) mines++; ch += cheese[i]; }
+            MapLocation ka = null, kb = null; int cats = 0;
+            List<MapLocation> catLocs = new ArrayList<>();
+            for (RobotInfo r : m.getInitialBodies()) {
+                if (r.getType() == UnitType.CAT) { cats++; catLocs.add(r.getLocation()); }
+                else if (r.getType() == UnitType.RAT_KING) { if (r.getTeam() == Team.A) ka = r.getLocation(); else kb = r.getLocation(); }
+            }
+            if (ascii != null) {
+                char[][] g = new char[h][w];
+                for (int y = 0; y < h; y++) for (int x = 0; x < w; x++) {
+                    int i = y * w + x;
+                    g[y][x] = wall[i] ? '#' : mine[i] ? 'M' : dirt[i] ? '%' : cheese[i] > 0 ? 'c' : '.';
+                }
+                for (RobotInfo r : m.getInitialBodies()) {
+                    MapLocation l = r.getLocation();
+                    g[l.y][l.x] = r.getType() == UnitType.CAT ? 'C' : r.getTeam() == Team.A ? 'A' : 'B';
+                }
+                System.out.println(name + " " + w + "x" + h + " " + m.getSymmetry());
+                for (int y = h - 1; y >= 0; y--) System.out.println(new String(g[y]));
+                continue;
+            }
+            int wp = 0; for (int[] a : m.getCatWaypoints()) wp += a.length;
+            System.out.printf("%s\t%d\t%d\t%s\t%s\t%s\t%d\t%d\t%.1f\t%.1f\t%d\t%d\t%d\t%d%n", name, w, h, m.getSymmetry(),
+                    ka == null ? "-" : ka.x + "," + ka.y, kb == null ? "-" : kb.x + "," + kb.y,
+                    ka == null || kb == null ? -1 : ka.distanceSquaredTo(kb), cats,
+                    100.0 * walls / (w * h), 100.0 * dirts / (w * h), mines, ch, m.getSeed(), wp);
+        }
+    }
+}
