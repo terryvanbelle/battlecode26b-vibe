@@ -125,6 +125,14 @@ with tempfile.TemporaryDirectory() as d:
     check(abs(g.sign_p(5, 0) - 1 / 32) < 1e-12 and g.sign_p(0, 0) == 1.0 and g.sign_p(1, 1) == 0.75, "gauntlet sign test")
     pr2 = g.paired(g.cell_scores([c]), g.cell_scores([b]))
     check(pr2['t'] < 0 and pr2['win_net'] == -1, f"gauntlet paired reversed {pr2}")
+    # self-play: the candidate is whichever side is not the base; rows without the base (or base vs base) are skipped
+    sp = run(os.path.join(d, 'sp.jsonl'), [('bots/y', 'bots/s', 'M1', 'A', 70, 30), ('bots/s', 'bots/y', 'M1', 'A', 60, 40),
+                                           ('bots/s', 'bots/s', 'M2', 'A', 50, 50), ('bots/y', 'cls:o:p', 'M2', 'A', 50, 50)])
+    ss = {k: v for k, v in g.selfplay_scores([sp], 'bots/s').items()}
+    check(ss == {('bots/s', 'M1', 'A', 0): (0.7, 1.0), ('bots/s', 'M1', 'B', 0): (0.4, 0.0)}, f"gauntlet selfplay scores {ss}")
+    pr3 = g.paired({k: (0.5, 0.5) for k in ss}, ss)
+    check(pr3['cells'] == 2 and abs(pr3['mean_d'] - 0.05) < 1e-9 and pr3['better'] == 1 and pr3['worse'] == 1,
+          f"gauntlet selfplay vs 50 {pr3}")
 # plot_progress: series per metric, one progress.png
 pp = load('plot_progress')
 with tempfile.TemporaryDirectory() as d:

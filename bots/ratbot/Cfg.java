@@ -48,6 +48,8 @@ public final class Cfg {
     public static final int RAID_STAY = 60, RAID_SPREAD = 60;
     /** One in RAID_EVERY fighters is a raider: on our half it ignores enemies beyond dist2 RAID_ENGAGE. */
     public static final int RAID_EVERY = 0, RAID_ENGAGE = 8, RAID_HP = 60;
+    /** Bytecodes the king's first-turn sense leaves for the rest of that turn (spawn first of all). */
+    public static final int KING_SENSE_RESERVE = 5000;
     /** King press: at war a rat that sees the enemy king squeaks it (allies relay it PRESS_HOPS times); a rat with
      *  PRESS_HP health or more walks to a king sighting at most PRESS_AGE rounds old within PRESS_D2 (gatherers
      *  carrying less than DELIVER_AT: PRESS_GATHER_D2) and bites it, ahead of standoffs and facing. */

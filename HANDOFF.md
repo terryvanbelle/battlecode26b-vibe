@@ -52,8 +52,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   the active build; `tools/galaxy26/drain-loop.sh` (nohup on the driver, log `build/drain.log`, stop with
   `touch build/drain.stop`) runs `contest.py drain` every 5 min and sends only rows of the active build.
 - **Local screen (rejects only)**: paired self-play vs the incumbent, `research/screen/self1-maps.txt` (40 random maps)
-  x both sides, seed 0: `runs/sp1_NAME` on the VM (cells `build/sp1_NAME.tsv`), identity control `s2o_id` (s2o
-  renamed). Score: candidate's cell score minus 50, paired t; reject at t <= -1.5 (identity run gives the noise floor).
+  x both sides, seed 0: `runs/spN_NAME` on the VM (cells `build/spN_NAME.tsv`), scored by `gauntlet.py selfplay
+  RUN/results.jsonl --base s2o`: candidate's cell score minus 50, paired t; reject at t <= -1.5. The identity
+  control `s2o_id` came out exactly 0 (identical code replays the same game with sides swapped), so no control run.
 - Economy report: `tools/econ_report.py TSVDIR|REPLAY` (each cheese pile from spawn to pickup: per mine its side,
   cheese spawned, taken by each team, wait, left on the ground; per team own/enemy/middle/drops and cheese lost on its
   own side).
@@ -71,8 +72,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 
 ## State (see TRAINING_LOG.md for the history)
 - Incumbent on the replica: s2o (submission #62, rating ~1408, #24 of 54). Dev base: s3d line (s3a dig-first, s3b
-  king defense + mine spread, s3c centre-first explore, s3d king digs to its mine). Candidates s3e (+MINE_BALANCE),
-  s3f (+gossip, scouts), s3g (+KING_PRESS) in the self-play screen sp1; the b1 band screen was stopped at M4.
+  king defense + mine spread, s3c centre-first explore, s3d king digs to its mine) + the king's first-turn sense guard
+  (60x60 first turns overran). sp1: s3e (+MINE_BALANCE) and s3g (+KING_PRESS) rejected (-5.4, t -2.4), s3f (+gossip,
+  scouts) passed (+3.2, t +1.55). sp2 (running): s3h (gossip + scouts), s3i (dev control), s3j (gossip only).
 - Against examplefuncsplayer (all 74 maps, both sides): v0d won 134-14. Against the six strongest field bots we
   score ~26% of points and win ~5 of 72; Version41 out-collects us ~2-3x (it tunnels to the centre from round 3 and
   walks its king to the mines).

@@ -11,6 +11,9 @@
       the local screen of TRAINING_ALGORITHM.md 2.6: per shared cell (opponent, map, our side, seed), d = the
       candidate's cell score (tools/score.py) minus the base's (/100); t = sum d / sqrt(sum d^2), D = cells with d != 0; win/loss net
       and a one-sided sign test on per-cell wins; per-map mean d; the verdict (reject at t <= -1.5 or sign p < 0.05)
+  gauntlet.py selfplay CAND/results.jsonl [--base s2o] [--control CTRL/results.jsonl]
+      the same screen for a self-play run (our candidate vs the incumbent BASE): d = the candidate's cell score minus
+      the identity control's on the same cell (CTRL: an identical copy of BASE vs BASE), or minus 50 without one
 """
 import argparse, collections, json, math, os, sys
 
@@ -114,6 +117,24 @@ def cell_scores(paths):
     return {k: (p / n, w / n) for k, (p, w, n) in acc.items()}
 
 
+def selfplay_scores(paths, base):
+    """cell_scores for a self-play run: {(base spec, map, our side, seed): (score, win)} of the bot that is not BASE."""
+    acc = collections.defaultdict(lambda: [0.0, 0.0, 0])
+    for path in paths:
+        for l in open(path):
+            if not l.strip():
+                continue
+            r = json.loads(l)
+            if r.get('winner') is None or (r['a'] == base) == (r['b'] == base):
+                continue
+            side, opp = ('A', r.get('b_spec') or r['b']) if r['b'] == base else ('B', r.get('a_spec') or r['a'])
+            c = acc[(opp, r['map'], side, r.get('seed', 0))]
+            c[0] += score.cell(r)[0 if side == 'A' else 1] / 100.0
+            c[1] += 1.0 if r['winner'] == side else 0.0
+            c[2] += 1
+    return {k: (p / n, w / n) for k, (p, w, n) in acc.items()}
+
+
 def sign_p(worse, better):
     """One-sided sign test: P(at most `better` of worse + better fair coin flips favour the candidate)."""
     n = worse + better
@@ -148,9 +169,16 @@ def main():
     u = sub.add_parser('summary'); u.add_argument('results')
     q = sub.add_parser('paired'); q.add_argument('base'); q.add_argument('cand')
     q.add_argument('--base-also', nargs='*', default=[]); q.add_argument('--cand-also', nargs='*', default=[])
+    v = sub.add_parser('selfplay'); v.add_argument('cand'); v.add_argument('--base', default='s2o')
+    v.add_argument('--control', default=None)
     o = ap.parse_args()
-    if o.cmd == 'paired':
-        r = paired(cell_scores([o.base] + o.base_also), cell_scores([o.cand] + o.cand_also))
+    if o.cmd in ('paired', 'selfplay'):
+        if o.cmd == 'paired':
+            r = paired(cell_scores([o.base] + o.base_also), cell_scores([o.cand] + o.cand_also))
+        else:
+            cand = selfplay_scores([o.cand], o.base)
+            ctrl = selfplay_scores([o.control], o.base) if o.control else {k: (0.5, 0.5) for k in cand}
+            r = paired(ctrl, cand)
         print(f"{r['cells']} shared cells, D {r['D']}: mean d {100 * r['mean_d']:+.1f} pts, t {r['t']:+.2f}; "
               f"win/loss net {r['win_net']:+g} (+{r['better']} -{r['worse']} cells, sign p {r['sign_p']:.3f})")
         for m, d in sorted(r['maps'].items(), key=lambda kv: kv[1]):

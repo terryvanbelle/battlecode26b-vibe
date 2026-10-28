@@ -23,12 +23,16 @@ public final class King {
             start = G.me;
             if (G.round <= 1) initialSymmetry();
         }
+        Debug.mark(41);
         Comms.readKings();
         Econ.startTurn();
         Comms.readMines();
+        Debug.mark(42);
         sense();
+        Debug.mark(43);
         readSqueaks();
         publish();
+        Debug.mark(44);
 
         RobotInfo[] enemies = rc.senseNearbyRobots(-1, G.them);
         RobotInfo[] cats = rc.senseNearbyRobots(-1, Team.NEUTRAL);
@@ -36,8 +40,10 @@ public final class King {
         int before = rc.getGlobalCheese();
         pickUp();
         Econ.received(rc.getGlobalCheese() - before);
+        Debug.mark(45);
         // a fresh rat (100 HP, bites every turn) is worth far more than one king bite: spawn first
         spawn(cats, enemies);
+        Debug.mark(46);
         if (!G.coop) bite(enemies);
         if (!G.coop && enemies.length > 0) {
             int threat = 0;
@@ -49,7 +55,9 @@ public final class King {
         }
         if (Cfg.KING_TRAPS && !G.coop) ratTrap(enemies);
         if (Cfg.FORM_KING) formation();
+        Debug.mark(47);
         move(cats, enemies);
+        Debug.mark(48);
         publish();
         Comms.write(Comms.BUDGET, Math.max(0, Math.min(1023, Econ.surplus() / 4)));
         Econ.endTurn();
@@ -70,7 +78,11 @@ public final class King {
         MapLocation me = G.rc.getLocation(), anchor = homeMine != null ? homeMine : start;
         nearCheese = null;
         int bd = Integer.MAX_VALUE;
+        // the first turn sees every tile new and pays for Sym.init too (60x60: 13.7k + 3.6k of 20k), so it stops
+        // KING_SENSE_RESERVE short of the limit rather than overrun; the rest is recorded next turn
+        int floor = G.round <= 1 ? Cfg.KING_SENSE_RESERVE : 0;
         for (MapInfo mi : infos) {
+            if (floor > 0 && Clock.getBytecodesLeft() < floor) break;
             MapLocation l = mi.getMapLocation();
             boolean mine = mi.hasCheeseMine();
             Sym.record(l.x, l.y, mi.isWall(), mi.isDirt(), mine);
