@@ -33,6 +33,8 @@ public final class Cfg {
     /** The king walks onto the nearest home-half mine within dist2 KING_MINE_R2 of its start. */
     public static final boolean KING_MINE = true;
     public static final int KING_MINE_R2 = 400;
+    /** With no enemy or cat in view the king walks to cheese within Chebyshev KING_ROAM of its mine (0 = off). */
+    public static final int KING_ROAM = 4;
     /** A second king: the first king names a home-half mine as the site once it has FORM_BABIES babies and
      *  FORM_CHEESE global cheese after round FORM_FROM; babies within dist2 FORM_PULL_R2 gather in its 3x3. */
     public static final boolean FORM_KING = false;

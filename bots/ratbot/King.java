@@ -60,13 +60,22 @@ public final class King {
         if (G.mirX(x, Sym.ROT) == x && G.mirY(y, Sym.ROT) == y) Sym.eliminate(Sym.ROT);
     }
 
+    static MapLocation nearCheese;   // nearest cheese pile within the roam leash, this turn
+
     static void sense() throws GameActionException {
         MapInfo[] infos = G.rc.senseNearbyMapInfos();
+        MapLocation me = G.rc.getLocation(), anchor = homeMine != null ? homeMine : start;
+        nearCheese = null;
+        int bd = Integer.MAX_VALUE;
         for (MapInfo mi : infos) {
             MapLocation l = mi.getMapLocation();
             boolean mine = mi.hasCheeseMine();
             Sym.record(l.x, l.y, mi.isWall(), mi.isDirt(), mine);
             if (mine) Comms.addMine(l.x, l.y);
+            if (Cfg.KING_ROAM > 0 && anchor != null && mi.getCheeseAmount() > 0 && G.cheb(l, anchor) <= Cfg.KING_ROAM) {
+                int d = me.distanceSquaredTo(l);
+                if (d < bd) { bd = d; nearCheese = l; }
+            }
         }
     }
 
@@ -259,17 +268,25 @@ public final class King {
         if (!Cfg.KING_MINE) return;
         if (enemies.length > 0 || cats.length > 0) { mineWhy = enemies.length > 0 ? 'e' : 'c'; return; }
         if (homeMine == null) homeMine = pickHomeMine(start);
+        // a pile the king can reach is cheese no rat has to carry: walk until it is under our 3x3
+        if (nearCheese != null && G.cheb(c, nearCheese) > 1 && step(c, nearCheese)) { mineWhy = 'p'; pickUp(); return; }
         if (homeMine == null) { mineWhy = 'n'; return; }
         if (G.cheb(c, homeMine) <= 1) { mineWhy = 'a'; return; }
         mineWhy = 'm';
-        Direction to = c.directionTo(homeMine);
-        // babies crowd a king: sidestep up to 90 degrees off the line rather than wait
+        if (step(c, homeMine)) pickUp();
+    }
+
+    /** One king step toward t; babies crowd a king, so sidestep up to 90 degrees off the line, never farther. */
+    static boolean step(MapLocation c, MapLocation t) throws GameActionException {
+        RobotController rc = G.rc;
+        Direction to = c.directionTo(t);
         Direction[] cand = {to, to.rotateLeft(), to.rotateRight(), to.rotateLeft().rotateLeft(), to.rotateRight().rotateRight()};
         for (Direction d : cand) {
             if (!rc.canMove(d)) continue;
-            if (G.cheb(c.add(d), homeMine) > G.cheb(c, homeMine)) continue;
-            rc.move(d); G.me = rc.getLocation(); return;
+            if (G.cheb(c.add(d), t) > G.cheb(c, t)) continue;
+            rc.move(d); G.me = rc.getLocation(); return true;
         }
+        return false;
     }
 
     static MapLocation formSite;
