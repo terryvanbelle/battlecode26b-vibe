@@ -147,6 +147,8 @@ public final class King {
         // at war with enemies in sight, bodies now beat cheese later: spawn down to a short upkeep floor
         boolean war = !G.coop && enemies.length > 0 && rc.getGlobalCheese() >= cost + Cfg.WAR_FLOOR;
         if (!boot && !war && Econ.surplus() < cost + Cfg.SPAWN_MARGIN) return;
+        // never spend the king's upkeep: SPAWN_FLOOR cheese (or what the rest of the game needs) stays
+        if (rc.getGlobalCheese() < cost + Math.min(Cfg.SPAWN_FLOOR, 2 * (2000 - G.round))) return;
         if (babies >= (war ? Cfg.MAX_BABIES_WAR : Cfg.MAX_BABIES)) return;
         // Spawn toward the most useful direction: away from visible cats, else toward the map centre.
         MapLocation c = rc.getLocation();
@@ -190,7 +192,11 @@ public final class King {
             int d = c.distanceSquaredTo(e.location);
             if (d < fd) { fd = d; foe = e.location; }
         }
-        if (foe == null || fd > Cfg.KING_TRAP_DIST2) return;
+        if (foe == null || fd > Cfg.KING_TRAP_DIST2) {
+            // fortress: no one close yet, so pre-lay a few traps on the side facing the map centre
+            if (Cfg.FORT_TRAPS <= 0 || rc.getNumberRatTraps() >= Cfg.FORT_TRAPS) return;
+            foe = new MapLocation(G.W / 2, G.H / 2);
+        }
         MapLocation best = null;
         int bs = Integer.MAX_VALUE;
         for (int dx = -2; dx <= 2; dx++)

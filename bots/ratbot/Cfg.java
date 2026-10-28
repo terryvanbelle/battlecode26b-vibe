@@ -4,7 +4,9 @@ package ratbot;
 public final class Cfg {
     public static final int MAX_BABIES = 30, MAX_BABIES_WAR = 60;
     /** Cheese kept when spawning under attack. */
-    public static final int WAR_FLOOR = 150;
+    public static final int WAR_FLOOR = 600;
+    /** Hard floor under every spawn (king upkeep). */
+    public static final int SPAWN_FLOOR = 600;
     /** King places rat traps toward enemy rats within this squared distance once cooperation is over. */
     public static final boolean KING_TRAPS = true;
     public static final int KING_TRAP_DIST2 = 20;
@@ -22,6 +24,12 @@ public final class Cfg {
     public static final boolean POUNCE = true;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */
     public static final int RETREAT_HP = 40;
+    /** Fortress radius (Chebyshev, from the king) fighters hold at war; 0 = off. */
+    public static final int FORT_R = 4;
+    /** King rat traps laid in advance at war (no enemy in sight), kept to this many. */
+    public static final int FORT_TRAPS = 10;
+    /** Avoid tiles where an enemy rat could have laid a trap (TrapRisk). */
+    public static final boolean TRAP_RISK = true;
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;
@@ -40,7 +48,7 @@ public final class Cfg {
     public static final boolean DIG = true;
     public static final int DIG_MIN_CHEESE = 60;
     /** Live babies kept unconditionally (while CORE_FLOOR cheese remain) before the income test applies. */
-    public static final int CORE_BABIES = 18, CORE_FLOOR = 200;
+    public static final int CORE_BABIES = 18, CORE_FLOOR = 600;
     /** Projected end-of-game cheese a spawn must leave. */
     public static final int SPAWN_MARGIN = 100;
     /** Fraction (percent) of measured income trusted when projecting forward. */
@@ -50,5 +58,5 @@ public final class Cfg {
     /** Projected surplus (cheese) a baby needs before placing a cat trap / biting with cheese. */
     public static final int TRAP_SURPLUS = 200, CHEESE_BITE_SURPLUS = 600;
     /** Cheese below which no trap is placed; cats within this squared distance of a king are trapped on the floor alone. */
-    public static final int TRAP_FLOOR = 300, TRAP_DEFEND_DIST2 = 100;
+    public static final int TRAP_FLOOR = 600, TRAP_DEFEND_DIST2 = 100;
 }

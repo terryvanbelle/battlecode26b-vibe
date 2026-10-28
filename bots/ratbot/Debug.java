@@ -15,7 +15,7 @@ public final class Debug {
               .append(" br=").append(Baby.bitesRat)
               .append(" tr=").append(Baby.trapsPlaced)
               .append(" rt=").append(Baby.ratTraps).append(" nap=").append(Baby.naps).append(" th=").append(Baby.throwsDone)
-              .append(" dg=").append(Nav.digs);
+              .append(" dg=").append(Nav.digs).append(" mv=").append(Baby.why);
         }
         sb.append(" sym=").append(Sym.mask);
         if (Sym.contradictions > 0) sb.append(" SYMX=").append(Sym.contradictions);

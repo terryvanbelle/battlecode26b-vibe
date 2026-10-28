@@ -52,6 +52,10 @@ public final class Baby {
 
         if (role != ATTACK) pickUp();
         Nav.avoid = cat != null ? laneMask(cat) : 0;
+        if (!G.coop && Cfg.TRAP_RISK) {
+            TrapRisk.observe(robots);
+            if (Nav.stall < 8) Nav.avoid |= TrapRisk.mask(G.me);
+        }
 
         eKing = enemyKing;
         nearestEnemy = null;
@@ -428,7 +432,11 @@ public final class Baby {
 
     // ---------------------------------------------------------------- movement
 
+    /** Which branch took the last movement decision (debug tag mv=). */
+    static char why = '-';
+
     static void moveDecision() throws GameActionException {
+        why = '-';
         RobotController rc = G.rc;
         int raw = rc.getRawCheese();
         boolean late = G.round > 1960;
@@ -436,13 +444,15 @@ public final class Baby {
         // keep gatherers out of cat reach
         if (cat != null && role == GATHER && catDist4(cat.location, G.me) <= 4 * Cfg.GATHER_CAT_DIST) {
             MapLocation cc = new MapLocation(cat.location.x, cat.location.y);
-            if (Nav.flee(cc)) return;
+            if (Nav.flee(cc)) { why = 'c'; return; }
         }
-        if (!G.coop && retreat()) return;
-        if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) return;
-        if (!G.coop && Cfg.FACE_ENEMY && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) return;
-        if (role == ATTACK && attack()) return;
-        if (!G.coop && war()) return;
+        if (!G.coop && retreat()) { why = 'r'; return; }
+        if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) { why = 'm'; return; }
+        if (!G.coop && Cfg.FACE_ENEMY && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) { why = 'f'; return; }
+        if (role == ATTACK && attack()) { why = 'a'; return; }
+        if (!G.coop && war()) { why = 'w'; return; }
+        if (!G.coop && role == FIGHT && Cfg.FORT_R > 0 && fort()) { why = 'h'; return; }
+        why = 'g';
         if (cat != null && role == FIGHT) {
             if (approachCat(cat)) return;
         }
@@ -556,7 +566,7 @@ public final class Baby {
             Nav.goTo(eKing.location);
             return true;
         }
-        if (nearestEnemy != null) {
+        if (nearestEnemy != null && !(role == FIGHT && Cfg.FORT_R > 0 && !nearHome(nearestEnemy.location, Cfg.FORT_R + 3))) {
             int d = G.me.distanceSquaredTo(nearestEnemy.location);
             if (d <= 2) {
                 // stay and face it: biting happens before and after movement
@@ -597,6 +607,28 @@ public final class Baby {
         MapLocation k = Comms.nearestKing(G.me);
         if (k == null || G.cheb(G.me, k) <= 2) return false;
         Nav.goTo(k);
+        return true;
+    }
+
+    /** True when l is within Chebyshev r of our nearest king. */
+    static boolean nearHome(MapLocation l, int r) {
+        MapLocation k = Comms.nearestKing(l);
+        return k != null && G.cheb(k, l) <= r;
+    }
+
+    /**
+     * Fortress: at war, fighters hold a ring around the king (where its traps are) instead of meeting the enemy
+     * in the open; war() engages anything that comes within FORT_R + 3 of the king.
+     */
+    static boolean fort() throws GameActionException {
+        MapLocation k = Comms.nearestKing(G.me);
+        if (k == null) return false;
+        if (cat != null && nearHome(cat.location, Cfg.FORT_R + 5)) return false; // defend against a cat at home
+        if (G.cheb(G.me, k) > Cfg.FORT_R) { Nav.goTo(k); return true; }
+        // on station: face outward, toward the map centre
+        MapLocation mid = new MapLocation(G.W / 2, G.H / 2);
+        Direction f = k.directionTo(mid);
+        if (f != Direction.CENTER && G.rc.getDirection() != f && G.rc.canTurn(f)) { G.rc.turn(f); G.facing = f; }
         return true;
     }
 

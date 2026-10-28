@@ -372,7 +372,32 @@ public class BotTest {
         check(me.y < 5, "retreat: it moved toward its king (at " + me + ")");
     }
 
+    static void testFort() throws GameActionException {
+        reset(); install();
+        Baby.role = Baby.FIGHT; Baby.cat = null;
+        Comms.kings[0] = new MapLocation(5, 15); Comms.numKings = 1;
+        check(Baby.fort(), "fort: a fighter far from the king takes the decision");
+        check(me.y > 5, "fort: it heads back toward the king (at " + me + ")");
+        check(!Baby.nearHome(new MapLocation(5, 5), 4) && Baby.nearHome(new MapLocation(7, 12), 4), "fort: nearHome radius");
+    }
+
+    static void testTrapRisk() throws GameActionException {
+        reset(); install();
+        G.round = 100;
+        TrapRisk.mark = null; TrapRisk.last = null;
+        // an enemy at (5,9) facing south marks (4..6, 8); risky tiles reach one further, to row 7
+        RobotInfo e = new RobotInfo(60, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 9), Direction.SOUTH, 0, 0, null);
+        TrapRisk.observe(new RobotInfo[]{e});
+        check(TrapRisk.risky(new MapLocation(5, 7)), "traprisk: tile next to the enemy's front is risky");
+        check(!TrapRisk.risky(new MapLocation(5, 6)), "traprisk: two tiles off the front is safe");
+        check(TrapRisk.mask(me) == 0, "traprisk: our neighbours (row 4..6) are not risky");
+        G.round = 100 + TrapRisk.TTL + 1;
+        check(!TrapRisk.risky(new MapLocation(5, 7)), "traprisk: marks expire");
+    }
+
     public static void main(String[] args) throws Exception {
+        testTrapRisk();
+        testFort();
         testRetreat();
         testWarRoles();
         testMicroRetreatsWhenOutnumbered();
