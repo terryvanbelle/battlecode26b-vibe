@@ -61,29 +61,31 @@ def render(rt, field, fs, order, nrows, srcs):
     return '\n'.join(L) + '\n', ours
 
 
-def chart(rt, ours, field, path):
+def chart(rt, ngames, path):
+    """Every player, best at the top, rating with its 95% interval; our builds (us:*) in red, the field in blue."""
     try:
         import matplotlib
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt
     except ImportError:
         return False
-    fig, ax = plt.subplots(figsize=(12, 5))
-    xs = list(range(len(ours)))
-    ax.errorbar(xs, [rt[p].rating for p in ours], yerr=[1.96 * rt[p].se for p in ours], fmt='o-', color='#2a6fdb',
-                ecolor='#a5c3f0', capsize=2, label='our builds (+-95%)')
-    top = sorted(field, key=lambda p: -rt[p].rating)[:6]
-    for k, p in enumerate(top):
-        ax.axhline(rt[p].rating, color='#d9480f', alpha=0.25 + 0.1 * (k == 0), lw=1)
-        ax.text(len(ours) - 0.5, rt[p].rating, p, fontsize=7, color='#d9480f', va='bottom', ha='right')
-    ax.set_xticks(xs)
-    ax.set_xticklabels([p[3:] for p in ours], rotation=70, fontsize=7)
-    ax.set_ylabel('Bradley-Terry rating (Elo scale)')
-    ax.set_title('Our builds vs the field (lines: the six best field players)')
-    ax.grid(axis='y', color='#e9ecef')
-    ax.legend(loc='lower right', fontsize=8)
+    ps = sorted(rt, key=lambda p: -rt[p].rating)
+    n = len(ps)
+    fig, ax = plt.subplots(figsize=(9.6, max(4.0, 0.19 * n + 1.2)))
+    for i, p in enumerate(ps):
+        c = '#d62728' if p.startswith('us:') else '#1f77b4'
+        ax.errorbar(rt[p].rating, n - 1 - i, xerr=1.96 * rt[p].se, fmt='o', ms=4, color=c, ecolor=c, elinewidth=1)
+    ax.set_yticks(range(n))
+    ax.set_yticklabels(ps[::-1], fontsize=7)
+    for t in ax.get_yticklabels():
+        if t.get_text().startswith('us:'):
+            t.set_color('#d62728'); t.set_fontweight('bold')
+    ax.set_ylim(-1, n)
+    ax.grid(axis='x', color='#e0e0e0')
+    ax.set_xlabel('rating (Bradley-Terry, Elo scale), 95% interval relative to the mean rating')
+    ax.set_title(f'Ladder: {ngames} games; our builds in red')
     fig.tight_layout()
-    fig.savefig(path, dpi=110)
+    fig.savefig(path, dpi=100)
     plt.close(fig)
     return True
 
@@ -102,7 +104,7 @@ def main(argv=None):
     rt, field, fs = compute(rows)
     md, ours = render(rt, field, fs, build_order(a.attempts), len(rows), srcs)
     open(os.path.join(a.out, 'ELO.md'), 'w').write(md)
-    png = chart(rt, ours, field, os.path.join(a.out, 'elo.png'))
+    png = chart(rt, len(rows), os.path.join(a.out, 'elo.png'))
     if not a.quiet:
         best = max(ours, key=lambda p: rt[p].rating) if ours else None
         print(f'{len(rt)} players, {len(ours)} builds; best {best} {rt[best].rating:.0f}' if best else 'no builds')

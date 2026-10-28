@@ -30,3 +30,7 @@ I'd like you to structure  the progress/ directory like the one in battlecode23-
 ## 3. 2026-10-28 06:28 PDT
 
 Can you give me a summary of everything that's happened since I started you up last night?
+
+## 4. 2026-10-28 06:35 PDT
+
+elo.png doesn't look like battlecode23's elo.png
