@@ -3,3 +3,5 @@ version	date	metric	value
 v0b	2026-10-27 22:40	win.example	0.885
 v0c	2026-10-27 23:00	win.example	0.878
 v0d	2026-10-27 23:20	win.example	0.905
+v0e	2026-10-27 23:40	win.example	0.662
+v0f	2026-10-28 00:29	win.example	0.682

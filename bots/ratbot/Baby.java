@@ -62,6 +62,17 @@ public final class Baby {
                 int d = G.me.distanceSquaredTo(r.location);
                 if (d < bd) { bd = d; nearestEnemy = r; }
             }
+            // fighters close on a rat they can grab (lower health than ours: trapped or bitten) before anything else
+            if (Cfg.POUNCE && role != GATHER && rc.getCarrying() == null) {
+                RobotInfo prey = null;
+                int pd = Integer.MAX_VALUE, hp = rc.getHealth();
+                for (RobotInfo r : robots) {
+                    if (r.team != G.them || r.type != UnitType.BABY_RAT || r.health >= hp) continue;
+                    int d = G.me.distanceSquaredTo(r.location);
+                    if (d <= 20 && d < pd) { pd = d; prey = r; }
+                }
+                if (prey != null) nearestEnemy = prey;
+            }
         }
         // 0. a carried enemy is thrown as soon as we can act
         if (rc.getCarrying() != null) tryThrow(robots);
@@ -80,6 +91,7 @@ public final class Baby {
         // 3. movement
         if (rc.isMovementReady()) moveDecision();
         pickUp();
+        if (!G.coop && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
         if (!G.coop) biteEnemies(rc.senseNearbyRobots(2, G.them));
         else if (role == ATTACK) {
             RobotInfo[] near = rc.senseNearbyRobots(8, G.them);
@@ -433,7 +445,7 @@ public final class Baby {
             if (Nav.flee(cc)) return;
         }
         if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) return;
-        if (!G.coop && Cfg.FACE_ENEMY && faceEnemy()) return;
+        if (!G.coop && Cfg.FACE_ENEMY && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) return;
         if (role == ATTACK && attack()) return;
         if (!G.coop && war()) return;
         if (cat != null && role == FIGHT) {
@@ -538,6 +550,13 @@ public final class Baby {
     /** War movement: close on a visible enemy king or nearby enemy rat, or answer a king's alert. */
     static boolean war() throws GameActionException {
         int raw = G.rc.getRawCheese();
+        if (role == GATHER && Cfg.WAR_GATHER > 0) {
+            // gatherers keep the economy going: only an adjacent enemy stops them
+            if (!nearEnemy(2)) return false;
+            Direction f = G.me.directionTo(nearestEnemy.location);
+            if (G.rc.getDirection() != f && G.rc.canTurn(f)) { G.rc.turn(f); G.facing = f; }
+            return true;
+        }
         if (eKing != null && (role == FIGHT || raw < Cfg.DELIVER_AT)) {
             Nav.goTo(eKing.location);
             return true;
@@ -563,6 +582,10 @@ public final class Baby {
             }
         }
         return false;
+    }
+
+    static boolean nearEnemy(int d2) {
+        return nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= d2;
     }
 
     /** True when the nearest tile of a 3x3 king centred at k is within transfer range (dist2 9) of p. */

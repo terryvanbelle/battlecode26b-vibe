@@ -25,3 +25,13 @@
   Our babies never moved toward an enemy. Combat is the missing basic.
 - s0g war mode: babies bite the best adjacent enemy (king first, then lowest HP; turn to face), close on visible
   enemies once cooperation ends, answer a king's alert slot; the king spawns freely toward enemies under attack.
+
+## F2 (2026-10-28 00:48 PDT): why we lose to the top field
+- s0m (core 12, trap floor 500) 0/28 vs the top six; s0n (+rush) 1/29; s0o (+Micro) 0/54.
+- Diagnostic s0m vs Version41 (DefaultSmall): kills are about even (35 vs 37) and our rat traps hit 66 times,
+  but Version41 delivered 1840 cheese to our 145 (102 pickups vs 20). Cheese spawns mostly in the middle, which they
+  hold. They also ratnap about 3x more (67 vs 23 in the s0r game) and bite twice as often; our carriers get grabbed
+  in the 2-3 rounds before they can throw.
+- s0p/s0q: gatherers ignore non-adjacent enemies in war (WAR_GATHER 1/2). s0r: s0p + POUNCE (fighters target an enemy
+  rat weaker than themselves, which they can ratnap) + a carry attempt after moving. One diagnostic game each: pickups
+  did not rise (20), so holding the middle is the real problem.

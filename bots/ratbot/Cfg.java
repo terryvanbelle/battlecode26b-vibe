@@ -16,6 +16,10 @@ public final class Cfg {
     /** Keep enemies within two tiles inside our cone (anti-ratnap) instead of moving. */
     public static final boolean FACE_ENEMY = true;
     /** Scored combat movement (Micro) for babies at war. */
+    /** War role split: 0 everyone fights, 1 gatherers ignore non-adjacent enemies, 2 and never freeze to face. */
+    public static final int WAR_GATHER = 1;
+    /** Fighters target the nearest enemy rat with less health than theirs (it can be ratnapped). */
+    public static final boolean POUNCE = true;
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;
