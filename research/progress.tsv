@@ -1,0 +1,5 @@
+version	date	metric	value
+# win.example = wins/games vs examplefuncsplayer, all 74 maps both sides (v0b-v0d times approximate)
+v0b	2026-10-27 22:40	win.example	0.885
+v0c	2026-10-27 23:00	win.example	0.878
+v0d	2026-10-27 23:20	win.example	0.905

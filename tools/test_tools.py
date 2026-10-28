@@ -49,5 +49,15 @@ with tempfile.TemporaryDirectory() as d:
     open(res, 'w').write('\n'.join(json.dumps(r) for r in rows) + '\n')
     t = g.table(res, path=f)
     check(t == [('opp1', 1, 2, 55.0), ('opp2', 1, 1, 80.0)], f"gauntlet table {t}")
+# plot_progress: one svg per metric group, index lists them
+pp = load('plot_progress')
+with tempfile.TemporaryDirectory() as d:
+    t = os.path.join(d, 'p.tsv')
+    open(t, 'w').write('version\tdate\tmetric\tvalue\nv1\tx\twin.a\t0.5\nv2\tx\twin.a\t0.7\nv2\tx\twin.b\t0.2\nv2\tx\tpts.f\t40\n')
+    vs, ss = pp.load(t)
+    check(vs == ['v1', 'v2'] and ss['win.a'] == {'v1': 0.5, 'v2': 0.7}, f"plot load {vs} {dict(ss)}")
+    subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'plot_progress.py'), '--tsv', t, '--out', d], capture_output=True)
+    check(os.path.exists(os.path.join(d, 'win.svg')) and os.path.exists(os.path.join(d, 'pts.svg')), "plot svgs written")
+    check('polyline' in open(os.path.join(d, 'win.svg')).read(), "plot has a line")
 print(f"test_tools: {checks - fails}/{checks} passed")
 sys.exit(1 if fails else 0)
