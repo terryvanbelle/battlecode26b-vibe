@@ -55,9 +55,10 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   x both sides, seed 0: `runs/spN_NAME` on the VM (cells `build/spN_NAME.tsv`), scored by `gauntlet.py selfplay
   RUN/results.jsonl --base s2o`: candidate's cell score minus 50, paired t; reject at t <= -1.5. The identity
   control `s2o_id` came out exactly 0 (identical code replays the same game with sides swapped), so no control run.
-- Economy report: `tools/econ_report.py TSVDIR|REPLAY` (each cheese pile from spawn to pickup: per mine its side,
-  cheese spawned, taken by each team, wait, left on the ground; per team own/enemy/middle/drops and cheese lost on its
-  own side).
+- Economy report: `tools/econ_report.py TSVDIR|REPLAY [--hi R]` (each cheese pile from spawn to pickup: per mine its
+  side, cheese spawned, taken by each team, wait, rat-rounds within 4, left on the ground; per team own/enemy/middle/
+  drops and cheese lost on its own side). `--team vibe26b --hi 200 R1.bc26 R2.bc26 ...` sums every game by mine side
+  (own / enemy / middle) for field-wide comparisons on replica replays.
 - **Ladder panel (accepts)**: replica, `tools/galaxy26/contest.py`. Panel v2 = 8 field bots s2o beat 25-75% in
   calibration (`tools/panel_pick.py s2o` on games.csv; plus C0derTang_v6 5/6 and bestsofar 1/6 at the edges), 3 maps
   each, both sides: set 1 `research/panel/v2-set1.json` (s2o's reference matches `v2-set1-ref-s2o.txt`, from the
@@ -71,12 +72,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (see TRAINING_LOG.md for the history)
-- Incumbent on the replica: s2o (submission #62, #24 of 54). Dev base = s3h: the s3d line (s3a dig-first, s3b king
-  defense + mine spread, s3c centre-first explore, s3d king digs to its mine) + first-turn sense guard + GOSSIP_ALWAYS +
-  SCOUT_EVERY 4. Self-play vs s2o: s3i (s3d line alone) -4.0, t -2.04 (reject); s3h +0.9; gossip+scouts are worth
-  +5 to +9, the rest of the s3d line costs ~4 vs s2o. Queue on the VM: sp3 s3k/s3l/s3m (economy switches on s3i),
-  sp4 s3n (cat dodge + yield, on s3i), sp5 ablations of s3h (s3o no FLOW/DIG_FIRST, s3p no KING_ROAM/KING_DIG, s3q
-  no DEFEND/MINE_SPREAD/explore-centre). Off-by-default switches in dev: KING_DODGE + YIELD_KING, HUNGRY, CARRY_MAX.
+- Incumbent on the replica: s2o (submission #62, #24 of 54). s3h (#63) submitted; its panel v2 block is going out
+  under the hourly limit. Dev = s3h behaviour (s3d line + first-turn sense guard + GOSSIP_ALWAYS + SCOUT_EVERY 4) plus
+  off-by-default switches: KING_DODGE + YIELD_KING, HUNGRY, CARRY_MAX, BITE_GUARD, BITE_CARRIER, MINE_BALANCE.
+- Field diagnosis (12:00 log entry): combat with the top 10 is even. The loss is collection. Our gatherers crowd the
+  first-known home mine (a rat picks its mine once, at birth) and half of our home-mine cheese is never collected.
+  s3t = s3h + MINE_BALANCE fixes this locally (keepout, by r200: picked up 2607 vs s3h 1520 vs s2o 580). Next
+  candidate for the replica if its screen passes.
+- VM queue (serial, ~1 h each): sp6 s3s (grab-war bundle) -> sp7 s3t -> sp4 s3n (cat dodge + yield) -> sp6 s3r
+  (BITE_GUARD) -> sp3 s3m (trap economy) -> sp5 s3o/s3p/s3q (ablations of s3h).
 - Against examplefuncsplayer (all 74 maps, both sides): v0d won 134-14. Against the six strongest field bots we
   score ~26% of points and win ~5 of 72; Version41 out-collects us ~2-3x (it tunnels to the centre from round 3 and
   walks its king to the mines).
