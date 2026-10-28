@@ -247,3 +247,26 @@
   finding "most of their grabs take our rat from behind" was wrong. Recomputed on the same five games: grabs on us
   are mostly from the front of a rat that is weaker than the grabber (cf5: front 45, behind 30; ex1: front 40,
   behind 19). Low HP, not facing, is what exposes a rat to a grab. Guard facing (s1h/s1i) rested on the wrong reading.
+
+## 2026-10-28 11:35 PDT: starvation is usually a lost army; the grab war
+- Self-play: s3i (the s3d line + sense guard) -4.0, t -2.04 vs s2o: reject. s3h (+ gossip + scouts) +0.9, so
+  gossip + scouts is worth ~+5 (sp1: ~+8.6) and dev adopts it. s3k (HUNGRY 150) vs its base s3i: +0.2, t +0.33,
+  22 of 80 cells changed. That is neutral; the bank rarely runs dry against s2o.
+- From now on a switch candidate is scored against its own base, not s2o (`gauntlet.py selfplay CAND --control
+  BASE/results.jsonl`).
+- 57 replica starvation deaths (all builds): at the round our bank ran dry we had a median of **2 babies to their
+  13**, and 14 a hundred rounds earlier. In 35 of 57 the army had been wiped (3 or fewer babies); only 17 had 10 or
+  more (fullofsecrets, diamond, seepastyourgreed: delivery). Median cheese delivered by then: ours 465, theirs 905.
+  Starvation is mostly what follows losing the fight. Combat is the root cause; spending is secondary.
+- Knifefight vs bestsofar (match 610, our king killed r38): bestsofar backstabbed with a bite on our king at r2.
+  - It grabbed 66 of our rats and threw 41, most of them into our king (its HP fell in steps of 42 and 84).
+  - We grabbed 20 and threw 2; 15 of our 20 carriers died still holding (THROW_HOLD waits up to 6 rounds for a
+    point-blank target).
+  - Our 44 rat traps hit 36 times (1250 HP of theirs) and we had more rats (26 vs 15 at r37), yet we bit 11 times to
+    their 44. Throws were 1694 of our 2624 HP lost.
+  - Engine rule (assertCanCarryRat): a rat can be grabbed by any enemy outside its 90-degree, dist2 20 cone, or by a
+    strictly healthier one (HEALTH_GRAB_THRESHOLD 0).
+- New switches: BITE_GUARD (bite first an adjacent enemy healthier than us by at most one bite, which could grab us)
+  and BITE_CARRIER (bite first an enemy carrying one of ours). Snapshots s3r (BITE_GUARD) and s3s (BITE_GUARD +
+  BITE_CARRIER + THROW_HOLD 0) are queued as sp6. s3h submitted to the replica (#63); its panel v2 block (sets 1+2)
+  is queued behind s2o's set-2 control.
