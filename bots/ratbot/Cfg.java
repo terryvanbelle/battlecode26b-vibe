@@ -37,6 +37,9 @@ public final class Cfg {
     /** Guard facing: with an enemy rat within this squared distance, steps strafe so we keep facing it, and a
      *  turn ends facing it (rats are grabbed from behind). 0 = off. */
     public static final int GUARD_DIST2 = 13;
+    /** Bite cheese: a king in combat bites with up to KING_BITE_MAX cheese (c = k*k gives +k damage) above
+     *  KING_BITE_FLOOR; a baby adds up to FINISH_K*FINISH_K cheese when that makes the bite a kill. 0 = off. */
+    public static final int KING_BITE_MAX = 225, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;

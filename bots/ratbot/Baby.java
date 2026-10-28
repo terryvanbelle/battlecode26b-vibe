@@ -339,8 +339,20 @@ public final class Baby {
             if (rc.getDirection() != d && rc.canTurn(d)) rc.turn(d);
             G.facing = rc.getDirection();
         }
-        if (rc.canAttack(t)) { rc.attack(t); bitesRat++; return true; }
+        if (rc.canAttack(t)) {
+            int c = r.type == UnitType.BABY_RAT ? finishCheese(r.health, rc.getGlobalCheese()) : 0;
+            if (c > 0 && rc.canAttack(t, c)) rc.attack(t, c); else rc.attack(t);
+            bitesRat++;
+            return true;
+        }
         return false;
+    }
+
+    /** Cheese that turns a bite on a target with hp into a kill (k*k for +k, k <= FINISH_K), else 0. */
+    static int finishCheese(int hp, int global) {
+        if (hp <= 10 || global < Cfg.FINISH_FLOOR) return 0;
+        int k = hp - 10;
+        return k <= Cfg.FINISH_K ? k * k : 0;
     }
 
     static boolean tryBite(RobotInfo r) throws GameActionException {

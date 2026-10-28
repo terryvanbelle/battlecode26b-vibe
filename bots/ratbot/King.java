@@ -132,7 +132,20 @@ public final class King {
             if (!G.rc.canAttack(e.location)) continue;
             if (best == null || e.health < best.health) best = e;
         }
-        if (best != null) G.rc.attack(best.location);
+        if (best == null) return;
+        int c = biteCheese(best.health, G.rc.getGlobalCheese());
+        if (c > 0 && G.rc.canAttack(best.location, c)) G.rc.attack(best.location, c);
+        else G.rc.attack(best.location);
+    }
+
+    /** Cheese for a king bite on a target with hp: the least that kills now, else the most the budget allows. */
+    static int biteCheese(int hp, int global) {
+        int budget = Math.min(Cfg.KING_BITE_MAX, global - Cfg.KING_BITE_FLOOR);
+        if (budget <= 0) return 0;
+        int kmax = (int) Math.sqrt(budget);
+        if (kmax * kmax > budget) kmax--;
+        for (int k = 0; k <= kmax; k++) if (10 + k >= hp) return k * k;
+        return kmax * kmax;
     }
 
     static void spawn(RobotInfo[] cats, RobotInfo[] enemies) throws GameActionException {

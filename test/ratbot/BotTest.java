@@ -382,6 +382,15 @@ public class BotTest {
         check(!Baby.nearHome(new MapLocation(5, 5), 4) && Baby.nearHome(new MapLocation(7, 12), 4), "fort: nearHome radius");
     }
 
+    static void testBiteCheese() {
+        check(Baby.finishCheese(10, 1000) == 0 && Baby.finishCheese(13, 1000) == 9 && Baby.finishCheese(16, 1000) == 0,
+              "bite cheese: a baby pays k*k only when it makes the kill");
+        check(Baby.finishCheese(13, 100) == 0, "bite cheese: none below the floor");
+        check(King.biteCheese(18, 1000) == 64, "bite cheese: the king pays the least that kills");
+        check(King.biteCheese(100, 1000) == 225 && King.biteCheese(100, 400) == 100 && King.biteCheese(100, 250) == 0,
+              "bite cheese: else the most the budget allows");
+    }
+
     static void testGuard() throws GameActionException {
         reset(); install();
         Nav.avoid = 0;
@@ -418,6 +427,7 @@ public class BotTest {
     public static void main(String[] args) throws Exception {
         testTrapRisk();
         testGuard();
+        testBiteCheese();
         testFort();
         testRetreat();
         testWarRoles();
