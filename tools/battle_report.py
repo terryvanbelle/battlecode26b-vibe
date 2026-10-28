@@ -11,7 +11,7 @@ Sections (team 1 = A, team 2 = B; rounds lo..hi):
   throws   damage the thrown rat took (42 = point-blank on the throw turn, 10 = landed on nothing)
   xfer     cheese transferred and rat pickups per step rounds
 """
-import argparse, collections, json, os, sys
+import argparse, collections, json, os, shutil, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import game_report  # noqa: E402
@@ -24,6 +24,8 @@ def load(path, game=0):
     d = path if os.path.isdir(path) else game_report.dump(path)
     turns = list(game_report.rows(os.path.join(d, f'g{game}.turns.tsv')))
     acts = list(game_report.rows(os.path.join(d, f'g{game}.actions.tsv')))
+    if d != path:
+        shutil.rmtree(d, ignore_errors=True)
     return turns, acts
 
 

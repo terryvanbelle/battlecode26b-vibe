@@ -212,6 +212,8 @@ def main(argv=None):
     if a.team is None:
         d = game_report.dump(a.src[0]) if a.src[0].endswith('.bc26') else a.src[0]
         o = analyse(d, a.game, a.hi)
+        if a.src[0].endswith('.bc26'):
+            shutil.rmtree(d, ignore_errors=True)
         print(json.dumps(o) if a.json else render(o))
         return
     outs = []

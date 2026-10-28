@@ -8,7 +8,7 @@ king eats 2 a round or loses 10 HP) and HP lost otherwise, bites and damage acti
 cheese first ran out, the first round an enemy rat came within dist2 20 of it, and per 25-round step until its death
 the enemy and friendly rats within dist2 20 of it and its HP. --team keeps only that team's kings (by name).
 """
-import argparse, collections, json, os, sys
+import argparse, collections, json, os, shutil, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import game_report  # noqa: E402
@@ -107,6 +107,8 @@ def main(argv=None):
     while os.path.exists(os.path.join(d, f'g{g}.meta.json')):
         rows += [o for o in analyse(d, g) if a.team is None or o['team'] == a.team]
         g += 1
+    if d != a.src:
+        shutil.rmtree(d, ignore_errors=True)
     print(json.dumps(rows) if a.json else render(rows))
 
 

@@ -7,7 +7,7 @@ Per team: global cheese curve (decoded from the round aggregate kings+10*cheese)
 king HP floor, rat-turn stall statistics (same tile for N+ own turns while not within dist2 18 of an own king),
 deaths, exceptions/overruns from the bot's own indicator tags, delivery and cat damage totals.
 """
-import argparse, collections, json, os, re, subprocess, sys, tempfile
+import argparse, atexit, collections, json, os, re, shutil, subprocess, sys, tempfile
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JDK = os.environ.get('BC_JDK', os.path.expanduser('~/opt/jdk21'))
@@ -150,6 +150,8 @@ def main():
     ap.add_argument('src'); ap.add_argument('--json', action='store_true'); ap.add_argument('--timeline', type=int, default=0)
     o = ap.parse_args()
     d = dump(o.src) if o.src.endswith('.bc26') else o.src
+    if d != o.src:
+        atexit.register(shutil.rmtree, d, True)
     if o.timeline:
         print('round  ratsA ratsB  kingHpA kingHpB  cheeseA cheeseB')
         for t in timeline(d, o.timeline):

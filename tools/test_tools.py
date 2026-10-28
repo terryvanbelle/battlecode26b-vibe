@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Tests for the python tools (synthetic inputs). Exit 1 on failure."""
-import importlib.util, json, math, os, subprocess, sys, tempfile
+import importlib.util, json, math, os, shutil, subprocess, sys, tempfile
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 fails = checks = 0
 
@@ -367,6 +367,7 @@ if os.path.exists(fx) and os.path.isdir(os.path.join(REPO, 'build', 'tools', 'bc
     check(rep['grabs']['2']['n'] > rep['grabs']['1']['n'] > 0 and sum(rep['grabs']['2']['fate'].values()) == rep['grabs']['2']['n'],
           f"battle_report grabs {rep['grabs']}")
     check(all(v > 0 for tm in '12' for v in rep['hploss'][tm].values()) and 42 in rep['throws']['2'], "battle_report hploss/throws")
+    shutil.rmtree(d, ignore_errors=True)
 # snapshot.sh refuses a source without java files and leaves nothing behind
 # econ_report: piles followed from spawn to pickup, mine sides, a drop, a pile never taken
 er = load('econ_report')
