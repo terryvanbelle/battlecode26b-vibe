@@ -40,7 +40,10 @@ public final class King {
         spawn(cats, enemies);
         if (!G.coop) bite(enemies);
         if (!G.coop && enemies.length > 0) {
-            Comms.write(Comms.ALERT, G.me.x + 1);
+            int threat = 0;
+            for (RobotInfo e : enemies)
+                if (e.type != UnitType.RAT_KING && e.location.distanceSquaredTo(G.me) <= Cfg.KING_THREAT_D2) threat++;
+            Comms.write(Comms.ALERT, (G.me.x + 1) | (Math.min(15, threat) << 6));
             Comms.write(Comms.ALERT + 1, G.me.y + 1);
             Comms.write(Comms.ALERT + 2, Comms.stamp());
         }

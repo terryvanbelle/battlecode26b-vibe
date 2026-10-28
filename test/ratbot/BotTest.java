@@ -643,6 +643,40 @@ public class BotTest {
         check(!Baby.formKing(), "form: no site, no formation");
     }
 
+    static void testMineSpread() {
+        reset(); W = 30; H = 30; install();
+        Sym.mask = Sym.HOR; Baby.home = new MapLocation(1, 5); Baby.fu = -1; Baby.fv = -1;
+        Comms.numMines = 0; Baby.myMineCount = 0;
+        int[][] ms = {{6, 8}, {11, 2}, {14, 9}, {20, 2}, {6, 21}, {11, 27}, {14, 20}, {20, 27}, {26, 12}};
+        for (int[] m : ms) Comms.mines[Comms.numMines++] = new MapLocation(m[0], m[1]);
+        java.util.Set<MapLocation> got = new java.util.HashSet<>();
+        G.seed(12345);
+        for (int i = 0; i < 200; i++) got.add(Baby.pickMine());
+        java.util.Set<MapLocation> want = new java.util.HashSet<>(java.util.Arrays.asList(new MapLocation(6, 8),
+            new MapLocation(11, 2), new MapLocation(14, 9), new MapLocation(20, 2)));
+        check(got.equals(want), "mine spread: the 4 nearest home-half mines, never the enemy half " + got);
+        Comms.numMines = 0;
+        Comms.mines[Comms.numMines++] = new MapLocation(6, 21);
+        check(new MapLocation(6, 21).equals(Baby.pickMine()), "mine spread: only enemy-half mines known -> take one");
+        Comms.numMines = 0;
+        check(Baby.pickMine() == null, "mine spread: no mine known");
+    }
+
+    static void testDefend() throws GameActionException {
+        reset(); W = 30; H = 30; install();
+        G.round = 200; G.coop = false; G.me = me;
+        // a king at (59, 3) with 5 enemy rats close: x and the threat share one 10-bit value
+        shared[Comms.ALERT] = (59 + 1) | (5 << 6); shared[Comms.ALERT + 1] = 3 + 1; shared[Comms.ALERT + 2] = Comms.stamp();
+        check(shared[Comms.ALERT] <= 1023 && new MapLocation(59, 3).equals(Comms.alertLoc()) && Comms.alertThreat() == 5,
+              "defend: alert location and threat packed");
+        shared[Comms.ALERT] = (me.x + 3 + 1) | (2 << 6); shared[Comms.ALERT + 1] = me.y + 1;
+        check(me.translate(3, 0).equals(Baby.threatenedKing()), "defend: a threatened king nearby is defended");
+        shared[Comms.ALERT] = me.x + 3 + 1;
+        check(Baby.threatenedKing() == null, "defend: enemies seen but none close to the king: keep gathering");
+        shared[Comms.ALERT] = (me.x + 3 + 1) | (2 << 6); G.round = 203;
+        check(Baby.threatenedKing() == null, "defend: a stale alert is ignored");
+    }
+
     static void testGuard() throws GameActionException {
         reset(); install();
         Nav.avoid = 0;
@@ -698,6 +732,8 @@ public class BotTest {
 
     public static void main(String[] args) throws Exception {
         testTrapRisk();
+        testMineSpread();
+        testDefend();
         testGuard();
         testBiteCheese();
         testFlank();

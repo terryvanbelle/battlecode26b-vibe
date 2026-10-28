@@ -172,7 +172,7 @@ public final class Flow {
             }
             if (found < 0) { drop(); request(t); return false; }
             if (path[found] == me) { ppos = found; nxi = found + 1; }
-            else { ppos = found - 1; nxi = found; }
+            else { ppos = Math.max(0, found - 1); nxi = found; }   // found 0: beside the start tile (ppos -1 threw every turn)
         }
         if (nxi >= plen) { drop(); return false; }
         int nx = path[nxi];

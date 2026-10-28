@@ -10,7 +10,8 @@ public final class Comms {
     public static final int SYM = 1;
     public static final int FORM_X = 0, FORM_Y = 23, FORM_T = 63;  // king formation site x+1, y+1, heartbeat
     public static final int KING0 = 2, KING_SLOTS = 5;           // 3 ints each: x+1, y+1, heartbeat round%1024
-    public static final int ALERT = 17;                          // x+1, y+1, round%1024: a king sees enemies in war
+    public static final int ALERT = 17;    // (x+1) | threat<<6, y+1, round%1024: a king sees enemies in war; threat =
+                                           // enemy rats within Cfg.KING_THREAT_D2 of it (at most 15)
     public static final int EKING = 20;                          // x+1, y+1, round%1024 last seen
     public static final int MINE0 = 24, MINE_SLOTS = 16;         // 2 ints each
     public static final int CAT0 = 56, CAT_SLOTS = 2;            // 3 ints each: x+1, y+1, round%1024
@@ -98,6 +99,15 @@ public final class Comms {
         write(MINE0 + 2 * numMines + 1, y + 1);
         mines[numMines++] = new MapLocation(x, y);
     }
+
+    /** The alerting king's location (ALERT's x carries the threat count in its upper bits), or null. */
+    public static MapLocation alertLoc() {
+        int v = read(ALERT);
+        if (v == 0) return null;
+        return new MapLocation((v & 63) - 1, read(ALERT + 1) - 1);
+    }
+
+    public static int alertThreat() { return read(ALERT) >> 6; }
 
     public static MapLocation readLoc(int i) {
         int x = read(i);

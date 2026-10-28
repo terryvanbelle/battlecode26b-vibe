@@ -1,0 +1,6 @@
+name=s3a
+source=bots/ratbot
+source_sha=404dde5ff6c0
+commit=9367852
+created=2026-10-28 07:31 PDT
+reason=s2z + overrun fix + dig-first (digToward before flow): cheesefarm 3 -> 23 pts in one diag game vs Version41

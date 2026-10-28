@@ -147,3 +147,20 @@
   looped on an unset VM address (no ensure_vm) and never printed; re-armed waiters now call ensure_vm first.
 - Next: the shared-tunnel economy for dirt-sealed maps (the king plans one dig path to the nearest mine and broadcasts
   it), then cheesefarm (10.0, our worst base map).
+
+## 2026-10-28 07:55 PDT: s3a gauntlet, progress chart, dev work
+- s3a (s2z + bytecode overrun fix + DIG_FIRST: a blocked rat digs toward its target before the Flow search) vs the
+  top 6, 72 games: base 3 maps 24.6 pts (s2z 23.2), new 3 maps 27.6 (s2z 30.0), kd 1.01, 2 wins. Per map:
+  UncomfortablyClose 41.8, DefaultMedium 31.4, DefaultSmall 29.2, Stash 21.8, Excavation 19.1, cheesefarm 13.2
+  (s2z 10.0). Worst-12 vs Version41: 10.6 (s2z 8.0; trapped 22.5, Nofreecheese 26.5). Inconclusive overall but
+  cheesefarm and the worst-12 both moved up; DIG_FIRST stays in dev.
+- progress.png redone in bc23's layout (owner prompt #7) on a map-aware Bradley-Terry ladder: local games count their
+  points share and our-vs-field games carry a per-map handicap, so builds gauntleted on different maps compare. It is
+  flat: v0d/s0e 1610, s2o 1591, s2s/s2t/s2z/s3a 1565-1575, all inside each other's 95% intervals. Hardest maps for
+  us (ELO.md): clockwisdom -304, the replica rotation -183, Stash -164, closeup -102, cheesefarm -97, Excavation -84.
+- Dev since s3a (diagnostics on cheesefarm vs Version41): king defense (the king broadcasts how many enemy rats are
+  within d2 18; gatherers within d2 100 of a threatened king fight instead of gathering; cf3 king lived to r298 vs
+  r138), mine spread (gatherers pick one of the 4 nearest home-half mines at random instead of all taking the
+  nearest), Flow.follow fix (a path starting beside us threw ArrayIndexOutOfBounds every turn: 56 turns of one rat
+  in one game), exception tags in the debug line (EXC=count:type@stage). Version41 still picks up ~2x our cheese on
+  our own half of cheesefarm.

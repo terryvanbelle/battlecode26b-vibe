@@ -37,11 +37,23 @@ public final class Debug {
         sb.append(" sym=").append(Sym.mask);
         if (Sym.contradictions > 0) sb.append(" SYMX=").append(Sym.contradictions);
         if (!G.king && Baby.lowBc > 0) sb.append(" lb=").append(Baby.lowBc);
+        if (!G.king && Baby.defends > 0) sb.append(" df=").append(Baby.defends);
         if (RobotPlayer.overruns > 0) sb.append(" OVR=").append(RobotPlayer.overruns).append(" OVS=").append(ovStage);
         if (RobotPlayer.nearMiss > 0) sb.append(" NEAR=").append(RobotPlayer.nearMiss);
-        if (RobotPlayer.exceptions > 0) sb.append(" EXC=").append(RobotPlayer.exceptions);
+        if (RobotPlayer.exceptions > 0) sb.append(" EXC=").append(RobotPlayer.exceptions).append(':').append(lastExc);
         sb.append(" hot=").append(hotStage).append(':').append(hotBc);
         sb.append(" mbc=").append(RobotPlayer.maxBc);
         G.rc.setIndicatorString(sb.toString());
+    }
+
+    static String lastExc = "";
+
+    /** Remember the latest exception as type@stage (the last mark() reached; the engine sandbox forbids stack
+     *  traces): A array index, N null, Z arithmetic, G game action, C cast, X other. Shown after EXC=. */
+    static void exception(Exception e) {
+        char t = e instanceof ArrayIndexOutOfBoundsException ? 'A' : e instanceof NullPointerException ? 'N'
+            : e instanceof ArithmeticException ? 'Z' : e instanceof battlecode.common.GameActionException ? 'G'
+            : e instanceof ClassCastException ? 'C' : 'X';
+        lastExc = t + "@" + stage;
     }
 }

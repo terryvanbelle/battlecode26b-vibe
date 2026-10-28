@@ -79,6 +79,12 @@ public final class Cfg {
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;
+    /** King defense: enemy rats within KING_THREAT_D2 of a king's centre raise its alert's threat count; gatherers
+     *  within DEFEND_D2 of it then fight (war movement, no standoff against the king's attackers). */
+    public static final boolean DEFEND = true;
+    public static final int KING_THREAT_D2 = 18, DEFEND_D2 = 100;
+    /** Gatherers pick uniformly among the MINE_SPREAD nearest known mines on our half (1 = always the nearest). */
+    public static final int MINE_SPREAD = 4;
     /** Raw cheese at which a gatherer heads home. */
     public static final int DELIVER_AT = 30;
     /** Babies spawned before any fighter is assigned. */
@@ -92,6 +98,8 @@ public final class Cfg {
     /** Squared distance (to the cat's 2x2 centre, doubled coords /4) a gatherer keeps from cats. */
     public static final int GATHER_CAT_DIST = 20;
     public static final boolean DIG = true;
+    /** digToward before flow: one-tile dirt bands (cheesefarm's diagonal stripes) are dug through at once. */
+    public static final boolean DIG_FIRST = true;
     /** Dig-aware flow-field navigation, requested after FLOW_STALL turns without progress. */
     public static final boolean FLOW = true;
     public static final int FLOW_STALL = 4, FLOW_TTL = 200, FLOW_RESERVE = 2500, FLOW_HOLD = 3, FLOW_REJOIN = 40, FLOW_MAX_TURNS = 12, FLOW_RETRY = 30;

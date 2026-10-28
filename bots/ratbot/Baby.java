@@ -722,7 +722,9 @@ public final class Baby {
     /** War movement: close on a visible enemy king or nearby enemy rat, or answer a king's alert. */
     static boolean war() throws GameActionException {
         int raw = G.rc.getRawCheese();
-        if (role == GATHER && Cfg.WAR_GATHER > 0 && !hunting) {
+        MapLocation threatened = threatenedKing();
+        if (threatened != null) defends++;
+        if (role == GATHER && Cfg.WAR_GATHER > 0 && !hunting && threatened == null) {
             // gatherers keep the economy going: only an adjacent enemy stops them
             if (!nearEnemy(2)) return false;
             Direction f = G.me.directionTo(nearestEnemy.location);
@@ -744,7 +746,9 @@ public final class Baby {
             if (d <= 20 && (role == FIGHT || raw < Cfg.DELIVER_AT || d <= 8)) {
                 // standoff: stepping into the front of an enemy that sees us (and is not weaker) walks onto its
                 // traps and into a grab; hold, face it and let it come (flank and prey moves still engage)
-                if (Cfg.STANDOFF && !hunting && sees(nearestEnemy, G.me) && nearestEnemy.health >= G.rc.getHealth()) {
+                // (not against a rat at our threatened king: it is biting the king while we wait)
+                boolean atKing = threatened != null && nearestEnemy.location.distanceSquaredTo(threatened) <= Cfg.KING_THREAT_D2;
+                if (Cfg.STANDOFF && !hunting && !atKing && sees(nearestEnemy, G.me) && nearestEnemy.health >= G.rc.getHealth()) {
                     Direction f = G.me.directionTo(nearestEnemy.location);
                     if (G.rc.getDirection() != f && G.rc.canTurn(f)) { G.rc.turn(f); G.facing = f; }
                     standoffs++;
@@ -755,13 +759,23 @@ public final class Baby {
             }
         }
         if (Comms.fresh(Comms.read(Comms.ALERT + 2), 3)) {
-            MapLocation a = Comms.readLoc(Comms.ALERT);
+            MapLocation a = Comms.alertLoc();
             if (a != null && G.me.distanceSquaredTo(a) <= Cfg.ALERT_DIST2 && G.me.distanceSquaredTo(a) > 8) {
                 Nav.goTo(a);
                 return true;
             }
         }
         return false;
+    }
+
+    public static int defends;
+
+    /** Our king's location when it reported enemy rats close to it this or last round and we are near enough to
+     *  help (gatherers then fight instead of gathering), else null. */
+    static MapLocation threatenedKing() {
+        if (!Cfg.DEFEND || G.coop || !Comms.fresh(Comms.read(Comms.ALERT + 2), 2) || Comms.alertThreat() < 1) return null;
+        MapLocation a = Comms.alertLoc();
+        return a != null && G.me.distanceSquaredTo(a) <= Cfg.DEFEND_D2 ? a : null;
     }
 
     /** True when a baby rat r (facing r.direction) can see tile t: dot >= |cross| with its facing, dist2 <= 20. */
@@ -891,21 +905,32 @@ public final class Baby {
     }
 
     static MapLocation pickMine() {
-        // nearest known mine on our half (closer to home than to its mirror); spread rats by seed
-        MapLocation best = null;
-        int bd = Integer.MAX_VALUE;
-        int n = Comms.numMines;
-        for (int i = 0; i < n; i++) {
-            MapLocation m = Comms.mines[i];
-            int d = m.distanceSquaredTo(home) + G.rand(40);
-            if (d < bd) { bd = d; best = m; }
-        }
-        for (int i = 0; i < myMineCount; i++) {
-            MapLocation m = new MapLocation(myMines[i] / 64, myMines[i] % 64);
-            int d = m.distanceSquaredTo(home) + G.rand(40);
-            if (d < bd) { bd = d; best = m; }
-        }
-        return best;
+        // A mine drops 20 cheese about every 12 rounds into its 9x9 square, however many rats wait there, so
+        // gatherers spread over the MINE_SPREAD nearest known mines on our half (cheesefarm: 4 mines, and every rat
+        // used to crowd the nearest). Order: distance from home, ties by the mirror-invariant offset.
+        int n = 0;
+        for (int i = 0; i < Comms.numMines && n < cand.length; i++) n = addCand(Comms.mines[i], n);
+        for (int i = 0; i < myMineCount && n < cand.length; i++) n = addCand(new MapLocation(myMines[i] / 64, myMines[i] % 64), n);
+        if (n == 0) return null;
+        int ours = 0;
+        for (int i = 0; i < n; i++) if (homeHalf(cand[i])) { MapLocation t = cand[ours]; cand[ours++] = cand[i]; cand[i] = t; }
+        int m = ours > 0 ? ours : n;
+        for (int i = 1; i < m; i++)   // insertion sort of the first m by mineKey
+            for (int j = i; j > 0 && mineKey(cand[j]) < mineKey(cand[j - 1]); j--) { MapLocation t = cand[j]; cand[j] = cand[j - 1]; cand[j - 1] = t; }
+        return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
+    }
+
+    static final MapLocation[] cand = new MapLocation[40];
+
+    static int addCand(MapLocation l, int n) {
+        for (int i = 0; i < n; i++) if (cand[i].equals(l)) return n;
+        cand[n] = l;
+        return n + 1;
+    }
+
+    /** Sort key: squared distance from home, then the offset along our outward axes (same for mirrored rats). */
+    static long mineKey(MapLocation m) {
+        return ((long) m.distanceSquaredTo(home) << 16) + ((m.x - home.x) * fu + 64) * 128 + (m.y - home.y) * fv + 64;
     }
 
     /** The site the king named for a second king, while its heartbeat is fresh. */
