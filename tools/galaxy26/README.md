@@ -36,7 +36,10 @@ It is ported from our earlier replicas (2023: `~/projects/vibe/2023/tools/galaxy
   - a bc26 Replay! link to `/viewer/index.html?gameSource=...`;
   - self-hosted fonts;
   - a CSP meta tag;
-  - email verification off.
+  - email verification off;
+  - the project's milestones (`progress/milestones.csv`, e.g. M1 = the owner switching the agent from Medium to
+    Ultracode effort) drawn as dashed lines on every rating chart. The charts read `/milestones.json`, which
+    `galaxy-setup.sh milestones` installs without a rebuild (no file = no lines).
 
   It installs with `npm ci --ignore-scripts`. `frontend_check.py` audits each build and each install: no URL of
   another host is fetched without a click, battlecode.org appears only as hyperlinks, and the CSP is present.
@@ -117,7 +120,8 @@ It keeps saturn's message and report protocol, as the earlier replicas' saturn.p
 
 ```
 tools/galaxy26/deploy/deploy.sh            # full (re)deploy; or deploy.sh STEP: status | app | runtime | env | units |
-                                           # start | stop | viewer | frontend | site | scheduler on|off | activity on|off
+                                           # start | stop | viewer | frontend | milestones | site | scheduler on|off |
+                                           # activity on|off
 bash tools/galaxy26/verify.sh              # isolation + health checks (runs on the VM over ssh)
 
 # rebuild the frontend / viewer on the VM (as the operator), then install them
@@ -125,6 +129,11 @@ gssh 'bash ~/bc26-galaxy-stage/tools/galaxy26/frontend/install-node.sh'      # o
 gssh 'bash ~/bc26-galaxy-stage/tools/galaxy26/frontend/build.sh'
 gssh 'bash ~/bc26-galaxy-stage/tools/galaxy26/viewer/build.sh'
 tools/galaxy26/deploy/deploy.sh frontend; tools/galaxy26/deploy/deploy.sh viewer
+
+# milestones on the rating charts: progress/milestones.csv -> /milestones.json (tools/progress-refresh.sh does this
+# when they change), then check that each chart draws them (screenshots in ~/bc26-shots)
+tools/galaxy26/deploy/deploy.sh milestones
+gssh 'python3 -I ~/bc26-galaxy-stage/tools/galaxy26/browser_check.py --out ~/bc26-shots --pages /,/bc26/team/9'
 
 # our team (credentials ~/.bc26b-galaxy-team, 600)
 python3 tools/galaxy26/contest.py register

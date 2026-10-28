@@ -100,6 +100,105 @@ diff -ruN a/frontend/src/api/helpers.ts b/frontend/src/api/helpers.ts
    }
  };
  
+diff -ruN a/frontend/src/components/compete/chart/ChartBase.tsx b/frontend/src/components/compete/chart/ChartBase.tsx
+--- a/frontend/src/components/compete/chart/ChartBase.tsx	2026-10-28 14:19:40.502575928 +0000
++++ b/frontend/src/components/compete/chart/ChartBase.tsx	2026-10-28 14:19:40.526576196 +0000
+@@ -1,5 +1,5 @@
+ import type React from "react";
+-import { useMemo, useState } from "react";
++import { useEffect, useMemo, useState } from "react";
+ import Highcharts from "highcharts";
+ import HighchartsReact from "highcharts-react-official";
+ import NoDataToDisplay from "highcharts/modules/no-data-to-display";
+@@ -11,6 +11,32 @@
+ 
+ NoDataToDisplay(Highcharts);
+ 
++// Replica only: the project's milestones (progress/milestones.csv, installed as /milestones.json by
++// `galaxy-setup.sh milestones`), drawn on every rating chart beside the tournament lines. A missing or malformed
++// file (the SPA fallback answers with index.html) draws nothing.
++interface Milestone {
++  tag: string;
++  label: string;
++  t: number;
++}
++let milestonesOnce: Promise<Milestone[]> | undefined;
++const loadMilestones = async (): Promise<Milestone[]> => {
++  milestonesOnce ??= fetch("/milestones.json", { cache: "no-cache" })
++    .then(async (r) => (r.ok ? ((await r.json()) as unknown) : []))
++    .then((m) =>
++      Array.isArray(m)
++        ? (m as Milestone[]).filter(
++            (x) =>
++              typeof x?.t === "number" &&
++              typeof x?.tag === "string" &&
++              typeof x?.label === "string",
++          )
++        : [],
++    )
++    .catch(() => []);
++  return await milestonesOnce;
++};
++
+ export interface ChartBaseProps {
+   yAxisLabel: string;
+   values?: Record<string, ChartData[]>;
+@@ -32,6 +58,16 @@
+ }) => {
+   // Translate values into Highcharts compatible options
+   const [myChart, setChart] = useState<Highcharts.Chart>();
++  const [milestones, setMilestones] = useState<Milestone[]>([]);
++  useEffect(() => {
++    let live = true;
++    void loadMilestones().then((m) => {
++      if (live) setMilestones(m);
++    });
++    return () => {
++      live = false;
++    };
++  }, []);
+ 
+   const seriesData: Highcharts.SeriesOptionsType[] = useMemo(() => {
+     if (values === undefined) return [];
+@@ -151,7 +187,8 @@
+         hour: "%I:%M %P",
+         minute: "%I:%M:%S %P",
+       },
+-      plotLines: plotLines?.map(([name, timestamp]) => ({
++      plotLines: [
++        ...(plotLines ?? []).map(([name, timestamp]): Highcharts.XAxisPlotLinesOptions => ({
+         color: "#ccd6eb",
+         zIndex: 1000,
+         value: timestamp,
+@@ -172,6 +209,28 @@
+           },
+         },
+       })),
++        ...milestones.map((m): Highcharts.XAxisPlotLinesOptions => ({
++          color: "#343a40",
++          dashStyle: "Dash" as const,
++          width: 2,
++          zIndex: 1001,
++          value: m.t,
++          label: {
++            text: `${m.tag} ${m.label}`,
++            x: -4,
++            y: 0,
++            rotation: 270,
++            align: "left" as const,
++            verticalAlign: "bottom" as const,
++            style: {
++              color: "#343a40",
++              fontSize: "11px",
++              textOverflow: "none",
++              whiteSpace: "nowrap",
++            },
++          },
++        })),
++      ],
+       max: Math.min(xAxisEndDate.getTime(), Date.now()),
+     },
+   };
 diff -ruN a/frontend/src/index.css b/frontend/src/index.css
 --- a/frontend/src/index.css
 +++ b/frontend/src/index.css

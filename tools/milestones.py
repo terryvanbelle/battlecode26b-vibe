@@ -4,11 +4,12 @@ so a change in performance can be lined up against them.
 
   milestones.py add LABEL [--when 'YYYY-MM-DD HH:MM']    append one (default: now, PDT)
   milestones.py list
+  milestones.py json [OUT]                               the replica website's /milestones.json (tools/galaxy26)
 
 progress/milestones.csv columns: date (PDT, YYYY-MM-DD HH:MM), label. Hand-kept. Read by tools/plot_progress.py
 (progress.png), tools/replica_report.py (rating-history.png) and tools/attempts.py (ATTEMPTS.md rows).
 """
-import argparse, csv, datetime as dt, os, sys
+import argparse, csv, datetime as dt, json, os, sys
 from zoneinfo import ZoneInfo
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -90,14 +91,30 @@ def place(dates, marks):
     return xs
 
 
+def to_json(marks):
+    """[{tag, label, t: UTC epoch ms}] for the replica's rating charts. Highcharts parses tags in label text, so
+    '->' becomes an arrow and any other '<' or '>' is dropped."""
+    out = [{'tag': tag(i), 'label': label.replace('->', '\u2192').replace('<', '').replace('>', ''),
+            't': int(when.timestamp() * 1000)}
+           for i, (when, label) in enumerate(marks)]
+    return json.dumps(out, separators=(',', ':'), ensure_ascii=True) + '\n'
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest='cmd', required=True)
     p = sub.add_parser('add'); p.add_argument('label'); p.add_argument('--when')
     sub.add_parser('list')
+    p = sub.add_parser('json'); p.add_argument('out', nargs='?')
     a = ap.parse_args(argv)
     if a.cmd == 'add':
         print(f'{add(a.label, a.when)} {a.label} -> {CSV}')
+    elif a.cmd == 'json':
+        text = to_json(read())
+        if a.out:
+            open(a.out, 'w').write(text)
+        else:
+            sys.stdout.write(text)
     else:
         for when, label in read():
             print(f'{when:{FMT}} PDT  {label}')

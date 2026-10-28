@@ -8,6 +8,7 @@
 #                                       engine/, maps/, galaxy.tar = git archive of the pinned galaxy commit)
 #   sudo galaxy-setup.sh user | egress | postgres | src STAGE | venv STAGE | app STAGE | runtime STAGE | dirs | secrets
 #   sudo galaxy-setup.sh password | env | units | cli | migrate | bootstrap | static | viewer | frontend | hostname
+#   sudo galaxy-setup.sh milestones STAGE   STAGE/milestones.json -> the rating charts (no rebuild)
 #   sudo galaxy-setup.sh caddy | site | start | stop | status | teardown [--purge-data] | scheduler on|off | activity on|off
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -525,6 +526,27 @@ viewer_step () {
   swap_in "$v.new" "$v"
 }
 
+milestones_step () {  # $1 stage: its milestones.json -> $ETC (kept across frontend builds) and the live frontend
+  local src="${1:?stage}/milestones.json"
+  [ -f "$src" ] || die "milestones: no $src (deploy.sh writes it from progress/milestones.csv)"
+  python3 -I - "$src" <<'PY' || die "milestones: $src is malformed"
+import json, sys
+d = json.load(open(sys.argv[1]))
+assert isinstance(d, list) and len(d) <= 200
+for m in d:
+    assert isinstance(m, dict) and set(m) == {'tag', 'label', 't'}
+    assert isinstance(m['tag'], str) and isinstance(m['label'], str) and isinstance(m['t'], int)
+    assert len(m['tag']) <= 8 and len(m['label']) <= 200 and not set('<>') & set(m['tag'] + m['label'])
+PY
+  install -d -m 0755 "$ETC"
+  install -m 0644 "$src" "$ETC/milestones.json.new"; mv -f "$ETC/milestones.json.new" "$ETC/milestones.json"
+  if [ -d "$WWW/frontend" ]; then
+    install -o root -g "$CUSER" -m 0640 "$ETC/milestones.json" "$WWW/frontend/milestones.json.new"
+    mv -f "$WWW/frontend/milestones.json.new" "$WWW/frontend/milestones.json"
+  fi
+  say "milestones: $(python3 -c 'import json,sys; print(len(json.load(open(sys.argv[1]))))' "$ETC/milestones.json") on the rating charts"
+}
+
 frontend_step () {
   say "frontend: $HOMED/frontend-dist (galaxy's frontend built by frontend/build.sh) -> $WWW/frontend, after the bundle audit"
   local src="$HOMED/frontend-dist" dst="$WWW/frontend"
@@ -534,6 +556,7 @@ frontend_step () {
     find "$dst.new" -name '*.map' -delete
     python3 "$OPT/galaxy26/frontend_check.py" "$dst.new" > "$ETC/frontend-check.txt" || { tail -5 "$ETC/frontend-check.txt"; rm -rf "$dst.new"; die "frontend check failed ($ETC/frontend-check.txt)"; }
     tail -3 "$ETC/frontend-check.txt"
+    [ -f "$ETC/milestones.json" ] && cp "$ETC/milestones.json" "$dst.new/milestones.json"   # milestones_step's data
   elif [ -f "$dst/index.html" ]; then
     say "frontend: no build at $src; keeping the installed one"; return 0
   else
@@ -774,13 +797,15 @@ case "$step" in
     user_step; egress_step; postgres_step; src_step "$stage"; [ -x "$OPT/venv/bin/python" ] || venv_step "$stage"
     app_step "$stage"; runtime_step "$stage"; dirs_step; secrets_step
     { hostname_step || true; }   # before siarnaq first runs: its ALLOWED_HOSTS and recorded job URLs use the name
-    password_step; env_step; units_step; cli_step; migrate_step; bootstrap_step; static_step; viewer_step; frontend_step
+    password_step; env_step; units_step; cli_step; migrate_step; bootstrap_step; static_step; viewer_step
+    [ -f "$stage/milestones.json" ] && milestones_step "$stage"; frontend_step
     caddy_step; site_step; start_step; status_step ;;
   user) user_step ;; egress) egress_step ;; postgres) postgres_step ;;
   src) src_step "${1:?stage}" ;; venv) venv_step "${1:?stage}" ;;
   app) app_step "${1:?stage}" ;; runtime) runtime_step "${1:?stage}" ;; dirs) dirs_step ;; secrets) secrets_step ;;
   password) password_step ;; env) env_step ;; units) units_step ;; cli) cli_step ;; migrate) migrate_step ;;
   bootstrap) bootstrap_step ;; static) static_step ;; viewer) viewer_step ;; frontend) frontend_step ;;
+  milestones) milestones_step "${1:?stage}" ;;
   hostname) hostname_step || true ;; caddy) caddy_step ;; site) site_step ;; boot-hostname) boot_hostname ;;
   start) start_step ;; stop) stop_step ;; status) status_step ;;
   activity) case "${1:-}" in on) systemctl enable --now "$U_ACT" ;; off) systemctl disable --now "$U_ACT" ;; *) die "activity on|off" ;; esac ;;

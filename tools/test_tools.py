@@ -175,6 +175,9 @@ with tempfile.TemporaryDirectory() as d:
     two = [(mst.parse('2026-10-28 06:10'), 'a'), (mst.parse('2026-10-28 06:20'), 'b'), mk[1]]
     check([round(x, 3) for x in mst.place(ds, two)] == [0.333, 0.667, 2.5], f"milestones spread in one gap {mst.place(ds, two)}")
     check(mst.tag(0) == 'M1' and mst.footnote(mk) == 'M1 10-28 06:38 first   M2 10-28 07:00 later', f"milestones footnote {mst.footnote(mk)}")
+    js = json.loads(mst.to_json([(mst.parse('2026-10-28 06:38'), 'a -> <b>c</b>')] + mk[1:]))
+    check(js == [{'tag': 'M1', 'label': 'a \u2192 bc/b', 't': 1793194680000}, {'tag': 'M2', 'label': 'later', 't': 1793196000000}],
+          f"milestones json for the replica charts {js}")
     t = os.path.join(d, 'p.tsv'); ac = os.path.join(d, 'a.csv')
     open(t, 'w').write('version\tdate\tmetric\tvalue\nv1\t2026-10-28 06:10\twin.a\t0.5\nv2\t2026-10-28 06:50\twin.a\t0.7\n'
                        'v3\tbad date\twin.a\t0.6\n')

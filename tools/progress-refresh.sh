@@ -20,6 +20,16 @@ pull_runs () {   # every runs/*/results.jsonl on the VM -> build/vmruns/runs/
   gssh 'cd ~/projects/vibe/2026b && tar czf - runs/*/results.jsonl' | tar xzf - -C build/vmruns &&
   ls build/vmruns/runs | wc -l
 }
+sync_milestones () {   # the replica website's rating charts draw progress/milestones.csv; redeploy only on change
+  mkdir -p build && python3 -I tools/milestones.py json build/milestones.json &&
+  source tools/vm.sh && ensure_vm > /dev/null &&
+  if [ "$(gssh 'cat /etc/bc26-galaxy/milestones.json 2>/dev/null' | sha256sum)" = "$(sha256sum < build/milestones.json)" ]; then
+    echo "replica milestones current"
+  else
+    tools/galaxy26/deploy/deploy.sh milestones 2>&1 | grep -E 'milestones:|error|die' | tail -1
+  fi
+}
+export -f sync_milestones
 echo "== start $(TZ=America/Los_Angeles date '+%H:%M PDT')"
 export -f pull_runs
 step "pull VM runs" 600 1 bash -c pull_runs
@@ -27,6 +37,7 @@ step "replica matches" 600 1 python3 -I tools/games.py replica
 step games 300 1 python3 -I tools/games.py build
 step elo 600 2 "$PY" -I tools/elo.py
 step replica 600 1 "$PY" -I tools/replica_report.py
+step "replica milestones" 600 1 bash -c sync_milestones
 step chart 300 1 "$PY" -I tools/plot_progress.py
 step attempts 300 1 "$PY" -I tools/attempts.py render
 echo "== done $(TZ=America/Los_Angeles date '+%H:%M PDT')"

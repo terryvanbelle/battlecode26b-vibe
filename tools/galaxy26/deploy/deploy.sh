@@ -2,10 +2,12 @@
 # Deploy (or redeploy) the bc26 galaxy replica on battlecode-dev from the driver. Idempotent. Doc: tools/galaxy26/README.md.
 #   tools/galaxy26/deploy/deploy.sh              push the stage, then galaxy-setup.sh all
 #   tools/galaxy26/deploy/deploy.sh STEP [ARG]   push the stage, then one galaxy-setup.sh step (status, app, runtime,
-#                                                units, start, viewer, frontend, site, scheduler on|off, activity on|off ...)
+#                                                units, start, viewer, frontend, milestones, site, scheduler on|off,
+#                                                activity on|off ...)
 # The stage on the VM (~/bc26-galaxy-stage) holds tools/galaxy26, engine/ (the pinned 1.2.6 jar), maps/ (the 74 .map26),
 # galaxy.tar (git archive of the pinned galaxy commit, from the reference clone) and viewer-src.tar (git archive of
-# client/ and schema/ of the pinned battlecode26 commit, for viewer/build.sh). Nothing is downloaded from battlecode.org.
+# client/ and schema/ of the pinned battlecode26 commit, for viewer/build.sh) and milestones.json (from
+# progress/milestones.csv, drawn on the site's rating charts). Nothing is downloaded from battlecode.org.
 # Afterwards the driver has the site gate password (~/.bc26b-replica-password, 600) and the site URL (~/.bc26-galaxy/site).
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; REPO="$(cd "$HERE/../../.." && pwd)"
@@ -27,13 +29,14 @@ gssh "mkdir -p ~/$STAGE/tools"
 "${RS[@]}" --include '*.map26' --exclude '*' "$REPO/maps/" "$USER_NAME@$IP:$STAGE/maps/"
 git -C "$GALAXY_REF" archive --format=tar -o "$TMP/galaxy.tar" "$GALAXY_COMMIT"
 git -C "$BC26_REF" archive --format=tar -o "$TMP/viewer-src.tar" "$CLIENT_COMMIT" client schema
-rsync -a --checksum -e "ssh ${SSHO[*]}" "$TMP/galaxy.tar" "$TMP/viewer-src.tar" "$USER_NAME@$IP:$STAGE/"
+python3 -I "$REPO/tools/milestones.py" json "$TMP/milestones.json"   # progress/milestones.csv -> the rating charts
+rsync -a --checksum -e "ssh ${SSHO[*]}" "$TMP/galaxy.tar" "$TMP/viewer-src.tar" "$TMP/milestones.json" "$USER_NAME@$IP:$STAGE/"
 
 SETUP="sudo bash ~/$STAGE/tools/galaxy26/deploy/galaxy-setup.sh"
 if [ $# -gt 0 ]; then
   case "$1" in
     stage) exit 0 ;;
-    all|app|runtime|src|venv) gssh "$SETUP $1 ~/$STAGE" ;;
+    all|app|runtime|src|venv|milestones) gssh "$SETUP $1 ~/$STAGE" ;;
     *) gssh "$SETUP $*" ;;
   esac
 else

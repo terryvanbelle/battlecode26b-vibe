@@ -137,3 +137,13 @@
   (y 37-43). Our 51 digs are scattered over 3+ partial tunnels (east, south-east, south) versus Version41's 128 digs;
   12 transfers all game. Hypothesis: each rat plans its own A* path to its own mine from its own map memory, so
   tunnels diverge and none is finished early. Candidate: one shared tunnel per king (king plans, broadcasts waypoints).
+
+## 2026-10-28 07:25 PDT: s2z gauntlet
+- s2z (s2y + Flow search timeout/backoff, mine gossip, cheese-on-dirt pickup) vs the top 6, 72 games on 6 maps:
+  base 3 maps 23.2 pts (s2s 24.4), new 3 maps 30.0 (s2s 25.6); kills/deaths 1.05. Per map: UncomfortablyClose 47.6,
+  DefaultMedium 34.3, Stash 25.8, DefaultSmall 25.2, Excavation 16.8, cheesefarm 10.0.
+- vs Version41 on the 12 worst census maps: 8.0 (s2y 7.5, s2t 6.8). Within noise of s2s overall (26.6 vs 25.0):
+  inconclusive, kept as the dev base (the overrun fix sits on top of it). The waiter that was meant to report this
+  looped on an unset VM address (no ensure_vm) and never printed; re-armed waiters now call ensure_vm first.
+- Next: the shared-tunnel economy for dirt-sealed maps (the king plans one dig path to the nearest mine and broadcasts
+  it), then cheesefarm (10.0, our worst base map).

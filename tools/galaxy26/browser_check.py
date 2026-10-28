@@ -18,6 +18,9 @@ Scrimmaging page; log out, log in as B, accept it from the inbox; once it has ru
 the bc26 web client (/viewer/index.html?gameSource=...). Writes screenshots and report.json to DIR and prints a
 summary: every host contacted, Authorization per request class, failed requests, console errors, CSP violations.
 Clean up afterwards: sudo bc26-galaxy-manage bootstrap purge-teams <prefix>.
+
+  --pages /,/bc26/rankings   chart check only: screenshot those pages logged out and require every milestone of
+                             /etc/bc26-galaxy/milestones.json among their Highcharts plot-line labels.
 """
 import argparse
 import base64
@@ -350,6 +353,9 @@ def main(argv=None):
     ap.add_argument('--episode', default='bc26')
     ap.add_argument('--bot', default=os.path.expanduser('~/bc26-galaxy-stage/example/src/examplefuncsplayer'))
     ap.add_argument('--match-timeout', type=int, default=3600)
+    ap.add_argument('--pages', help='comma-separated paths: only screenshot these (logged out) and check their chart '
+                                    'labels against --milestones; no contestants, uploads or scrimmages')
+    ap.add_argument('--milestones', default='/etc/bc26-galaxy/milestones.json')
     a = ap.parse_args(argv)
     os.makedirs(a.out, exist_ok=True)
     with open(a.password_file) as fh:
@@ -359,23 +365,24 @@ def main(argv=None):
     site, ep = c.site, a.episode
     host = c.host
 
-    # ---- two throwaway contestants through the API; B uploads the bot now, A will upload it in the browser
-    tag = secrets.token_hex(3)
-    acc, people = {}, {}
-    for side in 'ab':
-        team = f'{a.prefix}team-{side}-{tag}'
-        s_ = cl.ensure_team(c, acc, team, 'browser check', save=lambda: None)
-        people[side] = {'user': acc[team]['user'], 'pw': acc[team]['password'], 'session': s_,
-                        'team': {'name': team, 'id': acc[team]['team_id']}}
-        # requests wait for a person here (galaxy's default), so B accepts from its inbox in the browser
-        s_.api('PATCH', f'/api/team/{ep}/t/me/', {'profile': {'auto_accept_reject_ranked': 'M',
-                                                               'auto_accept_reject_unranked': 'M'}})
-        print(f'ok   contestant {acc[team]["user"]}, team {team} (id {acc[team]["team_id"]})')
-    zipdata, package, _ = cl.bot_zip(a.bot)
-    cl.submit(people['b']['session'], a.bot, 'browser check: B', ep)
-    zpath = os.path.join(a.out, f'{package}.zip')
-    with open(zpath, 'wb') as fh:
-        fh.write(zipdata)
+    if not a.pages:
+        # ---- two throwaway contestants through the API; B uploads the bot now, A will upload it in the browser
+        tag = secrets.token_hex(3)
+        acc, people = {}, {}
+        for side in 'ab':
+            team = f'{a.prefix}team-{side}-{tag}'
+            s_ = cl.ensure_team(c, acc, team, 'browser check', save=lambda: None)
+            people[side] = {'user': acc[team]['user'], 'pw': acc[team]['password'], 'session': s_,
+                            'team': {'name': team, 'id': acc[team]['team_id']}}
+            # requests wait for a person here (galaxy's default), so B accepts from its inbox in the browser
+            s_.api('PATCH', f'/api/team/{ep}/t/me/', {'profile': {'auto_accept_reject_ranked': 'M',
+                                                                   'auto_accept_reject_unranked': 'M'}})
+            print(f'ok   contestant {acc[team]["user"]}, team {team} (id {acc[team]["team_id"]})')
+        zipdata, package, _ = cl.bot_zip(a.bot)
+        cl.submit(people['b']['session'], a.bot, 'browser check: B', ep)
+        zpath = os.path.join(a.out, f'{package}.zip')
+        with open(zpath, 'wb') as fh:
+            fh.write(zipdata)
 
     # ---- the browser
     port = find_free_port()
@@ -416,102 +423,116 @@ def main(argv=None):
             w.shot(path.strip('/').replace('/', '-'))
         step('logged-out rankings, queue, resources rendered')
 
-        # A logs in, uploads, requests
-        A, B = people['a'], people['b']
-        w.login(A['user'], A['pw'])
-        w.shot('logged-in-a')
-        step(f'logged in as {A["user"]} through the login form -> {w.js("location.pathname")}')
-        w.go(f'/{ep}/submissions')
-        w.wait_js("!!document.querySelector('input[type=file]')", 'the submission form')
-        doc = w.cdp.call('DOM.getDocument', depth=1)
-        node = w.cdp.call('DOM.querySelector', nodeId=doc['root']['nodeId'], selector='input[type=file]')['nodeId']
-        w.cdp.call('DOM.setFileInputFiles', files=[zpath], nodeId=node)
-        w.fill('packageName', package)
-        w.fill('description', 'browser check: A')
-        w.click('Submit')
-        w.shot('submitted')
+        if a.pages:
+            # chart check only: each page (logged out) must draw every milestone label in its chart SVG
+            want = [f"{m['tag']} {m['label']}" for m in json.load(open(a.milestones))] if a.milestones else []
+            report['pages'] = []
+            for path in a.pages.split(','):
+                w.go(path)
+                time.sleep(3)
+                labels = w.js("[...document.querySelectorAll('svg .highcharts-plot-line-label')].map(e => e.textContent)")
+                # Highcharts marks wrap points with a zero-width space
+                missing = [m for m in want if not any(m in t.replace('\u200b', ' ') for t in labels or [])]
+                w.shot(path.strip('/').replace('/', '-') or 'home')
+                report['pages'].append({'path': path, 'labels': labels, 'missing': missing})
+                print(('ok  ' if not missing else 'FAIL'), f'{path}: {len(labels or [])} plot-line labels, missing {missing or "none"}')
+        else:
+            # A logs in, uploads, requests
+            A, B = people['a'], people['b']
+            w.login(A['user'], A['pw'])
+            w.shot('logged-in-a')
+            step(f'logged in as {A["user"]} through the login form -> {w.js("location.pathname")}')
+            w.go(f'/{ep}/submissions')
+            w.wait_js("!!document.querySelector('input[type=file]')", 'the submission form')
+            doc = w.cdp.call('DOM.getDocument', depth=1)
+            node = w.cdp.call('DOM.querySelector', nodeId=doc['root']['nodeId'], selector='input[type=file]')['nodeId']
+            w.cdp.call('DOM.setFileInputFiles', files=[zpath], nodeId=node)
+            w.fill('packageName', package)
+            w.fill('description', 'browser check: A')
+            w.click('Submit')
+            w.shot('submitted')
 
-        def latest(sess):
-            page = sess.api('GET', f'/api/compete/{ep}/submission/')
-            subs = page['results'] if isinstance(page, dict) else page
-            return subs[0] if subs else None
-        s = wait_for(lambda: (lambda x: x if x and x['status'] in ('OK!', 'ERR') else None)(latest(A['session'])),
-                         'compile of the browser upload', 600)
-        if s['status'] != 'OK!' or not s['accepted'] or s['description'] != 'browser check: A':
-            raise SystemExit(f'FAIL browser upload: {s["status"]} accepted={s["accepted"]} {s["description"]!r}')
-        sb = wait_for(lambda: (lambda x: x if x and x['status'] in ('OK!', 'ERR') else None)(latest(B['session'])),
-                          'compile of B', 600)
-        if not sb['accepted']:
-            raise SystemExit('FAIL compile of B')
-        w.go(f'/{ep}/submissions')
-        time.sleep(1)
-        w.shot('submissions-compiled')
-        step(f'uploaded {package} on the Submissions page: submission {s["id"]} {s["status"]}, accepted')
-        w.go(f'/{ep}/scrimmaging')
-        w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Find Teams')",
-                  'the Find Teams tab')
-        w.click('Find Teams')
-        w.wait_js("!!document.querySelector('input[placeholder^=\"Search for a team\"]')", 'the team search box')
-        w.fill(None, B['team']['name'], selector='input[placeholder^="Search for a team"]')
-        w.click('Search!')
-        w.wait_js(f"document.body.innerText.includes({json.dumps(B['team']['name'])})", 'team B in the teams table')
-        w.click('Request', within=B['team']['name'])
-        w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Request Scrimmage')",
-                  'the request modal')
-        w.shot('request-modal')
-        w.click('Request Scrimmage')
-        out = A['session'].api('GET', f'/api/compete/{ep}/request/outbox/')
-        reqs = out['results'] if isinstance(out, dict) else out
-        if not reqs:
-            raise SystemExit('FAIL browser: no scrimmage request in A\'s outbox')
-        step(f'requested a scrimmage with {B["team"]["name"]} in the modal: request {reqs[0]["id"]}, '
-             f'maps {reqs[0]["maps"]}, ranked={reqs[0]["is_ranked"]}')
+            def latest(sess):
+                page = sess.api('GET', f'/api/compete/{ep}/submission/')
+                subs = page['results'] if isinstance(page, dict) else page
+                return subs[0] if subs else None
+            s = wait_for(lambda: (lambda x: x if x and x['status'] in ('OK!', 'ERR') else None)(latest(A['session'])),
+                             'compile of the browser upload', 600)
+            if s['status'] != 'OK!' or not s['accepted'] or s['description'] != 'browser check: A':
+                raise SystemExit(f'FAIL browser upload: {s["status"]} accepted={s["accepted"]} {s["description"]!r}')
+            sb = wait_for(lambda: (lambda x: x if x and x['status'] in ('OK!', 'ERR') else None)(latest(B['session'])),
+                              'compile of B', 600)
+            if not sb['accepted']:
+                raise SystemExit('FAIL compile of B')
+            w.go(f'/{ep}/submissions')
+            time.sleep(1)
+            w.shot('submissions-compiled')
+            step(f'uploaded {package} on the Submissions page: submission {s["id"]} {s["status"]}, accepted')
+            w.go(f'/{ep}/scrimmaging')
+            w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Find Teams')",
+                      'the Find Teams tab')
+            w.click('Find Teams')
+            w.wait_js("!!document.querySelector('input[placeholder^=\"Search for a team\"]')", 'the team search box')
+            w.fill(None, B['team']['name'], selector='input[placeholder^="Search for a team"]')
+            w.click('Search!')
+            w.wait_js(f"document.body.innerText.includes({json.dumps(B['team']['name'])})", 'team B in the teams table')
+            w.click('Request', within=B['team']['name'])
+            w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Request Scrimmage')",
+                      'the request modal')
+            w.shot('request-modal')
+            w.click('Request Scrimmage')
+            out = A['session'].api('GET', f'/api/compete/{ep}/request/outbox/')
+            reqs = out['results'] if isinstance(out, dict) else out
+            if not reqs:
+                raise SystemExit('FAIL browser: no scrimmage request in A\'s outbox')
+            step(f'requested a scrimmage with {B["team"]["name"]} in the modal: request {reqs[0]["id"]}, '
+                 f'maps {reqs[0]["maps"]}, ranked={reqs[0]["is_ranked"]}')
 
-        # B accepts
-        w.click('Open user menu')
-        w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Sign out')",
-                  'the Sign out item')
-        w.click('Sign out')
-        w.wait_js("document.body.innerText.includes('Log in')", 'the logged-out header')
-        step(f'signed out {A["user"]} from the user menu')
-        w.login(B['user'], B['pw'])
-        w.go(f'/{ep}/scrimmaging')
-        w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Accept')",
-                  'the request in B\'s inbox')
-        w.shot('inbox-b')
-        w.click('Accept')
-        step(f'logged in as {B["user"]} and accepted the request from the inbox')
+            # B accepts
+            w.click('Open user menu')
+            w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Sign out')",
+                      'the Sign out item')
+            w.click('Sign out')
+            w.wait_js("document.body.innerText.includes('Log in')", 'the logged-out header')
+            step(f'signed out {A["user"]} from the user menu')
+            w.login(B['user'], B['pw'])
+            w.go(f'/{ep}/scrimmaging')
+            w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Accept')",
+                      'the request in B\'s inbox')
+            w.shot('inbox-b')
+            w.click('Accept')
+            step(f'logged in as {B["user"]} and accepted the request from the inbox')
 
-        def finished():
-            page = B['session'].api('GET', f'/api/compete/{ep}/match/scrimmage/?team_id={B["team"]["id"]}')
-            ms = page['results'] if isinstance(page, dict) else page
-            return ms[0] if ms and ms[0]['status'] in ('OK!', 'ERR', 'CAN') else None
-        m = wait_for(finished, 'the scrimmage', a.match_timeout, every=5)
-        if m['status'] != 'OK!':
-            raise SystemExit(f'FAIL match {m["id"]}: {m["status"]}')
-        step(f'match {m["id"]} ran: ' + ', '.join(f'{p["teamname"]} {p["score"]}' for p in m['participants'])
-             + f' on {m["maps"]}')
-        w.go(f'/{ep}/scrimmaging')
-        w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Scrim History')",
-                  'the Scrim History tab')
-        w.click('Scrim History')
-        w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Replay!' && !b.disabled)",
-                  'an enabled Replay! button', 60)
-        w.shot('history-b')
-        w.js("window.__opened = null; window.open = (u) => { window.__opened = u; return null; };")
-        w.click('Replay!')
-        url = w.wait_js('window.__opened', 'Replay! to open the viewer')
-        step(f'Replay! opens {url}')
-        n0 = len(w.console)
-        w.go(url)
-        w.wait_js("document.querySelectorAll('canvas').length > 0", 'the viewer canvas', 60)
-        time.sleep(8)       # the client fetches /storage/... (gameSource), un-gzips and parses it, then draws
-        loaded = w.js("[...document.querySelectorAll('canvas')].map(c => c.width + 'x' + c.height).join(',')")
-        step(f'viewer canvases: {loaded}; page text: ' + (w.js("document.body.innerText") or '')[:300].replace('\\n', ' | '))
-        w.shot('viewer')
-        viewer_log = [t for _, t in w.console[n0:]]
-        step('viewer console: ' + ' | '.join(viewer_log[:8]))
-        report['viewer_console'] = viewer_log
+            def finished():
+                page = B['session'].api('GET', f'/api/compete/{ep}/match/scrimmage/?team_id={B["team"]["id"]}')
+                ms = page['results'] if isinstance(page, dict) else page
+                return ms[0] if ms and ms[0]['status'] in ('OK!', 'ERR', 'CAN') else None
+            m = wait_for(finished, 'the scrimmage', a.match_timeout, every=5)
+            if m['status'] != 'OK!':
+                raise SystemExit(f'FAIL match {m["id"]}: {m["status"]}')
+            step(f'match {m["id"]} ran: ' + ', '.join(f'{p["teamname"]} {p["score"]}' for p in m['participants'])
+                 + f' on {m["maps"]}')
+            w.go(f'/{ep}/scrimmaging')
+            w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Scrim History')",
+                      'the Scrim History tab')
+            w.click('Scrim History')
+            w.wait_js("[...document.querySelectorAll('button')].some(b => b.textContent.trim() === 'Replay!' && !b.disabled)",
+                      'an enabled Replay! button', 60)
+            w.shot('history-b')
+            w.js("window.__opened = null; window.open = (u) => { window.__opened = u; return null; };")
+            w.click('Replay!')
+            url = w.wait_js('window.__opened', 'Replay! to open the viewer')
+            step(f'Replay! opens {url}')
+            n0 = len(w.console)
+            w.go(url)
+            w.wait_js("document.querySelectorAll('canvas').length > 0", 'the viewer canvas', 60)
+            time.sleep(8)       # the client fetches /storage/... (gameSource), un-gzips and parses it, then draws
+            loaded = w.js("[...document.querySelectorAll('canvas')].map(c => c.width + 'x' + c.height).join(',')")
+            step(f'viewer canvases: {loaded}; page text: ' + (w.js("document.body.innerText") or '')[:300].replace('\\n', ' | '))
+            w.shot('viewer')
+            viewer_log = [t for _, t in w.console[n0:]]
+            step('viewer console: ' + ' | '.join(viewer_log[:8]))
+            report['viewer_console'] = viewer_log
     except SystemExit:
         try:
             w.shot('failure')

@@ -39,6 +39,8 @@ play.battlecode.org, it has no replays, because galaxy hides other teams' scrimm
   - The test/field teams are **bc26-example** and **bc26-example-copy**, both the official examplefuncsplayer.
 - **Queue** (`/bc26/queue`): every match, newest first, with status, score and rating change.
 - **Team pages** (click a team name): profile, members, rating history.
+- Every rating chart (Home, team pages, My Team) has a dashed line per project milestone, e.g. **M1** = the switch
+  from Medium to Ultracode effort (2026-10-28 06:38 PDT). The list is `progress/milestones.csv`.
 - **Scrimmaging**, **Submissions**, **My Team**: the logged-in team's own pages.
   - Submissions take a zip of the Java package folder, `<package>/RobotPlayer.java ...`, which is what the
     scaffold's `zipForSubmit` makes. The package name goes in the form.
