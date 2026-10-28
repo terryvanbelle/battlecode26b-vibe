@@ -88,7 +88,7 @@ s3k,2026-10-28 10:46,s3i,"s3i + HUNGRY 150: with the bank under 150, any rat car
 s3l,2026-10-28 10:46,s3i,s3i + CARRY_MAX 120: a loaded rat takes no pile that lifts it above 120 (rats hauled 400-700 at a fifth of their speed),"self-play sp3 vs its base s3i: -0.6 pts, t -0.82, 26 of 80 cells changed (+5 -5): neutral"
 s3m,2026-10-28 10:46,s3i,"s3i + trap economy: RAT_TRAP_MIN_CHEESE 400, FORT_TRAPS 4 (rat traps took 560-1560 cheese before the bank ran dry)","neutral on screen vs s3i (+0.2, t +0.33)"
 s3n,2026-10-28 11:01,s3i,"s3i + king cat dodge (KING_DODGE: step the 3x3 out of a near cat's next two footprints, dig out of a dirt pocket) + YIELD_KING (empty rats step off the ring around the king while a cat is near it): 9-10 of our 45 replica king deaths were cats scratching a king that stood in a cat's waypoint path","neutral on screen vs s3i (+0.3, t +0.19)"
-s3o,2026-10-28 11:12,s3h,ablation: s3h without FLOW and DIG_FIRST (s2y/s3a nav): which dev-line change costs points vs s2o,
+s3o,2026-10-28 11:12,s3h,ablation: s3h without FLOW and DIG_FIRST (s2y/s3a nav): which dev-line change costs points vs s2o,"neutral-positive on screen vs s3h (+1.9, t +0.85; cells +15 -8): FLOW+DIG_FIRST may cost a little"
 s3p,2026-10-28 11:12,s3h,ablation: s3h without KING_ROAM and KING_DIG (s2t/s3d king walking),
 s3q,2026-10-28 11:12,s3h,"ablation: s3h without DEFEND, MINE_SPREAD 1, no EXPLORE_CENTER (s3b/s3c)",
 s3r,2026-10-28 11:17,s3h,"s3h + BITE_GUARD: an adjacent enemy rat healthier than us by at most one bite (it may grab us: the engine lets any strictly healthier enemy grab a rat that sees it, threshold 0) is bitten right after kills, so it cannot","neutral on screen vs s3h (-0.1, t -0.14)"
@@ -100,3 +100,4 @@ s3w,2026-10-28 12:53,s3t,s3t + RICH_BABIES 30 + FORM_KING (s3u + s3v): field rou
 s3x,2026-10-28 13:00,s3w,s3w + FORM_MAX 4: up to 4 kings (sites skip mines within 4 of any king); field top bots run 3-5 kings and kings are 50% of round-2000 points,"rejected on screen vs s3w (-2.5, t -1.68; 0 cells won, 4 lost); FORM_MAX 4 adds little over 2 and starves sooner"
 s3y,2026-10-28 14:33,s3t,"s3t + the bytecode tag (Debug.tag: each turn's count mod 128 = move/spawn decision; no behaviour change), for field diagnostics on the replica",
 s3z,2026-10-28 15:03,s3t,s3t + FORM_KING gated: FORM_NET100 -100 (form only if trusted income covers 3 of the 4 cheese/round two kings eat) + FORM_JOIN 8 (only the nearest babies join); s3v/s3w/s3x kings starved on poor maps (where_are_you: income 1.8/round at formation),
+s4a,2026-10-28 15:31,s3z,"s3z + FORM_CHEESE 1500: field bots whose extra kings live form them with a bank of 1500-2800 (median r300-600, 8-28 tiles from the first king); the two whose kings die form at bank 350-500 next to the first king",
