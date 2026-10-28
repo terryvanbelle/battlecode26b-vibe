@@ -18,9 +18,14 @@ public final class TrapRisk {
         if (mark == null) mark = new int[G.W * G.H];
     }
 
+    /** Enemy positions allies squeaked this round and last (for guard facing). */
+    public static final MapLocation[] heardE = new MapLocation[8];
+    public static int nHeard;
+
     /** Called once per turn with the robots we see. */
     public static void observe(RobotInfo[] robots) {
         init();
+        nHeard = 0;
         MapLocation me = G.rc.getLocation();
         if (last == null || !last.equals(me)) { last = me; arrived = G.round; }
         for (RobotInfo r : robots) {
@@ -50,6 +55,7 @@ public final class TrapRisk {
             if (Comms.sqType(c) != Comms.SQ_TRAP) continue;
             int d = (c >> 12) & 7;
             MapLocation e = new MapLocation(Comms.sqX(c), Comms.sqY(c));
+            if (nHeard < heardE.length) heardE[nHeard++] = e;
             Direction f = G.DIRS[d];
             put(e.add(f));
             put(e.add(f.rotateLeft()));

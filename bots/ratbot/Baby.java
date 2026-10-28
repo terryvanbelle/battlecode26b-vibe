@@ -122,7 +122,20 @@ public final class Baby {
             int d = G.me.distanceSquaredTo(r.location);
             if (d < bd) { bd = d; best = r; }
         }
-        MapLocation t = best != null ? best.location : Nav.guard;
+        MapLocation t = best != null ? best.location : null;
+        if (t == null && Cfg.GUARD_MEMORY) {
+            // nothing in view: an enemy we saw at the start of the turn, or one an ally squeaked, may be behind us
+            for (RobotInfo r : seen) {
+                if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
+                int d = G.me.distanceSquaredTo(r.location);
+                if (d <= Cfg.GUARD_DIST2 && d < bd) { bd = d; t = r.location; }
+            }
+            for (int i = 0; i < TrapRisk.nHeard; i++) {
+                int d = G.me.distanceSquaredTo(TrapRisk.heardE[i]);
+                if (d <= 8 && d < bd) { bd = d; t = TrapRisk.heardE[i]; }
+            }
+        }
+        if (t == null) t = Nav.guard;
         if (t == null) return;
         Direction to = G.me.directionTo(t);
         if (to != Direction.CENTER && rc.getDirection() != to && rc.canTurn(to)) { rc.turn(to); G.facing = to; }

@@ -41,6 +41,8 @@ public final class Cfg {
     /** Guard facing: with an enemy rat within this squared distance, steps strafe so we keep facing it, and a
      *  turn ends facing it (rats are grabbed from behind). 0 = off. */
     public static final int GUARD_DIST2 = 13;
+    /** Guard also faces enemies seen at the start of the turn or squeaked by allies when none is in view. */
+    public static final boolean GUARD_MEMORY = true;
     /** Bite cheese (c = k*k gives +k damage), only when it makes the bite a kill: a king pays up to KING_BITE_MAX
      *  above KING_BITE_FLOOR, a baby up to FINISH_K*FINISH_K above FINISH_FLOOR. */
     public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;

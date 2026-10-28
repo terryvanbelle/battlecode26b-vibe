@@ -438,6 +438,13 @@ public class BotTest {
         robots.put(e.location, e); G.coop = false;
         Baby.guardTurn();
         check(facing == me.directionTo(e.location), "guard: the turn ends facing the nearest enemy rat (" + facing + ")");
+        // out of view (behind us): an enemy heard from an ally's squeak
+        reset(); install(); G.coop = false; turnCd = 0;
+        TrapRisk.nHeard = 1; TrapRisk.heardE[0] = new MapLocation(4, 4);
+        Baby.seen = new RobotInfo[0];
+        Baby.guardTurn();
+        check(!Cfg.GUARD_MEMORY || facing == Direction.SOUTHWEST, "guard: faces a squeaked enemy behind it (" + facing + ")");
+        TrapRisk.nHeard = 0;
     }
 
     static void testTrapRisk() throws GameActionException {
