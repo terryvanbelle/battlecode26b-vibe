@@ -401,6 +401,25 @@ public class BotTest {
         check(!Baby.nearHome(new MapLocation(5, 5), 4) && Baby.nearHome(new MapLocation(7, 12), 4), "fort: nearHome radius");
     }
 
+    static void testStandoff() throws GameActionException {
+        reset(); install();
+        G.coop = false; Baby.role = Baby.FIGHT; Baby.hunting = false; Baby.eKing = null;
+        // an enemy three tiles north facing us (south)
+        RobotInfo e = new RobotInfo(64, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 8), Direction.SOUTH, 0, 0, null);
+        robots.put(e.location, e);
+        Baby.nearestEnemy = e;
+        MapLocation start = me;
+        check(Baby.war(), "standoff: war takes the turn");
+        if (Cfg.STANDOFF) check(me.equals(start) && facing == Direction.NORTH, "standoff: holds and faces a watching enemy (" + me + ")");
+        else check(!me.equals(start), "standoff off: closes on the enemy");
+        // an enemy looking away is approached
+        reset(); install(); G.coop = false; Baby.role = Baby.FIGHT; Baby.hunting = false; Baby.eKing = null;
+        e = new RobotInfo(64, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 8), Direction.NORTH, 0, 0, null);
+        robots.put(e.location, e);
+        Baby.nearestEnemy = e;
+        check(Baby.war() && !me.equals(new MapLocation(5, 5)), "standoff: closes on an enemy looking away");
+    }
+
     static void testSpawnFloor() throws GameActionException {
         reset(); install();
         type = UnitType.RAT_KING; G.coop = false; G.round = 300; global = 500;
@@ -486,6 +505,7 @@ public class BotTest {
         testBiteCheese();
         testFlank();
         testSpawnFloor();
+        testStandoff();
         testFort();
         testRetreat();
         testWarRoles();

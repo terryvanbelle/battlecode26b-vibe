@@ -646,6 +646,14 @@ public final class Baby {
                 return true;
             }
             if (d <= 20 && (role == FIGHT || raw < Cfg.DELIVER_AT || d <= 8)) {
+                // standoff: stepping into the front of an enemy that sees us (and is not weaker) walks onto its
+                // traps and into a grab; hold, face it and let it come (flank and prey moves still engage)
+                if (Cfg.STANDOFF && !hunting && sees(nearestEnemy, G.me) && nearestEnemy.health >= G.rc.getHealth()) {
+                    Direction f = G.me.directionTo(nearestEnemy.location);
+                    if (G.rc.getDirection() != f && G.rc.canTurn(f)) { G.rc.turn(f); G.facing = f; }
+                    standoffs++;
+                    return true;
+                }
                 Nav.goTo(nearestEnemy.location);
                 return true;
             }
@@ -696,7 +704,7 @@ public final class Baby {
         return moved;
     }
 
-    public static int flanks;
+    public static int flanks, standoffs;
 
     /** Nearest enemy baby within dist2 20 that we could ratnap (strictly less health than ours), or null. */
     static RobotInfo prey(RobotInfo[] robots, int hp) {
