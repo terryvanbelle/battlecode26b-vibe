@@ -337,3 +337,23 @@
   -0.1 vs s3h. All pass.
 - Next: s3v (s3t + FORM_KING) and s3w (s3t + RICH_BABIES + FORM_KING) are screening. Whichever of s3t/s3w screens
   best goes to the replica after s3h's panel block.
+
+## 2026-10-28 14:35 PDT: s3h rejected on the panel; a bytecode tag for field replays; s3v forms kings
+- s3h vs s2o on panel v2 (sets 1+2; s2o's reference `research/panel/v2-ref-s2o.txt`): 94 cells, 67 alike, D 27
+  (+15 -12), net +3, t 0.58. Block 2 rejects at t <= 1, so s3h is rejected and s2o stays the incumbent.
+- The bytecode tag (prompt 11):
+  - Each turn now ends with a pad, so that bc mod 128 carries the move code or spawn code, a fighter/war bit and a
+    parity bit (Debug.tag).
+  - The instrumenter charges a basic block before the instruction that ends it, and Clock.getBytecodeNum is free.
+    So the cost after the read is a constant 12 plus the pad. Calibrated on 5317 turns, then 9637 of 9637 decoded.
+  - Review fixes (workflow, 15 agents):
+    - Rows for throwers, thrown rats and carried rats are written mid-turn with the PREVIOUS turn's count; the
+      robot's own row comes last, so decoders keep the last row per robot-round.
+    - Skipped: bc 0 (died in its own turn), counts near the limit, and the turn after an overrun.
+    - An opponent with a constant count passed parity, so the decoder now also requires varied counts.
+  - `tools/smuggle.py` reads it. s3y = s3t + the tag is the next replica candidate.
+- s3v (FORM_KING) self-play vs s2o:
+  - It formed a second king in 28 of 80 games and ended with 2 kings in 24. Screen vs s3t: -0.6 (t -0.28).
+  - King deaths rose from 2 to 9. Both kings died on where_are_you (both sides) and houseofcards; one king died on
+    rose and ultimatestarvation without a second king ever forming. The formation probably spends the
+    rats and cheese that a poor map needs (FORM_CHEESE 300). Next: a richer gate (bank and income) before forming.
