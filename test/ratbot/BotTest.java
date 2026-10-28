@@ -342,6 +342,19 @@ public class BotTest {
         robots.put(e.location, e);
         facing = Direction.WEST;
         check(Baby.tryThrow(new RobotInfo[]{e}) && thrown == Direction.EAST, "throw: a sure wall beats a rat three tiles off (" + thrown + ")");
+        // an enemy king's body: its centre three tiles south puts its edge on the point-blank tile
+        reset(); install();
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, false, false, false);
+        RobotInfo k = new RobotInfo(70, G.them, UnitType.RAT_KING, 600, new MapLocation(5, 2), Direction.NORTH, 0, 0, null);
+        robots.put(k.location, k);
+        check(Baby.tryThrow(new RobotInfo[]{k}) && thrown == Direction.SOUTH, "throw: into an enemy king's edge tile (" + thrown + ")");
+        // an ally on the flight path is never the target
+        reset(); install();
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, false, false, false);
+        RobotInfo a = new RobotInfo(71, G.us, UnitType.BABY_RAT, 100, new MapLocation(5, 3), Direction.NORTH, 0, 0, null);
+        RobotInfo e2 = enemyRat(72, 7, 5, 100);
+        robots.put(a.location, a); robots.put(e2.location, e2);
+        check(Baby.tryThrow(new RobotInfo[]{a, e2}) && thrown == Direction.EAST, "throw: past no ally, into the enemy (" + thrown + ")");
         // nothing point-blank: hold the rat for a while
         reset(); install();
         G.round = 50; Baby.carryRound = 49;

@@ -79,12 +79,14 @@ public final class Baby {
                 }
             }
         }
+        Debug.mark(30);
         Nav.guard = null;
         if (!G.coop && Cfg.GUARD_DIST2 > 0 && nearestEnemy != null && rc.getCarrying() == null
                 && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
         boolean engaged = nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= 20;
         if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8 && !(hunting && Cfg.HUNT_IGNORES_RISK) && (Cfg.RISK_IN_FIGHT || !engaged))
             Nav.avoid |= TrapRisk.mask(G.me);
+        Debug.mark(31);
         // 0. a carried enemy is thrown as soon as we can act
         if (rc.getCarrying() != null) tryThrow(robots);
         // 1. bites: enemy rats once cooperation is over (they shoot back; cats wait), then cats.
@@ -107,7 +109,7 @@ public final class Baby {
         if (rc.isMovementReady()) moveDecision();
         Debug.mark(20);
         pickUp();
-        if (rc.getCarrying() != null && Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(null);
+        if (rc.getCarrying() != null && Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(rc.senseNearbyRobots(-1, null));
         Debug.mark(21);
         if (!G.coop && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
         Debug.mark(22);
@@ -274,34 +276,56 @@ public final class Baby {
      * wall or dirt for 46/42 (first two tiles), 38/34, 30/26, 22/18; the victim takes the same damage as the robot hit.
      * Hitting our own rat costs its damage; an empty flight lands for 10.
      */
+    static final RobotInfo[] grid = new RobotInfo[289];
+    static final int[] gridAt = new int[289];
+    static int gridStamp;
+
+    static void gridPut(int ox, int oy, RobotInfo r, int stamp) {
+        if (ox < -8 || ox > 8 || oy < -8 || oy > 8) return;
+        int i = (ox + 8) + 17 * (oy + 8);
+        grid[i] = r;
+        gridAt[i] = stamp;
+    }
+
     static boolean tryThrow(RobotInfo[] robots) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return false;
         MapLocation me = rc.getLocation();
+        if (robots == null) robots = rc.senseNearbyRobots(-1, null);
+        // robots we see by offset from us (kings cover their 3x3), so the flight scan never senses tile by tile
+        int stamp = ++gridStamp;
+        for (RobotInfo r : robots) {
+            int ox = r.location.x - me.x, oy = r.location.y - me.y;
+            if (r.type == UnitType.RAT_KING) {
+                for (int ex = -1; ex <= 1; ex++) for (int ey = -1; ey <= 1; ey++) gridPut(ox + ex, oy + ey, r, stamp);
+            } else if (r.team == Team.NEUTRAL) {
+                for (int ex = 0; ex <= 1; ex++) for (int ey = 0; ey <= 1; ey++) gridPut(ox + ex, oy + ey, r, stamp);
+            } else gridPut(ox, oy, r, stamp);
+        }
         Direction bestD = null;
         int bs = Integer.MIN_VALUE;
+        int[] mem = Sym.mem;
+        int w = G.W, h = G.H, blk = Sym.WALL | Sym.DIRT;
         for (int i = 0; i < 8; i++) {
             Direction d = G.DIRS[i];
-            MapLocation t1 = me.add(d);
-            if (!G.onMap(t1.x, t1.y) || Nav.terrainBlocked(t1) || rc.canSenseLocation(t1) && rc.isLocationOccupied(t1)) continue;
+            int ddx = d.dx, ddy = d.dy;
+            int x = me.x + ddx, y = me.y + ddy;
+            if (x < 0 || y < 0 || x >= w || y >= h || (mem[x + w * y] & blk) != 0 || gridAt[(ddx + 8) + 17 * (ddy + 8)] == stamp) continue;
             int s2 = 10;
-            boolean sure = true;
-            MapLocation t = t1;
             for (int k = 2; k <= 8; k++) {
-                t = t.add(d);
+                x += ddx; y += ddy;
                 int dmg = 10 + 4 * (2 * (4 - (k - 1) / 2) + ((k & 1) == 1 ? 1 : 0));
-                if (!G.onMap(t.x, t.y)) { s2 = 10; break; }
-                if (Nav.terrainBlocked(t)) { s2 = dmg; break; }
-                if (rc.canSenseLocation(t)) {
-                    RobotInfo r = rc.senseRobotAtLocation(t);
-                    if (r != null) {
-                        // beyond tile 2 the hit lands next round: a baby has usually moved by then (kings are slow)
-                        boolean far = k > 2 && r.type == UnitType.BABY_RAT;
-                        if (r.team == G.them) s2 = far ? dmg * 2 * Cfg.THROW_FAR_PCT / 100 : dmg * (r.type == UnitType.RAT_KING ? 3 : 2);
-                        else if (r.team == G.us) s2 = -dmg;
-                        else s2 = -50; // a cat eats the rat: no damage, it sleeps
-                        break;
-                    }
+                if (x < 0 || y < 0 || x >= w || y >= h) { s2 = 10; break; }
+                if ((mem[x + w * y] & blk) != 0) { s2 = dmg; break; }
+                int gi = (k * ddx + 8) + 17 * (k * ddy + 8);
+                if (gridAt[gi] == stamp) {
+                    RobotInfo r = grid[gi];
+                    // beyond tile 2 the hit lands next round: a baby has usually moved by then (kings are slow)
+                    boolean far = k > 2 && r.type == UnitType.BABY_RAT;
+                    if (r.team == G.them) s2 = far ? dmg * 2 * Cfg.THROW_FAR_PCT / 100 : dmg * (r.type == UnitType.RAT_KING ? 3 : 2);
+                    else if (r.team == G.us) s2 = -dmg;
+                    else s2 = -50; // a cat eats the rat: no damage, it sleeps
+                    break;
                 }
             }
             s2 = s2 * 2 + (G.hand(me, d) > 0 ? 1 : 0);
