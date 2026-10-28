@@ -19,3 +19,7 @@ s0t	2026-10-28 02:07	pts.top6	33.4
 s0u	2026-10-28 01:55	pts.top6	32.9
 s0y	2026-10-28 02:41	pts.top6	20.8
 s0z	2026-10-28 02:41	pts.top6	31.9
+# pts.top6.3m = mean points vs the top six on DefaultSmall, DefaultMedium, cheesefarm (both sides, 36 games)
+s1g	2026-10-28 03:11	pts.top6.3m	21.2
+s1l	2026-10-28 04:39	pts.top6.3m	18.5
+s1n	2026-10-28 04:39	pts.top6.3m	20.7
