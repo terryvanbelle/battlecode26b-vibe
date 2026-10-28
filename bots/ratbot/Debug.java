@@ -49,11 +49,13 @@ public final class Debug {
 
     /** Replay channel: replays keep each turn's bytecode count but drop indicator strings, so tag() pads the turn's
      *  end until the count mod 128 is a 7-bit tag. Bits 0-4: a baby's move decision (index in WHY) or a king's spawn
-     *  decision (index in KWHY); bit 5: a fighter / a king with enemies in view; bit 6: even parity of bits 0-5.
+     *  decision (index in KWHY); bit 5: role FIGHT (GATHER and ATTACK both 0) / a king with enemies in view;
+     *  bit 6: even parity of bits 0-5.
      *  tools/smuggle.py decodes it; keep the alphabets in step with it. */
     public static final boolean TAG = true;
     public static final String WHY = "-CDEHKMPSWacdfghkmprswyz", KWHY = "-nsfcbd";
-    /** Bytecodes the engine counts after tag()'s getBytecodeNum() read, the pad aside (calibrated on a local game). */
+    /** Bytecodes the engine counts after tag()'s getBytecodeNum() read, the pad aside (calibrated on a local game:
+     *  11 in tag() plus its return). Recalibrate if the engine jar or javac changes (smuggle.py: decode rate < 98%). */
     static final int TAG_K = 12;
     /** No pad with fewer bytecodes left than this (the pad costs at most 127). */
     static final int TAG_MIN_LEFT = 400;

@@ -427,23 +427,37 @@ with tempfile.TemporaryDirectory() as d:
     check(ko['b']['starveHp'] == 0 and ko['b']['otherHp'] == 30 and ko['b']['cause'] == {'bites': 2}
           and ko['b']['died'] == 3 and ko['b']['firstFoe'] == 2, f"king_report attacked {ko['b']}")
     check('HP lost starving 20' in kr.render(list(ko.values())), "king_report render")
-# smuggle: the bytecode-count tag; alphabets and layout must match bots/ratbot/Debug.java
+# smuggle: the bytecode-count tag; alphabets and layout must match bots/ratbot/Debug.java, Baby.java and King.java
 import re as _re
 sg = load('smuggle')
 _dj = open(os.path.join(REPO, 'bots', 'ratbot', 'Debug.java')).read()
+_bj = open(os.path.join(REPO, 'bots', 'ratbot', 'Baby.java')).read()
+_kj = open(os.path.join(REPO, 'bots', 'ratbot', 'King.java')).read()
 _m = _re.search(r'WHY = "([^"]*)", KWHY = "([^"]*)"', _dj)
 check(_m is not None and _m.group(1) == sg.WHY and _m.group(2) == sg.KWHY, "smuggle alphabets match Debug.java")
-check('& 127' in _dj and 'v | 64' in _dj and '? 32 : 0' in _dj, "smuggle layout matches Debug.tag (mod 128, parity bit 6, flag bit 5)")
+check(all(x in _dj for x in ('Baby.role == Baby.FIGHT ? 32 : 0', 'King.sawEnemy ? 32 : 0', 'Integer.bitCount(v) % 2 == 0 ? v : v | 64',
+                             '& 127', 'TAG_MIN_LEFT = %d;' % sg.TAG_MIN_LEFT)), "smuggle layout matches Debug.tagValue / tag")
+check(set(_re.findall(r"\bwhy = '(.)'", _bj)) <= set(sg.WHY) and set(_re.findall(r"spawnWhy = '(.)'", _kj)) <= set(sg.KWHY)
+      and len(sg.WHY) <= 31 and len(sg.KWHY) <= 31, "smuggle: every Baby.why / King.spawnWhy code has an index")
 _rt = all(sg.decode(1000 * 128 + sg.encode(c, h, k), k) == (c, h) for k, al in ((False, sg.WHY), (True, sg.KWHY)) for c in al for h in (False, True))
 check(_rt, "smuggle encode/decode round trip for every code and flag")
 check(sg.encode('#', False, False) & 31 == 31 and sg.decode(sg.encode('#', True, False), False) == ('?', True), "smuggle unknown code")
-check(not sg.parity_ok(1) and sg.parity_ok(3) and sg.decode(129, False) is None, "smuggle parity rejects odd tags")
-_rows = [{'round': str(i), 'id': '5', 'team': '1', 'type': 'RAT', 'bc': str(40 * 128 + sg.encode('m', True, False))} for i in range(60)]
-_rows += [{'round': str(i), 'id': '6', 'team': '2', 'type': 'RAT', 'bc': str(4000 + i)} for i in range(60)]
-_rows += [{'round': '0', 'id': '5', 'team': '1', 'type': 'RAT', 'bc': _rows[0]['bc']}]   # a carried rat's repeated row
+check(not sg.parity_ok(1) and sg.parity_ok(3) and sg.decode(129, False) is None and sg.decode(30, False) is None,
+      "smuggle rejects odd parity and indices encode() never writes")
+def _row(rn, i, team, bc, typ='RAT'):
+    return {'round': str(rn), 'id': str(i), 'team': str(team), 'type': typ, 'bc': str(bc)}
+_m_ = 40 * 128 + sg.encode('m', True, False)
+_rows = [_row(i, 5, 1, _m_ + 128 * (i % 20)) for i in range(60)]
+_rows += [_row(i, 6, 2, 4000 + i) for i in range(60)]
+# a throw turn: the stale row (last turn's count) comes first, the real row last
+_rows += [_row(60, 5, 1, _rows[59]['bc']), _row(60, 5, 1, 40 * 128 + sg.encode('k', False, False))]
+_rows += [_row(61, 5, 1, 0)]                                             # died in its own turn
+_rows += [_row(62, 7, 1, 17500), _row(63, 7, 1, 1 * 128 + sg.encode('W', False, False))]   # overrun, then a late turn
+_rows += [_row(i, 8, 2, 1912, 'KING') for i in range(300)]              # a constant-count opponent king
 _tt = sg.tagged_teams(_rows)
 check(_tt['1'][0] and not _tt['2'][0] and _tt['1'][2] == 61, f"smuggle tagged team detection {_tt}")
-check(sg.summarize(_rows) == {'1': {'F:m': 60}}, f"smuggle summarize one per robot-round {sg.summarize(_rows)}")
+check(sg.summarize(_rows) == {'1': {'F:m': 60, 'G:k': 1}}, f"smuggle summarize: last row, no death/overrun rows {sg.summarize(_rows)}")
+check(not sg.tagged_teams([_row(i, 8, 2, 1912, 'KING') for i in range(300)])['2'][0], "smuggle: a constant count is not a tag")
 check(sg.label('c', True, True) == 'K:cE' and sg.label('W', False, False) == 'G:W', "smuggle labels")
 import subprocess as _sp
 _r = _sp.run([os.path.join(REPO, 'tools', 'snapshot.sh'), 'zz_selftest', os.path.join(REPO, 'no_such_dir')], capture_output=True, text=True)
