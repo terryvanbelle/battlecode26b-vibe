@@ -41,9 +41,9 @@ public final class Cfg {
     /** Guard facing: with an enemy rat within this squared distance, steps strafe so we keep facing it, and a
      *  turn ends facing it (rats are grabbed from behind). 0 = off. */
     public static final int GUARD_DIST2 = 13;
-    /** Bite cheese: a king in combat bites with up to KING_BITE_MAX cheese (c = k*k gives +k damage) above
-     *  KING_BITE_FLOOR; a baby adds up to FINISH_K*FINISH_K cheese when that makes the bite a kill. 0 = off. */
-    public static final int KING_BITE_MAX = 225, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;
+    /** Bite cheese (c = k*k gives +k damage), only when it makes the bite a kill: a king pays up to KING_BITE_MAX
+     *  above KING_BITE_FLOOR, a baby up to FINISH_K*FINISH_K above FINISH_FLOOR. */
+    public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;
     /** Flank: step onto a tile next to an enemy rat that it cannot see, facing it, then grab it after moving. */
     public static final boolean FLANK = true;
     public static final boolean MICRO = false;

@@ -36,6 +36,8 @@ public final class King {
         int before = rc.getGlobalCheese();
         pickUp();
         Econ.received(rc.getGlobalCheese() - before);
+        // a fresh rat (100 HP, bites every turn) is worth far more than one king bite: spawn first
+        spawn(cats, enemies);
         if (!G.coop) bite(enemies);
         if (!G.coop && enemies.length > 0) {
             Comms.write(Comms.ALERT, G.me.x + 1);
@@ -43,7 +45,6 @@ public final class King {
             Comms.write(Comms.ALERT + 2, Comms.stamp());
         }
         if (Cfg.KING_TRAPS && !G.coop) ratTrap(enemies);
-        spawn(cats, enemies);
         move(cats);
         publish();
         Comms.write(Comms.BUDGET, Math.max(0, Math.min(1023, Econ.surplus() / 4)));
@@ -138,14 +139,12 @@ public final class King {
         else G.rc.attack(best.location);
     }
 
-    /** Cheese for a king bite on a target with hp: the least that kills now, else the most the budget allows. */
+    /** Cheese for a king bite on a target with hp: the least that kills now (at most KING_BITE_MAX), else 0. */
     static int biteCheese(int hp, int global) {
         int budget = Math.min(Cfg.KING_BITE_MAX, global - Cfg.KING_BITE_FLOOR);
-        if (budget <= 0) return 0;
-        int kmax = (int) Math.sqrt(budget);
-        if (kmax * kmax > budget) kmax--;
-        for (int k = 0; k <= kmax; k++) if (10 + k >= hp) return k * k;
-        return kmax * kmax;
+        if (budget <= 0 || hp <= 10) return 0;
+        int k = hp - 10;
+        return k * k <= budget ? k * k : 0;
     }
 
     static void spawn(RobotInfo[] cats, RobotInfo[] enemies) throws GameActionException {

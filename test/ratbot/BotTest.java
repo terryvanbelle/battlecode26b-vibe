@@ -422,8 +422,8 @@ public class BotTest {
               "bite cheese: a baby pays k*k only when it makes the kill");
         check(Baby.finishCheese(13, 100) == 0, "bite cheese: none below the floor");
         check(King.biteCheese(18, 1000) == 64, "bite cheese: the king pays the least that kills");
-        check(King.biteCheese(100, 1000) == 225 && King.biteCheese(100, 400) == 100 && King.biteCheese(100, 250) == 0,
-              "bite cheese: else the most the budget allows");
+        check(King.biteCheese(100, 5000) == 0 && King.biteCheese(18, 350) == 0 && King.biteCheese(21, 5000) == 0,
+              "bite cheese: nothing for a bite that does not kill or is over budget");
     }
 
     static void testGuard() throws GameActionException {
