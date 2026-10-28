@@ -54,3 +54,7 @@ You don't need to put all the candidates on progress.png, just the accepted ones
 ## 9. 2026-10-28 12:28 PDT
 
 I'd like you to do an audit of ReplayDump.java, checking to ensure it's capable of extracting all available information, and that it's being used effectively
+
+## 10. 2026-10-28 12:51 PDT
+
+I'd like you to start a file called BEST_PRACTICES.md in the battlecode-vibe repository.  Start it off with a note that you should ensure that you have a replay dumper that is thorough and complete, and is being used effectively.
