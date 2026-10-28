@@ -375,7 +375,8 @@ with tempfile.TemporaryDirectory() as d:
                'mines': [[3, 5]], 'bodies': [{'id': 1, 'team': 1, 'type': 'KING', 'x': 1, 'y': 5},
                                              {'id': 2, 'team': 2, 'type': 'KING', 'x': 18, 'y': 5}]},
               open(os.path.join(d, 'g0.meta.json'), 'w'))
-    open(os.path.join(d, 'g0.turns.tsv'), 'w').write('round\tid\tteam\ttype\tx\ty\n')
+    open(os.path.join(d, 'g0.turns.tsv'), 'w').write('round\tid\tteam\ttype\tx\ty\n'
+        '5\t9\t1\tRAT\t6\t6\n5\t8\t2\tRAT\t8\t6\n5\t1\t1\tKING\t3\t5\n12\t9\t1\tRAT\t10\t2\n12\t8\t2\tRAT\t15\t5\n')
     open(os.path.join(d, 'g0.actions.tsv'), 'w').write('round\tid\tteam\ttype\taction\ta\tb\tc\n'
         '3\t1\t0\tCAT\tcheesespawn\t4,5\t20\t\n3\t1\t0\tCAT\tcheesespawn\t15,5\t20\t\n'   # (16,5) mirrored: x -> 19-x
         '7\t9\t1\tRAT\tpickup\t4,5\t\t\n9\t8\t2\tRAT\tpickup\t15,5\t\t\n'
@@ -390,6 +391,16 @@ with tempfile.TemporaryDirectory() as d:
     check(eo2['A']['own'] == 20 and eo2['B']['enemy'] == 20 and eo2['B']['own'] == 20 and eo2['B']['drops'] == 7
           and eo2['A']['lostOwnSide'] == 20 and eo2['B']['lostOwnSide'] == 20, f"econ teams {eo2['A']} {eo2['B']}")
     check('lost on own side' in er.render(eo2), "econ render")
+    # rat-rounds within 4 of each mine (kings and far rats not counted); --hi stops the trace
+    check((m1['ratsA'], m1['ratsB'], m2['ratsA'], m2['ratsB']) == (1, 0, 0, 1), f"econ rats {m1} {m2}")
+    eh = er.analyse(d, 0, 8)
+    check(eh['mines'][1]['gotB'] == 0 and eh['mines'][1]['left'] == 20 and eh['mines'][0]['gotA'] == 20
+          and eh['mines'][1]['ratsB'] == 0 and eh['rounds'] == 7, f"econ hi {eh['mines']}")
+    st, sn = er.by_side([eo2, dict(eo2, teams={'A': 'x', 'B': 'y'})], 'b')
+    check(sn == 1 and st['own'] == {'rats': 1, 'oppRats': 0, 'spawned': 40, 'got': 20, 'oppGot': 0, 'left': 20}
+          and st['enemy'] == {'rats': 0, 'oppRats': 1, 'spawned': 40, 'got': 20, 'oppGot': 20, 'left': 0},
+          f"econ by_side {st}")
+    check('own' in er.render_sides(st, sn, 'b'), "econ render_sides")
 # panel_pick: per-opponent game rates of one build from replica rows; panel = rates in [lo, hi] with enough games
 pk = load('panel_pick')
 prow = lambda a, b, sa, sb, src='replica': dict(source=src, teamA=a, teamB=b, scoreA=str(sa), scoreB=str(sb))

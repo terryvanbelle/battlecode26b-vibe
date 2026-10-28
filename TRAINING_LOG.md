@@ -285,14 +285,18 @@
   Residual (cheese bites, error) -43/-111.
   - The bank gap of ~600 is ~350 delivery and ~270 rat traps.
   - Picked up: 647/1344. Carry-turns: 438/836. Rat-rounds: 3461/3021.
-- Per mine, to r200 (25 games):
-  - Mines on our half spawned 44.7k cheese:
-    - we picked up 14.1k (32%);
-    - they picked up 13.1k (29%);
-    - 19.0k lay uncollected (42%; median pile age 90 rounds).
-  - Our rat-rounds there: 46.7k. Our rats pile onto the 1-2 mines nearest the king and leave the rest at zero,
-    e.g. rift (12,26) 3613 rat-rounds (18 rats) while 5 other home mines got 0-10, and keepout (47,30) 3383.
-  - On their half they picked up 68% of the cheese with 18k rat-rounds, and they visit every mine.
-- Next: gatherers must spread over every home mine (cap per mine, leave a crowded mine, search for unknown
-  mines). MINE_BALANCE (s3e) lost 5.4 in self-play vs s2o, but self-play cannot show the field's theft of
-  neglected mines.
+- Per mine, to r200 (`econ_report.py --team vibe26b --hi 200` over the 30 games; it adds each listed mine's mirror
+  partner, which the first scratch count missed). Per game:
+  - Home mines: we spent 1501 rat-rounds there, they 217. Of 1227 cheese spawned, we picked up 374 (30%), they
+    240 (20%), and 613 lay uncollected (50%).
+  - Their home mines: they spent 652 rat-rounds and picked up 729 of 1236 (59%); we picked up 75.
+  - Cheese per rat-round at home mines: ours 0.25, theirs 1.1. Our rats crowd the 1-2 mines nearest the king and
+    leave the rest empty (rift (12,26): 3613 rat-rounds; keepout (47,30): 3383).
+  - Cause, seen locally (s3h vs s2o, keepout): a gatherer picks its mine once, at birth, and keeps it. Rats born
+    before the far mines are known stay at the nearest one. s3h's gossip and scouts find all 6 home mines by r103,
+    yet (47,30) got 2658 rat-rounds and the others 4-73; 1220 of s3h's home cheese lay uncollected at r200. Even so,
+    s3h picked up 1520 to s2o's 580 there.
+- Next: gatherers must spread over every home mine. s3t = s3h + MINE_BALANCE: each rat takes the (hash mod count)-th
+  known home mine and picks again whenever the team's known-mine count changes. It is queued as sp7. On the s3d
+  base without gossip, MINE_BALANCE (s3e) lost 5.4 in self-play vs s2o. Self-play cannot show the field's theft
+  from neglected mines.
