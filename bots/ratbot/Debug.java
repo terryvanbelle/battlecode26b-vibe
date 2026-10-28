@@ -7,13 +7,14 @@ public final class Debug {
     public static void indicator() {
         StringBuilder sb = new StringBuilder(96);
         if (G.king) {
-            sb.append("K sp=").append(King.spawned).append(" inc=").append(Econ.rate100()).append(" sur=").append(Econ.surplus());
+            sb.append("K sp=").append(King.spawned).append(" tr=").append(King.traps).append(" inc=").append(Econ.rate100()).append(" sur=").append(Econ.surplus());
         } else {
             sb.append(Baby.role == Baby.FIGHT ? "F" : Baby.role == Baby.ATTACK ? "A" : "G")
               .append(" dl=").append(Baby.delivered)
               .append(" bc=").append(Baby.bitesCat)
               .append(" br=").append(Baby.bitesRat)
               .append(" tr=").append(Baby.trapsPlaced)
+              .append(" rt=").append(Baby.ratTraps).append(" nap=").append(Baby.naps).append(" th=").append(Baby.throwsDone)
               .append(" dg=").append(Nav.digs);
         }
         sb.append(" sym=").append(Sym.mask);

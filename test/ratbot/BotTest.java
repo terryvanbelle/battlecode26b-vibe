@@ -24,6 +24,7 @@ public class BotTest {
     static List<Integer> squeaks = new ArrayList<>();
     static int digsDone;
     static List<MapLocation> bitten = new ArrayList<>();
+    static Direction thrown;
 
     static boolean onMap(MapLocation l) { return l.x >= 0 && l.y >= 0 && l.x < W && l.y < H; }
 
@@ -41,7 +42,7 @@ public class BotTest {
     }
 
     static void reset() {
-        walls.clear(); dirt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear();
+        walls.clear(); dirt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null;
         me = new MapLocation(5, 5); facing = Direction.NORTH; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0;
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0;
@@ -113,6 +114,10 @@ public class BotTest {
                         int d = me.distanceSquaredTo(l);
                         return actCd < 10 && sensable(l) && d >= 1 && d <= 2 && r != null && r.team != Team.A;
                     }
+                    case "isLocationOccupied": return robots.containsKey((MapLocation) a[0]);
+                    case "senseRobotAtLocation": return robots.get((MapLocation) a[0]);
+                    case "canThrowRat": { MapLocation t = me.add(facing); return actCd < 10 && passable(t) && !robots.containsKey(t); }
+                    case "throwRat": thrown = facing; actCd += 20; return null;
                     case "attack": bitten.add((MapLocation) a[0]); actCd += 10; return null;
                     case "squeak": squeaks.add((Integer) a[0]); return true;
                     case "readSqueaks": return new Message[0];
@@ -306,7 +311,27 @@ public class BotTest {
         check(b && bitten.size() == 1 && bitten.get(0).equals(new MapLocation(6, 6)), "bite: king's nearest body tile (" + bitten + ")");
     }
 
+    static void testThrowDirection() throws GameActionException {
+        reset(); install();
+        // a wall two tiles east, an enemy three tiles west, open north/south: the wall throw (42) beats nothing (10)
+        // but the enemy (38, doubled for hurting them) beats the wall
+        walls.add(new MapLocation(7, 5));
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) {
+            MapLocation l = new MapLocation(x, y);
+            Sym.record(x, y, walls.contains(l), false, false);
+        }
+        check(Baby.tryThrow(new RobotInfo[0]) && thrown == Direction.EAST, "throw: toward the wall behind a free tile (" + thrown + ")");
+        reset(); install();
+        walls.add(new MapLocation(7, 5));
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, walls.contains(new MapLocation(x, y)), false, false);
+        RobotInfo e = enemyRat(9, 2, 5, 100);
+        robots.put(e.location, e);
+        facing = Direction.WEST; // so the enemy is sensable
+        check(Baby.tryThrow(new RobotInfo[]{e}) && thrown == Direction.WEST, "throw: into an enemy beats a wall (" + thrown + ")");
+    }
+
     public static void main(String[] args) throws Exception {
+        testThrowDirection();
         testBiteTargets();
         testTransferReach();
         testHandMirror();

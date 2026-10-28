@@ -5,6 +5,12 @@ public final class Cfg {
     public static final int MAX_BABIES = 30, MAX_BABIES_WAR = 60;
     /** Cheese kept when spawning under attack. */
     public static final int WAR_FLOOR = 150;
+    /** King places rat traps toward enemy rats within this squared distance once cooperation is over. */
+    public static final boolean KING_TRAPS = true;
+    public static final int KING_TRAP_DIST2 = 20;
+    /** Babies at war grab adjacent enemies and throw them; lay rat traps toward enemies within BABY_TRAP_DIST2. */
+    public static final boolean NAP = true, BABY_RAT_TRAPS = true;
+    public static final int BABY_TRAP_DIST2 = 13;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;
     /** Raw cheese at which a gatherer heads home. */

@@ -62,8 +62,12 @@ public final class Baby {
                 if (d < bd) { bd = d; nearestEnemy = r; }
             }
         }
+        // 0. a carried enemy is thrown as soon as we can act
+        if (rc.getCarrying() != null) tryThrow(robots);
         // 1. bites: enemy rats once cooperation is over (they shoot back; cats wait), then cats.
         //    Attackers open the war themselves, but only on the enemy king.
+        if (!G.coop && Cfg.NAP) tryCarry(robots);
+        if (!G.coop && Cfg.BABY_RAT_TRAPS) tryRatTrap();
         if (!G.coop) biteEnemies(robots);
         else if (role == ATTACK && enemyKing != null) biteEnemies(new RobotInfo[]{enemyKing});
         if (cat != null) tryBiteCat(cat);
@@ -177,6 +181,91 @@ public final class Baby {
     }
 
     static RobotInfo eKing, nearestEnemy;
+    public static int naps, throwsDone, ratTraps;
+
+    /** Grab an adjacent enemy baby rat (the engine allows it when it cannot see us or is weaker). */
+    static boolean tryCarry(RobotInfo[] robots) throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady() || rc.getCarrying() != null) return false;
+        RobotInfo best = null;
+        for (RobotInfo r : robots) {
+            if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
+            if (G.me.distanceSquaredTo(r.location) > 2) continue;
+            if (!rc.canCarryRat(r.location)) continue;
+            if (best == null || r.health > best.health) best = r;
+        }
+        if (best == null) return false;
+        rc.carryRat(best.location);
+        naps++;
+        return true;
+    }
+
+    /**
+     * Throw the carried rat along the direction that hurts most: the flight (6-8 tiles) hits the first robot,
+     * wall or dirt for 46/42 (first two tiles), 38/34, 30/26, 22/18; the victim takes the same damage as the robot hit.
+     * Hitting our own rat costs its damage; an empty flight lands for 10.
+     */
+    static boolean tryThrow(RobotInfo[] robots) throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady()) return false;
+        MapLocation me = rc.getLocation();
+        Direction bestD = null;
+        int bs = Integer.MIN_VALUE;
+        for (int i = 0; i < 8; i++) {
+            Direction d = G.DIRS[i];
+            MapLocation t1 = me.add(d);
+            if (!G.onMap(t1.x, t1.y) || Nav.terrainBlocked(t1) || rc.canSenseLocation(t1) && rc.isLocationOccupied(t1)) continue;
+            int s2 = 10;
+            MapLocation t = t1;
+            for (int k = 2; k <= 8; k++) {
+                t = t.add(d);
+                int dmg = 10 + 4 * (2 * (4 - (k - 1) / 2) + ((k & 1) == 1 ? 1 : 0));
+                if (!G.onMap(t.x, t.y)) { s2 = 10; break; }
+                if (Nav.terrainBlocked(t)) { s2 = dmg; break; }
+                if (rc.canSenseLocation(t)) {
+                    RobotInfo r = rc.senseRobotAtLocation(t);
+                    if (r != null) {
+                        if (r.team == G.them) s2 = dmg * (r.type == UnitType.RAT_KING ? 3 : 2);
+                        else if (r.team == G.us) s2 = -dmg;
+                        else s2 = -50; // a cat eats the rat: no damage, it sleeps
+                        break;
+                    }
+                }
+            }
+            s2 = s2 * 2 + (G.hand(me, d) > 0 ? 1 : 0);
+            if (s2 > bs) { bs = s2; bestD = d; }
+        }
+        if (bestD == null) return false;
+        if (rc.getDirection() != bestD) { if (!rc.canTurn(bestD)) return false; rc.turn(bestD); G.facing = bestD; }
+        if (!rc.canThrowRat()) return false;
+        rc.throwRat();
+        throwsDone++;
+        return true;
+    }
+
+    /** Rat trap on the front tile nearest an approaching enemy rat (50 damage + stun when it enters the 3x3). */
+    static boolean tryRatTrap() throws GameActionException {
+        RobotController rc = G.rc;
+        if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= 25) return false;
+        if (rc.getAllCheese() < Cfg.WAR_FLOOR + 20) return false;
+        int d0 = G.me.distanceSquaredTo(nearestEnemy.location);
+        if (d0 <= 2 || d0 > Cfg.BABY_TRAP_DIST2) return false;
+        MapLocation me = rc.getLocation();
+        Direction f = rc.getDirection();
+        Direction[] fr = {f, f.rotateLeft(), f.rotateRight()};
+        MapLocation best = null;
+        int bs = Integer.MAX_VALUE;
+        for (Direction d : fr) {
+            MapLocation l = me.add(d);
+            if (!rc.canPlaceRatTrap(l)) continue;
+            int s2 = l.distanceSquaredTo(nearestEnemy.location);
+            if (s2 < bs) { bs = s2; best = l; }
+        }
+        if (best == null || bs >= d0) return false;
+        rc.placeRatTrap(best);
+        ratTraps++;
+        return true;
+    }
 
     /** Bite the best adjacent enemy: a king first, then the lowest health; turn to face it when needed. */
     static boolean biteEnemies(RobotInfo[] robots) throws GameActionException {

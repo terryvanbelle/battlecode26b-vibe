@@ -42,6 +42,7 @@ public final class King {
             Comms.write(Comms.ALERT + 1, G.me.y + 1);
             Comms.write(Comms.ALERT + 2, Comms.stamp());
         }
+        if (Cfg.KING_TRAPS && !G.coop) ratTrap(enemies);
         spawn(cats, enemies);
         move(cats);
         publish();
@@ -172,6 +173,35 @@ public final class King {
         } else {
             digRing(goal);
         }
+    }
+
+    public static int traps;
+
+    /** War defense: a rat trap on the reachable tile nearest an approaching enemy rat (50 damage + stun). */
+    static void ratTrap(RobotInfo[] enemies) throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady() || rc.getGlobalCheese() < Cfg.WAR_FLOOR + 20 || rc.getNumberRatTraps() >= 25) return;
+        MapLocation c = rc.getLocation();
+        MapLocation foe = null;
+        int fd = Integer.MAX_VALUE;
+        for (RobotInfo e : enemies) {
+            if (e.type == UnitType.RAT_KING) continue;
+            int d = c.distanceSquaredTo(e.location);
+            if (d < fd) { fd = d; foe = e.location; }
+        }
+        if (foe == null || fd > Cfg.KING_TRAP_DIST2) return;
+        MapLocation best = null;
+        int bs = Integer.MAX_VALUE;
+        for (int dx = -2; dx <= 2; dx++)
+            for (int dy = -2; dy <= 2; dy++) {
+                if (Math.abs(dx) < 2 && Math.abs(dy) < 2) continue;
+                MapLocation l = c.translate(dx, dy);
+                if (!rc.canPlaceRatTrap(l)) continue;
+                // the trap fires when the enemy enters its 3x3: covering the tile next to the foe's line in
+                int s2 = l.distanceSquaredTo(foe) * 2 + (G.hand(c, c.directionTo(l)) > 0 ? 1 : 0);
+                if (s2 < bs) { bs = s2; best = l; }
+            }
+        if (best != null) { rc.placeRatTrap(best); traps++; }
     }
 
     public static int digs;
