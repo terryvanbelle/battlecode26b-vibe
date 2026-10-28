@@ -438,6 +438,7 @@ public final class Baby {
             MapLocation cc = new MapLocation(cat.location.x, cat.location.y);
             if (Nav.flee(cc)) return;
         }
+        if (!G.coop && retreat()) return;
         if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) return;
         if (!G.coop && Cfg.FACE_ENEMY && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) return;
         if (role == ATTACK && attack()) return;
@@ -588,6 +589,15 @@ public final class Baby {
             if (d <= 20 && d < pd) { pd = d; prey = r; }
         }
         return prey;
+    }
+
+    /** A wounded rat near enemies falls back to its king instead of being finished off. */
+    static boolean retreat() throws GameActionException {
+        if (G.rc.getHealth() > Cfg.RETREAT_HP || !nearEnemy(20)) return false;
+        MapLocation k = Comms.nearestKing(G.me);
+        if (k == null || G.cheb(G.me, k) <= 2) return false;
+        Nav.goTo(k);
+        return true;
     }
 
     static boolean nearEnemy(int d2) {

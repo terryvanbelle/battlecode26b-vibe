@@ -19,6 +19,7 @@ public class BotTest {
     static int[] shared = new int[64];
     static MapLocation me = new MapLocation(5, 5);
     static Direction facing = Direction.NORTH;
+    static int health = 100;
     static int round = 1, global = 1000, raw = 0, moveCd = 0, turnCd = 0, actCd = 0;
     static UnitType type = UnitType.BABY_RAT;
     static List<Integer> squeaks = new ArrayList<>();
@@ -43,7 +44,7 @@ public class BotTest {
 
     static void reset() {
         walls.clear(); dirt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null;
-        me = new MapLocation(5, 5); facing = Direction.NORTH; round = 1; global = 1000; raw = 0;
+        me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0;
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0;
@@ -122,7 +123,7 @@ public class BotTest {
                     case "squeak": squeaks.add((Integer) a[0]); return true;
                     case "readSqueaks": return new Message[0];
                     case "getCurrentRatCost": return 10;
-                    case "getHealth": return 100;
+                    case "getHealth": return health;
                     case "setIndicatorString": return null;
                     default: throw new UnsupportedOperationException("fakeRc: " + m.getName());
                 }
@@ -361,7 +362,18 @@ public class BotTest {
         check(facing == me.directionTo(adj.location), "war: gatherer faces the adjacent enemy");
     }
 
+    static void testRetreat() throws GameActionException {
+        reset(); install();
+        Baby.nearestEnemy = enemyRat(50, 5, 7, 100);
+        check(!Baby.retreat(), "retreat: a healthy rat does not retreat");
+        health = 30;
+        Comms.kings[0] = new MapLocation(5, 0); Comms.numKings = 1;
+        check(Baby.retreat(), "retreat: a wounded rat near an enemy falls back");
+        check(me.y < 5, "retreat: it moved toward its king (at " + me + ")");
+    }
+
     public static void main(String[] args) throws Exception {
+        testRetreat();
         testWarRoles();
         testMicroRetreatsWhenOutnumbered();
         testThrowDirection();
