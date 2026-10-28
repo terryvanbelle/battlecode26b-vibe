@@ -58,23 +58,25 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Economy report: `tools/econ_report.py TSVDIR|REPLAY` (each cheese pile from spawn to pickup: per mine its side,
   cheese spawned, taken by each team, wait, left on the ground; per team own/enemy/middle/drops and cheese lost on its
   own side).
-- **Ladder panel (accepts)**: replica, `tools/galaxy26/contest.py`. Panel v1 = 8 field bots around our *rating*, 3
-  maps each (`research/panel/v1-setN.json`); s2o's control went 6-0, 8-1 vs two of them and 0-6, 0-9 vs two others, so
-  v2 will be picked from a calibration sweep (`research/panel/calib1.json`: s2o vs ~30 ladder bots, 3 maps x both
-  sides, queued) as the bots s2o beats 25-75%. Panel, both sides (`--vs NAME@+,NAME@-` per opponent: 48 games a block). Control:
-  the incumbent's own block on the set; candidate: submit it, create its block, re-submit the incumbent; `contest.py
-  fetch --new`, then `contest.py paired CONTROL_IDS CAND_IDS` (win/loss per cell; accept at t >= 2 with D >= 4,
-  blocks 1-3 reject at t <= 0 / 1 / 1.5). GAP: graded (points) score from panel replays; autoscrim can pair us while
-  a candidate is active.
+- **Ladder panel (accepts)**: replica, `tools/galaxy26/contest.py`. Panel v2 = 8 field bots s2o beat 25-75% in
+  calibration (`tools/panel_pick.py s2o` on games.csv; plus C0derTang_v6 5/6 and bestsofar 1/6 at the edges), 3 maps
+  each, both sides: set 1 `research/panel/v2-set1.json` (s2o's reference matches `v2-set1-ref-s2o.txt`, from the
+  calibration and v1 games), set 2 `v2-set2.json` (maps drawn as the requests go out; s2o's control queued). 48 games
+  a set. Candidate: submit it, `contest.py scrim --vs NAME@+,NAME@-,... --panel research/panel/v2-setN.json --queue
+  research/panel/queue.tsv`, re-submit the incumbent; `contest.py fetch --new --pages 30`, then `contest.py paired
+  REF_IDS CAND_IDS` (win/loss per cell; accept at t >= 2 with D >= 4, blocks 1-3 reject at t <= 0 / 1 / 1.5).
+  GAP: graded (points) score from panel replays; autoscrim can pair us while a candidate is active.
 - Ratings and progress: `tools/progress-refresh.sh` (see above); milestones `tools/milestones.py add LABEL`.
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (see TRAINING_LOG.md for the history)
-- Incumbent on the replica: s2o (submission #62, rating ~1408, #24 of 54). Dev base: s3d line (s3a dig-first, s3b
-  king defense + mine spread, s3c centre-first explore, s3d king digs to its mine) + the king's first-turn sense guard
-  (60x60 first turns overran). sp1: s3e (+MINE_BALANCE) and s3g (+KING_PRESS) rejected (-5.4, t -2.4), s3f (+gossip,
-  scouts) passed (+3.2, t +1.55). sp2 (running): s3h (gossip + scouts), s3i (dev control), s3j (gossip only).
+- Incumbent on the replica: s2o (submission #62, #24 of 54). Dev base = s3h: the s3d line (s3a dig-first, s3b king
+  defense + mine spread, s3c centre-first explore, s3d king digs to its mine) + first-turn sense guard + GOSSIP_ALWAYS +
+  SCOUT_EVERY 4. Self-play vs s2o: s3i (s3d line alone) -4.0, t -2.04 (reject); s3h +0.9; gossip+scouts are worth
+  +5 to +9, the rest of the s3d line costs ~4 vs s2o. Queue on the VM: sp3 s3k/s3l/s3m (economy switches on s3i),
+  sp4 s3n (cat dodge + yield, on s3i), sp5 ablations of s3h (s3o no FLOW/DIG_FIRST, s3p no KING_ROAM/KING_DIG, s3q
+  no DEFEND/MINE_SPREAD/explore-centre). Off-by-default switches in dev: KING_DODGE + YIELD_KING, HUNGRY, CARRY_MAX.
 - Against examplefuncsplayer (all 74 maps, both sides): v0d won 134-14. Against the six strongest field bots we
   score ~26% of points and win ~5 of 72; Version41 out-collects us ~2-3x (it tunnels to the centre from round 3 and
   walks its king to the mines).

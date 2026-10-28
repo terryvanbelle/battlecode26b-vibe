@@ -140,10 +140,10 @@ public final class Cfg {
     public static final boolean GOSSIP = true;
     /** Gossip all game: a rat away from the king squeaks a mine it knows that the king's list lacks, and every rat
      *  notes the mines it hears, so news reaches the king with the next delivery instead of its finder. */
-    public static final boolean GOSSIP_ALWAYS = false;
+    public static final boolean GOSSIP_ALWAYS = true;
     /** Scouts: one in SCOUT_EVERY gatherers explores our half (never-seen tiles) until round SCOUT_UNTIL, then
      *  gathers (0 = off). */
-    public static final int SCOUT_EVERY = 0, SCOUT_UNTIL = 150;
+    public static final int SCOUT_EVERY = 4, SCOUT_UNTIL = 150;
     public static final int DIG_MIN_CHEESE = 60;
     /** Live babies kept unconditionally (while CORE_FLOOR cheese remain) before the income test applies. */
     public static final int CORE_BABIES = 18, CORE_FLOOR = 300;

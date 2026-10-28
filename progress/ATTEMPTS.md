@@ -12,95 +12,99 @@ Every bot attempt (a snapshot under bots/), oldest first, with its score at each
 
 | attempt | date (PDT) | base | description | top6 3 maps | top6 new maps | k/d | top6 (older panels) | vs example | rating | field score | outcome |
 |---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|
-| s0e | 2026-10-27 23:26 |  | Gauntlet s0e vs the top 5 (partial, 80 games): **0-80**. Every loss is RATKING_DESTROYED by a rush: backstab at |  |  |  |  |  | 1389 +- 125 | 39.4% | submitted to replica (#61) |
-| s0g | 2026-10-27 23:45 |  | s0g war mode: babies bite the best adjacent enemy (king first, then lowest HP; turn to face), close on visible |  |  |  | 23.7 |  | 1422 +- 248 | 41.7% |  |
-| s0h | 2026-10-27 23:46 |  |  |  |  |  | 20.2 |  | 1364 +- 279 | 37.7% |  |
-| s0i | 2026-10-28 00:10 |  |  |  |  |  |  |  | 1449 +- 443 | 43.6% |  |
-| s0j | 2026-10-28 00:10 |  |  |  |  |  |  |  | 1667 +- 348 | 58.1% |  |
+| s0e | 2026-10-27 23:26 |  | Gauntlet s0e vs the top 5 (partial, 80 games): **0-80**. Every loss is RATKING_DESTROYED by a rush: backstab at |  |  |  |  |  | 1387 +- 125 | 39.5% | submitted to replica (#61) |
+| s0g | 2026-10-27 23:45 |  | s0g war mode: babies bite the best adjacent enemy (king first, then lowest HP; turn to face), close on visible |  |  |  | 23.7 |  | 1422 +- 249 | 42.0% |  |
+| s0h | 2026-10-27 23:46 |  |  |  |  |  | 20.2 |  | 1365 +- 279 | 38.0% |  |
+| s0i | 2026-10-28 00:10 |  |  |  |  |  |  |  | 1450 +- 443 | 43.9% |  |
+| s0j | 2026-10-28 00:10 |  |  |  |  |  |  |  | 1668 +- 348 | 58.2% |  |
 | s0k | 2026-10-28 00:18 |  |  |  |  |  |  |  |  |  |  |
 | s0l | 2026-10-28 00:18 |  |  |  |  |  |  |  |  |  |  |
-| s0m | 2026-10-28 00:18 |  | s0m (core 12, trap floor 500) 0/28 vs the top six; s0n (+rush) 1/29; s0o (+Micro) 0/54. |  |  |  | 28.8 |  | 1504 +- 64 | 47.3% |  |
-| s0n | 2026-10-28 00:18 |  | s0m (core 12, trap floor 500) 0/28 vs the top six; s0n (+rush) 1/29; s0o (+Micro) 0/54. |  |  |  | 20.7 |  | 1563 +- 247 | 51.3% |  |
-| s0o | 2026-10-28 00:19 |  | s0m (core 12, trap floor 500) 0/28 vs the top six; s0n (+rush) 1/29; s0o (+Micro) 0/54. |  |  |  | 29.9 |  | 1404 +- 239 | 40.4% |  |
-| s0p | 2026-10-28 00:48 |  | s0p/s0q: gatherers ignore non-adjacent enemies in war (WAR_GATHER 1/2). s0r: s0p + POUNCE (fighters target an enemy |  |  |  | 28.2 |  | 1469 +- 279 | 45.0% |  |
-| s0q | 2026-10-28 00:48 |  |  |  |  |  | 25.9 |  | 1466 +- 281 | 44.7% |  |
-| s0r | 2026-10-28 00:48 |  | hold. They also ratnap about 3x more (67 vs 23 in the s0r game) and bite twice as often; our carriers get grabbed |  |  |  | 29.1 |  | 1672 +- 64 | 58.4% |  |
-| s0s | 2026-10-28 01:19 |  | s0s (core 18, trap floor 1000) 0/42, s0t (no baby traps) 0/40, s0u (+retreat at <=40 HP) 0/48. |  |  |  | 32.7 |  | 1418 +- 193 | 41.4% |  |
-| s0t | 2026-10-28 01:19 |  | s0s (core 18, trap floor 1000) 0/42, s0t (no baby traps) 0/40, s0u (+retreat at <=40 HP) 0/48. |  |  |  | 33.4 |  | 1418 +- 193 | 41.4% |  |
-| s0u | 2026-10-28 01:19 |  | s0s (core 18, trap floor 1000) 0/42, s0t (no baby traps) 0/40, s0u (+retreat at <=40 HP) 0/48. |  |  |  | 32.9 |  | 1428 +- 108 | 42.1% |  |
-| v0d | 2026-10-28 01:20 |  | v0d (best vs example) wins 27 of the 37 example maps s0m lost; s0u wins 13. The conservative v0d spawner suits |  |  |  |  | 0.905 | 1726 +- 127 | 62.0% |  |
+| s0m | 2026-10-28 00:18 |  | s0m (core 12, trap floor 500) 0/28 vs the top six; s0n (+rush) 1/29; s0o (+Micro) 0/54. |  |  |  | 28.8 |  | 1504 +- 64 | 47.5% |  |
+| s0n | 2026-10-28 00:18 |  | s0m (core 12, trap floor 500) 0/28 vs the top six; s0n (+rush) 1/29; s0o (+Micro) 0/54. |  |  |  | 20.7 |  | 1563 +- 247 | 51.4% |  |
+| s0o | 2026-10-28 00:19 |  | s0m (core 12, trap floor 500) 0/28 vs the top six; s0n (+rush) 1/29; s0o (+Micro) 0/54. |  |  |  | 29.9 |  | 1404 +- 239 | 40.7% |  |
+| s0p | 2026-10-28 00:48 |  | s0p/s0q: gatherers ignore non-adjacent enemies in war (WAR_GATHER 1/2). s0r: s0p + POUNCE (fighters target an enemy |  |  |  | 28.2 |  | 1469 +- 280 | 45.2% |  |
+| s0q | 2026-10-28 00:48 |  |  |  |  |  | 25.9 |  | 1466 +- 281 | 44.9% |  |
+| s0r | 2026-10-28 00:48 |  | hold. They also ratnap about 3x more (67 vs 23 in the s0r game) and bite twice as often; our carriers get grabbed |  |  |  | 29.1 |  | 1667 +- 64 | 58.1% |  |
+| s0s | 2026-10-28 01:19 |  | s0s (core 18, trap floor 1000) 0/42, s0t (no baby traps) 0/40, s0u (+retreat at <=40 HP) 0/48. |  |  |  | 32.7 |  | 1418 +- 193 | 41.7% |  |
+| s0t | 2026-10-28 01:19 |  | s0s (core 18, trap floor 1000) 0/42, s0t (no baby traps) 0/40, s0u (+retreat at <=40 HP) 0/48. |  |  |  | 33.4 |  | 1419 +- 193 | 41.7% |  |
+| s0u | 2026-10-28 01:19 |  | s0s (core 18, trap floor 1000) 0/42, s0t (no baby traps) 0/40, s0u (+retreat at <=40 HP) 0/48. |  |  |  | 32.9 |  | 1428 +- 108 | 42.4% |  |
+| v0d | 2026-10-28 01:20 |  | v0d (best vs example) wins 27 of the 37 example maps s0m lost; s0u wins 13. The conservative v0d spawner suits |  |  |  |  | 0.905 | 1727 +- 127 | 62.0% |  |
 | s0v | 2026-10-28 02:11 |  | s0v fortress; s0w/s0x + hard spawn floor 600 (king lives, but the army is gone); s0y/s0z + TrapRisk. |  |  |  |  |  |  |  |  |
 | s0w | 2026-10-28 02:11 |  | s0v fortress; s0w/s0x + hard spawn floor 600 (king lives, but the army is gone); s0y/s0z + TrapRisk. |  |  |  |  |  |  |  |  |
 | s0x | 2026-10-28 02:11 |  |  |  |  |  |  |  |  |  |  |
-| s0y | 2026-10-28 02:11 |  | s0v fortress; s0w/s0x + hard spawn floor 600 (king lives, but the army is gone); s0y/s0z + TrapRisk. |  |  |  | 20.8 |  | 1385 +- 201 | 39.1% |  |
-| s0z | 2026-10-28 02:11 |  | s0y (fortress + TrapRisk) 0/48 pts 21, s0z (no fortress) 0/48 pts 32. The fortress is off from now on. |  |  |  | 31.9 |  | 1423 +- 192 | 41.8% |  |
-| s1a | 2026-10-28 02:14 |  | Economy sweep s1a-s1f (core 14/18, floors 150/300/600, trap minimum 400/1000) vs Version41, Icarus, Finals, |  |  |  |  |  | 1394 +- 402 | 39.8% |  |
-| s1b | 2026-10-28 02:45 |  |  |  |  |  |  |  | 1394 +- 402 | 39.8% |  |
-| s1c | 2026-10-28 02:45 |  |  |  |  |  |  |  | 1394 +- 402 | 39.8% |  |
-| s1d | 2026-10-28 02:45 |  |  |  |  |  |  |  | 1394 +- 402 | 39.8% |  |
-| s1e | 2026-10-28 02:45 |  |  |  |  |  |  |  | 1394 +- 402 | 39.8% |  |
-| s1f | 2026-10-28 02:45 |  | Economy sweep s1a-s1f (core 14/18, floors 150/300/600, trap minimum 400/1000) vs Version41, Icarus, Finals, |  |  |  |  |  | 1394 +- 402 | 39.8% |  |
-| s1g | 2026-10-28 02:47 |  | landings. Fixed ('land' rows). Real grabs, s1g vs Version41: 14 for us, 38 for them (our rats were thrown 31 times, | 21.2 |  | 1.26 |  |  | 1404 +- 207 | 40.5% |  |
-| s1h | 2026-10-28 03:09 |  | s1h/s1i: guard facing. With an enemy within d2 13 (s1i: 20), steps strafe so we keep facing it, and every turn |  |  |  |  |  | 1480 +- 477 | 45.7% |  |
+| s0y | 2026-10-28 02:11 |  | s0v fortress; s0w/s0x + hard spawn floor 600 (king lives, but the army is gone); s0y/s0z + TrapRisk. |  |  |  | 20.8 |  | 1386 +- 201 | 39.5% |  |
+| s0z | 2026-10-28 02:11 |  | s0y (fortress + TrapRisk) 0/48 pts 21, s0z (no fortress) 0/48 pts 32. The fortress is off from now on. |  |  |  | 31.9 |  | 1424 +- 192 | 42.1% |  |
+| s1a | 2026-10-28 02:14 |  | Economy sweep s1a-s1f (core 14/18, floors 150/300/600, trap minimum 400/1000) vs Version41, Icarus, Finals, |  |  |  |  |  | 1395 +- 403 | 40.1% |  |
+| s1b | 2026-10-28 02:45 |  |  |  |  |  |  |  | 1395 +- 403 | 40.1% |  |
+| s1c | 2026-10-28 02:45 |  |  |  |  |  |  |  | 1395 +- 403 | 40.1% |  |
+| s1d | 2026-10-28 02:45 |  |  |  |  |  |  |  | 1395 +- 403 | 40.1% |  |
+| s1e | 2026-10-28 02:45 |  |  |  |  |  |  |  | 1395 +- 403 | 40.1% |  |
+| s1f | 2026-10-28 02:45 |  | Economy sweep s1a-s1f (core 14/18, floors 150/300/600, trap minimum 400/1000) vs Version41, Icarus, Finals, |  |  |  |  |  | 1395 +- 403 | 40.1% |  |
+| s1g | 2026-10-28 02:47 |  | landings. Fixed ('land' rows). Real grabs, s1g vs Version41: 14 for us, 38 for them (our rats were thrown 31 times, | 21.2 |  | 1.26 |  |  | 1405 +- 207 | 40.8% |  |
+| s1h | 2026-10-28 03:09 |  | s1h/s1i: guard facing. With an enemy within d2 13 (s1i: 20), steps strafe so we keep facing it, and every turn |  |  |  |  |  | 1480 +- 477 | 45.9% |  |
 | s1i | 2026-10-28 03:09 |  | s1h/s1i: guard facing. With an enemy within d2 13 (s1i: 20), steps strafe so we keep facing it, and every turn |  |  |  |  |  |  |  |  |
 | s1j | 2026-10-28 03:11 |  | s1j: king bites in combat with up to 225 cheese (+15), babies pay k*k for a finishing bite. |  |  |  |  |  |  |  |  |
 | s1k | 2026-10-28 03:13 |  | s1k: everyone fights (WAR_GATHER 0). s1l: also no trap-risk mask while an enemy is within d2 20. Damage dealt in |  |  |  |  |  |  |  |  |
-| s1l | 2026-10-28 03:13 |  | s1k: everyone fights (WAR_GATHER 0). s1l: also no trap-risk mask while an enemy is within d2 20. Damage dealt in | 18.5 |  | 1.03 |  |  | 1560 +- 306 | 51.1% |  |
+| s1l | 2026-10-28 03:13 |  | s1k: everyone fights (WAR_GATHER 0). s1l: also no trap-risk mask while an enemy is within d2 20. Damage dealt in | 18.5 |  | 1.03 |  |  | 1562 +- 307 | 51.3% |  |
 | s1m | 2026-10-28 03:16 |  | s1m: flank (step onto an enemy's blind neighbour facing it, grab after moving). Vs Icarus: grabs 75 vs 62, |  |  |  |  |  |  |  |  |
-| s1n | 2026-10-28 03:19 |  | s1n: under 8 babies every floor drops to 100. Vs Icarus still lost (transferred 860 vs 2500; mid-game they pick | 20.7 |  | 0.77 |  |  | 1381 +- 395 | 38.9% |  |
+| s1n | 2026-10-28 03:19 |  | s1n: under 8 babies every floor drops to 100. Vs Icarus still lost (transferred 860 vs 2500; mid-game they pick | 20.7 |  | 0.77 |  |  | 1382 +- 396 | 39.2% |  |
 | s1o | 2026-10-28 03:22 |  | up more cheese on our side than we do). s1o: s1n with WAR_GATHER 1. |  |  |  |  |  |  |  |  |
 | s1p | 2026-10-28 03:23 |  |  |  |  |  |  |  |  |  |  |
-| s1q | 2026-10-28 03:24 |  | s1g pts 21.2 kd 1.26; s1l 18.5 / 1.03; s1n 20.7 / 0.77; s1q 18.3 / 0.76; s1s 17.0 / 0.78; s1w 19.5 / 0.83; | 18.3 |  | 0.76 |  |  | 1392 +- 401 | 39.6% |  |
+| s1q | 2026-10-28 03:24 |  | s1g pts 21.2 kd 1.26; s1l 18.5 / 1.03; s1n 20.7 / 0.77; s1q 18.3 / 0.76; s1s 17.0 / 0.78; s1w 19.5 / 0.83; | 18.3 |  | 0.76 |  |  | 1393 +- 402 | 40.0% |  |
 | s1r | 2026-10-28 03:24 |  |  |  |  |  |  |  |  |  |  |
-| s1s | 2026-10-28 03:26 |  | s1g pts 21.2 kd 1.26; s1l 18.5 / 1.03; s1n 20.7 / 0.77; s1q 18.3 / 0.76; s1s 17.0 / 0.78; s1w 19.5 / 0.83; | 17.0 |  | 0.78 |  |  | 1381 +- 395 | 38.9% |  |
+| s1s | 2026-10-28 03:26 |  | s1g pts 21.2 kd 1.26; s1l 18.5 / 1.03; s1n 20.7 / 0.77; s1q 18.3 / 0.76; s1s 17.0 / 0.78; s1w 19.5 / 0.83; | 17.0 |  | 0.78 |  |  | 1382 +- 396 | 39.2% |  |
 | s1t | 2026-10-28 03:27 |  |  |  |  |  |  |  |  |  |  |
 | s1u | 2026-10-28 03:29 |  |  |  |  |  |  |  |  |  |  |
 | s1v | 2026-10-28 03:32 |  |  |  |  |  |  |  |  |  |  |
-| s1w | 2026-10-28 03:35 |  | s1g pts 21.2 kd 1.26; s1l 18.5 / 1.03; s1n 20.7 / 0.77; s1q 18.3 / 0.76; s1s 17.0 / 0.78; s1w 19.5 / 0.83; | 19.5 |  | 0.83 |  |  | 1381 +- 395 | 38.9% |  |
-| s1x | 2026-10-28 03:35 |  | s1x 17.2 / 1.52. The "aggressive" changes after s1g lowered the kill ratio; single-game impressions misled. | 17.2 |  | 1.52 |  |  | 1381 +- 395 | 38.9% |  |
-| s1y | 2026-10-28 03:41 |  | New: battle_report.py; standoff (hold against a watching, not weaker enemy); TRAP_CAP; s1y-s2f variants. | 17.8 |  | 1.48 |  |  | 1381 +- 395 | 38.9% |  |
-| s1z | 2026-10-28 03:42 |  | s1y 17.8 pts kd 1.48, s1z (standoff) 16.5 kd 1.71: traps and standoffs trade well but do not move points. | 16.5 |  | 1.71 |  |  | 1381 +- 395 | 38.9% |  |
+| s1w | 2026-10-28 03:35 |  | s1g pts 21.2 kd 1.26; s1l 18.5 / 1.03; s1n 20.7 / 0.77; s1q 18.3 / 0.76; s1s 17.0 / 0.78; s1w 19.5 / 0.83; | 19.5 |  | 0.83 |  |  | 1382 +- 396 | 39.2% |  |
+| s1x | 2026-10-28 03:35 |  | s1x 17.2 / 1.52. The "aggressive" changes after s1g lowered the kill ratio; single-game impressions misled. | 17.2 |  | 1.52 |  |  | 1382 +- 396 | 39.2% |  |
+| s1y | 2026-10-28 03:41 |  | New: battle_report.py; standoff (hold against a watching, not weaker enemy); TRAP_CAP; s1y-s2f variants. | 17.8 |  | 1.48 |  |  | 1382 +- 396 | 39.2% |  |
+| s1z | 2026-10-28 03:42 |  | s1y 17.8 pts kd 1.48, s1z (standoff) 16.5 kd 1.71: traps and standoffs trade well but do not move points. | 16.5 |  | 1.71 |  |  | 1382 +- 396 | 39.2% |  |
 | s2a | 2026-10-28 03:43 |  |  |  |  |  |  |  |  |  |  |
 | s2b | 2026-10-28 03:43 |  |  |  |  |  |  |  |  |  |  |
-| s2c | 2026-10-28 03:46 |  |  | 16.2 |  | 0.94 |  |  | 1381 +- 395 | 38.9% |  |
+| s2c | 2026-10-28 03:46 |  |  | 16.2 |  | 0.94 |  |  | 1382 +- 396 | 39.2% |  |
 | s2d | 2026-10-28 03:46 |  |  |  |  |  |  |  |  |  |  |
-| s2e | 2026-10-28 03:48 |  | Raid gauntlet (top-6, 3 maps): s2i 17.7 pts kd 0.91, s2j 14.9 kd 0.88 vs s2e 19.1/0.91. Raiders cost points; RAID_EVERY 0 in dev. | 19.1 |  | 0.91 |  |  | 1381 +- 395 | 38.9% |  |
-| s2f | 2026-10-28 03:48 |  | New: battle_report.py; standoff (hold against a watching, not weaker enemy); TRAP_CAP; s1y-s2f variants. | 19.6 |  | 0.84 |  |  | 1381 +- 395 | 38.9% |  |
+| s2e | 2026-10-28 03:48 |  | Raid gauntlet (top-6, 3 maps): s2i 17.7 pts kd 0.91, s2j 14.9 kd 0.88 vs s2e 19.1/0.91. Raiders cost points; RAID_EVERY 0 in dev. | 19.1 |  | 0.91 |  |  | 1382 +- 396 | 39.2% |  |
+| s2f | 2026-10-28 03:48 |  | New: battle_report.py; standoff (hold against a watching, not weaker enemy); TRAP_CAP; s1y-s2f variants. | 19.6 |  | 0.84 |  |  | 1382 +- 396 | 39.2% |  |
 | s2g | 2026-10-28 04:01 |  | Added Cfg.RAID: one in RAID_EVERY fighters is a raider; on our half it ignores enemies beyond dist2 8 and heads to an enemy-half mine (known mines or mirrors of ours), wanders there RAID_STAY rounds. First game: raide... |  |  |  |  |  |  |  |  |
 | s2h | 2026-10-28 04:01 |  | Added Cfg.RAID: one in RAID_EVERY fighters is a raider; on our half it ignores enemies beyond dist2 8 and heads to an enemy-half mine (known mines or mirrors of ours), wanders there RAID_STAY rounds. First game: raide... |  |  |  |  |  |  |  |  |
-| s2i | 2026-10-28 04:05 |  | Bytecode: Debug.mark(k) stage markers locate overruns (OVS=, first stage reached after the round advanced) and the costliest segment (hot=). Overruns were the post-move throw scan (called with a wasted full sense) and... | 17.7 |  | 0.91 |  |  | 1381 +- 395 | 38.9% |  |
-| s2j | 2026-10-28 04:05 |  | Raid gauntlet (top-6, 3 maps): s2i 17.7 pts kd 0.91, s2j 14.9 kd 0.88 vs s2e 19.1/0.91. Raiders cost points; RAID_EVERY 0 in dev. | 14.9 |  | 0.88 |  |  | 1381 +- 395 | 38.9% |  |
-| s2k | 2026-10-28 04:11 |  | Cheese is a race: no pile is left over; Icarus takes all of its half and from r100 more than half of ours (cheesefate). Our gatherers are in 'g' 87% of the time. Micro gained a cheese-step bonus (MICRO is off, so iner... |  |  |  |  |  | 1385 +- 398 | 39.1% |  |
-| s2l | 2026-10-28 04:11 |  | Cheese is a race: no pile is left over; Icarus takes all of its half and from r100 more than half of ours (cheesefate). Our gatherers are in 'g' 87% of the time. Micro gained a cheese-step bonus (MICRO is off, so iner... |  |  |  |  |  | 1480 +- 477 | 45.7% |  |
-| s2m | 2026-10-28 04:25 |  | s2m = dev (comms fix, KING_MINE, FIGHT_MINE, raid off); s2n = s2m without KING_MINE. | 22.4 |  | 0.98 |  |  | 1381 +- 395 | 38.9% |  |
-| s2n | 2026-10-28 04:25 |  | s2m = dev (comms fix, KING_MINE, FIGHT_MINE, raid off); s2n = s2m without KING_MINE. | 11.9 |  | 1.09 |  |  | 1381 +- 395 | 38.9% |  |
-| s2o | 2026-10-28 04:25 |  | Gauntlet g6_mno: s2o 23.6 pts (best so far), s2m 22.4, s2n (no KING_MINE) 11.9. The king on a home mine is worth ~10 pts; WAR_GATHER 2 helps a little. Dev adopts WAR_GATHER 2. Weakest: cheesefarm and DefaultSmall vs I... | 23.6 |  | 0.92 |  |  | 1577 +- 29 | 52.2% | submitted to replica (#62) |
-| s2p | 2026-10-28 04:34 |  | Second king (FORM_KING): king 0 names a site (nearest clearly-ours mine with a clear 3x3, else 4 tiles behind it) once it has 16 babies and 300 cheese after r80; babies within dist2 72 walk into the 3x3, the centre ra... | 18.9 |  | 0.93 |  |  | 1381 +- 395 | 38.9% |  |
-| s2q | 2026-10-28 04:34 |  | Second king (FORM_KING): king 0 names a site (nearest clearly-ours mine with a clear 3x3, else 4 tiles behind it) once it has 16 babies and 300 cheese after r80; babies within dist2 72 walk into the 3x3, the centre ra... | 21.4 |  | 0.94 |  |  | 1381 +- 395 | 38.9% |  |
-| s2r | 2026-10-28 04:42 |  | King sidesteps babies on its way to the mine (up to 90 degrees off, never farther); kings skip a mine another king holds. s2r = dev (WAR_GATHER 2 + formation + these), s2s = s2r without formation. | 20.6 |  | 0.99 |  |  | 1381 +- 395 | 38.9% |  |
-| s2s | 2026-10-28 04:42 |  | King sidesteps babies on its way to the mine (up to 90 degrees off, never farther); kings skip a mine another king holds. s2r = dev (WAR_GATHER 2 + formation + these), s2s = s2r without formation. | 24.4 | 25.6 | 0.96 |  |  | 1476 +- 220 | 45.5% | adopted: current base (base 24.4, new maps 25.6) |
-| s2t | 2026-10-28 04:50 |  | King roam (KING_ROAM 4): with no enemy/cat in view the king walks to cheese within Chebyshev 4 of its mine (finalsbot's king roams its mines; cheesefarm xfer 5830 vs our 1512). One game vs finalsbot cheesefarm 25 pts ... | 23.7 | 25.3 | 1.01 |  |  | 1621 +- 96 | 55.1% | adopted variant of s2s (new maps 25.3, base 23.7) |
-| s2u | 2026-10-28 05:05 |  | s2s vs Version41 DefaultMedium: our king dies r180-213 after our army is wiped (10 -> 2 rats). Trap damage taken 2372 vs dealt 802; 42 of 45 of our trap triggers are on our half (Version41 lays 47 traps there, we 24);... | 20.1 |  | 1.82 |  |  | 1381 +- 395 | 38.9% | rejected (base 20.1) |
-| s2v | 2026-10-28 05:05 |  | s2s vs Version41 DefaultMedium: our king dies r180-213 after our army is wiped (10 -> 2 rats). Trap damage taken 2372 vs dealt 802; 42 of 45 of our trap triggers are on our half (Version41 lays 47 traps there, we 24);... | 22.3 |  | 1.08 |  |  | 1381 +- 395 | 38.9% | rejected (base 22.3) |
-| s2w | 2026-10-28 05:07 |  | GATHER_STILL (gatherers turn in place at their mine instead of wandering): vs Version41 DefaultMedium our trap triggers 51 -> 34 but cheese 414 -> 275, pts 31 -> 30; DefaultSmall 36 pts. Snapshot s2w for a gauntlet. | 22.8 |  | 1.01 |  |  | 1381 +- 395 | 38.9% | rejected (GATHER_STILL, base 22.8) |
+| s2i | 2026-10-28 04:05 |  | Bytecode: Debug.mark(k) stage markers locate overruns (OVS=, first stage reached after the round advanced) and the costliest segment (hot=). Overruns were the post-move throw scan (called with a wasted full sense) and... | 17.7 |  | 0.91 |  |  | 1382 +- 396 | 39.2% |  |
+| s2j | 2026-10-28 04:05 |  | Raid gauntlet (top-6, 3 maps): s2i 17.7 pts kd 0.91, s2j 14.9 kd 0.88 vs s2e 19.1/0.91. Raiders cost points; RAID_EVERY 0 in dev. | 14.9 |  | 0.88 |  |  | 1382 +- 396 | 39.2% |  |
+| s2k | 2026-10-28 04:11 |  | Cheese is a race: no pile is left over; Icarus takes all of its half and from r100 more than half of ours (cheesefate). Our gatherers are in 'g' 87% of the time. Micro gained a cheese-step bonus (MICRO is off, so iner... |  |  |  |  |  | 1386 +- 398 | 39.5% |  |
+| s2l | 2026-10-28 04:11 |  | Cheese is a race: no pile is left over; Icarus takes all of its half and from r100 more than half of ours (cheesefate). Our gatherers are in 'g' 87% of the time. Micro gained a cheese-step bonus (MICRO is off, so iner... |  |  |  |  |  | 1480 +- 477 | 45.9% |  |
+| s2m | 2026-10-28 04:25 |  | s2m = dev (comms fix, KING_MINE, FIGHT_MINE, raid off); s2n = s2m without KING_MINE. | 22.4 |  | 0.98 |  |  | 1382 +- 396 | 39.2% |  |
+| s2n | 2026-10-28 04:25 |  | s2m = dev (comms fix, KING_MINE, FIGHT_MINE, raid off); s2n = s2m without KING_MINE. | 11.9 |  | 1.09 |  |  | 1382 +- 396 | 39.2% |  |
+| s2o | 2026-10-28 04:25 |  | Gauntlet g6_mno: s2o 23.6 pts (best so far), s2m 22.4, s2n (no KING_MINE) 11.9. The king on a home mine is worth ~10 pts; WAR_GATHER 2 helps a little. Dev adopts WAR_GATHER 2. Weakest: cheesefarm and DefaultSmall vs I... | 23.6 |  | 0.92 |  |  | 1577 +- 26 | 52.3% | submitted to replica (#62) |
+| s2p | 2026-10-28 04:34 |  | Second king (FORM_KING): king 0 names a site (nearest clearly-ours mine with a clear 3x3, else 4 tiles behind it) once it has 16 babies and 300 cheese after r80; babies within dist2 72 walk into the 3x3, the centre ra... | 18.9 |  | 0.93 |  |  | 1382 +- 396 | 39.2% |  |
+| s2q | 2026-10-28 04:34 |  | Second king (FORM_KING): king 0 names a site (nearest clearly-ours mine with a clear 3x3, else 4 tiles behind it) once it has 16 babies and 300 cheese after r80; babies within dist2 72 walk into the 3x3, the centre ra... | 21.4 |  | 0.94 |  |  | 1382 +- 396 | 39.2% |  |
+| s2r | 2026-10-28 04:42 |  | King sidesteps babies on its way to the mine (up to 90 degrees off, never farther); kings skip a mine another king holds. s2r = dev (WAR_GATHER 2 + formation + these), s2s = s2r without formation. | 20.6 |  | 0.99 |  |  | 1382 +- 396 | 39.2% |  |
+| s2s | 2026-10-28 04:42 |  | King sidesteps babies on its way to the mine (up to 90 degrees off, never farther); kings skip a mine another king holds. s2r = dev (WAR_GATHER 2 + formation + these), s2s = s2r without formation. | 24.4 | 25.6 | 0.96 |  |  | 1479 +- 220 | 45.8% | adopted: current base (base 24.4, new maps 25.6) |
+| s2t | 2026-10-28 04:50 |  | King roam (KING_ROAM 4): with no enemy/cat in view the king walks to cheese within Chebyshev 4 of its mine (finalsbot's king roams its mines; cheesefarm xfer 5830 vs our 1512). One game vs finalsbot cheesefarm 25 pts ... | 23.7 | 25.3 | 1.01 |  |  | 1625 +- 96 | 55.4% | adopted variant of s2s (new maps 25.3, base 23.7) |
+| s2u | 2026-10-28 05:05 |  | s2s vs Version41 DefaultMedium: our king dies r180-213 after our army is wiped (10 -> 2 rats). Trap damage taken 2372 vs dealt 802; 42 of 45 of our trap triggers are on our half (Version41 lays 47 traps there, we 24);... | 20.1 |  | 1.82 |  |  | 1382 +- 396 | 39.2% | rejected (base 20.1) |
+| s2v | 2026-10-28 05:05 |  | s2s vs Version41 DefaultMedium: our king dies r180-213 after our army is wiped (10 -> 2 rats). Trap damage taken 2372 vs dealt 802; 42 of 45 of our trap triggers are on our half (Version41 lays 47 traps there, we 24);... | 22.3 |  | 1.08 |  |  | 1382 +- 396 | 39.2% | rejected (base 22.3) |
+| s2w | 2026-10-28 05:07 |  | GATHER_STILL (gatherers turn in place at their mine instead of wandering): vs Version41 DefaultMedium our trap triggers 51 -> 34 but cheese 414 -> 275, pts 31 -> 30; DefaultSmall 36 pts. Snapshot s2w for a gauntlet. | 22.8 |  | 1.01 |  |  | 1382 +- 396 | 39.2% | rejected (GATHER_STILL, base 22.8) |
 | s2x | 2026-10-28 05:20 | s2s | s2s with DIG=false (control for the dig-toward-target experiment on Excavation/Stash) |  |  |  |  |  |  |  |  |
-| s2y | 2026-10-28 05:56 |  | Excavation: all 3 mines buried mid-block, >4 tiles from open ground, so they are never seen. Explore now picks the nearest never-seen of 12 samples, and once no mine is known by r30 the never-seen sample nearest the m... | 18.8 | 23.8 |  |  |  | 1494 +- 185 | 46.7% | rejected (A* flow + unseen explore: base 18.8, new 23.8) |
-| s2z | 2026-10-28 06:24 | s2y | s2y + Flow search timeout and retry backoff, mine gossip squeaks (team knows no mine), cheese-on-dirt pickup from the adjacent tile | 23.2 | 30.0 |  |  |  | 1613 +- 145 | 54.6% | inconclusive (base 23.2, new 30.0 vs s2s 24.4/25.6; worst-12 vs Version41 8.0 vs s2y 7.5); kept as dev base |
+| s2y | 2026-10-28 05:56 |  | Excavation: all 3 mines buried mid-block, >4 tiles from open ground, so they are never seen. Explore now picks the nearest never-seen of 12 samples, and once no mine is known by r30 the never-seen sample nearest the m... | 18.8 | 23.8 |  |  |  | 1497 +- 186 | 47.0% | rejected (A* flow + unseen explore: base 18.8, new 23.8) |
+| s2z | 2026-10-28 06:24 | s2y | s2y + Flow search timeout and retry backoff, mine gossip squeaks (team knows no mine), cheese-on-dirt pickup from the adjacent tile | 23.2 | 30.0 |  |  |  | 1616 +- 145 | 54.8% | inconclusive (base 23.2, new 30.0 vs s2s 24.4/25.6; worst-12 vs Version41 8.0 vs s2y 7.5); kept as dev base |
 | **milestone M1** | 2026-10-28 06:38 | | **effort: Medium -> Ultracode** | | | | | | | | |
-| s3a | 2026-10-28 07:31 | s2z | s2z + newborn overrun fix + dig-first: digToward (dig the dirt straight ahead when no free side step gets closer, then step in) runs before flow; cheesefarm diag vs Version41 3 -> 23 pts | 24.6 | 27.6 |  |  |  | 1436 +- 211 | 42.7% | inconclusive (base 24.6, new 27.6, kd 1.01; cheesefarm 13.2 vs s2z 10.0; worst-12 vs Version41 10.6 vs s2z 8.0); dig-first kept in dev |
-| s3b | 2026-10-28 07:57 | s3a | s3a + king defense (ALERT threat count, gatherers within DEFEND_D2 defend), mine spread (4 nearest home-half), Flow.follow index fix, exception tags |  |  |  |  |  | 1599 +- 149 | 53.7% | top-6 screen pass (t +0.50; worst-12 -1.08); band screen stopped (benchmark games moved to the replica) |
-| s3c | 2026-10-28 08:01 | s3b | s3b + EXPLORE_CENTER_FROM 0: with no mine known, explorers head for the map centre from round 0 (Excavation digs r0-24: 31 vs 8) |  |  |  |  |  | 1541 +- 168 | 49.8% | top-6 screen pass (t +0.4); band screen not run |
-| s3d | 2026-10-28 08:09 | s3c | s3c + KING_DIG: the king walking to its home mine takes a strictly closer step, else digs the step's leading edge (Excavation xfer 335 -> 460) |  |  |  |  |  | 1457 +- 451 | 44.2% | top-6 screen stopped at 10/72 (metric change); band screen stopped (benchmark games moved to the replica) |
+| s3a | 2026-10-28 07:31 | s2z | s2z + newborn overrun fix + dig-first: digToward (dig the dirt straight ahead when no free side step gets closer, then step in) runs before flow; cheesefarm diag vs Version41 3 -> 23 pts | 24.6 | 27.6 |  |  |  | 1438 +- 211 | 43.1% | inconclusive (base 24.6, new 27.6, kd 1.01; cheesefarm 13.2 vs s2z 10.0; worst-12 vs Version41 10.6 vs s2z 8.0); dig-first kept in dev |
+| s3b | 2026-10-28 07:57 | s3a | s3a + king defense (ALERT threat count, gatherers within DEFEND_D2 defend), mine spread (4 nearest home-half), Flow.follow index fix, exception tags |  |  |  |  |  | 1602 +- 149 | 53.9% | top-6 screen pass (t +0.50; worst-12 -1.08); band screen stopped (benchmark games moved to the replica) |
+| s3c | 2026-10-28 08:01 | s3b | s3b + EXPLORE_CENTER_FROM 0: with no mine known, explorers head for the map centre from round 0 (Excavation digs r0-24: 31 vs 8) |  |  |  |  |  | 1543 +- 168 | 50.1% | top-6 screen pass (t +0.4); band screen not run |
+| s3d | 2026-10-28 08:09 | s3c | s3c + KING_DIG: the king walking to its home mine takes a strictly closer step, else digs the step's leading edge (Excavation xfer 335 -> 460) |  |  |  |  |  | 1458 +- 451 | 44.4% | top-6 screen stopped at 10/72 (metric change); band screen stopped (benchmark games moved to the replica) |
 | **milestone M2** | 2026-10-28 08:13 | | **method: TRAINING_ALGORITHM v2 (paired local screen; replica panel accepts)** | | | | | | | | |
 | **milestone M3** | 2026-10-28 08:28 | | **method: cell score = win/loss when kings decide (points bug fixed); local screen moves to the band** | | | | | | | | |
-| s3e | 2026-10-28 08:44 | s3d | s3d + MINE_BALANCE: gatherers spread evenly over every known home-half mine (per-rat hash slot), re-picked when the known-mine count changes (cheesefarm vs Version41 pickups 1620 -> 2055) |  |  |  |  |  | 1538 +- 76 | 49.6% | rejected (self-play sp1 vs s2o: -5.4 pts, t -2.40, 29-51 cells) |
-| s3f | 2026-10-28 08:44 | s3e | s3e + GOSSIP_ALWAYS (relay mines the king lacks all game) + SCOUT_EVERY 4 (one in 4 gatherers explores our half until r150); cheesefarm: king knew mine 4 at r31 (was r122) but pickups 2038, flat |  |  |  |  |  | 1596 +- 75 | 53.5% | self-play sp1 pass (+3.2 pts, t +1.55, 46-34 cells; includes MINE_BALANCE, so gossip+scouts ~ +8.6 over s3e) |
-| s3g | 2026-10-28 08:44 | s3e | s3e + KING_PRESS: at war, rats that see the enemy king squeak it (relayed twice) and healthy rats within dist2 100 walk to it and bite (DefaultMedium vs Finals: king bites 3 vs 0, but trap damage on us 1650 -> 2684) |  |  |  |  |  | 1538 +- 76 | 49.6% | rejected (self-play sp1: -5.4 pts, t -2.40; KING_PRESS almost never fires vs s2o) |
+| s3e | 2026-10-28 08:44 | s3d | s3d + MINE_BALANCE: gatherers spread evenly over every known home-half mine (per-rat hash slot), re-picked when the known-mine count changes (cheesefarm vs Version41 pickups 1620 -> 2055) |  |  |  |  |  | 1538 +- 76 | 49.7% | rejected (self-play sp1 vs s2o: -5.4 pts, t -2.40, 29-51 cells) |
+| s3f | 2026-10-28 08:44 | s3e | s3e + GOSSIP_ALWAYS (relay mines the king lacks all game) + SCOUT_EVERY 4 (one in 4 gatherers explores our half until r150); cheesefarm: king knew mine 4 at r31 (was r122) but pickups 2038, flat |  |  |  |  |  | 1597 +- 75 | 53.5% | self-play sp1 pass (+3.2 pts, t +1.55, 46-34 cells; includes MINE_BALANCE, so gossip+scouts ~ +8.6 over s3e) |
+| s3g | 2026-10-28 08:44 | s3e | s3e + KING_PRESS: at war, rats that see the enemy king squeak it (relayed twice) and healthy rats within dist2 100 walk to it and bite (DefaultMedium vs Finals: king bites 3 vs 0, but trap damage on us 1650 -> 2684) |  |  |  |  |  | 1538 +- 76 | 49.7% | rejected (self-play sp1: -5.4 pts, t -2.40; KING_PRESS almost never fires vs s2o) |
 | **milestone M4** | 2026-10-28 08:50 | | **method: benchmark games only on the replica; local games are self-play** | | | | | | | | |
-| s2o_id | 2026-10-28 09:00 | s2o | identity copy of s2o: the self-play control |  |  |  |  |  | 1575 +- 75 | 52.0% | control (sp1: exactly 0, 40-40 cells; the engine is deterministic for identical code, so self-play is scored against 50 from now on) |
+| s2o_id | 2026-10-28 09:00 | s2o | identity copy of s2o: the self-play control |  |  |  |  |  | 1575 +- 75 | 52.1% | control (sp1: exactly 0, 40-40 cells; the engine is deterministic for identical code, so self-play is scored against 50 from now on) |
 | s3h | 2026-10-28 10:24 | s3d | dev (s3d behaviour) + king first-turn sense guard (KING_SENSE_RESERVE 5000: the 60x60 first turn overran 20k in 9 of 40 maps, losing the round-2 spawn) + GOSSIP_ALWAYS + SCOUT_EVERY 4, no MINE_BALANCE |  |  |  |  |  | 1581 +- 75 | 52.5% | self-play sp2 pass (+0.9 pts, t +0.49, 43-37 cells; 0 overruns) |
-| s3i | 2026-10-28 10:24 | s3d | dev (s3d behaviour) + king first-turn sense guard only: the control for s3h/s3j |  |  |  |  |  | 1558 +- 146 | 51.0% |  |
+| s3i | 2026-10-28 10:24 | s3d | dev (s3d behaviour) + king first-turn sense guard only: the control for s3h/s3j |  |  |  |  |  | 1547 +- 76 | 50.3% | self-play sp2 reject (-4.0 pts, t -2.04, 27-53 cells): the dev line without gossip+scouts is worse than s2o; s3h (+gossip+scouts) +0.9, so gossip+scouts ~ +4.9 (sp1: +8.6). Dev adopts GOSSIP_ALWAYS + SCOUT_EVERY 4 |
 | s3j | 2026-10-28 10:24 | s3d | dev (s3d behaviour) + king first-turn sense guard + GOSSIP_ALWAYS (no scouts) |  |  |  |  |  |  |  | not run (dropped from sp2 for the economy candidates) |
-| s3k | 2026-10-28 10:46 | s3i | s3i + HUNGRY 150: with the bank under 150, any rat carrying cheese delivers before fighting (31 of 45 king deaths on the replica were starvation) |  |  |  |  |  |  |  |  |
+| s3k | 2026-10-28 10:46 | s3i | s3i + HUNGRY 150: with the bank under 150, any rat carrying cheese delivers before fighting (31 of 45 king deaths on the replica were starvation) |  |  |  |  |  | 1531 +- 172 | 49.3% |  |
 | s3l | 2026-10-28 10:46 | s3i | s3i + CARRY_MAX 120: a loaded rat takes no pile that lifts it above 120 (rats hauled 400-700 at a fifth of their speed) |  |  |  |  |  |  |  |  |
 | s3m | 2026-10-28 10:46 | s3i | s3i + trap economy: RAT_TRAP_MIN_CHEESE 400, FORT_TRAPS 4 (rat traps took 560-1560 cheese before the bank ran dry) |  |  |  |  |  |  |  |  |
+| s3n | 2026-10-28 11:01 | s3i | s3i + king cat dodge (KING_DODGE: step the 3x3 out of a near cat's next two footprints, dig out of a dirt pocket) + YIELD_KING (empty rats step off the ring around the king while a cat is near it): 9-10 of our 45 replica king deaths were cats scratching a king that stood in a cat's waypoint path |  |  |  |  |  |  |  |  |
+| s3o | 2026-10-28 11:12 | s3h | ablation: s3h without FLOW and DIG_FIRST (s2y/s3a nav): which dev-line change costs points vs s2o |  |  |  |  |  |  |  |  |
+| s3p | 2026-10-28 11:12 | s3h | ablation: s3h without KING_ROAM and KING_DIG (s2t/s3d king walking) |  |  |  |  |  |  |  |  |
+| s3q | 2026-10-28 11:12 | s3h | ablation: s3h without DEFEND, MINE_SPREAD 1, no EXPLORE_CENTER (s3b/s3c) |  |  |  |  |  |  |  |  |
