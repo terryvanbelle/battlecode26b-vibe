@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Combat analysis of one game from a ReplayDump tsv directory (or a .bc26, dumped on the fly).
 
-  battle_report.py REPLAY.bc26|TSVDIR [--lo R] [--hi R] [--step 10] [--json]
+  battle_report.py REPLAY.bc26|TSVDIR [--game N] [--lo R] [--hi R] [--step 10] [--json]
 
 Sections (team 1 = A, team 2 = B; rounds lo..hi):
   front    per step rounds: rats alive, total HP, rats within dist2 20 of an enemy, mean Chebyshev distance to own king
@@ -20,10 +20,10 @@ import game_report  # noqa: E402
 DIRS = [None, (-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1)]
 
 
-def load(path):
+def load(path, game=0):
     d = path if os.path.isdir(path) else game_report.dump(path)
-    turns = list(game_report.rows(os.path.join(d, 'g0.turns.tsv')))
-    acts = list(game_report.rows(os.path.join(d, 'g0.actions.tsv')))
+    turns = list(game_report.rows(os.path.join(d, f'g{game}.turns.tsv')))
+    acts = list(game_report.rows(os.path.join(d, f'g{game}.actions.tsv')))
     return turns, acts
 
 
@@ -161,8 +161,8 @@ def xfer(acts, lo, hi, step):
     return [dict(round=w, xfer1=x[(w, '1')], xfer2=x[(w, '2')], pick1=p[(w, '1')], pick2=p[(w, '2')]) for w in ws]
 
 
-def report(path, lo=0, hi=2000, step=10):
-    turns, acts = load(path)
+def report(path, lo=0, hi=2000, step=10, game=0):
+    turns, acts = load(path, game)
     hi = min(hi, max(int(t['round']) for t in turns))
     return dict(front=front(turns, max(lo, 1), hi, step), hploss=hploss(turns, acts, lo, hi),
                 grabs=grabs(turns, acts, lo, hi), throws=throws(acts, lo, hi), xfer=xfer(acts, lo, hi, max(step, 50)))
@@ -171,12 +171,13 @@ def report(path, lo=0, hi=2000, step=10):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('replay')
+    ap.add_argument('--game', type=int, default=0)
     ap.add_argument('--lo', type=int, default=0)
     ap.add_argument('--hi', type=int, default=2000)
     ap.add_argument('--step', type=int, default=10)
     ap.add_argument('--json', action='store_true')
     o = ap.parse_args()
-    r = report(o.replay, o.lo, o.hi, o.step)
+    r = report(o.replay, o.lo, o.hi, o.step, o.game)
     if o.json:
         print(json.dumps(r))
         return

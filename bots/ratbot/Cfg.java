@@ -16,6 +16,9 @@ public final class Cfg {
     public static final boolean NAP = true, BABY_RAT_TRAPS = true;
     /** Bite first the adjacent enemy rat that could grab us (healthier by at most one bite): it then cannot. */
     public static final boolean BITE_GUARD = false;
+    /** Bite first an adjacent enemy rat that carries one of ours (on knifefight bestsofar threw 41 of our rats, most
+     *  into our king). */
+    public static final boolean BITE_CARRIER = false;
     public static final int BABY_TRAP_DIST2 = 13;
     /** Cheese (global, or raw+global for babies) below which no rat trap is placed. */
     public static final int RAT_TRAP_MIN_CHEESE = 200;

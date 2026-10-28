@@ -398,8 +398,9 @@ public final class Baby {
         return true;
     }
 
-    /** Bite the best adjacent enemy: a king first, then the lowest health (BITE_GUARD: a rat our bite leaves no
-     *  healthier than us, and so unable to grab us, ranks right after the kills); turn to face it when needed. */
+    /** Bite the best adjacent enemy: a king first, then the lowest health (BITE_CARRIER: a rat carrying one of ours
+     *  first among rats; BITE_GUARD: a rat our bite leaves no healthier than us, and so unable to grab us, right after
+     *  the kills); turn to face it when needed. */
     static boolean biteEnemies(RobotInfo[] robots) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return false;
@@ -418,6 +419,8 @@ public final class Baby {
             if (me.distanceSquaredTo(t) > 2) continue;
             int s = (r.type == UnitType.RAT_KING ? 0 : 1000) + r.health;
             if (Cfg.BITE_GUARD && r.type == UnitType.BABY_RAT && guardBite(r.health, myHp)) s = 1011;
+            // a rat carrying one of ours throws it next (often into our king): bite it before any other rat
+            if (Cfg.BITE_CARRIER && r.carryingRobot != null && r.carryingRobot.team == G.us) s = 1000;
             if (rc.canAttack(t)) { if (s < bs) { bs = s; best = r; } }
             else if (s < bt) { bt = s; bestTurn = r; }
         }
