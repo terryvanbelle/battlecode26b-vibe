@@ -156,12 +156,13 @@ public final class King {
         // a few babies always (they pay for themselves on any map with cheese); beyond that the projected
         // end-of-game cheese at the measured income must stay positive after paying for this one
         // a core population always (rats pay for themselves and are the army); beyond it, the income test
-        boolean boot = babies < Cfg.CORE_BABIES && rc.getGlobalCheese() >= cost + Cfg.CORE_FLOOR;
+        boolean low = babies < Cfg.LOW_BABIES;
+        boolean boot = babies < Cfg.CORE_BABIES && rc.getGlobalCheese() >= cost + (low ? Cfg.LOW_FLOOR : Cfg.CORE_FLOOR);
         // at war with enemies in sight, bodies now beat cheese later: spawn down to a short upkeep floor
-        boolean war = !G.coop && enemies.length > 0 && rc.getGlobalCheese() >= cost + Cfg.WAR_FLOOR;
+        boolean war = !G.coop && enemies.length > 0 && rc.getGlobalCheese() >= cost + (low ? Cfg.LOW_FLOOR : Cfg.WAR_FLOOR);
         if (!boot && !war && Econ.surplus() < cost + Cfg.SPAWN_MARGIN) return;
         // never spend the king's upkeep: SPAWN_FLOOR cheese (or what the rest of the game needs) stays
-        if (rc.getGlobalCheese() < cost + Math.min(Cfg.SPAWN_FLOOR, 2 * (2000 - G.round))) return;
+        if (rc.getGlobalCheese() < cost + Math.min(low ? Cfg.LOW_FLOOR : Cfg.SPAWN_FLOOR, 2 * (2000 - G.round))) return;
         if (babies >= (war ? Cfg.MAX_BABIES_WAR : Cfg.MAX_BABIES)) return;
         // Spawn toward the most useful direction: away from visible cats, else toward the map centre.
         MapLocation c = rc.getLocation();

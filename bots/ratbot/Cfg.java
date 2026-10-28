@@ -7,6 +7,8 @@ public final class Cfg {
     public static final int WAR_FLOOR = 600;
     /** Hard floor under every spawn (king upkeep). */
     public static final int SPAWN_FLOOR = 600;
+    /** With fewer than LOW_BABIES babies every floor drops to LOW_FLOOR: a king without rats has no income. */
+    public static final int LOW_BABIES = 8, LOW_FLOOR = 100;
     /** King places rat traps toward enemy rats within this squared distance once cooperation is over. */
     public static final boolean KING_TRAPS = true;
     public static final int KING_TRAP_DIST2 = 20;

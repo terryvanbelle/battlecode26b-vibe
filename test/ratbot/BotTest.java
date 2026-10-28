@@ -22,6 +22,8 @@ public class BotTest {
     static int health = 100;
     static int round = 1, global = 1000, raw = 0, moveCd = 0, turnCd = 0, actCd = 0;
     static UnitType type = UnitType.BABY_RAT;
+    static int ratCost = 10;
+    static List<MapLocation> built = new ArrayList<>();
     static List<Integer> squeaks = new ArrayList<>();
     static int digsDone;
     static List<MapLocation> bitten = new ArrayList<>();
@@ -45,7 +47,7 @@ public class BotTest {
     static void reset() {
         walls.clear(); dirt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null;
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
-        moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0;
+        moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; ratCost = 10; built.clear();
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0;
     }
@@ -123,7 +125,9 @@ public class BotTest {
                     case "attack": bitten.add((MapLocation) a[0]); actCd += 10; return null;
                     case "squeak": squeaks.add((Integer) a[0]); return true;
                     case "readSqueaks": return new Message[0];
-                    case "getCurrentRatCost": return 10;
+                    case "getCurrentRatCost": return ratCost;
+                    case "canBuildRat": { MapLocation t = (MapLocation) a[0]; return actCd < 10 && passable(t) && !robots.containsKey(t) && global >= ratCost; }
+                    case "buildRat": built.add((MapLocation) a[0]); global -= ratCost; actCd += 10; return null;
                     case "getHealth": return health;
                     case "setIndicatorString": return null;
                     default: throw new UnsupportedOperationException("fakeRc: " + m.getName());
@@ -383,6 +387,17 @@ public class BotTest {
         check(!Baby.nearHome(new MapLocation(5, 5), 4) && Baby.nearHome(new MapLocation(7, 12), 4), "fort: nearHome radius");
     }
 
+    static void testSpawnFloor() throws GameActionException {
+        reset(); install();
+        type = UnitType.RAT_KING; G.coop = false; G.round = 300; global = 500;
+        ratCost = 40; // 12+ babies: the 600 floor holds
+        King.spawn(new RobotInfo[0], new RobotInfo[0]);
+        check(built.isEmpty(), "spawn: a king with a dozen babies keeps its floor");
+        ratCost = 20; // 4+ babies: too few to earn, the floor drops
+        King.spawn(new RobotInfo[0], new RobotInfo[0]);
+        check(built.size() == 1, "spawn: a king with few babies spends its reserve on rats (" + built + ")");
+    }
+
     static void testFlank() throws GameActionException {
         reset(); install();
         G.coop = false; Nav.avoid = 0;
@@ -449,6 +464,7 @@ public class BotTest {
         testGuard();
         testBiteCheese();
         testFlank();
+        testSpawnFloor();
         testFort();
         testRetreat();
         testWarRoles();
