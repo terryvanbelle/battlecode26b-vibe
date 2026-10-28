@@ -94,13 +94,15 @@ public final class Cfg {
     public static final boolean DIG = true;
     /** Dig-aware flow-field navigation, requested after FLOW_STALL turns without progress. */
     public static final boolean FLOW = true;
-    public static final int FLOW_STALL = 4, FLOW_TTL = 200, FLOW_RESERVE = 2500, FLOW_HOLD = 3, FLOW_REJOIN = 40;
+    public static final int FLOW_STALL = 4, FLOW_TTL = 200, FLOW_RESERVE = 2500, FLOW_HOLD = 3, FLOW_REJOIN = 40, FLOW_MAX_TURNS = 12, FLOW_RETRY = 30;
     /** Path cost of a dirt tile (a dig is 5 cheese and 2.5 turns of action cooldown, plus the step). */
     public static final int DIG_COST = 4;
     /** Random samples per explore target, taking the first never-seen tile. */
     public static final int EXPLORE_TRIES = 12, EXPLORE_CENTER_FROM = 30;
     /** A rat that finds the first mine walks it home to the king. */
     public static final boolean COURIER = true;
+    /** Babies relay mine squeaks to each other while the team knows no mine. */
+    public static final boolean GOSSIP = true;
     public static final int DIG_MIN_CHEESE = 60;
     /** Live babies kept unconditionally (while CORE_FLOOR cheese remain) before the income test applies. */
     public static final int CORE_BABIES = 18, CORE_FLOOR = 300;

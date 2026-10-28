@@ -518,6 +518,18 @@ public final class Baby {
     /** Squeak one fact: to a king in hearing range a mine it may not know or a sharper symmetry mask; at war, an enemy's front. */
     static void report() {
         MapLocation k = Comms.numKings == 0 ? null : Comms.nearestKing(G.me);
+        if (Cfg.GOSSIP && Comms.numMines == 0) {
+            // no mine known to the team yet: pass mine news rat to rat, which outruns a courier walking home
+            for (Message m : G.rc.readSqueaks(-1)) {
+                int c = m.getBytes();
+                if (Comms.sqType(c) == Comms.SQ_MINE) noteMine(Comms.sqX(c), Comms.sqY(c));
+            }
+            if (myMineCount > 0 && (k == null || G.me.distanceSquaredTo(k) > 16)) {
+                int key = myMines[G.round % myMineCount];
+                G.rc.squeak(Comms.squeak(Comms.SQ_MINE, key / 64, key % 64, 0));
+                return;
+            }
+        }
         // a squeak reaches robots with any tile within dist2 16 of us: the king's centre within 16 is always heard
         if (k != null && G.me.distanceSquaredTo(k) <= 16) {
             int sharedSym = Comms.read(Comms.SYM);
@@ -601,6 +613,14 @@ public final class Baby {
             if (k != null) { Nav.goTo(k); why = 'm'; return; }
         }
         if (cheeseTarget != null) {
+            if (G.cheb(G.me, cheeseTarget) == 1 && Nav.isDirt(cheeseTarget)) {
+                // cheese on dirt: pick it up from here, facing it, instead of digging onto the tile
+                Direction d = G.me.directionTo(cheeseTarget);
+                if (rc.getDirection() != d && rc.canTurn(d)) { rc.turn(d); G.facing = d; }
+                pickUp();
+                if (!rc.canSenseLocation(cheeseTarget) || rc.senseMapInfo(cheeseTarget).getCheeseAmount() == 0) cheeseTarget = null;
+                return;
+            }
             Nav.goTo(cheeseTarget);
             if (Nav.stall > 12) cheeseTarget = null;
             return;

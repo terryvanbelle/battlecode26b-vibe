@@ -53,7 +53,7 @@ public class BotTest {
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; ratCost = 10; built.clear();
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0;
-        Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null;
+        Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null;
     }
 
     static RobotController fakeRc() {
@@ -329,6 +329,15 @@ public class BotTest {
         Flow.request(t);
         Flow.work(0);
         check(!Flow.ready(t) && Flow.fails == f0 + 1 && !Flow.building, "flow: walled-off target fails");
+        Flow.request(t);
+        check(!Flow.building, "flow: a failed target is not retried at once");
+        // a search that cannot finish in time is abandoned, so the rat stops holding
+        reset(); W = 12; H = 8; install();
+        me = new MapLocation(2, 4); G.startTurn();
+        Flow.request(t);
+        check(Flow.searching(t), "flow: searching while the build runs");
+        round += Cfg.FLOW_MAX_TURNS + 1; G.startTurn();
+        check(!Flow.searching(t) && !Flow.building, "flow: slow search times out");
     }
 
     static void testExploreUnseen() throws GameActionException {
@@ -599,7 +608,12 @@ public class BotTest {
         squeaks.clear();
         Comms.kings[0] = new MapLocation(15, 15);
         Baby.report();
+        check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_MINE, "report: while the team knows no mine, relay ours even far from kings");
+        squeaks.clear();
+        Comms.numMines = 1;
+        Baby.report();
         check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_TRAP, "report: away from kings, share the enemy front");
+        Comms.numMines = 0;
         Comms.numKings = 0; Baby.myMineCount = 0; Baby.nearestEnemy = null; G.coop = true;
     }
 

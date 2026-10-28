@@ -25,7 +25,8 @@ public final class Flow {
     static int[] head = new int[NB], tail = new int[NB];
     static int curF, pending, held;
     public static int builds, steps, done, lastTurns, fails;
-    static int startRound;
+    static int startRound, failRound;
+    static MapLocation failTgt;
     /** Tests run outside the engine, where Clock reports 0 bytecodes left. */
     public static boolean unlimited;
 
@@ -38,12 +39,20 @@ public final class Flow {
 
     /** True while a search toward t is running. */
     public static boolean searching(MapLocation t) {
+        if (building && G.round - startRound > Cfg.FLOW_MAX_TURNS) {
+            // too slow (little spare bytecode, or a huge open search): give up so the rat moves again
+            building = false;
+            fails++;
+            failTgt = tgt;
+            failRound = G.round;
+        }
         return building && tgt != null && G.cheb(tgt, t) <= 1;
     }
 
     /** Ask for a path toward t (no-op if one is ready or already being built toward t). */
     public static void request(MapLocation t) {
         if (tgt != null && G.cheb(tgt, t) <= 1 && (building || ready(t))) return;
+        if (failTgt != null && G.cheb(failTgt, t) <= 1 && G.round - failRound < Cfg.FLOW_RETRY) return;
         tgt = t;
         tIdx = G.idx(t);
         tx = t.x; ty = t.y;
@@ -117,6 +126,8 @@ public final class Flow {
         // target unreachable over what we know
         building = false;
         fails++;
+        failTgt = tgt;
+        failRound = G.round;
     }
 
     static void finish() {
