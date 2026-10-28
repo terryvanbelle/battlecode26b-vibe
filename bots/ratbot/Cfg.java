@@ -19,7 +19,7 @@ public final class Cfg {
     public static final boolean FACE_ENEMY = true;
     /** Scored combat movement (Micro) for babies at war. */
     /** War role split: 0 everyone fights, 1 gatherers ignore non-adjacent enemies, 2 and never freeze to face. */
-    public static final int WAR_GATHER = 1;
+    public static final int WAR_GATHER = 0;
     /** Fighters target the nearest enemy rat with less health than theirs (it can be ratnapped). */
     public static final boolean POUNCE = true;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */
@@ -35,13 +35,15 @@ public final class Cfg {
     /** While chasing a ratnappable enemy, ignore suspected trap tiles. */
     public static final boolean HUNT_IGNORES_RISK = true;
     /** False: the trap-risk mask is dropped while a visible enemy rat is within dist2 20 (so we can close to bite). */
-    public static final boolean RISK_IN_FIGHT = true;
+    public static final boolean RISK_IN_FIGHT = false;
     /** Guard facing: with an enemy rat within this squared distance, steps strafe so we keep facing it, and a
      *  turn ends facing it (rats are grabbed from behind). 0 = off. */
     public static final int GUARD_DIST2 = 13;
     /** Bite cheese: a king in combat bites with up to KING_BITE_MAX cheese (c = k*k gives +k damage) above
      *  KING_BITE_FLOOR; a baby adds up to FINISH_K*FINISH_K cheese when that makes the bite a kill. 0 = off. */
     public static final int KING_BITE_MAX = 225, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;
+    /** Flank: step onto a tile next to an enemy rat that it cannot see, facing it, then grab it after moving. */
+    public static final boolean FLANK = true;
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;

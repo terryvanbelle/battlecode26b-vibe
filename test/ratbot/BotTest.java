@@ -382,6 +382,25 @@ public class BotTest {
         check(!Baby.nearHome(new MapLocation(5, 5), 4) && Baby.nearHome(new MapLocation(7, 12), 4), "fort: nearHome radius");
     }
 
+    static void testFlank() throws GameActionException {
+        reset(); install();
+        G.coop = false; Nav.avoid = 0;
+        // an enemy at (5,7) facing north sees (4..6, 8) but not the row below it
+        RobotInfo e = new RobotInfo(62, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 7), Direction.NORTH, 0, 0, null);
+        check(Baby.sees(e, new MapLocation(5, 8)) && !Baby.sees(e, new MapLocation(5, 6)) && !Baby.sees(e, new MapLocation(6, 7)),
+              "flank: cone of a north-facing rat");
+        RobotInfo ne = new RobotInfo(63, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 7), Direction.NORTHEAST, 0, 0, null);
+        check(Baby.sees(ne, new MapLocation(6, 7)) && Baby.sees(ne, new MapLocation(5, 8)) && !Baby.sees(ne, new MapLocation(4, 7)),
+              "flank: cone of a diagonal-facing rat");
+        robots.put(e.location, e);
+        check(Baby.flank(new RobotInfo[]{e}), "flank: a blind tile next to the enemy is taken");
+        check(G.cheb(me, e.location) == 1 && !Baby.sees(e, me) && facing == me.directionTo(e.location),
+              "flank: we end behind it, facing it (" + me + " " + facing + ")");
+        e = new RobotInfo(62, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 7), Direction.SOUTH, 0, 0, null);
+        reset(); install(); G.coop = false; robots.put(e.location, e);
+        check(!Baby.flank(new RobotInfo[]{e}), "flank: none when every reachable neighbour is in its view");
+    }
+
     static void testBiteCheese() {
         check(Baby.finishCheese(10, 1000) == 0 && Baby.finishCheese(13, 1000) == 9 && Baby.finishCheese(16, 1000) == 0,
               "bite cheese: a baby pays k*k only when it makes the kill");
@@ -428,6 +447,7 @@ public class BotTest {
         testTrapRisk();
         testGuard();
         testBiteCheese();
+        testFlank();
         testFort();
         testRetreat();
         testWarRoles();

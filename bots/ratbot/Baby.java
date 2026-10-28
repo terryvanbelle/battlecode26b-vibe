@@ -496,6 +496,7 @@ public final class Baby {
             if (Nav.flee(cc)) { why = 'c'; return; }
         }
         if (!G.coop && retreat()) { why = 'r'; return; }
+        if (!G.coop && Cfg.FLANK && Cfg.NAP && flank(seen)) { why = 'k'; return; }
         if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) { why = 'm'; return; }
         if (!G.coop && Cfg.FACE_ENEMY && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) { why = 'f'; return; }
         if (role == ATTACK && attack()) { why = 'a'; return; }
@@ -637,6 +638,44 @@ public final class Baby {
         }
         return false;
     }
+
+    /** True when a baby rat r (facing r.direction) can see tile t: dot >= |cross| with its facing, dist2 <= 20. */
+    static boolean sees(RobotInfo r, MapLocation t) {
+        int dx = t.x - r.location.x, dy = t.y - r.location.y;
+        Direction f = r.direction;
+        if (f == null || f == Direction.CENTER) return true;
+        return dx * dx + dy * dy <= 20 && dx * f.dx + dy * f.dy >= Math.abs(dx * f.dy - dy * f.dx);
+    }
+
+    /** Step onto a tile adjacent to an enemy baby that it cannot see, keeping it in view; the post-move carry grabs it. */
+    static boolean flank(RobotInfo[] robots) throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady() || !rc.isMovementReady() || rc.getCarrying() != null) return false;
+        RobotInfo bestE = null;
+        Direction bestD = null;
+        int bs = Integer.MAX_VALUE;
+        for (RobotInfo e : robots) {
+            if (e.team != G.them || e.type != UnitType.BABY_RAT) continue;
+            if (G.me.distanceSquaredTo(e.location) > 8) continue;
+            for (int i = 0; i < 8; i++) {
+                Direction d = G.DIRS[i];
+                MapLocation t = G.me.add(d);
+                if (G.cheb(t, e.location) != 1 || sees(e, t)) continue;
+                if ((Nav.avoid & (1 << i)) != 0 || !rc.canMove(d)) continue;
+                int sc = e.health * 4 + (d == rc.getDirection() ? 0 : 1) * 2 + (G.hand(G.me, d) > 0 ? 1 : 0);
+                if (sc < bs) { bs = sc; bestE = e; bestD = d; }
+            }
+        }
+        if (bestE == null) return false;
+        MapLocation g = Nav.guard;
+        Nav.guard = bestE.location;
+        boolean moved = Nav.step(bestD);
+        Nav.guard = g;
+        if (moved) flanks++;
+        return moved;
+    }
+
+    public static int flanks;
 
     /** Nearest enemy baby within dist2 20 that we could ratnap (strictly less health than ours), or null. */
     static RobotInfo prey(RobotInfo[] robots, int hp) {
