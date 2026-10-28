@@ -22,3 +22,6 @@
    winning). Starving the king (spending everything on rats) and a hard reserve (no rats left to fight) both lose.
 10. **Idle rats in contact.** Fortress fighters spent 359 of 420 engaged rat-rounds with every cooldown at 0
     (mv=h tag). Holding a ring does not fight; the enemy waits outside it.
+11. **Check the replay tooling against the engine before trusting a count.** The engine emits RatNap both for a grab
+    and for a thrown rat's own landing; counting both hid that the enemy grabs us almost three times as often as we
+    grab them. The grabs come from behind: any movement code that always turns to face its step exposes the back.

@@ -43,3 +43,15 @@
 - s0v fortress; s0w/s0x + hard spawn floor 600 (king lives, but the army is gone); s0y/s0z + TrapRisk.
 - v0d (best vs example) wins 27 of the 37 example maps s0m lost; s0u wins 13. The conservative v0d spawner suits
   passive opponents.
+
+## F4 (2026-10-28 03:09 PDT): economy does not matter, grabs from behind do
+- s0y (fortress + TrapRisk) 0/48 pts 21, s0z (no fortress) 0/48 pts 32. The fortress is off from now on.
+- Economy sweep s1a-s1f (core 14/18, floors 150/300/600, trap minimum 400/1000) vs Version41, Icarus, Finals,
+  finalsbot on 3 maps: all 0/24, mean points 15-21. The spawn economy is not the lever.
+- ReplayDump bug: the engine also emits RatNap for a thrown rat's own landing, so the dumped "naps" mixed grabs with
+  landings. Fixed ('land' rows). Real grabs, s1g vs Version41: 14 for us, 38 for them (our rats were thrown 31 times,
+  theirs 8). Vs Icarus: 32 vs 45.
+- Most of their grabs take our rat from behind (outside its cone) and, against Icarus, half land on 50-HP rats just
+  hit by a trap. Our Nav turns to face every step, so a retreating or gathering rat shows its back.
+- s1h/s1i: guard facing. With an enemy within d2 13 (s1i: 20), steps strafe so we keep facing it, and every turn
+  ends facing the nearest enemy rat.
