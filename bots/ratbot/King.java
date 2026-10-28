@@ -460,7 +460,7 @@ public final class King {
     /** The first king names a formation site and keeps it fresh until a second king exists or it times out. */
     static void formation() {
         if (slot != 0) return;
-        if (Comms.numKings >= 2) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
+        if (Comms.numKings >= Math.min(Cfg.FORM_MAX, Comms.KING_SLOTS)) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
         if (formSite != null) {
             if (G.round - formStart > Cfg.FORM_TTL) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
             Comms.write(Comms.FORM_T, Comms.stamp());
@@ -487,6 +487,7 @@ public final class King {
             MapLocation m = Comms.mines[i];
             // clearly ours: at most half as far from our start as from theirs
             if (G.cheb(m, from) <= 4 || 4 * m.distanceSquaredTo(start) > m.distanceSquaredTo(ek) || !clear3(m)) continue;
+            if (nearKing(m)) continue;
             int d = from.distanceSquaredTo(m);
             if (d < bd) { bd = d; best = m; }
         }
@@ -495,6 +496,13 @@ public final class King {
         Direction back = ek.directionTo(from);
         MapLocation b = from.translate(4 * back.dx, 4 * back.dy);
         return clear3(b) ? b : null;
+    }
+
+    /** Some live king of ours is within Chebyshev 4 of m (it holds that mine). */
+    static boolean nearKing(MapLocation m) {
+        for (int k = 0; k < Comms.numKings; k++)
+            if (G.cheb(m, Comms.kings[k]) <= 4) return true;
+        return false;
     }
 
     /** The 3x3 around c is on the map and known free of walls and dirt. */

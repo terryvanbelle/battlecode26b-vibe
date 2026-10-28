@@ -97,3 +97,4 @@ s3t,2026-10-28 11:56,s3h,"s3h + MINE_BALANCE: gatherers spread over every known 
 s3u,2026-10-28 12:12,s3t,"s3t + RICH_BABIES 30: with 1000+ global cheese the baby cap rises from 18 to 30 (s3t on keepout ended with 18405 cheese unspent, 20 babies, 1 king)","self-play sp8 vs its base s3t: +2.1 pts, t +1.00, +10 -6 cells (attack_on_cat +75, rose -49): pass"
 s3v,2026-10-28 12:13,s3t,"s3t + FORM_KING: retry the second king (s2p/s2q failed vs s2m on the old, starving economy; round-2000 points are 50% kings alive)",
 s3w,2026-10-28 12:53,s3t,s3t + RICH_BABIES 30 + FORM_KING (s3u + s3v): field round-2000 losses: 12 of 21 had the opponent on 2-5 kings to our 1 (kings are 50% of the points after a backstab); top bots form king 2 at r150-650,
+s3x,2026-10-28 13:00,s3w,s3w + FORM_MAX 4: up to 4 kings (sites skip mines within 4 of any king); field top bots run 3-5 kings and kings are 50% of round-2000 points,

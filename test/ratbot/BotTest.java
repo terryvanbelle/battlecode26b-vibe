@@ -713,6 +713,16 @@ public class BotTest {
               && King.babyCap(true, 1 << 20) == Math.max(Cfg.MAX_BABIES_WAR, Cfg.RICH_BABIES), "baby cap: a rich bank raises it, never lowers it");
     }
 
+    static void testNearKing() {
+        Comms.numKings = 2; Comms.kings[0] = new MapLocation(5, 5); Comms.kings[1] = new MapLocation(20, 20);
+        check(King.nearKing(new MapLocation(9, 1)) && King.nearKing(new MapLocation(16, 24)) && !King.nearKing(new MapLocation(10, 5))
+              && !King.nearKing(new MapLocation(12, 12)), "near king: Chebyshev 4 of any live king");
+        Comms.numKings = 1;
+        check(!King.nearKing(new MapLocation(20, 20)), "near king: only live slots count");
+        Comms.numKings = 0;
+        check(Cfg.FORM_MAX >= 1 && Cfg.FORM_MAX <= 5, "form max: within the engine's 5");
+    }
+
     static void testKingDig() {
         reset(); W = 30; H = 30; install();
         for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
@@ -892,6 +902,7 @@ public class BotTest {
         testBiteGuard();
         testCarryCap();
         testBabyCap();
+        testNearKing();
         testKingPress();
         testDefend();
         testGuard();

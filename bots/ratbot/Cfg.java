@@ -57,6 +57,8 @@ public final class Cfg {
      *  FORM_CHEESE global cheese after round FORM_FROM; babies within dist2 FORM_PULL_R2 gather in its 3x3. */
     public static final boolean FORM_KING = false;
     public static final int FORM_FROM = 80, FORM_BABIES = 16, FORM_CHEESE = 300, FORM_TTL = 60, FORM_RETRY = 150, FORM_PULL_R2 = 72;
+    /** Kings we form up to (engine max 5 before round 1200). */
+    public static final int FORM_MAX = 2;
     /** Gatherers at their mine turn in place instead of wandering. */
     public static final boolean GATHER_STILL = false;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines
