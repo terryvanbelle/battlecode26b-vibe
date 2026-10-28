@@ -15,6 +15,7 @@ public class BotTest {
     // ------------------------------------------------------------------ fake world
     static int W = 30, H = 20;
     static Set<MapLocation> walls = new HashSet<>(), dirt = new HashSet<>();
+    static Map<MapLocation, Integer> cheeseAt = new HashMap<>();
     static Map<MapLocation, RobotInfo> robots = new HashMap<>();
     static int[] shared = new int[64];
     static MapLocation me = new MapLocation(5, 5);
@@ -45,7 +46,7 @@ public class BotTest {
     }
 
     static void reset() {
-        walls.clear(); dirt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null;
+        walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null;
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; ratCost = 10; built.clear();
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0;
@@ -110,6 +111,10 @@ public class BotTest {
                                 out.add(new MapInfo(l, passable(l), null, walls.contains(l), dirt.contains(l), 0, TrapType.NONE, false));
                             }
                         return out.toArray(new MapInfo[0]);
+                    }
+                    case "senseMapInfo": {
+                        MapLocation l = (MapLocation) a[0];
+                        return new MapInfo(l, passable(l), null, walls.contains(l), dirt.contains(l), cheeseAt.getOrDefault(l, 0), TrapType.NONE, false);
                     }
                     case "senseNearbyRobots": return robots.values().toArray(new RobotInfo[0]);
                     case "canAttack": {
@@ -376,6 +381,12 @@ public class BotTest {
         robots.put(e.location, e);
         Micro.act(robots.values().toArray(new RobotInfo[0]));
         check(me.distanceSquaredTo(e.location) <= 2, "micro: winning fight moves into bite range (at " + me + ")");
+        // outnumbered three tiles off: of the steps that keep the distance, the one onto cheese wins
+        reset(); install();
+        for (int i = 0; i < 3; i++) { RobotInfo f = enemyRat(40 + i, 4 + i, 9, 100); robots.put(f.location, f); }
+        cheeseAt.put(new MapLocation(4, 6), 20);
+        Micro.act(robots.values().toArray(new RobotInfo[0]));
+        check(me.equals(new MapLocation(4, 6)), "micro: a safe step onto visible cheese (at " + me + ")");
     }
 
     static void testWarRoles() throws GameActionException {

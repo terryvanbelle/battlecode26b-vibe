@@ -26,6 +26,10 @@ public final class Cfg {
     public static final int WAR_GATHER = 1;
     /** The post-move throw scan runs only with this many bytecodes left (it costs up to ~6000). */
     public static final int THROW_BC = 7000;
+    /** Idle non-raiding fighters hold one of our mines instead of exploring. */
+    public static final boolean FIGHT_MINE = true;
+    /** Micro score bonus for a step onto cheese. */
+    public static final int MICRO_CHEESE = 15;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines
     public static final int RAID_STAY = 60, RAID_SPREAD = 60;
     /** One in RAID_EVERY fighters is a raider: on our half it ignores enemies beyond dist2 RAID_ENGAGE. */

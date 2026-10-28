@@ -597,7 +597,7 @@ public final class Baby {
             if (ct != null) { Nav.goTo(ct); return; }
             if (Cfg.RAID && raider && rc.getHealth() >= Cfg.RAID_HP && raid()) { why = 'z'; return; }
         }
-        if (role == GATHER) {
+        if (role == GATHER || role == FIGHT && Cfg.FIGHT_MINE) {
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
                 if (G.cheb(G.me, mineTarget) <= 2) {
