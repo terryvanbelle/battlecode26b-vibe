@@ -228,3 +228,22 @@
 - New switches, off in dev: HUNGRY (global cheese below which any rat carrying cheese delivers before fighting) and
   CARRY_MAX (a loaded rat takes no pile that lifts it above the cap; carrying slows moves 1% per unit). Snapshots
   s3k (HUNGRY 150), s3l (CARRY_MAX 120), s3m (RAT_TRAP_MIN_CHEESE 400, FORT_TRAPS 4) queued as sp3.
+
+## 2026-10-28 11:07 PDT: cats kill kings that block their path; the grab cone was decoded wrong
+- Of the 14 replica king deaths that were not starvation, 9-10 had no enemy rat near the king at any time: cats
+  (gridlock, sunandmoon, dirtfulcat, evileye, heart, popthecork x2, grove, uneasy_alliance). The engine's cat
+  (InternalRobot, EXPLORE) walks waypoint to waypoint and, when its next footprint is blocked, scratches whatever
+  blocks it, and keeps doing so. Our king on sunandmoon sat in such a path for 60 rounds (540 -> 20 HP). Its flee
+  only tried away / 45 degrees off; dirt boxed it in on the west and north, and an idle fighter (approachCat, stuck
+  behind the king) plus wandering gatherers boxed it in on the east.
+- King.dodge (KING_DODGE): scores the 3x3 at every legal step by the tiles it shares with a near cat's next two
+  footprints (250 / 75 per tile), touching its body (100) and distance; it moves when a step beats staying, and digs
+  the leading dirt tile of the safest dirt-only step when boxed in. YIELD_KING: an empty rat on the ring around our
+  king (Chebyshev 2) steps off it while the cat it sees is near that king. Dodge alone (one diagnostic game,
+  sunandmoon, vs s2o) lost the king at r116, exactly as s2o did on the replica. Dodge + yield (s3n): the king lost 20
+  HP in 2000 rounds and won on points. s3n is queued as sp4.
+- Bug: replay direction ordinals are FlatHelpers' (0 centre, 1 west, then counter-clockwise: 6 north-east, 7 north),
+  not the Java enum order. Checked against 66k rat moves. battle_report's vision cone used the enum order, so the F4
+  finding "most of their grabs take our rat from behind" was wrong. Recomputed on the same five games: grabs on us
+  are mostly from the front of a rat that is weaker than the grabber (cf5: front 45, behind 30; ex1: front 40,
+  behind 19). Low HP, not facing, is what exposes a rat to a grab. Guard facing (s1h/s1i) rested on the wrong reading.

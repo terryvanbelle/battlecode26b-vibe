@@ -87,3 +87,4 @@ s3j,2026-10-28 10:24,s3d,dev (s3d behaviour) + king first-turn sense guard + GOS
 s3k,2026-10-28 10:46,s3i,"s3i + HUNGRY 150: with the bank under 150, any rat carrying cheese delivers before fighting (31 of 45 king deaths on the replica were starvation)",
 s3l,2026-10-28 10:46,s3i,s3i + CARRY_MAX 120: a loaded rat takes no pile that lifts it above 120 (rats hauled 400-700 at a fifth of their speed),
 s3m,2026-10-28 10:46,s3i,"s3i + trap economy: RAT_TRAP_MIN_CHEESE 400, FORT_TRAPS 4 (rat traps took 560-1560 cheese before the bank ran dry)",
+s3n,2026-10-28 11:01,s3i,"s3i + king cat dodge (KING_DODGE: step the 3x3 out of a near cat's next two footprints, dig out of a dirt pocket) + YIELD_KING (empty rats step off the ring around the king while a cat is near it): 9-10 of our 45 replica king deaths were cats scratching a king that stood in a cat's waypoint path",

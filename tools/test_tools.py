@@ -355,9 +355,11 @@ if os.path.exists(fx) and os.path.isdir(os.path.join(REPO, 'build', 'tools', 'bc
     check(any(a['action'] == 'land' for a in acts), "replaydump logs landings")
 # battle_report: vision cone, and the sections on the fixture replay
 br = load('battle_report')
-check(br.sees(5, 5, 0, 5, 6) and br.sees(5, 5, 0, 6, 6) and not br.sees(5, 5, 0, 6, 5) and not br.sees(5, 5, 0, 5, 4),
+# replay direction ordinals: 1 west, 6 north-east, 7 north (FlatHelpers), checked against real rat moves
+check(br.sees(5, 5, 7, 5, 6) and br.sees(5, 5, 7, 6, 6) and not br.sees(5, 5, 7, 6, 5) and not br.sees(5, 5, 7, 5, 4),
       "battle_report cone (north)")
-check(br.sees(5, 5, 1, 6, 5) and br.sees(5, 5, 1, 5, 6) and not br.sees(5, 5, 1, 4, 6), "battle_report cone (northeast)")
+check(br.sees(5, 5, 6, 6, 5) and br.sees(5, 5, 6, 5, 6) and not br.sees(5, 5, 6, 4, 6), "battle_report cone (northeast)")
+check(br.sees(5, 5, 1, 4, 5) and not br.sees(5, 5, 1, 6, 5) and br.sees(5, 5, 0, 6, 5), "battle_report cone (west; centre sees all)")
 if os.path.exists(fx) and os.path.isdir(os.path.join(REPO, 'build', 'tools', 'bc26tools')):
     rep = br.report(d, 60, 140, 20)
     check([f['round'] for f in rep['front']] == [60, 80, 100, 120, 140][:len(rep['front'])] and rep['front'][0]['1']['n'] > 0,

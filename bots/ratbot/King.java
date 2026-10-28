@@ -273,7 +273,9 @@ public final class King {
         RobotController rc = G.rc;
         if (!rc.isMovementReady()) return;
         MapLocation c = rc.getLocation();
-        for (RobotInfo cat : cats) {
+        if (Cfg.KING_DODGE) {
+            if (dodge(c, cats)) { mineWhy = 'c'; return; }
+        } else for (RobotInfo cat : cats) {
             if (c.distanceSquaredTo(cat.location) <= 20) {
                 Direction away = cat.location.directionTo(c);
                 Direction[] cand = {away, away.rotateLeft(), away.rotateRight()};
@@ -301,6 +303,91 @@ public final class King {
         if (d == null) { mineWhy = 'z'; if (step(c, homeMine)) pickUp(); return; }
         if (!G.rc.canRemoveDirt(d)) { mineWhy = 'q'; return; }
         G.rc.removeDirt(d); digs++; Sym.mem[G.idx(d)] &= ~Sym.DIRT; mineWhy = 'D';
+    }
+
+    /**
+     * A cat walking to its waypoint scratches whatever blocks its next footprint, and stays put while it does: step the
+     * 3x3 out of a near cat's next two footprints (then off its body, then away) when some step is safer than staying.
+     */
+    static boolean dodge(MapLocation c, RobotInfo[] cats) throws GameActionException {
+        RobotController rc = G.rc;
+        boolean near = false;
+        for (RobotInfo cat : cats) if (c.distanceSquaredTo(cat.location) <= Cfg.KING_DODGE_R2) near = true;
+        if (!near) return false;
+        int best = 2 * catRisk(c, cats), bi = -1;
+        for (int i = 0; i < 8; i++) {
+            Direction d = G.DIRS[i];
+            if (!rc.canMove(d)) continue;
+            int s = 2 * catRisk(c.add(d), cats) + (G.hand(c, d) > 0 ? 1 : 0);
+            if (s < best) { best = s; bi = i; }
+        }
+        if (bi >= 0) {
+            rc.move(G.DIRS[bi]);
+            G.me = rc.getLocation();
+            return true;
+        }
+        // boxed in by dirt (a king's home is often a dirt pocket): dig the leading edge of the safest dirt-only step
+        if (!Cfg.KING_DODGE_DIG || !rc.isActionReady() || rc.getGlobalCheese() < Cfg.KING_DIG_MIN) return false;
+        MapLocation dig = null;
+        for (int i = 0; i < 8; i++) {
+            Direction d = G.DIRS[i];
+            MapLocation t = dirtStep(c, d);
+            if (t == null) continue;
+            int s = 2 * catRisk(c.add(d), cats) + (G.hand(c, d) > 0 ? 1 : 0);
+            if (s < best) { best = s; dig = t; }
+        }
+        if (dig == null || !rc.canRemoveDirt(dig)) return false;
+        rc.removeDirt(dig);
+        digs++;
+        Sym.mem[G.idx(dig)] &= ~Sym.DIRT;
+        mineWhy = 'C';
+        return true;
+    }
+
+    /** The first dirt tile among those a king step in d adds to its 3x3, when the step adds dirt and no wall, unseen
+     *  or off-map tile; else null. The added tiles are within dist2 8 of the king, its dig range. */
+    static MapLocation dirtStep(MapLocation c, Direction d) {
+        MapLocation nc = c.add(d), first = null;
+        for (int dx = -1; dx <= 1; dx++)
+            for (int dy = -1; dy <= 1; dy++) {
+                int x = nc.x + dx, y = nc.y + dy;
+                if (Math.abs(x - c.x) <= 1 && Math.abs(y - c.y) <= 1) continue;
+                if (x < 0 || y < 0 || x >= G.W || y >= G.H) return null;
+                int m = Sym.mem[x + G.W * y];
+                if ((m & Sym.SEEN) == 0 || (m & Sym.WALL) != 0) return null;
+                if ((m & Sym.DIRT) != 0 && first == null) first = new MapLocation(x, y);
+            }
+        return first;
+    }
+
+    /** Lower is safer for a king centred at k: 250 per king tile in a cat's next footprint, 75 per tile in its second
+     *  (the 3x3 is wider than the 2x2 lane, so leaving it can take two steps), 100 touching its body, less up to 100
+     *  for distance from the body's centre. */
+    static int catRisk(MapLocation k, RobotInfo[] cats) {
+        int s = 0;
+        for (RobotInfo cat : cats) {
+            MapLocation b = cat.location;
+            if (k.distanceSquaredTo(b) > Cfg.KING_DODGE_R2 + 16) continue;
+            MapLocation n1 = b.add(cat.direction), n2 = n1.add(cat.direction);
+            s += 250 * catOverlap(k, n1) + 75 * catOverlap(k, n2);
+            if (catGap(k, b) <= 1) s += 100;
+            s -= Math.min(100, Baby.catDist4(b, k));
+        }
+        return s;
+    }
+
+    /** Tiles shared by a king's 3x3 centred at k and a cat's 2x2 from bottom-left b. */
+    static int catOverlap(MapLocation k, MapLocation b) {
+        int ox = Math.min(k.x + 1, b.x + 1) - Math.max(k.x - 1, b.x) + 1;
+        int oy = Math.min(k.y + 1, b.y + 1) - Math.max(k.y - 1, b.y) + 1;
+        return ox > 0 && oy > 0 ? ox * oy : 0;
+    }
+
+    /** Chebyshev gap between a king's 3x3 centred at k and a cat's 2x2 from bottom-left b: 0 overlap, 1 touching. */
+    static int catGap(MapLocation k, MapLocation b) {
+        int gx = Math.max(0, Math.max(b.x - (k.x + 1), (k.x - 1) - (b.x + 1)));
+        int gy = Math.max(0, Math.max(b.y - (k.y + 1), (k.y - 1) - (b.y + 1)));
+        return Math.max(gx, gy);
     }
 
     /** One king step toward t that strictly shortens the distance: straight or 45 degrees off. */

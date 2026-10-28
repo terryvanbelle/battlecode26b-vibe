@@ -615,6 +615,7 @@ public final class Baby {
             MapLocation cc = new MapLocation(cat.location.x, cat.location.y);
             if (Nav.flee(cc)) { why = 'c'; return; }
         }
+        if (Cfg.YIELD_KING && cat != null && raw == 0 && yieldKing()) { why = 'y'; return; }
         Debug.mark(10);
         if (!G.coop && retreat()) { why = 'r'; return; }
         // the bank is nearly empty and the king starves at 0: whatever we carry goes home before any fight or errand
@@ -923,6 +924,24 @@ public final class Baby {
     }
 
     /** A wounded rat near enemies falls back to its king instead of being finished off. */
+    /** An empty rat on the ring around our king's 3x3 (Chebyshev 2 from its centre) while the cat we see is near
+     *  that king: step to a tile off the ring and out of the cat's lane, farthest from the king. */
+    static boolean yieldKing() throws GameActionException {
+        MapLocation k = Comms.nearestKing(G.me);
+        if (k == null || G.cheb(G.me, k) != 2 || King.catGap(k, cat.location) > 3) return false;
+        RobotController rc = G.rc;
+        if (!rc.isMovementReady()) return false;
+        int lane = laneMask(cat), best = -1, bd = -1;
+        for (int i = 0; i < 8; i++) {
+            if ((lane & (1 << i)) != 0 || !rc.canMove(G.DIRS[i])) continue;
+            MapLocation t = G.me.add(G.DIRS[i]);
+            if (G.cheb(t, k) < 3) continue;
+            int d = 2 * t.distanceSquaredTo(k) + (G.hand(G.me, G.DIRS[i]) > 0 ? 1 : 0);
+            if (d > bd) { bd = d; best = i; }
+        }
+        return best >= 0 && Nav.step(G.DIRS[best]);
+    }
+
     static boolean retreat() throws GameActionException {
         if (G.rc.getHealth() > Cfg.RETREAT_HP || !nearEnemy(20)) return false;
         MapLocation k = Comms.nearestKing(G.me);

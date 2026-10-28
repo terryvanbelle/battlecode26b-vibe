@@ -16,7 +16,8 @@ import argparse, collections, json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import game_report  # noqa: E402
 
-DIRS = [(0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]
+# the replay's direction ordinal (FlatHelpers): 0 centre, then west and counter-clockwise; not the Java enum order
+DIRS = [None, (-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1)]
 
 
 def load(path):
@@ -27,10 +28,10 @@ def load(path):
 
 
 def sees(vx, vy, vdir, tx, ty):
-    """A baby at (vx, vy) facing DIRS[vdir] sees (tx, ty): dot >= |cross| and dist2 <= 20."""
+    """A baby at (vx, vy) facing replay direction ordinal vdir sees (tx, ty): dot >= |cross| and dist2 <= 20."""
     try:
         fx, fy = DIRS[int(vdir)]
-    except (ValueError, IndexError):
+    except (ValueError, IndexError, TypeError):
         return True
     dx, dy = tx - vx, ty - vy
     return dx * dx + dy * dy <= 20 and dx * fx + dy * fy >= abs(dx * fy - dy * fx)

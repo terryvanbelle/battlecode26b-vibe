@@ -35,6 +35,14 @@ public final class Cfg {
     public static final int KING_MINE_R2 = 400;
     /** Dirt on the king's walk to its mine: the king digs the step's leading edge (5 cheese a tile). */
     public static final boolean KING_DIG = true;
+    /** King steps out of a near cat's path (King.dodge) instead of only straight away from it. */
+    public static final boolean KING_DODGE = false;
+    /** Cats within this dist2 of the king's centre make it dodge. */
+    public static final int KING_DODGE_R2 = 25;
+    /** A dodging king boxed in by dirt digs out (KING_DIG_MIN cheese and up). */
+    public static final boolean KING_DODGE_DIG = true;
+    /** With a cat near our king, empty rats on the ring around its 3x3 step off it: the king needs room to dodge. */
+    public static final boolean YIELD_KING = false;
     public static final int KING_DIG_MIN = 100;
     /** With no enemy or cat in view the king walks to cheese within Chebyshev KING_ROAM of its mine (0 = off). */
     public static final int KING_ROAM = 4;

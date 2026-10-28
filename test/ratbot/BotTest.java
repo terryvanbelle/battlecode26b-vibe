@@ -730,6 +730,37 @@ public class BotTest {
         check(d3 == null, "king dig: not off the map " + d3);
     }
 
+    static void testKingDodge() {
+        // the sunandmoon death: cat at (13,25) facing north, king at (14,28) in its next footprint
+        RobotInfo cat = new RobotInfo(6, Team.NEUTRAL, UnitType.CAT, 4000, new MapLocation(13, 25), Direction.NORTH, 0, 0, null);
+        RobotInfo[] cats = {cat};
+        MapLocation k = new MapLocation(14, 28);
+        check(King.catGap(k, new MapLocation(13, 26)) == 0 && King.catGap(k, cat.location) == 1, "king dodge: gap 0 in the lane, 1 touching");
+        check(King.catGap(new MapLocation(17, 28), cat.location) == 2, "king dodge: gap 2 two columns off");
+        int stay = King.catRisk(k, cats), east = King.catRisk(k.add(Direction.EAST), cats), west = King.catRisk(k.add(Direction.WEST), cats);
+        check(King.catOverlap(k, new MapLocation(13, 26)) == 2 && King.catOverlap(k.add(Direction.EAST), new MapLocation(13, 26)) == 1
+                && King.catOverlap(new MapLocation(16, 28), new MapLocation(13, 26)) == 0, "king dodge: overlap tiles 2, 1, 0");
+        check(east < stay && east < west, "king dodge: a step east is half out of the lane " + stay + " " + east + " " + west);
+        check(King.catRisk(new MapLocation(16, 28), cats) < east, "king dodge: two steps east is out");
+        check(King.catRisk(new MapLocation(20, 28), cats) < King.catRisk(new MapLocation(17, 28), cats) || King.catRisk(new MapLocation(20, 28), cats) == 0,
+                "king dodge: farther is no worse");
+        check(King.catRisk(new MapLocation(40, 40), cats) == 0, "king dodge: a far cat is no risk");
+        reset(); W = 30; H = 30; install();
+        for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
+        MapLocation c = new MapLocation(10, 10);
+        check(King.dirtStep(c, Direction.NORTH) == null, "king dodge: an open step needs no dig");
+        Sym.mem[10 + W * 12] |= Sym.DIRT;
+        MapLocation dn = King.dirtStep(c, Direction.NORTH);
+        check(dn != null && dn.x == 10 && dn.y == 12, "king dodge: dig the dirt the step adds " + dn);
+        check(King.dirtStep(c, Direction.SOUTH) == null, "king dodge: a step away adds no dirt");
+        Sym.mem[9 + W * 12] |= Sym.WALL;
+        check(King.dirtStep(c, Direction.NORTH) == null, "king dodge: never into a wall");
+        check(King.dirtStep(new MapLocation(1, 1), Direction.SOUTHWEST) == null, "king dodge: not off the map");
+        // mirrored (rotation about the 60x40 centre): the same score
+        RobotInfo mc = new RobotInfo(6, Team.NEUTRAL, UnitType.CAT, 4000, new MapLocation(59 - 14, 39 - 26), Direction.SOUTH, 0, 0, null);
+        check(King.catRisk(new MapLocation(59 - 15, 39 - 28), new RobotInfo[]{mc}) == east, "king dodge: rotation-symmetric score");
+    }
+
     static void testKingPress() throws GameActionException {
         reset(); install();
         G.round = 200; G.coop = false; G.me = me; Baby.role = Baby.FIGHT; Baby.eKing = null; Baby.lastEKing = null;
@@ -844,6 +875,7 @@ public class BotTest {
         testMineSpread();
         testScout();
         testKingDig();
+        testKingDodge();
         testCarryCap();
         testKingPress();
         testDefend();
