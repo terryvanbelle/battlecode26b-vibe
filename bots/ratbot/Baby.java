@@ -609,6 +609,12 @@ public final class Baby {
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
                 if (G.cheb(G.me, mineTarget) <= 2) {
+                    if (Cfg.GATHER_STILL) {
+                        // hold still (moves set off traps laid at our mines) and sweep the cone around the spawn square
+                        Direction t = G.facing.rotateRight().rotateRight();
+                        if (rc.canTurn(t)) { rc.turn(t); G.facing = t; }
+                        return;
+                    }
                     // wander inside the spawn square, facing outward to see new cheese
                     wanderAround(mineTarget);
                 } else {
