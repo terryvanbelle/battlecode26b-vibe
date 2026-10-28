@@ -48,6 +48,9 @@ public final class Cfg {
     public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;
     /** Flank: step onto a tile next to an enemy rat that it cannot see, facing it, then grab it after moving. */
     public static final boolean FLANK = true;
+    /** Throws: an enemy baby hit beyond tile 2 counts THROW_FAR_PCT percent; below a THROW_MIN score (42 = a
+     *  point-blank wall or rat) the carrier holds for up to THROW_HOLD rounds after the grab. */
+    public static final int THROW_FAR_PCT = 40, THROW_MIN = 42, THROW_HOLD = 6;
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;

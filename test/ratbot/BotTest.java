@@ -320,8 +320,8 @@ public class BotTest {
 
     static void testThrowDirection() throws GameActionException {
         reset(); install();
-        // a wall two tiles east, an enemy three tiles west, open north/south: the wall throw (42) beats nothing (10)
-        // but the enemy (38, doubled for hurting them) beats the wall
+        // a wall two tiles east, an enemy two tiles west, open north/south: the wall throw (42) beats nothing (10)
+        // but the enemy (42, doubled for hurting them) beats the wall; a rat three tiles away may move first
         walls.add(new MapLocation(7, 5));
         for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) {
             MapLocation l = new MapLocation(x, y);
@@ -331,10 +331,24 @@ public class BotTest {
         reset(); install();
         walls.add(new MapLocation(7, 5));
         for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, walls.contains(new MapLocation(x, y)), false, false);
-        RobotInfo e = enemyRat(9, 2, 5, 100);
+        RobotInfo e = enemyRat(9, 3, 5, 100);
         robots.put(e.location, e);
         facing = Direction.WEST; // so the enemy is sensable
-        check(Baby.tryThrow(new RobotInfo[]{e}) && thrown == Direction.WEST, "throw: into an enemy beats a wall (" + thrown + ")");
+        check(Baby.tryThrow(new RobotInfo[]{e}) && thrown == Direction.WEST, "throw: into an adjacent-flight enemy beats a wall (" + thrown + ")");
+        reset(); install();
+        walls.add(new MapLocation(7, 5));
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, walls.contains(new MapLocation(x, y)), false, false);
+        e = enemyRat(9, 2, 5, 100);
+        robots.put(e.location, e);
+        facing = Direction.WEST;
+        check(Baby.tryThrow(new RobotInfo[]{e}) && thrown == Direction.EAST, "throw: a sure wall beats a rat three tiles off (" + thrown + ")");
+        // nothing point-blank: hold the rat for a while
+        reset(); install();
+        G.round = 50; Baby.carryRound = 49;
+        check(!Baby.tryThrow(new RobotInfo[0]) && thrown == null, "throw: holds when no throw reaches 42");
+        G.round = 49 + Cfg.THROW_HOLD;
+        check(Baby.tryThrow(new RobotInfo[0]) && thrown != null, "throw: throws anyway when the hold runs out");
+        Baby.carryRound = -100;
     }
 
     static void testMicroRetreatsWhenOutnumbered() throws GameActionException {

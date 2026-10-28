@@ -99,6 +99,7 @@ public final class Baby {
         // 3. movement
         if (rc.isMovementReady()) moveDecision();
         pickUp();
+        if (rc.getCarrying() != null) tryThrow(rc.senseNearbyRobots(-1, null));
         if (!G.coop && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
         if (!G.coop) biteEnemies(rc.senseNearbyRobots(2, G.them));
         else if (role == ATTACK) {
@@ -235,6 +236,7 @@ public final class Baby {
     static RobotInfo eKing, nearestEnemy;
     static RobotInfo[] seen = new RobotInfo[0];
     public static int naps, throwsDone, ratTraps;
+    static int carryRound = -100;
 
     /** Grab an adjacent enemy baby rat (the engine allows it when it cannot see us or is weaker). */
     static boolean tryCarry(RobotInfo[] robots) throws GameActionException {
@@ -249,6 +251,7 @@ public final class Baby {
         }
         if (best == null) return false;
         rc.carryRat(best.location);
+        carryRound = G.round;
         naps++;
         return true;
     }
@@ -269,6 +272,7 @@ public final class Baby {
             MapLocation t1 = me.add(d);
             if (!G.onMap(t1.x, t1.y) || Nav.terrainBlocked(t1) || rc.canSenseLocation(t1) && rc.isLocationOccupied(t1)) continue;
             int s2 = 10;
+            boolean sure = true;
             MapLocation t = t1;
             for (int k = 2; k <= 8; k++) {
                 t = t.add(d);
@@ -278,7 +282,9 @@ public final class Baby {
                 if (rc.canSenseLocation(t)) {
                     RobotInfo r = rc.senseRobotAtLocation(t);
                     if (r != null) {
-                        if (r.team == G.them) s2 = dmg * (r.type == UnitType.RAT_KING ? 3 : 2);
+                        // beyond tile 2 the hit lands next round: a baby has usually moved by then (kings are slow)
+                        boolean far = k > 2 && r.type == UnitType.BABY_RAT;
+                        if (r.team == G.them) s2 = far ? dmg * 2 * Cfg.THROW_FAR_PCT / 100 : dmg * (r.type == UnitType.RAT_KING ? 3 : 2);
                         else if (r.team == G.us) s2 = -dmg;
                         else s2 = -50; // a cat eats the rat: no damage, it sleeps
                         break;
@@ -289,6 +295,8 @@ public final class Baby {
             if (s2 > bs) { bs = s2; bestD = d; }
         }
         if (bestD == null) return false;
+        // no point-blank hit (42) yet: keep holding (the carried rat is out of the fight) while the carry lasts
+        if (bs / 2 < Cfg.THROW_MIN && G.round - carryRound < Cfg.THROW_HOLD) return false;
         if (rc.getDirection() != bestD) { if (!rc.canTurn(bestD)) return false; rc.turn(bestD); G.facing = bestD; }
         if (!rc.canThrowRat()) return false;
         rc.throwRat();
