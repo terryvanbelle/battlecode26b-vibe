@@ -17,6 +17,12 @@ as a team on the official site would act. Standard library only; run on the driv
         A in every game, NAME@- team B (galaxy's player order, unranked only; otherwise '?': random, sides alternating)
         --panel FILE: unranked, on the maps FILE holds for that opponent; an opponent not in FILE gets a random draw
         that is written there, so a candidate's panel and the incumbent's control play the same maps in the same order
+        --queue FILE: requests the hourly limit refuses (HTTP 429) are appended to FILE, tagged with the build that is
+        the active submission now, for `drain`
+  python3 tools/galaxy26/contest.py drain FILE
+        send FILE's queued requests (lines: build, NAME@ORDER, panel file, maps) in order until the hourly limit
+        refuses one; only lines tagged with the active submission's build are sent (a block must be played by the
+        build it measures); sent lines leave FILE
   python3 tools/galaxy26/contest.py matches [--pages 1] [--all]   our scrimmages (or everyone's), newest first
   python3 tools/galaxy26/contest.py fetch [ID ...] [--new] [--out DIR]
         download match replays: DIR/<id>/replay.bc26 (every game of the match; open it in the client) + match.json
@@ -102,6 +108,94 @@ def plan_scrims(ladder, my_id, n, band, waiting_ids=()):
         out.append((t, side is above))
         i += 1
     return out
+
+
+def active_build(s, ep):
+    """The build (snapshot codename) of our newest accepted submission, which plays every new match."""
+    sys.path.insert(0, os.path.join(REPO, 'tools'))
+    import games
+    for x in s.pages(f'/api/compete/{ep}/submission/', limit=1):
+        if x.get('accepted'):
+            return games.codename(x.get('package'), x.get('description'))
+    return None
+
+
+def read_queue(path):
+    """[(build, spec, panel file, maps)] of a queue file."""
+    out = []
+    if os.path.exists(path):
+        for line in open(path):
+            p = line.rstrip('\n').split('\t')
+            if len(p) == 4 and not line.startswith('#'):
+                out.append((p[0], p[1], p[2], int(p[3])))
+    return out
+
+
+def write_queue(path, rows):
+    with open(path + '.tmp', 'w') as f:
+        for r in rows:
+            f.write('\t'.join(map(str, r)) + '\n')
+    os.replace(path + '.tmp', path)
+
+
+def send(c, s, ep, my_id, specs, panel_path, nmaps, dry_run=False):
+    """Request one scrimmage per spec (NAME, NAME@+ or NAME@-; with a panel file, on its maps for that opponent).
+    Returns the specs the hourly limit refused (HTTP 429), in order: every spec after the first refusal is kept too."""
+    ladder = cl.rankings(c)
+    pairs = [split_order(v) for v in specs]
+    plan = named(ladder, my_id, [n for n, _ in pairs])
+    maps = cl.public_maps(c)
+    import random
+    rnd = random.Random()
+    panel = {}
+    if panel_path and os.path.exists(panel_path):
+        with open(panel_path) as fh:
+            panel = json.load(fh)
+    left = []
+    for spec, (t, ranked), (_, order) in zip(specs, plan, pairs):
+        if left:
+            left.append(spec)
+            continue
+        tag = t['name'] + ('' if order == '?' else '@' + order)
+        if order != '?':
+            ranked = False      # galaxy: "Ranked matches must use shuffled order"
+        if panel_path:
+            ranked, mp = False, panel_maps(panel, t['name'], maps, nmaps, rnd)
+        else:
+            mp = [] if ranked else rnd.sample(maps, nmaps)
+        if dry_run:
+            print(f'would request {"ranked" if ranked else "unranked"} vs {tag} (rated {t["rating"] or 0:.0f}) {mp}')
+            continue
+        try:
+            r = cl.request(s, t['id'], ranked, mp, order, ep)
+            print(f'request {r["id"]}: vs {tag} ({"ranked" if ranked else "unranked"}, rated {t["rating"] or 0:.0f})')
+        except cl.ApiError as e:
+            if e.code == 429:
+                print(f'hourly limit: vs {tag} and later ones not sent')
+                left.append(spec)
+            else:
+                print(f'refused: vs {tag}: {e}')
+    if panel_path and not dry_run:
+        with open(panel_path, 'w') as f:
+            json.dump(panel, f, indent=1)
+            f.write('\n')   # as committed: a block leaves the panel file unchanged
+    return left
+
+
+def drain_rows(q, build, send_group):
+    """(queue, rows left, number sent): the rows tagged `build` go to send_group(specs, panel file, maps) one panel file
+    at a time, in queue order, until a group comes back with specs the hourly limit refused; other builds' rows wait."""
+    mine = [r for r in q if r[0] == build]
+    left_rows = []
+    for pf in dict.fromkeys(r[2] for r in mine):   # panel files in queue order
+        rows = [r for r in mine if r[2] == pf]
+        if left_rows:
+            left_rows += rows
+            continue
+        left = send_group([r[1] for r in rows], pf, rows[0][3])
+        if left:
+            left_rows += rows[len(rows) - len(left):]   # send() keeps the tail from its first refusal on
+    return q, [r for r in q if r[0] != build] + left_rows, len(mine) - len(left_rows)
 
 
 def named(ladder, my_id, names):
@@ -375,6 +469,8 @@ def main(argv=None):
     p = sub.add_parser('scrim'); p.add_argument('--n', type=int, default=1); p.add_argument('--band', type=int, default=3)
     p.add_argument('--maps', type=int, default=3); p.add_argument('--dry-run', action='store_true')
     p.add_argument('--vs', default=''); p.add_argument('--panel', default='')
+    p.add_argument('--queue', default='', help='append requests the hourly limit refuses to this file')
+    p = sub.add_parser('drain'); p.add_argument('file'); p.add_argument('--dry-run', action='store_true')
     p = sub.add_parser('matches'); p.add_argument('--pages', type=int, default=1); p.add_argument('--all', action='store_true')
     p = sub.add_parser('fetch'); p.add_argument('ids', type=int, nargs='*'); p.add_argument('--new', action='store_true')
     p.add_argument('--out', default=REPLAYS); p.add_argument('--pages', type=int, default=3)
@@ -426,40 +522,27 @@ def main(argv=None):
                 _, o = opponent(m, my_id)
                 if o:
                     waiting.add(o.get('team'))
-        ladder = cl.rankings(c)
-        specs = [split_order(v) for v in a.vs.split(',')] if a.vs else []
-        plan = named(ladder, my_id, [n for n, _ in specs]) if a.vs else plan_scrims(ladder, my_id, a.n, a.band, waiting)
-        orders = [o for _, o in specs] or ['?'] * len(plan)
-        if not plan:
-            print('no rated opponent near us (or all have a match waiting)')
-            return 1
-        maps = cl.public_maps(c)
-        import random
-        rnd = random.Random()
-        panel = {}
-        if a.panel and os.path.exists(a.panel):
-            with open(a.panel) as fh:
-                panel = json.load(fh)
-        for (t, ranked), order in zip(plan, orders):
-            tag = t['name'] + ('' if order == '?' else '@' + order)
-            if order != '?':
-                ranked = False      # galaxy: "Ranked matches must use shuffled order"
-            if a.panel:
-                ranked, mp = False, panel_maps(panel, t['name'], maps, a.maps, rnd)
-            else:
-                mp = [] if ranked else rnd.sample(maps, a.maps)
-            if a.dry_run:
-                print(f'would request {"ranked" if ranked else "unranked"} vs {tag} (rated {t["rating"] or 0:.0f}) {mp}')
-                continue
-            try:
-                r = cl.request(s, t['id'], ranked, mp, order, ep)
-                print(f'request {r["id"]}: vs {tag} ({"ranked" if ranked else "unranked"}, rated {t["rating"] or 0:.0f})')
-            except cl.ApiError as e:
-                print(f'refused: vs {tag}: {e}')
-        if a.panel and not a.dry_run:
-            with open(a.panel, 'w') as f:
-                json.dump(panel, f, indent=1)
-                f.write('\n')   # as committed: a block leaves the panel file unchanged
+        if a.vs:
+            specs = a.vs.split(',')
+        else:
+            plan = plan_scrims(cl.rankings(c), my_id, a.n, a.band, waiting)
+            if not plan:
+                print('no rated opponent near us (or all have a match waiting)')
+                return 1
+            specs = [t['name'] for t, _ in plan]
+        left = send(c, s, ep, my_id, specs, a.panel, a.maps, a.dry_run)
+        if left and a.queue:
+            b = active_build(s, ep)
+            write_queue(a.queue, read_queue(a.queue) + [(b, x, a.panel, a.maps) for x in left])
+            print(f'{len(left)} queued in {a.queue} for build {b}')
+    elif a.cmd == 'drain':
+        b = active_build(s, ep)
+        q, rest, nsent = drain_rows(read_queue(a.file), b,
+                                    lambda specs, pf, n: send(c, s, ep, my_id, specs, pf, n, a.dry_run))
+        if not a.dry_run:
+            write_queue(a.file, rest)
+        print(f'drain: active build {b}; {nsent} sent, {sum(1 for r in rest if r[0] == b)} still queued for it, '
+              f'{sum(1 for r in rest if r[0] != b)} held for other builds')
     elif a.cmd == 'matches':
         for m in cl.matches(c, None if a.all else my_id, a.pages):
             print(cl.fmt_match(m))

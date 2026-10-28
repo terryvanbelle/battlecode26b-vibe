@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Bradley-Terry ladder of every player in progress/games.csv: progress/ELO.md and progress/elo.png.
 
-  elo.py [--games progress/games.csv] [--attempts progress/attempts.csv] [--out progress] [--quiet]
+  elo.py [--games progress/games.csv] [--attempts progress/attempts.csv] [--out progress] [--local-field] [--quiet]
 
 Also writes progress/ratings.csv (player, rating, se, games, field_score; read by tools/plot_progress.py).
+
+Games against field (benchmark) bots count only from the replica, where a contestant's online scrimmages would be
+played; local games count only between our builds and the stock players (examplefuncsplayer, lectureplayer).
+--local-field also counts the local games against field bots (all played before 2026-10-28 08:50 PDT, when every
+benchmark game moved to the replica).
 
 Each of our builds (us:<package>) is its own player. A local game counts its cell score (tools/score.py: a win or
 loss when kings decide it, the spec's points share when points do, so a 45-55 points loss is 0.45 of a win), a replica
@@ -47,6 +52,19 @@ def records(rows):
     return rec
 
 
+# a stock player that is also a replica team plays as that team, so local games against it share its rating
+ALIAS = {'examplefuncsplayer': 'bc26-example'}
+
+
+def usable(rows, local_field=False):
+    """The rows the ladder rates: replica matches, and local games unless one side is a field bot (local_field keeps
+    those); stock players renamed per ALIAS."""
+    def field(t):
+        return not t.startswith('us:') and t not in G.STOCK
+    keep = [r for r in rows if local_field or r.get('source') != 'local' or not (field(r['teamA']) or field(r['teamB']))]
+    return [dict(r, teamA=ALIAS.get(r['teamA'], r['teamA']), teamB=ALIAS.get(r['teamB'], r['teamB'])) for r in keep]
+
+
 def game(r):
     """elolib game tuple of one row: ours vs a field bot is keyed by the map (a replica match: 'replica', its map mix),
     with our build first."""
@@ -66,7 +84,7 @@ def compute(rows, maps=False):
     return (rt, field, fs, h) if maps else (rt, field, fs)
 
 
-def render(rt, field, fs, order, nrows, srcs, rec=None, h=None):
+def render(rt, field, fs, order, nrows, srcs, rec=None, h=None, local_field=False):
     rec, h = rec or {}, h or {}
     ranked = sorted(rt, key=lambda p: -rt[p].rating)
     rank = {p: i for i, p in enumerate(ranked, 1)}
@@ -81,8 +99,8 @@ def render(rt, field, fs, order, nrows, srcs, rec=None, h=None):
          f'maps compare on an average map. Each pair of players counts at most {elolib.PAIR_CAP} games, every player carries one virtual win and loss against a fixed anchor, and '
          f'ratings are relative to a mean of 1500 over all {len(rt)} players. Each of our builds is its own player. '
          f'Regenerate with `tools/elo.py`; do not edit.', '',
-         '**Caveat**: most of our gauntlets are against the six strongest field bots on a few maps, so a build is rated '
-         'mostly on those maps; field-vs-field games are few, so the field order rests largely on its games against us. '
+         f'Games against field bots are replica scrimmages only; local games are our builds against each other and the '
+         f'stock players{" (and, with --local-field, the local games against field bots played before 2026-10-28 08:50 PDT)" if local_field else ""}. '
          'Record = games won and lost.', '',
          '![ratings of our builds](elo.png)', '',
          f'Our builds, in attempt order (rating +- 95%; field score = expected score against each of the {len(field)} '
@@ -147,13 +165,14 @@ def main(argv=None):
     ap.add_argument('--attempts', default=os.path.join(REPO, 'progress', 'attempts.csv'))
     ap.add_argument('--out', default=os.path.join(REPO, 'progress'))
     ap.add_argument('--quiet', action='store_true')
+    ap.add_argument('--local-field', action='store_true', help='also rate local games against field bots')
     a = ap.parse_args(argv)
-    rows = G.read(a.games)
+    rows = usable(G.read(a.games), a.local_field)
     srcs = {}
     for r in rows:
         srcs[r['source']] = srcs.get(r['source'], 0) + 1
     rt, field, fs, h = compute(rows, maps=True)
-    md, ours = render(rt, field, fs, build_order(a.attempts), len(rows), srcs, records(rows), h)
+    md, ours = render(rt, field, fs, build_order(a.attempts), len(rows), srcs, records(rows), h, a.local_field)
     open(os.path.join(a.out, 'ELO.md'), 'w').write(md)
     write_ratings(rt, fs, os.path.join(a.out, 'ratings.csv'))
     png = chart(rt, len(rows), os.path.join(a.out, 'elo.png'))

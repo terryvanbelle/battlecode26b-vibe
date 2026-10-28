@@ -62,6 +62,7 @@ public final class Baby {
 
         Debug.mark(3);
         eKing = enemyKing;
+        if (enemyKing != null && Cfg.KING_PRESS) { lastEKing = enemyKing.location; lastEKingRound = G.round; ekHops = 0; }
         nearestEnemy = null;
         hunting = false;
         if (!G.coop) {
@@ -165,6 +166,8 @@ public final class Baby {
     static void born() {
         RobotController rc = G.rc;
         birthRound = G.round;
+        slot = (rc.getID() * 0x9E3779B1) >>> 8;
+        scout = Cfg.SCOUT_EVERY > 0 && (slot >>> 4) % Cfg.SCOUT_EVERY == 0;
         int cost = rc.getCurrentRatCost();
         int idx = (cost - 10) / 10 * 4; // approximate spawn index from the cost step
         role = GATHER;
@@ -233,6 +236,15 @@ public final class Baby {
     static void sense2() throws GameActionException {
         if (Clock.getBytecodesLeft() < 4000) return;
         sense();
+    }
+
+    /** A mine we know that the king's list lacks (rotating through them by round), else -1. */
+    static int unreported() {
+        for (int j = 0; j < myMineCount; j++) {
+            int key = myMines[(G.round + j) % myMineCount];
+            if (!Comms.hasMine(key / 64, key % 64)) return key;
+        }
+        return -1;
     }
 
     static void noteMine(int x, int y) {
@@ -532,6 +544,15 @@ public final class Baby {
                 G.rc.squeak(Comms.squeak(Comms.SQ_MINE, key / 64, key % 64, 0));
                 return;
             }
+        } else if (Cfg.GOSSIP_ALWAYS) {
+            for (Message m : G.rc.readSqueaks(G.round - 1)) {
+                int c = m.getBytes();
+                if (Comms.sqType(c) == Comms.SQ_MINE) noteMine(Comms.sqX(c), Comms.sqY(c));
+            }
+            if (k == null || G.me.distanceSquaredTo(k) > 16) {
+                int key = unreported();
+                if (key >= 0) { G.rc.squeak(Comms.squeak(Comms.SQ_MINE, key / 64, key % 64, 0)); return; }
+            }
         }
         // a squeak reaches robots with any tile within dist2 16 of us: the king's centre within 16 is always heard
         if (k != null && G.me.distanceSquaredTo(k) <= 16) {
@@ -545,7 +566,14 @@ public final class Baby {
                 if (!Comms.hasMine(x, y)) { G.rc.squeak(Comms.squeak(Comms.SQ_MINE, x, y, 0)); return; }
             }
         }
-        // at war: tell nearby allies where an enemy stands and faces (its front tiles may hide a trap)
+        // at war: the enemy king first (seen, or news to relay once per sighting), then an enemy's front
+        if (!G.coop && Cfg.KING_PRESS && lastEKing != null && G.round - lastEKingRound <= 2
+                && (ekHops == 0 && eKing != null || ekHops < Cfg.PRESS_HOPS && ekRelayed != lastEKingRound)) {
+            int hops = eKing != null ? 0 : ekHops + 1;
+            G.rc.squeak(Comms.squeak(Comms.SQ_EKING, lastEKing.x, lastEKing.y, hops | (lastEKingRound & 1023) << 2));
+            ekRelayed = lastEKingRound;
+            return;
+        }
         if (!G.coop && Cfg.TRAP_SHARE && nearestEnemy != null && nearestEnemy.direction != null) {
             int d = nearestEnemy.direction.ordinal();
             G.rc.squeak(Comms.squeak(Comms.SQ_TRAP, nearestEnemy.location.x, nearestEnemy.location.y, d));
@@ -583,6 +611,7 @@ public final class Baby {
                 && (nearestEnemy == null || G.me.distanceSquaredTo(nearestEnemy.location) > Cfg.RAID_ENGAGE) && raid()) { why = 'z'; return; }
         Debug.mark(12);
         if (!G.coop && Cfg.FLANK && Cfg.NAP && flank(seen)) { why = 'k'; return; }
+        if (!G.coop && Cfg.KING_PRESS && pressKing()) { why = 'p'; return; }
         Debug.mark(13);
         if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) { why = 'm'; return; }
         Debug.mark(14);
@@ -637,7 +666,16 @@ public final class Baby {
             if (ct != null) { Nav.goTo(ct); return; }
             if (Cfg.RAID && raider && rc.getHealth() >= Cfg.RAID_HP && raid()) { why = 'z'; return; }
         }
+        if (scout && role == GATHER && G.round < Cfg.SCOUT_UNTIL) {
+            // a scout with news the king lacks carries it home (squeaks reach the king from dist2 16 only)
+            MapLocation k = Comms.nearestKing(G.me);
+            if (k != null && unreported() >= 0) { Nav.goTo(k); why = 's'; return; }
+            why = 'S';
+            exploreHome();
+            return;
+        }
         if (role == GATHER || role == FIGHT && Cfg.FIGHT_MINE) {
+            if (Cfg.MINE_BALANCE && mineTarget != null && Comms.numMines != minesAtPick) mineTarget = null;
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
                 if (G.cheb(G.me, mineTarget) <= 2) {
@@ -665,6 +703,46 @@ public final class Baby {
     static int noKing;               // symmetry candidates whose enemy-king spot we saw empty
     static MapLocation lastEKing;
     static int lastEKingRound = -100;
+    /** Relay hops of lastEKing's news (0 = seen ourselves), and the sighting round we last relayed. */
+    static int ekHops, ekRelayed = -100;
+    public static int presses;
+
+    /** An SQ_EKING squeak: extra = hops | (sighting round % 1024) << 2. A newer sighting (or the same one in fewer
+     *  hops) replaces ours. */
+    static void heardEKing(int c) {
+        int e = Comms.sqExtra(c), s = (e >> 2) & 1023;
+        int seenRound = G.round - (((G.round & 1023) - s + 1024) & 1023);
+        int hops = e & 3;
+        if (seenRound > lastEKingRound || seenRound == lastEKingRound && hops < ekHops) {
+            lastEKing = new MapLocation(Comms.sqX(c), Comms.sqY(c));
+            lastEKingRound = seenRound;
+            ekHops = hops;
+        }
+    }
+
+    /** King press movement (Cfg.KING_PRESS): walk to a fresh enemy-king sighting in range and stay against it. */
+    static boolean pressKing() throws GameActionException {
+        RobotController rc = G.rc;
+        MapLocation ek = eKing != null ? eKing.location : G.round - lastEKingRound <= Cfg.PRESS_AGE ? lastEKing : null;
+        if (ek == null || rc.getHealth() < Cfg.PRESS_HP) return false;
+        if (role == GATHER && rc.getRawCheese() >= Cfg.DELIVER_AT) return false;
+        int d = G.me.distanceSquaredTo(ek);
+        if (d > (role == GATHER ? Cfg.PRESS_GATHER_D2 : Cfg.PRESS_D2)) return false;
+        if (eKing == null && d <= 8 && rc.canSenseLocation(ek)) {
+            RobotInfo r = rc.senseRobotAtLocation(ek);
+            if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { lastEKing = null; return false; }
+        }
+        presses++;
+        if (G.cheb(G.me, ek) <= 2) {
+            // touching the king's 3x3: face its nearest tile and bite (bites run before and after movement)
+            int dx = Math.max(-1, Math.min(1, G.me.x - ek.x)), dy = Math.max(-1, Math.min(1, G.me.y - ek.y));
+            Direction f = G.me.directionTo(ek.translate(dx, dy));
+            if (f != Direction.CENTER && rc.getDirection() != f && rc.canTurn(f)) { rc.turn(f); G.facing = f; }
+            return true;
+        }
+        Nav.goTo(ek);
+        return true;
+    }
 
     /** Attacker movement: the visible enemy king, else the last place we saw it, else the nearest live mirror spot. */
     static boolean attack() throws GameActionException {
@@ -917,8 +995,13 @@ public final class Baby {
         int m = ours > 0 ? ours : n;
         for (int i = 1; i < m; i++)   // insertion sort of the first m by mineKey
             for (int j = i; j > 0 && mineKey(cand[j]) < mineKey(cand[j - 1]); j--) { MapLocation t = cand[j]; cand[j] = cand[j - 1]; cand[j - 1] = t; }
+        minesAtPick = Comms.numMines;
+        if (Cfg.MINE_BALANCE) return cand[slot % m];
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
     }
+
+    /** A per-rat hash (Cfg.MINE_BALANCE), and the team's known-mine count when mineTarget was picked. */
+    static int slot, minesAtPick;
 
     static final MapLocation[] cand = new MapLocation[40];
 
@@ -1035,6 +1118,25 @@ public final class Baby {
                 int d = Sym.known(G.idx(cx, cy)) ? 1 << 20 : Math.max(Math.abs(cx - ox), Math.abs(cy - oy));
                 if (d < bd) { bd = d; x = cx; y = cy; }
             }
+            exploreTarget = new MapLocation(x, y);
+        }
+        Nav.goTo(exploreTarget);
+    }
+
+    static boolean scout;
+
+    /** Scout movement: the nearest never-seen tile of EXPLORE_TRIES samples on our half (any tile if none is). */
+    static void exploreHome() throws GameActionException {
+        if (exploreTarget == null || G.cheb(G.me, exploreTarget) <= 2 || Nav.stall > 20 || Sym.known(G.idx(exploreTarget.x, exploreTarget.y))) {
+            int x = -1, y = -1, bd = Integer.MAX_VALUE;
+            for (int k = 0; k < Cfg.EXPLORE_TRIES; k++) {
+                int ax = G.rand(G.W), ay = G.rand(G.H);
+                int cx = fu > 0 ? ax : G.W - 1 - ax, cy = fv > 0 ? ay : G.H - 1 - ay;
+                if (Sym.known(G.idx(cx, cy)) || !homeHalf(new MapLocation(cx, cy))) continue;
+                int d = Math.max(Math.abs(cx - G.me.x), Math.abs(cy - G.me.y));
+                if (d < bd) { bd = d; x = cx; y = cy; }
+            }
+            if (x < 0) { explore(); return; }
             exploreTarget = new MapLocation(x, y);
         }
         Nav.goTo(exploreTarget);

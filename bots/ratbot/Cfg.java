@@ -48,6 +48,11 @@ public final class Cfg {
     public static final int RAID_STAY = 60, RAID_SPREAD = 60;
     /** One in RAID_EVERY fighters is a raider: on our half it ignores enemies beyond dist2 RAID_ENGAGE. */
     public static final int RAID_EVERY = 0, RAID_ENGAGE = 8, RAID_HP = 60;
+    /** King press: at war a rat that sees the enemy king squeaks it (allies relay it PRESS_HOPS times); a rat with
+     *  PRESS_HP health or more walks to a king sighting at most PRESS_AGE rounds old within PRESS_D2 (gatherers
+     *  carrying less than DELIVER_AT: PRESS_GATHER_D2) and bites it, ahead of standoffs and facing. */
+    public static final boolean KING_PRESS = false;
+    public static final int PRESS_HOPS = 2, PRESS_HP = 40, PRESS_AGE = 8, PRESS_D2 = 100, PRESS_GATHER_D2 = 20;
     /** Fighters target the nearest enemy rat with less health than theirs (it can be ratnapped). */
     public static final boolean POUNCE = true;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */
@@ -88,6 +93,10 @@ public final class Cfg {
     public static final int KING_THREAT_D2 = 18, DEFEND_D2 = 100;
     /** Gatherers pick uniformly among the MINE_SPREAD nearest known mines on our half (1 = always the nearest). */
     public static final int MINE_SPREAD = 4;
+    /** Gatherers (and mine-holding fighters) spread evenly over every known home-half mine: slot = a per-rat hash
+     *  mod the count, re-picked whenever the team's known-mine count changes (instead of MINE_SPREAD at random, picked
+     *  once: on cheesefarm 10-12 of our rats sat at one mine all game while 2 of our 5 were never visited). */
+    public static final boolean MINE_BALANCE = false;
     /** Raw cheese at which a gatherer heads home. */
     public static final int DELIVER_AT = 30;
     /** Babies spawned before any fighter is assigned. */
@@ -114,6 +123,12 @@ public final class Cfg {
     public static final boolean COURIER = true;
     /** Babies relay mine squeaks to each other while the team knows no mine. */
     public static final boolean GOSSIP = true;
+    /** Gossip all game: a rat away from the king squeaks a mine it knows that the king's list lacks, and every rat
+     *  notes the mines it hears, so news reaches the king with the next delivery instead of its finder. */
+    public static final boolean GOSSIP_ALWAYS = false;
+    /** Scouts: one in SCOUT_EVERY gatherers explores our half (never-seen tiles) until round SCOUT_UNTIL, then
+     *  gathers (0 = off). */
+    public static final int SCOUT_EVERY = 0, SCOUT_UNTIL = 150;
     public static final int DIG_MIN_CHEESE = 60;
     /** Live babies kept unconditionally (while CORE_FLOOR cheese remain) before the income test applies. */
     public static final int CORE_BABIES = 18, CORE_FLOOR = 300;

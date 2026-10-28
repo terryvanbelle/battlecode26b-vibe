@@ -95,6 +95,16 @@ def replica_rows(matches, packages, subs=()):
     return rows
 
 
+def codename(package, description, bots=os.path.join(REPO, 'bots')):
+    """Our build behind a submission: its package, unless that is the dev directory (ratbot) and the description starts
+    with a snapshot's name ("s0e econ budget", "s2o: ...")."""
+    if package == 'ratbot':
+        first = (description or '').split(' ', 1)[0].rstrip(':')
+        if first and first != 'ratbot' and os.path.isdir(os.path.join(bots, first)):
+            return first
+    return package or description
+
+
 def when_utc(s):
     """ISO timestamp with offset -> comparable UTC ISO string."""
     import datetime as dt
@@ -114,7 +124,7 @@ def fetch_replica(out):
     s = cl.session(c, acc, TEAM)
     ep = c.episode
     raw = [x for x in s.pages(f'/api/compete/{ep}/submission/') if x.get('accepted')]
-    subs = {x['id']: x['package'] or x['description'] for x in raw}
+    subs = {x['id']: codename(x['package'], x['description']) for x in raw}
     ms = [m for m in c.pages(f'/api/compete/{ep}/match/') if m.get('status') == 'OK!']
     with open(out, 'w') as f:
         json.dump({'packages': {str(k): v for k, v in subs.items()},

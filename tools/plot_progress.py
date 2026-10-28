@@ -4,11 +4,10 @@
   plot_progress.py [--ratings progress/ratings.csv] [--games progress/games.csv] [--attempts progress/attempts.csv]
                    [--milestones progress/milestones.csv] [--tsv research/progress.tsv] [--out progress/]
 
-progress.png, laid out like battlecode23-vibe's: our builds in date order on the ladder of tools/elo.py
-(progress/ratings.csv). Top: the Bradley-Terry rating (Elo scale) with its 95% interval. Bottom: the expected field
-score (%). Builds with fewer than MIN_GAMES games, and the dev directory (ratbot), are left out. Builds adopted as the
-dev base (attempts.csv outcome adopted / submitted / kept as..., or the base of a later attempt) have filled markers
-and bold labels; the rest are hollow.
+progress.png, laid out like battlecode23-vibe's: our accepted builds (attempts.csv outcome "accepted ..." or
+"submitted ...": each was the active submission) in date order on the ladder of tools/elo.py (progress/ratings.csv).
+Top: the Bradley-Terry rating (Elo scale) with its 95% interval. Bottom: the expected field score (%). Candidates that
+were never accepted, builds with fewer than MIN_GAMES games, and the dev directory (ratbot) are left out.
 metrics.png: the raw gauntlet metrics of research/progress.tsv (columns version, date (PDT, YYYY-MM-DD HH:MM),
 metric, value; one row per measurement), one panel per metric group (the part of the name before the first '.', e.g.
 pts.top6.3m and pts.top6.new3m share 'pts'), versions in date order (see version_dates).
@@ -87,17 +86,14 @@ def our_builds(ratings, min_games=MIN_GAMES):
     return [p[3:] for p, r in ratings.items() if p.startswith('us:') and p[3:] not in DEV and r['games'] >= min_games]
 
 
-def adopted(attempts_csv):
-    """Codenames that became the dev base: outcome adopted / submitted / kept as (or in) dev, or a later attempt's base."""
+def accepted(attempts_csv):
+    """Codenames that were accepted, i.e. made the active submission: outcome starting "accepted" or "submitted"."""
     out = set()
     if os.path.exists(attempts_csv):
         with open(attempts_csv, newline='') as f:
             for r in csv.DictReader(f):
-                o = (r.get('outcome') or '').strip().lower()
-                if re.match(r'(adopted|submitted)\b', o) or re.search(r'\bkept (as|in) (the )?dev', o):
+                if re.match(r'(accepted|submitted)\b', (r.get('outcome') or '').strip().lower()):
                     out.add(r['codename'])
-                if (r.get('base') or '').strip():
-                    out.add(r['base'].strip())
     return out
 
 
@@ -108,7 +104,7 @@ def count_rows(path):
         return sum(1 for _ in csv.DictReader(f))
 
 
-def ladder(builds, ratings, path, dates=None, marks=(), accepted=(), ngames=0):
+def ladder(builds, ratings, path, dates=None, marks=(), ngames=0):
     """bc23-style progress.png: rating +- 95% (top) and expected field score % (bottom) per build, in the given order."""
     import matplotlib
     matplotlib.use('Agg')
@@ -124,10 +120,10 @@ def ladder(builds, ratings, path, dates=None, marks=(), accepted=(), ngames=0):
     bot.plot(xs, fs, '-', color=SCORE, lw=1.5, zorder=2)
     for ax, ys, c in ((top, [r['rating'] for r in rs], RATING), (bot, fs, SCORE)):
         for x, y, b in zip(xs, ys, builds):
-            ax.plot(x, y, 'o', ms=6, color=c, mfc=c if b in accepted else 'white', mew=1.5, zorder=3)
+            ax.plot(x, y, 'o', ms=6, color=c, mew=1.5, zorder=3)
     for x, y in zip(xs, fs):
         bot.annotate(f'{y:.0f}%', (x, y), textcoords='offset points', xytext=(0, 7), ha='center', fontsize=8)
-    top.set_title(f'Our builds on the ladder ({ngames} games vs {nfield} rated field bots)', fontsize=12)
+    top.set_title(f'Our accepted builds on the ladder ({ngames} games, {nfield} rated field bots)', fontsize=12)
     top.set_ylabel('ladder rating (BT, Elo scale)')
     bot.set_ylabel('expected field score %')
     bot.set_ylim(0, 100)
@@ -138,20 +134,14 @@ def ladder(builds, ratings, path, dates=None, marks=(), accepted=(), ngames=0):
         ax.set_xlim(min([-0.6] + [x - 0.4 for x in mx]), max([n - 0.4] + [x + 0.6 for x in mx]))   # room for labels
     bot.set_xticks(xs)
     bot.set_xticklabels(builds, rotation=90 if n > 20 else 0, fontsize=8)
-    for t, b in zip(bot.get_xticklabels(), builds):
-        if b in accepted:
-            t.set_fontweight('bold')
     for x, (_, label) in zip(mx, marks):
         for ax in (top, bot):
             ax.axvline(x, color=MILESTONE, ls='--', lw=1.2, zorder=1)
         bot.text(x + 0.12, 2, label.replace('->', '\u2192'), rotation=90, color=MILESTONE, fontsize=8, ha='left',
                  va='bottom', clip_on=True)
-    if accepted & set(builds):
-        fig.text(0.01, 0.005, 'filled, bold: adopted as the dev base; hollow: tried. Local games count their points '
-                 'share; map difficulty is factored out (tools/elo.py).', fontsize=7, color='#555555', va='bottom')
-        fig.tight_layout(rect=(0, 0.02, 1, 1))
-    else:
-        fig.tight_layout()
+    fig.text(0.01, 0.005, 'Field games are replica scrimmages; local games are our builds against each other. Map '
+             'difficulty is factored out (tools/elo.py).', fontsize=7, color='#555555', va='bottom')
+    fig.tight_layout(rect=(0, 0.02, 1, 1))
     fig.savefig(path, dpi=100)
     plt.close(fig)
 
@@ -209,14 +199,14 @@ def main(argv=None):
     marks = MS.read(o.milestones)
     msg = []
     ratings = read_ratings(o.ratings)
-    builds = our_builds(ratings)
+    acc = accepted(o.attempts)
+    builds = [b for b in our_builds(ratings) if b in acc]
     if builds:
         builds, dates = in_time_order(builds, version_dates(builds, o.tsv, o.attempts))
-        ladder(builds, ratings, os.path.join(o.out, 'progress.png'), dates, marks, adopted(o.attempts),
-               count_rows(o.games))
+        ladder(builds, ratings, os.path.join(o.out, 'progress.png'), dates, marks, count_rows(o.games))
         msg.append(f'progress.png: {len(builds)} builds')
     else:
-        msg.append(f'progress.png skipped (no build with {MIN_GAMES}+ games in {o.ratings})')
+        msg.append(f'progress.png skipped (no accepted build with {MIN_GAMES}+ games in {o.ratings})')
     if os.path.exists(o.tsv):
         versions, series = load(o.tsv)
         versions, dates = in_time_order(versions, version_dates(versions, o.tsv, o.attempts))

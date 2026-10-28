@@ -20,10 +20,9 @@ an (opponent, map, side, seed) slot both play (ladder cells have no seed). Per c
 | rules digest (engine-checked, each fact cited to file and line) | what is possible; what each action costs | what wins |
 | replay reader + the bot's decision counters | how one game unfolded; whether a mechanism fired | frequency, value |
 | paired self-play (vs the incumbent on seeded cells, identity-controlled) | regressions, crashes, a change's cost | what both builds share; changes meant for the field |
-| local field games (downloaded field bots run here on seeded cells) | the ladder's opponents, cheaply, replays in hand | contest conditions (submission, map draw, current versions) |
 | sparring archetypes (our re-implementations of field styles, each checked against the bot it models) | survival against one known style | everything else |
 | frozen roster (every accepted build) | does each build still beat its ancestors (non-transitivity) | the field |
-| ladder replica (downloaded field bots, contest rules, batch ratings) | strength; what the field punishes | why |
+| ladder replica (downloaded field bots, contest rules and request limits, batch ratings; the only place field bots play) | strength; what the field punishes | why |
 
 ## 1. Foundation first
 
@@ -99,7 +98,7 @@ on disk (our random tie-breaks are free experiments), one-map probe, delivery bl
    end result its chain aims at. An arm that does not deliver is never gated and closes as inert. Delivery proves
    behaviour changed, not that it pays: component metrics have risen while wins fell.
 6. **Local screen** (rejects only): head-to-head with the incumbent on random (map, seed) cells from both sides (d = the
-   candidate's mean minus an even share), plus archetypes, frozen roster and local field games. Reject at paired t ≤
+   candidate's mean minus an even share), plus archetypes and the frozen roster. Reject at paired t ≤
    −1.5 on the cell score (if graded, also at a one-sided sign test p < 0.05 on per-cell win/loss), at a new exception,
    at a basics failure or battery rate worse than the incumbent's beyond noise, or, on a deterministic compute count, at
    any new overrun. Simulate the joint false-reject rate at the D in use (the t bar alone swings 3-13% with D) and hold
@@ -125,11 +124,11 @@ is broken, with **big swings**, which escape a local optimum.
 
 1. **Own degeneracies** (no opponent needed): battery symptoms (§1.11) even below their bars, deaths by cause, a counter
    that never fires (count units passing each precondition to see where they drop out). On the cadence (§8), play the
-   whole corpus from both sides against one strong bot and sort maps by graded score: the worst show basics failures the
-   panel hides. Trace each resource to who took it, where and when: a lost race looks like slow gathering in aggregate.
+   whole corpus from both sides against one strong bot (queued replica scrimmages) and sort maps by graded score: the
+   worst show basics failures the panel hides. Trace each resource to who took it, where and when: a lost race looks like slow gathering in aggregate.
 2. **The field**: what wins for the bots just above us. Contrast behaviour rates (patterns in context) of bots that beat
-   us with bots we beat; act where we differ from the first and match the second (run field-vs-field games here if need
-   be). Per opponent and map, find the first round from which a lead in a metric predicts the winner; work on that
+   us with bots we beat; act where we differ from the first and match the second (request field-vs-field games on the
+   replica if need be). Per opponent and map, find the first round from which a lead in a metric predicts the winner; work on that
    window. A metric that tracks the result is usually its consequence: it earns a diagnostic, never an allocation.
    Rebuild an offence that beats us from its games (never its code), enter it on the replica, build the counter.
 3. **Capability gaps**: every engine action and rule we never use; every free action, idle cooldown or spare compute
@@ -184,10 +183,12 @@ rarely: price a reallocation against what it displaces; give freed capacity a jo
 
 ## 5. Using the ladder like a contestant
 
-- Local self-play screens; replica scrimmages decide. Only accepted builds play ranked games; a candidate gets short
-  unranked panels and is parked once its matches exist. Trials overlap; local work never waits on the ladder.
-- Panel opponents come from the band around our strength (bots that recently beat or split with us, not the rating list
-  alone), since a panel of only the strongest yields few discordant cells; stronger bots rotate in as the band is
+- Local self-play screens; replica scrimmages decide. Field bots play only on the replica, as scrimmages within its
+  request limits, as they would for a contestant; locally only our own builds and archetypes play. Requests the limit
+  refuses wait in a queue tagged with the build they measure. Only accepted builds play ranked games; a candidate gets
+  short unranked panels and is parked once its matches exist. Trials overlap; local work never waits on the ladder.
+- Panel opponents come from the band around our strength, measured by a calibration sweep of the incumbent against
+  the ladder (bots it beats 25-75% of the time; the rating list alone misplaces them), since a panel of only the strongest yields few discordant cells; stronger bots rotate in as the band is
   beaten. Routine scrimmages of the incumbent meet bots above and below us on random maps and sides.
 - **Version the panel** when it saturates (an opponent's cell scores have no spread; on win/loss, an opponent at ≤ 10%
   or ≥ 90%, or the panel above ~80%), turns map-narrow, or has mostly inspired candidates. Each version is its own

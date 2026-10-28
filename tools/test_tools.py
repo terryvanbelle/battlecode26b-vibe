@@ -15,6 +15,47 @@ def load(name):
     m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
 
 arena = load('arena')
+# contest.py (replica requests): queue file round trip, drain order, per-build hold
+spec_ct = importlib.util.spec_from_file_location('contest', os.path.join(REPO, 'tools', 'galaxy26', 'contest.py'))
+ct = importlib.util.module_from_spec(spec_ct); spec_ct.loader.exec_module(ct)
+with tempfile.TemporaryDirectory() as d:
+    qf = os.path.join(d, 'q.tsv')
+    q0 = [('s2o', 'a@+', 'p1.json', 3), ('s2o', 'a@-', 'p1.json', 3), ('s3e', 'b@+', 'p2.json', 3),
+          ('s2o', 'c@+', 'p2.json', 3), ('s2o', 'c@-', 'p2.json', 3)]
+    ct.write_queue(qf, q0)
+    check(ct.read_queue(qf) == q0 and ct.read_queue(qf + 'x') == [], "contest queue round trip")
+    calls = []
+    def fake(specs, pf, n):
+        calls.append((tuple(specs), pf))
+        return specs[1:] if pf == 'p2.json' else []   # the limit refuses the second p2 request and the rest
+    _, rest, nsent = ct.drain_rows(q0, 's2o', fake)
+    check(calls == [(('a@+', 'a@-'), 'p1.json'), (('c@+', 'c@-'), 'p2.json')] and nsent == 3
+          and rest == [('s3e', 'b@+', 'p2.json', 3), ('s2o', 'c@-', 'p2.json', 3)],
+          f"contest drain: own build's rows by panel file until refused, others held {calls} {rest} {nsent}")
+    calls.clear()
+    _, rest, nsent = ct.drain_rows(q0, 's3e', lambda specs, pf, n: [])
+    check(nsent == 1 and len(rest) == 4 and all(r[0] == 's2o' for r in rest), "contest drain: only the active build's rows")
+    # send(): fixed sides are unranked, panel maps recorded, the tail from the first 429 is returned
+    lad = [{'id': 1, 'name': 'us', 'rating': 1400}, {'id': 2, 'name': 'hi', 'rating': 1450}, {'id': 3, 'name': 'lo', 'rating': 1300}]
+    sent = []
+    def req(s, tid, ranked, mp, order, ep):
+        if len(sent) == 2:
+            raise ct.cl.ApiError(429, 'too many')
+        sent.append((tid, ranked, tuple(mp), order))
+        return {'id': 100 + len(sent)}
+    saved = (ct.cl.rankings, ct.cl.public_maps, ct.cl.request)
+    ct.cl.rankings, ct.cl.public_maps, ct.cl.request = (lambda c: lad), (lambda c: ['m1', 'm2', 'm3', 'm4']), req
+    try:
+        import contextlib, io
+        pf = os.path.join(d, 'panel.json')
+        with contextlib.redirect_stdout(io.StringIO()):
+            left = ct.send(None, None, 'bc26', 1, ['hi@+', 'hi@-', 'lo@+', 'lo'], pf, 3)
+        pan = json.load(open(pf))
+        check(left == ['lo@+', 'lo'] and [x[1] for x in sent] == [False, False] and [x[3] for x in sent] == ['+', '-']
+              and sent[0][2] == sent[1][2] == tuple(pan['hi']) and len(pan['hi']) == 3,
+              f"contest send: unranked fixed sides on the panel's maps, tail kept after the limit {left} {sent} {pan}")
+    finally:
+        ct.cl.rankings, ct.cl.public_maps, ct.cl.request = saved
 # points(): cooperation weights 50/30/20, backstab 30/50/20
 row = {'catDmgA': 300, 'catDmgB': 100, 'kingsA': 1, 'kingsB': 1, 'cheeseXferA': 0, 'cheeseXferB': 0, 'backstabRound': -1}
 check(arena.points(row) == (52, 27), f"points coop (engine truncates) {arena.points(row)}")
@@ -102,6 +143,11 @@ with tempfile.TemporaryDirectory() as d:
         pass
 # games.py: player names, local rows, replica rows mapped to our submission by time
 gm = load('games')
+with tempfile.TemporaryDirectory() as bd:
+    os.mkdir(os.path.join(bd, 's0e'))
+    check([gm.codename('ratbot', 's0e econ budget', bd), gm.codename('ratbot', 'ratbot', bd), gm.codename('s2o', 's2o: x', bd),
+           gm.codename('ratbot', 'zz9: not a snapshot', bd)] == ['s0e', 'ratbot', 's2o', 'ratbot'],
+          "games codename: a dev-dir submission takes the snapshot its description names")
 fld = {'/c/1': 'opp1'}
 check(gm.player('cls:/c/1/:pkg', fld) == 'opp1' and gm.player('bots/s2t/', fld) == 'us:s2t'
       and gm.player('bots/examplefuncsplayer', fld) == 'examplefuncsplayer', "games player names")
@@ -159,6 +205,10 @@ check(eo.game(dict(lg, source='replica', ptsA='', ptsB='')) == ('us:x', 'f1', 0.
 check(eo.game(dict(lg, teamB='f2')) == ('f1', 'f2', 0.75, 0.25), "elo game: field vs field unkeyed")
 check(eo.game(dict(lg, ptsA='0', ptsB='0')) == ('us:x', 'f1', 0.0, 1.0, 'M'), "elo game: no points falls back to the score")
 check(eo.records(rows) == {'us:x': [1, 1], 'f1': [3, 1], 'f2': [0, 2]}, f"elo records {eo.records(rows)}")
+uz = [dict(lg), dict(lg, source='replica'), dict(lg, teamA='us:y'), dict(lg, teamA='examplefuncsplayer'), dict(lg, teamB='f2')]
+check(eo.usable(uz)[:2] == uz[1:3] and eo.usable(uz)[2]['teamA'] == 'bc26-example' and len(eo.usable(uz)) == 3
+      and len(eo.usable(uz, True)) == 5,
+      f"elo usable: local games vs field bots dropped unless --local-field {[r['teamA'] + '/' + r['teamB'] + '/' + r['source'] for r in eo.usable(uz)]}")
 md, _ = eo.render(*eo.compute(rows, maps=True)[:3], [], 3, {'local': 3}, eo.records(rows), {'M': 12.0})
 check('| x |' in md and '| 1-1 |' in md and '| M | +12 |' in md, "elo render: game records and map handicaps")
 # attempts: description seeding, init from bots/, render cells
@@ -252,14 +302,23 @@ with tempfile.TemporaryDirectory() as d:
     check(pp.our_builds(rts) == ['v1', 'v2', 'v4'], f"plot builds: ours, 20+ games, no dev dir {pp.our_builds(rts)}")
     open(os.path.join(d, 'ad.csv'), 'w').write('codename,date,base,description,outcome\na,,,,adopted: base\nb,,,,rejected (kept 12 rats)\n'
                                                'c,,,,submitted to replica\nd,,,,"inconclusive; kept as dev base"\ne,,c2,,\n')
-    ad = pp.adopted(os.path.join(d, 'ad.csv'))
-    check(ad == {'a', 'c', 'd', 'c2'}, f"plot adopted builds {ad}")
+    open(os.path.join(d, 'ad.csv'), 'a').write('f,,,,"accepted: panel t 2.3"\ng,,,,not submitted\n')
+    ad = pp.accepted(os.path.join(d, 'ad.csv'))
+    check(ad == {'c', 'f'}, f"plot accepted builds: submitted or accepted only {ad}")
     try:
         import matplotlib  # noqa: F401
         out = os.path.join(d, 'out')
         r = subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'plot_progress.py'), '--tsv', t, '--out', out,
                             '--attempts', ac, '--milestones', mp, '--ratings', rc], capture_output=True, text=True)
-        check(r.returncode == 0 and '2 milestones' in r.stdout and 'progress.png: 3 builds' in r.stdout
+        check(r.returncode == 0 and 'progress.png skipped (no accepted build' in r.stdout,
+              f"progress.png: candidates never accepted are left out {r.stdout}")
+        open(ac, 'a').write('v1b,,,,\n')
+        acs = open(ac).read().replace('v1,2026-10-28 05:00,,,', 'v1,2026-10-28 05:00,,,submitted (#1)') \
+            .replace('v4,2026-10-28 09:00,,,', 'v4,2026-10-28 09:00,,,accepted: panel')
+        open(ac, 'w').write(acs)
+        r = subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'plot_progress.py'), '--tsv', t, '--out', out,
+                            '--attempts', ac, '--milestones', mp, '--ratings', rc], capture_output=True, text=True)
+        check(r.returncode == 0 and '2 milestones' in r.stdout and 'progress.png: 2 builds' in r.stdout
               and os.path.getsize(os.path.join(out, 'progress.png')) > 1000 and os.path.getsize(os.path.join(out, 'metrics.png')) > 1000,
               f"progress.png + metrics.png with milestones {r.stdout} {r.stderr[-300:]}")
         rp0 = load('replica_report')

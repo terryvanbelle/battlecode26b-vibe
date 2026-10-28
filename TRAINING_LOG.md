@@ -185,3 +185,24 @@
   in all to our 460. Finals' king also walks to the middle (24,17) and is never bitten.
 - Backstab: Finals lays a rat trap at r25 during cooperation; our rat steps on it at r27, which ends cooperation with
   Finals as the backstabber (the trap's owner). Our trap-risk mask is off during cooperation.
+
+## 2026-10-28 09:10 PDT: field bots only on the replica; panel calibration; economy switches
+- Owner (PROMPTS #8) asked whether every benchmark game goes through the replica. It did not: every local screen
+  (g1-g7, b1) and diagnostic (dm*, cf*) ran the downloaded bots on the VM/driver directly, which a contestant cannot
+  do, and TRAINING_ALGORITHM listed "local field games" as an instrument. Changed (milestone M4, 08:50): field bots
+  play only as replica scrimmages, under its hourly request limits; local games are self-play, archetypes and stock
+  players. The b1 band screen was stopped (s2o 127/144, s3d/s3b never started) and is not used. `tools/elo.py` drops
+  local games against field bots (`--local-field` restores them) and maps examplefuncsplayer onto the replica's
+  bc26-example; progress.png shows accepted builds only (s0e 1250, s2o 1355 on replica games).
+- Panel v1 set 1 is badly calibrated: s2o went 6-0 vs PixelRifts_mushakraj_mk3, 8-1 vs alfredo, 0-6 vs goonv23 and
+  0-9 vs Icarus, although all are rated within 50 of us. The replica's ratings are compressed (the top six beat us
+  ~97% at +130). Calibration sweep queued: s2o vs ~30 ladder bots (3 maps x both sides, `research/panel/calib1.json`);
+  panel v2 = bots s2o beats 25-75%. The hourly limit refused 20 of 24 requests at once, so `contest.py scrim --queue`
+  / `drain` and `drain-loop.sh` feed the queue as the limit allows, sending only rows of the active build.
+- Economy switches (cheesefarm vs Version41, before M4): MINE_BALANCE (even spread over all known home-half mines,
+  re-picked when the count changes) pickups 1620 -> 2055; GOSSIP_ALWAYS + SCOUT_EVERY 4 moved the king's 4th mine from
+  r122 to r31 but pickups stayed 2038. The real gap there is war: Version41 backstabs at r15-16, rushes our king
+  (dist ~17) and lays traps at its door; trap damage is our biggest HP loss (2634 of 6083), and from r150 our rats
+  thin out (20 -> 5) while theirs hold 16-20 with a 1500-2000 cheese bank. One scout overran once (r21).
+- Snapshots s3e (s3d + MINE_BALANCE), s3f (s3e + gossip + scouts), s3g (s3e + KING_PRESS), s2o_id (identity control)
+  in the self-play screen sp1 vs s2o (40 random maps x both sides).

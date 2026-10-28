@@ -41,17 +41,26 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   the spec's points share. Before 2026-10-28 08:28 (milestone M3) screens used `arena.points`, whose "kings" share
   read the replay's kingsA/kingsB aggregate, which is 10 * global cheese + kings: a king-kill loss scored ~25-45 for
   cat damage and leftover cheese. Every score is now recomputed from the raw fields, old runs included.
-- **Local screen (rejects only)**, v1 (`research/screen/v1.json`): 12 field bots in our replica band (6 above, 6
-  below, the 8 ladder-panel bots left out) x 6 random maps x both sides = 144 cells: `gauntlet.py cells bots/NAME
-  --maps <v1 maps> --only <v1 bots> > build/b1_NAME.tsv`, run on the VM as `runs/b1_NAME`, then `gauntlet.py paired
-  runs/b1_BASE/results.jsonl runs/b1_CAND/results.jsonl` (reject at t <= -1.5 or sign p < 0.05). The old top-6 x 6
-  maps screen (`build/g7_NAME*.tsv`) is retired: at ~3% wins it carries no signal on win/loss. GAP: no seed axis
-  beyond seed 0, no identity-control run yet, no D-target extension.
+- **Field bots play only on the replica** (owner, PROMPTS #8; milestone M4, 2026-10-28 08:50): every game against a
+  downloaded bot is a replica scrimmage under its hourly limits (40 unranked + 20 ranked requests), as for a contestant.
+  Local games (VM `arena.py matrix`, driver diagnostics) are our builds against each other, archetypes and the stock
+  players only. Before M4 every local screen (g1-g7 top-6, b1 band) and diagnostic (dm*, cf*) ran field bots locally;
+  `tools/elo.py` now ignores those games (`--local-field` brings them back) and progress.png shows accepted builds only.
+  Field-bot diagnostics now come from downloaded scrimmage replays (`contest.py fetch`, then `game_report.py` /
+  `econ_report.py` / `battle_report.py` on the .bc26).
+- **Request queue**: `contest.py scrim ... --queue research/panel/queue.tsv` keeps what the limit refuses, tagged with
+  the active build; `tools/galaxy26/drain-loop.sh` (nohup on the driver, log `build/drain.log`, stop with
+  `touch build/drain.stop`) runs `contest.py drain` every 5 min and sends only rows of the active build.
+- **Local screen (rejects only)**: paired self-play vs the incumbent, `research/screen/self1-maps.txt` (40 random maps)
+  x both sides, seed 0: `runs/sp1_NAME` on the VM (cells `build/sp1_NAME.tsv`), identity control `s2o_id` (s2o
+  renamed). Score: candidate's cell score minus 50, paired t; reject at t <= -1.5 (identity run gives the noise floor).
 - Economy report: `tools/econ_report.py TSVDIR|REPLAY` (each cheese pile from spawn to pickup: per mine its side,
   cheese spawned, taken by each team, wait, left on the ground; per team own/enemy/middle/drops and cheese lost on its
   own side).
-- **Ladder panel (accepts)**: replica, `tools/galaxy26/contest.py`. Panel v1 = 8 field bots around our rating, 3 maps
-  each (`research/panel/v1-setN.json`), both sides (`--vs NAME@+,NAME@-` per opponent: 48 games a block). Control:
+- **Ladder panel (accepts)**: replica, `tools/galaxy26/contest.py`. Panel v1 = 8 field bots around our *rating*, 3
+  maps each (`research/panel/v1-setN.json`); s2o's control went 6-0, 8-1 vs two of them and 0-6, 0-9 vs two others, so
+  v2 will be picked from a calibration sweep (`research/panel/calib1.json`: s2o vs ~30 ladder bots, 3 maps x both
+  sides, queued) as the bots s2o beats 25-75%. Panel, both sides (`--vs NAME@+,NAME@-` per opponent: 48 games a block). Control:
   the incumbent's own block on the set; candidate: submit it, create its block, re-submit the incumbent; `contest.py
   fetch --new`, then `contest.py paired CONTROL_IDS CAND_IDS` (win/loss per cell; accept at t >= 2 with D >= 4,
   blocks 1-3 reject at t <= 0 / 1 / 1.5). GAP: graded (points) score from panel replays; autoscrim can pair us while
@@ -61,9 +70,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (see TRAINING_LOG.md for the history)
-- Incumbent on the replica: s2o (submission #62, rating ~1408, #22 of 54). Dev base: s3d line (s3a dig-first, s3b
-  king defense + mine spread, s3c centre-first explore, s3d king digs to its mine). s3b passed the local screen vs
-  s3a (t +0.50 top-6, -1.08 worst-12); s3c and s3d are queued on the VM (runs g7_s3c*, g7_s3d*).
+- Incumbent on the replica: s2o (submission #62, rating ~1408, #24 of 54). Dev base: s3d line (s3a dig-first, s3b
+  king defense + mine spread, s3c centre-first explore, s3d king digs to its mine). Candidates s3e (+MINE_BALANCE),
+  s3f (+gossip, scouts), s3g (+KING_PRESS) in the self-play screen sp1; the b1 band screen was stopped at M4.
 - Against examplefuncsplayer (all 74 maps, both sides): v0d won 134-14. Against the six strongest field bots we
   score ~26% of points and win ~5 of 72; Version41 out-collects us ~2-3x (it tunnels to the centre from round 3 and
   walks its king to the mines).

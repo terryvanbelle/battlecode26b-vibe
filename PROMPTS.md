@@ -46,3 +46,7 @@ Your TRAINING_ALGORITHM looks a little thin.  I'd like you to model it after the
 ## 7. 2026-10-28 07:44 PDT
 
 progress/progress.png also doesn't look like it does in bc23
+
+## 8. 2026-10-28 08:47 PDT
+
+You don't need to put all the candidates on progress.png, just the accepted ones.  What bots are on the ladder panel?  Are they appropriately calibrated to our level?  Are you using the replica for all games against benchmark bots?

@@ -611,6 +611,14 @@ public class BotTest {
         check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_MINE, "report: while the team knows no mine, relay ours even far from kings");
         squeaks.clear();
         Comms.numMines = 1;
+        Comms.mines[0] = new MapLocation(30, 31);
+        if (Cfg.GOSSIP_ALWAYS) {
+            Baby.report();
+            check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_MINE && Comms.sqX(squeaks.get(0)) == 12,
+                  "report: gossip passes on a mine the king's list lacks, away from kings");
+            squeaks.clear();
+            Comms.mines[0] = new MapLocation(12, 3);
+        }
         Baby.report();
         check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_TRAP, "report: away from kings, share the enemy front");
         Comms.numMines = 0;
@@ -654,12 +662,42 @@ public class BotTest {
         for (int i = 0; i < 200; i++) got.add(Baby.pickMine());
         java.util.Set<MapLocation> want = new java.util.HashSet<>(java.util.Arrays.asList(new MapLocation(6, 8),
             new MapLocation(11, 2), new MapLocation(14, 9), new MapLocation(20, 2)));
-        check(got.equals(want), "mine spread: the 4 nearest home-half mines, never the enemy half " + got);
+        if (!Cfg.MINE_BALANCE) check(got.equals(want), "mine spread: the 4 nearest home-half mines, never the enemy half " + got);
         Comms.numMines = 0;
         Comms.mines[Comms.numMines++] = new MapLocation(6, 21);
         check(new MapLocation(6, 21).equals(Baby.pickMine()), "mine spread: only enemy-half mines known -> take one");
         Comms.numMines = 0;
         check(Baby.pickMine() == null, "mine spread: no mine known");
+        if (Cfg.MINE_BALANCE) {
+            for (int[] m : ms) Comms.mines[Comms.numMines++] = new MapLocation(m[0], m[1]);
+            java.util.Map<MapLocation, Integer> per = new java.util.HashMap<>();
+            for (int id = 10001; id < 10001 + 500; id++) {
+                Baby.slot = (id * 0x9E3779B1) >>> 8;
+                per.merge(Baby.pickMine(), 1, Integer::sum);
+            }
+            int lo = java.util.Collections.min(per.values()), hi = java.util.Collections.max(per.values());
+            check(per.size() == 5 && !per.containsKey(new MapLocation(6, 21)) && lo >= 70 && hi <= 130,
+                  "mine balance: every home-half mine, evenly " + per);
+            check(Baby.minesAtPick == Comms.numMines, "mine balance: remembers the mine count it picked at");
+        }
+    }
+
+    static void testScout() throws GameActionException {
+        reset(); W = 30; H = 30; install();
+        Sym.mask = Sym.HOR; Baby.home = new MapLocation(1, 5); Baby.fu = -1; Baby.fv = -1;
+        // the right half is unseen, on both sides of the mirror line y = 14.5
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) if (x < 15) Sym.mem[x + W * y] = Sym.SEEN;
+        G.seed(777);
+        Baby.exploreTarget = null;
+        Baby.exploreHome();
+        MapLocation t = Baby.exploreTarget;
+        check(t != null && t.x >= 15 && t.y <= 14, "scout: explores an unseen tile on our half (" + t + ")");
+        // with nothing unseen on our half it explores like anyone else
+        for (int x = 15; x < W; x++) for (int y = 0; y < 15; y++) Sym.mem[x + W * y] = Sym.SEEN;
+        Baby.exploreTarget = null;
+        Baby.exploreHome();
+        check(Baby.exploreTarget == null || Baby.exploreTarget.y >= 15 || Baby.exploreTarget.x < 15,
+              "scout: falls back to explore() once our half is seen");
     }
 
     static void testKingDig() {
@@ -684,6 +722,47 @@ public class BotTest {
         for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN | Sym.DIRT;
         MapLocation d3 = King.digTile(new MapLocation(1, 1), new MapLocation(0, 0));
         check(d3 == null, "king dig: not off the map " + d3);
+    }
+
+    static void testKingPress() throws GameActionException {
+        reset(); install();
+        G.round = 200; G.coop = false; G.me = me; Baby.role = Baby.FIGHT; Baby.eKing = null; Baby.lastEKing = null;
+        Baby.lastEKingRound = -100; Baby.ekHops = 0;
+        // codec: hops | (sighting round % 1024) << 2 in the 16-bit extra
+        Baby.heardEKing(Comms.squeak(Comms.SQ_EKING, 5, 12, 1 | (198 & 1023) << 2));
+        check(new MapLocation(5, 12).equals(Baby.lastEKing) && Baby.lastEKingRound == 198 && Baby.ekHops == 1,
+              "king press: heard sighting decoded " + Baby.lastEKing + " r" + Baby.lastEKingRound + " h" + Baby.ekHops);
+        Baby.heardEKing(Comms.squeak(Comms.SQ_EKING, 9, 9, 0 | (190 & 1023) << 2));
+        check(new MapLocation(5, 12).equals(Baby.lastEKing), "king press: an older sighting is ignored");
+        Baby.heardEKing(Comms.squeak(Comms.SQ_EKING, 6, 12, 0 | (198 & 1023) << 2));
+        check(new MapLocation(6, 12).equals(Baby.lastEKing) && Baby.ekHops == 0, "king press: same sighting in fewer hops wins");
+        G.round = 1024 + 2; Baby.lastEKingRound = -100;
+        Baby.heardEKing(Comms.squeak(Comms.SQ_EKING, 6, 12, 0 | (1023 & 1023) << 2));
+        check(Baby.lastEKingRound == 1023, "king press: sighting round across the 1024 wrap " + Baby.lastEKingRound);
+        // a fighter walks to a fresh sighting in range
+        G.round = 200; Baby.lastEKing = new MapLocation(5, 12); Baby.lastEKingRound = 198;
+        MapLocation start = me;
+        check(Baby.pressKing() && me.distanceSquaredTo(Baby.lastEKing) < start.distanceSquaredTo(Baby.lastEKing),
+              "king press: a fighter closes on the king (" + me + ")");
+        // too old, too far for a gatherer, or too weak: no press
+        reset(); install(); G.coop = false; G.me = me; Baby.eKing = null; Baby.role = Baby.FIGHT;
+        Baby.lastEKing = new MapLocation(5, 12); Baby.lastEKingRound = 198; G.round = 198 + Cfg.PRESS_AGE + 1;
+        check(!Baby.pressKing(), "king press: a stale sighting is not chased");
+        G.round = 200; Baby.role = Baby.GATHER;
+        check(!Baby.pressKing(), "king press: a gatherer only presses a king within PRESS_GATHER_D2");
+        Baby.role = Baby.FIGHT; health = Cfg.PRESS_HP - 1;
+        check(!Baby.pressKing(), "king press: a weak rat does not press");
+        // against the king's 3x3: hold and face its nearest tile
+        reset(); install(); G.coop = false; G.me = me; Baby.role = Baby.FIGHT; G.round = 200; facing = Direction.EAST;
+        RobotInfo k = new RobotInfo(70, G.them, UnitType.RAT_KING, 600, new MapLocation(5, 7), Direction.SOUTH, 0, 0, null);
+        robots.put(k.location, k); Baby.eKing = k;
+        check(Baby.pressKing() && me.equals(new MapLocation(5, 5)) && facing == Direction.NORTH,
+              "king press: touching the 3x3, faces it (" + me + " " + facing + ")");
+        // the sighting spot is empty when we get there: forget it
+        reset(); install(); G.coop = false; G.me = me; Baby.role = Baby.FIGHT; G.round = 200; Baby.eKing = null;
+        Baby.lastEKing = new MapLocation(5, 7); Baby.lastEKingRound = 199;
+        check(!Baby.pressKing() && Baby.lastEKing == null, "king press: an empty sighting spot is forgotten");
+        Baby.eKing = null; Baby.lastEKing = null; Baby.lastEKingRound = -100;
     }
 
     static void testDefend() throws GameActionException {
@@ -757,7 +836,9 @@ public class BotTest {
     public static void main(String[] args) throws Exception {
         testTrapRisk();
         testMineSpread();
+        testScout();
         testKingDig();
+        testKingPress();
         testDefend();
         testGuard();
         testBiteCheese();

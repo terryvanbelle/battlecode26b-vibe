@@ -1,5 +1,5 @@
 codename,date,base,description,outcome
-s0e,2026-10-27 23:26,,"Gauntlet s0e vs the top 5 (partial, 80 games): **0-80**. Every loss is RATKING_DESTROYED by a rush: backstab at",
+s0e,2026-10-27 23:26,,"Gauntlet s0e vs the top 5 (partial, 80 games): **0-80**. Every loss is RATKING_DESTROYED by a rush: backstab at",submitted to replica (#61)
 s0g,2026-10-27 23:45,,"s0g war mode: babies bite the best adjacent enemy (king first, then lowest HP; turn to face), close on visible",
 s0h,2026-10-27 23:46,,,
 s0i,2026-10-28 00:10,,,
@@ -74,6 +74,9 @@ s2x,2026-10-28 05:20,s2s,s2s with DIG=false (control for the dig-toward-target e
 s2y,2026-10-28 05:56,,"Excavation: all 3 mines buried mid-block, >4 tiles from open ground, so they are never seen. Explore now picks the nearest never-seen of 12 samples, and once no mine is known by r30 the never-seen sample nearest the m...","rejected (A* flow + unseen explore: base 18.8, new 23.8)"
 s2z,2026-10-28 06:24,s2y,"s2y + Flow search timeout and retry backoff, mine gossip squeaks (team knows no mine), cheese-on-dirt pickup from the adjacent tile","inconclusive (base 23.2, new 30.0 vs s2s 24.4/25.6; worst-12 vs Version41 8.0 vs s2y 7.5); kept as dev base"
 s3a,2026-10-28 07:31,s2z,"s2z + newborn overrun fix + dig-first: digToward (dig the dirt straight ahead when no free side step gets closer, then step in) runs before flow; cheesefarm diag vs Version41 3 -> 23 pts","inconclusive (base 24.6, new 27.6, kd 1.01; cheesefarm 13.2 vs s2z 10.0; worst-12 vs Version41 10.6 vs s2z 8.0); dig-first kept in dev"
-s3b,2026-10-28 07:57,,s3c (s3b + centre-first explore) top-6 screen vs s3b: points t +0.4; worst-12 flat. s3d (+ king digs) stopped at,top-6 screen pass (t +0.50; worst-12 -1.08); band screen pending
-s3c,2026-10-28 08:01,,s3c (s3b + centre-first explore) top-6 screen vs s3b: points t +0.4; worst-12 flat. s3d (+ king digs) stopped at,top-6 screen pass (t +0.4); band screen not run
-s3d,2026-10-28 08:09,,s3c (s3b + centre-first explore) top-6 screen vs s3b: points t +0.4; worst-12 flat. s3d (+ king digs) stopped at,top-6 screen stopped at 10/72 (metric change); band screen pending
+s3b,2026-10-28 07:57,s3a,"s3a + king defense (ALERT threat count, gatherers within DEFEND_D2 defend), mine spread (4 nearest home-half), Flow.follow index fix, exception tags",top-6 screen pass (t +0.50; worst-12 -1.08); band screen stopped (benchmark games moved to the replica)
+s3c,2026-10-28 08:01,s3b,"s3b + EXPLORE_CENTER_FROM 0: with no mine known, explorers head for the map centre from round 0 (Excavation digs r0-24: 31 vs 8)",top-6 screen pass (t +0.4); band screen not run
+s3d,2026-10-28 08:09,s3c,"s3c + KING_DIG: the king walking to its home mine takes a strictly closer step, else digs the step's leading edge (Excavation xfer 335 -> 460)",top-6 screen stopped at 10/72 (metric change); band screen stopped (benchmark games moved to the replica)
+s3e,2026-10-28 08:44,s3d,"s3d + MINE_BALANCE: gatherers spread evenly over every known home-half mine (per-rat hash slot), re-picked when the known-mine count changes (cheesefarm vs Version41 pickups 1620 -> 2055)",
+s3f,2026-10-28 08:44,s3e,"s3e + GOSSIP_ALWAYS (relay mines the king lacks all game) + SCOUT_EVERY 4 (one in 4 gatherers explores our half until r150); cheesefarm: king knew mine 4 at r31 (was r122) but pickups 2038, flat",
+s3g,2026-10-28 08:44,s3e,"s3e + KING_PRESS: at war, rats that see the enemy king squeak it (relayed twice) and healthy rats within dist2 100 walk to it and bite (DefaultMedium vs Finals: king bites 3 vs 0, but trap damage on us 1650 -> 2684)",
