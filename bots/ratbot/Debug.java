@@ -7,7 +7,7 @@ public final class Debug {
     public static void indicator() {
         StringBuilder sb = new StringBuilder(96);
         if (G.king) {
-            sb.append("K sp=").append(King.spawned);
+            sb.append("K sp=").append(King.spawned).append(" inc=").append(Econ.rate100()).append(" sur=").append(Econ.surplus());
         } else {
             sb.append(Baby.role == Baby.FIGHT ? "F" : "G")
               .append(" dl=").append(Baby.delivered)

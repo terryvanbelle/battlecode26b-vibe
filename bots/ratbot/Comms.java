@@ -12,6 +12,7 @@ public final class Comms {
     public static final int EKING = 20;                          // x+1, y+1, round%1024 last seen
     public static final int MINE0 = 24, MINE_SLOTS = 16;         // 2 ints each
     public static final int CAT0 = 56, CAT_SLOTS = 2;            // 3 ints each: x+1, y+1, round%1024
+    public static final int BUDGET = 62;                         // spendable surplus / 4 (kings' projection)
 
     // squeak types (top 4 bits)
     public static final int SQ_MINE = 1, SQ_SYM = 2, SQ_EKING = 3, SQ_CAT = 4;

@@ -156,7 +156,7 @@ def run_game(a, b, mapname, seed=0, out=None, keep=False, tsv=False):
     with Slot():
         p = subprocess.run(cmd, capture_output=True, text=True, cwd=out)
     wall = time.time() - t0
-    row = {'a': a.name, 'a_hash': a.hash, 'b': b.name, 'b_hash': b.hash, 'map': mapname, 'seed': seed,
+    row = {'a': a.name, 'a_hash': a.hash, 'b': b.name, 'b_hash': b.hash, 'a_spec': a.spec, 'b_spec': b.spec, 'map': mapname, 'seed': seed,
            'wall': round(wall, 1), 'exit': p.returncode}
     m = WIN_RE.search(p.stdout)
     if m:

@@ -23,6 +23,8 @@ public final class King {
             start = G.me;
             if (G.round <= 1) initialSymmetry();
         }
+        Comms.readKings();
+        Econ.startTurn();
         Comms.readMines();
         sense();
         readSqueaks();
@@ -31,11 +33,15 @@ public final class King {
         RobotInfo[] enemies = rc.senseNearbyRobots(-1, G.them);
         RobotInfo[] cats = rc.senseNearbyRobots(-1, Team.NEUTRAL);
 
+        int before = rc.getGlobalCheese();
         pickUp();
+        Econ.received(rc.getGlobalCheese() - before);
         if (!G.coop) bite(enemies);
         spawn(cats, enemies);
         move(cats);
         publish();
+        Comms.write(Comms.BUDGET, Math.max(0, Math.min(1023, Econ.surplus() / 4)));
+        Econ.endTurn();
     }
 
     /** Round 1: our start and the enemy start are mirror images; a candidate that maps us onto ourselves is impossible. */
@@ -123,21 +129,15 @@ public final class King {
         if (best != null) G.rc.attack(best.location);
     }
 
-    /** Committed reserve: upkeep for every king for a horizon, never spent on spawns. */
-    static int reserve() {
-        int kings = Math.max(1, Comms.numKings);
-        int horizon = Math.min(Cfg.RESERVE_ROUNDS, Math.max(0, 2000 - G.round));
-        return 2 * kings * horizon;
-    }
-
     static void spawn(RobotInfo[] cats, RobotInfo[] enemies) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return;
         int cost = rc.getCurrentRatCost();
-        int cheese = rc.getGlobalCheese();
         int babies = (cost - 10) / 10 * 4; // lower bound of live babies (cost step)
-        boolean cheap = cost <= 30;
-        if (cheese < cost + reserve() && !(cheap && cheese >= cost + 2 * 60)) return;
+        // a few babies always (they pay for themselves on any map with cheese); beyond that the projected
+        // end-of-game cheese at the measured income must stay positive after paying for this one
+        boolean boot = spawned < Cfg.BOOT_BABIES && rc.getGlobalCheese() >= cost + 600;
+        if (!boot && Econ.surplus() < cost + Cfg.SPAWN_MARGIN) return;
         if (babies >= Cfg.MAX_BABIES) return;
         // Spawn toward the most useful direction: away from visible cats, else toward the map centre.
         MapLocation c = rc.getLocation();

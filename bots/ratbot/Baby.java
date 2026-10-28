@@ -184,7 +184,7 @@ public final class Baby {
             MapLocation t = c.location.translate(i & 1, i >> 1);
             if (me.distanceSquaredTo(t) > 2) continue;
             if (rc.canAttack(t)) {
-                int cheese = rc.getAllCheese() > 400 ? 1 : 0;
+                int cheese = Comms.read(Comms.BUDGET) * 4 >= Cfg.CHEESE_BITE_SURPLUS ? 1 : 0;
                 if (cheese > 0 && rc.canAttack(t, cheese)) rc.attack(t, cheese); else rc.attack(t);
                 bitesCat++;
                 return true;
@@ -202,7 +202,7 @@ public final class Baby {
     static void tryCatTrap(RobotInfo c) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return;
-        if (rc.getAllCheese() < Cfg.TRAP_RESERVE) return;
+        if (Comms.read(Comms.BUDGET) * 4 < Cfg.TRAP_SURPLUS) return;
         if (rc.getNumberCatTraps() >= 10) return;
         int d4 = catDist4(c.location, G.me);
         if (d4 > 4 * 36) return;
