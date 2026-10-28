@@ -504,6 +504,35 @@ public class BotTest {
         check(Baby.homeHalf(new MapLocation(5, 5)) && !Baby.homeHalf(new MapLocation(14, 14)), "raid: home half");
     }
 
+    static void testKingMine() {
+        reset(); W = 60; H = 60; install();
+        Sym.mask = Sym.ROT;
+        Comms.numMines = 0;
+        Comms.mines[Comms.numMines++] = new MapLocation(30, 31);  // nearer the enemy start (56, 56)
+        Comms.mines[Comms.numMines++] = new MapLocation(3, 25);   // ours but beyond dist2 400
+        check(Cfg.KING_MINE_R2 < 484 && King.pickHomeMine(new MapLocation(3, 3)) == null, "king mine: none on our half in reach");
+        Comms.mines[Comms.numMines++] = new MapLocation(7, 6);
+        Comms.mines[Comms.numMines++] = new MapLocation(4, 7);
+        check(new MapLocation(4, 7).equals(King.pickHomeMine(new MapLocation(3, 3))), "king mine: the nearest one on our half");
+        Comms.numMines = 0;
+    }
+
+    static void testReportPriority() {
+        reset(); install();
+        G.coop = false;
+        Comms.numKings = 1; Comms.kings[0] = new MapLocation(7, 8);   // dist2 13 from (5, 5)
+        Comms.numMines = 0; Baby.myMineCount = 0;
+        Baby.noteMine(12, 3);
+        Baby.nearestEnemy = enemyRat(80, 5, 7, 100);
+        Baby.report();
+        check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_MINE, "report: a king in hearing range learns the mine even at war");
+        squeaks.clear();
+        Comms.kings[0] = new MapLocation(15, 15);
+        Baby.report();
+        check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_TRAP, "report: away from kings, share the enemy front");
+        Comms.numKings = 0; Baby.myMineCount = 0; Baby.nearestEnemy = null; G.coop = true;
+    }
+
     static void testGuard() throws GameActionException {
         reset(); install();
         Nav.avoid = 0;
@@ -572,6 +601,8 @@ public class BotTest {
         testBiteTargets();
         testTransferReach();
         testRaid();
+        testReportPriority();
+        testKingMine();
         testHandMirror();
         testSymElimination();
         testSqueakCodec();

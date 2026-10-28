@@ -23,10 +23,10 @@ public final class Debug {
     public static void indicator() {
         StringBuilder sb = new StringBuilder(96);
         if (G.king) {
-            sb.append("K sp=").append(King.spawned).append(" tr=").append(King.traps).append(" inc=").append(Econ.rate100()).append(" sur=").append(Econ.surplus());
+            sb.append("K sp=").append(King.spawned).append(" tr=").append(King.traps).append(" inc=").append(Econ.rate100()).append(" sur=").append(Econ.surplus()).append(" km=").append(King.mineWhy).append(Comms.numMines);
         } else {
             sb.append(Baby.role == Baby.FIGHT ? "F" : Baby.role == Baby.ATTACK ? "A" : "G")
-              .append(" dl=").append(Baby.delivered)
+              .append(" dl=").append(Baby.delivered).append(" mm=").append(Baby.myMineCount)
               .append(" bc=").append(Baby.bitesCat)
               .append(" br=").append(Baby.bitesRat)
               .append(" tr=").append(Baby.trapsPlaced)

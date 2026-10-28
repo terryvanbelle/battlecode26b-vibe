@@ -45,7 +45,7 @@ public final class King {
             Comms.write(Comms.ALERT + 2, Comms.stamp());
         }
         if (Cfg.KING_TRAPS && !G.coop) ratTrap(enemies);
-        move(cats);
+        move(cats, enemies);
         publish();
         Comms.write(Comms.BUDGET, Math.max(0, Math.min(1023, Econ.surplus() / 4)));
         Econ.endTurn();
@@ -244,7 +244,7 @@ public final class King {
         if (best != null) { rc.removeDirt(best); digs++; }
     }
 
-    static void move(RobotInfo[] cats) throws GameActionException {
+    static void move(RobotInfo[] cats, RobotInfo[] enemies) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isMovementReady()) return;
         MapLocation c = rc.getLocation();
@@ -255,5 +255,31 @@ public final class King {
                 for (Direction d : cand) if (rc.canMove(d)) { rc.move(d); return; }
             }
         }
+        if (!Cfg.KING_MINE) return;
+        if (enemies.length > 0 || cats.length > 0) { mineWhy = enemies.length > 0 ? 'e' : 'c'; return; }
+        if (homeMine == null) homeMine = pickHomeMine(start);
+        if (homeMine == null) { mineWhy = 'n'; return; }
+        if (G.cheb(c, homeMine) <= 1) { mineWhy = 'a'; return; }
+        mineWhy = 'm';
+        Direction to = c.directionTo(homeMine);
+        Direction[] cand = {to, to.rotateLeft(), to.rotateRight()};
+        for (Direction d : cand) if (rc.canMove(d)) { rc.move(d); G.me = rc.getLocation(); return; }
+    }
+
+    static MapLocation homeMine;
+    static char mineWhy = '-';
+
+    /** The known mine nearest our start, within KING_MINE_R2 and on our half: the king sits on it. */
+    static MapLocation pickHomeMine(MapLocation from) {
+        int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
+        MapLocation ek = G.mirror(from, s);
+        MapLocation best = null;
+        int bd = Cfg.KING_MINE_R2 + 1;
+        for (int i = 0; i < Comms.numMines; i++) {
+            MapLocation m = Comms.mines[i];
+            int d = from.distanceSquaredTo(m);
+            if (d < bd && d < m.distanceSquaredTo(ek)) { bd = d; best = m; }
+        }
+        return best;
     }
 }

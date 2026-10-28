@@ -30,10 +30,13 @@ public final class Cfg {
     public static final boolean FIGHT_MINE = true;
     /** Micro score bonus for a step onto cheese. */
     public static final int MICRO_CHEESE = 15;
+    /** The king walks onto the nearest home-half mine within dist2 KING_MINE_R2 of its start. */
+    public static final boolean KING_MINE = true;
+    public static final int KING_MINE_R2 = 400;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines
     public static final int RAID_STAY = 60, RAID_SPREAD = 60;
     /** One in RAID_EVERY fighters is a raider: on our half it ignores enemies beyond dist2 RAID_ENGAGE. */
-    public static final int RAID_EVERY = 2, RAID_ENGAGE = 8, RAID_HP = 60;
+    public static final int RAID_EVERY = 0, RAID_ENGAGE = 8, RAID_HP = 60;
     /** Fighters target the nearest enemy rat with less health than theirs (it can be ratnapped). */
     public static final boolean POUNCE = true;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */

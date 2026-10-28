@@ -509,27 +509,28 @@ public final class Baby {
         }
     }
 
-    /** Squeak one fact to a nearby king: a mine it may not know, or a sharper symmetry mask. */
+    /** Squeak one fact: to a king in hearing range a mine it may not know or a sharper symmetry mask; at war, an enemy's front. */
     static void report() {
+        MapLocation k = Comms.numKings == 0 ? null : Comms.nearestKing(G.me);
+        // a squeak reaches robots with any tile within dist2 16 of us: the king's centre within 16 is always heard
+        if (k != null && G.me.distanceSquaredTo(k) <= 16) {
+            int sharedSym = Comms.read(Comms.SYM);
+            if (sharedSym != 0 && (Sym.mask & sharedSym) != sharedSym) {
+                G.rc.squeak(Comms.squeak(Comms.SQ_SYM, 0, 0, Sym.mask));
+                return;
+            }
+            for (int i = 0; i < myMineCount; i++) {
+                int x = myMines[i] / 64, y = myMines[i] % 64;
+                if (!Comms.hasMine(x, y)) { G.rc.squeak(Comms.squeak(Comms.SQ_MINE, x, y, 0)); return; }
+            }
+        }
         // at war: tell nearby allies where an enemy stands and faces (its front tiles may hide a trap)
         if (!G.coop && Cfg.TRAP_SHARE && nearestEnemy != null && nearestEnemy.direction != null) {
             int d = nearestEnemy.direction.ordinal();
             G.rc.squeak(Comms.squeak(Comms.SQ_TRAP, nearestEnemy.location.x, nearestEnemy.location.y, d));
             return;
         }
-        if (Comms.numKings == 0) return;
-        MapLocation k = Comms.nearestKing(G.me);
-        if (k == null || G.me.distanceSquaredTo(k) > 9) return;
-        int sharedSym = Comms.read(Comms.SYM);
-        if (sharedSym != 0 && (Sym.mask & sharedSym) != sharedSym) {
-            G.rc.squeak(Comms.squeak(Comms.SQ_SYM, 0, 0, Sym.mask));
-            return;
-        }
-        for (int i = 0; i < myMineCount; i++) {
-            int x = myMines[i] / 64, y = myMines[i] % 64;
-            if (!Comms.hasMine(x, y)) { G.rc.squeak(Comms.squeak(Comms.SQ_MINE, x, y, 0)); return; }
-        }
-        if (catSeen != null && G.round - catSeenRound <= 2) {
+        if (k != null && G.me.distanceSquaredTo(k) <= 16 && catSeen != null && G.round - catSeenRound <= 2) {
             G.rc.squeak(Comms.squeak(Comms.SQ_CAT, catSeen.x, catSeen.y, 0));
         }
     }
