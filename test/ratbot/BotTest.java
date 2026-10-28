@@ -706,6 +706,13 @@ public class BotTest {
         check(Cfg.CARRY_MAX >= 0 && Cfg.HUNGRY >= 0, "carry cap / hungry: switches non-negative");
     }
 
+    static void testBabyCap() {
+        check(King.babyCap(false, 0) == Cfg.MAX_BABIES && King.babyCap(true, 0) == Cfg.MAX_BABIES_WAR
+              && King.babyCap(false, Cfg.RICH_BANK - 1) == Cfg.MAX_BABIES, "baby cap: the base caps below RICH_BANK");
+        check(King.babyCap(false, Cfg.RICH_BANK) == Math.max(Cfg.MAX_BABIES, Cfg.RICH_BABIES)
+              && King.babyCap(true, 1 << 20) == Math.max(Cfg.MAX_BABIES_WAR, Cfg.RICH_BABIES), "baby cap: a rich bank raises it, never lowers it");
+    }
+
     static void testKingDig() {
         reset(); W = 30; H = 30; install();
         for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
@@ -884,6 +891,7 @@ public class BotTest {
         testKingDodge();
         testBiteGuard();
         testCarryCap();
+        testBabyCap();
         testKingPress();
         testDefend();
         testGuard();

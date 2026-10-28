@@ -3,6 +3,8 @@ package ratbot;
 /** Behaviour switches and constants. Every experiment adds a switch whose default is the incumbent. */
 public final class Cfg {
     public static final int MAX_BABIES = 18, MAX_BABIES_WAR = 18;
+    /** With RICH_BANK global cheese or more the baby cap rises to RICH_BABIES (0 = off): a surplus buys bodies. */
+    public static final int RICH_BABIES = 0, RICH_BANK = 1000;
     /** Cheese kept when spawning under attack. */
     public static final int WAR_FLOOR = 300;
     /** Hard floor under every spawn (king upkeep). */

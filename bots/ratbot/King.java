@@ -172,6 +172,12 @@ public final class King {
         return k * k <= budget ? k * k : 0;
     }
 
+    /** Most babies we keep: the war or peace cap, raised to RICH_BABIES while the bank holds RICH_BANK. */
+    static int babyCap(boolean war, int bank) {
+        int cap = war ? Cfg.MAX_BABIES_WAR : Cfg.MAX_BABIES;
+        return Cfg.RICH_BABIES > cap && bank >= Cfg.RICH_BANK ? Cfg.RICH_BABIES : cap;
+    }
+
     static void spawn(RobotInfo[] cats, RobotInfo[] enemies) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return;
@@ -187,7 +193,7 @@ public final class King {
         if (!boot && !war && Econ.surplus() < cost + Cfg.SPAWN_MARGIN) return;
         // never spend the king's upkeep: SPAWN_FLOOR cheese (or what the rest of the game needs) stays
         if (rc.getGlobalCheese() < cost + Math.min(low ? Cfg.LOW_FLOOR : Cfg.SPAWN_FLOOR, 2 * (2000 - G.round))) return;
-        if (babies >= (war ? Cfg.MAX_BABIES_WAR : Cfg.MAX_BABIES)) return;
+        if (babies >= babyCap(war, rc.getGlobalCheese())) return;
         // Spawn toward the most useful direction: away from visible cats, else toward the map centre.
         MapLocation c = rc.getLocation();
         MapLocation goal = new MapLocation(G.W / 2, G.H / 2);
