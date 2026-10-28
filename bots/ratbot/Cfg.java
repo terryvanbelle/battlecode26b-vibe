@@ -23,7 +23,7 @@ public final class Cfg {
     public static final boolean FACE_ENEMY = true;
     /** Scored combat movement (Micro) for babies at war. */
     /** War role split: 0 everyone fights, 1 gatherers ignore non-adjacent enemies, 2 and never freeze to face. */
-    public static final int WAR_GATHER = 1;
+    public static final int WAR_GATHER = 2;
     /** The post-move throw scan runs only with this many bytecodes left (it costs up to ~6000). */
     public static final int THROW_BC = 7000;
     /** Idle non-raiding fighters hold one of our mines instead of exploring. */

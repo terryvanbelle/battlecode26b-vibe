@@ -12,43 +12,46 @@
 <line x1="56" x2="560" y1="36.0" y2="36.0" stroke="#e9ecef"/>
 <text x="50" y="40.0" text-anchor="end" fill="#495057">1</text>
 <text transform="translate(56.0,302) rotate(40)" fill="#495057">v0b</text>
-<text transform="translate(72.3,302) rotate(40)" fill="#495057">v0c</text>
-<text transform="translate(88.5,302) rotate(40)" fill="#495057">v0d</text>
-<text transform="translate(104.8,302) rotate(40)" fill="#495057">v0e</text>
-<text transform="translate(121.0,302) rotate(40)" fill="#495057">v0f</text>
-<text transform="translate(137.3,302) rotate(40)" fill="#495057">s0g</text>
-<text transform="translate(153.5,302) rotate(40)" fill="#495057">s0h</text>
-<text transform="translate(169.8,302) rotate(40)" fill="#495057">s0m</text>
-<text transform="translate(186.1,302) rotate(40)" fill="#495057">s0n</text>
-<text transform="translate(202.3,302) rotate(40)" fill="#495057">s0o</text>
-<text transform="translate(218.6,302) rotate(40)" fill="#495057">s0p</text>
-<text transform="translate(234.8,302) rotate(40)" fill="#495057">s0q</text>
-<text transform="translate(251.1,302) rotate(40)" fill="#495057">s0r</text>
-<text transform="translate(267.4,302) rotate(40)" fill="#495057">s0s</text>
-<text transform="translate(283.6,302) rotate(40)" fill="#495057">s0t</text>
-<text transform="translate(299.9,302) rotate(40)" fill="#495057">s0u</text>
-<text transform="translate(316.1,302) rotate(40)" fill="#495057">s0y</text>
-<text transform="translate(332.4,302) rotate(40)" fill="#495057">s0z</text>
-<text transform="translate(348.6,302) rotate(40)" fill="#495057">s1g</text>
-<text transform="translate(364.9,302) rotate(40)" fill="#495057">s1l</text>
-<text transform="translate(381.2,302) rotate(40)" fill="#495057">s1n</text>
-<text transform="translate(397.4,302) rotate(40)" fill="#495057">s1q</text>
-<text transform="translate(413.7,302) rotate(40)" fill="#495057">s1s</text>
-<text transform="translate(429.9,302) rotate(40)" fill="#495057">s1w</text>
-<text transform="translate(446.2,302) rotate(40)" fill="#495057">s1x</text>
-<text transform="translate(462.5,302) rotate(40)" fill="#495057">s1y</text>
-<text transform="translate(478.7,302) rotate(40)" fill="#495057">s1z</text>
-<text transform="translate(495.0,302) rotate(40)" fill="#495057">s2c</text>
-<text transform="translate(511.2,302) rotate(40)" fill="#495057">s2e</text>
-<text transform="translate(527.5,302) rotate(40)" fill="#495057">s2f</text>
-<text transform="translate(543.7,302) rotate(40)" fill="#495057">s2i</text>
-<text transform="translate(560.0,302) rotate(40)" fill="#495057">s2j</text>
-<polyline fill="none" stroke="#2a6fdb" stroke-width="2" points="56.0,65.2 72.3,67.0 88.5,60.1 104.8,121.9 121.0,116.8"/>
+<text transform="translate(70.8,302) rotate(40)" fill="#495057">v0c</text>
+<text transform="translate(85.6,302) rotate(40)" fill="#495057">v0d</text>
+<text transform="translate(100.5,302) rotate(40)" fill="#495057">v0e</text>
+<text transform="translate(115.3,302) rotate(40)" fill="#495057">v0f</text>
+<text transform="translate(130.1,302) rotate(40)" fill="#495057">s0g</text>
+<text transform="translate(144.9,302) rotate(40)" fill="#495057">s0h</text>
+<text transform="translate(159.8,302) rotate(40)" fill="#495057">s0m</text>
+<text transform="translate(174.6,302) rotate(40)" fill="#495057">s0n</text>
+<text transform="translate(189.4,302) rotate(40)" fill="#495057">s0o</text>
+<text transform="translate(204.2,302) rotate(40)" fill="#495057">s0p</text>
+<text transform="translate(219.1,302) rotate(40)" fill="#495057">s0q</text>
+<text transform="translate(233.9,302) rotate(40)" fill="#495057">s0r</text>
+<text transform="translate(248.7,302) rotate(40)" fill="#495057">s0s</text>
+<text transform="translate(263.5,302) rotate(40)" fill="#495057">s0t</text>
+<text transform="translate(278.4,302) rotate(40)" fill="#495057">s0u</text>
+<text transform="translate(293.2,302) rotate(40)" fill="#495057">s0y</text>
+<text transform="translate(308.0,302) rotate(40)" fill="#495057">s0z</text>
+<text transform="translate(322.8,302) rotate(40)" fill="#495057">s1g</text>
+<text transform="translate(337.6,302) rotate(40)" fill="#495057">s1l</text>
+<text transform="translate(352.5,302) rotate(40)" fill="#495057">s1n</text>
+<text transform="translate(367.3,302) rotate(40)" fill="#495057">s1q</text>
+<text transform="translate(382.1,302) rotate(40)" fill="#495057">s1s</text>
+<text transform="translate(396.9,302) rotate(40)" fill="#495057">s1w</text>
+<text transform="translate(411.8,302) rotate(40)" fill="#495057">s1x</text>
+<text transform="translate(426.6,302) rotate(40)" fill="#495057">s1y</text>
+<text transform="translate(441.4,302) rotate(40)" fill="#495057">s1z</text>
+<text transform="translate(456.2,302) rotate(40)" fill="#495057">s2c</text>
+<text transform="translate(471.1,302) rotate(40)" fill="#495057">s2e</text>
+<text transform="translate(485.9,302) rotate(40)" fill="#495057">s2f</text>
+<text transform="translate(500.7,302) rotate(40)" fill="#495057">s2i</text>
+<text transform="translate(515.5,302) rotate(40)" fill="#495057">s2j</text>
+<text transform="translate(530.4,302) rotate(40)" fill="#495057">s2m</text>
+<text transform="translate(545.2,302) rotate(40)" fill="#495057">s2n</text>
+<text transform="translate(560.0,302) rotate(40)" fill="#495057">s2o</text>
+<polyline fill="none" stroke="#2a6fdb" stroke-width="2" points="56.0,65.2 70.8,67.0 85.6,60.1 100.5,121.9 115.3,116.8"/>
 <circle cx="56.0" cy="65.2" r="3" fill="#2a6fdb"/>
-<circle cx="72.3" cy="67.0" r="3" fill="#2a6fdb"/>
-<circle cx="88.5" cy="60.1" r="3" fill="#2a6fdb"/>
-<circle cx="104.8" cy="121.9" r="3" fill="#2a6fdb"/>
-<circle cx="121.0" cy="116.8" r="3" fill="#2a6fdb"/>
+<circle cx="70.8" cy="67.0" r="3" fill="#2a6fdb"/>
+<circle cx="85.6" cy="60.1" r="3" fill="#2a6fdb"/>
+<circle cx="100.5" cy="121.9" r="3" fill="#2a6fdb"/>
+<circle cx="115.3" cy="116.8" r="3" fill="#2a6fdb"/>
 <rect x="572" y="36" width="10" height="10" fill="#2a6fdb"/>
 <text x="586" y="45">win.example</text>
 </svg>
