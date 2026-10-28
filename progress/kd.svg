@@ -12,58 +12,62 @@
 <line x1="56" x2="560" y1="36.0" y2="36.0" stroke="#e9ecef"/>
 <text x="50" y="40.0" text-anchor="end" fill="#495057">1.71</text>
 <text transform="translate(56.0,302) rotate(40)" fill="#495057">v0b</text>
-<text transform="translate(70.8,302) rotate(40)" fill="#495057">v0c</text>
-<text transform="translate(85.6,302) rotate(40)" fill="#495057">v0d</text>
-<text transform="translate(100.5,302) rotate(40)" fill="#495057">v0e</text>
-<text transform="translate(115.3,302) rotate(40)" fill="#495057">v0f</text>
-<text transform="translate(130.1,302) rotate(40)" fill="#495057">s0g</text>
-<text transform="translate(144.9,302) rotate(40)" fill="#495057">s0h</text>
-<text transform="translate(159.8,302) rotate(40)" fill="#495057">s0m</text>
-<text transform="translate(174.6,302) rotate(40)" fill="#495057">s0n</text>
-<text transform="translate(189.4,302) rotate(40)" fill="#495057">s0o</text>
-<text transform="translate(204.2,302) rotate(40)" fill="#495057">s0p</text>
-<text transform="translate(219.1,302) rotate(40)" fill="#495057">s0q</text>
-<text transform="translate(233.9,302) rotate(40)" fill="#495057">s0r</text>
-<text transform="translate(248.7,302) rotate(40)" fill="#495057">s0s</text>
-<text transform="translate(263.5,302) rotate(40)" fill="#495057">s0t</text>
-<text transform="translate(278.4,302) rotate(40)" fill="#495057">s0u</text>
-<text transform="translate(293.2,302) rotate(40)" fill="#495057">s0y</text>
-<text transform="translate(308.0,302) rotate(40)" fill="#495057">s0z</text>
-<text transform="translate(322.8,302) rotate(40)" fill="#495057">s1g</text>
-<text transform="translate(337.6,302) rotate(40)" fill="#495057">s1l</text>
-<text transform="translate(352.5,302) rotate(40)" fill="#495057">s1n</text>
-<text transform="translate(367.3,302) rotate(40)" fill="#495057">s1q</text>
-<text transform="translate(382.1,302) rotate(40)" fill="#495057">s1s</text>
-<text transform="translate(396.9,302) rotate(40)" fill="#495057">s1w</text>
-<text transform="translate(411.8,302) rotate(40)" fill="#495057">s1x</text>
-<text transform="translate(426.6,302) rotate(40)" fill="#495057">s1y</text>
-<text transform="translate(441.4,302) rotate(40)" fill="#495057">s1z</text>
-<text transform="translate(456.2,302) rotate(40)" fill="#495057">s2c</text>
-<text transform="translate(471.1,302) rotate(40)" fill="#495057">s2e</text>
-<text transform="translate(485.9,302) rotate(40)" fill="#495057">s2f</text>
-<text transform="translate(500.7,302) rotate(40)" fill="#495057">s2i</text>
-<text transform="translate(515.5,302) rotate(40)" fill="#495057">s2j</text>
-<text transform="translate(530.4,302) rotate(40)" fill="#495057">s2m</text>
-<text transform="translate(545.2,302) rotate(40)" fill="#495057">s2n</text>
-<text transform="translate(560.0,302) rotate(40)" fill="#495057">s2o</text>
-<polyline fill="none" stroke="#2a6fdb" stroke-width="2" points="322.8,102.8 337.6,137.0 352.5,175.6 367.3,177.1 382.1,174.1 396.9,166.7 411.8,64.2 426.6,70.2 441.4,36.0 456.2,150.4 471.1,154.8 485.9,165.2 500.7,154.8 515.5,159.3 530.4,144.4 545.2,128.1 560.0,153.3"/>
-<circle cx="322.8" cy="102.8" r="3" fill="#2a6fdb"/>
-<circle cx="337.6" cy="137.0" r="3" fill="#2a6fdb"/>
-<circle cx="352.5" cy="175.6" r="3" fill="#2a6fdb"/>
-<circle cx="367.3" cy="177.1" r="3" fill="#2a6fdb"/>
-<circle cx="382.1" cy="174.1" r="3" fill="#2a6fdb"/>
-<circle cx="396.9" cy="166.7" r="3" fill="#2a6fdb"/>
-<circle cx="411.8" cy="64.2" r="3" fill="#2a6fdb"/>
-<circle cx="426.6" cy="70.2" r="3" fill="#2a6fdb"/>
-<circle cx="441.4" cy="36.0" r="3" fill="#2a6fdb"/>
-<circle cx="456.2" cy="150.4" r="3" fill="#2a6fdb"/>
-<circle cx="471.1" cy="154.8" r="3" fill="#2a6fdb"/>
-<circle cx="485.9" cy="165.2" r="3" fill="#2a6fdb"/>
-<circle cx="500.7" cy="154.8" r="3" fill="#2a6fdb"/>
-<circle cx="515.5" cy="159.3" r="3" fill="#2a6fdb"/>
-<circle cx="530.4" cy="144.4" r="3" fill="#2a6fdb"/>
-<circle cx="545.2" cy="128.1" r="3" fill="#2a6fdb"/>
-<circle cx="560.0" cy="153.3" r="3" fill="#2a6fdb"/>
+<text transform="translate(70.0,302) rotate(40)" fill="#495057">v0c</text>
+<text transform="translate(84.0,302) rotate(40)" fill="#495057">v0d</text>
+<text transform="translate(98.0,302) rotate(40)" fill="#495057">v0e</text>
+<text transform="translate(112.0,302) rotate(40)" fill="#495057">v0f</text>
+<text transform="translate(126.0,302) rotate(40)" fill="#495057">s0g</text>
+<text transform="translate(140.0,302) rotate(40)" fill="#495057">s0h</text>
+<text transform="translate(154.0,302) rotate(40)" fill="#495057">s0m</text>
+<text transform="translate(168.0,302) rotate(40)" fill="#495057">s0n</text>
+<text transform="translate(182.0,302) rotate(40)" fill="#495057">s0o</text>
+<text transform="translate(196.0,302) rotate(40)" fill="#495057">s0p</text>
+<text transform="translate(210.0,302) rotate(40)" fill="#495057">s0q</text>
+<text transform="translate(224.0,302) rotate(40)" fill="#495057">s0r</text>
+<text transform="translate(238.0,302) rotate(40)" fill="#495057">s0s</text>
+<text transform="translate(252.0,302) rotate(40)" fill="#495057">s0t</text>
+<text transform="translate(266.0,302) rotate(40)" fill="#495057">s0u</text>
+<text transform="translate(280.0,302) rotate(40)" fill="#495057">s0y</text>
+<text transform="translate(294.0,302) rotate(40)" fill="#495057">s0z</text>
+<text transform="translate(308.0,302) rotate(40)" fill="#495057">s1g</text>
+<text transform="translate(322.0,302) rotate(40)" fill="#495057">s1l</text>
+<text transform="translate(336.0,302) rotate(40)" fill="#495057">s1n</text>
+<text transform="translate(350.0,302) rotate(40)" fill="#495057">s1q</text>
+<text transform="translate(364.0,302) rotate(40)" fill="#495057">s1s</text>
+<text transform="translate(378.0,302) rotate(40)" fill="#495057">s1w</text>
+<text transform="translate(392.0,302) rotate(40)" fill="#495057">s1x</text>
+<text transform="translate(406.0,302) rotate(40)" fill="#495057">s1y</text>
+<text transform="translate(420.0,302) rotate(40)" fill="#495057">s1z</text>
+<text transform="translate(434.0,302) rotate(40)" fill="#495057">s2c</text>
+<text transform="translate(448.0,302) rotate(40)" fill="#495057">s2e</text>
+<text transform="translate(462.0,302) rotate(40)" fill="#495057">s2f</text>
+<text transform="translate(476.0,302) rotate(40)" fill="#495057">s2i</text>
+<text transform="translate(490.0,302) rotate(40)" fill="#495057">s2j</text>
+<text transform="translate(504.0,302) rotate(40)" fill="#495057">s2m</text>
+<text transform="translate(518.0,302) rotate(40)" fill="#495057">s2n</text>
+<text transform="translate(532.0,302) rotate(40)" fill="#495057">s2o</text>
+<text transform="translate(546.0,302) rotate(40)" fill="#495057">s2p</text>
+<text transform="translate(560.0,302) rotate(40)" fill="#495057">s2q</text>
+<polyline fill="none" stroke="#2a6fdb" stroke-width="2" points="308.0,102.8 322.0,137.0 336.0,175.6 350.0,177.1 364.0,174.1 378.0,166.7 392.0,64.2 406.0,70.2 420.0,36.0 434.0,150.4 448.0,154.8 462.0,165.2 476.0,154.8 490.0,159.3 504.0,144.4 518.0,128.1 532.0,153.3 546.0,151.9 560.0,150.4"/>
+<circle cx="308.0" cy="102.8" r="3" fill="#2a6fdb"/>
+<circle cx="322.0" cy="137.0" r="3" fill="#2a6fdb"/>
+<circle cx="336.0" cy="175.6" r="3" fill="#2a6fdb"/>
+<circle cx="350.0" cy="177.1" r="3" fill="#2a6fdb"/>
+<circle cx="364.0" cy="174.1" r="3" fill="#2a6fdb"/>
+<circle cx="378.0" cy="166.7" r="3" fill="#2a6fdb"/>
+<circle cx="392.0" cy="64.2" r="3" fill="#2a6fdb"/>
+<circle cx="406.0" cy="70.2" r="3" fill="#2a6fdb"/>
+<circle cx="420.0" cy="36.0" r="3" fill="#2a6fdb"/>
+<circle cx="434.0" cy="150.4" r="3" fill="#2a6fdb"/>
+<circle cx="448.0" cy="154.8" r="3" fill="#2a6fdb"/>
+<circle cx="462.0" cy="165.2" r="3" fill="#2a6fdb"/>
+<circle cx="476.0" cy="154.8" r="3" fill="#2a6fdb"/>
+<circle cx="490.0" cy="159.3" r="3" fill="#2a6fdb"/>
+<circle cx="504.0" cy="144.4" r="3" fill="#2a6fdb"/>
+<circle cx="518.0" cy="128.1" r="3" fill="#2a6fdb"/>
+<circle cx="532.0" cy="153.3" r="3" fill="#2a6fdb"/>
+<circle cx="546.0" cy="151.9" r="3" fill="#2a6fdb"/>
+<circle cx="560.0" cy="150.4" r="3" fill="#2a6fdb"/>
 <rect x="572" y="36" width="10" height="10" fill="#2a6fdb"/>
 <text x="586" y="45">kd.top6.3m</text>
 </svg>
