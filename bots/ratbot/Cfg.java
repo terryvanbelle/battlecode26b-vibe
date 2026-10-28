@@ -17,6 +17,8 @@ public final class Cfg {
     public static final int BABY_TRAP_DIST2 = 13;
     /** Cheese (global, or raw+global for babies) below which no rat trap is placed. */
     public static final int RAT_TRAP_MIN_CHEESE = 1000;
+    /** Most live rat traps we keep (engine max 25): new ones are bought only as old ones fire. */
+    public static final int TRAP_CAP = 25;
     /** Keep enemies within two tiles inside our cone (anti-ratnap) instead of moving. */
     public static final boolean FACE_ENEMY = true;
     /** Scored combat movement (Micro) for babies at war. */

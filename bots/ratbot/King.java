@@ -196,7 +196,7 @@ public final class King {
     /** War defense: a rat trap on the reachable tile nearest an approaching enemy rat (50 damage + stun). */
     static void ratTrap(RobotInfo[] enemies) throws GameActionException {
         RobotController rc = G.rc;
-        if (!rc.isActionReady() || rc.getGlobalCheese() < Cfg.RAT_TRAP_MIN_CHEESE || rc.getNumberRatTraps() >= 25) return;
+        if (!rc.isActionReady() || rc.getGlobalCheese() < Cfg.RAT_TRAP_MIN_CHEESE || rc.getNumberRatTraps() >= Cfg.TRAP_CAP) return;
         MapLocation c = rc.getLocation();
         MapLocation foe = null;
         int fd = Integer.MAX_VALUE;

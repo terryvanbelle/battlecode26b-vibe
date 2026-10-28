@@ -307,7 +307,7 @@ public final class Baby {
     /** Rat trap on the front tile nearest an approaching enemy rat (50 damage + stun when it enters the 3x3). */
     static boolean tryRatTrap() throws GameActionException {
         RobotController rc = G.rc;
-        if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= 25) return false;
+        if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= Cfg.TRAP_CAP) return false;
         if (rc.getAllCheese() < Cfg.RAT_TRAP_MIN_CHEESE) return false;
         int d0 = G.me.distanceSquaredTo(nearestEnemy.location);
         if (d0 <= 2 || d0 > Cfg.BABY_TRAP_DIST2) return false;
