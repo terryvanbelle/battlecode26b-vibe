@@ -345,7 +345,24 @@ public class BotTest {
         check(me.distanceSquaredTo(e.location) <= 2, "micro: winning fight moves into bite range (at " + me + ")");
     }
 
+    static void testWarRoles() throws GameActionException {
+        reset(); install();
+        RobotInfo strong = enemyRat(40, 5, 7, 100), weak = enemyRat(41, 7, 8, 40), far = enemyRat(42, 5, 12, 10);
+        RobotInfo[] rs = {strong, weak, far};
+        check(Baby.prey(rs, 100) == weak, "prey: nearest weaker enemy within dist2 20");
+        check(Baby.prey(rs, 40) == null, "prey: none when no enemy is strictly weaker in range");
+        // a gatherer ignores an enemy two tiles away, but turns to face an adjacent one
+        Baby.role = Baby.GATHER;
+        Baby.nearestEnemy = strong;
+        check(!Baby.war(), "war: gatherer keeps gathering past a non-adjacent enemy");
+        RobotInfo adj = enemyRat(43, me.x + 1, me.y, 100);
+        Baby.nearestEnemy = adj;
+        check(Baby.war(), "war: gatherer holds against an adjacent enemy");
+        check(facing == me.directionTo(adj.location), "war: gatherer faces the adjacent enemy");
+    }
+
     public static void main(String[] args) throws Exception {
+        testWarRoles();
         testMicroRetreatsWhenOutnumbered();
         testThrowDirection();
         testBiteTargets();

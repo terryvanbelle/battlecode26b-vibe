@@ -64,14 +64,8 @@ public final class Baby {
             }
             // fighters close on a rat they can grab (lower health than ours: trapped or bitten) before anything else
             if (Cfg.POUNCE && role != GATHER && rc.getCarrying() == null) {
-                RobotInfo prey = null;
-                int pd = Integer.MAX_VALUE, hp = rc.getHealth();
-                for (RobotInfo r : robots) {
-                    if (r.team != G.them || r.type != UnitType.BABY_RAT || r.health >= hp) continue;
-                    int d = G.me.distanceSquaredTo(r.location);
-                    if (d <= 20 && d < pd) { pd = d; prey = r; }
-                }
-                if (prey != null) nearestEnemy = prey;
+                RobotInfo p = prey(robots, rc.getHealth());
+                if (p != null) nearestEnemy = p;
             }
         }
         // 0. a carried enemy is thrown as soon as we can act
@@ -582,6 +576,18 @@ public final class Baby {
             }
         }
         return false;
+    }
+
+    /** Nearest enemy baby within dist2 20 that we could ratnap (strictly less health than ours), or null. */
+    static RobotInfo prey(RobotInfo[] robots, int hp) {
+        RobotInfo prey = null;
+        int pd = Integer.MAX_VALUE;
+        for (RobotInfo r : robots) {
+            if (r.team != G.them || r.type != UnitType.BABY_RAT || r.health >= hp) continue;
+            int d = G.me.distanceSquaredTo(r.location);
+            if (d <= 20 && d < pd) { pd = d; prey = r; }
+        }
+        return prey;
     }
 
     static boolean nearEnemy(int d2) {
