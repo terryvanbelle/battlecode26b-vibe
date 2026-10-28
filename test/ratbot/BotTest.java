@@ -356,7 +356,8 @@ public class BotTest {
         // a gatherer ignores an enemy two tiles away, but turns to face an adjacent one
         Baby.role = Baby.GATHER;
         Baby.nearestEnemy = strong;
-        check(!Baby.war(), "war: gatherer keeps gathering past a non-adjacent enemy");
+        if (Cfg.WAR_GATHER > 0) check(!Baby.war(), "war: gatherer keeps gathering past a non-adjacent enemy");
+        else check(Baby.war(), "war: with WAR_GATHER 0 a gatherer engages an enemy two tiles away");
         RobotInfo adj = enemyRat(43, me.x + 1, me.y, 100);
         Baby.nearestEnemy = adj;
         check(Baby.war(), "war: gatherer holds against an adjacent enemy");
