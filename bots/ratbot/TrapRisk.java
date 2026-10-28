@@ -82,8 +82,34 @@ public final class TrapRisk {
 
     /** Avoid-mask bits for the risky neighbours of me (0 when every neighbour is risky). */
     public static int mask(MapLocation me) {
-        int m = 0;
-        for (int i = 0; i < 8; i++) if (risky(me.add(G.DIRS[i]))) m |= 1 << i;
+        if (mark == null) return 0;
+        // one pass over the 5x5 around us: a live mark at offset (dx, dy) taints every neighbour within Chebyshev 1
+        int m = 0, w = G.W, x0 = me.x, y0 = me.y, r = G.round - TTL;
+        for (int dy = -2; dy <= 2; dy++) {
+            int y = y0 + dy;
+            if (y < 0 || y >= G.H) continue;
+            for (int dx = -2; dx <= 2; dx++) {
+                int x = x0 + dx;
+                if (x < 0 || x >= w) continue;
+                int k = mark[x + w * y];
+                if (k == 0 || k - 1 < r) continue;
+                m |= NEAR[(dx + 2) + 5 * (dy + 2)];
+            }
+        }
         return m == 0xFF ? 0 : m;
+    }
+
+    /** NEAR[offset] = bits of the 8 neighbour directions within Chebyshev 1 of that offset in the 5x5. */
+    static final int[] NEAR = new int[25];
+    static {
+        for (int dy = -2; dy <= 2; dy++)
+            for (int dx = -2; dx <= 2; dx++) {
+                int b = 0;
+                for (int i = 0; i < 8; i++) {
+                    int nx = G.DIRS[i].dx, ny = G.DIRS[i].dy;
+                    if (Math.abs(nx - dx) <= 1 && Math.abs(ny - dy) <= 1) b |= 1 << i;
+                }
+                NEAR[(dx + 2) + 5 * (dy + 2)] = b;
+            }
     }
 }

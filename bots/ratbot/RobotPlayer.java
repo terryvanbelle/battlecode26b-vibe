@@ -15,6 +15,7 @@ public strictfp class RobotPlayer {
         Sym.init();
         while (true) {
             int startRound = rc.getRoundNum();
+            Debug.begin(startRound);
             try {
                 G.startTurn();
                 if (G.king) King.turn(); else Baby.turn();
@@ -27,6 +28,7 @@ public strictfp class RobotPlayer {
             }
             int bc = Clock.getBytecodeNum();
             int limit = rc.getType() == UnitType.RAT_KING ? 20000 : 17500;
+            Debug.mark(99);
             if (rc.getRoundNum() != startRound) overruns++;
             else {
                 if (bc > maxBc) maxBc = bc;

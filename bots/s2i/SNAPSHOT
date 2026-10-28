@@ -1,0 +1,5 @@
+name=s2i
+source=bots/ratbot
+source_sha=1603f8984475
+commit=700c112
+created=2026-10-28 04:05 PDT

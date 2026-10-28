@@ -24,6 +24,8 @@ public final class Cfg {
     /** Scored combat movement (Micro) for babies at war. */
     /** War role split: 0 everyone fights, 1 gatherers ignore non-adjacent enemies, 2 and never freeze to face. */
     public static final int WAR_GATHER = 1;
+    /** The post-move throw scan runs only with this many bytecodes left (it costs up to ~6000). */
+    public static final int THROW_BC = 7000;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines
     public static final int RAID_STAY = 60, RAID_SPREAD = 60;
     /** One in RAID_EVERY fighters is a raider: on our half it ignores enemies beyond dist2 RAID_ENGAGE. */

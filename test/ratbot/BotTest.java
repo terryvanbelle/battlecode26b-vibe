@@ -518,6 +518,19 @@ public class BotTest {
         TrapRisk.heard(new Message[]{new Message(c, 7, G.round, new MapLocation(10, 10))});
         check(TrapRisk.risky(new MapLocation(10, 12)), "traprisk: a squeaked enemy front marks tiles");
         check(!TrapRisk.risky(new MapLocation(14, 12)), "traprisk: behind a squeaked enemy is safe");
+        // mask() agrees with risky() on every neighbour, for many tiles and random marks
+        java.util.Random rnd = new java.util.Random(7);
+        for (int i = 0; i < 60; i++) TrapRisk.put(new MapLocation(rnd.nextInt(W), rnd.nextInt(H)));
+        int bad = 0;
+        for (int x = 0; x < W; x++)
+            for (int y = 0; y < H; y++) {
+                MapLocation l = new MapLocation(x, y);
+                int m = 0;
+                for (int k = 0; k < 8; k++) if (TrapRisk.risky(l.add(G.DIRS[k]))) m |= 1 << k;
+                if (m == 0xFF) m = 0;
+                if (m != TrapRisk.mask(l)) bad++;
+            }
+        check(bad == 0, "traprisk: mask matches risky() everywhere (bad=" + bad + ")");
     }
 
     public static void main(String[] args) throws Exception {

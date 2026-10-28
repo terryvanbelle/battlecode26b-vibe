@@ -33,6 +33,7 @@ public final class Baby {
         int s = Comms.read(Comms.SYM);
         if (s != 0) Sym.merge(s);
 
+        Debug.mark(1);
         sense();
         RobotInfo[] robots = rc.senseNearbyRobots(-1, null);
         seen = robots;
@@ -50,12 +51,14 @@ public final class Baby {
         }
         if (cat != null) { catSeen = cat.location; catSeenRound = G.round; }
 
+        Debug.mark(2);
         if (role != ATTACK) pickUp();
         Nav.avoid = cat != null ? laneMask(cat) : 0;
         if (!G.coop && Cfg.TRAP_RISK) {
             TrapRisk.observe(robots);
         }
 
+        Debug.mark(3);
         eKing = enemyKing;
         nearestEnemy = null;
         hunting = false;
@@ -86,29 +89,38 @@ public final class Baby {
         if (rc.getCarrying() != null) tryThrow(robots);
         // 1. bites: enemy rats once cooperation is over (they shoot back; cats wait), then cats.
         //    Attackers open the war themselves, but only on the enemy king.
+        Debug.mark(4);
         if (!G.coop && Cfg.NAP) tryCarry(robots);
         if (!G.coop && Cfg.BABY_RAT_TRAPS) tryRatTrap();
+        Debug.mark(5);
         if (!G.coop) biteEnemies(robots);
         else if (role == ATTACK && enemyKing != null) biteEnemies(new RobotInfo[]{enemyKing});
         if (cat != null) tryBiteCat(cat);
         // 2. cat trap ahead of an approaching cat
         if (cat != null && Cfg.CAT_TRAPS) tryCatTrap(cat);
 
+        Debug.mark(6);
         report();
 
         // 3. movement
+        Debug.mark(7);
         if (rc.isMovementReady()) moveDecision();
+        Debug.mark(20);
         pickUp();
-        if (rc.getCarrying() != null) tryThrow(rc.senseNearbyRobots(-1, null));
+        if (rc.getCarrying() != null && Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(null);
+        Debug.mark(21);
         if (!G.coop && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
+        Debug.mark(22);
         if (!G.coop) biteEnemies(rc.senseNearbyRobots(2, G.them));
         else if (role == ATTACK) {
             RobotInfo[] near = rc.senseNearbyRobots(8, G.them);
             for (RobotInfo r : near) if (r.type == UnitType.RAT_KING) biteEnemies(new RobotInfo[]{r});
         }
         if (cat != null) tryBiteCat(cat);
+        Debug.mark(8);
         tryDeliver();
         guardTurn();
+        Debug.mark(9);
         sense2();
     }
 
@@ -517,15 +529,22 @@ public final class Baby {
             MapLocation cc = new MapLocation(cat.location.x, cat.location.y);
             if (Nav.flee(cc)) { why = 'c'; return; }
         }
+        Debug.mark(10);
         if (!G.coop && retreat()) { why = 'r'; return; }
+        Debug.mark(11);
         if (!G.coop && raider && raw == 0 && rc.getHealth() >= Cfg.RAID_HP && homeHalf(G.me)
                 && (nearestEnemy == null || G.me.distanceSquaredTo(nearestEnemy.location) > Cfg.RAID_ENGAGE) && raid()) { why = 'z'; return; }
+        Debug.mark(12);
         if (!G.coop && Cfg.FLANK && Cfg.NAP && flank(seen)) { why = 'k'; return; }
+        Debug.mark(13);
         if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) { why = 'm'; return; }
+        Debug.mark(14);
         if (!G.coop && Cfg.FACE_ENEMY && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) { why = 'f'; return; }
         if (role == ATTACK && attack()) { why = 'a'; return; }
+        Debug.mark(15);
         if (!G.coop && war()) { why = 'w'; return; }
         if (!G.coop && role == FIGHT && Cfg.FORT_R > 0 && fort()) { why = 'h'; return; }
+        Debug.mark(16);
         why = 'g';
         if (cat != null && role == FIGHT) {
             if (approachCat(cat)) return;
