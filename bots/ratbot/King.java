@@ -263,8 +263,13 @@ public final class King {
         if (G.cheb(c, homeMine) <= 1) { mineWhy = 'a'; return; }
         mineWhy = 'm';
         Direction to = c.directionTo(homeMine);
-        Direction[] cand = {to, to.rotateLeft(), to.rotateRight()};
-        for (Direction d : cand) if (rc.canMove(d)) { rc.move(d); G.me = rc.getLocation(); return; }
+        // babies crowd a king: sidestep up to 90 degrees off the line rather than wait
+        Direction[] cand = {to, to.rotateLeft(), to.rotateRight(), to.rotateLeft().rotateLeft(), to.rotateRight().rotateRight()};
+        for (Direction d : cand) {
+            if (!rc.canMove(d)) continue;
+            if (G.cheb(c.add(d), homeMine) > G.cheb(c, homeMine)) continue;
+            rc.move(d); G.me = rc.getLocation(); return;
+        }
     }
 
     static MapLocation formSite;
@@ -333,7 +338,12 @@ public final class King {
         for (int i = 0; i < Comms.numMines; i++) {
             MapLocation m = Comms.mines[i];
             int d = from.distanceSquaredTo(m);
-            if (d < bd && d < m.distanceSquaredTo(ek)) { bd = d; best = m; }
+            if (d >= bd || d >= m.distanceSquaredTo(ek)) continue;
+            // another king already holds it
+            boolean held = false;
+            for (int k = 0; k < Comms.numKings; k++)
+                if (G.cheb(Comms.kings[k], m) <= 2 && !Comms.kings[k].equals(G.me)) held = true;
+            if (!held) { bd = d; best = m; }
         }
         return best;
     }

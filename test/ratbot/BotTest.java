@@ -518,6 +518,9 @@ public class BotTest {
         Comms.mines[Comms.numMines++] = new MapLocation(7, 6);
         Comms.mines[Comms.numMines++] = new MapLocation(4, 7);
         check(new MapLocation(4, 7).equals(King.pickHomeMine(new MapLocation(3, 3))), "king mine: the nearest one on our half");
+        Comms.numKings = 1; Comms.kings[0] = new MapLocation(4, 8);
+        check(new MapLocation(7, 6).equals(King.pickHomeMine(new MapLocation(3, 3))), "king mine: skips a mine another king holds");
+        Comms.numKings = 0;
         Comms.numMines = 0;
     }
 
