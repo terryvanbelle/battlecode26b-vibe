@@ -79,7 +79,9 @@ public final class Baby {
         Nav.guard = null;
         if (!G.coop && Cfg.GUARD_DIST2 > 0 && nearestEnemy != null && rc.getCarrying() == null
                 && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
-        if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8 && !(hunting && Cfg.HUNT_IGNORES_RISK)) Nav.avoid |= TrapRisk.mask(G.me);
+        boolean engaged = nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= 20;
+        if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8 && !(hunting && Cfg.HUNT_IGNORES_RISK) && (Cfg.RISK_IN_FIGHT || !engaged))
+            Nav.avoid |= TrapRisk.mask(G.me);
         // 0. a carried enemy is thrown as soon as we can act
         if (rc.getCarrying() != null) tryThrow(robots);
         // 1. bites: enemy rats once cooperation is over (they shoot back; cats wait), then cats.

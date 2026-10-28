@@ -34,6 +34,8 @@ public final class Cfg {
     public static final boolean TRAP_SHARE = true;
     /** While chasing a ratnappable enemy, ignore suspected trap tiles. */
     public static final boolean HUNT_IGNORES_RISK = true;
+    /** False: the trap-risk mask is dropped while a visible enemy rat is within dist2 20 (so we can close to bite). */
+    public static final boolean RISK_IN_FIGHT = true;
     /** Guard facing: with an enemy rat within this squared distance, steps strafe so we keep facing it, and a
      *  turn ends facing it (rats are grabbed from behind). 0 = off. */
     public static final int GUARD_DIST2 = 13;
