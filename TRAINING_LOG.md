@@ -270,3 +270,29 @@
   and BITE_CARRIER (bite first an enemy carrying one of ours). Snapshots s3r (BITE_GUARD) and s3s (BITE_GUARD +
   BITE_CARRIER + THROW_HOLD 0) are queued as sp6. s3h submitted to the replica (#63); its panel v2 block (sets 1+2)
   is queued behind s2o's set-2 control.
+
+## 2026-10-28 12:00 PDT: the fight is even; the leak is collection (we crowd one mine)
+- Field-wide over s2o's replica matches (one per opponent, scratch scripts over battle_report):
+  - Grab war volume is even: we grab 3092 and throw 2488; they grab 3409 and throw 2201.
+  - Against the top 10 (30 games), HP lost: ours 107k, theirs 129k. Point-blank throws (42): 891 of our 1251,
+    826 of their 1392. Combat is not where we lose.
+- Economy, same 30 games (medians, us/them):
+  - Bank: r100 1106/1468, r200 332/1230, r300 190/1268.
+  - Delivered: r100 175/146, r200 410/544, r300 606/1032.
+  - Rats: r300 9/16. Rat traps placed by r100: 19/2.
+  - Spawns are even (36/43 by r300), and so are deaths. They can afford replacements; we stop at the spawn floor.
+- Cheese accounting to r200 (25 games, means): spawns 1224/1210, rat traps 425/158, digs 148/264, upkeep 392/401.
+  Residual (cheese bites, error) -43/-111.
+  - The bank gap of ~600 is ~350 delivery and ~270 rat traps.
+  - Picked up: 647/1344. Carry-turns: 438/836. Rat-rounds: 3461/3021.
+- Per mine, to r200 (25 games):
+  - Mines on our half spawned 44.7k cheese:
+    - we picked up 14.1k (32%);
+    - they picked up 13.1k (29%);
+    - 19.0k lay uncollected (42%; median pile age 90 rounds).
+  - Our rat-rounds there: 46.7k. Our rats pile onto the 1-2 mines nearest the king and leave the rest at zero,
+    e.g. rift (12,26) 3613 rat-rounds (18 rats) while 5 other home mines got 0-10, and keepout (47,30) 3383.
+  - On their half they picked up 68% of the cheese with 18k rat-rounds, and they visit every mine.
+- Next: gatherers must spread over every home mine (cap per mine, leave a crowded mine, search for unknown
+  mines). MINE_BALANCE (s3e) lost 5.4 in self-play vs s2o, but self-play cannot show the field's theft of
+  neglected mines.
