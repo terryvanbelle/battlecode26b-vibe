@@ -66,8 +66,9 @@ def table(results, ours_hash=None, path=FIELD):
 
 
 def summary(results):
-    """Per our-bot totals for a run holding several of our bots (sides with a bots/ spec) vs field bots."""
-    agg = collections.defaultdict(lambda: [0, 0, 0.0])
+    """Per our-bot totals for a run holding several of our bots (sides with a bots/ spec) vs field bots:
+    (bot, wins, games, mean points, kill ratio = enemy rat deaths / our rat deaths, mean rounds)."""
+    agg = collections.defaultdict(lambda: [0, 0, 0.0, 0, 0, 0])
     for l in open(results):
         if not l.strip():
             continue
@@ -75,11 +76,16 @@ def summary(results):
         for side, spec in (('A', r.get('a_spec') or r['a']), ('B', r.get('b_spec') or r['b'])):
             if not spec.startswith('bots/'):
                 continue
+            other = 'B' if side == 'A' else 'A'
             a = agg[spec[5:].rstrip('/')]
             a[1] += 1
             a[0] += 1 if r['winner'] == side else 0
             a[2] += r['ptsA' if side == 'A' else 'ptsB']
-    return sorted(((b, w, g, p / g) for b, (w, g, p) in agg.items()), key=lambda t: (-t[1] / t[2], -t[3]))
+            a[3] += (r.get(other) or {}).get('deathsRat', 0)
+            a[4] += (r.get(side) or {}).get('deathsRat', 0)
+            a[5] += r.get('rounds', 0)
+    return sorted(((b, w, g, p / g, k / max(1, d), n / g) for b, (w, g, p, k, d, n) in agg.items()),
+                  key=lambda t: (-t[1] / t[2], -t[3]))
 
 
 def main():
@@ -91,8 +97,8 @@ def main():
     u = sub.add_parser('summary'); u.add_argument('results')
     o = ap.parse_args()
     if o.cmd == 'summary':
-        for b, w, g, p in summary(o.results):
-            print(f'{b:20s} {w:3d}/{g:<3d} pts {p:5.1f}')
+        for b, w, g, p, kd, n in summary(o.results):
+            print(f'{b:20s} {w:3d}/{g:<3d} pts {p:5.1f}  kills/deaths {kd:4.2f}  rounds {n:5.0f}')
         return
     if o.cmd == 'cells':
         maps = [l.strip() for l in open(o.maps[1:])] if o.maps.startswith('@') else o.maps.split(',')
