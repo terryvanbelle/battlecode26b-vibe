@@ -28,6 +28,7 @@ s1s	2026-10-28 06:30	pts.top6.3m	17.0
 s1w	2026-10-28 06:30	pts.top6.3m	19.5
 s1x	2026-10-28 06:30	pts.top6.3m	17.2
 # kd.top6.3m = enemy rat deaths / our rat deaths over the same 3-map top-six panel
+# pts.top6.new3m = mean points vs the top six on Excavation, Stash, UncomfortablyClose (both sides, 36 games)
 s1g	2026-10-28 03:11	kd.top6.3m	1.26
 s1l	2026-10-28 04:39	kd.top6.3m	1.03
 s1n	2026-10-28 04:39	kd.top6.3m	0.77
@@ -65,3 +66,9 @@ s2t	2026-10-28 05:01	pts.top6.3m	23.7
 s2r	2026-10-28 05:01	kd.top6.3m	0.99
 s2s	2026-10-28 05:01	kd.top6.3m	0.96
 s2t	2026-10-28 05:01	kd.top6.3m	1.01
+s2s	2026-10-28 05:19	pts.top6.new3m	25.6
+s2t	2026-10-28 05:19	pts.top6.new3m	25.3
+s2u	2026-10-28 05:19	pts.top6.3m	20.1
+s2u	2026-10-28 05:19	kd.top6.3m	1.82
+s2v	2026-10-28 05:19	pts.top6.3m	22.3
+s2v	2026-10-28 05:19	kd.top6.3m	1.08
