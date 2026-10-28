@@ -8,3 +8,7 @@
    dig its own spawn ring (range 8).
 4. **Cat traps are the cheapest cat damage**: v0 DefaultSmall, 43 of 50 traps fired = 4300 of 6217 cat damage.
 5. Engine property is `bc.game.map-path` (not bc.server.*); only the jar's built-in maps load otherwise.
+6. **A cat kills whichever king it reaches first**, and against a passive opponent that race decides the game.
+   Gating cat traps on long-run surplus dropped the example battery from 134-14 to 98-50 (v0d -> v0e).
+7. **Strong 2026 bots rush.** They backstab by round ~15-35 and kill the king with bites, rat traps and thrown rats
+   within 20-300 rounds (g_s0e: 0-80 vs the top 5). Combat and king defense come before economy refinements.

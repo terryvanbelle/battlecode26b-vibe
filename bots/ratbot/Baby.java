@@ -52,12 +52,19 @@ public final class Baby {
         pickUp();
         Nav.avoid = cat != null ? laneMask(cat) : 0;
 
-        // 1. bites: cats always; enemy rats only once cooperation is over
-        if (cat != null) tryBiteCat(cat);
+        eKing = enemyKing;
+        nearestEnemy = null;
         if (!G.coop) {
-            if (enemyKing != null) tryBite(enemyKing);
-            if (enemy != null) tryBite(enemy);
+            int bd = Integer.MAX_VALUE;
+            for (RobotInfo r : robots) {
+                if (r.team != G.them || r.type == UnitType.RAT_KING) continue;
+                int d = G.me.distanceSquaredTo(r.location);
+                if (d < bd) { bd = d; nearestEnemy = r; }
+            }
         }
+        // 1. bites: enemy rats once cooperation is over (they shoot back; cats wait), then cats
+        if (!G.coop) biteEnemies(robots);
+        if (cat != null) tryBiteCat(cat);
         // 2. cat trap ahead of an approaching cat
         if (cat != null && Cfg.CAT_TRAPS) tryCatTrap(cat);
 
@@ -66,6 +73,7 @@ public final class Baby {
         // 3. movement
         if (rc.isMovementReady()) moveDecision();
         pickUp();
+        if (!G.coop) biteEnemies(rc.senseNearbyRobots(2, G.them));
         if (cat != null) tryBiteCat(cat);
         tryDeliver();
         sense2();
@@ -161,6 +169,46 @@ public final class Baby {
         G.rawCheese = rc.getRawCheese();
     }
 
+    static RobotInfo eKing, nearestEnemy;
+
+    /** Bite the best adjacent enemy: a king first, then the lowest health; turn to face it when needed. */
+    static boolean biteEnemies(RobotInfo[] robots) throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady()) return false;
+        MapLocation me = rc.getLocation();
+        RobotInfo best = null, bestTurn = null;
+        int bs = Integer.MAX_VALUE, bt = Integer.MAX_VALUE;
+        for (RobotInfo r : robots) {
+            if (r.team != G.them) continue;
+            MapLocation t = r.location;
+            if (r.type == UnitType.RAT_KING) {
+                // any king tile adjacent to us
+                int dx = Math.max(-1, Math.min(1, me.x - t.x)), dy = Math.max(-1, Math.min(1, me.y - t.y));
+                t = t.translate(dx, dy);
+            }
+            if (me.distanceSquaredTo(t) > 2) continue;
+            int s = (r.type == UnitType.RAT_KING ? 0 : 1000) + r.health;
+            if (rc.canAttack(t)) { if (s < bs) { bs = s; best = r; } }
+            else if (s < bt) { bt = s; bestTurn = r; }
+        }
+        // turning is free of action cooldown: a better target behind us wins if we can turn this turn
+        RobotInfo r = best;
+        if (bestTurn != null && (best == null || bt < bs) && rc.isTurningReady()) r = bestTurn;
+        if (r == null) return false;
+        MapLocation t = r.location;
+        if (r.type == UnitType.RAT_KING) {
+            int dx = Math.max(-1, Math.min(1, me.x - t.x)), dy = Math.max(-1, Math.min(1, me.y - t.y));
+            t = t.translate(dx, dy);
+        }
+        if (!rc.canAttack(t)) {
+            Direction d = me.directionTo(t);
+            if (rc.getDirection() != d && rc.canTurn(d)) rc.turn(d);
+            G.facing = rc.getDirection();
+        }
+        if (rc.canAttack(t)) { rc.attack(t); bitesRat++; return true; }
+        return false;
+    }
+
     static boolean tryBite(RobotInfo r) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return false;
@@ -202,7 +250,11 @@ public final class Baby {
     static void tryCatTrap(RobotInfo c) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return;
-        if (Comms.read(Comms.BUDGET) * 4 < Cfg.TRAP_SURPLUS) return;
+        if (rc.getAllCheese() < Cfg.TRAP_FLOOR) return;
+        // defending a king is survival: traps there need only the floor; elsewhere they need projected surplus
+        MapLocation k = Comms.nearestKing(G.me);
+        boolean defend = k != null && k.distanceSquaredTo(c.location) <= Cfg.TRAP_DEFEND_DIST2;
+        if (!defend && Comms.read(Comms.BUDGET) * 4 < Cfg.TRAP_SURPLUS) return;
         if (rc.getNumberCatTraps() >= 10) return;
         int d4 = catDist4(c.location, G.me);
         if (d4 > 4 * 36) return;
@@ -282,6 +334,7 @@ public final class Baby {
             MapLocation cc = new MapLocation(cat.location.x, cat.location.y);
             if (Nav.flee(cc)) return;
         }
+        if (!G.coop && war()) return;
         if (cat != null && role == FIGHT) {
             if (approachCat(cat)) return;
         }
@@ -322,6 +375,36 @@ public final class Baby {
             }
         }
         explore();
+    }
+
+    /** War movement: close on a visible enemy king or nearby enemy rat, or answer a king's alert. */
+    static boolean war() throws GameActionException {
+        int raw = G.rc.getRawCheese();
+        if (eKing != null && (role == FIGHT || raw < Cfg.DELIVER_AT)) {
+            Nav.goTo(eKing.location);
+            return true;
+        }
+        if (nearestEnemy != null) {
+            int d = G.me.distanceSquaredTo(nearestEnemy.location);
+            if (d <= 2) {
+                // stay and face it: biting happens before and after movement
+                Direction f = G.me.directionTo(nearestEnemy.location);
+                if (G.rc.getDirection() != f && G.rc.canTurn(f)) G.rc.turn(f);
+                return true;
+            }
+            if (d <= 20 && (role == FIGHT || raw < Cfg.DELIVER_AT || d <= 8)) {
+                Nav.goTo(nearestEnemy.location);
+                return true;
+            }
+        }
+        if (Comms.fresh(Comms.read(Comms.ALERT + 2), 3)) {
+            MapLocation a = Comms.readLoc(Comms.ALERT);
+            if (a != null && G.me.distanceSquaredTo(a) <= Cfg.ALERT_DIST2 && G.me.distanceSquaredTo(a) > 8) {
+                Nav.goTo(a);
+                return true;
+            }
+        }
+        return false;
     }
 
     /** True when the nearest tile of a 3x3 king centred at k is within transfer range (dist2 9) of p. */

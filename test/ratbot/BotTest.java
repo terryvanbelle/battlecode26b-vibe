@@ -23,6 +23,7 @@ public class BotTest {
     static UnitType type = UnitType.BABY_RAT;
     static List<Integer> squeaks = new ArrayList<>();
     static int digsDone;
+    static List<MapLocation> bitten = new ArrayList<>();
 
     static boolean onMap(MapLocation l) { return l.x >= 0 && l.y >= 0 && l.x < W && l.y < H; }
 
@@ -40,7 +41,7 @@ public class BotTest {
     }
 
     static void reset() {
-        walls.clear(); dirt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear();
+        walls.clear(); dirt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear();
         me = new MapLocation(5, 5); facing = Direction.NORTH; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0;
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0;
@@ -106,6 +107,13 @@ public class BotTest {
                         return out.toArray(new MapInfo[0]);
                     }
                     case "senseNearbyRobots": return robots.values().toArray(new RobotInfo[0]);
+                    case "canAttack": {
+                        MapLocation l = (MapLocation) a[0];
+                        RobotInfo r = robots.get(l);
+                        int d = me.distanceSquaredTo(l);
+                        return actCd < 10 && sensable(l) && d >= 1 && d <= 2 && r != null && r.team != Team.A;
+                    }
+                    case "attack": bitten.add((MapLocation) a[0]); actCd += 10; return null;
                     case "squeak": squeaks.add((Integer) a[0]); return true;
                     case "readSqueaks": return new Message[0];
                     case "getCurrentRatCost": return 10;
@@ -272,7 +280,34 @@ public class BotTest {
         check(!Baby.inTransferReach(new MapLocation(11, 11), k), "reach: a king tile itself is not a standing spot");
     }
 
+    static RobotInfo enemyRat(int id, int x, int y, int hp) {
+        return new RobotInfo(id, Team.B, UnitType.BABY_RAT, hp, new MapLocation(x, y), Direction.NORTH, 0, 0, null);
+    }
+
+    static void testBiteTargets() throws GameActionException {
+        reset(); install();
+        // two enemies adjacent: the weaker one behind us (outside the cone) is chosen and we turn to bite it
+        RobotInfo strong = enemyRat(1, 5, 6, 90), weak = enemyRat(2, 5, 4, 30);
+        robots.put(strong.location, strong); robots.put(weak.location, weak);
+        boolean b = Baby.biteEnemies(robots.values().toArray(new RobotInfo[0]));
+        check(b && bitten.size() == 1 && bitten.get(0).equals(weak.location) && facing == Direction.SOUTH,
+              "bite: lowest-health adjacent enemy, turning to face it (" + bitten + " " + facing + ")");
+        // nothing adjacent: no bite, no turn
+        reset(); install();
+        RobotInfo far = enemyRat(3, 5, 8, 10);
+        robots.put(far.location, far);
+        check(!Baby.biteEnemies(robots.values().toArray(new RobotInfo[0])) && bitten.isEmpty() && facing == Direction.NORTH,
+              "bite: enemy 3 tiles away is not bitten");
+        // an enemy king (3x3) whose body is adjacent diagonally: bite its nearest tile
+        reset(); install();
+        RobotInfo k = new RobotInfo(4, Team.B, UnitType.RAT_KING, 600, new MapLocation(7, 7), Direction.NORTH, 0, 0, null);
+        robots.put(new MapLocation(6, 6), k);
+        b = Baby.biteEnemies(new RobotInfo[]{k});
+        check(b && bitten.size() == 1 && bitten.get(0).equals(new MapLocation(6, 6)), "bite: king's nearest body tile (" + bitten + ")");
+    }
+
     public static void main(String[] args) throws Exception {
+        testBiteTargets();
         testTransferReach();
         testHandMirror();
         testSymElimination();

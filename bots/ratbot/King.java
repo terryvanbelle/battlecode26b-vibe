@@ -37,6 +37,11 @@ public final class King {
         pickUp();
         Econ.received(rc.getGlobalCheese() - before);
         if (!G.coop) bite(enemies);
+        if (!G.coop && enemies.length > 0) {
+            Comms.write(Comms.ALERT, G.me.x + 1);
+            Comms.write(Comms.ALERT + 1, G.me.y + 1);
+            Comms.write(Comms.ALERT + 2, Comms.stamp());
+        }
         spawn(cats, enemies);
         move(cats);
         publish();
@@ -137,13 +142,16 @@ public final class King {
         // a few babies always (they pay for themselves on any map with cheese); beyond that the projected
         // end-of-game cheese at the measured income must stay positive after paying for this one
         boolean boot = spawned < Cfg.BOOT_BABIES && rc.getGlobalCheese() >= cost + 600;
-        if (!boot && Econ.surplus() < cost + Cfg.SPAWN_MARGIN) return;
-        if (babies >= Cfg.MAX_BABIES) return;
+        // at war with enemies in sight, bodies now beat cheese later: spawn down to a short upkeep floor
+        boolean war = !G.coop && enemies.length > 0 && rc.getGlobalCheese() >= cost + Cfg.WAR_FLOOR;
+        if (!boot && !war && Econ.surplus() < cost + Cfg.SPAWN_MARGIN) return;
+        if (babies >= (war ? Cfg.MAX_BABIES_WAR : Cfg.MAX_BABIES)) return;
         // Spawn toward the most useful direction: away from visible cats, else toward the map centre.
         MapLocation c = rc.getLocation();
         MapLocation goal = new MapLocation(G.W / 2, G.H / 2);
         MapLocation cat = null;
         for (RobotInfo r : cats) { cat = r.location; break; }
+        if (!G.coop && enemies.length > 0) goal = enemies[0].location; // fresh rats join the fight at once
         MapLocation best = null;
         int bs = Integer.MIN_VALUE;
         for (int dx = -2; dx <= 2; dx++)

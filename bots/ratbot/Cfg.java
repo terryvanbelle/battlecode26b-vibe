@@ -2,7 +2,11 @@ package ratbot;
 
 /** Behaviour switches and constants. Every experiment adds a switch whose default is the incumbent. */
 public final class Cfg {
-    public static final int MAX_BABIES = 30;
+    public static final int MAX_BABIES = 30, MAX_BABIES_WAR = 60;
+    /** Cheese kept when spawning under attack. */
+    public static final int WAR_FLOOR = 150;
+    /** Squared distance within which a baby answers a king's alert. */
+    public static final int ALERT_DIST2 = 225;
     /** Raw cheese at which a gatherer heads home. */
     public static final int DELIVER_AT = 30;
     /** Babies spawned before any fighter is assigned. */
@@ -24,4 +28,6 @@ public final class Cfg {
     public static final int INCOME_WINDOW = 100;
     /** Projected surplus (cheese) a baby needs before placing a cat trap / biting with cheese. */
     public static final int TRAP_SURPLUS = 200, CHEESE_BITE_SURPLUS = 600;
+    /** Cheese below which no trap is placed; cats within this squared distance of a king are trapped on the floor alone. */
+    public static final int TRAP_FLOOR = 300, TRAP_DEFEND_DIST2 = 100;
 }

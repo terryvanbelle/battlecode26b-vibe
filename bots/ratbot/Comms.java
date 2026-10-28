@@ -9,6 +9,7 @@ import battlecode.common.*;
 public final class Comms {
     public static final int SYM = 1;
     public static final int KING0 = 2, KING_SLOTS = 5;           // 3 ints each: x+1, y+1, heartbeat round%1024
+    public static final int ALERT = 17;                          // x+1, y+1, round%1024: a king sees enemies in war
     public static final int EKING = 20;                          // x+1, y+1, round%1024 last seen
     public static final int MINE0 = 24, MINE_SLOTS = 16;         // 2 ints each
     public static final int CAT0 = 56, CAT_SLOTS = 2;            // 3 ints each: x+1, y+1, round%1024
