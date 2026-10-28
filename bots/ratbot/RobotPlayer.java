@@ -40,6 +40,7 @@ public strictfp class RobotPlayer {
                 if (bc > limit * 9 / 10) nearMiss++;
             }
             Debug.indicator();
+            if (Debug.TAG && rc.getRoundNum() == startRound) Debug.tag();
             Clock.yield();
         }
     }

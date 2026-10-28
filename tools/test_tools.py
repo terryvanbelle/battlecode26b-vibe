@@ -427,6 +427,24 @@ with tempfile.TemporaryDirectory() as d:
     check(ko['b']['starveHp'] == 0 and ko['b']['otherHp'] == 30 and ko['b']['cause'] == {'bites': 2}
           and ko['b']['died'] == 3 and ko['b']['firstFoe'] == 2, f"king_report attacked {ko['b']}")
     check('HP lost starving 20' in kr.render(list(ko.values())), "king_report render")
+# smuggle: the bytecode-count tag; alphabets and layout must match bots/ratbot/Debug.java
+import re as _re
+sg = load('smuggle')
+_dj = open(os.path.join(REPO, 'bots', 'ratbot', 'Debug.java')).read()
+_m = _re.search(r'WHY = "([^"]*)", KWHY = "([^"]*)"', _dj)
+check(_m is not None and _m.group(1) == sg.WHY and _m.group(2) == sg.KWHY, "smuggle alphabets match Debug.java")
+check('& 127' in _dj and 'v | 64' in _dj and '? 32 : 0' in _dj, "smuggle layout matches Debug.tag (mod 128, parity bit 6, flag bit 5)")
+_rt = all(sg.decode(1000 * 128 + sg.encode(c, h, k), k) == (c, h) for k, al in ((False, sg.WHY), (True, sg.KWHY)) for c in al for h in (False, True))
+check(_rt, "smuggle encode/decode round trip for every code and flag")
+check(sg.encode('#', False, False) & 31 == 31 and sg.decode(sg.encode('#', True, False), False) == ('?', True), "smuggle unknown code")
+check(not sg.parity_ok(1) and sg.parity_ok(3) and sg.decode(129, False) is None, "smuggle parity rejects odd tags")
+_rows = [{'round': str(i), 'id': '5', 'team': '1', 'type': 'RAT', 'bc': str(40 * 128 + sg.encode('m', True, False))} for i in range(60)]
+_rows += [{'round': str(i), 'id': '6', 'team': '2', 'type': 'RAT', 'bc': str(4000 + i)} for i in range(60)]
+_rows += [{'round': '0', 'id': '5', 'team': '1', 'type': 'RAT', 'bc': _rows[0]['bc']}]   # a carried rat's repeated row
+_tt = sg.tagged_teams(_rows)
+check(_tt['1'][0] and not _tt['2'][0] and _tt['1'][2] == 61, f"smuggle tagged team detection {_tt}")
+check(sg.summarize(_rows) == {'1': {'F:m': 60}}, f"smuggle summarize one per robot-round {sg.summarize(_rows)}")
+check(sg.label('c', True, True) == 'K:cE' and sg.label('W', False, False) == 'G:W', "smuggle labels")
 import subprocess as _sp
 _r = _sp.run([os.path.join(REPO, 'tools', 'snapshot.sh'), 'zz_selftest', os.path.join(REPO, 'no_such_dir')], capture_output=True, text=True)
 check(_r.returncode != 0 and not os.path.exists(os.path.join(REPO, 'bots', 'zz_selftest')), "snapshot.sh rejects a missing source")
