@@ -45,6 +45,7 @@ public class ReplayDump {
     int game = -1, width, height, symmetry;
     String mapName;
     Map<Integer, int[]> robots;   // id -> {team, type, spawnRound}
+    Map<Integer, Integer> trapOwner; // loc*4 + (rat?1:0) -> owning team (1/2), from PlaceTrap
     TeamStats[] ts;
     int backstabRound, backstabTurnRobot, prevTurnRobot, lastRound;
     boolean prevCoop;
@@ -55,17 +56,17 @@ public class ReplayDump {
         int spawned, kingsFormed, deathsRat, deathsKing, exceptions, overruns, near90;
         int maxBcRat, maxBcKing; long sumBcRat, turnsRat, sumBcKing, turnsKing;
         int bitesRat, bitesKing, bitesCat, dmgDealtCat, dmgDealtRat, pickups, transfers, transferAmt;
-        int ratTraps, catTraps, trapTriggers, dirtDug, dirtPlaced, squeaks, naps, throwsN, feeds;
+        int ratTraps, catTraps, trapTriggers, catTrapHits, ratTrapHits, dirtDug, dirtPlaced, squeaks, naps, throwsN, feeds;
         String json() {
             return String.format("{\"spawned\":%d,\"kingsFormed\":%d,\"deathsRat\":%d,\"deathsKing\":%d,\"exceptions\":%d,"
                     + "\"overruns\":%d,\"near90\":%d,\"maxBcRat\":%d,\"maxBcKing\":%d,\"meanBcRat\":%.0f,\"meanBcKing\":%.0f,"
                     + "\"bitesRat\":%d,\"bitesKing\":%d,\"bitesCat\":%d,\"dmgCat\":%d,\"dmgRat\":%d,\"pickups\":%d,"
-                    + "\"transfers\":%d,\"transferAmt\":%d,\"ratTraps\":%d,\"catTraps\":%d,\"trapTriggers\":%d,"
+                    + "\"transfers\":%d,\"transferAmt\":%d,\"ratTraps\":%d,\"catTraps\":%d,\"trapTriggers\":%d,\"catTrapHits\":%d,\"ratTrapHits\":%d,"
                     + "\"dirtDug\":%d,\"dirtPlaced\":%d,\"squeaks\":%d,\"naps\":%d,\"throws\":%d,\"feeds\":%d}",
                     spawned, kingsFormed, deathsRat, deathsKing, exceptions, overruns, near90, maxBcRat, maxBcKing,
                     turnsRat == 0 ? 0.0 : (double) sumBcRat / turnsRat, turnsKing == 0 ? 0.0 : (double) sumBcKing / turnsKing,
                     bitesRat, bitesKing, bitesCat, dmgDealtCat, dmgDealtRat, pickups, transfers, transferAmt,
-                    ratTraps, catTraps, trapTriggers, dirtDug, dirtPlaced, squeaks, naps, throwsN, feeds);
+                    ratTraps, catTraps, trapTriggers, catTrapHits, ratTrapHits, dirtDug, dirtPlaced, squeaks, naps, throwsN, feeds);
         }
     }
 
@@ -129,6 +130,7 @@ public class ReplayDump {
         GameMap m = mh.map();
         mapName = m.name(); width = m.size().x(); height = m.size().y(); symmetry = m.symmetry();
         robots = new HashMap<>();
+        trapOwner = new HashMap<>();
         ts = new TeamStats[]{new TeamStats(), new TeamStats(), new TeamStats()};
         backstabRound = -1; backstabTurnRobot = -1; prevTurnRobot = -1; prevCoop = true; lastRound = 0;
         lastRoundAgg = new int[8];
@@ -269,15 +271,28 @@ public class ReplayDump {
                 case Action.PlaceTrap: {
                     PlaceTrap a = ((PlaceTrap) at(t, j, new PlaceTrap()));
                     if (s != null) { if (a.isRatTrapType()) s.ratTraps++; else s.catTraps++; }
+                    if (a.team() >= 1 && a.team() <= 2) trapOwner.put(a.loc() * 4 + (a.isRatTrapType() ? 1 : 0), (int) a.team());
                     act(rn, id, a.isRatTrapType() ? "ratTrap" : "catTrap", loc(a.loc()), a.team(), ""); break;
                 }
                 case Action.TriggerTrap: {
                     TriggerTrap a = ((TriggerTrap) at(t, j, new TriggerTrap()));
-                    if (a.team() >= 1 && a.team() <= 2) ts[a.team()].trapTriggers++;
+                    // a.team() is the TRIGGERING robot's team (0 = cat); credit the trap's owner
+                    Integer owner;
+                    if (a.team() == 0) {
+                        owner = trapOwner.remove(a.loc() * 4);
+                        if (owner != null) { ts[owner].trapTriggers++; ts[owner].catTrapHits++; }
+                    } else {
+                        owner = trapOwner.remove(a.loc() * 4 + 1);
+                        if (owner != null) { ts[owner].trapTriggers++; ts[owner].ratTrapHits++; }
+                    }
                     act(rn, id, "trigger", loc(a.loc()), a.team(), ""); break;
                 }
                 case Action.RemoveTrap: {
                     RemoveTrap a = ((RemoveTrap) at(t, j, new RemoveTrap()));
+                    for (int k = 0; k < 2; k++) {
+                        Integer o = trapOwner.get(a.loc() * 4 + k);
+                        if (o != null && o == a.team()) trapOwner.remove(a.loc() * 4 + k);
+                    }
                     act(rn, id, "removeTrap", loc(a.loc()), a.team(), ""); break;
                 }
                 case Action.BreakDirt: {
