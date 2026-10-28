@@ -12,3 +12,13 @@
    Gating cat traps on long-run surplus dropped the example battery from 134-14 to 98-50 (v0d -> v0e).
 7. **Strong 2026 bots rush.** They backstab by round ~15-35 and kill the king with bites, rat traps and thrown rats
    within 20-300 rounds (g_s0e: 0-80 vs the top 5). Combat and king defense come before economy refinements.
+8. **Rat traps fire on the 3x3 around them and stack.** An invisible 20-cheese trap denies 9 tiles; two overlapping
+   traps deal 100. Field bots lay them on their front tiles as they advance, so advancing into them is lethal: 17 of 35
+   of our deaths in one Icarus game involved enemy traps. TrapRisk (marking the three front tiles of every enemy seen)
+   cut enemy trap hits on us from 41-46 to 19 in the same matchup.
+9. **Map income is small next to the starting 2500.** Each mine yields about 2.3 cheese/round (DefaultSmall: 2 mines a
+   side, about 4.5/round). Early on we did collect most of our half's cheese. The game is decided by the
+   army battle around rounds 80-150; the winner then takes the whole map's income (Icarus transferred 3900+ after
+   winning). Starving the king (spending everything on rats) and a hard reserve (no rats left to fight) both lose.
+10. **Idle rats in contact.** Fortress fighters spent 359 of 420 engaged rat-rounds with every cooldown at 0
+    (mv=h tag). Holding a ring does not fight; the enemy waits outside it.
