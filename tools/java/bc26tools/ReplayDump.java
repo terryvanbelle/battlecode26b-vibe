@@ -312,6 +312,8 @@ public class ReplayDump {
                 }
                 case Action.RatNap: {
                     RatNap a = ((RatNap) at(t, j, new RatNap()));
+                    // the engine also emits RatNap for a thrown rat's own landing (a.id() == id)
+                    if (a.id() == id) { act(rn, id, "land", "", "", ""); break; }
                     if (s != null) s.naps++;
                     act(rn, id, "nap", a.id(), teamOf(a.id()), ""); break;
                 }

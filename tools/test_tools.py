@@ -71,5 +71,13 @@ with tempfile.TemporaryDirectory() as d:
         '1\t3\t1\tKING\t0\t0\t600\n1\t4\t2\tKING\t9\t9\t600\n2\t3\t1\tKING\t0\t0\t590\n2\t50\t1\tRAT\t1\t1\t100\n2\t50\t1\tRAT\t1\t1\t100\n')
     tl = gr.timeline(d, 1)
     check(tl == [(1, 0, 0, 600, 600, 2500, 2500), (2, 1, 0, 590, None, 2498, 2499)], f"timeline {tl}")
+# ReplayDump on a real replay with throws: a thrown rat's landing is a 'land' row, never a self 'nap'
+fx = os.path.join(REPO, 'test', 'fixtures', 'throws.bc26')
+if os.path.exists(fx) and os.path.isdir(os.path.join(REPO, 'build', 'tools', 'bc26tools')):
+    d = gr.dump(fx)
+    acts = list(gr.rows(os.path.join(d, 'g0.actions.tsv')))
+    naps = [a for a in acts if a['action'] == 'nap']
+    check(naps and all(a['a'] != a['id'] for a in naps), "replaydump naps are grabs of another rat")
+    check(any(a['action'] == 'land' for a in acts), "replaydump logs landings")
 print(f"test_tools: {checks - fails}/{checks} passed")
 sys.exit(1 if fails else 0)
