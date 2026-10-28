@@ -357,3 +357,19 @@
   - King deaths rose from 2 to 9. Both kings died on where_are_you (both sides) and houseofcards; one king died on
     rose and ultimatestarvation without a second king ever forming. The formation probably spends the
     rats and cheese that a poor map needs (FORM_CHEESE 300). Next: a richer gate (bank and income) before forming.
+
+## 2026-10-28 14:55 PDT: extra kings starve on poor maps; s3y on the panel
+- s3w (s3t + RICH_BABIES 30 + FORM_KING) screen vs s3t: -1.6 (t -0.53), neutral. It formed 26 kings; our king
+  deaths were 16 vs s3t's 2.
+- The deaths are starvation. Every game where both kings died ended with bank 0-1, on maps where we delivered only
+  1-2 cheese a round: houseofcards, where_are_you, corridorofdoomanddespair, minimaze, and popthecork as B.
+  Two kings eat 4 a round (a starving king loses 10 HP a round). Where delivery ran 3+ a round (keepout, rift,
+  pipes, safelycontained, DefaultLarge, cheeseguardians), the second king lived and those games were won.
+- Local s3v vs s2o on where_are_you (rerun with a long timeout): s3v delivered 3520 to s2o's 7574 and did 0 cat
+  damage; both of its kings starved by r1608 (RATKING_DESTROYED, cooperation never ended).
+- Points at round 2000 (GameWorld.setWinnerIfMorePoints): without cooperation, kings are 50% of the points,
+  split by king count; in cooperation they are 30%. So extra kings matter wherever we can feed them.
+- New off-by-default switches in dev:
+  - FORM_NET100: form only while the trusted income beats every king's upkeep, the new one's included.
+  - FORM_JOIN: only babies with fewer than FORM_JOIN allied babies nearer the site join; the rest keep working.
+- s3y (s3t + the tag) is replica submission #64; its panel v2 blocks are queued.
