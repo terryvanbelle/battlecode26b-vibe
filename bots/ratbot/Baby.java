@@ -595,6 +595,11 @@ public final class Baby {
                 return;
             }
         }
+        if (Cfg.COURIER && Comms.numMines == 0 && myMineCount > 0) {
+            // we found a mine nobody else knows: squeaks only reach the king from dist2 16, so carry the news home
+            MapLocation k = Comms.nearestKing(G.me);
+            if (k != null) { Nav.goTo(k); why = 'm'; return; }
+        }
         if (cheeseTarget != null) {
             Nav.goTo(cheeseTarget);
             if (Nav.stall > 12) cheeseTarget = null;
@@ -962,10 +967,19 @@ public final class Baby {
 
     static void explore() throws GameActionException {
         if (exploreTarget == null || G.cheb(G.me, exploreTarget) <= 2 || Nav.stall > 20) {
-            // target in our side frame: mirrored rats pick mirrored targets
-            int ax = G.rand(G.W), ay = G.rand(G.H);
-            int x = fu > 0 ? ax : G.W - 1 - ax;
-            int y = fv > 0 ? ay : G.H - 1 - ay;
+            // target in our side frame: mirrored rats pick mirrored targets. Take the nearest never-seen
+            // sample: once open ground is mapped, what is left unseen is buried in dirt, and Flow digs to it.
+            // With no mine known by EXPLORE_CENTER_FROM, rank by closeness to the map centre instead: mines
+            // that nobody has seen are buried between the kings, and shallow edge pockets do not reveal them.
+            boolean centre = Comms.numMines == 0 && G.round >= Cfg.EXPLORE_CENTER_FROM;
+            int ox = centre ? (G.W - 1) / 2 : G.me.x, oy = centre ? (G.H - 1) / 2 : G.me.y;
+            int x = 0, y = 0, bd = Integer.MAX_VALUE;
+            for (int k = 0; k < Cfg.EXPLORE_TRIES; k++) {
+                int ax = G.rand(G.W), ay = G.rand(G.H);
+                int cx = fu > 0 ? ax : G.W - 1 - ax, cy = fv > 0 ? ay : G.H - 1 - ay;
+                int d = Sym.known(G.idx(cx, cy)) ? 1 << 20 : Math.max(Math.abs(cx - ox), Math.abs(cy - oy));
+                if (d < bd) { bd = d; x = cx; y = cy; }
+            }
             exploreTarget = new MapLocation(x, y);
         }
         Nav.goTo(exploreTarget);

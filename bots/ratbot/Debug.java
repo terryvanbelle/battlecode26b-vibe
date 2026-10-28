@@ -31,7 +31,7 @@ public final class Debug {
               .append(" br=").append(Baby.bitesRat)
               .append(" tr=").append(Baby.trapsPlaced)
               .append(" rt=").append(Baby.ratTraps).append(" nap=").append(Baby.naps).append(" th=").append(Baby.throwsDone)
-              .append(" dg=").append(Nav.digs).append(" mv=").append(Baby.why);
+              .append(" dg=").append(Nav.digs).append(" fl=").append(Flow.builds).append(":").append(Flow.done).append(":").append(Flow.lastTurns).append(":").append(Flow.steps).append(" mv=").append(Baby.why);
         }
         if (Baby.raidTarget != null) sb.append(" rz=").append(Baby.raidTarget.x).append(',').append(Baby.raidTarget.y);
         sb.append(" sym=").append(Sym.mask);

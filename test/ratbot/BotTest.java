@@ -53,6 +53,7 @@ public class BotTest {
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; ratCost = 10; built.clear();
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0;
+        Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null;
     }
 
     static RobotController fakeRc() {
@@ -147,6 +148,7 @@ public class BotTest {
     static void install() {
         G.init(fakeRc());
         Sym.init();
+        Flow.unlimited = true;
         G.startTurn();
     }
 
@@ -158,6 +160,7 @@ public class BotTest {
         MapInfo[] infos = G.rc.senseNearbyMapInfos();
         for (MapInfo mi : infos) Sym.record(mi.getMapLocation().x, mi.getMapLocation().y, mi.isWall(), mi.isDirt(), false);
         Nav.goTo(t);
+        Flow.work(0);
     }
 
     // ------------------------------------------------------------------ tests
@@ -281,6 +284,66 @@ public class BotTest {
         int steps = 0;
         while (!me.equals(t) && steps < 200) { tick(t); steps++; }
         check(me.equals(t), "nav: escapes a U trap (steps=" + steps + ", at " + me + ")");
+    }
+
+    static void testNavFlowSealedRoom() throws GameActionException {
+        reset(); W = 30; H = 30; install();
+        // wall across y=12 except a dirt plug at x=0..1 (the only way out): bug-walking alone circles forever
+        for (int x = 2; x < W; x++) walls.add(new MapLocation(x, 12));
+        dirt.add(new MapLocation(0, 12)); dirt.add(new MapLocation(1, 12));
+        me = new MapLocation(15, 5); facing = Direction.SOUTH;
+        MapLocation t = new MapLocation(15, 20);
+        int steps = 0;
+        while (!me.equals(t) && steps < 250) { tick(t); steps++; }
+        check(me.equals(t), "flow: leaves a room sealed by a dirt plug (steps=" + steps + ", at " + me + ", digs=" + digsDone + ")");
+        check(digsDone <= 2, "flow: digs only the plug (" + digsDone + ")");
+        check(steps < 120, "flow: bounded detour (steps=" + steps + ")");
+    }
+
+    static void testFlowField() {
+        reset(); W = 12; H = 8; install();
+        // dirt column x=5 beside a wall column x=6 with a gap at y=0: the path digs once and uses the gap
+        for (int y = 0; y < H; y++) { Sym.record(5, y, false, true, false); if (y > 0) Sym.record(6, y, true, false, false); }
+        me = new MapLocation(2, 4); G.startTurn();
+        MapLocation t = new MapLocation(10, 4);
+        Flow.request(t);
+        Flow.work(0);
+        check(Flow.ready(t), "flow: search completes with budget");
+        int digs = 0, gap = 0;
+        for (int i = 0; i < Flow.plen; i++) {
+            int x = Flow.path[i] % W, y = Flow.path[i] / W;
+            if (x == 5) digs++;
+            if (x == 6) gap += y == 0 ? 1 : 100;
+        }
+        check(Flow.path[0] == G.idx(me) && Flow.path[Flow.plen - 1] == G.idx(t), "flow: path runs from me to the target");
+        check(digs == 1 && gap == 1, "flow: one dirt tile, through the gap (digs=" + digs + " gap=" + gap + ")");
+        for (int i = 1; i < Flow.plen; i++) {
+            int a = Flow.path[i - 1], b = Flow.path[i];
+            if (Math.abs(a % W - b % W) > 1 || Math.abs(a / W - b / W) > 1) { check(false, "flow: path steps are adjacent"); break; }
+        }
+        // a sealed target fails cleanly
+        reset(); W = 12; H = 8; install();
+        for (int y = 0; y < H; y++) Sym.record(6, y, true, false, false);
+        me = new MapLocation(2, 4); G.startTurn();
+        int f0 = Flow.fails;
+        Flow.request(t);
+        Flow.work(0);
+        check(!Flow.ready(t) && Flow.fails == f0 + 1 && !Flow.building, "flow: walled-off target fails");
+    }
+
+    static void testExploreUnseen() throws GameActionException {
+        reset(); W = 20; H = 20; install();
+        // everything seen except an 8x8 block (16%): 12 samples land in it ~88% of the time
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++)
+            if (x < 6 || x > 13 || y < 6 || y > 13) Sym.record(x, y, false, false, false);
+        int in = 0;
+        for (int i = 0; i < 40; i++) {
+            Baby.exploreTarget = null;
+            Baby.explore();
+            MapLocation e = Baby.exploreTarget;
+            if (e.x >= 6 && e.x <= 13 && e.y >= 6 && e.y <= 13) in++;
+        }
+        check(in >= 28, "explore: prefers unseen tiles (" + in + "/40)");
     }
 
     static void testKingNeverWritesOutOfRange() throws GameActionException {
@@ -645,6 +708,9 @@ public class BotTest {
         testNavAroundWall();
         testNavDigsDirt();
         testNavUShape();
+        testNavFlowSealedRoom();
+        testFlowField();
+        testExploreUnseen();
         testKingNeverWritesOutOfRange();
         System.out.println("BotTest: " + (checks - fails) + "/" + checks + " passed");
         System.exit(fails == 0 ? 0 : 1);

@@ -26,6 +26,12 @@ public strictfp class RobotPlayer {
                 exceptions++;
                 if (Debug.ON) e.printStackTrace();
             }
+            try {
+                if (Cfg.FLOW && !G.king && rc.getRoundNum() == startRound) Flow.work(Cfg.FLOW_RESERVE);
+            } catch (Exception e) {
+                exceptions++;
+                if (Debug.ON) e.printStackTrace();
+            }
             int bc = Clock.getBytecodeNum();
             int limit = rc.getType() == UnitType.RAT_KING ? 20000 : 17500;
             Debug.mark(99);

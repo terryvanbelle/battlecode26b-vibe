@@ -48,7 +48,14 @@ public final class Nav {
         if (!G.rc.isMovementReady()) return false;
         int d0 = G.me.distanceSquaredTo(t);
         if (d0 < bestDist) { bestDist = d0; stall = 0; } else stall++;
-        if (digToward(t)) return false;
+        if (Cfg.FLOW && G.cheb(G.me, t) > 1) {
+            if (stall >= Cfg.FLOW_STALL || bugging && bugTurns >= Cfg.FLOW_STALL) Flow.request(t);
+            MapLocation was = G.me;
+            if (Flow.follow(t)) return !G.me.equals(was);
+            // hold while a search toward t runs: it starts from here, so moving would strand the path
+            if (Flow.searching(t)) return false;
+        }
+        if (!Cfg.FLOW && digToward(t)) return false;
         Direction d = choose(t);
         if (d == null) {
             tryDig(t);

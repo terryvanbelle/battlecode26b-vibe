@@ -40,7 +40,7 @@ public final class Cfg {
     public static final boolean FORM_KING = false;
     public static final int FORM_FROM = 80, FORM_BABIES = 16, FORM_CHEESE = 300, FORM_TTL = 60, FORM_RETRY = 150, FORM_PULL_R2 = 72;
     /** Gatherers at their mine turn in place instead of wandering. */
-    public static final boolean GATHER_STILL = true;
+    public static final boolean GATHER_STILL = false;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines
     public static final int RAID_STAY = 60, RAID_SPREAD = 60;
     /** One in RAID_EVERY fighters is a raider: on our half it ignores enemies beyond dist2 RAID_ENGAGE. */
@@ -92,6 +92,15 @@ public final class Cfg {
     /** Squared distance (to the cat's 2x2 centre, doubled coords /4) a gatherer keeps from cats. */
     public static final int GATHER_CAT_DIST = 20;
     public static final boolean DIG = true;
+    /** Dig-aware flow-field navigation, requested after FLOW_STALL turns without progress. */
+    public static final boolean FLOW = true;
+    public static final int FLOW_STALL = 4, FLOW_TTL = 200, FLOW_RESERVE = 2500, FLOW_HOLD = 3, FLOW_REJOIN = 40;
+    /** Path cost of a dirt tile (a dig is 5 cheese and 2.5 turns of action cooldown, plus the step). */
+    public static final int DIG_COST = 4;
+    /** Random samples per explore target, taking the first never-seen tile. */
+    public static final int EXPLORE_TRIES = 12, EXPLORE_CENTER_FROM = 30;
+    /** A rat that finds the first mine walks it home to the king. */
+    public static final boolean COURIER = true;
     public static final int DIG_MIN_CHEESE = 60;
     /** Live babies kept unconditionally (while CORE_FLOOR cheese remain) before the income test applies. */
     public static final int CORE_BABIES = 18, CORE_FLOOR = 300;
