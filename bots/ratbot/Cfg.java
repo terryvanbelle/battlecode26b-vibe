@@ -15,6 +15,8 @@ public final class Cfg {
     public static final int RAT_TRAP_MIN_CHEESE = 500;
     /** Keep enemies within two tiles inside our cone (anti-ratnap) instead of moving. */
     public static final boolean FACE_ENEMY = true;
+    /** Scored combat movement (Micro) for babies at war. */
+    public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;
     /** Raw cheese at which a gatherer heads home. */

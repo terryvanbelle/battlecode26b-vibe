@@ -35,6 +35,7 @@ public final class Baby {
 
         sense();
         RobotInfo[] robots = rc.senseNearbyRobots(-1, null);
+        seen = robots;
         RobotInfo enemyKing = null, enemy = null;
         cat = null;
         int bestCat = Integer.MAX_VALUE;
@@ -181,6 +182,7 @@ public final class Baby {
     }
 
     static RobotInfo eKing, nearestEnemy;
+    static RobotInfo[] seen = new RobotInfo[0];
     public static int naps, throwsDone, ratTraps;
 
     /** Grab an adjacent enemy baby rat (the engine allows it when it cannot see us or is weaker). */
@@ -430,6 +432,7 @@ public final class Baby {
             MapLocation cc = new MapLocation(cat.location.x, cat.location.y);
             if (Nav.flee(cc)) return;
         }
+        if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) return;
         if (!G.coop && Cfg.FACE_ENEMY && faceEnemy()) return;
         if (role == ATTACK && attack()) return;
         if (!G.coop && war()) return;

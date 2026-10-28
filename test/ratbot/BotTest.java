@@ -122,6 +122,7 @@ public class BotTest {
                     case "squeak": squeaks.add((Integer) a[0]); return true;
                     case "readSqueaks": return new Message[0];
                     case "getCurrentRatCost": return 10;
+                    case "getHealth": return 100;
                     case "setIndicatorString": return null;
                     default: throw new UnsupportedOperationException("fakeRc: " + m.getName());
                 }
@@ -330,7 +331,22 @@ public class BotTest {
         check(Baby.tryThrow(new RobotInfo[]{e}) && thrown == Direction.WEST, "throw: into an enemy beats a wall (" + thrown + ")");
     }
 
+    static void testMicroRetreatsWhenOutnumbered() throws GameActionException {
+        reset(); install();
+        // three healthy enemies two tiles north, we are alone: micro must not step toward them
+        for (int i = 0; i < 3; i++) { RobotInfo e = enemyRat(20 + i, 4 + i, 7, 100); robots.put(e.location, e); }
+        check(Micro.act(robots.values().toArray(new RobotInfo[0])), "micro: takes the decision with enemies near");
+        check(me.y <= 5, "micro: outnumbered rat does not advance (at " + me + ")");
+        // one weak enemy adjacent-diagonal reachable, we are healthy: micro closes / holds contact
+        reset(); install();
+        RobotInfo e = enemyRat(30, 6, 7, 20);
+        robots.put(e.location, e);
+        Micro.act(robots.values().toArray(new RobotInfo[0]));
+        check(me.distanceSquaredTo(e.location) <= 2, "micro: winning fight moves into bite range (at " + me + ")");
+    }
+
     public static void main(String[] args) throws Exception {
+        testMicroRetreatsWhenOutnumbered();
         testThrowDirection();
         testBiteTargets();
         testTransferReach();
