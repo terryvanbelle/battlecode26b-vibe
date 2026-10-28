@@ -101,6 +101,11 @@ public final class Cfg {
     public static final boolean MINE_BALANCE = false;
     /** Raw cheese at which a gatherer heads home. */
     public static final int DELIVER_AT = 30;
+    /** Global cheese below which any rat carrying cheese delivers it before fighting or running errands (0 = off):
+     *  31 of our 45 king deaths on the replica were starvation, once with 728 cheese in our rats' paws. */
+    public static final int HUNGRY = 0;
+    /** A rat already carrying cheese takes no pile that would lift it above this (0 = no cap). */
+    public static final int CARRY_MAX = 0;
     /** Babies spawned before any fighter is assigned. */
     public static final int GATHER_FIRST = 6;
     /** One in FIGHT_EVERY later babies is a cat fighter. */

@@ -81,6 +81,9 @@ s3e,2026-10-28 08:44,s3d,"s3d + MINE_BALANCE: gatherers spread evenly over every
 s3f,2026-10-28 08:44,s3e,"s3e + GOSSIP_ALWAYS (relay mines the king lacks all game) + SCOUT_EVERY 4 (one in 4 gatherers explores our half until r150); cheesefarm: king knew mine 4 at r31 (was r122) but pickups 2038, flat","self-play sp1 pass (+3.2 pts, t +1.55, 46-34 cells; includes MINE_BALANCE, so gossip+scouts ~ +8.6 over s3e)"
 s3g,2026-10-28 08:44,s3e,"s3e + KING_PRESS: at war, rats that see the enemy king squeak it (relayed twice) and healthy rats within dist2 100 walk to it and bite (DefaultMedium vs Finals: king bites 3 vs 0, but trap damage on us 1650 -> 2684)","rejected (self-play sp1: -5.4 pts, t -2.40; KING_PRESS almost never fires vs s2o)"
 s2o_id,2026-10-28 09:00,s2o,identity copy of s2o: the self-play control,"control (sp1: exactly 0, 40-40 cells; the engine is deterministic for identical code, so self-play is scored against 50 from now on)"
-s3h,2026-10-28 10:24,s3d,"dev (s3d behaviour) + king first-turn sense guard (KING_SENSE_RESERVE 5000: the 60x60 first turn overran 20k in 9 of 40 maps, losing the round-2 spawn) + GOSSIP_ALWAYS + SCOUT_EVERY 4, no MINE_BALANCE",
+s3h,2026-10-28 10:24,s3d,"dev (s3d behaviour) + king first-turn sense guard (KING_SENSE_RESERVE 5000: the 60x60 first turn overran 20k in 9 of 40 maps, losing the round-2 spawn) + GOSSIP_ALWAYS + SCOUT_EVERY 4, no MINE_BALANCE","self-play sp2 pass (+0.9 pts, t +0.49, 43-37 cells; 0 overruns)"
 s3i,2026-10-28 10:24,s3d,dev (s3d behaviour) + king first-turn sense guard only: the control for s3h/s3j,
-s3j,2026-10-28 10:24,s3d,dev (s3d behaviour) + king first-turn sense guard + GOSSIP_ALWAYS (no scouts),
+s3j,2026-10-28 10:24,s3d,dev (s3d behaviour) + king first-turn sense guard + GOSSIP_ALWAYS (no scouts),not run (dropped from sp2 for the economy candidates)
+s3k,2026-10-28 10:46,s3i,"s3i + HUNGRY 150: with the bank under 150, any rat carrying cheese delivers before fighting (31 of 45 king deaths on the replica were starvation)",
+s3l,2026-10-28 10:46,s3i,s3i + CARRY_MAX 120: a loaded rat takes no pile that lifts it above 120 (rats hauled 400-700 at a fifth of their speed),
+s3m,2026-10-28 10:46,s3i,"s3i + trap economy: RAT_TRAP_MIN_CHEESE 400, FORT_TRAPS 4 (rat traps took 560-1560 cheese before the bank ran dry)",

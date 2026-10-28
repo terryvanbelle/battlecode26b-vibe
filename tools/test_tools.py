@@ -388,6 +388,31 @@ with tempfile.TemporaryDirectory() as d:
     check(eo2['A']['own'] == 20 and eo2['B']['enemy'] == 20 and eo2['B']['own'] == 20 and eo2['B']['drops'] == 7
           and eo2['A']['lostOwnSide'] == 20 and eo2['B']['lostOwnSide'] == 20, f"econ teams {eo2['A']} {eo2['B']}")
     check('lost on own side' in er.render(eo2), "econ render")
+# panel_pick: per-opponent game rates of one build from replica rows; panel = rates in [lo, hi] with enough games
+pk = load('panel_pick')
+prow = lambda a, b, sa, sb, src='replica': dict(source=src, teamA=a, teamB=b, scoreA=str(sa), scoreB=str(sb))
+pacc = pk.rates([prow('us:s', 'x', 2, 1), prow('x', 'us:s', 1, 2), prow('y', 'us:s', 3, 0), prow('y', 'us:s', 3, 0),
+                 prow('z', 'us:s', 0, 3), prow('z', 'us:s', 0, 3), prow('us:t', 'x', 3, 0), prow('us:s', 'x', 3, 0, 'local'),
+                 prow('us:s', 'us:t', 3, 0), prow('w', 'us:s', 1, 2)], 's')
+check(pacc == {'x': [4, 6], 'y': [0, 6], 'z': [6, 6], 'w': [2, 3]}, f"panel_pick rates {pacc}")
+check(pk.pick(pacc, 25, 75, 6) == (['x'], ['z'], ['y'], ['w']), f"panel_pick pick {pk.pick(pacc, 25, 75, 6)}")
+# king_report: HP lost while the team has no cheese counts as starving, the rest as attack; enemy rats near the king
+kr = load('king_report')
+with tempfile.TemporaryDirectory() as d:
+    json.dump({'map': 'M', 'teamA': 'a', 'teamB': 'b'}, open(os.path.join(d, 'g0.meta.json'), 'w'))
+    open(os.path.join(d, 'g0.rounds.tsv'), 'w').write('round\tkingsA\tkingsB\n1\t101\t101\n2\t1\t101\n3\t1\t101\n')
+    open(os.path.join(d, 'g0.turns.tsv'), 'w').write('round\tid\tteam\ttype\tx\ty\thp\n'
+        '1\t1\t1\tKING\t0\t0\t600\n1\t2\t2\tKING\t9\t9\t600\n'
+        '2\t1\t1\tKING\t0\t0\t590\n2\t2\t2\tKING\t9\t9\t590\n2\t7\t1\tRAT\t8\t8\t100\n'
+        '3\t1\t1\tKING\t0\t0\t580\n3\t2\t2\tKING\t9\t9\t570\n3\t7\t1\tRAT\t8\t8\t100\n')
+    open(os.path.join(d, 'g0.actions.tsv'), 'w').write('round\tid\tteam\ttype\taction\ta\tb\tc\n'
+        '2\t7\t1\tRAT\tbite\t2\tKING\t2\n3\t7\t1\tRAT\tbite\t2\tKING\t2\n3\t7\t1\tRAT\tdie\t2\tdamage\tKING\n')
+    ko = {o['team']: o for o in kr.analyse(d, 0)}
+    check(ko['a']['starveHp'] == 20 and ko['a']['otherHp'] == 0 and ko['a']['broke'] == 2 and ko['a']['died'] is None,
+          f"king_report starving {ko['a']}")
+    check(ko['b']['starveHp'] == 0 and ko['b']['otherHp'] == 30 and ko['b']['cause'] == {'bites': 2}
+          and ko['b']['died'] == 3 and ko['b']['firstFoe'] == 2, f"king_report attacked {ko['b']}")
+    check('HP lost starving 20' in kr.render(list(ko.values())), "king_report render")
 import subprocess as _sp
 _r = _sp.run([os.path.join(REPO, 'tools', 'snapshot.sh'), 'zz_selftest', os.path.join(REPO, 'no_such_dir')], capture_output=True, text=True)
 check(_r.returncode != 0 and not os.path.exists(os.path.join(REPO, 'bots', 'zz_selftest')), "snapshot.sh rejects a missing source")

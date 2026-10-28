@@ -700,6 +700,12 @@ public class BotTest {
               "scout: falls back to explore() once our half is seen");
     }
 
+    static void testCarryCap() {
+        check(Baby.takeOk(0, 500, 120) && Baby.takeOk(100, 20, 120) && !Baby.takeOk(100, 40, 120) && Baby.takeOk(400, 400, 0),
+              "carry cap: empty-handed takes any pile; loaded only within the cap; 0 = no cap");
+        check(Cfg.CARRY_MAX >= 0 && Cfg.HUNGRY >= 0, "carry cap / hungry: switches non-negative");
+    }
+
     static void testKingDig() {
         reset(); W = 30; H = 30; install();
         for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
@@ -838,6 +844,7 @@ public class BotTest {
         testMineSpread();
         testScout();
         testKingDig();
+        testCarryCap();
         testKingPress();
         testDefend();
         testGuard();

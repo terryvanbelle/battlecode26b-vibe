@@ -256,15 +256,27 @@ public final class Baby {
     static void pickUp() throws GameActionException {
         RobotController rc = G.rc;
         MapLocation c = rc.getLocation();
-        if (rc.canPickUpCheese(c)) { rc.pickUpCheese(c); picked++; }
+        if (canTake(c)) { rc.pickUpCheese(c); picked++; }
         Direction f = rc.getDirection();
         Direction[] fr = {f, f.rotateLeft(), f.rotateRight()};
         for (Direction d : fr) {
             MapLocation l = c.add(d);
-            if (rc.canPickUpCheese(l)) { rc.pickUpCheese(l); picked++; }
+            if (canTake(l)) { rc.pickUpCheese(l); picked++; }
         }
         G.rawCheese = rc.getRawCheese();
     }
+
+    /** A pile we may take: any when empty-handed, else only one that keeps us within CARRY_MAX (each unit carried
+     *  slows moves and actions 1%: on fullofsecrets rats hauled 400-700 home at a fifth of their speed). */
+    static boolean canTake(MapLocation l) throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.canPickUpCheese(l)) return false;
+        if (Cfg.CARRY_MAX <= 0) return true;
+        int raw = rc.getRawCheese();
+        return raw == 0 || takeOk(raw, rc.senseMapInfo(l).getCheeseAmount(), Cfg.CARRY_MAX);
+    }
+
+    static boolean takeOk(int raw, int pile, int cap) { return cap <= 0 || raw == 0 || raw + pile <= cap; }
 
     static RobotInfo eKing, nearestEnemy;
     static RobotInfo[] seen = new RobotInfo[0];
@@ -605,6 +617,8 @@ public final class Baby {
         }
         Debug.mark(10);
         if (!G.coop && retreat()) { why = 'r'; return; }
+        // the bank is nearly empty and the king starves at 0: whatever we carry goes home before any fight or errand
+        if (raw > 0 && G.globalCheese < Cfg.HUNGRY && deliver()) { why = 'H'; return; }
         if (Cfg.FORM_KING && formKing()) { why = 'K'; return; }
         Debug.mark(11);
         if (!G.coop && raider && raw == 0 && rc.getHealth() >= Cfg.RAID_HP && homeHalf(G.me)
@@ -626,21 +640,7 @@ public final class Baby {
             if (approachCat(cat)) return;
         }
 
-        if (raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= 10))) {
-            MapLocation k = Comms.nearestKing(G.me);
-            if (k != null) {
-                if (inTransferReach(G.me, k)) {
-                    // in transfer range of the king's body (dist2 9 to its nearest tile): face it, stay off the ring
-                    Direction d = G.me.directionTo(k);
-                    if (d != Direction.CENTER && rc.getDirection() != d && rc.canTurn(d)) rc.turn(d);
-                    why = 'D';
-                    return;
-                }
-                Nav.goTo(k);
-                why = 'd';
-                return;
-            }
-        }
+        if ((raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= 10))) && deliver()) return;
         if (Cfg.COURIER && Comms.numMines == 0 && myMineCount > 0) {
             // we found a mine nobody else knows: squeaks only reach the king from dist2 16, so carry the news home
             MapLocation k = Comms.nearestKing(G.me);
@@ -698,6 +698,22 @@ public final class Baby {
         }
         why = 'E';
         explore();
+    }
+
+    /** Head for the nearest king to hand over our cheese (face it once in transfer reach); false with no king known. */
+    static boolean deliver() throws GameActionException {
+        MapLocation k = Comms.nearestKing(G.me);
+        if (k == null) return false;
+        if (inTransferReach(G.me, k)) {
+            // in transfer range of the king's body (dist2 9 to its nearest tile): face it, stay off the ring
+            Direction d = G.me.directionTo(k);
+            if (d != Direction.CENTER && G.rc.getDirection() != d && G.rc.canTurn(d)) G.rc.turn(d);
+            why = 'D';
+            return true;
+        }
+        Nav.goTo(k);
+        why = 'd';
+        return true;
     }
 
     static int noKing;               // symmetry candidates whose enemy-king spot we saw empty
