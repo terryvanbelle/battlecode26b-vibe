@@ -8,3 +8,5 @@ OUT="$REPO/build/tests"; rm -rf "$OUT"; mkdir -p "$OUT"
 for t in "$REPO"/test/ratbot/*Test.java; do "$JDK/bin/java" -cp "$OUT:$ENGINE" "ratbot.$(basename "$t" .java)"; done
 PY=python3; [ -x "$REPO/tools/.venv/bin/python" ] && PY="$REPO/tools/.venv/bin/python"
 "$PY" -I "$REPO/tools/test_tools.py"
+# per-tool test modules (one file per tool, so tools can gain tests independently)
+for t in "$REPO"/tools/tests/test_*.py; do [ -e "$t" ] && "$PY" -I "$t"; done
