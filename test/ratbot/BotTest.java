@@ -62,6 +62,7 @@ public class BotTest {
                     case "getType": return type;
                     case "getLocation": return me;
                     case "getDirection": return facing;
+                    case "getCarrying": return null;
                     case "isCooperation": return true;
                     case "getGlobalCheese": return global;
                     case "getRawCheese": return raw;
@@ -381,6 +382,20 @@ public class BotTest {
         check(!Baby.nearHome(new MapLocation(5, 5), 4) && Baby.nearHome(new MapLocation(7, 12), 4), "fort: nearHome radius");
     }
 
+    static void testGuard() throws GameActionException {
+        reset(); install();
+        Nav.avoid = 0;
+        Nav.guard = new MapLocation(8, 5);
+        check(Nav.step(Direction.SOUTH), "guard: the step is taken");
+        check(me.equals(new MapLocation(5, 4)) && facing != Direction.SOUTH, "guard: it strafes, still facing the enemy (" + facing + ")");
+        Nav.guard = null;
+        reset(); install();
+        RobotInfo e = enemyRat(61, 7, 5, 100);
+        robots.put(e.location, e); G.coop = false;
+        Baby.guardTurn();
+        check(facing == me.directionTo(e.location), "guard: the turn ends facing the nearest enemy rat (" + facing + ")");
+    }
+
     static void testTrapRisk() throws GameActionException {
         reset(); install();
         G.round = 100;
@@ -402,6 +417,7 @@ public class BotTest {
 
     public static void main(String[] args) throws Exception {
         testTrapRisk();
+        testGuard();
         testFort();
         testRetreat();
         testWarRoles();

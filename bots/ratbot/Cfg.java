@@ -25,15 +25,18 @@ public final class Cfg {
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */
     public static final int RETREAT_HP = 40;
     /** Fortress radius (Chebyshev, from the king) fighters hold at war; 0 = off. */
-    public static final int FORT_R = 4;
+    public static final int FORT_R = 0;
     /** King rat traps laid in advance at war (no enemy in sight), kept to this many. */
-    public static final int FORT_TRAPS = 10;
+    public static final int FORT_TRAPS = 0;
     /** Avoid tiles where an enemy rat could have laid a trap (TrapRisk). */
     public static final boolean TRAP_RISK = true;
     /** Squeak enemy positions/facings so nearby allies share TrapRisk marks. */
     public static final boolean TRAP_SHARE = true;
     /** While chasing a ratnappable enemy, ignore suspected trap tiles. */
     public static final boolean HUNT_IGNORES_RISK = true;
+    /** Guard facing: with an enemy rat within this squared distance, steps strafe so we keep facing it, and a
+     *  turn ends facing it (rats are grabbed from behind). 0 = off. */
+    public static final int GUARD_DIST2 = 13;
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;

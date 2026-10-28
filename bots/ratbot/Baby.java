@@ -76,6 +76,9 @@ public final class Baby {
                 }
             }
         }
+        Nav.guard = null;
+        if (!G.coop && Cfg.GUARD_DIST2 > 0 && nearestEnemy != null && rc.getCarrying() == null
+                && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
         if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8 && !(hunting && Cfg.HUNT_IGNORES_RISK)) Nav.avoid |= TrapRisk.mask(G.me);
         // 0. a carried enemy is thrown as soon as we can act
         if (rc.getCarrying() != null) tryThrow(robots);
@@ -102,7 +105,25 @@ public final class Baby {
         }
         if (cat != null) tryBiteCat(cat);
         tryDeliver();
+        guardTurn();
         sense2();
+    }
+
+    /** End the turn facing the nearest enemy rat close enough to grab us next round. */
+    static void guardTurn() throws GameActionException {
+        RobotController rc = G.rc;
+        if (G.coop || Cfg.GUARD_DIST2 == 0 || !rc.isTurningReady() || rc.getCarrying() != null) return;
+        RobotInfo best = null;
+        int bd = Integer.MAX_VALUE;
+        for (RobotInfo r : rc.senseNearbyRobots(Cfg.GUARD_DIST2, G.them)) {
+            if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
+            int d = G.me.distanceSquaredTo(r.location);
+            if (d < bd) { bd = d; best = r; }
+        }
+        MapLocation t = best != null ? best.location : Nav.guard;
+        if (t == null) return;
+        Direction to = G.me.directionTo(t);
+        if (to != Direction.CENTER && rc.getDirection() != to && rc.canTurn(to)) { rc.turn(to); G.facing = to; }
     }
 
     static void born() {

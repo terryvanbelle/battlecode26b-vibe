@@ -57,11 +57,19 @@ public final class Nav {
         return step(d);
     }
 
-    /** Executes a step in direction d, turning first so the move is a forward move. */
+    /** Enemy to keep facing while stepping (strafe instead of turning our back), or null. */
+    public static MapLocation guard;
+
+    /** Executes a step in direction d, turning first so the move is a forward move (or toward guard). */
     public static boolean step(Direction d) throws GameActionException {
         RobotController rc = G.rc;
         if (d == null || d == Direction.CENTER) return false;
-        if (rc.getDirection() != d && rc.canTurn(d)) rc.turn(d);
+        Direction f = d;
+        if (guard != null) {
+            Direction g = G.me.add(d).directionTo(guard);
+            if (g != Direction.CENTER) f = g;
+        }
+        if (rc.getDirection() != f && rc.canTurn(f)) rc.turn(f);
         if (rc.canMove(d)) {
             rc.move(d);
             G.me = rc.getLocation();
