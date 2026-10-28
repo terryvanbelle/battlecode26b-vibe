@@ -12,16 +12,29 @@
 <line x1="56" x2="560" y1="36.0" y2="36.0" stroke="#e9ecef"/>
 <text x="50" y="40.0" text-anchor="end" fill="#495057">1</text>
 <text transform="translate(56.0,302) rotate(40)" fill="#495057">v0b</text>
-<text transform="translate(182.0,302) rotate(40)" fill="#495057">v0c</text>
-<text transform="translate(308.0,302) rotate(40)" fill="#495057">v0d</text>
-<text transform="translate(434.0,302) rotate(40)" fill="#495057">v0e</text>
-<text transform="translate(560.0,302) rotate(40)" fill="#495057">v0f</text>
-<polyline fill="none" stroke="#2a6fdb" stroke-width="2" points="56.0,65.2 182.0,67.0 308.0,60.1 434.0,121.9 560.0,116.8"/>
+<text transform="translate(85.6,302) rotate(40)" fill="#495057">v0c</text>
+<text transform="translate(115.3,302) rotate(40)" fill="#495057">v0d</text>
+<text transform="translate(144.9,302) rotate(40)" fill="#495057">v0e</text>
+<text transform="translate(174.6,302) rotate(40)" fill="#495057">v0f</text>
+<text transform="translate(204.2,302) rotate(40)" fill="#495057">s0g</text>
+<text transform="translate(233.9,302) rotate(40)" fill="#495057">s0h</text>
+<text transform="translate(263.5,302) rotate(40)" fill="#495057">s0m</text>
+<text transform="translate(293.2,302) rotate(40)" fill="#495057">s0n</text>
+<text transform="translate(322.8,302) rotate(40)" fill="#495057">s0o</text>
+<text transform="translate(352.5,302) rotate(40)" fill="#495057">s0p</text>
+<text transform="translate(382.1,302) rotate(40)" fill="#495057">s0q</text>
+<text transform="translate(411.8,302) rotate(40)" fill="#495057">s0r</text>
+<text transform="translate(441.4,302) rotate(40)" fill="#495057">s0s</text>
+<text transform="translate(471.1,302) rotate(40)" fill="#495057">s0t</text>
+<text transform="translate(500.7,302) rotate(40)" fill="#495057">s0u</text>
+<text transform="translate(530.4,302) rotate(40)" fill="#495057">s0y</text>
+<text transform="translate(560.0,302) rotate(40)" fill="#495057">s0z</text>
+<polyline fill="none" stroke="#2a6fdb" stroke-width="2" points="56.0,65.2 85.6,67.0 115.3,60.1 144.9,121.9 174.6,116.8"/>
 <circle cx="56.0" cy="65.2" r="3" fill="#2a6fdb"/>
-<circle cx="182.0" cy="67.0" r="3" fill="#2a6fdb"/>
-<circle cx="308.0" cy="60.1" r="3" fill="#2a6fdb"/>
-<circle cx="434.0" cy="121.9" r="3" fill="#2a6fdb"/>
-<circle cx="560.0" cy="116.8" r="3" fill="#2a6fdb"/>
+<circle cx="85.6" cy="67.0" r="3" fill="#2a6fdb"/>
+<circle cx="115.3" cy="60.1" r="3" fill="#2a6fdb"/>
+<circle cx="144.9" cy="121.9" r="3" fill="#2a6fdb"/>
+<circle cx="174.6" cy="116.8" r="3" fill="#2a6fdb"/>
 <rect x="572" y="36" width="10" height="10" fill="#2a6fdb"/>
 <text x="586" y="45">win.example</text>
 </svg>
