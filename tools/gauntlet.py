@@ -7,8 +7,12 @@
       per-opponent wins/games and points share for our bot, worst first, plus totals
   gauntlet.py summary RUN/results.jsonl
       one line per bot of ours (a bots/ spec) in a mixed run: wins/games and mean points, best first
+  gauntlet.py paired BASE/results.jsonl CAND/results.jsonl [--base-also R ...] [--cand-also R ...]
+      the local screen of TRAINING_ALGORITHM.md 2.6: per shared cell (opponent, map, our side, seed), d = the
+      candidate's points share minus the base's (/100); t = sum d / sqrt(sum d^2), D = cells with d != 0; win/loss net
+      and a one-sided sign test on per-cell wins; per-map mean d; the verdict (reject at t <= -1.5 or sign p < 0.05)
 """
-import argparse, collections, json, os, sys
+import argparse, collections, json, math, os, sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIELD = os.path.join(REPO, 'research', 'field', 'FIELD.tsv')
@@ -88,6 +92,50 @@ def summary(results):
                   key=lambda t: (-t[1] / t[2], -t[3]))
 
 
+def cell_scores(paths):
+    """{(opponent spec, map, our side, seed): (mean points share / 100, mean win)} for the one bots/ bot of the runs."""
+    acc = collections.defaultdict(lambda: [0.0, 0.0, 0])
+    for path in paths:
+        for l in open(path):
+            if not l.strip():
+                continue
+            r = json.loads(l)
+            a, b = r.get('a_spec') or r['a'], r.get('b_spec') or r['b']
+            if a.startswith('bots/') == b.startswith('bots/') or r.get('winner') is None:
+                continue
+            side, opp = ('A', b) if a.startswith('bots/') else ('B', a)
+            c = acc[(opp, r['map'], side, r.get('seed', 0))]
+            c[0] += r['ptsA' if side == 'A' else 'ptsB'] / 100.0
+            c[1] += 1.0 if r['winner'] == side else 0.0
+            c[2] += 1
+    return {k: (p / n, w / n) for k, (p, w, n) in acc.items()}
+
+
+def sign_p(worse, better):
+    """One-sided sign test: P(at most `better` of worse + better fair coin flips favour the candidate)."""
+    n = worse + better
+    return sum(math.comb(n, i) for i in range(better + 1)) / 2 ** n if n else 1.0
+
+
+def paired(base, cand):
+    """Paired screen of cand vs base on their shared cells (cell_scores dicts): a dict of the numbers and a verdict."""
+    keys = sorted(set(base) & set(cand), key=str)
+    ds = [cand[k][0] - base[k][0] for k in keys]
+    wd = [cand[k][1] - base[k][1] for k in keys]
+    s, s2 = sum(ds), sum(d * d for d in ds)
+    t = s / math.sqrt(s2) if s2 > 0 else 0.0
+    better, worse = sum(1 for w in wd if w > 0), sum(1 for w in wd if w < 0)
+    p = sign_p(worse, better)
+    maps = collections.defaultdict(list)
+    for k, d in zip(keys, ds):
+        maps[k[1]].append(d)
+    reject = t <= -1.5 or p < 0.05
+    return {'cells': len(keys), 'D': sum(1 for d in ds if d != 0), 't': t, 'mean_d': s / len(keys) if keys else 0.0,
+            'win_net': sum(wd), 'better': better, 'worse': worse, 'sign_p': p,
+            'maps': {m: sum(v) / len(v) for m, v in maps.items()},
+            'verdict': 'reject' if reject else 'pass (screen only rejects)'}
+
+
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest='cmd', required=True)
@@ -95,7 +143,17 @@ def main():
     c.add_argument('--seeds', default='0'); c.add_argument('--only', default=None)
     t = sub.add_parser('table'); t.add_argument('results'); t.add_argument('--ours', default=None)
     u = sub.add_parser('summary'); u.add_argument('results')
+    q = sub.add_parser('paired'); q.add_argument('base'); q.add_argument('cand')
+    q.add_argument('--base-also', nargs='*', default=[]); q.add_argument('--cand-also', nargs='*', default=[])
     o = ap.parse_args()
+    if o.cmd == 'paired':
+        r = paired(cell_scores([o.base] + o.base_also), cell_scores([o.cand] + o.cand_also))
+        print(f"{r['cells']} shared cells, D {r['D']}: mean d {100 * r['mean_d']:+.1f} pts, t {r['t']:+.2f}; "
+              f"win/loss net {r['win_net']:+g} (+{r['better']} -{r['worse']} cells, sign p {r['sign_p']:.3f})")
+        for m, d in sorted(r['maps'].items(), key=lambda kv: kv[1]):
+            print(f'  {m:28s} {100 * d:+6.1f}')
+        print('verdict:', r['verdict'])
+        return
     if o.cmd == 'summary':
         for b, w, g, p, kd, n in summary(o.results):
             print(f'{b:20s} {w:3d}/{g:<3d} pts {p:5.1f}  kills/deaths {kd:4.2f}  rounds {n:5.0f}')

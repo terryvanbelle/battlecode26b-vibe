@@ -33,6 +33,9 @@ public final class Cfg {
     /** The king walks onto the nearest home-half mine within dist2 KING_MINE_R2 of its start. */
     public static final boolean KING_MINE = true;
     public static final int KING_MINE_R2 = 400;
+    /** Dirt on the king's walk to its mine: the king digs the step's leading edge (5 cheese a tile). */
+    public static final boolean KING_DIG = true;
+    public static final int KING_DIG_MIN = 100;
     /** With no enemy or cat in view the king walks to cheese within Chebyshev KING_ROAM of its mine (0 = off). */
     public static final int KING_ROAM = 4;
     /** A second king: the first king names a home-half mine as the site once it has FORM_BABIES babies and
@@ -106,7 +109,7 @@ public final class Cfg {
     /** Path cost of a dirt tile (a dig is 5 cheese and 2.5 turns of action cooldown, plus the step). */
     public static final int DIG_COST = 4;
     /** Random samples per explore target, taking the first never-seen tile. */
-    public static final int EXPLORE_TRIES = 12, EXPLORE_CENTER_FROM = 30;
+    public static final int EXPLORE_TRIES = 12, EXPLORE_CENTER_FROM = 0;
     /** A rat that finds the first mine walks it home to the king. */
     public static final boolean COURIER = true;
     /** Babies relay mine squeaks to each other while the team knows no mine. */

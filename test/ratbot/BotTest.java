@@ -662,6 +662,30 @@ public class BotTest {
         check(Baby.pickMine() == null, "mine spread: no mine known");
     }
 
+    static void testKingDig() {
+        reset(); W = 30; H = 30; install();
+        for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
+        MapLocation c = new MapLocation(10, 10), east = new MapLocation(20, 10);
+        check(King.digTile(c, east) == null, "king dig: an open step needs no dig");
+        // a dirt band at x = 12: the east step adds (12, 9..11), all dirt
+        for (int y = 0; y < H; y++) Sym.mem[12 + W * y] |= Sym.DIRT;
+        MapLocation d = King.digTile(c, east);
+        check(d != null && d.x == 12 && Math.abs(d.y - 10) <= 1 && c.distanceSquaredTo(d) <= 8, "king dig: the leading edge, in range " + d);
+        // toward (20, 20) with a wall at (12, 10): north-east and east are out; north adds (9..11, 12), dirt
+        for (int x = 0; x < W; x++) Sym.mem[x + W * 12] |= Sym.DIRT;
+        Sym.mem[12 + W * 10] |= Sym.WALL;
+        MapLocation d2 = King.digTile(c, new MapLocation(20, 20));
+        check(d2 != null && d2.y == 12 && d2.x >= 9 && d2.x <= 11 && c.distanceSquaredTo(d2) <= 8, "king dig: the step around a wall " + d2);
+        // walls across the east edge: every step toward the target adds a wall
+        Sym.mem[12 + W * 9] |= Sym.WALL; Sym.mem[12 + W * 11] |= Sym.WALL;
+        check(King.digTile(c, east) == null, "king dig: never through a wall");
+        for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.DIRT;
+        check(King.digTile(c, east) == null, "king dig: not into unseen tiles");
+        for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN | Sym.DIRT;
+        MapLocation d3 = King.digTile(new MapLocation(1, 1), new MapLocation(0, 0));
+        check(d3 == null, "king dig: not off the map " + d3);
+    }
+
     static void testDefend() throws GameActionException {
         reset(); W = 30; H = 30; install();
         G.round = 200; G.coop = false; G.me = me;
@@ -733,6 +757,7 @@ public class BotTest {
     public static void main(String[] args) throws Exception {
         testTrapRisk();
         testMineSpread();
+        testKingDig();
         testDefend();
         testGuard();
         testBiteCheese();

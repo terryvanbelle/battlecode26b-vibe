@@ -1,0 +1,6 @@
+name=s3d
+source=bots/ratbot
+source_sha=d974fa0e0f09
+commit=a3f5ced
+created=2026-10-28 08:09 PDT
+reason=s3c + KING_DIG: the king walking to its home mine takes a strictly closer step, else digs the step's leading edge (Excavation xfer 335 -> 460)

@@ -1,0 +1,6 @@
+name=s3b
+source=bots/ratbot
+source_sha=c6cb52685cf5
+commit=a3f5ced
+created=2026-10-28 07:57 PDT
+reason=dev after s3a: king defense (ALERT threat count, gatherers defend), mine spread (4 nearest home-half), Flow.follow index fix, exception tags

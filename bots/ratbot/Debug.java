@@ -23,7 +23,7 @@ public final class Debug {
     public static void indicator() {
         StringBuilder sb = new StringBuilder(96);
         if (G.king) {
-            sb.append("K sp=").append(King.spawned).append(" tr=").append(King.traps).append(" inc=").append(Econ.rate100()).append(" sur=").append(Econ.surplus()).append(" km=").append(King.mineWhy).append(Comms.numMines);
+            sb.append("K sp=").append(King.spawned).append(" tr=").append(King.traps).append(" inc=").append(Econ.rate100()).append(" sur=").append(Econ.surplus()).append(" km=").append(King.mineWhy).append(Comms.numMines).append(" hm=").append(King.homeMine == null ? "-" : King.homeMine.x + "," + King.homeMine.y).append(" kd=").append(King.digs);
         } else {
             sb.append(Baby.role == Baby.FIGHT ? "F" : Baby.role == Baby.ATTACK ? "A" : "G")
               .append(" dl=").append(Baby.delivered).append(" mm=").append(Baby.myMineCount)

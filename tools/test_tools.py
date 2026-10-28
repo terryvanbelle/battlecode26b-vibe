@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Tests for the python tools (synthetic inputs). Exit 1 on failure."""
-import importlib.util, json, os, subprocess, sys, tempfile
+import importlib.util, json, math, os, subprocess, sys, tempfile
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 fails = checks = 0
 
@@ -54,6 +54,24 @@ with tempfile.TemporaryDirectory() as d:
                                          A={'deathsRat': 8}, B={'deathsRat': 4})) + '\n')
     sm = g.summary(res)
     check(sm == [('x', 2, 3, 190 / 3, 0.0, 0.0), ('y', 0, 1, 10.0, 0.5, 300.0)], f"gauntlet summary {sm}")
+# gauntlet paired screen: shared cells only, t = sum d / sqrt(sum d^2), sign test on per-cell wins
+with tempfile.TemporaryDirectory() as d:
+    def run(path, rows):
+        open(path, 'w').write(''.join(json.dumps(dict(a_spec=a, b_spec=b, a=a, b=b, map=m, seed=0, winner=w, ptsA=pa, ptsB=pb)) + '\n'
+                                      for a, b, m, w, pa, pb in rows))
+        return path
+    b = run(os.path.join(d, 'b.jsonl'), [('bots/x', 'cls:o:p', 'M1', 'B', 20, 80), ('cls:o:p', 'bots/x', 'M1', 'A', 70, 30),
+                                         ('bots/x', 'cls:o:p', 'M2', 'B', 40, 60), ('bots/x', 'cls:q:p', 'M2', 'A', 60, 40)])
+    c = run(os.path.join(d, 'c.jsonl'), [('bots/y', 'cls:o:p', 'M1', 'B', 30, 70), ('cls:o:p', 'bots/y', 'M1', 'A', 70, 30),
+                                         ('bots/y', 'cls:o:p', 'M2', 'A', 60, 40), ('bots/y', 'cls:o:p', 'M3', 'A', 90, 10)])
+    cs = g.cell_scores([b])
+    check(cs[('cls:o:p', 'M1', 'B', 0)] == (0.3, 0.0) and len(cs) == 4, f"gauntlet cell scores {cs}")
+    pr = g.paired(g.cell_scores([b]), g.cell_scores([c]))
+    check(pr['cells'] == 3 and pr['D'] == 2 and abs(pr['t'] - 0.3 / math.sqrt(0.05)) < 1e-9 and pr['win_net'] == 1
+          and pr['better'] == 1 and pr['worse'] == 0 and pr['verdict'].startswith('pass'), f"gauntlet paired {pr}")
+    check(abs(g.sign_p(5, 0) - 1 / 32) < 1e-12 and g.sign_p(0, 0) == 1.0 and g.sign_p(1, 1) == 0.75, "gauntlet sign test")
+    pr2 = g.paired(g.cell_scores([c]), g.cell_scores([b]))
+    check(pr2['t'] < 0 and pr2['win_net'] == -1, f"gauntlet paired reversed {pr2}")
 # plot_progress: series per metric, one progress.png
 pp = load('plot_progress')
 with tempfile.TemporaryDirectory() as d:

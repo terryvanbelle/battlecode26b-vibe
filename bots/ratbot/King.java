@@ -276,7 +276,64 @@ public final class King {
         if (homeMine == null) { mineWhy = 'n'; return; }
         if (G.cheb(c, homeMine) <= 1) { mineWhy = 'a'; return; }
         mineWhy = 'm';
-        if (step(c, homeMine)) pickUp();
+        if (!Cfg.KING_DIG) {
+            if (step(c, homeMine)) pickUp();
+            return;
+        }
+        // a step that gets closer, else dig one (a sidestep that only keeps the distance jitters at a dirt face)
+        if (closer(c, homeMine)) { pickUp(); return; }
+        // blocked: tag why the king does not dig (x cooldown, y cheese, z no dirt-only step, q engine refused)
+        if (!G.rc.isActionReady()) { mineWhy = 'x'; return; }
+        if (G.rc.getGlobalCheese() < Cfg.KING_DIG_MIN) { mineWhy = 'y'; return; }
+        MapLocation d = digTile(c, homeMine);
+        if (d == null) { mineWhy = 'z'; if (step(c, homeMine)) pickUp(); return; }
+        if (!G.rc.canRemoveDirt(d)) { mineWhy = 'q'; return; }
+        G.rc.removeDirt(d); digs++; Sym.mem[G.idx(d)] &= ~Sym.DIRT; mineWhy = 'D';
+    }
+
+    /** One king step toward t that strictly shortens the distance: straight or 45 degrees off. */
+    static boolean closer(MapLocation c, MapLocation t) throws GameActionException {
+        RobotController rc = G.rc;
+        Direction to = c.directionTo(t);
+        int d0 = c.distanceSquaredTo(t);
+        Direction[] cand = {to, to.rotateLeft(), to.rotateRight()};
+        for (Direction d : cand) {
+            if (!rc.canMove(d) || c.add(d).distanceSquaredTo(t) >= d0) continue;
+            rc.move(d); G.me = rc.getLocation(); return true;
+        }
+        return false;
+    }
+
+    /** Dirt blocks the king's walk to t: a dirt tile of the step toward t (or 45 degrees off it, never farther from
+     *  t) with the fewest dirt tiles and no wall, unseen or off-map tile among the tiles the step adds to the 3x3.
+     *  Every added tile is within dist2 8 of the king, its dig range. Null when no step is blocked only by dirt. */
+    static MapLocation digTile(MapLocation c, MapLocation t) {
+        Direction to = c.directionTo(t);
+        if (to == Direction.CENTER) return null;
+        Direction[] cand = {to, to.rotateLeft(), to.rotateRight()};
+        MapLocation best = null;
+        int bn = Integer.MAX_VALUE;
+        for (Direction d : cand) {
+            MapLocation nc = c.add(d);
+            if (G.cheb(nc, t) > G.cheb(c, t)) continue;
+            int n = 0;
+            MapLocation first = null;
+            boolean ok = true;
+            for (int dx = -1; dx <= 1 && ok; dx++)
+                for (int dy = -1; dy <= 1; dy++) {
+                    int x = nc.x + dx, y = nc.y + dy;
+                    if (Math.abs(x - c.x) <= 1 && Math.abs(y - c.y) <= 1) continue;   // already under us
+                    if (x < 0 || y < 0 || x >= G.W || y >= G.H) { ok = false; break; }
+                    int m = Sym.mem[x + G.W * y];
+                    if ((m & Sym.SEEN) == 0 || (m & Sym.WALL) != 0) { ok = false; break; }
+                    if ((m & Sym.DIRT) != 0) {
+                        n++;
+                        if (first == null) first = new MapLocation(x, y);
+                    }
+                }
+            if (ok && n > 0 && n < bn) { bn = n; best = first; }
+        }
+        return best;
     }
 
     /** One king step toward t; babies crowd a king, so sidestep up to 90 degrees off the line, never farther. */

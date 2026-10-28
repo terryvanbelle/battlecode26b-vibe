@@ -1,0 +1,6 @@
+name=s3c
+source=bots/ratbot
+source_sha=d86f7263068f
+commit=a3f5ced
+created=2026-10-28 08:01 PDT
+reason=s3b + EXPLORE_CENTER_FROM 0: with no mine known, explorers head for the map centre from round 0 (Excavation digs r0-24: 31 vs 8)
