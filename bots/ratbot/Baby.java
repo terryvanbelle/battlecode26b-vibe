@@ -289,8 +289,8 @@ public final class Baby {
         if (raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= 10))) {
             MapLocation k = Comms.nearestKing(G.me);
             if (k != null) {
-                if (G.me.distanceSquaredTo(k) <= 8) {
-                    // in transfer range of the king's body: face it so it is inside our cone
+                if (inTransferReach(G.me, k)) {
+                    // in transfer range of the king's body (dist2 9 to its nearest tile): face it, stay off the ring
                     Direction d = G.me.directionTo(k);
                     if (d != Direction.CENTER && rc.getDirection() != d && rc.canTurn(d)) rc.turn(d);
                     return;
@@ -322,6 +322,12 @@ public final class Baby {
             }
         }
         explore();
+    }
+
+    /** True when the nearest tile of a 3x3 king centred at k is within transfer range (dist2 9) of p. */
+    static boolean inTransferReach(MapLocation p, MapLocation k) {
+        int dx = Math.max(0, Math.abs(p.x - k.x) - 1), dy = Math.max(0, Math.abs(p.y - k.y) - 1);
+        return dx * dx + dy * dy <= 9 && !(Math.abs(p.x - k.x) <= 1 && Math.abs(p.y - k.y) <= 1);
     }
 
     static MapLocation knownCat() {

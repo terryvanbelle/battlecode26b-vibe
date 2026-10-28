@@ -264,7 +264,16 @@ public class BotTest {
         check(ok, "king publish stays in 0..1023");
     }
 
+    static void testTransferReach() {
+        MapLocation k = new MapLocation(10, 10);
+        check(Baby.inTransferReach(new MapLocation(14, 11), k), "reach: (4,1) from centre -> nearest tile dist2 9");
+        check(Baby.inTransferReach(new MapLocation(13, 13), k), "reach: (3,3) -> 8");
+        check(!Baby.inTransferReach(new MapLocation(14, 12), k), "reach: (4,2) -> 10 out of range");
+        check(!Baby.inTransferReach(new MapLocation(11, 11), k), "reach: a king tile itself is not a standing spot");
+    }
+
     public static void main(String[] args) throws Exception {
+        testTransferReach();
         testHandMirror();
         testSymElimination();
         testSqueakCodec();
