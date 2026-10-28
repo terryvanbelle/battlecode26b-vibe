@@ -481,13 +481,19 @@ public final class King {
         }
         int babies = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
         if (G.round < Cfg.FORM_FROM || G.round > 1150 || G.round - formStart < Cfg.FORM_TTL + Cfg.FORM_RETRY
-                || babies < Cfg.FORM_BABIES || G.rc.getGlobalCheese() < Cfg.FORM_CHEESE) return;
+                || babies < Cfg.FORM_BABIES || G.rc.getGlobalCheese() < Cfg.FORM_CHEESE || !formIncome()) return;
         formSite = pickFormSite(G.me);
         if (formSite == null) return;
         formStart = G.round;
         Comms.write(Comms.FORM_X, formSite.x + 1);
         Comms.write(Comms.FORM_Y, formSite.y + 1);
         Comms.write(Comms.FORM_T, Comms.stamp());
+    }
+
+    /** The income test for one more king (Cfg.FORM_NET100). */
+    static boolean formIncome() {
+        if (Cfg.FORM_NET100 == Integer.MIN_VALUE) return true;
+        return Econ.rate100() * Cfg.INCOME_TRUST / 100 - 200 * (Econ.kings() + 1) >= Cfg.FORM_NET100;
     }
 
     /** The nearest clearly-ours mine more than 4 tiles from us with a clear 3x3, else a clear spot behind us. */

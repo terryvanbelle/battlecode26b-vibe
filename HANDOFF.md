@@ -77,15 +77,18 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (see TRAINING_LOG.md for the history)
-- Incumbent on the replica: s2o (submission #62, #24 of 54). s3h (#63) submitted; its panel v2 block is going out
-  under the hourly limit. Dev = s3h behaviour (s3d line + first-turn sense guard + GOSSIP_ALWAYS + SCOUT_EVERY 4) plus
-  off-by-default switches: KING_DODGE + YIELD_KING, HUNGRY, CARRY_MAX, BITE_GUARD, BITE_CARRIER, MINE_BALANCE.
-- Field diagnosis (12:00 log entry): combat with the top 10 is even. The loss is collection. Our gatherers crowd the
-  first-known home mine (a rat picks its mine once, at birth) and half of our home-mine cheese is never collected.
-  s3t = s3h + MINE_BALANCE fixes this locally (keepout, by r200: picked up 2607 vs s3h 1520 vs s2o 580). Next
-  candidate for the replica if its screen passes.
-- VM queue (serial, ~1 h each): sp6 s3s (grab-war bundle) -> sp7 s3t -> sp4 s3n (cat dodge + yield) -> sp6 s3r
-  (BITE_GUARD) -> sp3 s3m (trap economy) -> sp5 s3o/s3p/s3q (ablations of s3h).
-- Against examplefuncsplayer (all 74 maps, both sides): v0d won 134-14. Against the six strongest field bots we
-  score ~26% of points and win ~5 of 72; Version41 out-collects us ~2-3x (it tunnels to the centre from round 3 and
-  walks its king to the mines).
+- Incumbent on the replica: s2o (submission #62). s3h (#63) was rejected on panel v2 (t 0.58). s3y (#64) = s3t
+  behaviour (s3h + MINE_BALANCE) + the bytecode tag; its panel v2 blocks (sets 1 and 2) are queued in
+  research/panel/queue.tsv and the drain loop sends them under the hourly limit. Score with
+  `contest.py paired research/panel/v2-ref-s2o.txt SET1_IDS SET2_IDS`, then re-submit s2o if s3y is rejected.
+- Dev = s3h behaviour plus off-by-default switches: KING_DODGE + YIELD_KING, HUNGRY, CARRY_MAX, BITE_GUARD,
+  BITE_CARRIER, MINE_BALANCE, RICH_BABIES, FORM_KING (FORM_MAX). Debug.TAG is on (no behaviour change).
+- Field diagnosis: combat with the top 10 is even; the loss is collection (fixed locally by MINE_BALANCE: s3t picks
+  14-141% more cheese to r300) and kings. In 12 of 21 round-2000 losses the opponent had 2-5 kings to our 1; the
+  top bots form king 2 at r150-650. s3v (FORM_KING) forms kings but was neutral on self-play (-0.6) with king
+  deaths 9 vs 2: forming at FORM_CHEESE 300 likely starves poor maps. Next: a bank+income gate, then a tagged king
+  variant for the replica.
+- VM queue (serial, ~20 min each): sp8 s3w (MINE_BALANCE + RICH_BABIES 30 + FORM_KING) -> sp9 s3x (s3w +
+  FORM_MAX 4) -> sp4 s3n -> sp6 s3r -> sp3 s3m -> sp5 s3o/s3p/s3q. Controls: s3w vs sp7_s3t, s3x vs sp8_s3w, s3n/s3m
+  vs sp2_s3i, s3r/s3o/s3p/s3q vs sp2_s3h.
+- Against examplefuncsplayer (all 74 maps, both sides): v0d won 134-14.

@@ -59,6 +59,9 @@ public final class Cfg {
     public static final int FORM_FROM = 80, FORM_BABIES = 16, FORM_CHEESE = 300, FORM_TTL = 60, FORM_RETRY = 150, FORM_PULL_R2 = 72;
     /** Kings we form up to (engine max 5 before round 1200). */
     public static final int FORM_MAX = 2;
+    /** Form only while the trusted income (x100 per round) beats every king's upkeep, the new one's included, by
+     *  FORM_NET100 (Integer.MIN_VALUE = no income test). */
+    public static final int FORM_NET100 = Integer.MIN_VALUE;
     /** Gatherers at their mine turn in place instead of wandering. */
     public static final boolean GATHER_STILL = false;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines

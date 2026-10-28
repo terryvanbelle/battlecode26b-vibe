@@ -723,6 +723,22 @@ public class BotTest {
         check(Cfg.FORM_MAX >= 1 && Cfg.FORM_MAX <= 5, "form max: within the engine's 5");
     }
 
+    static void testFormIncome() {
+        Comms.numKings = 1;
+        Econ.n = 100; Econ.sum = 0;   // rate100() = sum
+        if (Cfg.FORM_NET100 == Integer.MIN_VALUE) {
+            check(King.formIncome(), "form income: no test when FORM_NET100 is off");
+        } else {
+            // two kings' upkeep (400 x100) plus the margin, at INCOME_TRUST percent
+            int need = (400 + Cfg.FORM_NET100) * 100 / Cfg.INCOME_TRUST + 1;
+            Econ.sum = need;
+            check(King.formIncome(), "form income: enough for both kings plus the margin");
+            Econ.sum = need * 9 / 10 - 1;
+            check(400 + Cfg.FORM_NET100 < 20 || !King.formIncome(), "form income: short of the second king's upkeep");
+        }
+        Econ.n = 0; Econ.sum = 0; Comms.numKings = 0;
+    }
+
     static void testKingDig() {
         reset(); W = 30; H = 30; install();
         for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
@@ -903,6 +919,7 @@ public class BotTest {
         testCarryCap();
         testBabyCap();
         testNearKing();
+        testFormIncome();
         testKingPress();
         testDefend();
         testGuard();
