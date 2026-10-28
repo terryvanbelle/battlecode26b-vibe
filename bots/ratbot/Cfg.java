@@ -14,6 +14,9 @@ public final class Cfg {
     /** One in FIGHT_EVERY later babies is a cat fighter. */
     public static final int FIGHT_EVERY = 2;
     public static final boolean CAT_TRAPS = true;
+    /** Rush: babies with spawn index in [RUSH_FROM, RUSH_TO) attack the enemy king from birth. */
+    public static final boolean RUSH = false;
+    public static final int RUSH_FROM = 4, RUSH_TO = 16;
     /** Squared distance (to the cat's 2x2 centre, doubled coords /4) a gatherer keeps from cats. */
     public static final int GATHER_CAT_DIST = 20;
     public static final boolean DIG = true;

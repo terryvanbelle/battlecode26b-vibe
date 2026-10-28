@@ -9,7 +9,7 @@ public final class Debug {
         if (G.king) {
             sb.append("K sp=").append(King.spawned).append(" inc=").append(Econ.rate100()).append(" sur=").append(Econ.surplus());
         } else {
-            sb.append(Baby.role == Baby.FIGHT ? "F" : "G")
+            sb.append(Baby.role == Baby.FIGHT ? "F" : Baby.role == Baby.ATTACK ? "A" : "G")
               .append(" dl=").append(Baby.delivered)
               .append(" bc=").append(Baby.bitesCat)
               .append(" br=").append(Baby.bitesRat)

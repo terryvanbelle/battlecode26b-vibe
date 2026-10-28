@@ -4,7 +4,7 @@ import battlecode.common.*;
 
 /** Baby rat: gather and deliver cheese, fight cats, lay cat traps, explore. */
 public final class Baby {
-    public static final int GATHER = 0, FIGHT = 1;
+    public static final int GATHER = 0, FIGHT = 1, ATTACK = 2;
     public static int role = -1;
     static int birthRound;
     static MapLocation home;          // spawning king's location at birth
@@ -49,7 +49,7 @@ public final class Baby {
         }
         if (cat != null) { catSeen = cat.location; catSeenRound = G.round; }
 
-        pickUp();
+        if (role != ATTACK) pickUp();
         Nav.avoid = cat != null ? laneMask(cat) : 0;
 
         eKing = enemyKing;
@@ -62,8 +62,10 @@ public final class Baby {
                 if (d < bd) { bd = d; nearestEnemy = r; }
             }
         }
-        // 1. bites: enemy rats once cooperation is over (they shoot back; cats wait), then cats
+        // 1. bites: enemy rats once cooperation is over (they shoot back; cats wait), then cats.
+        //    Attackers open the war themselves, but only on the enemy king.
         if (!G.coop) biteEnemies(robots);
+        else if (role == ATTACK && enemyKing != null) biteEnemies(new RobotInfo[]{enemyKing});
         if (cat != null) tryBiteCat(cat);
         // 2. cat trap ahead of an approaching cat
         if (cat != null && Cfg.CAT_TRAPS) tryCatTrap(cat);
@@ -74,6 +76,10 @@ public final class Baby {
         if (rc.isMovementReady()) moveDecision();
         pickUp();
         if (!G.coop) biteEnemies(rc.senseNearbyRobots(2, G.them));
+        else if (role == ATTACK) {
+            RobotInfo[] near = rc.senseNearbyRobots(8, G.them);
+            for (RobotInfo r : near) if (r.type == UnitType.RAT_KING) biteEnemies(new RobotInfo[]{r});
+        }
         if (cat != null) tryBiteCat(cat);
         tryDeliver();
         sense2();
@@ -86,6 +92,7 @@ public final class Baby {
         int idx = (cost - 10) / 10 * 4; // approximate spawn index from the cost step
         role = GATHER;
         if (idx >= Cfg.GATHER_FIRST && (G.round % Cfg.FIGHT_EVERY) == 0) role = FIGHT;
+        if (Cfg.RUSH && idx >= Cfg.RUSH_FROM && idx < Cfg.RUSH_TO) role = ATTACK;
         Comms.readKings();
         home = Comms.nearestKing(G.me);
         if (home == null) home = G.me;
@@ -334,6 +341,7 @@ public final class Baby {
             MapLocation cc = new MapLocation(cat.location.x, cat.location.y);
             if (Nav.flee(cc)) return;
         }
+        if (role == ATTACK && attack()) return;
         if (!G.coop && war()) return;
         if (cat != null && role == FIGHT) {
             if (approachCat(cat)) return;
@@ -375,6 +383,41 @@ public final class Baby {
             }
         }
         explore();
+    }
+
+    static int noKing;               // symmetry candidates whose enemy-king spot we saw empty
+    static MapLocation lastEKing;
+    static int lastEKingRound = -100;
+
+    /** Attacker movement: the visible enemy king, else the last place we saw it, else the nearest live mirror spot. */
+    static boolean attack() throws GameActionException {
+        if (eKing != null) { lastEKing = eKing.location; lastEKingRound = G.round; Nav.goTo(eKing.location); return true; }
+        if (lastEKing != null && G.round - lastEKingRound < 30 && G.me.distanceSquaredTo(lastEKing) > 8) {
+            Nav.goTo(lastEKing);
+            return true;
+        }
+        MapLocation t = rushTarget();
+        if (t == null) return false;
+        Nav.goTo(t);
+        return true;
+    }
+
+    static MapLocation rushTarget() throws GameActionException {
+        RobotController rc = G.rc;
+        MapLocation best = null;
+        int bd = Integer.MAX_VALUE;
+        for (int s = 1; s <= 4; s <<= 1) {
+            if ((Sym.mask & s) == 0 || (noKing & s) != 0) continue;
+            MapLocation c = G.mirror(home, s);
+            if (G.me.distanceSquaredTo(c) <= 13 && rc.canSenseLocation(c)) {
+                RobotInfo r = rc.senseRobotAtLocation(c);
+                if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { noKing |= s; continue; }
+            }
+            int d = G.me.distanceSquaredTo(c) * 2 + (G.hand(G.me, G.me.directionTo(c)) > 0 ? 1 : 0);
+            if (d < bd) { bd = d; best = c; }
+        }
+        if (best == null && noKing != 0) { noKing = 0; return null; }
+        return best;
     }
 
     /** War movement: close on a visible enemy king or nearby enemy rat, or answer a king's alert. */
