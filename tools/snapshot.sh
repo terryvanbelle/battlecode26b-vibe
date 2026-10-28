@@ -7,6 +7,7 @@ NAME="$1"; SRC="${2:-$REPO/bots/ratbot}"
 [[ "$NAME" =~ ^[a-z][a-z0-9_]*$ ]] || { echo "snapshot: bad package name $NAME" >&2; exit 1; }
 DST="$REPO/bots/$NAME"
 [ -e "$DST" ] && { echo "snapshot: $DST exists" >&2; exit 1; }
+[ -d "$SRC" ] && ls "$SRC"/*.java >/dev/null 2>&1 || { echo "snapshot: no java sources in $SRC" >&2; exit 1; }
 OLD="$(basename "$SRC")"
 mkdir -p "$DST"
 for f in "$SRC"/*.java; do sed -e "s/^package $OLD;/package $NAME;/" -e "s/\b$OLD\./$NAME./g" "$f" > "$DST/$(basename "$f")"; done

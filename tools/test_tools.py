@@ -92,5 +92,9 @@ if os.path.exists(fx) and os.path.isdir(os.path.join(REPO, 'build', 'tools', 'bc
     check(rep['grabs']['2']['n'] > rep['grabs']['1']['n'] > 0 and sum(rep['grabs']['2']['fate'].values()) == rep['grabs']['2']['n'],
           f"battle_report grabs {rep['grabs']}")
     check(all(v > 0 for tm in '12' for v in rep['hploss'][tm].values()) and 42 in rep['throws']['2'], "battle_report hploss/throws")
+# snapshot.sh refuses a source without java files and leaves nothing behind
+import subprocess as _sp
+_r = _sp.run([os.path.join(REPO, 'tools', 'snapshot.sh'), 'zz_selftest', os.path.join(REPO, 'no_such_dir')], capture_output=True, text=True)
+check(_r.returncode != 0 and not os.path.exists(os.path.join(REPO, 'bots', 'zz_selftest')), "snapshot.sh rejects a missing source")
 print(f"test_tools: {checks - fails}/{checks} passed")
 sys.exit(1 if fails else 0)
