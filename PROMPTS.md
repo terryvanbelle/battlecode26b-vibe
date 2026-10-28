@@ -58,3 +58,7 @@ I'd like you to do an audit of ReplayDump.java, checking to ensure it's capable 
 ## 10. 2026-10-28 12:51 PDT
 
 I'd like you to start a file called BEST_PRACTICES.md in the battlecode-vibe repository.  Start it off with a note that you should ensure that you have a replay dumper that is thorough and complete, and is being used effectively.
+
+## 11. 2026-10-28 13:03 PDT
+
+An addition to BEST_PRACTICES, point 1:  Often the replays strip out debug information like indicator strings.  To get around this problem, you can smuggle out some additional per-robot information in the low-order bits of the bytecode count by artificially adding some no-op steps
