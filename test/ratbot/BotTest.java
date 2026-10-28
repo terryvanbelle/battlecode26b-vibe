@@ -16,6 +16,7 @@ public class BotTest {
     static int W = 30, H = 20;
     static Set<MapLocation> walls = new HashSet<>(), dirt = new HashSet<>();
     static Map<MapLocation, Integer> cheeseAt = new HashMap<>();
+    static boolean canPromote, promoted;
     static Map<MapLocation, RobotInfo> robots = new HashMap<>();
     static int[] shared = new int[64];
     static MapLocation me = new MapLocation(5, 5);
@@ -46,6 +47,7 @@ public class BotTest {
     }
 
     static void reset() {
+        canPromote = promoted = false;
         walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null;
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; ratCost = 10; built.clear();
@@ -134,6 +136,8 @@ public class BotTest {
                     case "canBuildRat": { MapLocation t = (MapLocation) a[0]; return actCd < 10 && passable(t) && !robots.containsKey(t) && global >= ratCost; }
                     case "buildRat": built.add((MapLocation) a[0]); global -= ratCost; actCd += 10; return null;
                     case "getHealth": return health;
+                    case "canBecomeRatKing": return canPromote && actCd < 10;
+                    case "becomeRatKing": promoted = true; type = UnitType.RAT_KING; return null;
                     case "setIndicatorString": return null;
                     default: throw new UnsupportedOperationException("fakeRc: " + m.getName());
                 }
@@ -533,6 +537,32 @@ public class BotTest {
         Comms.numKings = 0; Baby.myMineCount = 0; Baby.nearestEnemy = null; G.coop = true;
     }
 
+    static void testFormation() throws GameActionException {
+        reset(); W = 30; H = 30; install();
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, false, false, false);
+        Sym.mask = Sym.ROT;
+        King.start = new MapLocation(3, 3);
+        Comms.numMines = 0;
+        Comms.mines[Comms.numMines++] = new MapLocation(4, 4);    // too close to the king
+        Comms.mines[Comms.numMines++] = new MapLocation(20, 22);  // enemy half
+        Comms.mines[Comms.numMines++] = new MapLocation(9, 6);
+        check(new MapLocation(9, 6).equals(King.pickFormSite(new MapLocation(3, 3))), "form: nearest clear home mine away from the king");
+        Comms.numMines = 0;
+        check(new MapLocation(6, 6).equals(King.pickFormSite(new MapLocation(10, 10))), "form: no mine -> four tiles behind the king");
+        // a baby on the site promotes when it can; one beside the free centre steps onto it
+        G.round = 100;
+        shared[Comms.FORM_X] = 6; shared[Comms.FORM_Y] = 6; shared[Comms.FORM_T] = Comms.stamp();
+        check(new MapLocation(5, 5).equals(Baby.formSite()), "form: site read from the shared array");
+        canPromote = true;
+        check(Baby.formKing() && promoted, "form: the centre rat becomes a king");
+        reset(); W = 30; H = 30; install();
+        G.round = 100;
+        shared[Comms.FORM_X] = 6; shared[Comms.FORM_Y] = 7; shared[Comms.FORM_T] = Comms.stamp();
+        check(Baby.formKing() && me.equals(new MapLocation(5, 6)), "form: steps onto the free centre (at " + me + ")");
+        shared[Comms.FORM_T] = 0;
+        check(!Baby.formKing(), "form: no site, no formation");
+    }
+
     static void testGuard() throws GameActionException {
         reset(); install();
         Nav.avoid = 0;
@@ -601,6 +631,7 @@ public class BotTest {
         testBiteTargets();
         testTransferReach();
         testRaid();
+        testFormation();
         testReportPriority();
         testKingMine();
         testHandMirror();

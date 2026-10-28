@@ -33,6 +33,10 @@ public final class Cfg {
     /** The king walks onto the nearest home-half mine within dist2 KING_MINE_R2 of its start. */
     public static final boolean KING_MINE = true;
     public static final int KING_MINE_R2 = 400;
+    /** A second king: the first king names a home-half mine as the site once it has FORM_BABIES babies and
+     *  FORM_CHEESE global cheese after round FORM_FROM; babies within dist2 FORM_PULL_R2 gather in its 3x3. */
+    public static final boolean FORM_KING = true;
+    public static final int FORM_FROM = 80, FORM_BABIES = 16, FORM_CHEESE = 300, FORM_TTL = 60, FORM_RETRY = 150, FORM_PULL_R2 = 72;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines
     public static final int RAID_STAY = 60, RAID_SPREAD = 60;
     /** One in RAID_EVERY fighters is a raider: on our half it ignores enemies beyond dist2 RAID_ENGAGE. */

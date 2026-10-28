@@ -8,6 +8,7 @@ import battlecode.common.*;
  */
 public final class Comms {
     public static final int SYM = 1;
+    public static final int FORM_X = 0, FORM_Y = 23, FORM_T = 63;  // king formation site x+1, y+1, heartbeat
     public static final int KING0 = 2, KING_SLOTS = 5;           // 3 ints each: x+1, y+1, heartbeat round%1024
     public static final int ALERT = 17;                          // x+1, y+1, round%1024: a king sees enemies in war
     public static final int EKING = 20;                          // x+1, y+1, round%1024 last seen

@@ -109,6 +109,7 @@ public final class Baby {
         MapLocation before = rc.getLocation();
         if (rc.isMovementReady()) moveDecision();
         boolean moved = !rc.getLocation().equals(before);
+        if (rc.getType() == UnitType.RAT_KING) return;   // just promoted: the king code runs from next turn
         Debug.mark(20);
         pickUp();
         if (rc.getCarrying() != null && moved && Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(rc.senseNearbyRobots(-1, null));
@@ -561,6 +562,7 @@ public final class Baby {
         }
         Debug.mark(10);
         if (!G.coop && retreat()) { why = 'r'; return; }
+        if (Cfg.FORM_KING && formKing()) { why = 'K'; return; }
         Debug.mark(11);
         if (!G.coop && raider && raw == 0 && rc.getHealth() >= Cfg.RAID_HP && homeHalf(G.me)
                 && (nearestEnemy == null || G.me.distanceSquaredTo(nearestEnemy.location) > Cfg.RAID_ENGAGE) && raid()) { why = 'z'; return; }
@@ -865,6 +867,36 @@ public final class Baby {
         return best;
     }
 
+    /** The site the king named for a second king, while its heartbeat is fresh. */
+    static MapLocation formSite() {
+        int t = Comms.read(Comms.FORM_T), x = Comms.read(Comms.FORM_X);
+        if (t == 0 || x == 0 || !Comms.fresh(t, 2)) return null;
+        return new MapLocation(x - 1, Comms.read(Comms.FORM_Y) - 1);
+    }
+
+    /** Join a king formation: walk into the site's 3x3 and hold; the rat on the centre promotes once 7 stand there. */
+    static boolean formKing() throws GameActionException {
+        MapLocation site = formSite();
+        if (site == null || G.me.distanceSquaredTo(site) > Cfg.FORM_PULL_R2) return false;
+        RobotController rc = G.rc;
+        if (G.me.equals(site)) {
+            if (rc.canBecomeRatKing()) { rc.becomeRatKing(); formed++; }
+            return true;
+        }
+        if (G.cheb(G.me, site) <= 1) {
+            // step onto the centre when it is free, else hold our ring tile facing it
+            Direction d = G.me.directionTo(site);
+            if (rc.canMove(d)) {
+                if (rc.getDirection() != d && rc.canTurn(d)) { rc.turn(d); G.facing = d; }
+                if (rc.canMove(d)) { rc.move(d); G.me = rc.getLocation(); }
+            }
+            return true;
+        }
+        Nav.goTo(site);
+        return true;
+    }
+
+    static int formed;
     static MapLocation raidTarget;
     static boolean raider;           // a fighter that leaves our half to contest theirs
 

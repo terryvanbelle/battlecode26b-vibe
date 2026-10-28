@@ -45,6 +45,7 @@ public final class King {
             Comms.write(Comms.ALERT + 2, Comms.stamp());
         }
         if (Cfg.KING_TRAPS && !G.coop) ratTrap(enemies);
+        if (Cfg.FORM_KING) formation();
         move(cats, enemies);
         publish();
         Comms.write(Comms.BUDGET, Math.max(0, Math.min(1023, Econ.surplus() / 4)));
@@ -264,6 +265,60 @@ public final class King {
         Direction to = c.directionTo(homeMine);
         Direction[] cand = {to, to.rotateLeft(), to.rotateRight()};
         for (Direction d : cand) if (rc.canMove(d)) { rc.move(d); G.me = rc.getLocation(); return; }
+    }
+
+    static MapLocation formSite;
+    static int formStart = -1000;
+
+    /** The first king names a formation site and keeps it fresh until a second king exists or it times out. */
+    static void formation() {
+        if (slot != 0) return;
+        if (Comms.numKings >= 2) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
+        if (formSite != null) {
+            if (G.round - formStart > Cfg.FORM_TTL) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
+            Comms.write(Comms.FORM_T, Comms.stamp());
+            return;
+        }
+        int babies = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
+        if (G.round < Cfg.FORM_FROM || G.round > 1150 || G.round - formStart < Cfg.FORM_TTL + Cfg.FORM_RETRY
+                || babies < Cfg.FORM_BABIES || G.rc.getGlobalCheese() < Cfg.FORM_CHEESE) return;
+        formSite = pickFormSite(G.me);
+        if (formSite == null) return;
+        formStart = G.round;
+        Comms.write(Comms.FORM_X, formSite.x + 1);
+        Comms.write(Comms.FORM_Y, formSite.y + 1);
+        Comms.write(Comms.FORM_T, Comms.stamp());
+    }
+
+    /** The nearest clearly-ours mine more than 4 tiles from us with a clear 3x3, else a clear spot behind us. */
+    static MapLocation pickFormSite(MapLocation from) {
+        int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
+        MapLocation ek = G.mirror(start, s);
+        MapLocation best = null;
+        int bd = Integer.MAX_VALUE;
+        for (int i = 0; i < Comms.numMines; i++) {
+            MapLocation m = Comms.mines[i];
+            // clearly ours: at most half as far from our start as from theirs
+            if (G.cheb(m, from) <= 4 || 4 * m.distanceSquaredTo(start) > m.distanceSquaredTo(ek) || !clear3(m)) continue;
+            int d = from.distanceSquaredTo(m);
+            if (d < bd) { bd = d; best = m; }
+        }
+        if (best != null) return best;
+        // else a clear spot four tiles behind us, away from the enemy start
+        Direction back = ek.directionTo(from);
+        MapLocation b = from.translate(4 * back.dx, 4 * back.dy);
+        return clear3(b) ? b : null;
+    }
+
+    /** The 3x3 around c is on the map and known free of walls and dirt. */
+    static boolean clear3(MapLocation c) {
+        if (c.x < 1 || c.y < 1 || c.x > G.W - 2 || c.y > G.H - 2) return false;
+        for (int dx = -1; dx <= 1; dx++)
+            for (int dy = -1; dy <= 1; dy++) {
+                int m = Sym.mem[(c.x + dx) + G.W * (c.y + dy)];
+                if ((m & Sym.SEEN) == 0 || (m & (Sym.WALL | Sym.DIRT)) != 0) return false;
+            }
+        return true;
     }
 
     static MapLocation homeMine;
