@@ -300,3 +300,13 @@
   known home mine and picks again whenever the team's known-mine count changes. It is queued as sp7. On the s3d
   base without gossip, MINE_BALANCE (s3e) lost 5.4 in self-play vs s2o. Self-play cannot show the field's theft
   from neglected mines.
+
+## 2026-10-28 12:15 PDT: s3t (MINE_BALANCE) on keepout; the round-2000 points rule
+- Local, keepout, vs s2o (A side, one game each):
+  - s3h delivered 9025 and s3t 22246; s2o delivered 6580 in both.
+  - s3t visits every home mine: 5 of 6 are emptied over the game (0-280 left each); (28,47) keeps 3480.
+  - s2o leaves 20060 cheese lying on its own side. We never raid (RAID_EVERY 0 since s2e-s2j cost points against
+    the top 6). The enemy's neglected mines are the next pool of cheese.
+- Points at round 2000 (GameWorld.setWinnerIfMorePoints, after cooperation): 50% kings-alive share, 30% cat-damage
+  share, 20% cheese-delivered share. Top bots run 2-5 kings (finalsbot and Finals 5). Only 2 of our 30 top-10 games
+  reached r2000, though. Against the top, a game is decided by king deaths, not points.
