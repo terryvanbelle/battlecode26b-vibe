@@ -16,6 +16,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - `tools/arena.py` (game/matrix) and `tools/cells.py`.
   - `tools/gauntlet.py` (field cells/table, from `research/field/FIELD.tsv`).
   - `tools/game_report.py` (basics report, `--timeline N`), `tools/rows.py`.
+  - `tools/battle_report.py` (combat: front line, HP loss by cause, grabs and their fate, throw damage, cheese per window).
 - Charts: `tools/plot_progress.py` reads `research/progress.tsv` and writes `progress/*.svg`.
 - VM: `source tools/vm.sh && ensure_vm && vm_sync`. All volume games run on battlecode-dev.
   - Local games use `BC_SLOTS` up to 6.

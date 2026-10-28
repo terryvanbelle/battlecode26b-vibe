@@ -79,5 +79,17 @@ if os.path.exists(fx) and os.path.isdir(os.path.join(REPO, 'build', 'tools', 'bc
     naps = [a for a in acts if a['action'] == 'nap']
     check(naps and all(a['a'] != a['id'] for a in naps), "replaydump naps are grabs of another rat")
     check(any(a['action'] == 'land' for a in acts), "replaydump logs landings")
+# battle_report: vision cone, and the sections on the fixture replay
+br = load('battle_report')
+check(br.sees(5, 5, 0, 5, 6) and br.sees(5, 5, 0, 6, 6) and not br.sees(5, 5, 0, 6, 5) and not br.sees(5, 5, 0, 5, 4),
+      "battle_report cone (north)")
+check(br.sees(5, 5, 1, 6, 5) and br.sees(5, 5, 1, 5, 6) and not br.sees(5, 5, 1, 4, 6), "battle_report cone (northeast)")
+if os.path.exists(fx) and os.path.isdir(os.path.join(REPO, 'build', 'tools', 'bc26tools')):
+    rep = br.report(d, 60, 140, 20)
+    check([f['round'] for f in rep['front']] == [60, 80, 100, 120, 140][:len(rep['front'])] and rep['front'][0]['1']['n'] > 0,
+          f"battle_report front {rep['front'][:1]}")
+    check(rep['grabs']['2']['n'] > rep['grabs']['1']['n'] > 0 and sum(rep['grabs']['2']['fate'].values()) == rep['grabs']['2']['n'],
+          f"battle_report grabs {rep['grabs']}")
+    check(all(v > 0 for tm in '12' for v in rep['hploss'][tm].values()) and 42 in rep['throws']['2'], "battle_report hploss/throws")
 print(f"test_tools: {checks - fails}/{checks} passed")
 sys.exit(1 if fails else 0)
