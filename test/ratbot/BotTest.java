@@ -730,6 +730,12 @@ public class BotTest {
         check(d3 == null, "king dig: not off the map " + d3);
     }
 
+    static void testBiteGuard() {
+        check(Baby.guardBite(95, 90) && Baby.guardBite(100, 90), "bite guard: healthier by up to one bite");
+        check(!Baby.guardBite(90, 90) && !Baby.guardBite(101, 90), "bite guard: not equal, not out of one bite's reach");
+        check(!Baby.guardBite(10, 5), "bite guard: a kill is ranked as a kill");
+    }
+
     static void testKingDodge() {
         // the sunandmoon death: cat at (13,25) facing north, king at (14,28) in its next footprint
         RobotInfo cat = new RobotInfo(6, Team.NEUTRAL, UnitType.CAT, 4000, new MapLocation(13, 25), Direction.NORTH, 0, 0, null);
@@ -876,6 +882,7 @@ public class BotTest {
         testScout();
         testKingDig();
         testKingDodge();
+        testBiteGuard();
         testCarryCap();
         testKingPress();
         testDefend();

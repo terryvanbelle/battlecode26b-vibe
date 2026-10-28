@@ -108,3 +108,4 @@ Every bot attempt (a snapshot under bots/), oldest first, with its score at each
 | s3o | 2026-10-28 11:12 | s3h | ablation: s3h without FLOW and DIG_FIRST (s2y/s3a nav): which dev-line change costs points vs s2o |  |  |  |  |  |  |  |  |
 | s3p | 2026-10-28 11:12 | s3h | ablation: s3h without KING_ROAM and KING_DIG (s2t/s3d king walking) |  |  |  |  |  |  |  |  |
 | s3q | 2026-10-28 11:12 | s3h | ablation: s3h without DEFEND, MINE_SPREAD 1, no EXPLORE_CENTER (s3b/s3c) |  |  |  |  |  |  |  |  |
+| s3r | 2026-10-28 11:17 | s3h | s3h + BITE_GUARD: an adjacent enemy rat healthier than us by at most one bite (it may grab us: the engine lets any strictly healthier enemy grab a rat that sees it, threshold 0) is bitten right after kills, so it cannot |  |  |  |  |  |  |  |  |

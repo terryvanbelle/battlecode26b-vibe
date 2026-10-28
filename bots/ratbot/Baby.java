@@ -398,11 +398,13 @@ public final class Baby {
         return true;
     }
 
-    /** Bite the best adjacent enemy: a king first, then the lowest health; turn to face it when needed. */
+    /** Bite the best adjacent enemy: a king first, then the lowest health (BITE_GUARD: a rat our bite leaves no
+     *  healthier than us, and so unable to grab us, ranks right after the kills); turn to face it when needed. */
     static boolean biteEnemies(RobotInfo[] robots) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return false;
         MapLocation me = rc.getLocation();
+        int myHp = rc.getHealth();
         RobotInfo best = null, bestTurn = null;
         int bs = Integer.MAX_VALUE, bt = Integer.MAX_VALUE;
         for (RobotInfo r : robots) {
@@ -415,6 +417,7 @@ public final class Baby {
             }
             if (me.distanceSquaredTo(t) > 2) continue;
             int s = (r.type == UnitType.RAT_KING ? 0 : 1000) + r.health;
+            if (Cfg.BITE_GUARD && r.type == UnitType.BABY_RAT && guardBite(r.health, myHp)) s = 1011;
             if (rc.canAttack(t)) { if (s < bs) { bs = s; best = r; } }
             else if (s < bt) { bt = s; bestTurn = r; }
         }
@@ -440,6 +443,9 @@ public final class Baby {
         }
         return false;
     }
+
+    /** An enemy rat with hp can grab us (strictly healthier) and one bite (10) takes that away; not a kill. */
+    static boolean guardBite(int hp, int myHp) { return hp > myHp && hp <= myHp + 10 && hp > 10; }
 
     /** Cheese that turns a bite on a target with hp into a kill (k*k for +k, k <= FINISH_K), else 0. */
     static int finishCheese(int hp, int global) {

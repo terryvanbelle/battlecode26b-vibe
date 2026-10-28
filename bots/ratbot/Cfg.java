@@ -14,6 +14,8 @@ public final class Cfg {
     public static final int KING_TRAP_DIST2 = 20;
     /** Babies at war grab adjacent enemies and throw them; lay rat traps toward enemies within BABY_TRAP_DIST2. */
     public static final boolean NAP = true, BABY_RAT_TRAPS = true;
+    /** Bite first the adjacent enemy rat that could grab us (healthier by at most one bite): it then cannot. */
+    public static final boolean BITE_GUARD = false;
     public static final int BABY_TRAP_DIST2 = 13;
     /** Cheese (global, or raw+global for babies) below which no rat trap is placed. */
     public static final int RAT_TRAP_MIN_CHEESE = 200;
