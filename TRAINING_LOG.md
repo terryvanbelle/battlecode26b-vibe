@@ -310,3 +310,30 @@
 - Points at round 2000 (GameWorld.setWinnerIfMorePoints, after cooperation): 50% kings-alive share, 30% cat-damage
   share, 20% cheese-delivered share. Top bots run 2-5 kings (finalsbot and Finals 5). Only 2 of our 30 top-10 games
   reached r2000, though. Against the top, a game is decided by king deaths, not points.
+
+## 2026-10-28 13:00 PDT: how field games end; opponents' extra kings
+- All 240 replica games of our three submissions (ReplayDump summaries, `build/ends.jsonl`):
+  - King killed or starved: 176 games, we won 77.
+  - Points at round 2000: 41 games, we won 20.
+  - Points before round 2000: 23 games, we won 16. These are cooperation games in which every cat died
+    (GameWorld.setWinnerifAllCatsDead). Points then weigh 50% cat damage, 30% kings, 20% delivery. We won all 13
+    in which we did all the cat damage (8000/0 on closeup, canyoudig, externalsustenance...). We lost the even ones:
+    TheHeist (4000/4000, delivery 46-49%) twice, krotus and knifefight vs bc26vibe_bot (42-43%).
+- Round-2000 losses: in 12 of 21, the opponent ended with 2-5 kings to our 1. A 1-2 kings split costs about
+  17 points of the 50 for kings. In the wins, our delivery share is often under 50% but cat damage is 80-100%.
+- When the field forms more kings (rounds.tsv king counts, 76 games where a side reached 2):
+  - thewaxmango PhD: king 2 at r194-296 (keepout, rift), king 3 at r378-891.
+  - AlexT101 finalsbot: kings 2-5 at r168-419 (EscapeTheNight) and r384-768 (seepastyourgreed).
+  - daannte Skadoosh: kings 2-4 at r221-310 (safelycontained) and 2-5 at r321-611 (seepastyourgreed).
+  - AdamTan12 Icarus/Finals: king 2 at r108-520, Finals reaching 5 by r943.
+  - HugoIngelsson: king 2 at r333-802, king 3 at r536-1117.
+  - We never have more than one king. Our single king dies later in most of these games.
+- Formation rule (RobotControllerImpl.assertCanBecomeRatKing): 7 allied baby rats in the 3x3 (the former counted),
+  50 cheese, no cat or king in the 3x3, every tile passable. Up to 5 kings before r1200, 2 after. The king's HP
+  is the sum of the rats' HP; enemy rats in the 3x3 die too.
+- Local (6 games, s3t vs s3h, alternating sides): 3-3. s3t picked up 14-141% more cheese to r300 in the 4 long
+  games. The 2 short games (gridlock r84, canyoudig r96) ended when the cats died during cooperation.
+- Self-play screens: s3t +1.5 vs s3h (t +0.66); s3u (RICH_BABIES 30) +2.1 vs s3t (t +1.00); s3s (grab-war bundle)
+  -0.1 vs s3h. All pass.
+- Next: s3v (s3t + FORM_KING) and s3w (s3t + RICH_BABIES + FORM_KING) are screening. Whichever of s3t/s3w screens
+  best goes to the replica after s3h's panel block.
