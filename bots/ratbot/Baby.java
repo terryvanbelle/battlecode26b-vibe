@@ -1071,6 +1071,7 @@ public final class Baby {
     static boolean formKing() throws GameActionException {
         MapLocation site = formSite();
         if (site == null || G.me.distanceSquaredTo(site) > Cfg.FORM_PULL_R2) return false;
+        if (Cfg.FORM_JOIN > 0 && G.cheb(G.me, site) > 1 && nearerAllies(site) >= Cfg.FORM_JOIN) return false;
         RobotController rc = G.rc;
         if (G.me.equals(site)) {
             if (rc.canBecomeRatKing()) { rc.becomeRatKing(); formed++; }
@@ -1087,6 +1088,14 @@ public final class Baby {
         }
         Nav.goTo(site);
         return true;
+    }
+
+    /** Allied babies in view strictly nearer the site than we are (no id tie-break: mirrored rats decide alike). */
+    static int nearerAllies(MapLocation site) {
+        int d = G.me.distanceSquaredTo(site), n = 0;
+        for (RobotInfo r : seen)
+            if (r.team == G.us && r.type == UnitType.BABY_RAT && r.location.distanceSquaredTo(site) < d) n++;
+        return n;
     }
 
     static int formed;

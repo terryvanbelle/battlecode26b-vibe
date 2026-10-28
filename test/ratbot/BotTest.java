@@ -723,6 +723,21 @@ public class BotTest {
         check(Cfg.FORM_MAX >= 1 && Cfg.FORM_MAX <= 5, "form max: within the engine's 5");
     }
 
+    static void testNearerAllies() {
+        G.us = Team.A;
+        G.me = new MapLocation(10, 10);
+        MapLocation site = new MapLocation(14, 10);
+        Baby.seen = new RobotInfo[] {
+            new RobotInfo(1, Team.A, UnitType.BABY_RAT, 100, new MapLocation(12, 10), Direction.NORTH, 0, 0, null),
+            new RobotInfo(2, Team.A, UnitType.BABY_RAT, 100, new MapLocation(10, 14), Direction.NORTH, 0, 0, null),  // farther
+            new RobotInfo(3, Team.B, UnitType.BABY_RAT, 100, new MapLocation(13, 10), Direction.NORTH, 0, 0, null),  // enemy
+            new RobotInfo(4, Team.A, UnitType.RAT_KING, 600, new MapLocation(14, 11), Direction.NORTH, 0, 0, null),  // king
+            new RobotInfo(5, Team.A, UnitType.BABY_RAT, 100, new MapLocation(15, 11), Direction.NORTH, 0, 0, null),
+        };
+        check(Baby.nearerAllies(site) == 2, "nearer allies: our babies strictly nearer the site only, got " + Baby.nearerAllies(site));
+        Baby.seen = new RobotInfo[0];
+    }
+
     static void testFormIncome() {
         Comms.numKings = 1;
         Econ.n = 100; Econ.sum = 0;   // rate100() = sum
@@ -920,6 +935,7 @@ public class BotTest {
         testBabyCap();
         testNearKing();
         testFormIncome();
+        testNearerAllies();
         testKingPress();
         testDefend();
         testGuard();
