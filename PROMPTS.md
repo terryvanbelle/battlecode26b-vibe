@@ -50,3 +50,7 @@ progress/progress.png also doesn't look like it does in bc23
 ## 8. 2026-10-28 08:47 PDT
 
 You don't need to put all the candidates on progress.png, just the accepted ones.  What bots are on the ladder panel?  Are they appropriately calibrated to our level?  Are you using the replica for all games against benchmark bots?
+
+## 9. 2026-10-28 12:28 PDT
+
+I'd like you to do an audit of ReplayDump.java, checking to ensure it's capable of extracting all available information, and that it's being used effectively
