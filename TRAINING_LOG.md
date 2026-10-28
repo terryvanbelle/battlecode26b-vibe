@@ -316,11 +316,11 @@
   - King killed or starved: 176 games, we won 77.
   - Points at round 2000: 41 games, we won 20.
   - Points before round 2000: 23 games, we won 16. These are cooperation games in which every cat died
-    (GameWorld.setWinnerifAllCatsDead). Points then weigh 50% cat damage, 30% kings, 20% delivery. We won all 13
+    (GameWorld.setWinnerifAllCatsDead). Points then weigh 50% cat damage, 30% kings, 20% delivery. We won all 12
     in which we did all the cat damage (8000/0 on closeup, canyoudig, externalsustenance...). We lost the even ones:
     TheHeist (4000/4000, delivery 46-49%) twice, krotus and knifefight vs bc26vibe_bot (42-43%).
 - Round-2000 losses: in 12 of 21, the opponent ended with 2-5 kings to our 1. A 1-2 kings split costs about
-  17 points of the 50 for kings. In the wins, our delivery share is often under 50% but cat damage is 80-100%.
+  17 points of the 50 for kings. In the 20 wins, our delivery share is often under 50%, but our cat damage share is 55-100%.
 - When the field forms more kings (rounds.tsv king counts, 76 games where a side reached 2):
   - thewaxmango PhD: king 2 at r194-296 (keepout, rift), king 3 at r378-891.
   - AlexT101 finalsbot: kings 2-5 at r168-419 (EscapeTheNight) and r384-768 (seepastyourgreed).
