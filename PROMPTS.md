@@ -22,3 +22,7 @@ Make sure that your attempts are a good combination of incremental tweaks and bi
 Starting with this one, save all of my prompts in a document called PROMPTS.md.  Note that the user is in the PDT timezone.
 
 This year we will compete again in Battlecode 2026.  Store all results in a new Github repository called battlecode26b-vibe.  Start from scratch, and do not look into or reuse anything from the original battlecode26-vibe, except that you may add the original battlecode26-vibe bot to your benchmark.  The purpose of this iteration is to see how much we’ve improved since the last time we tried 2026, so reusing any learnings from the previous 2026 effort would taint the findings.  Download the rules and begin.
+
+## 2. 2026-10-28 06:15 PDT
+
+I'd like you to structure  the progress/ directory like the one in battlecode23-vibe

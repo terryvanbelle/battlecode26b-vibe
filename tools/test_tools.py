@@ -54,16 +54,87 @@ with tempfile.TemporaryDirectory() as d:
                                          A={'deathsRat': 8}, B={'deathsRat': 4})) + '\n')
     sm = g.summary(res)
     check(sm == [('x', 2, 3, 190 / 3, 0.0, 0.0), ('y', 0, 1, 10.0, 0.5, 300.0)], f"gauntlet summary {sm}")
-# plot_progress: one svg per metric group, index lists them
+# plot_progress: series per metric, one progress.png
 pp = load('plot_progress')
 with tempfile.TemporaryDirectory() as d:
     t = os.path.join(d, 'p.tsv')
     open(t, 'w').write('version\tdate\tmetric\tvalue\nv1\tx\twin.a\t0.5\nv2\tx\twin.a\t0.7\nv2\tx\twin.b\t0.2\nv2\tx\tpts.f\t40\n')
     vs, ss = pp.load(t)
     check(vs == ['v1', 'v2'] and ss['win.a'] == {'v1': 0.5, 'v2': 0.7}, f"plot load {vs} {dict(ss)}")
-    subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'plot_progress.py'), '--tsv', t, '--out', d], capture_output=True)
-    check(os.path.exists(os.path.join(d, 'win.svg')) and os.path.exists(os.path.join(d, 'pts.svg')), "plot svgs written")
-    check('polyline' in open(os.path.join(d, 'win.svg')).read(), "plot has a line")
+    check(list(pp.groups(ss)) == ['win', 'pts'] and list(pp.groups(ss)['win']) == ['win.a', 'win.b'], "plot groups")
+    try:
+        import matplotlib  # noqa: F401  (system python has none; unit-tests.sh runs the venv)
+        subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'plot_progress.py'), '--tsv', t, '--out', d], capture_output=True)
+        check(os.path.getsize(os.path.join(d, 'progress.png')) > 1000, "progress.png written")
+    except ImportError:
+        pass
+# games.py: player names, local rows, replica rows mapped to our submission by time
+gm = load('games')
+fld = {'/c/1': 'opp1'}
+check(gm.player('cls:/c/1/:pkg', fld) == 'opp1' and gm.player('bots/s2t/', fld) == 'us:s2t'
+      and gm.player('bots/examplefuncsplayer', fld) == 'examplefuncsplayer', "games player names")
+with tempfile.TemporaryDirectory() as d:
+    os.makedirs(os.path.join(d, 'r1'))
+    open(os.path.join(d, 'r1', 'results.jsonl'), 'w').write(
+        json.dumps(dict(a_spec='bots/x', b_spec='cls:/c/1:p', map='M', winner='B', rounds=200, winType='K', seed=3)) + '\n'
+        + 'not json\n' + json.dumps(dict(a_spec='bots/x', b_spec='cls:/c/1:p', winner=None)) + '\n')
+    lr = gm.local_rows(d, fld)
+    check(len(lr) == 1 and lr[0]['teamA'] == 'us:x' and lr[0]['teamB'] == 'opp1' and lr[0]['winner'] == 'B'
+          and (lr[0]['scoreA'], lr[0]['scoreB']) == (0, 1), f"games local rows {lr}")
+P = lambda team, idx, score, sub=None: {'teamname': team, 'player_index': idx, 'score': score, 'submission': sub}
+ms = [{'id': 2, 'status': 'OK!', 'is_ranked': True, 'maps': ['M1', 'M2', 'M3'], 'created': '2026-10-28T09:00:00-04:00',
+       'participants': [P('opp1', 0, 1), P(gm.TEAM, 1, 2)]},
+      {'id': 1, 'status': 'OK!', 'is_ranked': False, 'maps': ['M1'], 'created': '2026-10-28T03:00:00-04:00',
+       'participants': [P(gm.TEAM, 0, 0, 7), P('opp2', 1, 1)]},
+      {'id': 3, 'status': 'QUE', 'participants': []}]
+subs = [(gm.when_utc('2026-10-28T05:00:00-07:00'), 'new'), (gm.when_utc('2026-10-27T20:00:00-07:00'), 'old')]
+rr = gm.replica_rows(ms, {7: 'sub7'}, subs)
+check([(r['seq'], r['teamA'], r['teamB'], r['winner'], r['map'], r['run']) for r in rr] ==
+      [(1, 'us:sub7', 'opp2', 'B', 'M1', 'unranked'), (2, 'opp1', 'us:new', 'B', 'M1+M2+M3', 'ranked')], f"games replica rows {rr}")
+check(gm.replica_rows(ms[:1], {}, [])[0]['teamB'] == 'us:?', "games replica row without a known submission")
+# elolib / elo: Bradley-Terry fit orders players by strength, field score in [0, 1]
+el = load('elolib')
+gs = [('a', 'b', 3, 1), ('b', 'c', 3, 1), ('a', 'c', 4, 0)]
+rt = el.fit(gs)
+check(rt['a'].rating > rt['b'].rating > rt['c'].rating and abs(sum(x.rating for x in rt.values()) / 3 - 1500) < 1,
+      f"elolib fit order/mean {rt}")
+check(rt['a'].wins == 7 and rt['c'].losses == 7, f"elolib records {rt}")
+check(abs(el.expected(1500, 1500) - 0.5) < 1e-9 and el.expected(1900, 1500) > 0.9, "elolib expected")
+check(el.pair_table([('a', 'b', 300, 100)])[('a', 'b')] == [150.0, 50.0], "elolib pair cap")
+sys.path.insert(0, os.path.join(REPO, 'tools'))
+eo = load('elo')
+rows = [{'teamA': 'us:x', 'teamB': 'f1', 'scoreA': '1', 'scoreB': '0'}, {'teamA': 'f1', 'teamB': 'us:x', 'scoreA': '1', 'scoreB': '0'},
+        {'teamA': 'f1', 'teamB': 'f2', 'scoreA': '2', 'scoreB': '0'}]
+rt, field, fs = eo.compute(rows)
+check(sorted(field) == ['f1', 'f2'] and all(0 <= v <= 1 for v in fs.values()), f"elo compute {field} {fs}")
+# attempts: description seeding, init from bots/, render cells
+at = load('attempts')
+check(at.seed_description(['- s2t: trap tweak', 's2tt other'], 's2t') == 's2t: trap tweak'
+      and at.seed_description(['bots/s2t x', 'nothing'], 's2t') == '', "attempts seed description")
+with tempfile.TemporaryDirectory() as d:
+    for b in ('s1a', 'ratbot', 's1b'):
+        os.makedirs(os.path.join(d, 'bots', b))
+    open(os.path.join(d, 'TRAINING_LOG.md'), 'w').write('- s1b: bigger swarm\n')
+    csvp = os.path.join(d, 'a.csv')
+    check(at.init(d, csvp) == 2 and at.init(d, csvp) == 0, "attempts init adds snapshots once")
+    at.set_fields('s1b', ['outcome=adopted'], csvp)
+    rows = at.read(csvp)
+    check([r['codename'] for r in rows] == ['s1a', 's1b'] and rows[1]['description'] == 's1b: bigger swarm'
+          and rows[1]['outcome'] == 'adopted', f"attempts rows {rows}")
+    md = at.render(rows, {'s1b': {'pts.top6.3m': 23.71, 'kd.top6.3m': 1.234}}, {})
+    check('| s1b |' in md and '| 23.7 |' in md and '| 1.23 |' in md and 'adopted |' in md, "attempts render")
+# replica_report: W-L from replica rows, ladder and history markdown
+rp = load('replica_report')
+wl = rp.wl_from_games([{'source': 'replica', 'teamA': 'us:x', 'teamB': 'o', 'scoreA': '2', 'scoreB': '1'},
+                       {'source': 'local', 'teamA': 'us:x', 'teamB': 'o', 'scoreA': '0', 'scoreB': '1'}])
+check(wl == {rp.TEAM: [2, 1], 'o': [1, 2]}, f"replica W-L {wl}")
+import datetime as _dt
+now = _dt.datetime(2026, 10, 28, 6, 0, tzinfo=rp.PDT)
+lm = rp.ladder_md([{'name': 'o', 'rating': 1400.0, 'active': True}, {'name': rp.TEAM, 'rating': None, 'active': False}], wl, now)
+check('| 1 | o | 1400.0 | 1-2 | accepted |' in lm and f'| 2 | **{rp.TEAM}** | - | 2-1 | none |' in lm, "replica ladder md")
+hist = [(rp.ts('2026-10-28T10:00:00+00:00'), 900.0), (rp.ts('2026-10-28T12:00:00+00:00'), 1000.0)]
+hm = rp.history_md(hist, [{'id': 5, 'package': 'p', 'accepted': True, 'created': '2026-10-28T11:00:00+00:00'}], now)
+check('| #5 | p | 2026-10-28 04:00 | yes | 900 | 1 |' in hm and 'latest rating 1,000' in hm, "replica history md")
 # game_report.timeline on a synthetic tsv dir
 gr = load('game_report')
 with tempfile.TemporaryDirectory() as d:
