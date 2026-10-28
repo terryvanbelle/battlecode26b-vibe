@@ -32,6 +32,8 @@ public final class Cfg {
     public static final boolean TRAP_RISK = true;
     /** Squeak enemy positions/facings so nearby allies share TrapRisk marks. */
     public static final boolean TRAP_SHARE = true;
+    /** While chasing a ratnappable enemy, ignore suspected trap tiles. */
+    public static final boolean HUNT_IGNORES_RISK = true;
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;

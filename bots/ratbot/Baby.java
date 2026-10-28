@@ -54,11 +54,11 @@ public final class Baby {
         Nav.avoid = cat != null ? laneMask(cat) : 0;
         if (!G.coop && Cfg.TRAP_RISK) {
             TrapRisk.observe(robots);
-            if (Nav.stall < 8) Nav.avoid |= TrapRisk.mask(G.me);
         }
 
         eKing = enemyKing;
         nearestEnemy = null;
+        hunting = false;
         if (!G.coop) {
             int bd = Integer.MAX_VALUE;
             for (RobotInfo r : robots) {
@@ -67,11 +67,16 @@ public final class Baby {
                 if (d < bd) { bd = d; nearestEnemy = r; }
             }
             // fighters close on a rat they can grab (lower health than ours: trapped or bitten) before anything else
-            if (Cfg.POUNCE && role != GATHER && rc.getCarrying() == null) {
+            if (Cfg.POUNCE && rc.getCarrying() == null) {
                 RobotInfo p = prey(robots, rc.getHealth());
-                if (p != null) nearestEnemy = p;
+                // gatherers only grab prey that is close; fighters hunt it across their vision
+                if (p != null && (role != GATHER || G.me.distanceSquaredTo(p.location) <= 8)) {
+                    nearestEnemy = p;
+                    hunting = true;
+                }
             }
         }
+        if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8 && !(hunting && Cfg.HUNT_IGNORES_RISK)) Nav.avoid |= TrapRisk.mask(G.me);
         // 0. a carried enemy is thrown as soon as we can act
         if (rc.getCarrying() != null) tryThrow(robots);
         // 1. bites: enemy rats once cooperation is over (they shoot back; cats wait), then cats.
@@ -438,6 +443,9 @@ public final class Baby {
 
     // ---------------------------------------------------------------- movement
 
+    /** True this turn when nearestEnemy is a prey (a rat we could ratnap). */
+    static boolean hunting;
+
     /** Which branch took the last movement decision (debug tag mv=). */
     static char why = '-';
 
@@ -561,7 +569,7 @@ public final class Baby {
     /** War movement: close on a visible enemy king or nearby enemy rat, or answer a king's alert. */
     static boolean war() throws GameActionException {
         int raw = G.rc.getRawCheese();
-        if (role == GATHER && Cfg.WAR_GATHER > 0) {
+        if (role == GATHER && Cfg.WAR_GATHER > 0 && !hunting) {
             // gatherers keep the economy going: only an adjacent enemy stops them
             if (!nearEnemy(2)) return false;
             Direction f = G.me.directionTo(nearestEnemy.location);
