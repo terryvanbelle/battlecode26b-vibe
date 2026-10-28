@@ -55,3 +55,18 @@
   hit by a trap. Our Nav turns to face every step, so a retreating or gathering rat shows its back.
 - s1h/s1i: guard facing. With an enemy within d2 13 (s1i: 20), steps strafe so we keep facing it, and every turn
   ends facing the nearest enemy rat.
+
+## F5 (2026-10-28 03:22 PDT): idle in contact, starving on the floor
+- s1h vs Version41, rounds 85-115: our rats were within d2 20 of an enemy for 397 rat-rounds but bit 10 times, grabbed
+  9, threw 4 and laid no traps (they: 18 traps, 24 grabs, 18 throws, often throwing our rats onto traps). 200 of
+  the 350 engaged rat-rounds were gatherers still gathering (WAR_GATHER 1), and TrapRisk marks every enemy's front
+  tiles, so fighters could never step next to an enemy facing them.
+- s1j: king bites in combat with up to 225 cheese (+15), babies pay k*k for a finishing bite.
+- s1k: everyone fights (WAR_GATHER 0). s1l: also no trap-risk mask while an enemy is within d2 20. Damage dealt in
+  the battle window rose from 390 to 870-1080.
+- s1m: flank (step onto an enemy's blind neighbour facing it, grab after moving). Vs Icarus: grabs 75 vs 62,
+  throws 47 vs 29, kills even, still lost: from r100 the king sat on its 600 spawn floor and never reinforced,
+  then starved with no rats (Icarus spent down to 365 and kept 12-16 rats).
+- s1n: under 8 babies every floor drops to 100. Vs Icarus still lost (transferred 860 vs 2500; mid-game they pick
+  up more cheese on our side than we do). s1o: s1n with WAR_GATHER 1.
+- The ghi gauntlet was stopped at 48/144 (rift games run 2000 rounds, about 300 s each); s1g: 0/46, pts 30.0.
