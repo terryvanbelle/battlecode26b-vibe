@@ -30,6 +30,8 @@ public final class Cfg {
     public static final int FORT_TRAPS = 10;
     /** Avoid tiles where an enemy rat could have laid a trap (TrapRisk). */
     public static final boolean TRAP_RISK = true;
+    /** Squeak enemy positions/facings so nearby allies share TrapRisk marks. */
+    public static final boolean TRAP_SHARE = true;
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;

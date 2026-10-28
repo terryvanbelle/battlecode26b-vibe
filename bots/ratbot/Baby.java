@@ -413,6 +413,12 @@ public final class Baby {
 
     /** Squeak one fact to a nearby king: a mine it may not know, or a sharper symmetry mask. */
     static void report() {
+        // at war: tell nearby allies where an enemy stands and faces (its front tiles may hide a trap)
+        if (!G.coop && Cfg.TRAP_SHARE && nearestEnemy != null && nearestEnemy.direction != null) {
+            int d = nearestEnemy.direction.ordinal();
+            G.rc.squeak(Comms.squeak(Comms.SQ_TRAP, nearestEnemy.location.x, nearestEnemy.location.y, d));
+            return;
+        }
         if (Comms.numKings == 0) return;
         MapLocation k = Comms.nearestKing(G.me);
         if (k == null || G.me.distanceSquaredTo(k) > 9) return;

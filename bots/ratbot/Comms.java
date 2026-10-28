@@ -16,7 +16,7 @@ public final class Comms {
     public static final int BUDGET = 62;                         // spendable surplus / 4 (kings' projection)
 
     // squeak types (top 4 bits)
-    public static final int SQ_MINE = 1, SQ_SYM = 2, SQ_EKING = 3, SQ_CAT = 4;
+    public static final int SQ_MINE = 1, SQ_SYM = 2, SQ_EKING = 3, SQ_CAT = 4, SQ_TRAP = 5;
 
     public static int squeak(int type, int x, int y, int extra) {
         return (type << 28) | (extra << 12) | (x << 6) | y;

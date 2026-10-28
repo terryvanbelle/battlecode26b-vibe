@@ -393,6 +393,11 @@ public class BotTest {
         check(TrapRisk.mask(me) == 0, "traprisk: our neighbours (row 4..6) are not risky");
         G.round = 100 + TrapRisk.TTL + 1;
         check(!TrapRisk.risky(new MapLocation(5, 7)), "traprisk: marks expire");
+        // an ally's squeak about an enemy at (12,12) facing west marks (11, 11..13)
+        int c = Comms.squeak(Comms.SQ_TRAP, 12, 12, Direction.WEST.ordinal());
+        TrapRisk.heard(new Message[]{new Message(c, 7, G.round, new MapLocation(10, 10))});
+        check(TrapRisk.risky(new MapLocation(10, 12)), "traprisk: a squeaked enemy front marks tiles");
+        check(!TrapRisk.risky(new MapLocation(14, 12)), "traprisk: behind a squeaked enemy is safe");
     }
 
     public static void main(String[] args) throws Exception {

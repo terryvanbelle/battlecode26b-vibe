@@ -31,6 +31,8 @@ public final class TrapRisk {
             put(r.location.add(f.rotateLeft()));
             put(r.location.add(f.rotateRight()));
         }
+        if (Cfg.TRAP_SHARE) heard(G.rc.readSqueaks(G.round - 1));
+        if (Cfg.TRAP_SHARE) heard(G.rc.readSqueaks(G.round));
         // clear marks we have proven safe: anything within 1 of our tile marked before we arrived
         for (int dx = -1; dx <= 1; dx++)
             for (int dy = -1; dy <= 1; dy++) {
@@ -39,6 +41,20 @@ public final class TrapRisk {
                 int i = x + G.W * y;
                 if (mark[i] != 0 && mark[i] - 1 < arrived) mark[i] = 0;
             }
+    }
+
+    /** Marks from allies' SQ_TRAP squeaks: an enemy at (x, y) facing DIRS[extra]. */
+    static void heard(Message[] ms) {
+        for (Message m : ms) {
+            int c = m.getBytes();
+            if (Comms.sqType(c) != Comms.SQ_TRAP) continue;
+            int d = (c >> 12) & 7;
+            MapLocation e = new MapLocation(Comms.sqX(c), Comms.sqY(c));
+            Direction f = G.DIRS[d];
+            put(e.add(f));
+            put(e.add(f.rotateLeft()));
+            put(e.add(f.rotateRight()));
+        }
     }
 
     static void put(MapLocation l) {
