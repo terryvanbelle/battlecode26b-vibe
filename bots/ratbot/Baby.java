@@ -106,10 +106,12 @@ public final class Baby {
 
         // 3. movement
         Debug.mark(7);
+        MapLocation before = rc.getLocation();
         if (rc.isMovementReady()) moveDecision();
+        boolean moved = !rc.getLocation().equals(before);
         Debug.mark(20);
         pickUp();
-        if (rc.getCarrying() != null && Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(rc.senseNearbyRobots(-1, null));
+        if (rc.getCarrying() != null && moved && Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(rc.senseNearbyRobots(-1, null));
         Debug.mark(21);
         if (!G.coop && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
         Debug.mark(22);
@@ -278,6 +280,9 @@ public final class Baby {
      */
     static final RobotInfo[] grid = new RobotInfo[289];
     static final int[] gridAt = new int[289];
+    /** Damage when the flight ends at tile k (2 = point-blank 42, then 38, 34, ...). */
+    static final int[] FLIGHT_DMG = new int[9];
+    static { for (int k = 2; k <= 8; k++) FLIGHT_DMG[k] = 10 + 4 * (2 * (4 - (k - 1) / 2) + ((k & 1) == 1 ? 1 : 0)); }
     static int gridStamp;
 
     static void gridPut(int ox, int oy, RobotInfo r, int stamp) {
@@ -314,7 +319,7 @@ public final class Baby {
             int s2 = 10;
             for (int k = 2; k <= 8; k++) {
                 x += ddx; y += ddy;
-                int dmg = 10 + 4 * (2 * (4 - (k - 1) / 2) + ((k & 1) == 1 ? 1 : 0));
+                int dmg = FLIGHT_DMG[k];
                 if (x < 0 || y < 0 || x >= w || y >= h) { s2 = 10; break; }
                 if ((mem[x + w * y] & blk) != 0) { s2 = dmg; break; }
                 int gi = (k * ddx + 8) + 17 * (k * ddy + 8);

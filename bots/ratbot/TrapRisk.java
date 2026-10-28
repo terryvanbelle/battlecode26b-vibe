@@ -51,11 +51,12 @@ public final class TrapRisk {
     /** Marks from allies' SQ_TRAP squeaks: an enemy at (x, y) facing DIRS[extra]. */
     static void heard(Message[] ms) {
         for (Message m : ms) {
+            if (nHeard >= heardE.length) return;   // bytecode cap: the nearest few squeaks are enough
             int c = m.getBytes();
             if (Comms.sqType(c) != Comms.SQ_TRAP) continue;
             int d = (c >> 12) & 7;
             MapLocation e = new MapLocation(Comms.sqX(c), Comms.sqY(c));
-            if (nHeard < heardE.length) heardE[nHeard++] = e;
+            heardE[nHeard++] = e;
             Direction f = G.DIRS[d];
             put(e.add(f));
             put(e.add(f.rotateLeft()));
