@@ -10,14 +10,17 @@ Sources:
   replica -- finished matches of our galaxy replica (ours and field-vs-field), one row per match: map is the
             match's maps joined by '+', scoreA/scoreB are its game counts (galaxy does not publish per-game winners).
 
-Columns: source,run,seq,teamA,teamB,map,scoreA,scoreB,winner,rounds,reason,seed.
+Columns: source,run,seq,teamA,teamB,map,scoreA,scoreB,winner,rounds,reason,seed,ptsA,ptsB. ptsA/ptsB: a local game's
+points (tools/arena.py points(): the spec's weighted shares, at most 100 together; empty for runs older than it), a
+replica match's share of its games won (%).
 Players: our builds are us:<package> (a replica match's package is the submission it played), the stock
 examplefuncsplayer/lectureplayer keep their names, field bots use their research/field/FIELD.tsv name.
 """
 import argparse, csv, glob, json, os, sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-COLS = ['source', 'run', 'seq', 'teamA', 'teamB', 'map', 'scoreA', 'scoreB', 'winner', 'rounds', 'reason', 'seed']
+COLS = ['source', 'run', 'seq', 'teamA', 'teamB', 'map', 'scoreA', 'scoreB', 'winner', 'rounds', 'reason', 'seed',
+        'ptsA', 'ptsB']
 STOCK = ('examplefuncsplayer', 'lectureplayer')
 TEAM = 'vibe26b'
 
@@ -57,7 +60,8 @@ def local_rows(runs_dir, field):
             rows.append({'source': 'local', 'run': run, 'seq': seq,
                          'teamA': player(j['a_spec'], field), 'teamB': player(j['b_spec'], field),
                          'map': j.get('map', ''), 'scoreA': int(w == 'A'), 'scoreB': int(w == 'B'), 'winner': w,
-                         'rounds': j.get('rounds', ''), 'reason': j.get('winType', ''), 'seed': j.get('seed', '')})
+                         'rounds': j.get('rounds', ''), 'reason': j.get('winType', ''), 'seed': j.get('seed', ''),
+                         'ptsA': j.get('ptsA', ''), 'ptsB': j.get('ptsB', '')})
     return rows
 
 
@@ -82,7 +86,8 @@ def replica_rows(matches, packages, subs=()):
         rows.append({'source': 'replica', 'run': 'ranked' if m.get('is_ranked') else 'unranked', 'seq': m['id'],
                      'teamA': names[0], 'teamB': names[1], 'map': '+'.join(m.get('maps') or []),
                      'scoreA': a, 'scoreB': b, 'winner': 'A' if a > b else 'B' if b > a else 'T',
-                     'rounds': '', 'reason': '', 'seed': ''})
+                     'rounds': '', 'reason': '', 'seed': '',
+                     'ptsA': round(100 * a / (a + b), 1) if a + b else 50, 'ptsB': round(100 * b / (a + b), 1) if a + b else 50})
     return rows
 
 

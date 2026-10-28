@@ -42,3 +42,7 @@ I just switched you from Medium effort to Ultracode effort.  I'd like you to mar
 ## 6. 2026-10-28 06:50 PDT
 
 Your TRAINING_ALGORITHM looks a little thin.  I'd like you to model it after the one in battlecode19-vibe
+
+## 7. 2026-10-28 07:44 PDT
+
+progress/progress.png also doesn't look like it does in bc23

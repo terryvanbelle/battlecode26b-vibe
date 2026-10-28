@@ -64,8 +64,10 @@ with tempfile.TemporaryDirectory() as d:
     check(list(pp.groups(ss)) == ['win', 'pts'] and list(pp.groups(ss)['win']) == ['win.a', 'win.b'], "plot groups")
     try:
         import matplotlib  # noqa: F401  (system python has none; unit-tests.sh runs the venv)
-        subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'plot_progress.py'), '--tsv', t, '--out', d], capture_output=True)
-        check(os.path.getsize(os.path.join(d, 'progress.png')) > 1000, "progress.png written")
+        r = subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'plot_progress.py'), '--tsv', t, '--out', d,
+                            '--ratings', os.path.join(d, 'none.csv')], capture_output=True, text=True)
+        check(os.path.getsize(os.path.join(d, 'metrics.png')) > 1000 and not os.path.exists(os.path.join(d, 'progress.png'))
+              and 'progress.png skipped' in r.stdout, f"metrics.png written, progress.png skipped without ratings {r.stdout}")
     except ImportError:
         pass
 # games.py: player names, local rows, replica rows mapped to our submission by time
@@ -76,11 +78,11 @@ check(gm.player('cls:/c/1/:pkg', fld) == 'opp1' and gm.player('bots/s2t/', fld) 
 with tempfile.TemporaryDirectory() as d:
     os.makedirs(os.path.join(d, 'r1'))
     open(os.path.join(d, 'r1', 'results.jsonl'), 'w').write(
-        json.dumps(dict(a_spec='bots/x', b_spec='cls:/c/1:p', map='M', winner='B', rounds=200, winType='K', seed=3)) + '\n'
+        json.dumps(dict(a_spec='bots/x', b_spec='cls:/c/1:p', map='M', winner='B', rounds=200, winType='K', seed=3, ptsA=30, ptsB=60)) + '\n'
         + 'not json\n' + json.dumps(dict(a_spec='bots/x', b_spec='cls:/c/1:p', winner=None)) + '\n')
     lr = gm.local_rows(d, fld)
     check(len(lr) == 1 and lr[0]['teamA'] == 'us:x' and lr[0]['teamB'] == 'opp1' and lr[0]['winner'] == 'B'
-          and (lr[0]['scoreA'], lr[0]['scoreB']) == (0, 1), f"games local rows {lr}")
+          and (lr[0]['scoreA'], lr[0]['scoreB']) == (0, 1) and (lr[0]['ptsA'], lr[0]['ptsB']) == (30, 60), f"games local rows {lr}")
 P = lambda team, idx, score, sub=None: {'teamname': team, 'player_index': idx, 'score': score, 'submission': sub}
 ms = [{'id': 2, 'status': 'OK!', 'is_ranked': True, 'maps': ['M1', 'M2', 'M3'], 'created': '2026-10-28T09:00:00-04:00',
        'participants': [P('opp1', 0, 1), P(gm.TEAM, 1, 2)]},
@@ -91,6 +93,7 @@ subs = [(gm.when_utc('2026-10-28T05:00:00-07:00'), 'new'), (gm.when_utc('2026-10
 rr = gm.replica_rows(ms, {7: 'sub7'}, subs)
 check([(r['seq'], r['teamA'], r['teamB'], r['winner'], r['map'], r['run']) for r in rr] ==
       [(1, 'us:sub7', 'opp2', 'B', 'M1', 'unranked'), (2, 'opp1', 'us:new', 'B', 'M1+M2+M3', 'ranked')], f"games replica rows {rr}")
+check([(r['ptsA'], r['ptsB']) for r in rr] == [(0.0, 100.0), (33.3, 66.7)], f"games replica rows: share of games won {rr}")
 check(gm.replica_rows(ms[:1], {}, [])[0]['teamB'] == 'us:?', "games replica row without a known submission")
 # elolib / elo: Bradley-Terry fit orders players by strength, field score in [0, 1]
 el = load('elolib')
@@ -101,12 +104,33 @@ check(rt['a'].rating > rt['b'].rating > rt['c'].rating and abs(sum(x.rating for 
 check(rt['a'].wins == 7 and rt['c'].losses == 7, f"elolib records {rt}")
 check(abs(el.expected(1500, 1500) - 0.5) < 1e-9 and el.expected(1900, 1500) > 0.9, "elolib expected")
 check(el.pair_table([('a', 'b', 300, 100)])[('a', 'b')] == [150.0, 50.0], "elolib pair cap")
+kt = el.key_table([('u', 'f', 150, 50, 'm1'), ('f', 'u', 100, 100)])
+check(kt == {('u', 'f', 'm1'): [75.0, 25.0], ('f', 'u', None): [50.0, 50.0]}, f"elolib pair cap across keys {kt}")
+# keyed fit: u0 only meets f on the easy map, u1 only on the hard one, u2 on both (without a build on both maps, map
+# and build are confounded and only the prior splits them); exact expected outcomes, true u1 - u0 = +100
+P = lambda d: 1 / (1 + 10 ** (-d / 400))
+F, H = {'f0': -100, 'f1': 0, 'f2': 100}, {'easy': 150, 'hard': -150}
+kg = [(a, b, 100 * P(F[a] - F[b]), 100 * (1 - P(F[a] - F[b]))) for a in F for b in F if a < b]
+for u, du, mp in (('u0', -50, 'easy'), ('u1', 50, 'hard'), ('u2', 0, 'easy'), ('u2', 0, 'hard')):
+    kg += [(u, f, 100 * P(du + H[mp] - F[f]), 100 * (1 - P(du + H[mp] - F[f])), mp) for f in F]
+kr, kh = el.fit_h(kg)
+nr = el.fit([g[:4] for g in kg])
+check(80 < kr['u1'].rating - kr['u0'].rating < 105 and nr['u1'].rating < nr['u0'].rating and 270 < kh['easy'] - kh['hard'] < 305
+      and abs(kh['easy'] + kh['hard']) < 1e-6, f"elolib map handicap recovers u1 > u0 {kr} {kh}")
 sys.path.insert(0, os.path.join(REPO, 'tools'))
 eo = load('elo')
 rows = [{'teamA': 'us:x', 'teamB': 'f1', 'scoreA': '1', 'scoreB': '0'}, {'teamA': 'f1', 'teamB': 'us:x', 'scoreA': '1', 'scoreB': '0'},
         {'teamA': 'f1', 'teamB': 'f2', 'scoreA': '2', 'scoreB': '0'}]
 rt, field, fs = eo.compute(rows)
 check(sorted(field) == ['f1', 'f2'] and all(0 <= v <= 1 for v in fs.values()), f"elo compute {field} {fs}")
+lg = {'source': 'local', 'teamA': 'f1', 'teamB': 'us:x', 'map': 'M', 'scoreA': '1', 'scoreB': '0', 'ptsA': '75', 'ptsB': '25'}
+check(eo.game(lg) == ('us:x', 'f1', 0.25, 0.75, 'M'), f"elo game: ours first, keyed by map, points share {eo.game(lg)}")
+check(eo.game(dict(lg, source='replica', ptsA='', ptsB='')) == ('us:x', 'f1', 0.0, 1.0, 'replica'), "elo game: replica key, wins")
+check(eo.game(dict(lg, teamB='f2')) == ('f1', 'f2', 0.75, 0.25), "elo game: field vs field unkeyed")
+check(eo.game(dict(lg, ptsA='0', ptsB='0')) == ('us:x', 'f1', 0.0, 1.0, 'M'), "elo game: no points falls back to the score")
+check(eo.records(rows) == {'us:x': [1, 1], 'f1': [3, 1], 'f2': [0, 2]}, f"elo records {eo.records(rows)}")
+md, _ = eo.render(*eo.compute(rows, maps=True)[:3], [], 3, {'local': 3}, eo.records(rows), {'M': 12.0})
+check('| x |' in md and '| 1-1 |' in md and '| M | +12 |' in md, "elo render: game records and map handicaps")
 # attempts: description seeding, init from bots/, render cells
 at = load('attempts')
 check(at.seed_description(['- s2t: trap tweak', 's2tt other'], 's2t') == 's2t: trap tweak'
@@ -189,13 +213,25 @@ with tempfile.TemporaryDirectory() as d:
           f"plot version dates: earlier of snapshot and first measurement {vd}")
     ov, od = pp.in_time_order(['v1', 'v2', 'v3', 'v4'], vd)
     check(ov == ['v4', 'v1', 'v2', 'v3'] and od[-1] is None, f"plot axis in date order {ov}")
+    rc = os.path.join(d, 'ratings.csv')
+    open(rc, 'w').write('player,rating,se,games,field_score\nf1,1700,40,90,0.7\nus:v1,1500,50,40,0.45\nus:v2,1520,60,25,0.5\n'
+                        'us:v4,1480,80,20,0.4\nus:v3,1490,90,19,0.4\nus:ratbot,1600,30,200,0.6\n')
+    rts = pp.read_ratings(rc)
+    check(rts['us:v2'] == {'rating': 1520.0, 'se': 60.0, 'games': 25.0, 'field_score': 0.5} and pp.read_ratings(rc + 'x') == {},
+          f"plot read ratings {rts}")
+    check(pp.our_builds(rts) == ['v1', 'v2', 'v4'], f"plot builds: ours, 20+ games, no dev dir {pp.our_builds(rts)}")
+    open(os.path.join(d, 'ad.csv'), 'w').write('codename,date,base,description,outcome\na,,,,adopted: base\nb,,,,rejected (kept 12 rats)\n'
+                                               'c,,,,submitted to replica\nd,,,,"inconclusive; kept as dev base"\ne,,c2,,\n')
+    ad = pp.adopted(os.path.join(d, 'ad.csv'))
+    check(ad == {'a', 'c', 'd', 'c2'}, f"plot adopted builds {ad}")
     try:
         import matplotlib  # noqa: F401
         out = os.path.join(d, 'out')
         r = subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'plot_progress.py'), '--tsv', t, '--out', out,
-                            '--attempts', ac, '--milestones', mp], capture_output=True, text=True)
-        check(r.returncode == 0 and '2 milestones' in r.stdout and os.path.getsize(os.path.join(out, 'progress.png')) > 1000,
-              f"progress.png with milestones {r.stdout} {r.stderr[-300:]}")
+                            '--attempts', ac, '--milestones', mp, '--ratings', rc], capture_output=True, text=True)
+        check(r.returncode == 0 and '2 milestones' in r.stdout and 'progress.png: 3 builds' in r.stdout
+              and os.path.getsize(os.path.join(out, 'progress.png')) > 1000 and os.path.getsize(os.path.join(out, 'metrics.png')) > 1000,
+              f"progress.png + metrics.png with milestones {r.stdout} {r.stderr[-300:]}")
         rp0 = load('replica_report')
         h = [(rp0.ts('2026-10-28T12:00:00+00:00'), 900.0), (rp0.ts('2026-10-28T13:00:00+00:00'), 950.0)]
         sb = [{'id': 5, 'package': 'p', 'accepted': True, 'created': '2026-10-28T11:30:00+00:00'}]

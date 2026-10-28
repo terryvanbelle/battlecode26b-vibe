@@ -1,8 +1,8 @@
 # Ladder
 
-3019 rows of progress/games.csv (2700 local games, 319 replica matches), rated by a batch Bradley-Terry fit on the Elo scale (`tools/elolib.py`): each pair of players counts at most 200 games, every player carries one virtual win and loss against a fixed anchor, and ratings are relative to a mean of 1500 over all 113 players. Each of our builds is its own player. Regenerate with `tools/elo.py`; do not edit.
+3323 rows of progress/games.csv (2892 local games, 431 replica matches), rated by a batch Bradley-Terry fit on the Elo scale (`tools/elolib.py`). A local game counts its points share (a 23-77 loss is 0.23 of a win), a replica match its games won. A game between one of our builds and a field bot also fits how hard its map is for us (table at the end), so builds gauntleted on different maps compare on an average map. Each pair of players counts at most 200 games, every player carries one virtual win and loss against a fixed anchor, and ratings are relative to a mean of 1500 over all 115 players. Each of our builds is its own player. Regenerate with `tools/elo.py`; do not edit.
 
-**Caveat**: local games are win/loss only, and most of our gauntlets are against the six strongest field bots, which we rarely beat. Builds with no wins are indistinguishable here (they sit at the prior), and one or two wins against the strongest bot lift a build far more than its play warrants. Rank attempts by the gauntlet points share in `progress/ATTEMPTS.md` first; use this ladder for cross-build and field context.
+**Caveat**: most of our gauntlets are against the six strongest field bots on a few maps, so a build is rated mostly on those maps; field-vs-field games are few, so the field order rests largely on its games against us. Record = games won and lost.
 
 ![ratings of our builds](elo.png)
 
@@ -10,174 +10,258 @@ Our builds, in attempt order (rating +- 95%; field score = expected score agains
 
 | build | rating | rank | games | record | field score |
 |---|---|---|---|---|---|
-| s0e | 1243 +- 362 | 98 of 113 | 80 | 0-80 | 24.1% |
-| s0g | 1305 +- 377 | 88 of 113 | 52 | 0-52 | 28.3% |
-| s0h | 1312 +- 380 | 67 of 113 | 47 | 0-47 | 28.8% |
-| s0i | 1415 +- 440 | 50 of 113 | 12 | 0-12 | 36.1% |
-| s0j | 1656 +- 377 | 30 of 113 | 14 | 1-13 | 52.2% |
-| s0m | 1467 +- 58 | 42 of 113 | 183 | 98-85 | 39.6% |
-| s0n | 1531 +- 307 | 35 of 113 | 35 | 1-34 | 44.0% |
-| s0o | 1299 +- 375 | 89 of 113 | 54 | 0-54 | 27.9% |
-| s0p | 1356 +- 399 | 54 of 113 | 34 | 0-34 | 31.9% |
-| s0q | 1356 +- 399 | 55 of 113 | 34 | 0-34 | 31.9% |
-| s0r | 1539 +- 67 | 34 of 113 | 270 | 91-179 | 44.5% |
-| s0s | 1281 +- 370 | 91 of 113 | 48 | 0-48 | 26.6% |
-| s0t | 1281 +- 370 | 92 of 113 | 48 | 0-48 | 26.6% |
-| s0u | 1250 +- 112 | 97 of 113 | 85 | 13-72 | 24.5% |
-| v0d | 1521 +- 121 | 37 of 113 | 37 | 27-10 | 43.3% |
-| s0y | 1281 +- 370 | 93 of 113 | 48 | 0-48 | 26.6% |
-| s0z | 1281 +- 370 | 94 of 113 | 48 | 0-48 | 26.6% |
-| s1a | 1322 +- 384 | 59 of 113 | 24 | 0-24 | 29.5% |
-| s1b | 1322 +- 384 | 60 of 113 | 24 | 0-24 | 29.5% |
-| s1c | 1322 +- 384 | 61 of 113 | 24 | 0-24 | 29.5% |
-| s1d | 1322 +- 384 | 62 of 113 | 24 | 0-24 | 29.5% |
-| s1e | 1322 +- 384 | 63 of 113 | 24 | 0-24 | 29.5% |
-| s1f | 1322 +- 384 | 64 of 113 | 24 | 0-24 | 29.5% |
-| s1g | 1283 +- 371 | 90 of 113 | 46 | 0-46 | 26.8% |
-| s1h | 1445 +- 472 | 44 of 113 | 2 | 0-2 | 38.1% |
-| s1l | 1465 +- 285 | 43 of 113 | 36 | 1-35 | 39.5% |
-| s1n | 1307 +- 378 | 69 of 113 | 36 | 0-36 | 28.4% |
-| s1q | 1318 +- 382 | 65 of 113 | 29 | 0-29 | 29.2% |
-| s1s | 1307 +- 378 | 70 of 113 | 36 | 0-36 | 28.4% |
-| s1w | 1307 +- 378 | 71 of 113 | 36 | 0-36 | 28.4% |
-| s1x | 1307 +- 378 | 72 of 113 | 36 | 0-36 | 28.4% |
-| s1y | 1307 +- 378 | 73 of 113 | 36 | 0-36 | 28.4% |
-| s1z | 1307 +- 378 | 74 of 113 | 36 | 0-36 | 28.4% |
-| s2c | 1307 +- 378 | 75 of 113 | 36 | 0-36 | 28.4% |
-| s2e | 1307 +- 378 | 76 of 113 | 36 | 0-36 | 28.4% |
-| s2f | 1307 +- 378 | 77 of 113 | 36 | 0-36 | 28.4% |
-| s2i | 1307 +- 378 | 78 of 113 | 36 | 0-36 | 28.4% |
-| s2j | 1307 +- 378 | 79 of 113 | 36 | 0-36 | 28.4% |
-| s2k | 1311 +- 380 | 68 of 113 | 32 | 0-32 | 28.7% |
-| s2l | 1445 +- 472 | 45 of 113 | 2 | 0-2 | 38.1% |
-| s2m | 1307 +- 378 | 80 of 113 | 36 | 0-36 | 28.4% |
-| s2n | 1307 +- 378 | 81 of 113 | 36 | 0-36 | 28.4% |
-| s2o | 1420 +- 237 | 49 of 113 | 48 | 3-45 | 36.4% |
-| s2p | 1307 +- 378 | 82 of 113 | 36 | 0-36 | 28.4% |
-| s2q | 1307 +- 378 | 83 of 113 | 36 | 0-36 | 28.4% |
-| s2r | 1307 +- 378 | 84 of 113 | 36 | 0-36 | 28.4% |
-| s2s | 1468 +- 221 | 41 of 113 | 72 | 2-70 | 39.7% |
-| s2t | 1607 +- 116 | 31 of 113 | 244 | 9-235 | 49.0% |
-| s2u | 1307 +- 378 | 85 of 113 | 36 | 0-36 | 28.4% |
-| s2v | 1307 +- 378 | 86 of 113 | 36 | 0-36 | 28.4% |
-| s2w | 1307 +- 378 | 87 of 113 | 36 | 0-36 | 28.4% |
-| s2y | 1510 +- 190 | 38 of 113 | 96 | 3-93 | 42.6% |
-| ratbot | 1488 +- 55 | 40 of 113 | 187 | 122-65 | 41.1% |
+| s0e | 1611 +- 84 | 28 of 115 | 80 | 0-80 | 61.3% |
+| s0g | 1522 +- 109 | 59 of 115 | 52 | 0-52 | 53.2% |
+| s0h | 1486 +- 120 | 80 of 115 | 47 | 0-47 | 50.0% |
+| s0i | 1501 +- 228 | 72 of 115 | 12 | 0-12 | 51.4% |
+| s0j | 1489 +- 210 | 77 of 115 | 14 | 1-13 | 50.2% |
+| s0m | 1577 +- 66 | 32 of 115 | 183 | 98-85 | 58.3% |
+| s0n | 1505 +- 137 | 68 of 115 | 35 | 1-34 | 51.7% |
+| s0o | 1569 +- 103 | 36 of 115 | 54 | 0-54 | 57.5% |
+| s0p | 1568 +- 130 | 37 of 115 | 34 | 0-34 | 57.4% |
+| s0q | 1561 +- 131 | 43 of 115 | 34 | 0-34 | 56.8% |
+| s0r | 1567 +- 50 | 38 of 115 | 270 | 91-179 | 57.3% |
+| s0s | 1559 +- 110 | 44 of 115 | 48 | 0-48 | 56.6% |
+| s0t | 1566 +- 110 | 40 of 115 | 48 | 0-48 | 57.2% |
+| s0u | 1534 +- 87 | 52 of 115 | 85 | 13-72 | 54.3% |
+| v0d | 1612 +- 149 | 27 of 115 | 37 | 27-10 | 61.5% |
+| s0y | 1445 +- 124 | 86 of 115 | 48 | 0-48 | 46.3% |
+| s0z | 1553 +- 111 | 48 of 115 | 48 | 0-48 | 56.0% |
+| s1a | 1516 +- 166 | 63 of 115 | 24 | 0-24 | 52.7% |
+| s1b | 1493 +- 172 | 74 of 115 | 24 | 0-24 | 50.7% |
+| s1c | 1510 +- 168 | 66 of 115 | 24 | 0-24 | 52.2% |
+| s1d | 1527 +- 164 | 57 of 115 | 24 | 0-24 | 53.7% |
+| s1e | 1463 +- 181 | 84 of 115 | 24 | 0-24 | 48.0% |
+| s1f | 1489 +- 173 | 76 of 115 | 24 | 0-24 | 50.3% |
+| s1g | 1550 +- 114 | 50 of 115 | 46 | 0-46 | 55.8% |
+| s1h | 1580 +- 375 | 31 of 115 | 2 | 0-2 | 58.5% |
+| s1l | 1510 +- 141 | 67 of 115 | 36 | 1-35 | 52.2% |
+| s1n | 1533 +- 136 | 53 of 115 | 36 | 0-36 | 54.2% |
+| s1q | 1510 +- 156 | 65 of 115 | 29 | 0-29 | 52.2% |
+| s1s | 1493 +- 145 | 75 of 115 | 36 | 0-36 | 50.7% |
+| s1w | 1521 +- 139 | 60 of 115 | 36 | 0-36 | 53.1% |
+| s1x | 1496 +- 144 | 73 of 115 | 36 | 0-36 | 50.9% |
+| s1y | 1502 +- 143 | 69 of 115 | 36 | 0-36 | 51.4% |
+| s1z | 1488 +- 146 | 79 of 115 | 36 | 0-36 | 50.2% |
+| s2c | 1485 +- 147 | 81 of 115 | 36 | 0-36 | 49.9% |
+| s2e | 1516 +- 140 | 62 of 115 | 36 | 0-36 | 52.7% |
+| s2f | 1522 +- 139 | 58 of 115 | 36 | 0-36 | 53.2% |
+| s2i | 1502 +- 143 | 70 of 115 | 36 | 0-36 | 51.4% |
+| s2j | 1468 +- 151 | 82 of 115 | 36 | 0-36 | 48.4% |
+| s2k | 1488 +- 155 | 78 of 115 | 32 | 0-32 | 50.2% |
+| s2l | 1531 +- 383 | 55 of 115 | 2 | 0-2 | 54.0% |
+| s2m | 1551 +- 133 | 49 of 115 | 36 | 0-36 | 55.9% |
+| s2n | 1431 +- 162 | 88 of 115 | 36 | 0-36 | 45.0% |
+| s2o | 1591 +- 108 | 30 of 115 | 57 | 12-45 | 59.5% |
+| s2p | 1515 +- 140 | 64 of 115 | 36 | 0-36 | 52.6% |
+| s2q | 1540 +- 135 | 51 of 115 | 36 | 0-36 | 54.9% |
+| s2r | 1532 +- 137 | 54 of 115 | 36 | 0-36 | 54.2% |
+| s2s | 1572 +- 94 | 34 of 115 | 72 | 2-70 | 57.8% |
+| s2t | 1576 +- 53 | 33 of 115 | 244 | 9-235 | 58.1% |
+| s2u | 1528 +- 137 | 56 of 115 | 36 | 0-36 | 53.8% |
+| s2v | 1553 +- 133 | 47 of 115 | 36 | 0-36 | 56.1% |
+| s2w | 1553 +- 133 | 46 of 115 | 36 | 0-36 | 56.1% |
+| s2y | 1520 +- 92 | 61 of 115 | 96 | 3-93 | 53.1% |
+| s2z | 1566 +- 85 | 39 of 115 | 96 | 6-90 | 57.2% |
+| s3a | 1569 +- 85 | 35 of 115 | 96 | 2-94 | 57.5% |
+| ratbot | 1561 +- 65 | 42 of 115 | 187 | 122-65 | 56.8% |
 
 All players:
 
 | # | player | rating | games | record | field score |
 |---:|---|---|---|---|---|
-| 1 | uravt_Version41 | 2238 +- 103 | 662 | 651-11 | 89.3% |
-| 2 | uravt_Version35 | 2236 +- 120 | 65 | 54-11 | 89.2% |
-| 3 | quesswho_quals | 2219 +- 112 | 281 | 269-12 | 88.3% |
-| 4 | daannte_v52_ThisGuy | 2188 +- 108 | 411 | 398-13 | 86.8% |
-| 5 | IvanGeffner_basic51 | 2165 +- 136 | 43 | 32-11 | 85.5% |
-| 6 | quesswho_bot16 | 2135 +- 122 | 49 | 36-13 | 83.8% |
-| 7 | awu7_awubot_us | 2104 +- 149 | 43 | 33-10 | 82.0% |
-| 8 | battlecode-archive_testplayer | 2101 +- 141 | 40 | 31-9 | 81.8% |
-| 9 | daannte_v47_Skadoosh | 2098 +- 111 | 81 | 60-21 | 81.6% |
-| 10 | TeamSPAARK_SPAARK | 2093 +- 119 | 52 | 37-15 | 81.3% |
-| 11 | awu7_awubot_quals | 2055 +- 124 | 40 | 26-14 | 78.9% |
-| 12 | AlexT101_finalsbot | 2044 +- 87 | 397 | 372-25 | 78.2% |
-| 13 | AdamTan12_Finals | 2040 +- 103 | 298 | 279-19 | 78.0% |
-| 14 | abcdezyxwv_bestsofar | 2040 +- 161 | 28 | 21-7 | 78.0% |
-| 15 | nzjt_TheComplexMerlin | 2013 +- 174 | 37 | 30-7 | 76.2% |
-| 16 | HugoIngelsson_Xzibit | 1980 +- 194 | 40 | 35-5 | 74.0% |
-| 17 | AdamTan12_Icarus | 1972 +- 84 | 315 | 282-33 | 73.5% |
-| 18 | nubbbbbb_testplayer | 1966 +- 155 | 25 | 14-11 | 73.0% |
-| 19 | HugoIngelsson_YokoOno | 1928 +- 148 | 43 | 29-14 | 70.4% |
-| 20 | thewaxmango_PhD | 1918 +- 187 | 34 | 27-7 | 69.8% |
-| 21 | thewaxmango_collegejunior | 1915 +- 149 | 46 | 34-12 | 69.6% |
-| 22 | spsquared_TSPAARK_QUALS | 1907 +- 189 | 28 | 17-11 | 69.0% |
-| 23 | AlexT101_usqualsbot | 1839 +- 152 | 41 | 22-19 | 64.4% |
-| 24 | outercloudstudio_v_1_18 | 1817 +- 229 | 22 | 19-3 | 62.9% |
-| 25 | bman12345678_goonv23 | 1813 +- 218 | 34 | 30-4 | 62.6% |
-| 26 | TeamSPAARK_TSPAARKJAN25 | 1793 +- 374 | 4 | 4-0 | 61.3% |
-| 27 | VarunVejalla_refactored_final3 | 1793 +- 374 | 4 | 4-0 | 61.3% |
-| 28 | amcsz_fighterrats | 1712 +- 195 | 22 | 11-11 | 56.0% |
-| 29 | VarunVejalla_final4_run_away10 | 1695 +- 186 | 28 | 19-9 | 54.8% |
-| 30 | us:s0j | 1656 +- 377 | 14 | 1-13 | 52.2% |
-| 31 | us:s2t | 1607 +- 116 | 244 | 9-235 | 49.0% |
-| 32 | CS50Crab_rapierV1 | 1578 +- 146 | 40 | 21-19 | 47.1% |
-| 33 | CS50Crab_protoSaberV7 | 1573 +- 139 | 40 | 21-19 | 46.7% |
-| 34 | us:s0r | 1539 +- 67 | 270 | 91-179 | 44.5% |
-| 35 | us:s0n | 1531 +- 307 | 35 | 1-34 | 44.0% |
-| 36 | XSercia_genies | 1525 +- 131 | 64 | 20-44 | 43.5% |
-| 37 | us:v0d | 1521 +- 121 | 37 | 27-10 | 43.3% |
-| 38 | us:s2y | 1510 +- 190 | 96 | 3-93 | 42.6% |
-| 39 | PixelRifts_mushakraj_mk3 | 1509 +- 178 | 37 | 19-18 | 42.4% |
-| 40 | us:ratbot | 1488 +- 55 | 187 | 122-65 | 41.1% |
-| 41 | us:s2s | 1468 +- 221 | 72 | 2-70 | 39.7% |
-| 42 | us:s0m | 1467 +- 58 | 183 | 98-85 | 39.6% |
-| 43 | us:s1l | 1465 +- 285 | 36 | 1-35 | 39.5% |
-| 44 | us:s1h | 1445 +- 472 | 2 | 0-2 | 38.1% |
-| 45 | us:s2l | 1445 +- 472 | 2 | 0-2 | 38.1% |
-| 46 | bc26vibe_bot | 1435 +- 133 | 27 | 15-12 | 37.2% |
-| 47 | C0derTang_v6 | 1429 +- 128 | 34 | 14-20 | 36.8% |
-| 48 | Naton-Cai_ratplayer | 1428 +- 144 | 37 | 13-24 | 36.7% |
-| 49 | us:s2o | 1420 +- 237 | 48 | 3-45 | 36.4% |
-| 50 | us:s0i | 1415 +- 440 | 12 | 0-12 | 36.1% |
-| 51 | ask8000_bumchit67 | 1389 +- 131 | 40 | 15-25 | 34.0% |
-| 52 | bc26-example | 1371 +- 120 | 60 | 18-42 | 32.7% |
-| 53 | Camleaf_mk1 | 1367 +- 159 | 37 | 16-21 | 32.4% |
-| 54 | us:s0p | 1356 +- 399 | 34 | 0-34 | 31.9% |
-| 55 | us:s0q | 1356 +- 399 | 34 | 0-34 | 31.9% |
-| 56 | j2399_weighted_micro_v9 | 1356 +- 171 | 34 | 12-22 | 31.6% |
-| 57 | examplefuncsplayer | 1353 +- 38 | 370 | 131-239 | 31.4% |
-| 58 | justinottesen_alfredo | 1349 +- 140 | 43 | 15-28 | 31.1% |
-| 59 | us:s1a | 1322 +- 384 | 24 | 0-24 | 29.5% |
-| 60 | us:s1b | 1322 +- 384 | 24 | 0-24 | 29.5% |
-| 61 | us:s1c | 1322 +- 384 | 24 | 0-24 | 29.5% |
-| 62 | us:s1d | 1322 +- 384 | 24 | 0-24 | 29.5% |
-| 63 | us:s1e | 1322 +- 384 | 24 | 0-24 | 29.5% |
-| 64 | us:s1f | 1322 +- 384 | 24 | 0-24 | 29.5% |
-| 65 | us:s1q | 1318 +- 382 | 29 | 0-29 | 29.2% |
-| 66 | justinottesen_carbonara | 1317 +- 171 | 25 | 7-18 | 28.8% |
-| 67 | us:s0h | 1312 +- 380 | 47 | 0-47 | 28.8% |
-| 68 | us:s2k | 1311 +- 380 | 32 | 0-32 | 28.7% |
-| 69 | us:s1n | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 70 | us:s1s | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 71 | us:s1w | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 72 | us:s1x | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 73 | us:s1y | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 74 | us:s1z | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 75 | us:s2c | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 76 | us:s2e | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 77 | us:s2f | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 78 | us:s2i | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 79 | us:s2j | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 80 | us:s2m | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 81 | us:s2n | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 82 | us:s2p | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 83 | us:s2q | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 84 | us:s2r | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 85 | us:s2u | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 86 | us:s2v | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 87 | us:s2w | 1307 +- 378 | 36 | 0-36 | 28.4% |
-| 88 | us:s0g | 1305 +- 377 | 52 | 0-52 | 28.3% |
-| 89 | us:s0o | 1299 +- 375 | 54 | 0-54 | 27.9% |
-| 90 | us:s1g | 1283 +- 371 | 46 | 0-46 | 26.8% |
-| 91 | us:s0s | 1281 +- 370 | 48 | 0-48 | 26.6% |
-| 92 | us:s0t | 1281 +- 370 | 48 | 0-48 | 26.6% |
-| 93 | us:s0y | 1281 +- 370 | 48 | 0-48 | 26.6% |
-| 94 | us:s0z | 1281 +- 370 | 48 | 0-48 | 26.6% |
-| 95 | vincentwang60_javabot | 1273 +- 170 | 28 | 8-20 | 25.7% |
-| 96 | bc26-example-copy | 1269 +- 110 | 54 | 17-37 | 25.4% |
-| 97 | us:s0u | 1250 +- 112 | 85 | 13-72 | 24.5% |
-| 98 | us:s0e | 1243 +- 362 | 80 | 0-80 | 24.1% |
-| 99 | winkelmantanner_genetic1 | 1227 +- 375 | 4 | 0-4 | 22.5% |
-| 100 | LL-OV_Astro | 1227 +- 375 | 4 | 0-4 | 22.5% |
-| 101 | OmarAyman33_pre_nav_2 | 1227 +- 375 | 4 | 0-4 | 22.5% |
-| 102 | StuxnetStudios_skaven | 1227 +- 375 | 4 | 0-4 | 22.5% |
-| 103 | TheEvergreenStateCollege_immortal_chariot | 1227 +- 375 | 4 | 0-4 | 22.5% |
-| 104 | Victor-Ramirez-Garcia_battlecats | 1227 +- 375 | 4 | 0-4 | 22.5% |
-| 105 | Gavdingo_v1 | 1226 +- 134 | 49 | 11-38 | 22.4% |
-| 106 | GuzziFlipFlops_Hermesv8 | 1219 +- 144 | 37 | 12-25 | 22.0% |
-| 107 | battlecode-archive_result_408 | 1211 +- 163 | 43 | 5-38 | 21.4% |
-| 108 | seru9_TOTAL_AGGRO | 1167 +- 164 | 43 | 7-36 | 18.7% |
-| 109 | quanticsoul4772_ratbot | 1116 +- 191 | 31 | 3-28 | 15.6% |
-| 110 | Victor-Ramirez-Garcia_battleca | 1098 +- 154 | 48 | 7-41 | 14.6% |
-| 111 | j2399_weighted_path | 1042 +- 357 | 19 | 0-19 | 11.7% |
-| 112 | anicolao_myplayer | 919 +- 212 | 46 | 2-44 | 6.7% |
-| 113 | Krak9n_robot | 916 +- 252 | 40 | 1-39 | 6.6% |
+| 1 | uravt_Version35 | 1925 +- 89 | 80 | 65-15 | 86.6% |
+| 2 | IvanGeffner_basic51 | 1902 +- 103 | 61 | 46-15 | 85.2% |
+| 3 | awu7_awubot_us | 1834 +- 111 | 58 | 45-13 | 80.5% |
+| 4 | daannte_v52_ThisGuy | 1811 +- 40 | 459 | 435-24 | 78.8% |
+| 5 | abcdezyxwv_bestsofar | 1809 +- 141 | 34 | 27-7 | 78.6% |
+| 6 | uravt_Version41 | 1808 +- 32 | 752 | 738-14 | 78.5% |
+| 7 | battlecode-archive_testplayer | 1806 +- 107 | 55 | 39-16 | 78.4% |
+| 8 | nzjt_TheComplexMerlin | 1801 +- 137 | 46 | 38-8 | 78.0% |
+| 9 | awu7_awubot_quals | 1800 +- 114 | 43 | 29-14 | 78.0% |
+| 10 | quesswho_bot16 | 1790 +- 96 | 61 | 41-20 | 77.1% |
+| 11 | thewaxmango_PhD | 1788 +- 142 | 46 | 39-7 | 77.0% |
+| 12 | nubbbbbb_testplayer | 1774 +- 128 | 37 | 26-11 | 75.8% |
+| 13 | daannte_v47_Skadoosh | 1771 +- 81 | 96 | 67-29 | 75.6% |
+| 14 | AdamTan12_Icarus | 1764 +- 45 | 345 | 304-41 | 75.0% |
+| 15 | AlexT101_finalsbot | 1736 +- 39 | 436 | 398-38 | 72.7% |
+| 16 | quesswho_quals | 1728 +- 45 | 314 | 296-18 | 72.0% |
+| 17 | TeamSPAARK_SPAARK | 1724 +- 95 | 64 | 38-26 | 71.7% |
+| 18 | HugoIngelsson_Xzibit | 1715 +- 137 | 49 | 41-8 | 70.9% |
+| 19 | AdamTan12_Finals | 1687 +- 42 | 346 | 315-31 | 68.4% |
+| 20 | thewaxmango_collegejunior | 1682 +- 124 | 49 | 36-13 | 67.9% |
+| 21 | TeamSPAARK_TSPAARKJAN25 | 1669 +- 293 | 4 | 4-0 | 66.8% |
+| 22 | bman12345678_goonv23 | 1665 +- 160 | 43 | 38-5 | 66.5% |
+| 23 | AlexT101_usqualsbot | 1664 +- 105 | 56 | 35-21 | 66.3% |
+| 24 | HugoIngelsson_YokoOno | 1651 +- 116 | 49 | 32-17 | 65.2% |
+| 25 | outercloudstudio_v_1_18 | 1648 +- 157 | 37 | 32-5 | 64.9% |
+| 26 | VarunVejalla_refactored_final3 | 1623 +- 284 | 4 | 4-0 | 62.6% |
+| 27 | us:v0d | 1612 +- 149 | 37 | 27-10 | 61.5% |
+| 28 | us:s0e | 1611 +- 84 | 80 | 0-80 | 61.3% |
+| 29 | VarunVejalla_final4_run_away10 | 1591 +- 155 | 37 | 28-9 | 59.7% |
+| 30 | us:s2o | 1591 +- 108 | 57 | 12-45 | 59.5% |
+| 31 | us:s1h | 1580 +- 375 | 2 | 0-2 | 58.5% |
+| 32 | us:s0m | 1577 +- 66 | 183 | 98-85 | 58.3% |
+| 33 | us:s2t | 1576 +- 53 | 244 | 9-235 | 58.1% |
+| 34 | us:s2s | 1572 +- 94 | 72 | 2-70 | 57.8% |
+| 35 | us:s3a | 1569 +- 85 | 96 | 2-94 | 57.5% |
+| 36 | us:s0o | 1569 +- 103 | 54 | 0-54 | 57.5% |
+| 37 | us:s0p | 1568 +- 130 | 34 | 0-34 | 57.4% |
+| 38 | us:s0r | 1567 +- 50 | 270 | 91-179 | 57.3% |
+| 39 | us:s2z | 1566 +- 85 | 96 | 6-90 | 57.2% |
+| 40 | us:s0t | 1566 +- 110 | 48 | 0-48 | 57.2% |
+| 41 | spsquared_TSPAARK_QUALS | 1565 +- 139 | 37 | 21-16 | 57.3% |
+| 42 | us:ratbot | 1561 +- 65 | 187 | 122-65 | 56.8% |
+| 43 | us:s0q | 1561 +- 131 | 34 | 0-34 | 56.8% |
+| 44 | us:s0s | 1559 +- 110 | 48 | 0-48 | 56.6% |
+| 45 | StuxnetStudios_skaven | 1559 +- 280 | 4 | 0-4 | 56.7% |
+| 46 | us:s2w | 1553 +- 133 | 36 | 0-36 | 56.1% |
+| 47 | us:s2v | 1553 +- 133 | 36 | 0-36 | 56.1% |
+| 48 | us:s0z | 1553 +- 111 | 48 | 0-48 | 56.0% |
+| 49 | us:s2m | 1551 +- 133 | 36 | 0-36 | 55.9% |
+| 50 | us:s1g | 1550 +- 114 | 46 | 0-46 | 55.8% |
+| 51 | us:s2q | 1540 +- 135 | 36 | 0-36 | 54.9% |
+| 52 | us:s0u | 1534 +- 87 | 85 | 13-72 | 54.3% |
+| 53 | us:s1n | 1533 +- 136 | 36 | 0-36 | 54.2% |
+| 54 | us:s2r | 1532 +- 137 | 36 | 0-36 | 54.2% |
+| 55 | us:s2l | 1531 +- 383 | 2 | 0-2 | 54.0% |
+| 56 | us:s2u | 1528 +- 137 | 36 | 0-36 | 53.8% |
+| 57 | us:s1d | 1527 +- 164 | 24 | 0-24 | 53.7% |
+| 58 | us:s2f | 1522 +- 139 | 36 | 0-36 | 53.2% |
+| 59 | us:s0g | 1522 +- 109 | 52 | 0-52 | 53.2% |
+| 60 | us:s1w | 1521 +- 139 | 36 | 0-36 | 53.1% |
+| 61 | us:s2y | 1520 +- 92 | 96 | 3-93 | 53.1% |
+| 62 | us:s2e | 1516 +- 140 | 36 | 0-36 | 52.7% |
+| 63 | us:s1a | 1516 +- 166 | 24 | 0-24 | 52.7% |
+| 64 | us:s2p | 1515 +- 140 | 36 | 0-36 | 52.6% |
+| 65 | us:s1q | 1510 +- 156 | 29 | 0-29 | 52.2% |
+| 66 | us:s1c | 1510 +- 168 | 24 | 0-24 | 52.2% |
+| 67 | us:s1l | 1510 +- 141 | 36 | 1-35 | 52.2% |
+| 68 | us:s0n | 1505 +- 137 | 35 | 1-34 | 51.7% |
+| 69 | us:s1y | 1502 +- 143 | 36 | 0-36 | 51.4% |
+| 70 | us:s2i | 1502 +- 143 | 36 | 0-36 | 51.4% |
+| 71 | amcsz_fighterrats | 1502 +- 133 | 37 | 17-20 | 51.4% |
+| 72 | us:s0i | 1501 +- 228 | 12 | 0-12 | 51.4% |
+| 73 | us:s1x | 1496 +- 144 | 36 | 0-36 | 50.9% |
+| 74 | us:s1b | 1493 +- 172 | 24 | 0-24 | 50.7% |
+| 75 | us:s1s | 1493 +- 145 | 36 | 0-36 | 50.7% |
+| 76 | us:s1f | 1489 +- 173 | 24 | 0-24 | 50.3% |
+| 77 | us:s0j | 1489 +- 210 | 14 | 1-13 | 50.2% |
+| 78 | us:s2k | 1488 +- 155 | 32 | 0-32 | 50.2% |
+| 79 | us:s1z | 1488 +- 146 | 36 | 0-36 | 50.2% |
+| 80 | us:s0h | 1486 +- 120 | 47 | 0-47 | 50.0% |
+| 81 | us:s2c | 1485 +- 147 | 36 | 0-36 | 49.9% |
+| 82 | us:s2j | 1468 +- 151 | 36 | 0-36 | 48.4% |
+| 83 | CS50Crab_rapierV1 | 1466 +- 109 | 58 | 33-25 | 48.2% |
+| 84 | us:s1e | 1463 +- 181 | 24 | 0-24 | 48.0% |
+| 85 | OmarAyman33_pre_nav_2 | 1457 +- 291 | 4 | 0-4 | 47.4% |
+| 86 | us:s0y | 1445 +- 124 | 48 | 0-48 | 46.3% |
+| 87 | PixelRifts_mushakraj_mk3 | 1434 +- 126 | 55 | 28-27 | 45.3% |
+| 88 | us:s2n | 1431 +- 162 | 36 | 0-36 | 45.0% |
+| 89 | CS50Crab_protoSaberV7 | 1405 +- 110 | 58 | 25-33 | 42.7% |
+| 90 | TheEvergreenStateCollege_immortal_chariot | 1364 +- 323 | 4 | 0-4 | 39.0% |
+| 91 | XSercia_genies | 1353 +- 102 | 85 | 22-63 | 38.0% |
+| 92 | Naton-Cai_ratplayer | 1346 +- 133 | 43 | 17-26 | 37.5% |
+| 93 | C0derTang_v6 | 1345 +- 113 | 46 | 21-25 | 37.3% |
+| 94 | Victor-Ramirez-Garcia_battlecats | 1336 +- 337 | 4 | 0-4 | 36.6% |
+| 95 | bc26vibe_bot | 1328 +- 124 | 36 | 22-14 | 35.9% |
+| 96 | ask8000_bumchit67 | 1281 +- 107 | 58 | 21-37 | 31.9% |
+| 97 | winkelmantanner_genetic1 | 1276 +- 374 | 4 | 0-4 | 31.5% |
+| 98 | LL-OV_Astro | 1276 +- 374 | 4 | 0-4 | 31.5% |
+| 99 | examplefuncsplayer | 1273 +- 48 | 370 | 131-239 | 31.2% |
+| 100 | bc26-example | 1235 +- 92 | 90 | 26-64 | 28.2% |
+| 101 | justinottesen_alfredo | 1234 +- 109 | 64 | 22-42 | 28.1% |
+| 102 | justinottesen_carbonara | 1230 +- 152 | 37 | 9-28 | 27.7% |
+| 103 | vincentwang60_javabot | 1214 +- 138 | 46 | 13-33 | 26.6% |
+| 104 | Camleaf_mk1 | 1211 +- 121 | 55 | 20-35 | 26.3% |
+| 105 | j2399_weighted_micro_v9 | 1209 +- 138 | 43 | 15-28 | 26.1% |
+| 106 | GuzziFlipFlops_Hermesv8 | 1201 +- 117 | 52 | 19-33 | 25.5% |
+| 107 | bc26-example-copy | 1157 +- 103 | 60 | 20-40 | 22.3% |
+| 108 | battlecode-archive_result_408 | 1156 +- 139 | 49 | 7-42 | 22.3% |
+| 109 | Gavdingo_v1 | 1136 +- 114 | 61 | 16-45 | 20.8% |
+| 110 | seru9_TOTAL_AGGRO | 1124 +- 121 | 58 | 15-43 | 20.0% |
+| 111 | quanticsoul4772_ratbot | 1040 +- 159 | 46 | 6-40 | 14.9% |
+| 112 | Victor-Ramirez-Garcia_battleca | 987 +- 126 | 60 | 10-50 | 12.1% |
+| 113 | j2399_weighted_path | 921 +- 272 | 25 | 1-24 | 9.2% |
+| 114 | anicolao_myplayer | 855 +- 184 | 58 | 3-55 | 6.8% |
+| 115 | Krak9n_robot | 787 +- 249 | 46 | 1-45 | 4.8% |
+
+Map handicap for our builds (Elo points; + = we score better there than on an average map of the mix, replica = the replica's map rotation):
+
+| map | handicap |
+|---|---:|
+| rift | +271 |
+| knifefight | +223 |
+| minimaze | +135 |
+| UncomfortablyClose | +131 |
+| TheHeist | +125 |
+| constrictinglattice | +123 |
+| DefaultLarge | +111 |
+| uneruesansfin | +92 |
+| sittingducks | +81 |
+| mercifullattice | +80 |
+| averystrangespace | +78 |
+| cheeseguardians | +71 |
+| superioristhmus | +67 |
+| dirtpassageway | +65 |
+| hatefullattice | +65 |
+| ratsareants | +64 |
+| streetsofnewyork | +57 |
+| keepout | +56 |
+| corridorofdoomanddespair | +53 |
+| jail | +45 |
+| safelycontained | +40 |
+| thunderdome | +36 |
+| uneasy_alliance | +33 |
+| evileye | +29 |
+| tornadoes | +25 |
+| DefaultMedium | +25 |
+| peaceinourtime | +21 |
+| clouds | +17 |
+| arrows | +15 |
+| DefaultSmall | +13 |
+| sunandmoon | +8 |
+| dirtfulcat | +5 |
+| houseofcards | +3 |
+| starvation | +3 |
+| groveisbeingdesecrated | -3 |
+| ZeroDay | -6 |
+| attack_on_cat | -6 |
+| heart | -8 |
+| rose | -9 |
+| where_are_you | -10 |
+| diamond | -11 |
+| cheesebottles | -12 |
+| seepastyourgreed | -12 |
+| FreeTheCheese | -13 |
+| learn_your_lesson | -29 |
+| t_minus_five_minutes | -32 |
+| Nofreecheese | -37 |
+| trapped | -37 |
+| Meow | -45 |
+| krotus | -45 |
+| popthecork | -50 |
+| tiny | -52 |
+| bed | -58 |
+| Hike | -61 |
+| toomuchcheese | -63 |
+| fullofsecrets | -64 |
+| whereisthecheese | -66 |
+| mincemeat | -67 |
+| averyfineline | -68 |
+| 5t4rv4t10n_1337 | -70 |
+| EscapeTheNight | -71 |
+| externalsustenance | -71 |
+| pipes | -72 |
+| ultimatestarvation | -73 |
+| canyoudig | -74 |
+| wallsofparadis | -76 |
+| RUN | -78 |
+| gridlock | -86 |
+| Excavation | -87 |
+| whatsthecatdoin | -88 |
+| closeup | -95 |
+| cheesefarm | -100 |
+| Stash | -115 |
+| replica | -152 |
+| clockwisdom | -304 |
