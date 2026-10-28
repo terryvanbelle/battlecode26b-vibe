@@ -17,6 +17,7 @@ public final class Debug {
               .append(" rt=").append(Baby.ratTraps).append(" nap=").append(Baby.naps).append(" th=").append(Baby.throwsDone)
               .append(" dg=").append(Nav.digs).append(" mv=").append(Baby.why);
         }
+        if (Baby.raidTarget != null) sb.append(" rz=").append(Baby.raidTarget.x).append(',').append(Baby.raidTarget.y);
         sb.append(" sym=").append(Sym.mask);
         if (Sym.contradictions > 0) sb.append(" SYMX=").append(Sym.contradictions);
         if (RobotPlayer.overruns > 0) sb.append(" OVR=").append(RobotPlayer.overruns);

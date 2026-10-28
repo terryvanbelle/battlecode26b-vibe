@@ -12,36 +12,38 @@
 <line x1="56" x2="560" y1="36.0" y2="36.0" stroke="#e9ecef"/>
 <text x="50" y="40.0" text-anchor="end" fill="#495057">1</text>
 <text transform="translate(56.0,302) rotate(40)" fill="#495057">v0b</text>
-<text transform="translate(77.0,302) rotate(40)" fill="#495057">v0c</text>
-<text transform="translate(98.0,302) rotate(40)" fill="#495057">v0d</text>
-<text transform="translate(119.0,302) rotate(40)" fill="#495057">v0e</text>
-<text transform="translate(140.0,302) rotate(40)" fill="#495057">v0f</text>
-<text transform="translate(161.0,302) rotate(40)" fill="#495057">s0g</text>
-<text transform="translate(182.0,302) rotate(40)" fill="#495057">s0h</text>
-<text transform="translate(203.0,302) rotate(40)" fill="#495057">s0m</text>
-<text transform="translate(224.0,302) rotate(40)" fill="#495057">s0n</text>
-<text transform="translate(245.0,302) rotate(40)" fill="#495057">s0o</text>
-<text transform="translate(266.0,302) rotate(40)" fill="#495057">s0p</text>
-<text transform="translate(287.0,302) rotate(40)" fill="#495057">s0q</text>
-<text transform="translate(308.0,302) rotate(40)" fill="#495057">s0r</text>
-<text transform="translate(329.0,302) rotate(40)" fill="#495057">s0s</text>
-<text transform="translate(350.0,302) rotate(40)" fill="#495057">s0t</text>
-<text transform="translate(371.0,302) rotate(40)" fill="#495057">s0u</text>
-<text transform="translate(392.0,302) rotate(40)" fill="#495057">s0y</text>
-<text transform="translate(413.0,302) rotate(40)" fill="#495057">s0z</text>
-<text transform="translate(434.0,302) rotate(40)" fill="#495057">s1g</text>
-<text transform="translate(455.0,302) rotate(40)" fill="#495057">s1l</text>
-<text transform="translate(476.0,302) rotate(40)" fill="#495057">s1n</text>
-<text transform="translate(497.0,302) rotate(40)" fill="#495057">s1q</text>
-<text transform="translate(518.0,302) rotate(40)" fill="#495057">s1s</text>
-<text transform="translate(539.0,302) rotate(40)" fill="#495057">s1w</text>
-<text transform="translate(560.0,302) rotate(40)" fill="#495057">s1x</text>
-<polyline fill="none" stroke="#2a6fdb" stroke-width="2" points="56.0,65.2 77.0,67.0 98.0,60.1 119.0,121.9 140.0,116.8"/>
+<text transform="translate(75.4,302) rotate(40)" fill="#495057">v0c</text>
+<text transform="translate(94.8,302) rotate(40)" fill="#495057">v0d</text>
+<text transform="translate(114.2,302) rotate(40)" fill="#495057">v0e</text>
+<text transform="translate(133.5,302) rotate(40)" fill="#495057">v0f</text>
+<text transform="translate(152.9,302) rotate(40)" fill="#495057">s0g</text>
+<text transform="translate(172.3,302) rotate(40)" fill="#495057">s0h</text>
+<text transform="translate(191.7,302) rotate(40)" fill="#495057">s0m</text>
+<text transform="translate(211.1,302) rotate(40)" fill="#495057">s0n</text>
+<text transform="translate(230.5,302) rotate(40)" fill="#495057">s0o</text>
+<text transform="translate(249.8,302) rotate(40)" fill="#495057">s0p</text>
+<text transform="translate(269.2,302) rotate(40)" fill="#495057">s0q</text>
+<text transform="translate(288.6,302) rotate(40)" fill="#495057">s0r</text>
+<text transform="translate(308.0,302) rotate(40)" fill="#495057">s0s</text>
+<text transform="translate(327.4,302) rotate(40)" fill="#495057">s0t</text>
+<text transform="translate(346.8,302) rotate(40)" fill="#495057">s0u</text>
+<text transform="translate(366.2,302) rotate(40)" fill="#495057">s0y</text>
+<text transform="translate(385.5,302) rotate(40)" fill="#495057">s0z</text>
+<text transform="translate(404.9,302) rotate(40)" fill="#495057">s1g</text>
+<text transform="translate(424.3,302) rotate(40)" fill="#495057">s1l</text>
+<text transform="translate(443.7,302) rotate(40)" fill="#495057">s1n</text>
+<text transform="translate(463.1,302) rotate(40)" fill="#495057">s1q</text>
+<text transform="translate(482.5,302) rotate(40)" fill="#495057">s1s</text>
+<text transform="translate(501.8,302) rotate(40)" fill="#495057">s1w</text>
+<text transform="translate(521.2,302) rotate(40)" fill="#495057">s1x</text>
+<text transform="translate(540.6,302) rotate(40)" fill="#495057">s1y</text>
+<text transform="translate(560.0,302) rotate(40)" fill="#495057">s1z</text>
+<polyline fill="none" stroke="#2a6fdb" stroke-width="2" points="56.0,65.2 75.4,67.0 94.8,60.1 114.2,121.9 133.5,116.8"/>
 <circle cx="56.0" cy="65.2" r="3" fill="#2a6fdb"/>
-<circle cx="77.0" cy="67.0" r="3" fill="#2a6fdb"/>
-<circle cx="98.0" cy="60.1" r="3" fill="#2a6fdb"/>
-<circle cx="119.0" cy="121.9" r="3" fill="#2a6fdb"/>
-<circle cx="140.0" cy="116.8" r="3" fill="#2a6fdb"/>
+<circle cx="75.4" cy="67.0" r="3" fill="#2a6fdb"/>
+<circle cx="94.8" cy="60.1" r="3" fill="#2a6fdb"/>
+<circle cx="114.2" cy="121.9" r="3" fill="#2a6fdb"/>
+<circle cx="133.5" cy="116.8" r="3" fill="#2a6fdb"/>
 <rect x="572" y="36" width="10" height="10" fill="#2a6fdb"/>
 <text x="586" y="45">win.example</text>
 </svg>

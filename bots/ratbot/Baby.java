@@ -149,6 +149,7 @@ public final class Baby {
         int idx = (cost - 10) / 10 * 4; // approximate spawn index from the cost step
         role = GATHER;
         if (idx >= Cfg.GATHER_FIRST && (G.round % Cfg.FIGHT_EVERY) == 0) role = FIGHT;
+        raider = role == FIGHT && Cfg.RAID_EVERY > 0 && (G.round / Cfg.FIGHT_EVERY) % Cfg.RAID_EVERY == 0;
         if (Cfg.RUSH && idx >= Cfg.RUSH_FROM && idx < Cfg.RUSH_TO) role = ATTACK;
         Comms.readKings();
         home = Comms.nearestKing(G.me);
@@ -517,6 +518,8 @@ public final class Baby {
             if (Nav.flee(cc)) { why = 'c'; return; }
         }
         if (!G.coop && retreat()) { why = 'r'; return; }
+        if (!G.coop && raider && raw == 0 && rc.getHealth() >= Cfg.RAID_HP && homeHalf(G.me)
+                && (nearestEnemy == null || G.me.distanceSquaredTo(nearestEnemy.location) > Cfg.RAID_ENGAGE) && raid()) { why = 'z'; return; }
         if (!G.coop && Cfg.FLANK && Cfg.NAP && flank(seen)) { why = 'k'; return; }
         if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) { why = 'm'; return; }
         if (!G.coop && Cfg.FACE_ENEMY && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) { why = 'f'; return; }
@@ -549,6 +552,7 @@ public final class Baby {
         if (role == FIGHT) {
             MapLocation ct = knownCat();
             if (ct != null) { Nav.goTo(ct); return; }
+            if (Cfg.RAID && raider && rc.getHealth() >= Cfg.RAID_HP && raid()) { why = 'z'; return; }
         }
         if (role == GATHER) {
             if (mineTarget == null) mineTarget = pickMine();
@@ -810,6 +814,56 @@ public final class Baby {
             if (d < bd) { bd = d; best = m; }
         }
         return best;
+    }
+
+    static MapLocation raidTarget;
+    static boolean raider;           // a fighter that leaves our half to contest theirs
+
+    /** l is closer to our king than to its mirror under the first live symmetry. */
+    static boolean homeHalf(MapLocation l) {
+        MapLocation ek = G.mirror(home, firstSym());
+        return l.distanceSquaredTo(home) < l.distanceSquaredTo(ek);
+    }
+
+    static int firstSym() {
+        return (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
+    }
+    static int raidSince = -1;
+
+    /** Idle fighter: contest the enemy half at a mine closer to the enemy king than to ours; wander there a while. */
+    static boolean raid() throws GameActionException {
+        if (raidTarget != null && (Nav.stall > 20 || raidSince >= 0 && G.round - raidSince > Cfg.RAID_STAY)) {
+            raidTarget = null;
+            raidSince = -1;
+        }
+        if (raidTarget == null) raidTarget = pickRaid();
+        if (raidTarget == null) return false;
+        Nav.guard = null;
+        if (G.cheb(G.me, raidTarget) <= 2) {
+            if (raidSince < 0) raidSince = G.round;
+            wanderAround(raidTarget);
+        } else {
+            Nav.goTo(raidTarget);
+        }
+        return true;
+    }
+
+    /** A mine on the enemy half: known mines and the mirrors of our own, under the first live symmetry. */
+    static MapLocation pickRaid() {
+        int s = firstSym();
+        MapLocation ek = G.mirror(home, s);
+        MapLocation best = null;
+        int bd = Integer.MAX_VALUE;
+        for (int i = 0; i < Comms.numMines; i++) {
+            MapLocation m = Comms.mines[i];
+            for (int k = 0; k < 2; k++) {
+                MapLocation c = k == 0 ? m : G.mirror(m, s);
+                if (c.distanceSquaredTo(ek) >= c.distanceSquaredTo(home)) continue;
+                int d = G.me.distanceSquaredTo(c) + G.rand(Cfg.RAID_SPREAD);
+                if (d < bd) { bd = d; best = c; }
+            }
+        }
+        return best != null ? best : new MapLocation((home.x + ek.x) / 2, (home.y + ek.y) / 2);
     }
 
     static void wanderAround(MapLocation m) throws GameActionException {

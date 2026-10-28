@@ -422,11 +422,11 @@ public class BotTest {
 
     static void testSpawnFloor() throws GameActionException {
         reset(); install();
-        type = UnitType.RAT_KING; G.coop = false; G.round = 300; global = 500;
-        ratCost = 40; // 12+ babies: the 600 floor holds
+        type = UnitType.RAT_KING; G.coop = false; G.round = 300; global = Cfg.SPAWN_FLOOR - 100;
+        ratCost = 40; // 12+ babies: the spawn floor holds
         King.spawn(new RobotInfo[0], new RobotInfo[0]);
         check(built.isEmpty(), "spawn: a king with a dozen babies keeps its floor");
-        ratCost = 20; // 4+ babies: too few to earn, the floor drops
+        ratCost = 20; global = Cfg.LOW_FLOOR + 100; // 4+ babies: too few to earn, the floor drops
         King.spawn(new RobotInfo[0], new RobotInfo[0]);
         check(built.size() == 1, "spawn: a king with few babies spends its reserve on rats (" + built + ")");
     }
@@ -457,6 +457,27 @@ public class BotTest {
         check(King.biteCheese(18, 1000) == 64, "bite cheese: the king pays the least that kills");
         check(King.biteCheese(100, 5000) == 0 && King.biteCheese(18, 350) == 0 && King.biteCheese(21, 5000) == 0,
               "bite cheese: nothing for a bite that does not kill or is over budget");
+    }
+
+    static void testRaid() throws GameActionException {
+        reset(); W = 20; H = 20; install();
+        Sym.mask = Sym.ROT;
+        Baby.home = new MapLocation(3, 3);
+        Comms.numMines = 0;
+        Comms.mines[Comms.numMines++] = new MapLocation(4, 6);    // our half: its ROT mirror (15, 13) is theirs
+        MapLocation t = Baby.pickRaid();
+        check(t.equals(new MapLocation(15, 13)), "raid: mirror of our mine on the enemy half (" + t + ")");
+        Comms.mines[Comms.numMines++] = new MapLocation(12, 17);  // enemy half
+        Comms.mines[Comms.numMines++] = new MapLocation(7, 2);    // mirror (12, 17) duplicates
+        int far = 0;
+        for (int i = 0; i < 20; i++) {
+            MapLocation c = Baby.pickRaid();
+            if (c.distanceSquaredTo(new MapLocation(16, 16)) >= c.distanceSquaredTo(Baby.home)) far++;
+        }
+        check(far == 0, "raid: never picks a spot on our half");
+        Comms.numMines = 0;
+        check(Baby.pickRaid().equals(new MapLocation(9, 9)), "raid: no mines -> map centre");
+        check(Baby.homeHalf(new MapLocation(5, 5)) && !Baby.homeHalf(new MapLocation(14, 14)), "raid: home half");
     }
 
     static void testGuard() throws GameActionException {
@@ -513,6 +534,7 @@ public class BotTest {
         testThrowDirection();
         testBiteTargets();
         testTransferReach();
+        testRaid();
         testHandMirror();
         testSymElimination();
         testSqueakCodec();
