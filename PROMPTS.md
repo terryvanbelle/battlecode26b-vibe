@@ -34,3 +34,11 @@ Can you give me a summary of everything that's happened since I started you up l
 ## 4. 2026-10-28 06:35 PDT
 
 elo.png doesn't look like battlecode23's elo.png
+
+## 5. 2026-10-28 06:38 PDT
+
+I just switched you from Medium effort to Ultracode effort.  I'd like you to mark this as a milestone on any graph with a time dimension, so we can track whether it affected performance
+
+## 6. 2026-10-28 06:50 PDT
+
+Your TRAINING_ALGORITHM looks a little thin.  I'd like you to model it after the one in battlecode19-vibe

@@ -123,6 +123,23 @@ with tempfile.TemporaryDirectory() as d:
           and rows[1]['outcome'] == 'adopted', f"attempts rows {rows}")
     md = at.render(rows, {'s1b': {'pts.top6.3m': 23.71, 'kd.top6.3m': 1.234}}, {})
     check('| s1b |' in md and '| 23.7 |' in md and '| 1.23 |' in md and 'adopted |' in md, "attempts render")
+mst = load('milestones')
+with tempfile.TemporaryDirectory() as d:
+    os.makedirs(os.path.join(d, 'bots', 's9a'))
+    open(os.path.join(d, 'bots', 's9a', 'SNAPSHOT'), 'w').write('name=s9a\nsource=bots/s9\ncreated=2026-10-28 05:20 PDT\n')
+    check(at.snapshot_info(d, 's9a') == ('2026-10-28 05:20', 's9') and at.snapshot_info(d, 'nope') == ('', ''),
+          f"attempts snapshot info {at.snapshot_info(d, 's9a')}")
+rows = [{'codename': 'a1', 'date': '2026-10-28 06:00', 'base': '', 'description': '', 'outcome': ''},
+        {'codename': 'a2', 'date': '2026-10-28 07:00', 'base': '', 'description': '', 'outcome': ''}]
+mk2 = [(mst.parse('2026-10-28 06:38'), 'switch'), (mst.parse('2026-10-28 08:00'), 'later')]
+md = at.render(rows, {}, {}, mk2).splitlines()
+body = [l for l in md if l.startswith('| ') and not l.startswith('| attempt')]
+check([l.split('|')[1].strip() for l in body] == ['a1', '**milestone M1**', 'a2', '**milestone M2**']
+      and all(l.count('|') == md[[i for i, x in enumerate(md) if x.startswith('| attempt')][0]].count('|') for l in body)
+      and '**switch**' in body[1], f"attempts milestone rows {body}")
+shuffled = [rows[1], {'codename': 'a0', 'date': 'not a date', 'base': '', 'description': '', 'outcome': ''}, rows[0]]
+body = [l for l in at.render(shuffled, {}, {}, mk2[:1]).splitlines() if l.startswith('| ') and not l.startswith('| attempt')]
+check([l.split('|')[1].strip() for l in body] == ['a1', '**milestone M1**', 'a2', 'a0'], f"attempts sorted by date, bad date last {body}")
 # replica_report: W-L from replica rows, ladder and history markdown
 rp = load('replica_report')
 wl = rp.wl_from_games([{'source': 'replica', 'teamA': 'us:x', 'teamB': 'o', 'scoreA': '2', 'scoreB': '1'},
@@ -135,6 +152,55 @@ check('| 1 | o | 1400.0 | 1-2 | accepted |' in lm and f'| 2 | **{rp.TEAM}** | - 
 hist = [(rp.ts('2026-10-28T10:00:00+00:00'), 900.0), (rp.ts('2026-10-28T12:00:00+00:00'), 1000.0)]
 hm = rp.history_md(hist, [{'id': 5, 'package': 'p', 'accepted': True, 'created': '2026-10-28T11:00:00+00:00'}], now)
 check('| #5 | p | 2026-10-28 04:00 | yes | 900 | 1 |' in hm and 'latest rating 1,000' in hm, "replica history md")
+hm2 = rp.history_md(hist, [], now, [(mst.parse('2026-10-28 06:38'), 'effort switch')])
+check('- M1 2026-10-28 06:38 PDT: effort switch' in hm2 and 'Milestones' not in hm, "replica history md milestones")
+# milestones: add/read round trip, placement between time-ordered items, drawn on progress.png and rating-history.png
+mst = load('milestones')
+with tempfile.TemporaryDirectory() as d:
+    mp = os.path.join(d, 'm.csv')
+    check(mst.read(mp) == [], "milestones missing file")
+    mst.add('later', '2026-10-28 07:00', mp)
+    mst.add('first', '2026-10-28 06:38', mp)
+    mk = mst.read(mp)
+    check([l for _, l in mk] == ['first', 'later'] and mk[0][0].utcoffset().total_seconds() == -7 * 3600,
+          f"milestones read {mk}")
+    ds = [mst.parse('2026-10-28 06:00'), None, mst.parse('2026-10-28 06:40'), mst.parse('2026-10-28 07:30')]
+    check(mst.index_x(ds, mk[0][0]) == 0.5 and mst.index_x(ds, mk[1][0]) == 2.5
+          and mst.index_x(ds, mst.parse('2026-10-27 00:00')) == -0.5 and mst.index_x(ds, mst.parse('2026-10-29 00:00')) == 3.5,
+          "milestones index_x")
+    bad = os.path.join(d, 'bad.csv')
+    open(bad, 'w', encoding='utf-8-sig').write('date,label\n2026-10-28 06:38,ok\nnot a date,skip\n\n')
+    check([l for _, l in mst.read(bad)] == ['ok'], "milestones skip bad rows and a BOM")
+    check(mst.place(ds, mk) == [0.5, 2.5], f"milestones place alone {mst.place(ds, mk)}")
+    two = [(mst.parse('2026-10-28 06:10'), 'a'), (mst.parse('2026-10-28 06:20'), 'b'), mk[1]]
+    check([round(x, 3) for x in mst.place(ds, two)] == [0.333, 0.667, 2.5], f"milestones spread in one gap {mst.place(ds, two)}")
+    check(mst.tag(0) == 'M1' and mst.footnote(mk) == 'M1 10-28 06:38 first   M2 10-28 07:00 later', f"milestones footnote {mst.footnote(mk)}")
+    t = os.path.join(d, 'p.tsv'); ac = os.path.join(d, 'a.csv')
+    open(t, 'w').write('version\tdate\tmetric\tvalue\nv1\t2026-10-28 06:10\twin.a\t0.5\nv2\t2026-10-28 06:50\twin.a\t0.7\n'
+                       'v3\tbad date\twin.a\t0.6\n')
+    open(ac, 'w').write('codename,date,base,description,outcome\nv1,2026-10-28 05:00,,,\nv2,,,,\n')
+    open(t, 'a').write('v4\t2026-10-28 04:00\twin.a\t0.1\n')
+    open(ac, 'a').write('v4,2026-10-28 09:00,,,\nv3,bad,,,\n')
+    vd = pp.version_dates(['v1', 'v2', 'v3', 'v4'], t, ac)
+    check(vd == [mst.parse('2026-10-28 05:00'), mst.parse('2026-10-28 06:50'), None, mst.parse('2026-10-28 04:00')],
+          f"plot version dates: earlier of snapshot and first measurement {vd}")
+    ov, od = pp.in_time_order(['v1', 'v2', 'v3', 'v4'], vd)
+    check(ov == ['v4', 'v1', 'v2', 'v3'] and od[-1] is None, f"plot axis in date order {ov}")
+    try:
+        import matplotlib  # noqa: F401
+        out = os.path.join(d, 'out')
+        r = subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'plot_progress.py'), '--tsv', t, '--out', out,
+                            '--attempts', ac, '--milestones', mp], capture_output=True, text=True)
+        check(r.returncode == 0 and '2 milestones' in r.stdout and os.path.getsize(os.path.join(out, 'progress.png')) > 1000,
+              f"progress.png with milestones {r.stdout} {r.stderr[-300:]}")
+        rp0 = load('replica_report')
+        h = [(rp0.ts('2026-10-28T12:00:00+00:00'), 900.0), (rp0.ts('2026-10-28T13:00:00+00:00'), 950.0)]
+        sb = [{'id': 5, 'package': 'p', 'accepted': True, 'created': '2026-10-28T11:30:00+00:00'}]
+        tm = [{'name': 'o', 'rating': 1400.0, 'active': True}, {'name': rp0.TEAM, 'rating': 950.0, 'active': True}]
+        check(rp0.charts(tm, h, sb, d, mk, mst.parse('2026-10-28 07:10')) and os.path.getsize(os.path.join(d, 'rating-history.png')) > 1000,
+              "rating-history.png with milestones")
+    except ImportError:
+        pass
 # game_report.timeline on a synthetic tsv dir
 gr = load('game_report')
 with tempfile.TemporaryDirectory() as d:

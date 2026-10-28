@@ -5,8 +5,8 @@
 
 Writes progress/ladder.md + ladder.png (the Rankings page: galaxy's displayed rating, with each team's game W-L
 from the replica rows of progress/games.csv) and progress/rating-history.md + rating-history.png (our displayed
-rating after each rated match, from /match/historical_rating/, with our submissions marked). Regenerate, do not
-edit. Charts need matplotlib (tools/.venv).
+rating after each rated match, from /match/historical_rating/, with our submissions and the milestones of
+progress/milestones.csv marked). Regenerate, do not edit. Charts need matplotlib (tools/.venv).
 """
 import argparse, datetime as dt, os, sys
 from zoneinfo import ZoneInfo
@@ -14,6 +14,7 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'galaxy26'))
 import games as G
+import milestones as MS
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEAM = G.TEAM
@@ -55,12 +56,16 @@ def ladder_md(teams, wl, now):
     return '\n'.join(L) + '\n'
 
 
-def history_md(hist, subs, now):
+def history_md(hist, subs, now, marks=()):
     L = ['# Rating history (replica)', '',
          f'Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, '
          f'with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched '
          f'{now:%Y-%m-%d %H:%M} PDT. Times are Pacific.', '',
          '![rating history](rating-history.png)', '']
+    if marks:
+        L += ['Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):', '']
+        L += [f'- {MS.tag(i)} {when:%Y-%m-%d %H:%M} PDT: {label}' for i, (when, label) in enumerate(marks)]
+        L.append('')
     if hist:
         L.append(f'{len(hist)} rated matches; latest rating {hist[-1][1]:,.0f} ({hist[-1][0]:%Y-%m-%d %H:%M} PDT).')
         L.append('')
@@ -76,11 +81,12 @@ def history_md(hist, subs, now):
     return '\n'.join(L) + '\n'
 
 
-def charts(teams, hist, subs, out):
+def charts(teams, hist, subs, out, marks=(), now=None):
     try:
         import matplotlib
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt
+        import matplotlib.dates as mdates
     except ImportError:
         return False
     rated = [t for t in teams if t['rating'] is not None]
@@ -103,11 +109,26 @@ def charts(teams, hist, subs, out):
         ax.axvline(t, color='#d9480f', alpha=0.4, lw=1)
         ax.text(t, ax.get_ylim()[1], f' #{s["id"]} {s["package"] or ""}', rotation=90, va='top', fontsize=7,
                 color='#d9480f')
+    for i, (when, label) in enumerate(marks):
+        ax.axvline(when, color=MS.COLOR, ls='--', lw=1.3)
+        t = ax.text(when, 0.01, MS.tag(i), transform=ax.get_xaxis_transform(), va='bottom', ha='center', fontsize=7,
+                    color='white', clip_on=True, bbox=dict(boxstyle='round,pad=0.15', fc=MS.COLOR, ec='none'))
+        t.set_in_layout(False)
+    times = [w for w, _ in hist] + [ts(s['created']) for s in subs] + [w for w, _ in marks] + ([now] if now else [])
+    if times:
+        pad = max((max(times) - min(times)) / 40, dt.timedelta(minutes=10))
+        ax.set_xlim(min(times) - pad, max(times) + pad)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M', tz=PDT))
+    ax.set_xlabel('time (PDT)')
     ax.set_ylabel('displayed rating')
-    ax.set_title(f'{TEAM} rating on the replica (lines: submissions)')
+    ax.set_title(f'{TEAM} rating on the replica (orange: submissions; dashed: milestones)')
     ax.grid(color='#e9ecef')
     fig.autofmt_xdate()
-    fig.tight_layout()
+    if marks:
+        fig.text(0.01, 0.005, 'Milestones: ' + MS.footnote(marks), fontsize=7, color=MS.COLOR, va='bottom', wrap=True)
+        fig.tight_layout(rect=(0, 0.05, 1, 1))
+    else:
+        fig.tight_layout()
     fig.savefig(os.path.join(out, 'rating-history.png'), dpi=110)
     plt.close(fig)
     return True
@@ -131,8 +152,9 @@ def main(argv=None):
     now = dt.datetime.now(PDT)
     wl = wl_from_games(G.read(a.games)) if os.path.exists(a.games) else {}
     open(os.path.join(a.out, 'ladder.md'), 'w').write(ladder_md(teams, wl, now))
-    open(os.path.join(a.out, 'rating-history.md'), 'w').write(history_md(hist, subs, now))
-    png = charts(teams, hist, subs, a.out)
+    marks = MS.read()
+    open(os.path.join(a.out, 'rating-history.md'), 'w').write(history_md(hist, subs, now, marks))
+    png = charts(teams, hist, subs, a.out, marks, now)
     me = next((i for i, t in enumerate(teams, 1) if t['name'] == TEAM), None)
     print(f'ladder: {len(teams)} teams, {TEAM} #{me}; history: {len(hist)} rated matches, {len(subs)} submissions'
           f'{"" if png else " (no matplotlib: charts skipped)"}')

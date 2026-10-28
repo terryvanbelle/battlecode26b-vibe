@@ -124,3 +124,16 @@
 - progress/ now follows battlecode23-vibe's layout (ATTEMPTS.md, attempts.csv, games.csv, ELO.md/elo.png, ladder.md/png,
   rating-history.md/png, progress.png; `tools/progress-refresh.sh`). The Bradley-Terry ladder is weak for us because
   local games are win/loss and we rarely beat the top 6; the points share is still the main signal.
+
+## 2026-10-28 06:55 PDT: overruns fixed; trapped economy trace
+- Newborn first-turn overruns (20/game on trapped, all on a rat's first turn): TrapRisk allocated one int per tile
+  (~9.3k bc) on top of the first full sense. Fix: defer the allocation until a turn has 3*W*H + 8000 bc left; skip
+  optional work under 8000 left; bail under 3500 left after sensing; Flow.finish() waits a turn when the backtrack
+  would not fit. Rerun on trapped: overruns 20 -> 0, max rat bc 17503 -> 16043.
+- New move tags inside gather: D/d deliver (at king / walking), P cheese-on-dirt pickup, C cheese target, M to mine,
+  W at mine, E explore.
+- trapped (50x50, our king sealed in a pocket: 5 dirt columns east, 6 dirt rows south): gatherer turns r50+ are
+  mostly M (1448, 37% standing still) and d (700, 32% still); W only 411, C 72. Stalls cluster on the south dirt band
+  (y 37-43). Our 51 digs are scattered over 3+ partial tunnels (east, south-east, south) versus Version41's 128 digs;
+  12 transfers all game. Hypothesis: each rat plans its own A* path to its own mine from its own map memory, so
+  tunnels diverge and none is finished early. Candidate: one shared tunnel per king (king plans, broadcasts waypoints).

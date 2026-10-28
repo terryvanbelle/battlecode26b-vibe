@@ -8,6 +8,8 @@ Every bot attempt (a snapshot under bots/), oldest first, with its score at each
 3. **Rating**: Bradley-Terry rating over every game in progress/games.csv (`progress/ELO.md`) and its field score (expected score against each field player).
 4. **Replica**: the best build is submitted to the galaxy replica and scrimmages the ladder (`progress/ladder.md`, `progress/rating-history.md`).
 
+**Milestone** rows (`progress/milestones.csv`) sit where they fall in time, between the attempts made before and after them.
+
 | attempt | date (PDT) | base | description | top6 3 maps | top6 new maps | k/d | top6 (older panels) | vs example | rating | field score | outcome |
 |---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|
 | s0e | 2026-10-27 23:26 |  | Gauntlet s0e vs the top 5 (partial, 80 games): **0-80**. Every loss is RATKING_DESTROYED by a rush: backstab at |  |  |  |  |  | 1243 +- 362 | 24.1% |  |
@@ -81,5 +83,7 @@ Every bot attempt (a snapshot under bots/), oldest first, with its score at each
 | s2u | 2026-10-28 05:05 |  | s2s vs Version41 DefaultMedium: our king dies r180-213 after our army is wiped (10 -> 2 rats). Trap damage taken 2372 vs dealt 802; 42 of 45 of our trap triggers are on our half (Version41 lays 47 traps there, we 24);... | 20.1 |  | 1.82 |  |  | 1307 +- 378 | 28.4% | rejected (base 20.1) |
 | s2v | 2026-10-28 05:05 |  | s2s vs Version41 DefaultMedium: our king dies r180-213 after our army is wiped (10 -> 2 rats). Trap damage taken 2372 vs dealt 802; 42 of 45 of our trap triggers are on our half (Version41 lays 47 traps there, we 24);... | 22.3 |  | 1.08 |  |  | 1307 +- 378 | 28.4% | rejected (base 22.3) |
 | s2w | 2026-10-28 05:07 |  | GATHER_STILL (gatherers turn in place at their mine instead of wandering): vs Version41 DefaultMedium our trap triggers 51 -> 34 but cheese 414 -> 275, pts 31 -> 30; DefaultSmall 36 pts. Snapshot s2w for a gauntlet. | 22.8 |  | 1.01 |  |  | 1307 +- 378 | 28.4% | rejected (GATHER_STILL, base 22.8) |
+| s2x | 2026-10-28 05:20 | s2s | s2s with DIG=false (control for the dig-toward-target experiment on Excavation/Stash) |  |  |  |  |  |  |  |  |
 | s2y | 2026-10-28 05:56 |  | Excavation: all 3 mines buried mid-block, >4 tiles from open ground, so they are never seen. Explore now picks the nearest never-seen of 12 samples, and once no mine is known by r30 the never-seen sample nearest the m... | 18.8 | 23.8 |  |  |  | 1510 +- 190 | 42.6% | rejected (A* flow + unseen explore: base 18.8, new 23.8) |
-| s2x |  |  | Excavation (39x39, 35% dirt) and Stash (30x30, each king sealed behind a wall row whose only exits are dirt corner plugs reached through a dirt serpentine): s2s digs 128 tiles on Excavation; s2x (no eager dig) deliver... |  |  |  |  |  |  |  |  |
+| s2z | 2026-10-28 06:24 | s2y | s2y + Flow search timeout and retry backoff, mine gossip squeaks (team knows no mine), cheese-on-dirt pickup from the adjacent tile |  |  |  |  |  |  |  | gauntlet running (g7_s2z, g7_s2zw) |
+| **milestone M1** | 2026-10-28 06:38 | | **effort: Medium -> Ultracode** | | | | | | | | |
