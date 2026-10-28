@@ -105,7 +105,12 @@ public final class Flow {
             pending--;
             int ux = u % W, uy = u / W, gu = gg[u] - bs;
             if (gu + Math.max(Math.abs(ux - X), Math.abs(uy - Y)) != curF) continue; // stale entry
-            if (u == tIdx) { finish(); return; }
+            if (u == tIdx) {
+                // backtrack + reverse costs ~40 bc per tile and the path has at most gu + 1 tiles: wait a turn if short
+                if (left() < reserve + 40 * (gu + 2)) { head[b]--; pending++; return; }
+                finish();
+                return;
+            }
             for (int k = 0; k < 8; k++) {
                 int vx = ux + DX[k], vy = uy + DY[k];
                 if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;

@@ -24,6 +24,8 @@ public final class TrapRisk {
 
     /** Called once per turn with the robots we see. */
     public static void observe(RobotInfo[] robots) {
+        // allocating one int per tile costs ~2.5 bytecodes each: wait for a turn with room (a newborn's first has none)
+        if (mark == null && Flow.left() < 3 * G.W * G.H + Cfg.BC_OPTIONAL) return;
         init();
         nHeard = 0;
         MapLocation me = G.rc.getLocation();

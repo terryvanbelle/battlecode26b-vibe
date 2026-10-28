@@ -20,6 +20,7 @@ public final class Baby {
 
     // mines this rat has sensed (to report to kings)
     static int[] myMines = new int[24];
+    static int lowBc;   // turns cut short for lack of bytecodes
     static int myMineCount;
     static int reportedSym = 7;
 
@@ -54,7 +55,8 @@ public final class Baby {
         Debug.mark(2);
         if (role != ATTACK) pickUp();
         Nav.avoid = cat != null ? laneMask(cat) : 0;
-        if (!G.coop && Cfg.TRAP_RISK) {
+        // a newborn's first turn pays for array allocation and a full first sense: skip optional work when short
+        if (!G.coop && Cfg.TRAP_RISK && Flow.left() > Cfg.BC_OPTIONAL) {
             TrapRisk.observe(robots);
         }
 
@@ -80,6 +82,7 @@ public final class Baby {
             }
         }
         Debug.mark(30);
+        if (Flow.left() < Cfg.BC_BAIL) { lowBc++; return; }
         Nav.guard = null;
         if (!G.coop && Cfg.GUARD_DIST2 > 0 && nearestEnemy != null && rc.getCarrying() == null
                 && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
@@ -601,9 +604,11 @@ public final class Baby {
                     // in transfer range of the king's body (dist2 9 to its nearest tile): face it, stay off the ring
                     Direction d = G.me.directionTo(k);
                     if (d != Direction.CENTER && rc.getDirection() != d && rc.canTurn(d)) rc.turn(d);
+                    why = 'D';
                     return;
                 }
                 Nav.goTo(k);
+                why = 'd';
                 return;
             }
         }
@@ -619,8 +624,10 @@ public final class Baby {
                 if (rc.getDirection() != d && rc.canTurn(d)) { rc.turn(d); G.facing = d; }
                 pickUp();
                 if (!rc.canSenseLocation(cheeseTarget) || rc.senseMapInfo(cheeseTarget).getCheeseAmount() == 0) cheeseTarget = null;
+                why = 'P';
                 return;
             }
+            why = 'C';
             Nav.goTo(cheeseTarget);
             if (Nav.stall > 12) cheeseTarget = null;
             return;
@@ -642,13 +649,16 @@ public final class Baby {
                     }
                     // wander inside the spawn square, facing outward to see new cheese
                     wanderAround(mineTarget);
+                    why = 'W';
                 } else {
+                    why = 'M';
                     Nav.goTo(mineTarget);
                     if (Nav.stall > 25) mineTarget = null;
                 }
                 return;
             }
         }
+        why = 'E';
         explore();
     }
 

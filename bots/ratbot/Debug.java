@@ -36,6 +36,7 @@ public final class Debug {
         if (Baby.raidTarget != null) sb.append(" rz=").append(Baby.raidTarget.x).append(',').append(Baby.raidTarget.y);
         sb.append(" sym=").append(Sym.mask);
         if (Sym.contradictions > 0) sb.append(" SYMX=").append(Sym.contradictions);
+        if (!G.king && Baby.lowBc > 0) sb.append(" lb=").append(Baby.lowBc);
         if (RobotPlayer.overruns > 0) sb.append(" OVR=").append(RobotPlayer.overruns).append(" OVS=").append(ovStage);
         if (RobotPlayer.nearMiss > 0) sb.append(" NEAR=").append(RobotPlayer.nearMiss);
         if (RobotPlayer.exceptions > 0) sb.append(" EXC=").append(RobotPlayer.exceptions);

@@ -116,4 +116,8 @@ public final class Cfg {
     public static final int TRAP_SURPLUS = 200, CHEESE_BITE_SURPLUS = 600;
     /** Cheese below which no trap is placed; cats within this squared distance of a king are trapped on the floor alone. */
     public static final int TRAP_FLOOR = 600, TRAP_DEFEND_DIST2 = 100;
+    /** Optional per-turn work (trap-risk observation) needs this many bytecodes left. */
+    public static final int BC_OPTIONAL = 8000;
+    /** Below this many bytecodes left after sensing, end the turn rather than overrun. */
+    public static final int BC_BAIL = 3500;
 }
