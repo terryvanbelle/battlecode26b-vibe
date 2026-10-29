@@ -361,6 +361,7 @@ public final class King {
             }
         }
         if (!Cfg.KING_MINE) return;
+        if (Cfg.FORM_STILL && formSite != null) { mineWhy = 'f'; return; }
         if (enemies.length > 0 || cats.length > 0) { mineWhy = enemies.length > 0 ? 'e' : 'c'; return; }
         if (homeMine == null) homeMine = pickHomeMine(start);
         // a pile the king can reach is cheese no rat has to carry: walk until it is under our 3x3
@@ -527,23 +528,32 @@ public final class King {
     }
 
     static MapLocation formSite;
-    static int formStart = -1000;
+    static int formStart = -1000, formKings;
 
-    /** The first king names a formation site and keeps it fresh until a second king exists or it times out. */
-    static void formation() {
+    /** The first king names a formation site and keeps it fresh until the king cap is reached, a king forms there
+     *  (Cfg.FORM_GAP) or it times out. */
+    static void formation() throws GameActionException {
         if (slot != 0) return;
         if (Comms.numKings >= Math.min(formCap(G.coop), Comms.KING_SLOTS)) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
         if (formSite != null) {
-            if (G.round - formStart > Cfg.FORM_TTL) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
+            boolean formed = Cfg.FORM_GAP > 0 && Comms.numKings > formKings;
+            if (formed || G.round - formStart > Cfg.FORM_TTL) {
+                formSite = null;
+                Comms.write(Comms.FORM_T, 0);
+                if (formed) formStart = G.round + Cfg.FORM_GAP - Cfg.FORM_TTL - Cfg.FORM_RETRY;
+                return;
+            }
             Comms.write(Comms.FORM_T, Comms.stamp());
             return;
         }
         int babies = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
-        if (G.round < Cfg.FORM_FROM || G.round > 1150 || G.round - formStart < Cfg.FORM_TTL + Cfg.FORM_RETRY
+        int last = Cfg.FORM_LATE && Comms.numKings < 2 ? 1940 : 1150;
+        if (G.round < Cfg.FORM_FROM || G.round > last || G.round - formStart < Cfg.FORM_TTL + Cfg.FORM_RETRY
                 || babies < Cfg.FORM_BABIES || G.rc.getGlobalCheese() < Cfg.FORM_CHEESE || !formIncome()) return;
         formSite = pickFormSite(G.me);
         if (formSite == null) return;
         formStart = G.round;
+        formKings = Comms.numKings;
         Comms.write(Comms.FORM_X, formSite.x + 1);
         Comms.write(Comms.FORM_Y, formSite.y + 1);
         Comms.write(Comms.FORM_T, Comms.stamp());
@@ -554,12 +564,14 @@ public final class King {
 
     /** The income test for one more king (Cfg.FORM_NET100). */
     static boolean formIncome() {
+        if (Cfg.FORM_SURPLUS != Integer.MIN_VALUE) return Econ.surplus(Econ.kings() + 1) >= Cfg.FORM_SURPLUS;
         if (Cfg.FORM_NET100 == Integer.MIN_VALUE) return true;
         return Econ.rate100() * Cfg.INCOME_TRUST / 100 - 200 * (Econ.kings() + 1) >= Cfg.FORM_NET100;
     }
 
-    /** The nearest clearly-ours mine more than 4 tiles from us with a clear 3x3, else a clear spot behind us. */
-    static MapLocation pickFormSite(MapLocation from) {
+    /** The nearest clearly-ours mine more than 4 tiles from us with a clear 3x3, else a clear spot behind us (with
+     *  Cfg.FORM_RING: a clear 3x3 just off our body). */
+    static MapLocation pickFormSite(MapLocation from) throws GameActionException {
         int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
         MapLocation ek = G.mirror(start, s);
         MapLocation best = null;
@@ -573,10 +585,42 @@ public final class King {
             if (d < bd) { bd = d; best = m; }
         }
         if (best != null) return best;
+        if (Cfg.FORM_RING) return ringSite(from, ek);
         // else a clear spot four tiles behind us, away from the enemy start
         Direction back = ek.directionTo(from);
         MapLocation b = from.translate(4 * back.dx, 4 * back.dy);
         return clear3(b) ? b : null;
+    }
+
+    /** Site centres 3 tiles out from the king (its body and the site's 3x3 then leave a one-tile lane between them),
+     *  every site tile within the king's view; offsets are in the side frame, so mirrored kings scan alike. */
+    static final int[][] RING = {{3, 0}, {0, 3}, {3, 1}, {1, 3}, {3, -1}, {-1, 3}, {0, -3}, {-3, 0}, {1, -3}, {-3, 1}, {-1, -3}, {-3, -1}};
+
+    /** Cfg.FORM_RING: the clear 3x3 off our king's body farthest from the enemy start, or null. */
+    static MapLocation ringSite(MapLocation c, MapLocation ek) throws GameActionException {
+        int sx = 2 * c.x >= G.W - 1 ? 1 : -1, sy = 2 * c.y >= G.H - 1 ? 1 : -1;
+        MapLocation best = null;
+        int bd = -1;
+        for (int[] o : RING) {
+            MapLocation s = c.translate(o[0] * sx, o[1] * sy);
+            int d = s.distanceSquaredTo(ek);
+            if (d > bd && clearNow(s)) { bd = d; best = s; }
+        }
+        return best;
+    }
+
+    /** The 3x3 around s is on the map, in view, passable, and holds no cat or king. */
+    static boolean clearNow(MapLocation s) throws GameActionException {
+        if (s.x < 1 || s.y < 1 || s.x > G.W - 2 || s.y > G.H - 2) return false;
+        RobotController rc = G.rc;
+        for (int dx = -1; dx <= 1; dx++)
+            for (int dy = -1; dy <= 1; dy++) {
+                MapLocation t = s.translate(dx, dy);
+                if (!rc.canSenseLocation(t) || !rc.senseMapInfo(t).isPassable()) return false;
+                RobotInfo r = rc.senseRobotAtLocation(t);
+                if (r != null && r.type != UnitType.BABY_RAT) return false;
+            }
+        return true;
     }
 
     /** Some live king of ours is within Chebyshev 4 of m (it holds that mine). */

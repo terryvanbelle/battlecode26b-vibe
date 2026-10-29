@@ -31,9 +31,12 @@ public final class Econ {
     public static int rate100() { return n == 0 ? 0 : sum * 100 / n; }
 
     /** Projected global cheese at the end of the game, minus nothing spent: negative means we would starve. */
-    public static int surplus() {
+    public static int surplus() { return surplus(kings()); }
+
+    /** surplus() as if we had k kings. */
+    public static int surplus(int k) {
         int left = Math.max(0, 2000 - G.round);
-        int net100 = rate100() * Cfg.INCOME_TRUST / 100 - 200 * kings();
+        int net100 = rate100() * Cfg.INCOME_TRUST / 100 - 200 * k;
         return G.rc.getGlobalCheese() + net100 * left / 100;
     }
 }

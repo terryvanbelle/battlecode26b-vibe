@@ -1093,6 +1093,27 @@ public class BotTest {
         check(Baby.formKing() && me.equals(new MapLocation(5, 6)), "form: steps onto the free centre (at " + me + ")");
         shared[Comms.FORM_T] = 0;
         check(!Baby.formKing(), "form: no site, no formation");
+        // FORM_RING: a clear 3x3 three tiles off the king, farthest from the enemy start, all in the king's view
+        reset(); W = 30; H = 30; install();
+        type = UnitType.RAT_KING; me = new MapLocation(5, 5);
+        MapLocation ek = new MapLocation(26, 26);
+        check(new MapLocation(2, 4).equals(King.ringSite(me, ek)), "form ring: the clear site farthest from the enemy (" + King.ringSite(me, ek) + ")");
+        walls.add(new MapLocation(1, 3));
+        check(new MapLocation(4, 2).equals(King.ringSite(me, ek)), "form ring: a wall in the 3x3 rules the site out");
+        robots.put(new MapLocation(5, 1), new RobotInfo(9, Team.NEUTRAL, UnitType.CAT, 4000, new MapLocation(5, 1), Direction.NORTH, 0, 0, null));
+        check(new MapLocation(2, 5).equals(King.ringSite(me, ek)), "form ring: a cat in the 3x3 rules the site out (" + King.ringSite(me, ek) + ")");
+        robots.put(new MapLocation(1, 5), new RobotInfo(8, Team.A, UnitType.BABY_RAT, 100, new MapLocation(1, 5), Direction.NORTH, 0, 0, null));
+        check(new MapLocation(2, 5).equals(King.ringSite(me, ek)), "form ring: our babies in the 3x3 are welcome");
+        reset(); W = 30; H = 30; install();
+        type = UnitType.RAT_KING; me = new MapLocation(24, 24);
+        check(new MapLocation(27, 25).equals(King.ringSite(me, new MapLocation(3, 3))), "form ring: the mirrored king picks the mirrored site (" + King.ringSite(me, new MapLocation(3, 3)) + ")");
+        me = new MapLocation(1, 1);
+        check(King.ringSite(me, ek) != null && King.clearNow(King.ringSite(me, ek)), "form ring: a corner king still finds a site");
+        check(!King.clearNow(new MapLocation(0, 5)), "form ring: a 3x3 off the map edge is not clear");
+        // Econ.surplus(k): each more king costs 2 a round to round 2000
+        G.round = 1000; global = 3000; Econ.n = 0; Econ.sum = 0;
+        check(Econ.surplus(1) == 1000 && Econ.surplus(2) == -1000, "econ: surplus with one more king (" + Econ.surplus(1) + ", " + Econ.surplus(2) + ")");
+        type = UnitType.BABY_RAT;
     }
 
     static void testMineSpread() {

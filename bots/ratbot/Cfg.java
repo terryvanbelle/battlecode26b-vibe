@@ -68,6 +68,18 @@ public final class Cfg {
     /** Form only while the trusted income (x100 per round) beats every king's upkeep, the new one's included, by
      *  FORM_NET100 (Integer.MIN_VALUE = no income test). */
     public static final int FORM_NET100 = Integer.MIN_VALUE;
+    /** Formation v2. FORM_SURPLUS: form while Econ's projected round-2000 bank with one more king's upkeep stays at
+     *  least this (Integer.MIN_VALUE = FORM_NET100's income test instead; that test ignores the bank, and s4d's long
+     *  replica games sat on 2-9k cheese without a site). FORM_RING: with no home mine for a site, name a clear 3x3
+     *  just off the king's body (all of it in the king's view; the mine pick needs tiles the king has seen, and its
+     *  four-behind fallback is often a wall). FORM_STILL: the first king does not walk while a site is open (on
+     *  cheesebottles it chased piles onto its own site, 1300 rat-turns of failed formation in a game). FORM_GAP: a
+     *  formed king lets the next site open this many rounds later (0 = the FORM_TTL + FORM_RETRY wait). FORM_LATE: a
+     *  lone king may form a second after round 1150 (the engine's round-1200 cutoff binds only at 2 kings; kings alive
+     *  at round 2000 weigh 0.5 of war points). */
+    public static final int FORM_SURPLUS = Integer.MIN_VALUE;
+    public static final boolean FORM_RING = false, FORM_STILL = false, FORM_LATE = false;
+    public static final int FORM_GAP = 0;
     /** A baby outside the site's 3x3 joins only while it sees fewer than FORM_JOIN allied babies nearer the site;
      *  the rest keep working (0 = every baby within FORM_PULL_R2 joins). */
     public static final int FORM_JOIN = 0;
