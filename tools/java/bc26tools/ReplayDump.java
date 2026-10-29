@@ -207,6 +207,13 @@ public class ReplayDump {
     ReplayDump(String file, String outDir) { this.file = abs(file); this.outDir = outDir; }
     static String abs(String f) { return Paths.get(f).toAbsolutePath().normalize().toString(); }
 
+    /** Close w and fail on any write error it swallowed (PrintWriter never throws: a full disk otherwise leaves
+     *  empty or cut files behind a 0 exit, and game_report caches them as a complete dump). */
+    static void checked(PrintWriter w, String what) throws IOException {
+        w.close();
+        if (w.checkError()) throw new IOException("write failed: " + what);
+    }
+
     // ---- per-file state
     String[] teamName = new String[3], pkg = new String[3];
     String spec;
@@ -457,6 +464,7 @@ public class ReplayDump {
                             + "\"maxRounds\":%d,\"specVersion\":%s,\"packageA\":%s,\"packageB\":%s,\"types\":%s,\"dumpVersion\":%d}%n",
                     q(file), game, q(mapName), width, height, symmetry, q(teamName[1]), q(teamName[2]), m.randomSeed(),
                     walls, dirt, mines, bodies, cheese, wp, maxRounds, q(spec), q(pkg[1]), q(pkg[2]), typesJson, DUMP_VERSION);
+            checked(meta, p + ".meta.json");
         }
         rounds = new PrintWriter(new BufferedWriter(new FileWriter(p + ".rounds.tsv")));
         rounds.println("round\tcheeseXferA\tcheeseXferB\tcatDmgA\tcatDmgB\tkingsA\tkingsB\tbabiesA\tbabiesB\tratTrapsA\tratTrapsB\tcatTrapsA\tcatTrapsB\tdirtA\tdirtB\tdied"
@@ -1034,7 +1042,7 @@ public class ReplayDump {
                 g[6], g[7], catSleepTurns, f.timelineMarkersLength(), f.profilerFilesLength(), cheeseModelErr, DUMP_VERSION);
         System.out.println(line);
         if (rounds == null) return;
-        try (PrintWriter w = new PrintWriter(outDir + "/g" + game + ".summary.json")) { w.println(line); }
+        try (PrintWriter w = new PrintWriter(outDir + "/g" + game + ".summary.json")) { w.println(line); checked(w, "summary"); }
         if (f.timelineMarkersLength() > 0) {
             try (PrintWriter w = new PrintWriter(outDir + "/g" + game + ".markers.tsv")) {
                 w.println("round\tteam\tlabel\tcolor");
@@ -1043,10 +1051,11 @@ public class ReplayDump {
                     f.timelineMarkers(tm, i);
                     w.printf("%d\t%d\t%s\t%06x%n", tm.round(), tm.team() + 1, clean(String.valueOf(tm.label())), tm.colorHex() & 0xffffff);
                 }
+                checked(w, "markers");
             }
         }
-        rounds.close(); turns.close(); actions.close();
-        if (indicators != null) indicators.close();
+        checked(rounds, "rounds.tsv"); checked(turns, "turns.tsv"); checked(actions, "actions.tsv");
+        if (indicators != null) checked(indicators, "indicators.tsv");
         rounds = turns = actions = indicators = null;
     }
 
@@ -1056,6 +1065,7 @@ public class ReplayDump {
             w.printf("{\"file\":%s,\"specVersion\":%s,\"teamA\":%s,\"teamB\":%s,\"packageA\":%s,\"packageB\":%s,\"games\":%d,\"winner\":\"%s\"}%n",
                     q(file), q(spec), q(teamName[1]), q(teamName[2]), q(pkg[1]), q(pkg[2]), game + 1,
                     f.winner() == 1 ? "A" : f.winner() == 2 ? "B" : "?");
+            checked(w, "game.json");
         }
     }
 }

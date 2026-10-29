@@ -104,6 +104,27 @@ try:
           f'dump: sweeps old dumps of other replays by another dumper only {entries()}')
     for p in fake.values():
         GR._rm(p)
+    # the size cap: least recently used current-dumper dumps go first; the kept one and any used within STALE_AGE stay
+    now = time.time()
+    lru = {}
+    for n, age in (('3' * 20, 5), ('4' * 20, 3), ('5' * 20, 0)):
+        p = os.path.join(CACHE, n + '-' + cur)
+        os.mkdir(p)
+        with open(os.path.join(p, 'x'), 'wb') as f:
+            f.write(b'0' * 300000)
+        os.utime(p, (now - age * GR.STALE_AGE,) * 2)
+        lru[n[0]] = p
+    tot = sum(GR._size(os.path.join(CACHE, e)) for e in entries() if '-' in e)
+    GR._trim(CACHE, d, cap_mb=(tot - 150000) / 1024 / 1024)
+    check([os.path.isdir(lru[k]) for k in '345'] == [False, True, True] and os.path.isdir(d) and os.path.isdir(dk),
+          f'trim: the least recently used dump goes first, only as many as needed {entries()}')
+    GR._trim(CACHE, d, cap_mb=0)
+    check([os.path.isdir(lru[k]) for k in '45'] == [False, True] and os.path.isdir(d) and os.path.isdir(dk),
+          f'trim: never the kept dump nor one used within STALE_AGE {entries()}')
+    GR._rm(lru['5'])
+    os.utime(d, (now - 2 * GR.STALE_AGE,) * 2)
+    GR.dump(FX)
+    check(time.time() - os.stat(d).st_mtime < 60, 'dump: a cache hit marks the dump recently used')
     with tempfile.TemporaryDirectory() as t:
         code, out, err = run(GR, t)
         check(code == 1 and 'not a ReplayDump tsv dir' in err, f'source: a dir with no games and no replay {code} {err!r}')

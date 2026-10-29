@@ -19,7 +19,8 @@ overrides the root). The key is the replay's content and the ReplayDump classes 
 tools/build-tools.sh), so a rebuilt dumper never serves an old dump. A dump is written to a temp dir and renamed into
 place, so a directory that exists is complete; callers must never delete it (it is made read-only, so a stray
 rmtree(ignore_errors=True) removes nothing). Every dump() removes the cache's dumps by any other dumper (of every
-replay) and temp dirs of crashed dumps once they are an hour old; the current dumper's dumps are kept. rows(), own(),
+replay) and temp dirs of crashed dumps once they are an hour old; the current dumper's dumps are kept up to
+BC_DUMPCACHE_MAX_MB (2500), least recently used first out (_trim). rows(), own(),
 games(), summary(), bank() read the files; need() gives the columns a reader requires of a dumpVersion 2+ dump.
 """
 import argparse, collections, fcntl, glob, hashlib, json, os, re, shutil, subprocess, sys, tempfile, time
@@ -33,6 +34,7 @@ ENGINE = os.path.join(REPO, 'engine', 'battlecode26-java-1.2.6.jar')
 TOOLS = os.path.join(REPO, 'build', 'tools')
 STALL = 8
 STALE_AGE = 3600        # seconds before another dumper's dump (or a crashed dump's temp dir) is removed
+CACHE_MAX_MB = int(os.environ.get('BC_DUMPCACHE_MAX_MB', '2500'))   # the current dumper's dumps are trimmed to this
 
 
 class DumpError(RuntimeError):
@@ -88,6 +90,40 @@ def _sweep(root, keep):
             pass
 
 
+def _size(p):
+    n = 0
+    for e in os.scandir(p):
+        try:
+            n += e.stat(follow_symlinks=False).st_size
+        except OSError:
+            pass
+    return n
+
+
+def _trim(root, keep, cap_mb=None):
+    """Evict the least recently used dumps (directory mtime, refreshed on every dump() hit) until the cache holds at
+    most cap_mb (default CACHE_MAX_MB). `keep` and dumps used within STALE_AGE (a reader may be on them) stay. A full
+    disk once filled the cache (568 dumps, 4 GB) and cut a dump short."""
+    cap = (CACHE_MAX_MB if cap_mb is None else cap_mb) * 1024 * 1024
+    now, ds = time.time(), []
+    for e in os.listdir(root):
+        if not re.fullmatch(r'[0-9a-f]{20}-[0-9a-f]{12}', e):
+            continue
+        p = os.path.join(root, e)
+        try:
+            ds.append((os.stat(p).st_mtime, _size(p), p))
+        except OSError:
+            pass
+    total = sum(d[1] for d in ds)
+    for mt, n, p in sorted(ds):
+        if total <= cap:
+            break
+        if p == keep or now - mt <= STALE_AGE:
+            continue
+        _rm(p)
+        total -= n
+
+
 def dump(replay):
     """The ReplayDump tsv directory of `replay` (cached; see the module doc). Raises DumpError with ReplayDump's
     stderr when the build or the dump fails; nothing is left behind then."""
@@ -112,6 +148,9 @@ def dump(replay):
                 with open(os.path.join(tmp, '.stamp'), 'w') as f:
                     json.dump({'replay': os.path.abspath(replay), 'sha1': sha, 'tools': tools,
                                'made': time.strftime('%Y-%m-%dT%H:%M:%S')}, f)
+                gj = os.path.join(tmp, 'game.json')
+                if os.path.exists(gj) and not os.path.getsize(gj):
+                    raise DumpError(f'ReplayDump left an empty game.json for {replay}')
                 try:
                     os.rename(tmp, d)
                     os.chmod(d, 0o555)    # read-only: an rmtree(ignore_errors=True) by a caller removes nothing
@@ -121,6 +160,12 @@ def dump(replay):
             finally:
                 if os.path.exists(tmp):
                     _rm(tmp)
+            _trim(root, d)
+        else:
+            try:
+                os.utime(d)   # a hit: most recently used (_trim)
+            except OSError:
+                pass
     _sweep(root, d)
     return d
 

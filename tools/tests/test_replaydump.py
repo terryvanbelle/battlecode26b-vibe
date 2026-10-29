@@ -368,6 +368,14 @@ def main():
             check(r.returncode == 1 and len(out) == 2 and out[0].get('winType') and out[1]['file'] == bad and 'error' in out[1]
                   and 'bad.bc26' in r.stderr, f'summary mode exits 1 on a bad replay {r.returncode} {r.stdout[-200:]}')
             check(java('summary', KING).returncode == 0, 'summary mode exits 0 on good replays')
+            # a write that fails (a full disk: /dev/full) must fail the dump, not leave a cut file behind exit 0
+            for name in ('g0.turns.tsv', 'g0.summary.json', 'game.json'):
+                e = os.path.join(d, 'full-' + name)
+                os.mkdir(e)
+                os.symlink('/dev/full', os.path.join(e, name))
+                r = java('tsv', FX, e)
+                check(r.returncode != 0 and 'write failed' in r.stderr, f'tsv: a failed write of {name} fails the dump '
+                                                                         f'{r.returncode} {r.stderr[-200:]!r}')
             e = os.path.join(d, 'king')
             r = java('tsv', KING, e)
             check(r.returncode == 0 and len(r.stdout.splitlines()) == 1, f'king fixture dump {r.stderr[-300:]}')
