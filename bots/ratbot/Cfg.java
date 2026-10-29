@@ -139,6 +139,9 @@ public final class Cfg {
     public static final int RUSH_FROM = 4, RUSH_TO = 16;
     /** Squared distance (to the cat's 2x2 centre, doubled coords /4) a gatherer keeps from cats. */
     public static final int GATHER_CAT_DIST = 20;
+    /** A cat within dist2 CAT_DEFEND_R2 of one of our kings draws every rat that sees it, gatherers included
+     *  (0 = off): attack_on_cat, a lone cat scratched our king to death in 113 rounds while 17 gatherers kept away. */
+    public static final int CAT_DEFEND_R2 = 0;
     public static final boolean DIG = true;
     /** digToward before flow: one-tile dirt bands (cheesefarm's diagonal stripes) are dug through at once. */
     public static final boolean DIG_FIRST = true;

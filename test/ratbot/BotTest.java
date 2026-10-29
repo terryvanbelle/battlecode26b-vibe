@@ -738,6 +738,15 @@ public class BotTest {
         Baby.seen = new RobotInfo[0];
     }
 
+    static void testCatAtKing() {
+        Comms.numKings = 1; Comms.kings[0] = new MapLocation(7, 43);
+        MapLocation near = new MapLocation(4, 43), far = new MapLocation(20, 43);
+        check(Cfg.CAT_DEFEND_R2 == 0 || Baby.catAtKing(near), "cat at king: the attack_on_cat cat, 3 tiles off, counts");
+        check(!Baby.catAtKing(far), "cat at king: a cat 13 tiles off does not");
+        Comms.numKings = 0;
+        check(!Baby.catAtKing(near), "cat at king: no live king, no defence");
+    }
+
     static void testFormIncome() {
         Comms.numKings = 1;
         Econ.n = 100; Econ.sum = 0;   // rate100() = sum
@@ -935,6 +944,7 @@ public class BotTest {
         testBabyCap();
         testNearKing();
         testFormIncome();
+        testCatAtKing();
         testNearerAllies();
         testKingPress();
         testDefend();

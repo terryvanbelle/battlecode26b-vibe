@@ -619,6 +619,7 @@ public final class Baby {
         int raw = rc.getRawCheese();
         boolean late = G.round > 1960;
 
+        if (Cfg.CAT_DEFEND_R2 > 0 && cat != null && catAtKing(cat.location) && approachCat(cat)) { why = 'g'; return; }
         // keep gatherers out of cat reach
         if (cat != null && role == GATHER && catDist4(cat.location, G.me) <= 4 * Cfg.GATHER_CAT_DIST) {
             MapLocation cc = new MapLocation(cat.location.x, cat.location.y);
@@ -1007,6 +1008,13 @@ public final class Baby {
     }
 
     /** Move to a tile adjacent to the cat body, outside its forward lane. */
+    /** A cat at c is within dist2 Cfg.CAT_DEFEND_R2 of one of our live kings. */
+    static boolean catAtKing(MapLocation c) {
+        for (int k = 0; k < Comms.numKings; k++)
+            if (c.distanceSquaredTo(Comms.kings[k]) <= Cfg.CAT_DEFEND_R2) return true;
+        return false;
+    }
+
     static boolean approachCat(RobotInfo c) throws GameActionException {
         MapLocation me = G.me;
         if (chebToBody(c.location, me) == 1 && !inLane(c, me)) return true; // already in place: stay
