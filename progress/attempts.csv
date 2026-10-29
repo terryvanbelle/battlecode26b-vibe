@@ -139,3 +139,5 @@ s5g,2026-10-29 00:27,s4d,s4d + WAR_STRIKE 1: once cooperation is over every figh
 s5h,2026-10-29 00:27,s4d,s4d + WAR_STRIKE 2: one in two fighters strikes at the enemy king once at war,pending (rush run)
 s5i,2026-10-29 00:50,s4d,"s4d + KING_PRESS with a wider reach (PRESS_D2 225, PRESS_AGE 16, PRESS_HOPS 3): vs the rushers their king sits 7-15 tiles from ours for hundreds of rounds and is never bitten",pending (rush run rx_s5i)
 s5j,2026-10-29 00:50,s5i,s5i + PRESS_SHARED: rats also chase the kings' shared enemy-king slot (kings wrote squeaked sightings there but no rat read it; kings now also write the enemy kings they see),pending (rush run rx_s5j)
+s5k,2026-10-29 01:01,s4d,"s4d + SYM_SLOT: the per-rat hash behind the scout pick and MINE_BALANCE's mine comes from the mirror-invariant birth seed, not the robot id (mirrored rats had different scout roles and mines)","pending (mirror check, then screens)"
+s5l,2026-10-29 01:01,dev,"dev + SYM_SLOT alone: the partner bot for s5k's mirror check (both sides symmetric), not a candidate",tool
