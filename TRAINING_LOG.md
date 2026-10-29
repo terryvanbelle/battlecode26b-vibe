@@ -1326,3 +1326,56 @@
   - s7i mirror self-play (ms3): knifefight now splits at r10, not r1. There the twins chose explore targets that
     aren't mirrors (17,26 against 22,26 in X's frame). Hike r28, cheesefarm r20 and sunandmoon r21 are unchanged.
   - Screens: s6s (FLOW_PROGRESS) was rejected (-8.9, t -1.95). s6v (FLOW_CACHE) passed (+4.8, t +1.17, net +7).
+
+## 2026-10-29 08:43 PDT: s7d accepted; SWAP_HOLD fixes most corridor starvation; half the cheese lies unpicked
+- s7d (s6y = s6m + FLOW_REV + FLOW_FAST, with TrapRisk.NEAR as a literal) played v3 set 1 against s6m's
+  reference (2053-2054, 2056-2057, 2070-2075, 2086-2087, 2094-2095): 42 cells, D 10 (+9 -1), net +8, t 2.53.
+  That passes on block 1 (t ≥ 2, D ≥ 4): s7d is accepted, replica submission #84.
+  - Gained: AlexT101 popthecork (both sides) and uneasy_alliance (A); CS50Crab Nofreecheese (B) and dirtfulcat
+    (A); bc26vibe_bot krotus (A) and wallsofparadis (B); outercloudstudio heart (B); spsquared fullofsecrets (B).
+  - Lost: outercloudstudio seepastyourgreed (B). Still 0-6 against AdamTan12 (DefaultSmall, tiny, jail).
+  - Local agrees: ra_s6y (same behaviour, before the overrun fix) scored +10.4 points, t +2.32, net +13 (+18 -5)
+    against ra_s6m.
+- New reference research/panel/v3-ref-s7d.txt (set 1 = accepting block). s7d's control blocks on sets 2 and 3
+  are queued (6 sent, 22 in the queue). New preset @s7d = @s6m + FLOW_REV + FLOW_FAST (snapvar test checks it
+  reproduces bots/s7d). Candidates are now built on S7D, and ra_s6y is the screen control for them.
+- sv1/sj1 (s7j = s6m + SWAP_HOLD 2 against araid, on the side where s6m starved):
+
+  | Map | s6m delivered (result) | s7j delivered (result) |
+  |---|---|---|
+  | Stash | 380 (starved r904) | 13488 (won on points) |
+  | minimaze | 3623 (starved r1299) | 11775 (won on points) |
+  | EscapeTheNight | 0 (starved r777) | 11023 (lost on points at r2000) |
+  | whereisthecheese | 630 (starved r423) | 870 (won: araid's king died r291) |
+  | krotus | 557 (starved r363) | 588 (starved r375) |
+  | rose (A) | - | 2750 (lost on points at r2000) |
+  | rose (B) | - | 60 (starved r1020, 1259 ally grabs) |
+  | fullofsecrets (A / B) | - | 2329 / 1790 (won both) |
+
+- rose as B jammed in a new way: three carriers at (50,5), (51,6) and (52,5) each held an ally for hundreds of
+  rounds. Each carrier's old tile, where it meant to set the ally down, was filled at once by the next rat in its
+  queue, and a 1-wide stem has no other free tile. SWAP_YIELD (off by default): a baby doesn't step next to an
+  allied baby carrying an ally, so that tile stays free for the drop. s7k = @s6m + SWAP_HOLD 2 + SWAP_YIELD: diag
+  sk1 runs the same maps, and ra_s7k is at the front of the screen queue.
+- The economy gap is per rat, not rat count (replica, s6m's three blocks, cooperation rounds only):
+
+  | Rounds | Babies us / them | Pickups per rat-round us / them |
+  |---|---|---|
+  | 1-50 | 21.7 / 20.5 | 0.178 / 0.208 |
+  | 51-100 | 22.2 / 20.6 | 0.265 / 0.301 |
+  | 101-200 | 21.6 / 20.7 | 0.279 / 0.385 |
+  | 201-400 | 23.8 / 27.9 | 0.314 / 0.405 |
+
+- Both teams leave most mined cheese lying. By r200 the mines had produced 5199 cheese a game, but we had picked
+  up 969 and the opponent 1185, leaving 3101 on the floor. At r400 it was 11385 mined, 2111 + 3024 picked, 6580
+  lying. By mine rank through r300, our five nearest mines gave us 41/32/32/40/27% of their spawn, and mines
+  ranked 6th and beyond gave us 0-11%. The opponents took 42/37/34/42/22/16/9% of theirs. AdamTan12 also took
+  420 each from two mines on our half of keepout. Where the lying cheese sits:
+  - corridor and dirt maps (Hike: 1120 of 1240 lying at our second mine by r300; EscapeTheNight: nothing picked
+    by either team by r300);
+  - far mines nobody visits (DefaultLarge (32,54): 760 of 760 lying).
+- Where our rats' turns go (replica tag, r1-200): walking to a mine 25.8%, at a mine 14.6%, to a pile 11.4%,
+  delivering 8.2%, scouting 7.9%, exploring 7.7%, cat defence 8.3%. A mine pays about 1.6 cheese a round, so
+  about 3 rats at mines at a time can't cover 5+ mines. Levers: more rats at mines, larger loads from far mines
+  (s6t/s6u test longer trips), and spreading over every mine the team knows of (with symmetry, the enemy half's
+  twins too).

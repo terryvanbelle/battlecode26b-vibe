@@ -4,8 +4,8 @@
   snapvar.py NAME [@PRESET ...] ['old=>new' ...]
 
 Each 'old=>new' must match exactly once in bots/ratbot/Cfg.java (after the presets before it). @PRESET expands to a
-named list of replacements: @s4d is the switch set of s4d, @s6m the incumbent's (accepted 2026-10-29), so a candidate is
-`snapvar.py s7a @s6m 'X = 0=>X = 1'`. tools/snapshot.sh does the copy, rename and compile check.
+named list of replacements: @s4d is the switch set of s4d, @s6m s6m's, @s7d the incumbent's (accepted 2026-10-29), so a
+candidate is `snapvar.py s7l @s7d 'X = 0=>X = 1'`. tools/snapshot.sh does the copy, rename and compile check.
 """
 import os, subprocess, sys
 
@@ -16,6 +16,7 @@ PRESETS = {
             'CAT_DEFEND_R2 = 0=>CAT_DEFEND_R2 = 36', 'SEEK_CROWD = 0,=>SEEK_CROWD = 6,'],
 }
 PRESETS['s6m'] = PRESETS['s4d'] + ['HOME_PICK = 0=>HOME_PICK = 1']
+PRESETS['s7d'] = PRESETS['s6m'] + ['FLOW_REV = false=>FLOW_REV = true', 'FLOW_FAST = false=>FLOW_FAST = true']
 
 
 def expand(args):
