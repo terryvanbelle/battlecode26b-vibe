@@ -314,6 +314,37 @@ public class BotTest {
         check(oldBad > 0, "centre: W / 2, H / 2 does not (it sits half a tile off on an even map)");
     }
 
+    static void testWalledOff() {
+        reset(); W = 30; H = 30; install();
+        // Stash: a wall row y=22 with dirt at the corners; piles round the mines below it are walled off
+        for (int x = 2; x < 28; x++) Sym.mem[G.idx(x, 22)] = Sym.SEEN | Sym.WALL;
+        Sym.mem[G.idx(1, 22)] = Sym.SEEN | Sym.DIRT;
+        MapLocation me = new MapLocation(16, 24);
+        check(Baby.walledOff(me, new MapLocation(15, 20)) && Baby.walledOff(me, new MapLocation(18, 21)),
+              "walled off: a pile seen through the wall row");
+        check(!Baby.walledOff(me, new MapLocation(13, 26)) && !Baby.walledOff(me, new MapLocation(16, 23)) && !Baby.walledOff(me, me),
+              "walled off: piles on our side, one next to the wall, our own tile");
+        check(!Baby.walledOff(new MapLocation(1, 24), new MapLocation(1, 20)), "walled off: dirt is no wall (it can be dug)");
+        check(!Baby.walledOff(new MapLocation(16, 21), new MapLocation(16, 22)), "walled off: the target tile itself is not crossed");
+        // mirror invariance: random walls and segments, each symmetry
+        Random r = new Random(5);
+        int bad = 0;
+        for (int i = 0; i < 300; i++) {
+            reset(); W = 15 + r.nextInt(10); H = 15 + r.nextInt(10); install();
+            int s = new int[]{Sym.ROT, Sym.HOR, Sym.VER}[i % 3];
+            for (int k = 0; k < 30; k++) {
+                MapLocation w = new MapLocation(r.nextInt(W), r.nextInt(H)), mw = G.mirror(w, s);
+                Sym.mem[G.idx(w)] |= Sym.WALL; Sym.mem[G.idx(mw)] |= Sym.WALL;
+            }
+            for (int k = 0; k < 20; k++) {
+                MapLocation a = new MapLocation(r.nextInt(W), r.nextInt(H));
+                MapLocation b = new MapLocation(Math.max(0, Math.min(W - 1, a.x + r.nextInt(9) - 4)), Math.max(0, Math.min(H - 1, a.y + r.nextInt(9) - 4)));
+                if (Baby.walledOff(a, b) != Baby.walledOff(G.mirror(a, s), G.mirror(b, s))) bad++;
+            }
+        }
+        check(bad == 0, "walled off: mirrored walls and segments agree (bad=" + bad + ")");
+    }
+
     static void testSymElimination() {
         reset(); W = 20; H = 20; install();
         // wall at (2,3); its mirrors: ROT (17,16), HOR (2,16), VER (17,3)
@@ -1457,6 +1488,7 @@ public class BotTest {
         testBiteGuard();
         testCarryCap();
         testBabyCap();
+        testWalledOff();
         testNearKing();
         testFormIncome();
         testCatAtKing();

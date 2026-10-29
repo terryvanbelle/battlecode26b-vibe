@@ -250,24 +250,47 @@ public final class Baby {
         return inCatBody(n1, p) || inCatBody(n2, p);
     }
 
+    /** Cfg.CHEESE_LOS: the piles seen this sense, judged once every wall in view is recorded. */
+    static final MapLocation[] piles = new MapLocation[24];
+
     static void sense() throws GameActionException {
         MapInfo[] infos = G.rc.senseNearbyMapInfos();
         MapLocation bestCheese = null;
-        int bd = Integer.MAX_VALUE;
+        int bd = Integer.MAX_VALUE, np = 0;
         for (MapInfo mi : infos) {
             MapLocation l = mi.getMapLocation();
             boolean mine = mi.hasCheeseMine();
             if (Sym.record(l.x, l.y, mi.isWall(), mi.isDirt(), mine)) { }
             if (mine) noteMine(l.x, l.y);
             if (mi.getCheeseAmount() > 0) {
+                if (Cfg.CHEESE_LOS) { if (np < piles.length) piles[np++] = l; continue; }
                 int d = G.me.distanceSquaredTo(l);
                 if (d < bd && (Cfg.CHEESE_BAN == 0 || !bannedCheese(l, Cfg.CHEESE_BAN))) { bd = d; bestCheese = l; }
             } else if (cheeseTarget != null && cheeseTarget.equals(l)) {
                 cheeseTarget = null;
             }
         }
+        if (Cfg.CHEESE_LOS) {
+            for (int i = 0; i < np; i++) {
+                MapLocation l = piles[i];
+                int d = G.me.distanceSquaredTo(l);
+                if (d < bd && (Cfg.CHEESE_BAN == 0 || !bannedCheese(l, Cfg.CHEESE_BAN)) && !walledOff(G.me, l)) { bd = d; bestCheese = l; }
+            }
+            if (cheeseTarget != null && walledOff(G.me, cheeseTarget)) cheeseTarget = null;
+        }
         if (bestCheese != null) {
             if (cheeseTarget == null || G.me.distanceSquaredTo(cheeseTarget) > bd) cheeseTarget = bestCheese;
+        }
+    }
+
+    /** The greedy line from a to b (directionTo steps, as a straight walk would take) crosses a known wall. */
+    static boolean walledOff(MapLocation a, MapLocation b) {
+        int[] mem = Sym.mem;
+        MapLocation c = a;
+        while (true) {
+            c = c.add(c.directionTo(b));
+            if (c.equals(b)) return false;
+            if ((mem[G.idx(c)] & Sym.WALL) != 0) return true;
         }
     }
 

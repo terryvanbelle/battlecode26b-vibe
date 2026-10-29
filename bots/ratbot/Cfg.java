@@ -153,6 +153,11 @@ public final class Cfg {
     /** CHEESE_BAN only piles behind a wall: the last flow path toward the pile was a detour (longer than
      *  2 * Chebyshev distance + 2) or its search failed. A stall in a crowd at a mine then bans nothing. */
     public static final boolean CHEESE_BAN_WALL = false;
+    /** A cheese pile whose greedy line from us (directionTo steps) crosses a known wall is not chased; a walled-off
+     *  target is dropped. Stash (1210, 1211 vs abcdezyxwv): a wall row seals our base but for dug corners; our
+     *  rats saw the piles round the mines through it and chased them into the wall ('C'), each pick resetting the
+     *  stall that would start a flow search to the mine, so they made 9 pickups to r100 (they 52) and none r100-200. */
+    public static final boolean CHEESE_LOS = false;
     /** A goTo target within Chebyshev NAV_SAME_R of the last one keeps the stall count and bug state (0 = only an
      *  equal tile does). fullofsecrets: carriers with up to 490 cheese sat 76 rounds outside the wall of the king's
      *  pocket; each step of the roaming king was a new target, so the stall never reached FLOW_STALL. */
