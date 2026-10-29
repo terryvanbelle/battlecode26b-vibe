@@ -579,3 +579,19 @@
   sides against both versions. Against abrk, our own rush archetype, war-time fixes move few panel cells. s3y is
   back (submission 71). The next candidate goes out when the early-king screens (sp17) or the stacked rush run
   (rx_s4n) are scored.
+
+## 2026-10-28 23:05 PDT: s4q rejected; s4i to the replica; starvation tally
+- sp17_s4q (s4d + FORM_FROM 30) vs s2o, control sp14_s4d: 80 cells, D 54, mean -2.6, t -1.23, net +1. It formed a
+  second king in 21 of 80 games (s4d 23), so FORM_FROM is not what holds the second king back. Rejected. s4r
+  (FORM_BABIES 12 + FORM_CHEESE 150 on top) is running.
+- The replica was idle with s3y alone, so s4i (s4d + BITE_GUARD + BITE_CARRIER, rush run t +1.82, cells +7 -2) is
+  submission 72 with a set-1 block from match 1520.
+- What killed our king in the 64 s3y/s4d-era field losses: bite 25, starvation 23, throw hit 11, trap 2, scratch 2.
+  The starvation deaths come from 17 replays on 11 maps (Stash, dirtfulcat, sittingducks, constrictinglattice,
+  Nofreecheese, streetsofnewyork, heart, fullofsecrets, EscapeTheNight, pipes, ultimatestarvation). Dumps of
+  all 17 are running to see where the cheese went before the bank hit 0. The first one, dirtfulcat in 1373
+  (backstab r11), shows the pattern. The cat and the enemy killed 17 of our babies, and income stopped (20
+  babies at r80, 2 by r220). We formed a second king at about r150 with the bank at 343, and its 7 babies left
+  the workforce. Spawns stopped below LOW_FLOOR 100. Two kings at 4 per round ran the bank to 0 at r258, and
+  both kings starved by r311. Rat traps cost 1300 of our 2488 starting cheese in the first 150 rounds (65 traps,
+  all triggered, 23 enemy kills).
