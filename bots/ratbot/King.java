@@ -32,6 +32,7 @@ public final class King {
         sense();
         Debug.mark(43);
         readSqueaks();
+        if (Cfg.SYM_MINELIST) Sym.listCheck(Comms.mines, Comms.numMines, true);
         if (Cfg.MINE_MIRROR) mirrorMines();
         publish();
         Debug.mark(44);
@@ -569,7 +570,8 @@ public final class King {
         for (int i = 0; i < Comms.numMines; i++) {
             MapLocation m = Comms.mines[i];
             int d = from.distanceSquaredTo(m);
-            if (d >= bd || d >= m.distanceSquaredTo(ek)) continue;
+            int e = m.distanceSquaredTo(ek);
+            if (d >= bd || d > e || d == e && !Cfg.MINE_TIES) continue;
             // another king already holds it
             boolean held = false;
             for (int k = 0; k < Comms.numKings; k++)

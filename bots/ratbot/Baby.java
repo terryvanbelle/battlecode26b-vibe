@@ -36,6 +36,7 @@ public final class Baby {
 
         Debug.mark(1);
         sense();
+        if (Cfg.SYM_MINELIST && Flow.left() > Cfg.BC_OPTIONAL) Sym.listCheck(Comms.mines, Comms.numMines, false);
         RobotInfo[] robots = rc.senseNearbyRobots(-1, null);
         seen = robots;
         RobotInfo enemyKing = null, enemy = null;
@@ -571,13 +572,16 @@ public final class Baby {
     /** Squeak one fact: to a king in hearing range a mine it may not know or a sharper symmetry mask; at war, an enemy's front. */
     static void report() {
         MapLocation k = Comms.numKings == 0 ? null : Comms.nearestKing(G.me);
+        boolean near = k != null && (Cfg.SYM_HEAR_TILE ? kingInEarshot(G.me) : G.me.distanceSquaredTo(k) <= 16);
         if (Cfg.GOSSIP && Comms.numMines == 0) {
             // no mine known to the team yet: pass mine news rat to rat, which outruns a courier walking home
             for (Message m : G.rc.readSqueaks(-1)) {
                 int c = m.getBytes();
                 if (Comms.sqType(c) == Comms.SQ_MINE) noteMine(Comms.sqX(c), Comms.sqY(c));
+                else if (Cfg.SYM_GOSSIP && Comms.sqType(c) == Comms.SQ_SYM) Sym.merge(Comms.sqExtra(c) & 7);
             }
-            if (myMineCount > 0 && (k == null || G.me.distanceSquaredTo(k) > 16)) {
+            if (symGossip(Cfg.SYM_GOSSIP, near)) return;
+            if (myMineCount > 0 && !near) {
                 int key = myMines[G.round % myMineCount];
                 G.rc.squeak(Comms.squeak(Comms.SQ_MINE, key / 64, key % 64, 0));
                 return;
@@ -586,14 +590,16 @@ public final class Baby {
             for (Message m : G.rc.readSqueaks(G.round - 1)) {
                 int c = m.getBytes();
                 if (Comms.sqType(c) == Comms.SQ_MINE) noteMine(Comms.sqX(c), Comms.sqY(c));
+                else if (Cfg.SYM_GOSSIP && Comms.sqType(c) == Comms.SQ_SYM) Sym.merge(Comms.sqExtra(c) & 7);
             }
-            if (k == null || G.me.distanceSquaredTo(k) > 16) {
+            if (symGossip(Cfg.SYM_GOSSIP, near)) return;
+            if (!near) {
                 int key = unreported();
                 if (key >= 0) { G.rc.squeak(Comms.squeak(Comms.SQ_MINE, key / 64, key % 64, 0)); return; }
             }
         }
         // a squeak reaches robots with any tile within dist2 16 of us: the king's centre within 16 is always heard
-        if (k != null && G.me.distanceSquaredTo(k) <= 16) {
+        if (near) {
             int sharedSym = Comms.read(Comms.SYM);
             if (sharedSym != 0 && (Sym.mask & sharedSym) != sharedSym) {
                 G.rc.squeak(Comms.squeak(Comms.SQ_SYM, 0, 0, Sym.mask));
@@ -620,6 +626,40 @@ public final class Baby {
         if (k != null && G.me.distanceSquaredTo(k) <= 16 && catSeen != null && G.round - catSeenRound <= 2) {
             G.rc.squeak(Comms.squeak(Comms.SQ_CAT, catSeen.x, catSeen.y, 0));
         }
+    }
+
+    static int symSqueaked = -100;
+
+    /** Some tile of one of our kings (3x3) is within squeak range (d2 16) of p. */
+    static boolean kingInEarshot(MapLocation p) {
+        for (int i = 0; i < Comms.numKings; i++) {
+            MapLocation k = Comms.kings[i];
+            int dx = Math.max(0, Math.abs(p.x - k.x) - 1), dy = Math.max(0, Math.abs(p.y - k.y) - 1);
+            if (dx * dx + dy * dy <= 16) return true;
+        }
+        return false;
+    }
+
+    /** Some tile of a cat (2x2 from catBL) is within squeak range (d2 16) of p. */
+    static boolean catInEarshot(MapLocation catBL, MapLocation p) {
+        int dx = Math.max(0, Math.max(catBL.x - p.x, p.x - catBL.x - 1));
+        int dy = Math.max(0, Math.max(catBL.y - p.y, p.y - catBL.y - 1));
+        return dx * dx + dy * dy <= 16;
+    }
+
+    /** SYM_GOSSIP: away from the kings, squeak a mask sharper than the shared one every SYM_GOSSIP_EVERY rounds,
+     *  when an ally can hear it, no enemy is in view at war, and no cat can hear it. */
+    static boolean symGossip(boolean on, boolean near) {
+        if (!on || near || G.round - symSqueaked < Cfg.SYM_GOSSIP_EVERY) return false;
+        int shared = Comms.read(Comms.SYM);
+        if (shared == 0 || (Sym.mask & shared) == shared) return false;
+        if (!G.coop && nearestEnemy != null || cat != null && catInEarshot(cat.location, G.me)) return false;
+        boolean ally = false;
+        for (RobotInfo r : seen) if (r.team == G.us && G.me.distanceSquaredTo(r.location) <= 16) { ally = true; break; }
+        if (!ally) return false;
+        G.rc.squeak(Comms.squeak(Comms.SQ_SYM, 0, 0, Sym.mask));
+        symSqueaked = G.round;
+        return true;
     }
 
     // ---------------------------------------------------------------- movement
@@ -1132,7 +1172,8 @@ public final class Baby {
     /** l is closer to our king than to its mirror under the first live symmetry. */
     static boolean homeHalf(MapLocation l) {
         MapLocation ek = G.mirror(home, firstSym());
-        return l.distanceSquaredTo(home) < l.distanceSquaredTo(ek);
+        int a = l.distanceSquaredTo(home), b = l.distanceSquaredTo(ek);
+        return a < b || Cfg.MINE_TIES && a == b;
     }
 
     static int firstSym() {

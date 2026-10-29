@@ -165,6 +165,21 @@ public final class Cfg {
     /** Gossip all game: a rat away from the king squeaks a mine it knows that the king's list lacks, and every rat
      *  notes the mines it hears, so news reaches the king with the next delivery instead of its finder. */
     public static final boolean GOSSIP_ALWAYS = true;
+    /** Symmetry news (SQ_SYM) is squeaked to a king when any of its 9 tiles is in hearing range (d2 16), not only
+     *  its centre: delivery spots at d2 17-18 were never heard. */
+    public static final boolean SYM_HEAR_TILE = false;
+    /** Babies merge SQ_SYM squeaks they hear, and one away from the kings that knows a sharper mask than the shared one
+     *  squeaks it every SYM_GOSSIP_EVERY rounds, in peace or with no enemy in view, when an ally is near and no cat
+     *  can hear (squeaks draw attacking cats). */
+    public static final boolean SYM_GOSSIP = false;
+    public static final int SYM_GOSSIP_EVERY = 3;
+    /** The team mine list is symmetry evidence: a listed mine whose s-twin a robot saw without a mine rules out s
+     *  (twins not seen yet are marked and checked when first seen). The king also rules out s when a listed mine's
+     *  s-twin would sit closer than the engine's minimum mine spacing (d2 25) to a listed mine. */
+    public static final boolean SYM_MINELIST = false;
+    /** A mine as near the enemy start as ours (on a HOR/VER axis: 7 of EscapeTheNight's 11) counts as ours for the
+     *  gatherers' pick and the king's home mine, instead of as theirs. */
+    public static final boolean MINE_TIES = false;
     /** Scouts: one in SCOUT_EVERY gatherers explores our half (never-seen tiles) until round SCOUT_UNTIL, then
      *  gathers (0 = off). */
     public static final int SCOUT_EVERY = 4, SCOUT_UNTIL = 150;

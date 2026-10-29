@@ -51,7 +51,7 @@ public class BotTest {
         walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null;
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; ratCost = 10; built.clear();
-        Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0;
+        Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0; Sym.listDone = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null;
     }
@@ -164,6 +164,76 @@ public class BotTest {
     }
 
     // ------------------------------------------------------------------ tests
+
+    static void testSymMineList() {
+        reset(); W = 20; H = 20; install();
+        // listed mine m = (3,4); twins: ROT (16,15), HOR (3,15), VER (16,4)
+        MapLocation[] ms = { new MapLocation(3, 4) };
+        Sym.record(16, 15, false, false, false);
+        Sym.listCheck(ms, 1, false);
+        check(Sym.mask == (Sym.HOR | Sym.VER) && !Sym.known(3 + 15 * W) && (Sym.mem[3 + 15 * W] & Sym.EXP) == Sym.HOR << 4,
+              "sym list: a mineless ROT twin rules out ROT; the unseen HOR twin is marked, not seen");
+        Sym.record(16, 4, false, false, false);
+        check(Sym.mask == Sym.HOR && Sym.contradictions == 0, "sym list: a marked twin first seen mineless rules out its symmetry");
+        reset(); install();
+        Sym.listCheck(ms, 1, false);
+        Sym.record(16, 15, false, false, true);
+        check(Sym.mask == 7 && Sym.listDone == 1, "sym list: a twin that holds a mine keeps every symmetry");
+        reset(); install();
+        Sym.listCheck(ms, 1, false);
+        Sym.record(3, 15, false, true, false);   // its own mirrors are all unseen: only the HOR mark can fire
+        check(Sym.mask == (Sym.ROT | Sym.VER) && (Sym.mem[3 + 15 * W] & (Sym.SEEN | Sym.DIRT | Sym.EXP)) == (Sym.SEEN | Sym.DIRT | Sym.HOR << 4),
+              "sym list: record keeps the marks, and the HOR mark fires on the first sighting");
+        Sym.record(3, 15, false, false, false);
+        check(Sym.mask == (Sym.ROT | Sym.VER) && Sym.contradictions == 0, "sym list: a second sighting changes nothing");
+        // spacing (kings): mirror_ROT(3,4) = (16,15) lies at d2 4 from the listed (16,13)
+        reset(); install();
+        MapLocation[] ms2 = { new MapLocation(3, 4), new MapLocation(16, 13) };
+        Sym.listCheck(ms2, 2, false);
+        check(Sym.mask == 7, "sym list: no spacing test for babies");
+        reset(); install();
+        Sym.listCheck(ms2, 2, true);
+        check(Sym.mask == (Sym.HOR | Sym.VER) && Sym.listDone == 2, "sym list: a twin closer than the mine spacing rules out its symmetry");
+        Sym.mask = Sym.HOR;
+        MapLocation[] ms3 = { new MapLocation(3, 4), new MapLocation(16, 13), new MapLocation(8, 8) };
+        Sym.listCheck(ms3, 3, true);
+        check(Sym.mask == Sym.HOR && Sym.listDone == 3 && Sym.contradictions == 0, "sym list: a unique mask skips the rest");
+    }
+
+    static void testSymRelay() {
+        reset(); W = 20; H = 20; install();
+        Comms.numKings = 1; Comms.kings[0] = new MapLocation(9, 6);
+        check(Baby.kingInEarshot(new MapLocation(5, 5)) && new MapLocation(5, 5).distanceSquaredTo(Comms.kings[0]) > 16
+              && !Baby.kingInEarshot(new MapLocation(3, 5)) && Baby.kingInEarshot(new MapLocation(9, 11)),
+              "sym relay: a king is in earshot when any of its 9 tiles is within d2 16");
+        MapLocation c = new MapLocation(10, 10);
+        check(Baby.catInEarshot(c, new MapLocation(6, 10)) && !Baby.catInEarshot(c, new MapLocation(5, 10))
+              && Baby.catInEarshot(c, new MapLocation(15, 11)) && !Baby.catInEarshot(c, new MapLocation(16, 11)),
+              "sym relay: a cat hears from any of its 4 tiles");
+        G.us = Team.A; G.coop = true; G.round = 50; G.me = new MapLocation(5, 5);
+        Baby.cat = null; Baby.nearestEnemy = null; Baby.symSqueaked = -100;
+        RobotInfo ally = new RobotInfo(2, Team.A, UnitType.BABY_RAT, 100, new MapLocation(6, 7), Direction.NORTH, 0, 0, null);
+        Baby.seen = new RobotInfo[] { ally };
+        shared[Comms.SYM] = 7; Sym.mask = Sym.HOR;
+        check(!Baby.symGossip(false, false) && squeaks.isEmpty(), "sym relay: off by switch");
+        check(!Baby.symGossip(true, true) && squeaks.isEmpty(), "sym relay: within a king's earshot the king squeak handles it");
+        check(Baby.symGossip(true, false) && squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_SYM
+              && (Comms.sqExtra(squeaks.get(0)) & 7) == Sym.HOR, "sym relay: a sharper mask is squeaked to a nearby ally");
+        G.round = 52;
+        check(!Baby.symGossip(true, false), "sym relay: at most once per SYM_GOSSIP_EVERY rounds");
+        G.round = 50 + Cfg.SYM_GOSSIP_EVERY;
+        Baby.cat = new RobotInfo(3, Team.NEUTRAL, UnitType.CAT, 1000, new MapLocation(6, 8), Direction.NORTH, 0, 0, null);
+        check(!Baby.symGossip(true, false), "sym relay: never with a cat in earshot");
+        Baby.cat = null;
+        Baby.seen = new RobotInfo[0];
+        check(!Baby.symGossip(true, false), "sym relay: never with no ally to hear");
+        Baby.seen = new RobotInfo[] { ally };
+        shared[Comms.SYM] = Sym.HOR;
+        check(!Baby.symGossip(true, false), "sym relay: nothing new against the shared mask");
+        shared[Comms.SYM] = 7;
+        check(Baby.symGossip(true, false) && squeaks.size() == 2, "sym relay: squeaks again after the wait");
+        Baby.seen = new RobotInfo[0]; Comms.numKings = 0; squeaks.clear();
+    }
 
     static void testHandMirror() {
         reset(); W = 31; H = 24; install();
@@ -593,6 +663,16 @@ public class BotTest {
         Comms.numKings = 1; Comms.kings[0] = new MapLocation(4, 8);
         check(new MapLocation(7, 6).equals(King.pickHomeMine(new MapLocation(3, 3))), "king mine: skips a mine another king holds");
         Comms.numKings = 0;
+        // VER map: a mine on the x axis is as near the enemy start (56, 3) as ours
+        Sym.mask = Sym.VER;
+        Comms.numMines = 0;
+        Comms.mines[Comms.numMines++] = new MapLocation(29, 10);   // axis x = 29.5: d2 from (3,3) 725, from (56,3) 778
+        Comms.mines[Comms.numMines++] = new MapLocation(15, 3);    // d2 144 vs 1681: ours
+        W = 31; install(); Sym.mask = Sym.VER;                       // axis x = 15: (15, 3) ties
+        check((King.pickHomeMine(new MapLocation(3, 3)) != null) == Cfg.MINE_TIES, "king mine: an axis tie counts as ours only with MINE_TIES");
+        Baby.home = new MapLocation(3, 3);
+        check(Baby.homeHalf(new MapLocation(15, 9)) == Cfg.MINE_TIES && Baby.homeHalf(new MapLocation(14, 9))
+              && !Baby.homeHalf(new MapLocation(16, 9)), "home half: an axis tie is ours only with MINE_TIES");
         Comms.numMines = 0;
     }
 
@@ -1030,6 +1110,8 @@ public class BotTest {
         testKingMine();
         testHandMirror();
         testSymElimination();
+        testSymMineList();
+        testSymRelay();
         testSqueakCodec();
         testFresh();
         testCatGeometry();

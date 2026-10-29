@@ -506,3 +506,24 @@
 - rx_s4h (s4h = s4d + MAX_BABIES_WAR 30, vs abrk) against control rx2_s4d: +3.1 pts, t +0.93, cells +11 -7, 52-28,
   king-kill losses 16 (17), king kills by us 21 (18). We spawned 4572 babies against 4108 and moved 718702 cheese
   against 703869. Lean positive; it joins GLANCE_MEM 20 in the next stack. It is inert in peace.
+
+## 2026-10-28 21:50 PDT: s4d rejected on the replica; the symmetry audit
+- s4d block 3 (set 3, matches 1373-1380 and 1420-1427) vs s3y lost 3 net: uneasy_alliance on both sides to bc26vibe_bot
+  and Excavation to abcdezyxwv. Blocks 1-3: 142 cells, D 21 (+12 -9), net +3, t 0.65, under the block-3 bar (1.5):
+  rejected. s3y is back on the replica (submission 69). s4d's +3.3 self-play points did not carry to the field. Its
+  switches stay as the base of the next stacks, because nothing in the field data says they hurt.
+- The symmetry audit (research/audits/symmetry.md) found nothing wrong with the sightings we already use. Its gaps:
+  the team pools almost no evidence, so the king's mask never becomes unique on about 40% of our game-sides, and the
+  median round where it does is 103. Its top proposal reads the symmetry from the order of
+  senseNearbyMapInfos, which the engine reverses for chirality-1 robots. Only one side would learn the symmetry from
+  this, so our play would differ by side. That breaks the rule that every move is symmetric when switching sides, so
+  it is not implemented.
+- Implemented behind switches: SYM_HEAR_TILE (a SYM squeak goes to the king when any of its 9 tiles is in earshot,
+  not only its centre: the engine delivers to any occupied tile), SYM_GOSSIP (babies merge heard SYM squeaks, and
+  one away from the kings squeaks a sharper mask every 3 rounds, with an ally in earshot, no cat in earshot, no
+  enemy in view), and SYM_MINELIST (a listed mine's mineless s-twin rules out s; unseen twins carry expectation bits
+  that fire on the first sighting; the king also applies the engine's d2-25 mine spacing). The companion is
+  MINE_TIES: once VER is known on EscapeTheNight, 7 of its 11 mines sit on the axis, and the strict test would leave
+  the king no home mine.
+- Arms: s4k = s4d + the three plus MINE_TIES, s4l = s4k + MINE_MIRROR, on the self-play screen (sp16) vs s2o, with
+  control sp14_s4d, after rx_s4j (s4d + GLANCE_MEM 20 + MAX_BABIES_WAR 30, the two rush passes stacked).
