@@ -1428,3 +1428,36 @@
   when its slot % (m + k) is m or more. With k = 1 that is half the gatherers while one mine is known and a third
   with two. s7v (k = 1) and s7w (k = 2) are in diag eco3 against s7d, with replays kept for the same discovery
   measure. md1 (an s7d mirror on the same maps) is the reference.
+
+## 2026-10-29 09:39 PDT: EscapeTheNight starvation; MapCensus dig columns; eco1, s6z and s7i outcomes
+- s7d's set 3 started (2233-2238). Against outercloudstudio the king starved on EscapeTheNight on both sides, 61
+  rounds with the bank under 2, holding 19-20 babies.
+  - 2233 (A): we picked nothing in 1000 rounds. 79% of our rat-turns were 'C', chasing cheese at x 18-20 that
+    we could see through the room's east wall. The room only opens through dirt.
+  - outercloudstudio cleared its dirt pocket by r150, then sank one straight shaft up through the 9-row dirt band.
+    By r400 it reached the far mine.
+  - 2234 (B): we got out after the r317 backstab and picked 8454, but delivered only 4447. They picked 7437 on
+    our half.
+  - Local etn1 (s7d vs araid, both sides): s7d delivered 45 as A, all rats at king distance 3 with mv=C on piles
+    at (18-19, 12-21) for 600 rounds, then mv=E. As B it lost on points. ra_s6y (same behaviour) delivered 11403
+    there, so escaping is chaotic rather than impossible. Earlier fixes (CHEESE_BAN, CHEESE_LOS) were neutral or
+    rejected.
+- MapCensus now reports dig columns from king A (0-1 search, a dirt tile = one dig): freeTiles, minesFree, digNear
+  and digHome. research/maps.tsv was regenerated, and tools/tests/test_mapcensus.py checks known answers.
+  - Maps where the nearest home mine needs 3+ digs: EscapeTheNight 12, Excavation 6, streetsofnewyork 5, trapped
+    5, whereisthecheese 5, mincemeat 5 (no home mine), canyoudig 3, learn_your_lesson 3, pipes 3.
+  - Replica s6m+s7d record by dig need: 11/23 (0.48) on 3+ digs, 15/27 on 1-2, and 83/184 (0.45) on none. So
+    digging is not where we lose to the field on average. pipes is 0/4 and streetsofnewyork 1/5.
+- eco1 (vs s7d, 12 games each on 6 maps):
+  - s7m (MINE_ANY_COOP): 6 wins, -0.5 pts, pick x0.95.
+  - s7n (MINE_ANY_COOP + MINE_MIRROR): 6 wins, -2.0 pts, pick x1.12.
+  - s7o (DELIVER_IDLE 30): 5 wins, -1.7 pts, pick x1.05.
+  - None is adopted.
+- Self-play keepout is side-biased: whenever a variant plays exactly like s7d there, side A picks 21819 to B's
+  18400. The SYM line (s7e/s7g/s7i) is the fix in progress.
+- Screens:
+  - ra_s6y passes against ra_s6m: net +13, t +2.32. Its behaviour is s7d's.
+  - s6z (FLOW_RESERVE 1300) is neutral against ra_s6y: net -1, t -0.06. Not adopted.
+  - s7i (SYM_SLOT + SYM_FLOW + SYM_CENTRE + SYM_HAND + pickBit + SYM_FACE + KING_SENSE_RESERVE 7000) passes
+    against ra_s6y: +3.3 pts, t +0.65, net +2. The SYM switches cost nothing and make the bot's moves mirror
+    across sides, so they go in the next replica bundle.
