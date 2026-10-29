@@ -456,7 +456,7 @@ public final class Baby {
     static boolean tryRatTrap() throws GameActionException {
         RobotController rc = G.rc;
         if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= Cfg.TRAP_CAP) return false;
-        if (rc.getAllCheese() < Cfg.RAT_TRAP_MIN_CHEESE || King.trapStarvesSpawn(rc)) return false;
+        if (rc.getAllCheese() < Econ.floor(Cfg.RAT_TRAP_MIN_CHEESE) || King.trapStarvesSpawn(rc)) return false;
         int d0 = G.me.distanceSquaredTo(nearestEnemy.location);
         if (d0 <= 2 || d0 > Cfg.BABY_TRAP_DIST2) return false;
         MapLocation me = rc.getLocation();

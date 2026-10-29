@@ -1113,6 +1113,10 @@ public class BotTest {
         // Econ.surplus(k): each more king costs 2 a round to round 2000
         G.round = 1000; global = 3000; Econ.n = 0; Econ.sum = 0;
         check(Econ.surplus(1) == 1000 && Econ.surplus(2) == -1000, "econ: surplus with one more king (" + Econ.surplus(1) + ", " + Econ.surplus(2) + ")");
+        Comms.numKings = 3;
+        check(Econ.floor(300) == (Cfg.FLOOR_PER_KING ? 900 : 300), "econ: floors scale with live kings only under FLOOR_PER_KING");
+        Comms.numKings = 0;
+        check(Econ.floor(300) == 300, "econ: no live king counts as one");
         type = UnitType.BABY_RAT;
     }
 

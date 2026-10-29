@@ -225,7 +225,7 @@ public final class King {
     /** At rat cost `cost` (the cost step gives the baby count) and `global` cheese, a 20-cheese trap would leave
      *  less than the next spawn plus SPAWN_FLOOR while the count is under `cap`. */
     static boolean starves(int cost, int global, int cap) {
-        return (cost - 10) / 10 * 4 < cap && global < cost + Cfg.SPAWN_FLOOR + 20;
+        return (cost - 10) / 10 * 4 < cap && global < cost + Econ.floor(Cfg.SPAWN_FLOOR) + 20;
     }
 
     /** The last spawn() outcome (Debug.KWHY): n not action-ready, s no surplus, f under the floor, c at the cap,
@@ -244,14 +244,14 @@ public final class King {
         // end-of-game cheese at the measured income must stay positive after paying for this one
         // a core population always (rats pay for themselves and are the army); beyond it, the income test
         boolean low = babies < Cfg.LOW_BABIES;
-        boolean boot = babies < Cfg.CORE_BABIES && rc.getGlobalCheese() >= cost + (low ? Cfg.LOW_FLOOR : Cfg.CORE_FLOOR);
+        boolean boot = babies < Cfg.CORE_BABIES && rc.getGlobalCheese() >= cost + Econ.floor(low ? Cfg.LOW_FLOOR : Cfg.CORE_FLOOR);
         // at war with enemies in sight, bodies now beat cheese later: spawn down to a short upkeep floor
-        boolean war = !G.coop && enemies.length > 0 && rc.getGlobalCheese() >= cost + (low ? Cfg.LOW_FLOOR : Cfg.WAR_FLOOR);
+        boolean war = !G.coop && enemies.length > 0 && rc.getGlobalCheese() >= cost + Econ.floor(low ? Cfg.LOW_FLOOR : Cfg.WAR_FLOOR);
         spawnWhy = 's';
         if (!boot && !war && Econ.surplus() < cost + Cfg.SPAWN_MARGIN) return;
         // never spend the king's upkeep: SPAWN_FLOOR cheese (or what the rest of the game needs) stays
         spawnWhy = 'f';
-        if (rc.getGlobalCheese() < cost + Math.min(low ? Cfg.LOW_FLOOR : Cfg.SPAWN_FLOOR, 2 * (2000 - G.round))) return;
+        if (rc.getGlobalCheese() < cost + Econ.floor(Math.min(low ? Cfg.LOW_FLOOR : Cfg.SPAWN_FLOOR, 2 * (2000 - G.round)))) return;
         spawnWhy = 'c';
         if (babies >= babyCap(war, rc.getGlobalCheese())) return;
         // Spawn toward the most useful direction: away from visible cats, else toward the map centre.
@@ -295,7 +295,7 @@ public final class King {
     /** War defense: a rat trap on the reachable tile nearest an approaching enemy rat (50 damage + stun). */
     static void ratTrap(RobotInfo[] enemies) throws GameActionException {
         RobotController rc = G.rc;
-        if (!rc.isActionReady() || rc.getGlobalCheese() < Cfg.RAT_TRAP_MIN_CHEESE || rc.getNumberRatTraps() >= Cfg.TRAP_CAP) return;
+        if (!rc.isActionReady() || rc.getGlobalCheese() < Econ.floor(Cfg.RAT_TRAP_MIN_CHEESE) || rc.getNumberRatTraps() >= Cfg.TRAP_CAP) return;
         if (trapStarvesSpawn(rc)) return;
         MapLocation c = rc.getLocation();
         MapLocation foe = null;

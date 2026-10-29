@@ -11,6 +11,10 @@ public final class Cfg {
     public static final int SPAWN_FLOOR = 300;
     /** With fewer than LOW_BABIES babies every floor drops to LOW_FLOOR: a king without rats has no income. */
     public static final int LOW_BABIES = 8, LOW_FLOOR = 100;
+    /** The spawn floors, the rest-of-game upkeep reserve and the rat-trap minimums scale with our live kings (each
+     *  king eats 2 a round): s5r on cheesebottles (1800) formed a second king, spawned to its 30-baby cap down to
+     *  the one-king floor, and both kings starved from r650. */
+    public static final boolean FLOOR_PER_KING = false;
     /** King places rat traps toward enemy rats within this squared distance once cooperation is over. */
     public static final boolean KING_TRAPS = true;
     public static final int KING_TRAP_DIST2 = 20;
