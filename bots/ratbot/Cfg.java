@@ -36,6 +36,9 @@ public final class Cfg {
      *  cooperation (a fired trap is a backstab), with MINE_TRAP_CHEESE banked, while we have fewer than MINE_TRAP_CAP
      *  live traps; the combat cap rises by MINE_TRAP_CAP so these don't crowd out traps in fights. */
     public static final int MINE_TRAPS = 0, MINE_TRAP_CAP = 10, MINE_TRAP_CHEESE = 400;
+    /** A raider at an enemy-half mine lays traps on its RAID_TRAPS sites nearest the enemy start, the way MINE_TRAPS
+     *  does at ours, under the same caps (the field rushers pick nearly every pile on their half; we pick 0-15). */
+    public static final int RAID_TRAPS = 0;
     /** No rat trap (baby or king) while the king, under the baby cap, lacks the cheese for its next spawn plus
      *  SPAWN_FLOOR and the trap: bodies before traps (1204 constrictinglattice vs AlexT101: r100-150 we laid 7 traps
      *  while the king sat under the spawn floor, and the army fell 12 -> 8). */

@@ -477,7 +477,7 @@ public final class Baby {
     }
 
     /** The live rat traps past which no combat trap is laid (TRAP_CAP, plus MINE_TRAP_CAP with trapped mines). */
-    static int trapCap() { return Cfg.MINE_TRAPS > 0 ? Math.min(25, Cfg.TRAP_CAP + Cfg.MINE_TRAP_CAP) : Cfg.TRAP_CAP; }
+    static int trapCap() { return Cfg.MINE_TRAPS > 0 || Cfg.RAID_TRAPS > 0 ? Math.min(25, Cfg.TRAP_CAP + Cfg.MINE_TRAP_CAP) : Cfg.TRAP_CAP; }
 
     /** Trap sites around a mine in our side frame (offsets times fu, fv); the order breaks distance ties. */
     static final int[][] MINE_SITES = {{-3, -3}, {-3, 0}, {0, -3}, {-3, 3}, {3, -3}, {0, 3}, {3, 0}, {3, 3}};
@@ -497,15 +497,15 @@ public final class Baby {
         return rank;
     }
 
-    /** MINE_TRAPS: a rat trap on a front tile that is one of mine m's first MINE_TRAPS trap sites. */
-    static boolean mineTrap(MapLocation m) throws GameActionException {
+    /** A rat trap on a front tile that is one of mine m's first `sites` trap sites (MINE_TRAPS, RAID_TRAPS). */
+    static boolean mineTrap(MapLocation m, int sites) throws GameActionException {
         RobotController rc = G.rc;
         if (G.coop || !rc.isActionReady() || rc.getNumberRatTraps() >= Cfg.MINE_TRAP_CAP) return false;
         if (rc.getAllCheese() < Econ.floor(Cfg.MINE_TRAP_CHEESE) || King.trapStarvesSpawn(rc)) return false;
         MapLocation ek = G.mirror(home, firstSym()), me = rc.getLocation();
         for (Direction d : G.fan(me, rc.getDirection())) {
             MapLocation l = me.add(d);
-            if (mineSiteRank(m, l, ek) < Cfg.MINE_TRAPS && rc.canPlaceRatTrap(l)) {
+            if (mineSiteRank(m, l, ek) < sites && rc.canPlaceRatTrap(l)) {
                 rc.placeRatTrap(l);
                 ratTraps++; mineTraps++;
                 return true;
@@ -854,12 +854,12 @@ public final class Baby {
                         // hold still (moves set off traps laid at our mines) and sweep the cone around the spawn square
                         Direction t = G.facing.rotateRight().rotateRight();
                         if (rc.canTurn(t)) { rc.turn(t); G.facing = t; }
-                        if (Cfg.MINE_TRAPS > 0) mineTrap(mineTarget);
+                        if (Cfg.MINE_TRAPS > 0) mineTrap(mineTarget, Cfg.MINE_TRAPS);
                         return;
                     }
                     // wander inside the spawn square, facing outward to see new cheese
                     wanderAround(mineTarget);
-                    if (Cfg.MINE_TRAPS > 0) mineTrap(mineTarget);
+                    if (Cfg.MINE_TRAPS > 0) mineTrap(mineTarget, Cfg.MINE_TRAPS);
                     why = 'W';
                 } else {
                     why = 'M';
@@ -1325,6 +1325,7 @@ public final class Baby {
         if (G.cheb(G.me, raidTarget) <= 2) {
             if (raidSince < 0) raidSince = G.round;
             wanderAround(raidTarget);
+            if (Cfg.RAID_TRAPS > 0) mineTrap(raidTarget, Cfg.RAID_TRAPS);
         } else {
             Nav.goTo(raidTarget);
         }
