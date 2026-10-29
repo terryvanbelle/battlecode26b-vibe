@@ -691,3 +691,24 @@
   and a carrier behind a wall.
 - s5c = s4d + CHEESE_BAN 60 (no KING_BLOCK); s5d = s5c + TRAIL. Diagnostics on the five maps are running, and
   sp18/rx screens for s5c and s4v are queued after them.
+
+## 2026-10-29 00:55 PDT: KING_FLOW, TRAIL's jam, and a war strike
+- s5c (s4d + CHEESE_BAN, no KING_BLOCK): 6521 stuck rounds on the five diagnostic maps (s4d 7295). Without KING_BLOCK,
+  babies bound for a mine still stand touching the king on EscapeTheNight (2394 rounds).
+- KING_FLOW (off by default): our kings' bodies block flow paths only. Greedy steps and bug walks still treat a king
+  as a robot to wait for or sidestep, which was KING_BLOCK's other half. s5e = s5c + KING_FLOW: 5080 stuck rounds
+  (EscapeTheNight 1731, fullofsecrets 2806). Its sp18 screen is queued.
+- TRAIL works for carriers (s5d vs s5c: pipes 'd' 913 -> 121, fullofsecrets 1339 -> 155), but both TRAIL builds jam
+  EscapeTheNight. There, babies bound for a mine fill the king's box: s5d 13763 rounds, s5f 14883 (72% of baby
+  turns, lost 15-84). The king sits in a walled box whose only way out is a dirt passage west. Every mine lies past
+  a 9-row dirt band (y 25-33) that must be dug. Trail carriers deliver in the box mouth and then stay there, bound
+  for a mine they cannot path to. s5d and s5f are withdrawn. A trail that helps there must not fill the only exit.
+- Field rushers: in s3y's 36 panel games against AlexT101 and abcdezyxwv (2-16 each) the enemy king took no bites.
+  DefaultLarge vs abcdezyxwv (match 1600): kills about even (kd 1.26), but our bank fell from 1620 to 587 between
+  r75 and r125, mostly on 45 rat traps (900 cheese, 17 kills). We then could not reinforce (rats 20 -> 0, theirs
+  15-24), and their rats kept gathering during the war (deliveries 695-845 per 50 rounds vs our 118-20).
+- WAR_STRIKE k (off by default): once cooperation is over, one in k fighters (chosen by birth round, so mirrored rats
+  agree) becomes an attacker. It walks to the enemy king (seen, last heard, or the symmetry mirror of home) and
+  bites it. s5g = s4d + WAR_STRIKE 1 is on the replica (block 1 from match 1629) and on the rush run vs abrk
+  (rx_s5g). s5h = s4d + WAR_STRIKE 2 follows. Almost every field bot backstabs eventually (all but bc26vibe_bot), so
+  war play matters in most panel games, and the sp screens never reach war.
