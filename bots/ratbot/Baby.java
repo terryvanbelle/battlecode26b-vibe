@@ -94,6 +94,11 @@ public final class Baby {
                     hunting = true;
                 }
             }
+            guardKing = null;
+            if (Cfg.GUARD_KING_R > 0 && rc.getCarrying() == null) {
+                RobotInfo b = kingBiter(robots, Cfg.GUARD_KING_R);
+                if (b != null) { nearestEnemy = b; hunting = true; guards++; }
+            }
         }
         Debug.mark(30);
         if (Flow.left() < Cfg.BC_BAIL) { lowBc++; return; }
@@ -645,6 +650,8 @@ public final class Baby {
             if (Cfg.BITE_GUARD && r.type == UnitType.BABY_RAT && guardBite(r.health, myHp)) s = 1011;
             // a rat carrying one of ours throws it next (often into our king): bite it before any other rat
             if (Cfg.BITE_CARRIER && r.carryingRobot != null && r.carryingRobot.team == G.us) s = 1000;
+            // a rat in reach of our king bites it next: after an enemy king, before any other rat
+            if (guardKing != null && r.type == UnitType.BABY_RAT && G.cheb(r.location, guardKing) <= 2) s = 650 + r.health;
             if (rc.canAttack(t)) { if (s < bs) { bs = s; best = r; } }
             else if (s < bt) { bt = s; bestTurn = r; }
         }
@@ -1254,6 +1261,26 @@ public final class Baby {
             if (d > bd) { bd = d; best = i; }
         }
         return best >= 0 && Nav.step(G.DIRS[best]);
+    }
+
+    /** Our king's centre while this turn's nearestEnemy is a rat in reach of it (Cfg.GUARD_KING_R), else null. */
+    static MapLocation guardKing;
+    public static int guards;
+
+    /** Cfg.GUARD_KING_R: when we are within Chebyshev reach of our nearest king, the visible enemy baby nearest us among
+     *  those within Chebyshev 2 of its centre (they can bite it), else null. Ties: lower health, then G.pickBit. */
+    static RobotInfo kingBiter(RobotInfo[] robots, int reach) {
+        MapLocation k = Comms.nearestKing(G.me);
+        if (k == null || G.cheb(G.me, k) > reach) return null;
+        RobotInfo best = null;
+        int bk = Integer.MAX_VALUE;
+        for (RobotInfo r : robots) {
+            if (r.team != G.them || r.type != UnitType.BABY_RAT || G.cheb(r.location, k) > 2) continue;
+            int key = (G.me.distanceSquaredTo(r.location) * 128 + r.health) * 2 + (G.pickBit(G.me, r.location) ? 0 : 1);
+            if (key < bk) { bk = key; best = r; }
+        }
+        if (best != null) guardKing = k;
+        return best;
     }
 
     static boolean retreat() throws GameActionException {

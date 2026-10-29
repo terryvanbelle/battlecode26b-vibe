@@ -133,6 +133,12 @@ public final class Cfg {
     public static final boolean POUNCE = true;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */
     public static final int RETREAT_HP = 40;
+    /** At war a baby within GUARD_KING_R (Chebyshev) of our king targets, ahead of its own nearest enemy, the visible
+     *  enemy rat nearest it among those within Chebyshev 2 of the king's centre (in reach to bite it), skips the
+     *  standoff against it and bites such rats first (0 = off). 2239 tiny: in r16-48 our king fell 540 -> 32 to 43
+     *  bites with 16-19 of our rats near it against 8-14 of theirs; ours held standoffs with their own nearest
+     *  enemies and ended 288 of 624 turns with the action unused. */
+    public static final int GUARD_KING_R = 0;
     /** Fortress radius (Chebyshev, from the king) fighters hold at war; 0 = off. */
     public static final int FORT_R = 0;
     /** King rat traps laid in advance at war (no enemy in sight), kept to this many. */

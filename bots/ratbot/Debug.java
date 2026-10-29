@@ -49,6 +49,7 @@ public final class Debug {
         if (!G.king && Baby.lowBc > 0) sb.append(" lb=").append(Baby.lowBc);
         if (!G.king && Baby.defends > 0) sb.append(" df=").append(Baby.defends);
         if (!G.king && Baby.presses > 0) sb.append(" pk=").append(Baby.presses);
+        if (!G.king && Baby.guards > 0) sb.append(" gd=").append(Baby.guards);
         if (RobotPlayer.overruns > 0) sb.append(" OVR=").append(RobotPlayer.overruns).append(" OVS=").append(ovStage);
         if (RobotPlayer.nearMiss > 0) sb.append(" NEAR=").append(RobotPlayer.nearMiss);
         if (RobotPlayer.exceptions > 0) sb.append(" EXC=").append(RobotPlayer.exceptions).append(':').append(lastExc);

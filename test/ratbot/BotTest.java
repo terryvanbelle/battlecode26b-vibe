@@ -531,6 +531,27 @@ public class BotTest {
      *  the rest is not. The frontier search from (5,6) ends on a never-seen tile just outside the exit, through the
      *  dirt; the x-mirrored room in the mirrored side frame gives the mirrored path; a room of solid walls finds
      *  nothing. Two walled-off chases given up within 100 rounds start a breakout, two 150 apart do not. */
+    static void testKingBiter() {
+        reset(); install();
+        G.round = 200; G.coop = false;
+        Comms.kings[0] = new MapLocation(8, 5); Comms.numKings = 1;   // we are at (5, 5), Chebyshev 3 from its centre
+        RobotInfo far = new RobotInfo(30, Team.B, UnitType.BABY_RAT, 100, new MapLocation(5, 8), Direction.NORTH, 0, 0, null);
+        RobotInfo b1 = new RobotInfo(31, Team.B, UnitType.BABY_RAT, 100, new MapLocation(7, 7), Direction.NORTH, 0, 0, null);
+        RobotInfo b2 = new RobotInfo(32, Team.B, UnitType.BABY_RAT, 60, new MapLocation(6, 4), Direction.NORTH, 0, 0, null);
+        RobotInfo b3 = new RobotInfo(34, Team.B, UnitType.BABY_RAT, 30, new MapLocation(6, 6), Direction.NORTH, 0, 0, null);
+        RobotInfo ally = new RobotInfo(33, Team.A, UnitType.BABY_RAT, 100, new MapLocation(6, 5), Direction.NORTH, 0, 0, null);
+        Baby.guardKing = null;
+        check(Baby.kingBiter(new RobotInfo[]{far, b1, ally, b2}, 4) == b2 && new MapLocation(8, 5).equals(Baby.guardKing),
+              "king guard: the nearest enemy rat in reach of our king (" + Baby.guardKing + ")");
+        Baby.guardKing = null;
+        check(Baby.kingBiter(new RobotInfo[]{far, ally}, 4) == null && Baby.guardKing == null,
+              "king guard: an enemy 3 from the king's centre is out of its reach");
+        check(Baby.kingBiter(new RobotInfo[]{far, b1, ally, b2}, 2) == null && Baby.guardKing == null,
+              "king guard: none when we are farther than the reach from our king");
+        check(Baby.kingBiter(new RobotInfo[]{b2, b3}, 4) == b3, "king guard: equal distance, the weaker rat first");
+        Comms.numKings = 0;
+    }
+
     static void testFrontier() throws GameActionException {
         MapLocation[] tg = new MapLocation[2];
         for (int mir = 0; mir < 3; mir++) {
@@ -1939,6 +1960,7 @@ public class BotTest {
         testSwapPast();
         testMineExplore();
         testFrontier();
+        testKingBiter();
         testRingArcs();
         testHomeRank();
         testScoutUntil();
