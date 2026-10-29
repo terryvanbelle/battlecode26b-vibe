@@ -1700,6 +1700,18 @@ public class BotTest {
               "ring arcs: the rotated pocket counts the same");
     }
 
+    static void testTrapRiskNear() {
+        boolean ok = true;
+        for (int dy = -2; dy <= 2; dy++)
+            for (int dx = -2; dx <= 2; dx++) {
+                int b = 0;
+                for (int i = 0; i < 8; i++)
+                    if (Math.abs(G.DIRS[i].dx - dx) <= 1 && Math.abs(G.DIRS[i].dy - dy) <= 1) b |= 1 << i;
+                ok &= TrapRisk.NEAR[(dx + 2) + 5 * (dy + 2)] == b;
+            }
+        check(ok && TrapRisk.NEAR.length == 25, "TrapRisk.NEAR literal = the neighbours within Chebyshev 1 of each 5x5 offset");
+    }
+
     static void testHomeRank() {
         check(Baby.homeRank(0, 3) < Baby.homeRank(0, 9) && Baby.homeRank(1, 3) < Baby.homeRank(1, 9), "home pick 0/1: nearer ranks first");
         check(Baby.homeRank(2, 9) < Baby.homeRank(2, 3), "home pick 2: farther ranks first");
@@ -1710,6 +1722,7 @@ public class BotTest {
         testFlowCache();
         testFlowRev();
         testFlowFast();
+        testTrapRiskNear();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

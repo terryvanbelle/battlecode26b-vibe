@@ -1189,3 +1189,27 @@
   - The victims were mostly moving (140 of 186 had moved in the 3 rounds before), so dodging is not the fix.
   - Our throws mostly end on the ground (10) or a wall.
 - s6p (S4D + THROW_FAR_PCT 80) is on the ra screen.
+
+## 2026-10-29 07:30 PDT: a class's static block was the newborn overrun; symmetry switches on
+- Mirror check of s6y/s6m (mr1, both seatings): the first divergence is r2 on where_are_you, where twin newborns
+  spawn one tile apart, and r5 on Hike. That matches s5m/s5n before the SYM switches. All four switches (SYM_SLOT,
+  SYM_FLOW, SYM_CENTRE, SYM_HAND) are still off in s6m and s6y, and s5p's self-play screen (sp21_s5p) is still
+  near the end of the VM queue.
+- First-turn trace probe (pb3 = s6y plus a per-stage bytecode trace of each rat's first turn, cheeseguardians vs
+  araid): 52 overruns, and 51 of them are first turns.
+
+  | Segment | Normal first turn | Overrunning first turn |
+  |---|---|---|
+  | G.init + Sym.init | 3650 | 3650 |
+  | born, comms reads (91 to 1) | 2070 | 2070 |
+  | first full sense (1 to 2) | 4280 | 4280 |
+  | 30 to 31: Nav.guard, TrapRisk.mask | 51 | 6115 |
+  | turn total | 15550 | past 17500 |
+
+  The 6115 is TrapRisk's static block: it builds the 25-entry NEAR table with 200 Math.abs pairs, and it runs the
+  first time a robot touches the class. TrapRisk.observe waits for a turn with room, but TrapRisk.mask runs
+  whenever we're at war. Before the backstab it isn't called, so only rats born after the backstab paid.
+- Fix: NEAR is now a literal, and BotTest checks it against the formula. The only other static block
+  (Baby.FLIGHT_DMG) is 7 entries. s7d = s6y + the fix, with overrun probe ov1 on cheeseguardians and
+  superioristhmus. s7e = s7d + all four SYM switches, with mirror self-play ms1 (where_are_you, Hike,
+  DefaultMedium, cheesefarm) and screen ra_s7e queued right after ra_s6z.

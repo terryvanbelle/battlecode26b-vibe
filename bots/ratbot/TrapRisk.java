@@ -103,17 +103,9 @@ public final class TrapRisk {
         return m == 0xFF ? 0 : m;
     }
 
-    /** NEAR[offset] = bits of the 8 neighbour directions within Chebyshev 1 of that offset in the 5x5. */
-    static final int[] NEAR = new int[25];
-    static {
-        for (int dy = -2; dy <= 2; dy++)
-            for (int dx = -2; dx <= 2; dx++) {
-                int b = 0;
-                for (int i = 0; i < 8; i++) {
-                    int nx = G.DIRS[i].dx, ny = G.DIRS[i].dy;
-                    if (Math.abs(nx - dx) <= 1 && Math.abs(ny - dy) <= 1) b |= 1 << i;
-                }
-                NEAR[(dx + 2) + 5 * (dy + 2)] = b;
-            }
-    }
+    /** NEAR[offset] = bits of the 8 neighbour directions (G.DIRS order) within Chebyshev 1 of that offset in the 5x5.
+     *  A literal: computing it in a static block cost ~6000 bytecodes at the class's first use, a newborn's first turn
+     *  once the war starts, and pushed 51 of 52 cheeseguardians overruns past the limit (BotTest checks the values). */
+    static final int[] NEAR = {32, 48, 56, 24, 8, 96, 112, 124, 28, 12, 224, 241, 255, 31, 14, 192, 193, 199, 7, 6, 128,
+                               129, 131, 3, 2};
 }
