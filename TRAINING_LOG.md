@@ -1743,3 +1743,25 @@
   three. AlexT101 swings a lot between blocks (s8j 5/6, s7d 3/6, s8k 0/6), so one block says little about it.
 - s7w (s7d + MINE_EXPLORE 2, working every home mine) is submission #90, set-1 block from 2439. s8l was
   s8k + MINE_EXPLORE 2, so it waits on s7w's result.
+
+## 2026-10-29 14:57 PDT: our rats are thrown into our king; RESCUE (s8n)
+- King damage by source over s7d's 126 field games (kinghits): AlexT101 does 241 a game by throwing our own
+  rats into our king and 191 by biting it. For abcdezyxwv it's 206 and 278. AdamTan12 almost only bites (345).
+  Throw hits on our king (throwking): AlexT101 6.6 a game at 36 each, abcdezyxwv 5.1 at 41, outercloudstudio
+  2.9 at 38, everyone else under 1. Grab to hit takes about 3 rounds. 29-36% of these victims had been thrown
+  before (juggled: grab, throw, re-grab 2 rounds later, the soonest the engine allows). First-time victims were
+  2-3 from our king's centre, averaging 58-68 hp, and 40% of abcdezyxwv's were at full health (grabbed from behind).
+- Our rats next to an enemy at our besieged king (kingidle, carried enemies excluded): 65-73% of those turns
+  our rat is itself being carried, against 38-47% for theirs. We bite on 5-10% of them, they bite on 14-29%.
+- The counter in the rules: any rat may grab an enemy that cannot see it, whatever its health, and a grabbed
+  carrier drops the rat it holds (InternalRobot.getGrabbed). A carrier faces its throw, so 5 of the 8 tiles
+  around it are blind. In s7d's games enemy carriers held one of ours for 137-244 rounds a game. A free rat of
+  ours stood within Chebyshev 2 of the carrier on 55-64% of those rounds, but on its blind side only 5-9%; we
+  grabbed 5-20 such carriers a game, mostly by accident. The nearby rats were busy: f/w codes with the action
+  spent (on a bite) or the move spent.
+- RESCUE (off-by-default switch): an enemy baby carrying one of ours within dist2 8 comes first. No bite or
+  trap before moving (the action stays free), step to a blind tile next to it while turning to face it
+  (flank's move), and the post-move grab prefers carriers holding ours. Move code R; BotTest testRescue.
+  s8n = s7d + RESCUE. Screen ra_s8n and rs1 (s8n vs s7d, 8 maps x 2 sides) are on the VM.
+- Screens: ra_s8k +7.2 pts, t +1.54, net +5; ra_s8l +1.7, t +0.37, net +6. Both pass, but s8k lost its
+  replica block and s8l is parked behind it.
