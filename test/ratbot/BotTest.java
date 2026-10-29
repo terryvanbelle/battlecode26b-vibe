@@ -53,7 +53,7 @@ public class BotTest {
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; ratCost = 10; built.clear();
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0; Sym.listDone = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
-        Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null;
+        Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
     }
 
     static RobotController fakeRc() {
@@ -441,6 +441,25 @@ public class BotTest {
         check(!roamingTarget(0), "nav same target: without it the roaming target behind a wall is never reached");
     }
 
+    static void testAtMine() {
+        reset(); W = 30; H = 30; install();
+        MapLocation m = new MapLocation(15, 15);
+        Comms.numKings = 0;
+        me = new MapLocation(12, 15); G.startTurn();
+        check(!Baby.atMine(m, 4), "at mine: 3 tiles off with no king near the mine is not there");
+        me = new MapLocation(13, 16); G.startTurn();
+        check(Baby.atMine(m, 0) && Baby.atMine(m, 4), "at mine: within 2 always");
+        Comms.kings[0] = new MapLocation(14, 16); Comms.numKings = 1;
+        me = new MapLocation(11, 15); G.startTurn();
+        check(Baby.atMine(m, 4) && !Baby.atMine(m, 0) && !Baby.atMine(m, 3 - 1), "at mine: a king on the mine widens it to kingR");
+        me = new MapLocation(10, 15); G.startTurn();
+        check(!Baby.atMine(m, 4), "at mine: not beyond kingR");
+        Comms.kings[0] = new MapLocation(18, 15);
+        me = new MapLocation(11, 15); G.startTurn();
+        check(!Baby.atMine(m, 4), "at mine: a king 3 from the mine does not widen it");
+        Comms.numKings = 0;
+    }
+
     static void testCheeseBan() {
         reset(); W = 20; H = 20; install();
         Arrays.fill(Baby.banned, null); Baby.banHead = 0;
@@ -457,6 +476,16 @@ public class BotTest {
         check(!Baby.bannedCheese(a, 1000) && Baby.bannedCheese(new MapLocation(17, 2), 60) && Baby.bannedCheese(new MapLocation(2, 2), 60),
               "cheese ban: a ring of four, the oldest overwritten");
         Arrays.fill(Baby.banned, null); Baby.banHead = 0;
+        // detour: a pile 3 tiles east through a wall whose path runs around it, against one in the open
+        reset(); W = 30; H = 20; install();
+        for (int y = 3; y <= 17; y++) walls.add(new MapLocation(10, y));
+        for (int y = 0; y < H; y++) for (int x = 0; x < W; x++) Sym.record(x, y, walls.contains(new MapLocation(x, y)), false, false);
+        me = new MapLocation(8, 10); G.startTurn();
+        MapLocation far = new MapLocation(11, 10), near = new MapLocation(8, 13);
+        Flow.request(far); Flow.work(0);
+        check(Flow.ready(far) && Flow.detour(far), "cheese ban: a path around the wall is a detour (" + Flow.plen + " tiles)");
+        Flow.request(near); Flow.work(0);
+        check(Flow.ready(near) && !Flow.detour(near) && !Flow.detour(far), "cheese ban: a straight path is not; only the last path counts");
     }
 
     static void testFlowJam() {
@@ -1242,6 +1271,7 @@ public class BotTest {
         testFlowJam();
         testCheeseBan();
         testNavSameTarget();
+        testAtMine();
         testKingBlock();
         testExploreUnseen();
         testKingNeverWritesOutOfRange();

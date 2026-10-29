@@ -644,3 +644,26 @@
   screen rejection would end the block.
 - The block waiter had a bug: `contest.py matches` shows one page by default, so older block games fell off the list
   and the count could not reach 16. Waiters now pass `--pages 5`.
+
+## 2026-10-29 00:05 PDT: CHEESE_BAN works; NAV_SAME_R backfires; flow paths are mostly wasted
+- s4v (s4t + CHEESE_BAN 60) on the five diagnostic maps: 1386 stuck rounds (s4d 7295, s4t 4755). EscapeTheNight
+  fell from 1809 to 83 and fullofsecrets from 1543 to 928. Results were unchanged; cheese delivered on
+  EscapeTheNight went from 21029 to 26520. FreeTheCheese delivered less (17472 -> 9566, one game). A plausible cause:
+  a stall in a crowd at a mine bans every pile within 2 of it for 60 rounds. CHEESE_BAN_WALL bans only piles whose
+  last flow path was a detour (> 2 * Chebyshev distance + 2) or whose search failed (Flow.detour, tested).
+- Carriers on fullofsecrets stall outside the wall of the king's pocket. The king roams between (3,32) and (4,32),
+  every step was a new goTo target, and the stall reset before it reached FLOW_STALL. NAV_SAME_R 2 kept the stall
+  for targets within 2. The unit test passes (a roaming target behind a wall is reached only with it), but in games
+  it is worse: s4w 5468 stuck rounds vs s4t 4755, s4x 3558 vs s4v 1386. The search from such a carrier to the pocket
+  spans most of the 40x45 map, overruns FLOW_MAX_TURNS 12 with the carrier holding still, fails, and waits
+  FLOW_RETRY 30. With the stall kept, the carrier loops on that and never falls back to bug walking. One carrier
+  held 1190 cheese for 365 rounds. s4w, s4x, s4y and s4z are rejected or withdrawn.
+- MINE_KING_R 4: on FreeTheCheese our king's 3x3 covered a gatherer's mine. The free tiles within 2 were taken,
+  so it pathed into the king for 60 rounds. Now a gatherer counts as at its mine within 4 when a king sits within
+  2 of it, and wander targets avoid the kings' bodies (testAtMine). s5a = s4v + MINE_KING_R, s5b = s5a +
+  CHEESE_BAN_WALL; diagnostics are running.
+- Flow accounting from the final indicators of s4v's five games: 12-38% of searches fail on the maze maps
+  (fullofsecrets 224 of 711, Nofreecheese 85 of 223). Completed paths are followed for about 3 steps each (fullofsecrets
+  1383 steps over 487 paths), after 4+ turns of holding still to build them. Per-path end counters (fe=: reached
+  the end, robot-held, wall, drift, replaced while ready, replaced while building, failed) are in the indicator
+  now. dbgv (s4v + counters) is running to show where the paths go.

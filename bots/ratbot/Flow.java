@@ -28,6 +28,12 @@ public final class Flow {
     static int[] head = new int[NB], tail = new int[NB];
     static int curF, pending, held;
     public static int builds, steps, done, lastTurns, fails;
+    /** Target and tile count of the last completed path (kept after the path is dropped). */
+    static MapLocation lastTgt;
+    static int lastLen;
+    /** Debug counts of how paths and searches ended: 0 reached the end, 1 held by a robot, 2 wall on the path,
+     *  3 drifted off it, 4 replaced while ready (new target), 5 search replaced before it finished. */
+    public static final int[] ends = new int[6];
     static int startRound, failRound;
     static MapLocation failTgt;
     /** Tests run outside the engine, where Clock reports 0 bytecodes left. */
@@ -56,6 +62,8 @@ public final class Flow {
     public static void request(MapLocation t) {
         if (tgt != null && G.cheb(tgt, t) <= 1 && (building || ready(t))) return;
         if (failTgt != null && G.cheb(failTgt, t) <= 1 && G.round - failRound < Cfg.FLOW_RETRY) return;
+        if (building) ends[5]++;
+        else if (tgt != null && builtRound >= 0 && G.round - builtRound <= Cfg.FLOW_TTL) ends[4]++;
         tgt = t;
         tIdx = G.idx(t);
         block = Cfg.KING_BLOCK && !Nav.atKing(t) ? Sym.WALL | Sym.KING : Sym.WALL;
@@ -151,6 +159,8 @@ public final class Flow {
         for (int i = 0, j = len - 1; i < j; i++, j--) { int t = path[i]; path[i] = path[j]; path[j] = t; }
         plen = len;
         ppos = 0;
+        lastTgt = tgt;
+        lastLen = len;
         building = false;
         builtRound = G.round;
         done++;
@@ -158,6 +168,13 @@ public final class Flow {
     }
 
     static void drop() { builtRound = -1; tgt = null; }
+
+    /** The way to t is known to be long: the last path toward t was longer than 2 * Chebyshev distance + 2 tiles, or
+     *  the last failed search was toward t. */
+    static boolean detour(MapLocation t) {
+        if (failTgt != null && G.cheb(failTgt, t) <= 1 && G.round - failRound < Cfg.FLOW_RETRY) return true;
+        return lastTgt != null && G.cheb(lastTgt, t) <= 1 && lastLen - 1 > 2 * G.cheb(G.me, t) + 2;
+    }
 
     /** A free step that lands beside one of the next few path tiles after the blocked one (the farthest wins; ties go
      *  by G.hand so mirrored rats pick mirrored sides), or null. follow() rejoins the path from there next turn. */
@@ -195,14 +212,14 @@ public final class Flow {
                 int p = path[i];
                 if (Math.abs(p % G.W - G.me.x) <= 1 && Math.abs(p / G.W - G.me.y) <= 1) found = i;
             }
-            if (found < 0) { drop(); request(t); return false; }
+            if (found < 0) { ends[3]++; drop(); request(t); return false; }
             if (path[found] == me) { ppos = found; nxi = found + 1; }
             else { ppos = Math.max(0, found - 1); nxi = found; }   // found 0: beside the start tile (ppos -1 threw every turn)
         }
-        if (nxi >= plen) { drop(); return false; }
+        if (nxi >= plen) { ends[0]++; drop(); return false; }
         int nx = path[nxi];
         MapLocation n = new MapLocation(nx % G.W, nx / G.W);
-        if ((Sym.mem[nx] & block) != 0) { drop(); return false; } // newly seen wall (or a king moved) on the path
+        if ((Sym.mem[nx] & block) != 0) { ends[2]++; drop(); return false; } // newly seen wall (or a king moved) on the path
         RobotController rc = G.rc;
         Direction d = G.me.directionTo(n);
         if ((Sym.mem[nx] & Sym.DIRT) != 0) {
@@ -223,7 +240,7 @@ public final class Flow {
                     if (s != null) Nav.step(s);
                     return true;
                 }
-                held = 0; drop(); return false;
+                held = 0; ends[1]++; drop(); return false;
             }
             return true;
         }

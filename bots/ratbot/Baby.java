@@ -748,7 +748,7 @@ public final class Baby {
             why = 'C';
             Nav.goTo(cheeseTarget);
             if (Nav.stall > 12) {
-                if (Cfg.CHEESE_BAN > 0) banCheese(cheeseTarget);
+                if (Cfg.CHEESE_BAN > 0 && (!Cfg.CHEESE_BAN_WALL || Flow.detour(cheeseTarget))) banCheese(cheeseTarget);
                 cheeseTarget = null;
             }
             return;
@@ -771,7 +771,7 @@ public final class Baby {
             if (Cfg.MINE_BALANCE && mineTarget != null && Comms.numMines != minesAtPick) mineTarget = null;
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
-                if (G.cheb(G.me, mineTarget) <= 2) {
+                if (atMine(mineTarget, Cfg.MINE_KING_R)) {
                     if (role == GATHER && startSeek(mineTarget) && seek()) { why = 'x'; return; }
                     if (Cfg.GATHER_STILL) {
                         // hold still (moves set off traps laid at our mines) and sweep the cone around the spawn square
@@ -1244,8 +1244,20 @@ public final class Baby {
     static void wanderAround(MapLocation m) throws GameActionException {
         if (exploreTarget == null || G.me.equals(exploreTarget) || G.cheb(exploreTarget, m) > 3 || Nav.stall > 6) {
             exploreTarget = new MapLocation(clampX(m.x + fu * (G.rand(7) - 3)), clampY(m.y + fv * (G.rand(7) - 3)));
+            // a tile under one of our kings can never be reached: draw again (twice at most)
+            for (int k = 0; k < 2 && Cfg.MINE_KING_R > 0 && Nav.atKing(exploreTarget); k++)
+                exploreTarget = new MapLocation(clampX(m.x + fu * (G.rand(7) - 3)), clampY(m.y + fv * (G.rand(7) - 3)));
         }
         Nav.goTo(exploreTarget);
+    }
+
+    /** At mine m: within Chebyshev 2, or within kingR (when > 0) if one of our kings sits within 2 of m. */
+    static boolean atMine(MapLocation m, int kingR) {
+        int d = G.cheb(G.me, m);
+        if (d <= 2) return true;
+        if (kingR <= 2 || d > kingR) return false;
+        for (int k = 0; k < Comms.numKings; k++) if (G.cheb(Comms.kings[k], m) <= 2) return true;
+        return false;
     }
 
     static void explore() throws GameActionException {

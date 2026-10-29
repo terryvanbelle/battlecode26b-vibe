@@ -124,5 +124,10 @@ s4t,2026-10-28 23:26,s4d,s4d + KING_BLOCK: our kings' 3x3 bodies count as walls 
 s4u,2026-10-28 23:26,s4d,s4d + KING_BLOCK + FLOW_JAM (sidestep a held path tile up to 12 turns),rejected on diagnostics: stuck rounds 8182 on 5 maps vs s4t 4755 (FLOW_JAM hurts again)
 dbgt,2026-10-28 23:37,s4t,debug build: s4t with the nav/flow target state in the indicator string (no behaviour change; same game as s4t),"diagnostic only, not a candidate"
 s4v,2026-10-28 23:41,s4t,s4t + CHEESE_BAN 60: a cheese pile given up after a 12-turn stall is ignored with its Chebyshev-2 neighbourhood for 60 rounds,
-s4w,2026-10-28 23:48,s4t,"s4t + NAV_SAME_R 2: a goTo target within Chebyshev 2 of the last keeps the stall and bug state, so carriers chasing a roaming king get a flow path",
-s4x,2026-10-28 23:48,s4t,s4t + NAV_SAME_R 2 + CHEESE_BAN 60,
+s4w,2026-10-28 23:48,s4t,"s4t + NAV_SAME_R 2: a goTo target within Chebyshev 2 of the last keeps the stall and bug state, so carriers chasing a roaming king get a flow path","rejected on diagnostics: deliver jams worse (EscapeTheNight 2361 vs s4t 1809, fullofsecrets 2297 vs 1543): kept stall turns failed 12-turn searches toward a pocketed king into a 30-round retry loop"
+s4x,2026-10-28 23:48,s4t,s4t + NAV_SAME_R 2 + CHEESE_BAN 60,"rejected on diagnostics: s4v + NAV_SAME_R, EscapeTheNight 1521 vs s4v 83 (deliver jams)"
+s4y,2026-10-28 23:51,s4x,"s4x + MINE_KING_R 4: a gatherer is at its mine within 4 when our king sits within 2 of it, and wanders only off the kings' bodies (all four stuck fixes)",withdrawn: carries NAV_SAME_R (3 diag games: 4535 stuck rounds); MINE_KING_R goes on in s5a
+s4z,2026-10-28 23:53,s4y,"s4y + CHEESE_BAN_WALL: ban only piles behind a wall (last flow path toward the pile a detour longer than 2*cheb+2, or its search failed), not piles lost in a crowd","withdrawn: carries NAV_SAME_R, which made delivery jams worse (s4w); diag stopped, replaced by s5b"
+s5a,2026-10-28 23:55,s4v,s4v + MINE_KING_R 4 (no NAV_SAME_R): a gatherer is at its mine within 4 when our king sits within 2 of it; wanders off the kings' bodies,
+s5b,2026-10-28 23:55,s5a,s5a + CHEESE_BAN_WALL: ban only piles behind a wall (last path a detour or the search failed),
+dbgv,2026-10-28 23:58,s4v,debug build: s4v with path-end counters (fe=) in the indicator; no behaviour change,"diagnostic only, not a candidate"

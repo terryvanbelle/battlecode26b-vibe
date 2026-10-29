@@ -137,10 +137,17 @@ public final class Cfg {
      *  EscapeTheNight: five babies in the king's room chased a pile 3 tiles away through a wall for 110 rounds, each
      *  re-picking it the turn after giving up, while their 19-tile path out was held by one another. */
     public static final int CHEESE_BAN = 0;
+    /** CHEESE_BAN only piles behind a wall: the last flow path toward the pile was a detour (longer than
+     *  2 * Chebyshev distance + 2) or its search failed. A stall in a crowd at a mine then bans nothing. */
+    public static final boolean CHEESE_BAN_WALL = false;
     /** A goTo target within Chebyshev NAV_SAME_R of the last one keeps the stall count and bug state (0 = only an
      *  equal tile does). fullofsecrets: carriers with up to 490 cheese sat 76 rounds outside the wall of the king's
      *  pocket; each step of the roaming king was a new target, so the stall never reached FLOW_STALL. */
     public static final int NAV_SAME_R = 0;
+    /** A gatherer counts as at its mine within Chebyshev MINE_KING_R of it when one of our kings sits within 2 of the
+     *  mine (0 = off: always 2), and wanders only to tiles off the kings' bodies. FreeTheCheese: the king's 3x3 covered
+     *  the mine, the free tiles within 2 were taken, and a gatherer pathed into the king for 60 rounds. */
+    public static final int MINE_KING_R = 0;
     /** A rat already carrying cheese takes no pile that would lift it above this (0 = no cap). */
     public static final int CARRY_MAX = 0;
     /** Babies spawned before any fighter is assigned. */
