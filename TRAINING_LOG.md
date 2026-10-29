@@ -1703,3 +1703,22 @@
   to 20 with enemies in the king's sight) is aimed at exactly this and goes to the replica after s8j. s8k is s7u
   plus RAT_TRAP_MIN_CHEESE 600, which keeps a 600 reserve that only spawns can spend. Local check tf1 (s7d, s7u,
   s8k vs araid on DefaultSmall and tiny, both sides) is on the VM.
+
+## 2026-10-29 13:25 PDT: who picks up our home mines' cheese
+- Pickups to r400 per game over s7d's 126 field games, at each home-half mine ranked by distance from our king
+  (h1 nearest, h4 = 4th and beyond), us/them. AlexT101: h1 580/69, h2 241/273, h3 295/60, h4 344/338.
+  abcdezyxwv: h1 410/131, h2 339/175, h3 143/252, h4 49/125. AdamTan12: h1 519/100, h2 352/198, h3 105/123,
+  h4 260/128. So they take 549-740 a game off our half, while we take 0-31 at each of their mines. Their
+  own-half totals are 1634-2154 to our 941-1460. Against the other four we pick 1600-2500 at home.
+- Jail (2346, s8j vs AdamTan12, r150-500) shows the mechanism. Of our two home mines, (8,36) gets every
+  gatherer: 1268 waiting turns and 1080 walking turns within 4 of it. (52,35), 26 tiles from our king, is never
+  worked (our rats were within 4 of it 0.1 per round), and their occasional visitors pick 540 there to our 300.
+  Mines fire in mirror pairs, so its twin (52,4) gave them 615 more. Our income was about 3 a round against
+  their 6, and the king logged 'no surplus' or 'under the floor' on 89% of its turns.
+- Grab legality over the same games: their grabs on our rats are legal because our rat is weaker (34-53%
+  weaker only, 30-37% both). Only 15-27% need us to be facing away, so GLANCE-style facing is not the lever.
+  Our victims average 50-56 HP, their grabbers 82-85.
+- So two levers stand out: finding and working every home mine (s7w, MINE_EXPLORE 2, held for a field bundle)
+  and keeping a spawn reserve (s8k). s8k goes to the replica after s8j, then s7w. MINE_MIRROR (off in s7d)
+  would let s8j's raiders list the home twin of each enemy mine they see.
+- s8i's screen: ra_s8i vs ra_s6y, 80 cells, D 58, -6.2 pts, t -1.11, net -2: a weak pass, parked behind s8j.
