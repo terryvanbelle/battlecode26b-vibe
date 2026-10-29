@@ -958,3 +958,28 @@
   - Sanity game s6g vs araid on DefaultMedium: 129 traps laid, 118 hit (4610 damage), rat kills 82-30. It still
     lost at r553: a cat scratched one king and a throw finished the other.
   - ra_s6g and ra_s6f are at the head of the VM queue.
+
+## 2026-10-29 04:54 PDT: s5w rejected; s6j to the replica; where the babies stand; raiders again
+- s5w on the replica (v3 set 3 vs the s3y reference, 1835-1840, 1847-1852, 1870-1871): 42 cells, D 6 (+3 -3),
+  net 0, t 0.00. Rejected (block 1 needs t > 0). Only Excavation of set 3 is a tie map, so the block mostly
+  measured noise for MINE_TIES. Its own screen (mt_s5w, +27.2 pts, t +2.84 on the tie maps) stands.
+- ra_s5y (formation v2 from r600) vs araid: 80 cells, D 49, -0.8 pts, t -0.19, net +9 (+19 -10). Pass.
+- s6j = s5y + MINE_TIES (submission 82) is on the replica, v3 set 1. That set has superioristhmus and jail, two
+  of the points losses.
+- Where babies stand in s3y's reference games, r100-300 (`posture.py`; per round: alive, at a mine of their own
+  half, at a mine of the other half, carrying cheese, within dist2 36 of their own king, on the other half):
+
+  | Opponent | Us: alive / own mine / carry / near king / other half | Them: same |
+  |---|---|---|
+  | AlexT101 | 11.5 / 8.7 / 1.9 / 8.1 / 0.1 | 15.4 / 6.8 / 5.9 / 3.8 / 3.9 |
+  | abcdezyxwv | 16.0 / 9.0 / 2.1 / 9.3 / 0.8 | 16.8 / 6.3 / 4.8 / 3.5 / 4.2 |
+  | AdamTan12 | 16.2 / 10.4 / 1.7 / 7.9 / 0.3 | 16.6 / 3.8 / 6.4 / 4.2 / 5.1 |
+  | CS50Crab | 15.9 / 10.4 / 2.9 / 7.0 / 0.4 | 11.6 / 3.7 / 5.5 / 2.3 / 1.7 |
+
+  - The top three keep 4-5 babies on our half all the time; we keep under 1 on theirs.
+  - They carry cheese 2-3x as often, even the weaker bots (C0derTang 5.6 of 11).
+  - 7-9 of ours stand near our own king.
+- Raiders were last tried on s2i/s2j (2026-10-28 04:01), a much weaker base, and cost points in a small
+  gauntlet. s6i = s4d + RAID_EVERY 2 (a quarter of the babies raid enemy-half mines) + RAID_TRAPS 8 is queued
+  after the trapped-mine screens (ra_s6g running; ra_s6f, ra_s6h next). sp22_s5t and ra_s5g were dropped from
+  the queue: the replica had already rejected s5t and s5g.
