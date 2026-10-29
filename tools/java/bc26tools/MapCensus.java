@@ -5,14 +5,16 @@ import battlecode.world.*;
 import java.io.File;
 import java.util.*;
 
-/** Map census: one TSV row per .map26 file (or an ASCII board with --ascii NAME).
+/** Map census: one TSV row per .map26 file (or an ASCII board with --ascii NAME). The dig columns come from team A's
+ *  king (0-1 search, walls blocked, a dirt tile costs one dig): freeTiles = tiles reached without digging, minesFree =
+ *  mines among them, digNear = fewest digs to any mine, digHome = fewest digs to a mine nearer king A than king B.
  *  Usage: java -cp engine.jar:classes bc26tools.MapCensus MAPDIR [--ascii NAME] */
 public class MapCensus {
     public static void main(String[] args) throws Exception {
         File dir = new File(args[0]);
         String ascii = args.length > 2 && args[1].equals("--ascii") ? args[2] : null;
         if (ascii == null)
-            System.out.println("map\tw\th\tsym\tkingA\tkingB\tkingDist2\tcats\twallPct\tdirtPct\tmines\tcheese0\tseed\twaypoints");
+            System.out.println("map\tw\th\tsym\tkingA\tkingB\tkingDist2\tcats\twallPct\tdirtPct\tmines\tcheese0\tseed\twaypoints\tfreeTiles\tminesFree\tdigNear\tdigHome");
         File[] files = dir.listFiles((d, n) -> n.endsWith(".map26"));
         Arrays.sort(files);
         for (File f : files) {
@@ -45,10 +47,46 @@ public class MapCensus {
                 continue;
             }
             int wp = 0; for (int[] a : m.getCatWaypoints()) wp += a.length;
-            System.out.printf("%s\t%d\t%d\t%s\t%s\t%s\t%d\t%d\t%.1f\t%.1f\t%d\t%d\t%d\t%d%n", name, w, h, m.getSymmetry(),
+            int[] dg = digs(w, h, wall, dirt, ka);
+            int free = 0, minesFree = 0, digNear = -1, digHome = -1;
+            for (int i = 0; i < w * h; i++) {
+                if (dg[i] == 0) free++;
+                if (!mine[i] || dg[i] < 0) continue;
+                if (dg[i] == 0) minesFree++;
+                if (digNear < 0 || dg[i] < digNear) digNear = dg[i];
+                MapLocation l = new MapLocation(i % w, i / w);
+                if (kb != null && l.distanceSquaredTo(ka) < l.distanceSquaredTo(kb) && (digHome < 0 || dg[i] < digHome)) digHome = dg[i];
+            }
+            System.out.printf("%s\t%d\t%d\t%s\t%s\t%s\t%d\t%d\t%.1f\t%.1f\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d%n", name, w, h, m.getSymmetry(),
                     ka == null ? "-" : ka.x + "," + ka.y, kb == null ? "-" : kb.x + "," + kb.y,
                     ka == null || kb == null ? -1 : ka.distanceSquaredTo(kb), cats,
-                    100.0 * walls / (w * h), 100.0 * dirts / (w * h), mines, ch, m.getSeed(), wp);
+                    100.0 * walls / (w * h), 100.0 * dirts / (w * h), mines, ch, m.getSeed(), wp, free, minesFree, digNear, digHome);
         }
+    }
+
+    /** Fewest dirt tiles dug to reach each tile from the 3x3 king at k (-1 = walled off or no king). */
+    static int[] digs(int w, int h, boolean[] wall, boolean[] dirt, MapLocation k) {
+        int[] d = new int[w * h];
+        Arrays.fill(d, -1);
+        if (k == null) return d;
+        ArrayDeque<Integer> q = new ArrayDeque<>();
+        for (int dx = -1; dx <= 1; dx++) for (int dy = -1; dy <= 1; dy++) {
+            int x = k.x + dx, y = k.y + dy;
+            if (x >= 0 && y >= 0 && x < w && y < h && !wall[y * w + x]) { d[y * w + x] = 0; q.add(y * w + x); }
+        }
+        while (!q.isEmpty()) {
+            int i = q.pollFirst(), x = i % w, y = i / w;
+            for (int dx = -1; dx <= 1; dx++) for (int dy = -1; dy <= 1; dy++) {
+                int nx = x + dx, ny = y + dy;
+                if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
+                int j = ny * w + nx;
+                if (wall[j]) continue;
+                int c = d[i] + (dirt[j] ? 1 : 0);
+                if (d[j] >= 0 && d[j] <= c) continue;
+                d[j] = c;
+                if (dirt[j]) q.addLast(j); else q.addFirst(j);
+            }
+        }
+        return d;
     }
 }
