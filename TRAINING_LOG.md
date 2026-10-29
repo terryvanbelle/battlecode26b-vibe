@@ -1797,3 +1797,23 @@
   s8q (RESCUE_BLOCK) 13. All in the noise. Screens ra_s8p and ra_s8q are on the VM.
 - A background waiter (ra_s8p's scorer) was stopped by Claude Code for low local memory (2 GB machine). The
   screen itself runs on the VM; I'll score it in one foreground call once it's done.
+
+## 2026-10-29 16:52 PDT: s8p and s8q screens; mine discovery is not the lever; s8r and s8s
+- ra_s8p (s8o + THROW_HOLD 3): vs ra_s6y +3.8 pts, t +1.01, net +4; vs ra_s8o -2.2, t -0.61, net -1. Parked.
+- ra_s8q (s8o + RESCUE_BLOCK): vs ra_s6y -6.2 pts, t -1.51, net -5; vs ra_s8o -12.2, t -2.37, net -10 (sign
+  p 0.04). Rejected: our rat steps into the tile the carrier would throw through, and gets grabbed or thrown.
+- Field mine discovery (minedisc.py) for s7w's replica block (MINE_EXPLORE 2, 2439-2480) against s7d's on the
+  same set 1 (median first sighting of each home-half mine, by distance rank; field = the opponent's own):
+
+  | Rank | s7d | s7w | field | seen by r200, s7d / s7w / field |
+  |---|---|---|---|---|
+  | 2nd | r47 | r50 | r32-35 | 30 / 30 / 33-35 of 38 |
+  | 3rd | r154 | r117 | r91-145 | 16 / 20 / 19-22 of 30 |
+  | 4th | r579 | r183 | r116-237 | 5 / 10 / 8-9 of 16 |
+
+  s7w found our 3rd and 4th home mines at about the field's pace and still went net -1 (t -0.38) on the replica.
+  So slow discovery is not why the top three out-pick us 1.9x by r300.
+- s7d's field losses: 55 of 64 are king kills (AlexT101 3-15, abcdezyxwv 2-16, AdamTan12 6-12). The economy
+  split was never tuned on a modern base: half of the babies after the 6th are cat fighters. New (both @s7d):
+  s8r = FIGHT_EVERY 3, s8s = GATHER_FIRST 10. Screens ra_s8r and ra_s8s are queued on the VM. s8o's replica
+  block 1 is running (from 2588).
