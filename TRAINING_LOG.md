@@ -1668,3 +1668,16 @@
 - Leak 3, traps: we spend 940, 814 and 726 on traps by r300 against their 789, 155 and 511, while they spend
   more on spawns (AlexT101 52 spawns to our 43, abcdezyxwv 51 to 40). s7u gates traps behind the next spawn.
 - Replica order: s8j (running, from 2317), s7u, s7w, then s7q, s8e, s8b.
+
+## 2026-10-29 13:01 PDT: s8j (raiders) passes replica block 1, but not by raiding
+- s8j (s7d + RAID_EVERY 1 + RAID_TRAPS 8) on v3 set 1 (2317-2322, 2326-2329, 2343-2344, 2346-2347) against
+  s7d's reference: 42 cells, 34 alike, D 8 (+5 -3), net +2, t +0.71. Block 1 rejects only at t <= 0, so set 2
+  is queued (from 2350).
+- The AlexT101 gain (5 of 6 against s7d's 3 of 6 on the same set) is not the raiders. Their first king died
+  in 5 games, 4 of them to cat scratches (490 HP a game against 398 for s7d); our bites on it stay at 15 HP a
+  game in both. Our share of rats on their half barely moved: 3-14% in r100-300 against s7d's 1-5% over
+  all games.
+- Field posture is unchanged where it matters. Against abcdezyxwv we hold 7-9% on their half from r100 to
+  r300 while they hold 26-28% on ours, and against AdamTan12 our king still dies in all 6 games (mean r250,
+  565 HP a game to bites). Raiders hold their half against a passive s7d (rd1, 8-18%) but not against the top
+  bots.
