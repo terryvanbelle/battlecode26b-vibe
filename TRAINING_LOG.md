@@ -1655,3 +1655,16 @@
   and spawns stop. s7u (s7d + SIEGE_FLOOR 20 + TRAP_SPAWN_FIRST: spawn floors drop to 20 with enemies in the
   king's sight, and no baby or king rat trap while the king lacks its next spawn) was written for exactly this
   case (2094 DefaultSmall) and has never met the field. It goes to the replica after s8j.
+
+## 2026-10-29 12:27 PDT: the r300 economy against the field: three leaks
+- econ_report aggregated to r300 over s7d's 126 field games (per game). Against AlexT101 we pick 1265 to their
+  2389, abcdezyxwv 1047 to 1875, AdamTan12 1050 to 1840; against the other four we are level or ahead.
+- Leak 1, our own mines: we work 2.9 of 3.9 home mines against AlexT101, 2.1 of 2.8 against abcdezyxwv, 2.2
+  of 4.0 against AdamTan12 (they work 3.2-3.9 of theirs), and 826, 386 and 1002 cheese lie unpicked at our
+  home mines by r300. That is slow mine discovery (the field sees its 2nd/3rd home mines at r68/r90, we at
+  r143/r335): s7w (MINE_EXPLORE 2) is the candidate.
+- Leak 2, raiding: they pick 486, 386 and 433 on our half by r300; we pick 27-33 on theirs. s8j (raiders) is
+  on the replica now.
+- Leak 3, traps: we spend 940, 814 and 726 on traps by r300 against their 789, 155 and 511, while they spend
+  more on spawns (AlexT101 52 spawns to our 43, abcdezyxwv 51 to 40). s7u gates traps behind the next spawn.
+- Replica order: s8j (running, from 2317), s7u, s7w, then s7q, s8e, s8b.
