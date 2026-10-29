@@ -1461,3 +1461,36 @@
   - s7i (SYM_SLOT + SYM_FLOW + SYM_CENTRE + SYM_HAND + pickBit + SYM_FACE + KING_SENSE_RESERVE 7000) passes
     against ra_s6y: +3.3 pts, t +0.65, net +2. The SYM switches cost nothing and make the bot's moves mirror
     across sides, so they go in the next replica bundle.
+
+## 2026-10-29 10:02 PDT: the throw war against the top bots; RETREAT_HP parks ammunition beside our king (s8b)
+- s7d's set 3 so far: 0-3 on both sides against AlexT101 (2239-2240) and abcdezyxwv (2241-2242), 3-0 and 3-0
+  against CS50Crab_rapierV1 (2237-2238). In all 12 losses our king was killed between r49 and r645.
+- Grabs and throws in those 12 games (throwstat.py; damage counts the thrown rat's landing plus any robot hit):
+
+  | | us | them |
+  |---|---|---|
+  | enemy rats grabbed | 586 | 884 |
+  | throws | 411 | 625 |
+  | throws landing on an enemy robot | 80 (19%) | 278 (44%) |
+  | ... on the enemy king | 0 | 70 |
+  | throw damage to enemies | 17.8k | 33.1k |
+  | bites on the enemy king | 2 | 259 |
+  | cheese picked up (pickups) | 746 | 1707 |
+
+  Over all 90 top-3 games the grab counts are close (4926 against 5446) and so is the damage to the thrown rat
+  itself (148k each). The gap is what the throw lands on: 17% of ours hit an enemy robot to 48% of theirs, 27
+  of ours hit their king to 365 of theirs on ours, and robot hits did 25k damage to 68k. Most of our throws hit
+  a wall (2852 of 3860).
+- Who gets grabbed (napwhy.py: the victim's smuggled decision code the turn before): both sides take mostly weaker
+  victims (75%; victims average 50 hp against grabbers' 78). Our victims were in war ('w', 27%), facing an enemy
+  ('f', 22%), going to a mine ('M', 12%) or retreating ('r', 6%). The rats thrown into our king were mostly 'w'
+  and 'f' rats at Chebyshev 2-3 from it, many at 40 hp or less.
+- In 2241 g2 every one of the 9 hits on our king was one of our own rats (6-50 hp, 1-2 tiles from the king)
+  grabbed by a 10-58 hp enemy and thrown point-blank, 42 damage each: the king went 600 -> 348 in r112-r250.
+- Baby.retreat() sends a rat at RETREAT_HP (40) or less that is near an enemy back to within Chebyshev 2 of our
+  king. The engine has no healing, so the only effect is to put grabbable rats where a throw hits the king.
+  RETREAT_HP was never tested. s8b = @s7d + RETREAT_HP 0; screen ra_s8b is queued after ra_s8a.
+- CARRY_AIM v2 (s7h, screen running) addresses our own aim. BITE_CARRIER (bite first an enemy carrying one of
+  ours) was rejected on the replica as part of s4i (net -2).
+- battle_report.py's throws section now counts hitKing (enemy-king hits, a subset of hitEnemy); test_battle checks
+  it on a synthetic throw.

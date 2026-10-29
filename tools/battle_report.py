@@ -23,8 +23,8 @@ the front.
            whether the victim was weaker than the carrier and could see it the round before
   throws   landing damage the thrown rat took (42 = point-blank on the throw turn, 10 = landed on nothing);
            throwOut: thrown rats by side, landing (ground, target, eaten, fed, none), fatal landings, robots hit
-           (hitEnemy, hitAlly), enemy rats (kills) and kings (killsKing) killed by throws (the hp is in the enemy's
-           hploss/kingloss throwLand/throwHit)
+           (hitEnemy, hitAlly; hitKing: the enemy king, a subset of hitEnemy), enemy rats (kills) and kings
+           (killsKing) killed by throws (the hp is in the enemy's hploss/kingloss throwLand/throwHit)
   traps    per owner: rat/cat traps placed in the window and what became of those by the game's end (hit = fired,
            removed, live: placed = hit + removed + live), hitRate = hit / placed, meanLife (rounds placed->fired);
            triggers in the window (fired, by kind), their damage, kills, rat-trap victims by team; the window's cat
@@ -321,6 +321,8 @@ def throws(turns, acts, lo, hi):
         h = hurt.get(key)
         if h:
             o['hitEnemy' if h['d'] != tm else 'hitAlly'] += 1
+            if h['c'] == 'KING' and h['d'] != tm:
+                o['hitKing'] += 1
     for a in acts:
         r, k = int(a['round']), a['action']
         if not lo <= r <= hi:

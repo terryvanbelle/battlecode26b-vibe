@@ -121,6 +121,13 @@ with tempfile.TemporaryDirectory() as d:
           f"deaths: kd {D}")
     check(r['throwOut']['2'] == {'n': 1, 'enemyRat': 1, 'ground': 1, 'fatal': 1, 'kills': 1} and r['throws']['2'] == {42: 1},
           f"throws: a fatal point-blank throw {r['throwOut']['2']} {r['throws']['2']}")
+    thr = [dict(round='5', id='7', team='1', type='RAT', action='throw', a='20', seq='4', src='own'),
+           dict(round='5', id='20', team='2', type='RAT', action='land', a='20', b='target', c='0', seq='4', src='thrown'),
+           dict(round='5', id='20', team='2', type='RAT', action='damage', a='20', b='42', seq='4', src='thrown'),
+           dict(round='5', id='20', team='2', type='RAT', action='throwHit', a='30', b='42', c='KING', d='2', e='20', seq='4', src='thrown')]
+    t1 = br.throws([dict(id='20', team='2')], thr, 0, 9)
+    check(t1[1]['1'] == {'n': 1, 'enemyRat': 1, 'target': 1, 'fatal': 0, 'hitEnemy': 1, 'hitKing': 1} and t1[0]['1'] == {42: 1},
+          f"throws: an enemy rat thrown into its own king {t1}")
     die = dict(round='5', id='9', team='1', type='RAT', action='die', b='damage', seq='3', src='thrown', d='2', e='throwHit', g='1')
     check(br.throws([], [dict(die, a='2', c='KING'), dict(die, a='25', c='RAT')], 0, 9)[1]['1'] == {'kills': 1, 'killsKing': 1},
           'throws: kings killed apart')
