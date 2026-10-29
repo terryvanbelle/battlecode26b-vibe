@@ -413,44 +413,59 @@ public final class Baby {
         return stamp;
     }
 
-    /** Point-blank value of a throw from offset (mx, my) of me toward d (tryThrow's tile-2 scale: an enemy baby 84, an
-     *  enemy king 126, a wall or dirt 42, an ally -42, a cat -50, nothing 0), or MIN_VALUE when the first tile is
-     *  blocked. Robots come from the gridFill with this stamp; the tile we leave counts as empty. */
-    static int aimValue(MapLocation me, int mx, int my, Direction d, int stamp) {
-        int ddx = d.dx, ddy = d.dy, w = G.W, h = G.H, blk = Sym.WALL | Sym.DIRT;
-        int[] mem = Sym.mem;
-        int x = me.x + mx + ddx, y = me.y + my + ddy, ox = mx + ddx, oy = my + ddy;
-        if (x < 0 || y < 0 || x >= w || y >= h || (mem[x + w * y] & blk) != 0
-                || (ox != 0 || oy != 0) && gridAt[(ox + 8) + 17 * (oy + 8)] == stamp) return Integer.MIN_VALUE;
-        x += ddx; y += ddy; ox += ddx; oy += ddy;
-        if (x < 0 || y < 0 || x >= w || y >= h) return 0;
-        if ((mem[x + w * y] & blk) != 0) return 42;
-        if ((ox == 0 && oy == 0) || gridAt[(ox + 8) + 17 * (oy + 8)] != stamp) return 0;
-        RobotInfo r = grid[(ox + 8) + 17 * (oy + 8)];
-        if (r.team == G.them) return r.type == UnitType.RAT_KING ? 126 : 84;
-        return r.team == G.us ? -42 : -50;
-    }
+    /** D3[(dx + 1) + 3 * (dy + 1)]: the direction of a unit offset (CENTER in the middle). */
+    static final Direction[] D3 = {Direction.SOUTHWEST, Direction.SOUTH, Direction.SOUTHEAST, Direction.WEST,
+                                   Direction.CENTER, Direction.EAST, Direction.NORTHWEST, Direction.NORTH, Direction.NORTHEAST};
 
-    /** Carrying an enemy (Cfg.CARRY_AIM): from our tile or a neighbour we can step to, the throw direction whose
-     *  point-blank tile holds an enemy robot (aimValue >= Cfg.AIM_MIN); turn to it, step there (a strafe when it is
-     *  not ahead) and throw now if the action is ready, else hold the aim for next turn. Ties: stay, then G.hand. */
+    /** Carrying an enemy (Cfg.CARRY_AIM): from our tile or a neighbour we can step to, a throw whose point-blank tile
+     *  (two out, the first one empty) holds an enemy robot: a baby 84, a king's body 126 (tryThrow's scale). Turn to
+     *  it, step there (a strafe when it is not ahead) and throw now if the action is ready, else hold the aim for
+     *  next turn. Only enemy tiles within Chebyshev 3 can be such targets, so the scan starts from them (a scan of
+     *  every step and throw cost ~7000 bytecodes and overran). Ties: stay, then G.hand of the step, of the throw, and
+     *  G.pickBit of the target tile. */
     static boolean aimCarry() throws GameActionException {
         RobotController rc = G.rc;
         if (seen == null || Flow.left() < Cfg.THROW_BC) return false;
         MapLocation me = rc.getLocation();
+        int[] tx = AIM_TX, ty = AIM_TY, tv = AIM_TV;
+        int n = 0;
+        for (RobotInfo r : seen) {
+            if (r.team != G.them) continue;
+            int ox = r.location.x - me.x, oy = r.location.y - me.y;
+            if (r.type == UnitType.RAT_KING) {
+                if (ox > 4 || ox < -4 || oy > 4 || oy < -4) continue;
+                for (int ex = -1; ex <= 1; ex++)
+                    for (int ey = -1; ey <= 1; ey++) {
+                        int x = ox + ex, y = oy + ey;
+                        if (x > 3 || x < -3 || y > 3 || y < -3 || n >= 24) continue;
+                        tx[n] = x; ty[n] = y; tv[n++] = 126;
+                    }
+            } else if (ox <= 3 && ox >= -3 && oy <= 3 && oy >= -3 && n < 24) { tx[n] = ox; ty[n] = oy; tv[n++] = 84; }
+        }
+        if (n == 0) return false;
         int stamp = gridFill(me, seen);
+        int[] mem = Sym.mem;
+        int w = G.W, h = G.H, blk = Sym.WALL | Sym.DIRT;
+        boolean canMove = rc.isMovementReady();
         int best = Integer.MIN_VALUE;
         Direction bm = null, bt = null;
-        boolean canMove = rc.isMovementReady();
-        for (int j = -1; j < 8; j++) {
-            Direction m = j < 0 ? Direction.CENTER : G.DIRS[j];
-            if (j >= 0 && (!canMove || !rc.canMove(m))) continue;
-            MapLocation p = me.add(m);
-            for (int i = 0; i < 8; i++) {
-                Direction d = G.DIRS[i];
-                int v = aimValue(me, m.dx, m.dy, d, stamp);
-                if (v < Cfg.AIM_MIN) continue;
-                int key = v * 8 + (j < 0 ? 4 : G.hand(me, m) > 0 ? 2 : 0) + (G.hand(p, d) > 0 ? 1 : 0);
+        for (int j = 0; j < 9; j++) {
+            int mx = j % 3 - 1, my = j / 3 - 1;
+            boolean stay = mx == 0 && my == 0;
+            if (!stay && !canMove) continue;
+            Direction m = D3[j];
+            boolean checked = stay;
+            for (int i = 0; i < n; i++) {
+                int vx = tx[i] - mx, vy = ty[i] - my;
+                if (vx != 0 && vx != 2 && vx != -2 || vy != 0 && vy != 2 && vy != -2 || vx == 0 && vy == 0) continue;
+                int fx = mx + vx / 2, fy = my + vy / 2, x = me.x + fx, y = me.y + fy;
+                // the first flight tile: on the map, open terrain, no robot (the tile we leave is free)
+                if (x < 0 || y < 0 || x >= w || y >= h || (mem[x + w * y] & blk) != 0
+                        || (fx != 0 || fy != 0) && gridAt[(fx + 8) + 17 * (fy + 8)] == stamp) continue;
+                if (!checked) { if (!rc.canMove(m)) break; checked = true; }
+                Direction d = D3[(vx / 2 + 1) + 3 * (vy / 2 + 1)];
+                int key = tv[i] * 16 + (stay ? 8 : G.hand(me, m) > 0 ? 4 : 0) + (G.hand(me.add(m), d) > 0 ? 2 : 0)
+                        + (G.pickBit(me, me.translate(tx[i], ty[i])) ? 1 : 0);
                 if (key > best) { best = key; bm = m; bt = d; }
             }
         }
@@ -460,6 +475,8 @@ public final class Baby {
         if (rc.canThrowRat()) { rc.throwRat(); throwsDone++; aimThrows++; }
         return true;
     }
+
+    static final int[] AIM_TX = new int[24], AIM_TY = new int[24], AIM_TV = new int[24];
 
     static int aimThrows;
 
@@ -1043,7 +1060,7 @@ public final class Baby {
                 RobotInfo r = rc.senseRobotAtLocation(c);
                 if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { noKing |= s; continue; }
             }
-            int d = G.me.distanceSquaredTo(c) * 2 + (G.hand(G.me, G.me.directionTo(c)) > 0 ? 1 : 0);
+            int d = G.me.distanceSquaredTo(c) * 2 + (G.pickBit(G.me, c) ? 1 : 0);
             if (d < bd) { bd = d; best = c; }
         }
         if (best == null && noKing != 0) { noKing = 0; return null; }
@@ -1274,7 +1291,7 @@ public final class Baby {
                 MapLocation t = c.location.translate(dx, dy);
                 if (!G.onMap(t.x, t.y) || inLane(c, t)) continue;
                 if ((Sym.mem[G.idx(t)] & (Sym.WALL | Sym.DIRT)) != 0) continue;
-                int d = me.distanceSquaredTo(t) * 2 + (G.hand(me, me.directionTo(t)) > 0 ? 1 : 0);
+                int d = me.distanceSquaredTo(t) * 2 + (G.pickBit(me, t) ? 1 : 0);
                 if (d < bd) { bd = d; best = t; }
             }
         if (best == null) return false;

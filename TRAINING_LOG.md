@@ -1236,3 +1236,51 @@
   The ammunition is our own rats in the war near our king (their last move tag was mostly 'w' war or 'f' facing
   an enemy). The carrier throws at its first ready action. The king also takes 170-570 in bites a game in those
   losses, so throws are about a third of its damage.
+
+## 2026-10-29 07:45 PDT: s6m's control blocks; s7d on the replica
+- s6m's control blocks are in: set 1 is 1973-1978, 1980-1983, 2001-2002, 2008-2009, and set 3 is 2010-2011,
+  2014-2015, 2024-2025, 2032-2037, 2039-2040. They are now rows of research/panel/v3-ref-s6m.txt.
+- The same blocks scored against s3y's reference:
+
+  | Set | Cells | D | Net | t |
+  |---|---|---|---|---|
+  | 1 (control) | 42 | 13 (+3 -10) | -7 | -1.94 |
+  | 2 (s6m's accepting block) | 42 | 9 (+8 -1) | +7 | 2.33 |
+  | 3 (control) | 42 | 5 (+3 -2) | +1 | 0.45 |
+
+  Over all 126 cells s6m is about even with s3y (net +1). Its acceptance was mostly the noise of a single 42-cell
+  block, as the control blocks are there to show. Candidates are scored against s6m's own row for each set, so
+  the bar stays fair. A single-block pass is weak evidence, though, and a candidate's first block is no verdict.
+- s7d (s6y + the TrapRisk literal) is submission 84, with its first block on v3 set 1 (from match 2053). The ra
+  screen for s6y (the same flow code) is at about 20 of 80.
+- Mirror self-play of s7e (all SYM switches; ms1):
+  - First divergences: Hike r28 (s6y/s6m: r5) and cheesefarm r20.
+  - where_are_you still splits at r2. The kings' second spawn ties on centre distance between (3,4) and (4,3).
+    G.hand gets c.directionTo(l), which puts both in NORTHEAST, so loop order decides, and loop order doesn't
+    mirror. Separately, a per-candidate hand bonus flips under a reflection, so it only mirrors on rotational maps.
+  - DefaultMedium splits at r3 because B's king overran its first turn by one bytecode (20001, A 19989; the
+    smuggle pad and the debug strings differ by a few bytecodes). It missed the r2 spawn. KING_SENSE_RESERVE 5000
+    leaves too little for spawn, publish and the debug strings on a 45x45 map.
+- Fixes:
+  - G.pickBit(from, l) is the tie bit for ranking candidate tiles: King spawn, the king's traps and dig, and
+    Baby's two target picks. Under SYM_HAND it is the sign of the cross product of from's centre offset with the
+    exact vector to l, times the side chirality, or the sign of the dot product when the cross is 0. That bit is
+    the same for a rotated twin and for a reflected one. BotTest checks it over 4 map sizes x 3 symmetries, and
+    checks the (4,3)/(3,4) pair.
+  - Without SYM_HAND it is the old hand() of the compass direction.
+- s7g = s7e + both fixes, with KING_SENSE_RESERVE 7000 set by snapvar (the default stays 5000, so the @s6m preset
+  still reproduces s6m). It takes ra_s7e's place in the screen queue. Mirror self-play ms2 covers where_are_you,
+  DefaultMedium, sunandmoon and knifefight.
+- CARRY_AIM v1 (s7f) overran. In ca1 it had 102 overruns on DefaultMedium, 18 on cheesefarm, 8 on sittingducks
+  and 4 on knifefight; s7d had 0 on all four. 67 of the 98 counted on DefaultMedium crossed in moveDecision's
+  segment 7-10, where aimCarry sits, which took ~7350 bytecodes (9 steps x 8 throws x a flight check). The grab
+  war there was much bigger (151 grabs, throwHit 1700, against s7d's 55 and 490), but the game was still lost.
+- v2 (s7h) starts from the targets: only enemy tiles within Chebyshev 3 can be a point-blank target from here or
+  a neighbour. The grid fill runs only when one exists, and the step's canMove is asked only when a line needs
+  it. Diag ca2 is on the same maps, and ra_s7h takes ra_s7f's place in the queue.
+- s7g mirror self-play (ms2): DefaultMedium r62 (s7e r3), where_are_you r27 (r2; at r27 the twins share a tile
+  and only a cat's scratch differs, 100 vs 80 hp), sunandmoon r21. knifefight (vertical) splits at r1 on the
+  kings' facing. That facing comes from the map: neither king turns, and the two sides start in directions that
+  aren't mirrors of each other. The engine gives a newborn its king's direction (and chirality), so the first
+  rats look along unmirrored lines. By r2 one side's rat had ruled out a symmetry (sym=5) and its twin hadn't
+  (sym=7).

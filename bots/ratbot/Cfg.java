@@ -111,7 +111,8 @@ public final class Cfg {
     public static final int WAR_STRIKE = 0;
     /** One in RAID_EVERY fighters is a raider: on our half it ignores enemies beyond dist2 RAID_ENGAGE. */
     public static final int RAID_EVERY = 0, RAID_ENGAGE = 8, RAID_HP = 60;
-    /** Bytecodes the king's first-turn sense leaves for the rest of that turn (spawn first of all). */
+    /** Bytecodes the king's first-turn sense leaves for the rest of that turn (spawn first of all). 5000 can be short:
+     *  on DefaultMedium an s7e king ended its first turn at 20001 of 20000 and missed the round-2 spawn (s7g: 7000). */
     public static final int KING_SENSE_RESERVE = 5000;
     /** King press: at war a rat that sees the enemy king squeaks it (allies relay it PRESS_HOPS times); a rat with
      *  PRESS_HP health or more walks to a king sighting at most PRESS_AGE rounds old within PRESS_D2 (gatherers

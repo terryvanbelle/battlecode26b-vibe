@@ -107,6 +107,22 @@ public final class G {
         return dot >= 0 ? chir : -chir;
     }
 
+    /** Tie bit for ranking candidate tiles l seen from {@code from} (spawn, trap and target picks), the same for a
+     *  rotated or a reflected twin when Cfg.SYM_HAND: the cross product of from's centre offset with the exact vector
+     *  to l, times the side chirality (both flip under a reflection), else the sign of their dot product. Without
+     *  SYM_HAND, hand() of the compass direction as before: two tiles a knight's move apart share one direction, so
+     *  their tie fell to loop order, which does not mirror (where_are_you's second spawn), and a bonus from hand()
+     *  alone flips under a reflection. */
+    public static boolean pickBit(MapLocation from, MapLocation l) {
+        return Cfg.SYM_HAND ? pickBitSym(from, l) : hand(from, from.directionTo(l)) > 0;
+    }
+
+    static boolean pickBitSym(MapLocation from, MapLocation l) {
+        int px = 2 * from.x - cx2, py = 2 * from.y - cy2, dx = l.x - from.x, dy = l.y - from.y;
+        int c = px * dy - py * dx;
+        return c != 0 ? c * chir > 0 : px * dx + py * dy >= 0;
+    }
+
     /** Side chirality for hand()'s tie: the product of the signs of the home king's offset from the centre (the same
      *  for a rotated twin, opposite for a reflected one), or 1. */
     public static int chir = 1;

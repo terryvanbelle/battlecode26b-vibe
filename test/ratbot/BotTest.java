@@ -1756,6 +1756,39 @@ public class BotTest {
         check(ok && TrapRisk.NEAR.length == 25, "TrapRisk.NEAR literal = the neighbours within Chebyshev 1 of each 5x5 offset");
     }
 
+    static void testPickBit() {
+        // every twin pair under each symmetry gets the same bit when each side's chirality comes from its own king
+        int[][] sizes = {{30, 20}, {45, 45}, {60, 60}, {21, 33}};
+        java.util.Random rnd = new java.util.Random(11);
+        boolean ok = true; int n = 0;
+        for (int[] wh : sizes) {
+            W = wh[0]; H = wh[1]; reset(); install();
+            for (int s : new int[]{Sym.ROT, Sym.HOR, Sym.VER}) {
+                for (int t = 0; t < 40; t++) {
+                    MapLocation home = new MapLocation(rnd.nextInt(W), rnd.nextInt(H));
+                    MapLocation homeM = new MapLocation(G.mirX(home.x, s), G.mirY(home.y, s));
+                    if (home.equals(homeM) || 2 * home.x == W - 1 || 2 * home.y == H - 1) continue;
+                    MapLocation f = new MapLocation(rnd.nextInt(W), rnd.nextInt(H));
+                    MapLocation l = f.translate(rnd.nextInt(5) - 2, rnd.nextInt(5) - 2);
+                    if (l.equals(f)) continue;
+                    G.chir = G.chirOf(home);
+                    boolean a = G.pickBitSym(f, l);
+                    G.chir = G.chirOf(homeM);
+                    boolean b = G.pickBitSym(new MapLocation(G.mirX(f.x, s), G.mirY(f.y, s)), new MapLocation(G.mirX(l.x, s), G.mirY(l.y, s)));
+                    ok &= a == b; n++;
+                }
+            }
+        }
+        G.chir = 1; W = 30; H = 20; reset(); install();
+        check(ok && n > 300, "pickBit: twins under rotation and both reflections get the same tie bit (" + n + " pairs)");
+        // the knight's-move pair that split where_are_you: one gets the bit, the other not
+        W = 60; H = 60; reset(); install();
+        G.chir = G.chirOf(new MapLocation(2, 2));
+        MapLocation k = new MapLocation(2, 2);
+        check(G.pickBitSym(k, new MapLocation(4, 3)) != G.pickBitSym(k, new MapLocation(3, 4)), "pickBit: (4,3) and (3,4) seen from (2,2) differ");
+        G.chir = 1; W = 30; H = 20; reset(); install();
+    }
+
     static void testHomeRank() {
         check(Baby.homeRank(0, 3) < Baby.homeRank(0, 9) && Baby.homeRank(1, 3) < Baby.homeRank(1, 9), "home pick 0/1: nearer ranks first");
         check(Baby.homeRank(2, 9) < Baby.homeRank(2, 3), "home pick 2: farther ranks first");
@@ -1768,6 +1801,7 @@ public class BotTest {
         testFlowFast();
         testTrapRiskNear();
         testCarryAim();
+        testPickBit();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

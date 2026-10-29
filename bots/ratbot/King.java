@@ -277,7 +277,7 @@ public final class King {
                     s = -G.centreD2x4(l) - 200 * (Math.abs(dx) == 2 && Math.abs(dy) == 2 ? 1 : 0);
                     if (cat != null) s += 4 * Baby.catDist4(cat, l);
                 }
-                s = s * 4 + (G.hand(c, c.directionTo(l)) > 0 ? 1 : 0);
+                s = s * 4 + (G.pickBit(c, l) ? 1 : 0);
                 if (s > bs) { bs = s; best = l; }
             }
         if (best != null) {
@@ -320,7 +320,7 @@ public final class King {
                 MapLocation l = c.translate(dx, dy);
                 if (!rc.canPlaceRatTrap(l)) continue;
                 // the trap fires when the enemy enters its 3x3: covering the tile next to the foe's line in
-                int s2 = (mid ? G.centreD2x4(l) : l.distanceSquaredTo(foe)) * 2 + (G.hand(c, c.directionTo(l)) > 0 ? 1 : 0);
+                int s2 = (mid ? G.centreD2x4(l) : l.distanceSquaredTo(foe)) * 2 + (G.pickBit(c, l) ? 1 : 0);
                 if (s2 < bs) { bs = s2; best = l; }
             }
         if (best != null) { rc.placeRatTrap(best); traps++; }
@@ -340,7 +340,7 @@ public final class King {
                 if (Math.abs(dx) < 2 && Math.abs(dy) < 2) continue;
                 MapLocation l = c.translate(dx, dy);
                 if (!rc.canRemoveDirt(l)) continue;
-                int s = l.distanceSquaredTo(goal) * 2 + (G.hand(c, c.directionTo(l)) > 0 ? 1 : 0);
+                int s = l.distanceSquaredTo(goal) * 2 + (G.pickBit(c, l) ? 1 : 0);
                 if (s < bs) { bs = s; best = l; }
             }
         if (best != null) { rc.removeDirt(best); digs++; }
