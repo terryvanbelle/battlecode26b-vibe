@@ -485,3 +485,9 @@
   rx_s4i (BITE_GUARD + BITE_CARRIER).
 - s4d on the replica, block 1 (set 1, matches 1287-1302) vs s3y: 48 cells, D 9 (+5 -4), net +1, t 0.33: above the
   block 1 bar (t <= 0 rejects); block 2 on set 2 is going out.
+
+## 2026-10-28 20:40 PDT: GLANCE_MEM helps against the rush
+- rx3_s4g (s4g = s4d + GLANCE_MEM 20, vs abrk) against control rx2_s4d: +6.4 pts, t +1.52, cells +10 -7; 51-29 (s4d
+  48-32); our king killed in 14 losses (17). Our grab count rose (3624 -> 3972) and the enemy's barely moved (3128 ->
+  3267), so the gain seems to come from seeing, and then grabbing, enemies behind us rather than from dodging their
+  grabs. Pass; it joins the next stack. It is inert in peace, since the turn-end code returns during cooperation.
