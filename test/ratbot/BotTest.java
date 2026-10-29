@@ -689,15 +689,42 @@ public class BotTest {
         for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) if (x < 15) Sym.mem[x + W * y] = Sym.SEEN;
         G.seed(777);
         Baby.exploreTarget = null;
-        Baby.exploreHome();
+        boolean went = Baby.exploreHome();
         MapLocation t = Baby.exploreTarget;
-        check(t != null && t.x >= 15 && t.y <= 14, "scout: explores an unseen tile on our half (" + t + ")");
-        // with nothing unseen on our half it explores like anyone else
+        check(went && t != null && t.x >= 15 && t.y <= 14, "scout: explores an unseen tile on our half (" + t + ")");
+        // with nothing unseen on our half it says so (the scout then explores like anyone else)
         for (int x = 15; x < W; x++) for (int y = 0; y < 15; y++) Sym.mem[x + W * y] = Sym.SEEN;
         Baby.exploreTarget = null;
-        Baby.exploreHome();
-        check(Baby.exploreTarget == null || Baby.exploreTarget.y >= 15 || Baby.exploreTarget.x < 15,
-              "scout: falls back to explore() once our half is seen");
+        check(!Baby.exploreHome() && Baby.exploreTarget == null, "scout: no target once our half is seen");
+    }
+
+    static void testSeek() throws GameActionException {
+        reset(); W = 30; H = 30; install();
+        Sym.mask = Sym.HOR; Baby.home = new MapLocation(1, 5); Baby.fu = -1; Baby.fv = -1;
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) if (x < 15) Sym.mem[x + W * y] = Sym.SEEN;
+        G.seed(777); G.us = Team.A; G.me = new MapLocation(6, 6);
+        MapLocation mine = new MapLocation(8, 6);
+        RobotInfo[] crowd = new RobotInfo[12];
+        for (int i = 0; i < crowd.length; i++)
+            crowd[i] = new RobotInfo(100 + i, Team.A, UnitType.BABY_RAT, 100, new MapLocation(7 + i % 3, 5 + i / 3 % 3), Direction.NORTH, 0, 0, null);
+        Baby.seen = crowd;
+        Baby.seekNext = 0; Baby.seekUntil = 0; Baby.myMineCount = 0;
+        boolean started = Baby.startSeek(mine);
+        check(Cfg.SEEK_CROWD == 0 ? !started : started == (Baby.nearerAllies(mine) >= Cfg.SEEK_CROWD), "seek: starts only at a crowded mine, when on");
+        // a seeker heads for an unseen tile of our half; it stops once nothing there is unseen
+        Baby.seekMines = 0; Baby.exploreTarget = null; Baby.seekUntil = round + 100;
+        check(Baby.seek() && Baby.exploreTarget != null && Baby.exploreTarget.x >= 15 && Baby.exploreTarget.y <= 14,
+              "seek: explores our half's unseen tiles (" + Baby.exploreTarget + ")");
+        for (int x = 15; x < W; x++) for (int y = 0; y < 15; y++) Sym.mem[x + W * y] = Sym.SEEN;
+        Baby.exploreTarget = null;
+        MapLocation keep = Baby.mineTarget = mine;
+        check(!Baby.seek() && Baby.seekUntil == 0 && Baby.mineTarget == keep, "seek: over once our half is seen, mine kept");
+        // a find (known to the king already) ends seeking and sends the rat to re-pick its mine
+        Baby.seekUntil = round + 100; Baby.myMineCount = 0; Baby.noteMine(20, 3);
+        Comms.numMines = 1; Comms.mines[0] = new MapLocation(20, 3);
+        shared[Comms.MINE0] = 21; shared[Comms.MINE0 + 1] = 4;
+        check(!Baby.seek() && Baby.seekUntil == 0 && Baby.mineTarget == null, "seek: a reported find ends it and re-picks");
+        Baby.seen = new RobotInfo[0]; Baby.myMineCount = 0; Comms.numMines = 0; Baby.mineTarget = null;
     }
 
     static void testCarryCap() {
@@ -937,6 +964,7 @@ public class BotTest {
         testTrapRisk();
         testMineSpread();
         testScout();
+        testSeek();
         testKingDig();
         testKingDodge();
         testBiteGuard();

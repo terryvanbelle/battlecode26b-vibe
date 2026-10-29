@@ -682,14 +682,16 @@ public final class Baby {
             MapLocation k = Comms.nearestKing(G.me);
             if (k != null && unreported() >= 0) { Nav.goTo(k); why = 's'; return; }
             why = 'S';
-            exploreHome();
+            if (!exploreHome()) explore();
             return;
         }
+        if (role == GATHER && G.round < seekUntil && seek()) { why = 'x'; return; }
         if (role == GATHER || role == FIGHT && Cfg.FIGHT_MINE) {
             if (Cfg.MINE_BALANCE && mineTarget != null && Comms.numMines != minesAtPick) mineTarget = null;
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
                 if (G.cheb(G.me, mineTarget) <= 2) {
+                    if (role == GATHER && startSeek(mineTarget) && seek()) { why = 'x'; return; }
                     if (Cfg.GATHER_STILL) {
                         // hold still (moves set off traps laid at our mines) and sweep the cone around the spawn square
                         Direction t = G.facing.rotateRight().rotateRight();
@@ -1186,8 +1188,9 @@ public final class Baby {
 
     static boolean scout;
 
-    /** Scout movement: the nearest never-seen tile of EXPLORE_TRIES samples on our half (any tile if none is). */
-    static void exploreHome() throws GameActionException {
+    /** Scout movement: the nearest never-seen tile of EXPLORE_TRIES samples on our half; false (no move) when no
+     *  sample is one. */
+    static boolean exploreHome() throws GameActionException {
         if (exploreTarget == null || G.cheb(G.me, exploreTarget) <= 2 || Nav.stall > 20 || Sym.known(G.idx(exploreTarget.x, exploreTarget.y))) {
             int x = -1, y = -1, bd = Integer.MAX_VALUE;
             for (int k = 0; k < Cfg.EXPLORE_TRIES; k++) {
@@ -1197,10 +1200,37 @@ public final class Baby {
                 int d = Math.max(Math.abs(cx - G.me.x), Math.abs(cy - G.me.y));
                 if (d < bd) { bd = d; x = cx; y = cy; }
             }
-            if (x < 0) { explore(); return; }
+            if (x < 0) return false;
             exploreTarget = new MapLocation(x, y);
         }
         Nav.goTo(exploreTarget);
+        return true;
+    }
+
+    /** Mine seeking (Cfg.SEEK_CROWD) runs until round seekUntil and may start again from seekNext; seekMines is
+     *  myMineCount when it started. */
+    static int seekUntil, seekNext, seekMines;
+
+    /** A gatherer at a crowded mine starts seeking: SEEK_CROWD allied babies nearer the mine than us. */
+    static boolean startSeek(MapLocation mine) {
+        if (Cfg.SEEK_CROWD <= 0 || G.round < seekNext || nearerAllies(mine) < Cfg.SEEK_CROWD) return false;
+        seekUntil = G.round + Cfg.SEEK_TTL;
+        seekNext = G.round + Cfg.SEEK_RETRY;
+        seekMines = myMineCount;
+        exploreTarget = null;
+        return true;
+    }
+
+    /** One seeking step; false once it is over: a mine found and reported to the king, or nothing left unseen. */
+    static boolean seek() throws GameActionException {
+        if (myMineCount > seekMines) {
+            // squeaks reach the king from dist2 16 only: carry the news home, then gather (the new mine included)
+            MapLocation k = Comms.nearestKing(G.me);
+            if (k != null && unreported() >= 0) { Nav.goTo(k); return true; }
+            mineTarget = null;
+        } else if (exploreHome()) return true;
+        seekUntil = 0;
+        return false;
     }
 
     static int clampX(int x) { return Math.max(0, Math.min(G.W - 1, x)); }
