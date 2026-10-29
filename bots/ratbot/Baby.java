@@ -35,7 +35,7 @@ public final class Baby {
         if (role < 0) born();
         if (Cfg.TRAIL) Trail.record();
         Comms.readKings();
-        if (Cfg.KING_BLOCK) Nav.markKings();
+        if (Cfg.KING_BLOCK || Cfg.KING_FLOW) Nav.markKings();
         Comms.readMines();
         int s = Comms.read(Comms.SYM);
         if (s != 0) Sym.merge(s);

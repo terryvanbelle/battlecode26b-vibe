@@ -25,17 +25,20 @@ public final class Nav {
 
     public static void reset() { bugging = false; bugTurns = 0; }
 
+    /** Tile bits that block greedy steps and start bug walks: walls, dirt, and our kings' bodies with Cfg.KING_BLOCK
+     *  (not KING_FLOW, which marks them for flow paths only). A field so tests can set it. */
+    static int terrain = Sym.WALL | Sym.DIRT | (Cfg.KING_BLOCK ? Sym.KING : 0);
+
     /** Static blocker (wall/dirt) from memory or sensing; robots are not static blockers. */
     static boolean terrainBlocked(MapLocation l) {
         if (!G.onMap(l.x, l.y)) return true;
-        int m = Sym.mem[G.idx(l)];
-        return (m & (Sym.WALL | Sym.DIRT | Sym.KING)) != 0;
+        return (Sym.mem[G.idx(l)] & terrain) != 0;
     }
 
     static MapLocation[] kingMarks = new MapLocation[Comms.KING_SLOTS];
     static int kingMarkN;
 
-    /** Keep Sym.KING on our kings' 3x3 bodies (from the shared array; Cfg.KING_BLOCK): re-marked when a king moves,
+    /** Keep Sym.KING on our kings' 3x3 bodies (from the shared array; Cfg.KING_BLOCK, KING_FLOW): re-marked when a king moves,
      *  appears or dies. */
     public static void markKings() {
         int n = Comms.numKings;

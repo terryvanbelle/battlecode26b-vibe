@@ -17,7 +17,7 @@ public final class Flow {
     static MapLocation tgt;
     static int tIdx, tx, ty, base, sIdx;
     static boolean building;
-    /** Tile bits a path may not cross (the target tile excepted): walls, and our kings' bodies (Cfg.KING_BLOCK) unless
+    /** Tile bits a path may not cross (the target tile excepted): walls, and our kings' bodies (Cfg.KING_BLOCK, KING_FLOW) unless
      *  the target is inside one. */
     static int block = Sym.WALL;
     /** Round the current path was completed, or -1. */
@@ -66,7 +66,7 @@ public final class Flow {
         else if (tgt != null && builtRound >= 0 && G.round - builtRound <= Cfg.FLOW_TTL) ends[4]++;
         tgt = t;
         tIdx = G.idx(t);
-        block = Cfg.KING_BLOCK && !Nav.atKing(t) ? Sym.WALL | Sym.KING : Sym.WALL;
+        block = (Cfg.KING_BLOCK || Cfg.KING_FLOW) && !Nav.atKing(t) ? Sym.WALL | Sym.KING : Sym.WALL;
         tx = t.x; ty = t.y;
         builtRound = -1;
         building = true;

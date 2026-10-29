@@ -183,6 +183,10 @@ public final class Cfg {
      *  EscapeTheNight: A* routed babies through the king that stood between them and the room's exit; they waited behind
      *  it, dropped the path and searched again, 500+ rounds. */
     public static final boolean KING_BLOCK = false;
+    /** KING_BLOCK for flow paths only: greedy steps and bug walks still treat a king as a robot to wait for or sidestep.
+     *  Without it the A* routes babies through the king's body (EscapeTheNight: babies bound for a mine stood touching
+     *  the king for 1266 rounds); KING_BLOCK fixed that but lost on the replica (net -5) and in self-play (net -4). */
+    public static final boolean KING_FLOW = false;
     public static final int FLOW_JAM_HOLD = 12;
     /** Path cost of a dirt tile (a dig is 5 cheese and 2.5 turns of action cooldown, plus the step). */
     public static final int DIG_COST = 4;

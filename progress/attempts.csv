@@ -133,3 +133,5 @@ s5b,2026-10-28 23:55,s5a,s5a + CHEESE_BAN_WALL: ban only piles behind a wall (la
 dbgv,2026-10-28 23:58,s4v,debug build: s4v with path-end counters (fe=) in the indicator; no behaviour change,"diagnostic only, not a candidate"
 s5c,2026-10-29 00:12,s4d,"s4d + CHEESE_BAN 60 (without KING_BLOCK, which the replica and self-play put at net -5 and -4)",pending
 s5d,2026-10-29 00:12,s5c,s5c + TRAIL: a delivery stalled FLOW_STALL turns walks back along the rat's own loop-free trail of walked tiles from its spawn,pending (diagnostics)
+s5e,2026-10-29 00:23,s5c,s5c + KING_FLOW: our kings' bodies are walls for flow paths only (greedy and bug walks still wait or sidestep),pending (diagnostics)
+s5f,2026-10-29 00:23,s5e,s5e + TRAIL,pending (diagnostics)

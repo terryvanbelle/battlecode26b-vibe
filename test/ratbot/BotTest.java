@@ -381,8 +381,13 @@ public class BotTest {
         for (int i = 0; i < W * H; i++) if ((Sym.mem[i] & Sym.KING) != 0) n++;
         check(n == 9 && (Sym.mem[G.idx(new MapLocation(11, 6))] & Sym.KING) != 0, "king block: the king's 3x3 is marked (" + n + ")");
         Sym.record(11, 6, false, false, false);
+        Nav.terrain = Sym.WALL | Sym.DIRT | Sym.KING;
         check((Sym.mem[G.idx(new MapLocation(11, 6))] & Sym.KING) != 0 && Nav.terrainBlocked(new MapLocation(11, 6)),
               "king block: re-sensing a body tile keeps the mark; bug walks treat it as terrain");
+        Nav.terrain = Sym.WALL | Sym.DIRT;
+        check(!Nav.terrainBlocked(new MapLocation(11, 6)) && Nav.terrainBlocked(new MapLocation(-1, 6)),
+              "king flow: without KING_BLOCK a marked body tile is no terrain for greedy and bug walks");
+        Nav.terrain = Sym.WALL | Sym.DIRT | (Cfg.KING_BLOCK ? Sym.KING : 0);
         check(Nav.atKing(new MapLocation(10, 5)) && Nav.atKing(new MapLocation(9, 6)) && !Nav.atKing(new MapLocation(12, 5)),
               "king block: atKing covers the body only");
         // a path past the king goes around its body when the search blocks king tiles
