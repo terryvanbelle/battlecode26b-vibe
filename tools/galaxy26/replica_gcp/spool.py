@@ -155,7 +155,8 @@ class Queue:
     def bump(self, pick):
         """Move the ready messages for which pick(obj) is true ahead of every other ready message, keeping their
         order: each is renamed to an id just older than the oldest ready one (same pid-counter suffix). A message a
-        consumer leases meanwhile is skipped. Returns [(old id, new id)]."""
+        consumer leases meanwhile is skipped. Nothing moves when they already lead the queue. Returns
+        [(old id, new id)]."""
         names = self._names(self.ready)
         chosen = []
         for f in names:
@@ -165,7 +166,7 @@ class Queue:
                         chosen.append(f[:-5])
             except (FileNotFoundError, ValueError):
                 continue
-        if not chosen:
+        if not chosen or [f[:-5] for f in names[:len(chosen)]] == chosen:
             return []
         t0, moved = int(names[0][:20]), []
         for i, old in enumerate(chosen):
