@@ -801,3 +801,26 @@
   bot knows the symmetry yet). In random 15x11 symmetric layouts the fixed order splits 1 of 211 pairs and the
   framed order none; a unit test pins the splitting layout. s5m = s5k + SYM_FLOW (partner s5n) is in a
   mirror check.
+
+## 2026-10-29 01:59 PDT: mirror check on s5p; the rushers win the war economy, not the opening
+- s5p/s5q (all four SYM switches) mirror check: first divergences moved from DefaultMedium r63/r87 to r75/r93,
+  cheesefarm r37/r14 to r82/r107, sunandmoon r2 to r22/r25. What is left starts at cat moves ('g' cat defend,
+  'c' cat flee) beside cats whose hp differs by one scratch. SYM_CENTRE fixed the gatherer's cat flee (it aimed at
+  the cat's bottom-left tile, not its centre), king spawn and trap goals (integer W/2 centre), and fort facing.
+  SYM_HAND fixed the cross=0 tie (a chirality from the home king's quadrant). All four switches are off by
+  default; s5p goes to a self-play screen for harm before they become defaults.
+- s3y's record by panel opponent on the replica (144 games): AlexT101 2/18, abcdezyxwv 2/18, CS50Crab 11/18,
+  outercloudstudio 12/18, bc26vibe 12/18, XSercia 17/18, C0derTang 17/18, ask8000 18/18. 41 of our 53 losses are
+  king kills.
+- The two rushers are not ahead on rats early: at r100 we average 16-20 babies to their 15-17. By r300 we are at
+  10-12 and they are at 16-19. AlexT101 on constrictinglattice (1204 g0): to r75 we spawned 31 and they 31, our
+  traps hit them 30 times and theirs hit us 19 times, and they lost 16 rats to our 10. But our bank went
+  2500 -> 690 by r75 (spawns ~1200, 37 rat traps 740, upkeep 150) and income stopped: deliveries ('d' turns) fell
+  to 4-5 per 25 rounds after r150, with the gatherers walking to mines ('M') and fleeing. From r100 the king sat at
+  'f' (under the 300 spawn floor) for 100+ rounds while the army shrank 12 -> 2. AlexT101 rebuilt from 11 to 17
+  on a steady ~600 bank.
+- The cap: MAX_BABIES 18 is checked against the cost-step count, so we stop at 20 babies. outercloudstudio and
+  bc26vibe peak at 33, and EscapeTheNight (1196) ended with 9322 cheese unspent on 20 rats. On tiny (1204 g2) our
+  king died at r48 holding 1105 cheese with 20 rats to their 31. s3u (RICH_BABIES 30) passed self-play but never
+  went to the replica on its own, and s4h/s4j raised only the war cap. s5r = s4d + MAX_BABIES 30 +
+  MAX_BABIES_WAR 40 is on the ra screen (vs araid) and the sp screen.
