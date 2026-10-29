@@ -71,6 +71,10 @@ public final class Cfg {
     public static final boolean GATHER_STILL = false;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines
     public static final int RAID_STAY = 60, RAID_SPREAD = 60;
+    /** Once cooperation is over, one in WAR_STRIKE fighters (by birth round, so mirrored rats agree) turns attacker
+     *  and goes for the enemy king (0 = off). In s3y's panel games against the two early rushers the enemy king took
+     *  no bites while ours died by about r325 (DefaultLarge vs abcdezyxwv: kills even, kd 1.26). */
+    public static final int WAR_STRIKE = 0;
     /** One in RAID_EVERY fighters is a raider: on our half it ignores enemies beyond dist2 RAID_ENGAGE. */
     public static final int RAID_EVERY = 0, RAID_ENGAGE = 8, RAID_HP = 60;
     /** Bytecodes the king's first-turn sense leaves for the rest of that turn (spawn first of all). */

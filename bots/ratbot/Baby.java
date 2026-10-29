@@ -33,6 +33,7 @@ public final class Baby {
     public static void turn() throws GameActionException {
         RobotController rc = G.rc;
         if (role < 0) born();
+        if (Cfg.WAR_STRIKE > 0 && !G.coop && striker(role, birthRound, Cfg.WAR_STRIKE)) role = ATTACK;
         if (Cfg.TRAIL) Trail.record();
         Comms.readKings();
         if (Cfg.KING_BLOCK || Cfg.KING_FLOW) Nav.markKings();
@@ -206,6 +207,12 @@ public final class Baby {
         fv = py >= 0 ? 1 : -1;
         // mirror-invariant seed: round and the unsigned offset from the king
         G.seed(G.round * 977 + Math.abs(G.me.x - home.x) * 31 + Math.abs(G.me.y - home.y) * 7 + 1);
+    }
+
+    /** Cfg.WAR_STRIKE k: whether a rat of this role born in this round is one of the 1 in k fighters that strike at
+     *  the enemy king once at war (k 0: none). */
+    static boolean striker(int role, int birth, int k) {
+        return k > 0 && role == FIGHT && (birth / Cfg.FIGHT_EVERY) % k == 0;
     }
 
     /** 4 x squared distance from a tile to a cat's 2x2 centre. */

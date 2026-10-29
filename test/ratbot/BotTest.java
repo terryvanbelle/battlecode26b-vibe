@@ -516,6 +516,18 @@ public class BotTest {
         return -1;
     }
 
+    static void testWarStrike() {
+        int n1 = 0, n2 = 0, g = 0;
+        for (int b = 0; b < 400; b += Cfg.FIGHT_EVERY) {
+            if (Baby.striker(Baby.FIGHT, b, 1)) n1++;
+            if (Baby.striker(Baby.FIGHT, b, 2)) n2++;
+            if (Baby.striker(Baby.GATHER, b, 1) || Baby.striker(Baby.FIGHT, b, 0)) g++;
+        }
+        int all = 400 / Cfg.FIGHT_EVERY;
+        check(n1 == all && n2 == all / 2 && g == 0, "war strike: every fighter at 1, half at 2, no gatherer, none at 0 ("
+            + n1 + " " + n2 + " " + g + ")");
+    }
+
     static void testAtMine() {
         reset(); W = 30; H = 30; install();
         MapLocation m = new MapLocation(15, 15);
@@ -1348,6 +1360,7 @@ public class BotTest {
         testNavSameTarget();
         testAtMine();
         testTrail();
+        testWarStrike();
         testKingBlock();
         testExploreUnseen();
         testKingNeverWritesOutOfRange();

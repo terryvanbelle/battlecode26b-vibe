@@ -135,3 +135,5 @@ s5c,2026-10-29 00:12,s4d,"s4d + CHEESE_BAN 60 (without KING_BLOCK, which the rep
 s5d,2026-10-29 00:12,s5c,s5c + TRAIL: a delivery stalled FLOW_STALL turns walks back along the rat's own loop-free trail of walked tiles from its spawn,pending (diagnostics)
 s5e,2026-10-29 00:23,s5c,s5c + KING_FLOW: our kings' bodies are walls for flow paths only (greedy and bug walks still wait or sidestep),pending (diagnostics)
 s5f,2026-10-29 00:23,s5e,s5e + TRAIL,pending (diagnostics)
+s5g,2026-10-29 00:27,s4d,s4d + WAR_STRIKE 1: once cooperation is over every fighter turns attacker and goes for the enemy king (the field rushers' kings took no bites in s3y's losses),pending (rush run)
+s5h,2026-10-29 00:27,s4d,s4d + WAR_STRIKE 2: one in two fighters strikes at the enemy king once at war,pending (rush run)
