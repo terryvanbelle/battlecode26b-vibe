@@ -770,3 +770,34 @@
   Rejected.
 - rx_s5g (WAR_STRIKE) vs rx2_s4d: 80 cells, D 53, +4.1 pts, t +0.77, net -2. That's neutral, but it's the best
   signal on deck and aims at the rushers' unbitten king, so s5g is on the replica now (submission 78).
+
+## 2026-10-29 01:45 PDT: araid replaces abrk as the rush screen; an early insurance king; mirrored flow search
+- rxa_s3y (s3y vs araid, 16 kept games on the eight rusher maps): s3y won 5 of 16. Its profile (`profile.py`):
+
+  | Measure | araid | Field rushers |
+  |---|---|---|
+  | Backstab | r45 (94% theirs) | r36-40 |
+  | Throw damage on our king | 203 | 150-230 |
+  | Bites on our king | 13 | ~20 |
+  | Picked on our half | 211 | 600-700 |
+  | Bank at r100 | 680 | 960-1234 |
+
+  araid is a weaker version of the same style, and far closer than abrk (s4d beat abrk 7 of 16). The rx runs vs
+  abrk stopped (rx_s4m at 25 of 80: +5.4 pts, t +0.64; rx_s5j at 52 of 80: +6.3 pts, t +1.29; s4o, s5h, s5i
+  and s5c's rx runs dropped). The new ra screen is the same 80 cells vs araid: ra_s4d (control), ra_s5g, ra_s5m
+  on one stream; ra_s5o, ra_s5i, ra_s4m on the other.
+- Grab forensics (s3y's panel games): our grabbed rats had already lost hp to rat traps (the first damage in 340
+  of AlexT101's 957 grabs; victim hp peaks at 50, one trap) and to landings from earlier throws (22.5 hp per grab
+  vs abcdezyxwv). Their grabbers are fresh (100 hp in about half the grabs). The engine lets a strictly
+  healthier adjacent rat grab from any side, so a trapped rat is fair game for every fresh rusher.
+- Kings: s3y never had a second king in 144 panel games. s5e (s4d's formation switches) formed one in 14 of 48,
+  but vs the rushers only 3 of 12, at r105-228. The war starts at r36-40 and the bank starts near 2500, so
+  s5o = s4d with FORM_FROM 25, FORM_BABIES 8, FORM_CHEESE 150 and no income test: a second king early, before the
+  war, so the rushers have two kings to kill.
+- Symmetry: the s5k/s5l split at DefaultMedium r40 is two twin rats on equal-length (17-tile) flow paths that
+  disagree on the first step. The side decides it, not the build: in both games the side-A twin steps
+  diagonally. Flow's A* expanded neighbours in a fixed order; SYM_FLOW (off by default) expands them in the side
+  frame (the signs of the home king's offset, which flip exactly along the map's mirror axes whether or not the
+  bot knows the symmetry yet). In random 15x11 symmetric layouts the fixed order splits 1 of 211 pairs and the
+  framed order none; a unit test pins the splitting layout. s5m = s5k + SYM_FLOW (partner s5n) is in a
+  mirror check.
