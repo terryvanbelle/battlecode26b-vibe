@@ -173,6 +173,12 @@ public final class Cfg {
     public static final int RUSH_FROM = 4, RUSH_TO = 16;
     /** Rush attackers bite and grab enemy rats during cooperation too (the first bite ends it for everyone). */
     public static final boolean RUSH_BREAK = false;
+    /** From this round on (0 = never) every baby bites and grabs enemy rats during cooperation too: the field rushers
+     *  open the war at r36-40 (abrk, whose attackers must first walk over, at r66). */
+    public static final int BREAK_ROUND = 0;
+    /** Gatherers spread over every known mine, not only those on our half: the field rushers pick 600-700 cheese a game
+     *  on our half in rounds 100-400 (abrk 156). */
+    public static final boolean MINE_ANY = false;
     /** Squared distance (to the cat's 2x2 centre, doubled coords /4) a gatherer keeps from cats. */
     public static final int GATHER_CAT_DIST = 20;
     /** A cat within dist2 CAT_DEFEND_R2 of one of our kings draws every rat that sees it, gatherers included

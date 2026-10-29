@@ -737,3 +737,36 @@
   they see themselves. Unit tests cover it.
 - s5i = s4d + KING_PRESS with PRESS_D2 225, PRESS_AGE 16, PRESS_HOPS 3. s5j = s5i + PRESS_SHARED. Their rush runs
   vs abrk follow sp18_s5c on the VM. rx_s4m (plain KING_PRESS) now runs right after rx_s5g.
+
+## 2026-10-29 01:20 PDT: a mirror-invariant rat hash; abrk is a weak stand-in for the field rushers
+- sp18_s5c: neutral vs sp14_s4d (80 cells, D 57, -0.6 pts, t -0.26, net -2). rx_s5g at 55 of 80: +3.4 pts, net +1.
+  It recovered from 0 of 6 at the start.
+- Symmetry: Baby.slot hashed rc.getID(). It decides the scout pick and MINE_BALANCE's mine, so mirrored rats could
+  get different roles and mines (mirror_check.py listed this as a known asymmetry). SYM_SLOT (off by default)
+  hashes the mirror-invariant birth seed instead: round plus the unsigned offset from the king, now
+  Baby.birthSeed with a mirror test. s5k = s4d + SYM_SLOT; s5l = dev + SYM_SLOT is only its partner for mirror
+  checks. Mirror pairs s5k/s5l and s4d/s2o (DefaultMedium, cheesefarm) are running on the VM.
+- abrk vs the field rushers (16 kept-replay games s4d vs abrk, profiled like s3y's panel games):
+
+  | Measure | abrk | Field rushers |
+  |---|---|---|
+  | Backstab round | r66 | r36-40 |
+  | Grabs, theirs vs ours | 39 vs 46 | 53-74 vs 42-53 |
+  | Cheese picked on our half, r100-400 | 156 | 600-700 |
+  | Picked on their own half | 1056 | 1285-1612 |
+  | Bank at r100 | 686 | 960-1234 |
+  | Bank at r200 | 454 | 809-940 |
+
+  abrk is poorer and opens the war late, which explains why rush-run passes (s4g, s4h, s4j) did nothing against
+  the real rushers on the replica (s4j 2-10 vs them, s3y 3-9).
+- New archetype switches (off by default): BREAK_ROUND (every baby is hostile from that round) and MINE_ANY
+  (gatherers spread over all known mines, not only our half). `bots/araid` = the s4d switch set + SYM_SLOT + RUSH
+  + RUSH_BREAK + BREAK_ROUND 36 + MINE_ANY. s3y vs araid on the eight rusher maps, both sides (rxa_s3y), checks
+  whether it reproduces the field rushers' profile and s3y's 2-16 against them.
+- Mirror check: with SYM_SLOT the first divergence of a mirrored pair moves from r5 to r40 on DefaultMedium (s4d/s2o
+  vs s5k/s5l) and from r3 to r22 on cheesefarm. The early rat-hash asymmetry is gone, but something later still
+  breaks symmetry: at DefaultMedium r40 two twin gatherers at the same tile pick moves one tile apart.
+- s5e (KING_FLOW) on the replica, block 1 vs the s3y reference: 48 cells, D 14 (+5 -9), net -4, t -1.07.
+  Rejected.
+- rx_s5g (WAR_STRIKE) vs rx2_s4d: 80 cells, D 53, +4.1 pts, t +0.77, net -2. That's neutral, but it's the best
+  signal on deck and aims at the rushers' unbitten king, so s5g is on the replica now (submission 78).

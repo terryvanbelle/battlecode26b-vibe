@@ -155,7 +155,7 @@ public final class Baby {
     }
 
     /** Whether this rat bites and grabs enemy rats now: after cooperation, or a RUSH_BREAK attacker at any time. */
-    static boolean hostile() { return !G.coop || Cfg.RUSH_BREAK && role == ATTACK; }
+    static boolean hostile() { return !G.coop || Cfg.RUSH_BREAK && role == ATTACK || Cfg.BREAK_ROUND > 0 && G.round >= Cfg.BREAK_ROUND; }
 
     /** End the turn facing the nearest enemy rat close enough to grab us next round. */
     static void guardTurn() throws GameActionException {
@@ -1170,7 +1170,7 @@ public final class Baby {
         if (n == 0) return null;
         int ours = 0;
         for (int i = 0; i < n; i++) if (homeHalf(cand[i])) { MapLocation t = cand[ours]; cand[ours++] = cand[i]; cand[i] = t; }
-        int m = ours > 0 ? ours : n;
+        int m = ours > 0 && !Cfg.MINE_ANY ? ours : n;
         for (int i = 1; i < m; i++)   // insertion sort of the first m by mineKey
             for (int j = i; j > 0 && mineKey(cand[j]) < mineKey(cand[j - 1]); j--) { MapLocation t = cand[j]; cand[j] = cand[j - 1]; cand[j - 1] = t; }
         minesAtPick = Comms.numMines;
