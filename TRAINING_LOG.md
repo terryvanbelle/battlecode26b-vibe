@@ -1213,3 +1213,16 @@
   (Baby.FLIGHT_DMG) is 7 entries. s7d = s6y + the fix, with overrun probe ov1 on cheeseguardians and
   superioristhmus. s7e = s7d + all four SYM switches, with mirror self-play ms1 (where_are_you, Hike,
   DefaultMedium, cheesefarm) and screen ra_s7e queued right after ra_s6z.
+- ov1: s7d vs araid on cheeseguardians had 0 overruns (pb3 had 52; s6y in cg1 had 39 and 55).
+- CARRY_AIM (off by default; s7f = s7d + it): a carrier holding an enemy rat checks its own tile and the 8 it can
+  step to for a throw whose point-blank tile holds an enemy robot (a baby scores 84, a king 126). It turns to the
+  throw direction, steps there (a strafe if the step isn't ahead, so the turn, move and throw fit in one turn) and
+  throws at once if its action is ready. Otherwise it holds the line for the next turn. WHY code 'T'. Engine
+  check: the 1.5x carry movement multiplier is cast to int, so carriers move at full speed, and an enemy wriggles
+  free after 10 of its turns. Diag ca1 (s7f and s7d vs araid on 4 maps) and screen ra_s7f are queued.
+- Correction to the grab-war table above (grabs.py, s6m's 6 matches vs AlexT101):
+  - By total damage per throw (the thrown rat plus what it hits) we're ahead: 18.7 to their 13.5. Our throws mostly
+    hit walls point-blank (42 to their rat).
+  - Throw kills are close: 156 ours, 186 theirs.
+  - The gap is the king. 36 of their throws hit our king, and none of ours hit theirs. The fights happen beside our
+    king.
