@@ -20,6 +20,8 @@ public final class Nav {
     /** Avoid-mask: bit d set means do not step in DIRS[d] this turn (cat lanes etc). */
     public static int avoid;
     public static int digs;
+    /** Cfg.NAV_SAME_R (a field so tests can set it). */
+    static int sameR = Cfg.NAV_SAME_R;
 
     public static void reset() { bugging = false; bugTurns = 0; }
 
@@ -71,10 +73,14 @@ public final class Nav {
     public static boolean goTo(MapLocation t) throws GameActionException {
         if (t == null) return false;
         if (target == null || !target.equals(t)) {
+            // a target that only moved a little (a roaming king) is the same errand: keep the stall and bug state
+            boolean same = target != null && sameR > 0 && G.cheb(target, t) <= sameR;
             target = t;
-            bugging = false;
-            bestDist = G.me.distanceSquaredTo(t);
-            stall = 0;
+            if (!same) {
+                bugging = false;
+                bestDist = G.me.distanceSquaredTo(t);
+                stall = 0;
+            }
         }
         if (G.me.equals(t)) return false;
         if (!G.rc.isMovementReady()) return false;

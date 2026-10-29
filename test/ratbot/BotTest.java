@@ -406,6 +406,41 @@ public class BotTest {
         check(n == 0, "king block: marks clear when the king is gone (" + n + ")");
     }
 
+    /** Walk toward a target that steps between three tiles every two turns, behind a wall; true if we got beside it. */
+    static boolean roamingTarget(int sameR) throws GameActionException {
+        reset(); W = 30; H = 20; install();
+        for (int y = 3; y <= 17; y++) walls.add(new MapLocation(10, y));
+        me = new MapLocation(12, 10); facing = Direction.WEST;
+        Nav.sameR = sameR;
+        MapLocation[] ts = { new MapLocation(7, 10), new MapLocation(7, 11), new MapLocation(6, 10) };
+        boolean got = false;
+        for (int i = 0; i < 90 && !got; i++) {
+            MapLocation t = ts[(i / 2) % 3];
+            tick(t);
+            got = G.cheb(me, t) <= 1;
+        }
+        Nav.sameR = Cfg.NAV_SAME_R;
+        return got;
+    }
+
+    static void testNavSameTarget() throws GameActionException {
+        reset(); W = 30; H = 20; install();
+        me = new MapLocation(5, 10);
+        Nav.sameR = 2;
+        Nav.target = new MapLocation(15, 10); Nav.stall = 7; Nav.bestDist = 0;
+        Nav.goTo(new MapLocation(15, 12));
+        check(Nav.stall >= 7, "nav same target: a target 2 tiles off keeps the stall (" + Nav.stall + ")");
+        Nav.goTo(new MapLocation(15, 15));
+        check(Nav.stall <= 1, "nav same target: a target 3 tiles off resets it (" + Nav.stall + ")");
+        Nav.sameR = 0;
+        Nav.target = new MapLocation(15, 10); Nav.stall = 7; Nav.bestDist = 0;
+        Nav.goTo(new MapLocation(15, 11));
+        check(Nav.stall <= 1, "nav same target: with NAV_SAME_R 0 any other tile resets it (" + Nav.stall + ")");
+        Nav.sameR = Cfg.NAV_SAME_R;
+        check(roamingTarget(2), "nav same target: reaches a roaming target behind a wall");
+        check(!roamingTarget(0), "nav same target: without it the roaming target behind a wall is never reached");
+    }
+
     static void testCheeseBan() {
         reset(); W = 20; H = 20; install();
         Arrays.fill(Baby.banned, null); Baby.banHead = 0;
@@ -1206,6 +1241,7 @@ public class BotTest {
         testFlowField();
         testFlowJam();
         testCheeseBan();
+        testNavSameTarget();
         testKingBlock();
         testExploreUnseen();
         testKingNeverWritesOutOfRange();
