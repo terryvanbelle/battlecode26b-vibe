@@ -1,3 +1,5 @@
 # s7d (accepted 2026-10-29): its own games per v3 set. Sets 2 and 3 get control blocks (queued at acceptance);
 # their rows are added when they finish. No candidate is scored on a set before its row is here.
 2053-2054,2056-2057,2070-2075,2086-2087,2094-2095  # set 1 (accepting block)
+2115-2128  # set 2 (control block)
+2233-2246  # set 3 (control block)
