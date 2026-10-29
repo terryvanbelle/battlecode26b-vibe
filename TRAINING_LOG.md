@@ -491,3 +491,7 @@
   48-32); our king killed in 14 losses (17). Our grab count rose (3624 -> 3972) and the enemy's barely moved (3128 ->
   3267), so the gain seems to come from seeing, and then grabbing, enemies behind us rather than from dodging their
   grabs. Pass; it joins the next stack. It is inert in peace, since the turn-end code returns during cooperation.
+
+## 2026-10-28 21:00 PDT: s4d replica block 2
+- s4d block 2 (set 2, matches 1310-1313 and 1352-1363) vs s3y: D 9 (+7 -2), net +5, block t 1.67. Blocks 1-2: 94
+  cells, D 18 (+12 -6), net +6, t 1.41, above the block-2 bar (t <= 1 rejects); block 3 on set 3 is going out.
