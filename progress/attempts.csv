@@ -172,3 +172,5 @@ s6l,2026-10-29 05:01,s4d,"s4d + SCOUT_AREA 6 + MINE_MIRROR: scouts explore our h
 s6m,2026-10-29 05:12,s4d,"S4D + HOME_PICK 1: scouts and seekers take a uniform never-seen home-half tile, not the nearest (where_are_you: 5 of 8 home mines never seen)","pending: replica submission 83, v3 set 2; ra_s6m running"
 s6n,2026-10-29 05:12,s4d,S4D + HOME_PICK 2: scouts and seekers take the farthest never-seen home-half sample,dropped: lost the where_are_you diagnostic game vs araid (10257 pickups vs s6m's 12187); not screened
 s6o,2026-10-29 05:12,s4d,S4D + HOME_PICK 1 + SCOUT_AREA 6,pending
+s6p,2026-10-29 05:27,s4d,"S4D + THROW_FAR_PCT 80: count an enemy rat 3-8 tiles down the throw line at 80% (was 40%). Reference games: 54% of abcdezyxwv's throws hit our robots, 21% of ours hit theirs (42 damage each)",pending: ra_s6p
+s6q,2026-10-29 05:27,s4d,"S4D + THROW_MIN 60, THROW_HOLD 8: hold a grabbed rat up to 8 rounds for a robot hit instead of a point-blank wall",pending: ra_s6q

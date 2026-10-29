@@ -1,0 +1,5 @@
+name=s6q
+source=bots/ratbot
+source_sha=f03f2c320a6c
+commit=29f7f8d
+created=2026-10-29 05:27 PDT

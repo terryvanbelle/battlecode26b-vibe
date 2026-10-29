@@ -1,0 +1,5 @@
+name=s6p
+source=bots/ratbot
+source_sha=283718fdb2dc
+commit=29f7f8d
+created=2026-10-29 05:27 PDT
