@@ -56,6 +56,11 @@ public final class Cfg {
     public static final int MICRO_CHEESE = 15;
     /** The king walks onto the nearest home-half mine within dist2 KING_MINE_R2 of its start. */
     public static final boolean KING_MINE = true;
+    /** The king never steps to where its 3x3 plugs a passage (the 16 tiles around it split into two or more open
+     *  arcs, walls, dirt and the map edge closed), unless where it stands is as bad, and steps out of one when it can.
+     *  rose vs spsquared (1796): the king walked toward its home mine into the pocket's only exit at r~60 and sat
+     *  there to r2000 with all 20 babies shut in behind it (75% of our baby turns went to mine trips that never got out). */
+    public static final boolean KING_PLUG = false;
     public static final int KING_MINE_R2 = 400;
     /** Dirt on the king's walk to its mine: the king digs the step's leading edge (5 cheese a tile). */
     public static final boolean KING_DIG = true;

@@ -1529,12 +1529,39 @@ public class BotTest {
         check(Baby.scoutUntil(6) == Math.max(Cfg.SCOUT_UNTIL, 150), "scout area: a small map keeps SCOUT_UNTIL");
     }
 
+    static void testRingArcs() {
+        reset(); W = 30; H = 30; install();
+        for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
+        check(King.ringArcs(new MapLocation(15, 15)) == 1, "ring arcs: open ground is one arc");
+        check(King.ringArcs(new MapLocation(15, 1)) == 1 && King.ringArcs(new MapLocation(1, 1)) == 1, "ring arcs: a map edge or corner closes one run");
+        // rose (1796): a pocket whose only exit is x=11, y 0-1, past walls at (11,2), (10..12,3)
+        int[][] walls = {{11, 2}, {10, 3}, {11, 3}, {12, 3}, {10, 1}, {10, 0}};
+        for (int[] w : walls) Sym.mem[G.idx(w[0], w[1])] |= Sym.WALL;
+        check(King.ringArcs(new MapLocation(13, 1)) == 2, "ring arcs: a king at the pocket's exit plugs it");
+        check(King.ringArcs(new MapLocation(16, 1)) == 1, "ring arcs: the king's start further in does not");
+        // a closed corner between two open ring tiles is cut diagonally
+        reset(); W = 30; H = 30; install();
+        for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
+        Sym.mem[G.idx(13, 13)] |= Sym.WALL; Sym.mem[G.idx(17, 17)] |= Sym.DIRT;
+        check(King.ringArcs(new MapLocation(15, 15)) == 1, "ring arcs: closed corners alone do not split the ring");
+        // a 3-wide corridor along x: walls above and below the king's body
+        for (int x = 0; x < W; x++) { Sym.mem[G.idx(x, 13)] |= Sym.WALL; Sym.mem[G.idx(x, 17)] |= Sym.WALL; }
+        check(King.ringArcs(new MapLocation(15, 15)) == 2, "ring arcs: a king filling a corridor plugs it");
+        // mirror: the same count for the mirrored position of the rose pocket
+        reset(); W = 30; H = 30; install();
+        for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
+        for (int[] w : walls) Sym.mem[G.idx(W - 1 - w[0], H - 1 - w[1])] |= Sym.WALL;
+        check(King.ringArcs(new MapLocation(W - 1 - 13, H - 1 - 1)) == 2 && King.ringArcs(new MapLocation(W - 1 - 16, H - 1 - 1)) == 1,
+              "ring arcs: the rotated pocket counts the same");
+    }
+
     static void testHomeRank() {
         check(Baby.homeRank(0, 3) < Baby.homeRank(0, 9) && Baby.homeRank(1, 3) < Baby.homeRank(1, 9), "home pick 0/1: nearer ranks first");
         check(Baby.homeRank(2, 9) < Baby.homeRank(2, 3), "home pick 2: farther ranks first");
     }
 
     public static void main(String[] args) throws Exception {
+        testRingArcs();
         testHomeRank();
         testScoutUntil();
         testMineTraps();

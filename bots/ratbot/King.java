@@ -363,6 +363,7 @@ public final class King {
         if (!Cfg.KING_MINE) return;
         if (Cfg.FORM_STILL && formSite != null) { mineWhy = 'f'; return; }
         if (enemies.length > 0 || cats.length > 0) { mineWhy = enemies.length > 0 ? 'e' : 'c'; return; }
+        if (Cfg.KING_PLUG && unplug(c)) { mineWhy = 'u'; return; }
         if (homeMine == null) homeMine = pickHomeMine(start);
         // a pile the king can reach is cheese no rat has to carry: walk until it is under our 3x3
         if (nearCheese != null && G.cheb(c, nearCheese) > 1 && step(c, nearCheese)) { mineWhy = 'p'; pickUp(); return; }
@@ -469,6 +470,55 @@ public final class King {
         return Math.max(gx, gy);
     }
 
+    /** The 16 tiles around a king's 3x3 at c, in ring order (corners at 0, 4, 8, 12). */
+    static final int[] RX = {-2, -1, 0, 1, 2, 2, 2, 2, 2, 1, 0, -1, -2, -2, -2, -2},
+                       RY = {-2, -2, -2, -2, -2, -1, 0, 1, 2, 2, 2, 2, 2, 1, 0, -1};
+
+    /** Open arcs of the ring around a king's 3x3 at c (Cfg.KING_PLUG): a wall, dirt or off-map tile closes a ring tile,
+     *  except a closed corner whose two ring neighbours are open (rats cut it diagonally). 1 with none closed, 0 with
+     *  all closed; 2 or more means the body may cut one open area from another. */
+    static int ringArcs(MapLocation c) {
+        int[] mem = Sym.mem;
+        int w = G.W, h = G.H, blk = Sym.WALL | Sym.DIRT, closedMask = 0;
+        for (int i = 0; i < 16; i++) {
+            int x = c.x + RX[i], y = c.y + RY[i];
+            if (x < 0 || y < 0 || x >= w || y >= h || (mem[x + w * y] & blk) != 0) closedMask |= 1 << i;
+        }
+        for (int i = 0; i < 16; i += 4)
+            if ((closedMask >> i & 1) != 0 && (closedMask >> ((i + 1) & 15) & 1) == 0 && (closedMask >> ((i + 15) & 15) & 1) == 0)
+                closedMask &= ~(1 << i);
+        if (closedMask == 0) return 1;
+        int arcs = 0;
+        for (int i = 0; i < 16; i++)
+            if ((closedMask >> i & 1) == 0 && (closedMask >> ((i + 15) & 15) & 1) != 0) arcs++;
+        return arcs;
+    }
+
+    /** Cfg.KING_PLUG: a move from c by d does not plug a passage (or plugs no worse than where the king stands). */
+    static boolean unplugged(MapLocation c, Direction d) {
+        if (!Cfg.KING_PLUG) return true;
+        int a = ringArcs(c.add(d));
+        return a <= 1 || a <= ringArcs(c);
+    }
+
+    /** Cfg.KING_PLUG: standing where the ring splits, step to the neighbour with the fewest arcs (fewer than here). */
+    static boolean unplug(MapLocation c) throws GameActionException {
+        RobotController rc = G.rc;
+        int here = ringArcs(c);
+        if (here <= 1) return false;
+        int best = 2 * here, bi = -1;
+        for (int i = 0; i < 8; i++) {
+            Direction d = G.DIRS[i];
+            if (!rc.canMove(d)) continue;
+            int s = 2 * ringArcs(c.add(d)) + (G.hand(c, d) > 0 ? 1 : 0);
+            if (s < best) { best = s; bi = i; }
+        }
+        if (bi < 0) return false;
+        rc.move(G.DIRS[bi]);
+        G.me = rc.getLocation();
+        return true;
+    }
+
     /** One king step toward t that strictly shortens the distance: straight or 45 degrees off. */
     static boolean closer(MapLocation c, MapLocation t) throws GameActionException {
         RobotController rc = G.rc;
@@ -476,7 +526,7 @@ public final class King {
         int d0 = c.distanceSquaredTo(t);
         Direction[] cand = G.fan(c, to);
         for (Direction d : cand) {
-            if (!rc.canMove(d) || c.add(d).distanceSquaredTo(t) >= d0) continue;
+            if (!rc.canMove(d) || c.add(d).distanceSquaredTo(t) >= d0 || !unplugged(c, d)) continue;
             rc.move(d); G.me = rc.getLocation(); return true;
         }
         return false;
@@ -521,7 +571,7 @@ public final class King {
         Direction[] cand = G.fan5(c, to);
         for (Direction d : cand) {
             if (!rc.canMove(d)) continue;
-            if (G.cheb(c.add(d), t) > G.cheb(c, t)) continue;
+            if (G.cheb(c.add(d), t) > G.cheb(c, t) || !unplugged(c, d)) continue;
             rc.move(d); G.me = rc.getLocation(); return true;
         }
         return false;
