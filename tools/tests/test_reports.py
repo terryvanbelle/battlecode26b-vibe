@@ -92,6 +92,24 @@ try:
               and not [e for e in entries() if e.startswith('.tmp-')], f'dump: concurrent dumps agree {outs} {entries()}')
     dk = GR.dump(KING)
     check(GR.source(d) == d, 'source: a directory is used as it is')
+    # the sweep: every replay's dumps by another dumper once STALE_AGE old; never the current dumper's, nor other names
+    cur = os.path.basename(d).split('-')[1]
+    fake = {n: os.path.join(CACHE, n) for n in ('0' * 20 + '-' + '1' * 12, '0' * 20 + '-' + cur, '2' * 20 + '-' + '1' * 12, 'notes')}
+    for n, p in fake.items():
+        os.mkdir(p)
+        if not n.startswith('2'):
+            os.utime(p, (time.time() - 2 * GR.STALE_AGE,) * 2)
+    GR.dump(FX)
+    check([os.path.isdir(p) for p in fake.values()] == [False, True, True, True] and os.path.isdir(dk),
+          f'dump: sweeps old dumps of other replays by another dumper only {entries()}')
+    for p in fake.values():
+        GR._rm(p)
+    with tempfile.TemporaryDirectory() as t:
+        code, out, err = run(GR, t)
+        check(code == 1 and 'not a ReplayDump tsv dir' in err, f'source: a dir with no games and no replay {code} {err!r}')
+        shutil.copy(FX, os.path.join(t, 'replay.bc26'))
+        code, out, err = run(KR, t)
+        check(GR.source(t) == d and code == 0 and 'game 0 DefaultSmall' in out, f'source: a match dir -> its replay.bc26 {code} {err!r}')
 
     # ---- rows / own / bank / pick
     with tempfile.TemporaryDirectory() as t:
@@ -124,9 +142,46 @@ try:
                   and sum(v for k, v in g[n]['deaths'].items() if k.startswith('KING:')) == s[n]['deathsKing']
                   and not any(k.endswith(':merge') for k in g[n]['deaths']),
                   f'game_report {os.path.basename(dd)} {n}: rat turns = own records, deaths = summary {g[n]["ratTurns"]} {rat} {s[n]}')
-    tl = GR.timeline(d, 40)
+    tl = GR.timeline(d, 40, kings=True)
     own0 = GR.own(GR.rows(os.path.join(d, 'g0.turns.tsv')))
-    check(tl[0][1] == sum(1 for r in own0 if r['round'] == '40' and r['team'] == '1' and r['type'] == 'RAT'), f'timeline own rows {tl[0]}')
+    r40 = [r for r in GR.rows(os.path.join(d, 'g0.rounds.tsv')) if r['round'] == '40'][0]
+    check(tl[0][:3] == (40, int(r40['babiesA']), int(r40['babiesB'])) and tl[0][7:] == (int(r40['numKingsA']), int(r40['numKingsB'])),
+          f'timeline: rebuilt babies and kings {tl[0]}')
+    g, s = GR.analyse(d, 0), GR.summary(d, 0)
+    check(g['A']['bc'] == __import__('field_report').bytecode(d, 0)[1] and all(
+        sum(x[k] for x in g[n]['bc'].values()) == s[n][sk] for n in 'AB' for k, sk in (('over', 'overruns'), ('near90', 'near90'))),
+        f'game_report: bytecode stats = field_report.bytecode, summary overruns/near90 {g["B"]["bc"]}')
+    # a v2+ dump: dead own records count as rat turns but not as king hp or positions (rat 5 standing still beside king
+    # 1's dead record is stationary); no indicator strings -> tags n/a
+    with tempfile.TemporaryDirectory() as t:
+        json.dump({'map': 'M', 'teamA': 'a', 'teamB': 'b', 'dumpVersion': 3}, open(os.path.join(t, 'g0.meta.json'), 'w'))
+        write(t, 'g0.rounds.tsv', 'round cheeseXferA cheeseXferB catDmgA catDmgB kingsA kingsB babiesA babiesB numKingsA '
+              'numKingsB bankA bankB engBabiesA engBabiesB', [(1, 0, 0, 0, 0, 1001, 1001, 3, 0, 1, 1, 100, 100, 3, 0),
+                                                              (2, 0, 0, 0, 0, 0, 1001, 0, 0, 0, 1, 0, 100, 1, 0)])
+        TT = 'round id team type x y hp bc ind seq src dead'
+        turns = [(1, 1, 1, 'KING', 0, 0, 600, 5000, '', 0, 'own', 0), (1, 2, 2, 'KING', 9, 9, 600, 6000, 'OVR=2', 1, 'own', 0),
+                 (1, 5, 1, 'RAT', 1, 1, 100, 7000, '', 2, 'own', 0), (2, 1, 1, 'KING', 0, 0, -8, 100, '', 0, 'own', 1),
+                 (2, 2, 2, 'KING', 9, 9, 600, 6100, 'OVR=3', 1, 'own', 0), (2, 5, 1, 'RAT', 1, 1, 0, 0, '', 2, 'own', 1)]
+        write(t, 'g0.turns.tsv', TT, turns)
+        write(t, 'g0.actions.tsv', 'round id team type action a b c seq src d e f g',
+              [(2, 1, 1, 'KING', 'die', 1, 'damage', 'KING', 0, 'own', 1, 'bite', 9, 2),
+               (2, 5, 1, 'RAT', 'die', 5, 'damage', 'RAT', 2, 'own', 1, 'bite', 9, 2)])
+        g2 = GR.analyse(t, 0)
+        a, b = g2['A'], g2['B']
+        check(a['kingHpMin'] == 600 and a['ratTurns'] == 2 and a['stationaryPct'] == 50.0 and a['deaths'] == {'KING:bite': 1, 'RAT:bite': 1} and a['tags'] is None
+              and b['tags'] == {'OVR': 3} and a['bc']['KING']['turns'] == 2 and a['bc']['RAT']['max'] == 7000,
+              f'game_report: dead rows, tags, bc {a} {b}')
+        check(GR.timeline(t, 1, kings=True) == [(1, 3, 0, 600, 600, 100, 100, 1, 1), (2, 0, 0, None, 600, 0, 100, 0, 1)],
+              f'timeline: babies/kings from rounds, no dead king hp {GR.timeline(t, 1, kings=True)}')
+        code, out, _ = run(GR, t)
+        check(code == 0 and 'tags: n/a (no indicator strings)' in out.splitlines()[1] and "tags: {'OVR': 3}" in out
+              and 'bc RAT: 2 turns, max 7000' in out, f'game_report text {out!r}')
+        write(t, 'g0.turns.tsv', TT.replace(' dead', ''), [r[:-1] for r in turns])
+        try:
+            GR.analyse(t, 0); msg = ''
+        except ValueError as e:
+            msg = str(e)
+        check('no column dead' in msg, f'game_report: a v2+ dump must have the columns it reads {msg!r}')
     # every game of a multi-game dir; --game picks one; a missing game exits 2
     with tempfile.TemporaryDirectory() as t:
         for f in os.listdir(d):
@@ -160,14 +215,14 @@ try:
     check(len(SG.robot_rounds(GR.rows(os.path.join(d, 'g0.turns.tsv'))))
           == sum(1 for r in own0 if r['team'] in ('1', '2')), 'smuggle: one row per own record on the fixture')
 
-    # ---- king_report: hp by source; starvation is exactly 10 a starving turn; fixtures agree with the summary
+    # ---- king_report: hp by source; starvation as the summary books it; fixtures agree with the summary
     for dd in (d, dk):
         s, ks = GR.summary(dd, 0), KR.analyse(dd, 0)
         for n, op in (('A', 'B'), ('B', 'A')):
             mine = [o for o in ks if o['side'] == n]
             enemy = sum(v for o in mine for k, v in o['hpBy'].items() if k in ('bite', 'biteBoost', 'throw', 'trap'))
-            check(all(o['hpBy'].get('other', 0) == 0 for o in mine) and enemy == s[op]['dmgKing']
-                  and sum(o['starveHp'] for o in mine) == s[n]['starveDmg'],
+            check(all(o['hpBy'].get('other', 0) == 0 and sum(o['hpBy'].values()) == o['otherHp'] for o in mine)
+                  and enemy == s[op]['dmgKing'] and sum(o['starveHp'] for o in mine) == s[n]['starveDmg'],
                   f'king_report {os.path.basename(dd)} {n}: hp by enemy sources = summary dmgKing {enemy} {s[op]["dmgKing"]}')
     ko = {o['side']: o for o in KR.analyse(d, 0)}
     check(ko['A']['died'] == 138 and ko['A']['deathCause'] == 'bite' and ko['A']['winner'] == 'B' and ko['B']['hpEnd'] == 600,
@@ -175,29 +230,49 @@ try:
     with tempfile.TemporaryDirectory() as t:
         json.dump({'map': 'M', 'teamA': 'a', 'teamB': 'b'}, open(os.path.join(t, 'g0.meta.json'), 'w'))
         write(t, 'g0.rounds.tsv', 'round kingsA kingsB bankA bankB numKingsA numKingsB',
-              [(1, 101, 101, 10, 10, 1, 1)] + [(rn, 1, 101, 0, 10, 1, 1) for rn in range(2, 6)])
-        tt = 'round id team type x y hp seq src dead'
-        write(t, 'g0.turns.tsv', tt, [(1, 1, 1, 'KING', 0, 0, 600, 0, 'own', 0), (1, 2, 2, 'KING', 9, 9, 600, 1, 'own', 0),
-                                      (2, 7, 2, 'RAT', 1, 1, 100, 0, 'own', 0), (2, 1, 1, 'KING', 0, 0, 570, 1, 'own', 0),
-                                      (2, 2, 2, 'KING', 9, 9, 582, 2, 'own', 0), (3, 1, 1, 'KING', 0, 0, 550, 0, 'own', 0),
-                                      (4, 1, 1, 'KING', 0, 0, 527, 0, 'own', 0), (5, 1, 1, 'KING', 0, 0, 0, 0, 'own', 1)])
-        write(t, 'g0.actions.tsv', 'round id team type action a b c seq src d e f g',
-              [(2, 7, 2, 'RAT', 'bite', 1, 'KING', 1, 0, 'own', 10, 0, '', ''),        # before king 1's record (seq 1)
-               (2, 7, 2, 'RAT', 'throwHit', 1, 10, 'KING', 0, 'own', 1, 12, 7, 2),
-               (2, 2, 2, 'KING', 'trigger', '9,9', 2, '', 2, 'own', 1, 2, 15, 'rat'),   # A's trap on B's king
-               (3, 4, 0, 'CAT', 'scratch', '0,0', '', '', 0, 'own', 1, 1, 20, ''),
-               (4, 7, 2, 'RAT', 'bite', 1, 'KING', 1, 0, 'own', 10, 0, '', ''),
-               (5, 1, 1, 'KING', 'die', 1, 'damage', 'KING', 0, 'own', 1, 'starve', 0, 0)])
-        ko = {o['side']: o for o in KR.analyse(t, 0)}
-        a, b = ko['A'], ko['B']
-        # A r2: 600 -> 570 = bite 10 + throw 10 + starvation 10; r3: scratch 20, no starvation (rest 0) although the
-        # bank is 0; r4: 550 -> 527 = bite 10 + starvation 10 + the bite's cheese boost 3; r5 starved to death from 527
-        # (its dead record is skipped)
-        check(a['hpBy'] == {'bite': 20, 'throw': 10, 'scratch': 20, 'biteBoost': 3} and a['starveHp'] == 20 + 527
-              and a['otherHp'] == 20 + 20 + 13 and a['cause'] == {'bites': 2, 'throwHits': 1, 'scratches': 1}
-              and a['starved'] == [2, 4] and a['died'] == 5 and a['deathCause'] == 'starve', f'king_report attribution {a}')
+              [(rn, 1, 101, bank, 10, 1, 1) for rn, bank in enumerate((10, 0, 0, 0, 5, 0, 0, 0), 1)])
+        K = lambda rn, hp, seq, dead=0: (rn, 1, 1, 'KING', 0, 0, hp, seq, 'own', dead)
+        write(t, 'g0.turns.tsv', 'round id team type x y hp seq src dead',
+              [K(1, 600, 0), (1, 2, 2, 'KING', 9, 9, 600, 1, 'own', 0), (2, 7, 2, 'RAT', 1, 1, 100, 0, 'own', 0), K(2, 570, 1),
+               (2, 2, 2, 'KING', 9, 9, 582, 2, 'own', 0), K(3, 550, 0), K(4, 527, 0), K(5, 507, 1), K(6, 497, 0), K(7, 477, 1),
+               K(8, 0, 0, 1), (1, 9, 2, 'RAT', 5, 5, 100, 3, 'own', 0), (2, 9, 2, 'RAT', 5, 5, 300, 3, 'own', 0),   # 9 forms in r2
+               (3, 9, 2, 'KING', 5, 5, 280, 3, 'own', 0)])
+        A = lambda rn, act, a, b, c, seq, *x: (rn, 7, 2, 'RAT', act, a, b, c, seq, 'own') + tuple(x) + ('',) * (4 - len(x))
+        acts = [A(2, 'bite', 1, 'KING', 1, 0, 10, 0), A(2, 'throwHit', 1, 10, 'KING', 0, 1, 12, 7, 2),   # before the seq-1 record
+                A(2, 'trigger', '9,9', 2, '', 2, 1, 2, 15, 'rat'),       # A's trap on B's king
+                A(3, 'scratch', '0,0', '', '', 0, 1, 1, 20), A(4, 'bite', 1, 'KING', 1, 0, 10, 0),
+                A(5, 'throwHit', 1, 10, 'KING', 1, 1, 14, 3, 1),         # A's own rat 3 threw it
+                A(5, 'transfer', 1, 5, '', 3), A(7, 'bite', 1, 'KING', 1, 0, 10, 0),
+                (7, 1, 1, 'KING', 'kingPickup', 1, 10, '', 1, 'own', '', '', '', ''),   # in the king's own record
+                A(8, 'scratch', '0,0', '', '', 0, 1, 1, 20), A(8, 'die', 1, 'damage', 'KING', 0, 1, 'starve', 0, 0),
+                A(2, 'scratch', '5,5', '', '', 0, 9, 2, 20), A(3, 'scratch', '5,5', '', '', 0, 9, 2, 20)]
+        write(t, 'g0.actions.tsv', 'round id team type action a b c seq src d e f g', acts)
+        ko = {o['king']: o for o in KR.analyse(t, 0)}
+        a, b, f = ko[1], ko[2], ko[9]
+        # A r2: 600 -> 570 = bite + enemy throw + 10 more: the bank may have been 10 and it was bitten, so a bite boost;
+        # r3: scratch 20 (rest 0) although the bank is 0; r4: bite + 13 with banks 0 and 0: starvation 10 + boost 3;
+        # r5: own throw + 10, bank 5 but the 5 came after its record (low bound 0), not bitten: starvation; r6: plain
+        # starvation; r7: bite + 10, bank 0 then and now but it picked up 10 in its own turn, before it ate: a boost; r8: a
+        # scratch to 457, then starved to death from 457 (not its last record's 477; its dead record is skipped)
+        check(a['hpBy'] == {'bite': 30, 'throw': 10, 'ownThrow': 10, 'scratch': 40, 'biteBoost': 23} and a['starveHp'] == 30 + 457
+              and a['otherHp'] == 113 and a['starveHp'] + a['otherHp'] == 600 and a['starved'] == [4, 5, 6]
+              and a['cause'] == {'bites': 3, 'throwHits': 1, 'ownThrowHits': 1, 'scratches': 2}
+              and a['died'] == 8 and a['deathCause'] == 'starve', f'king_report attribution {a}')
         # B: 600 -> 582: trap 15 + 3 hp nobody explains (bank 10: no starvation)
         check(b['hpBy'] == {'trap': 15, 'other': 3} and b['starveHp'] == 0 and b['otherHp'] == 18, f'king_report trap/other {b}')
+        # B's king 9 formed in r2: its first state is its forming (RAT) record, so the r2 scratch before it is not its
+        # and the r3 scratch before its first KING record is
+        check(f['side'] == 'B' and f['hpBy'] == {'scratch': 20} and f['otherHp'] == 20 and f['starveHp'] == 0 and f['hpEnd'] == 280,
+              f'king_report: a formed king from its forming record {f}')
+        # a dumpVersion 2+ dump must have the columns king_report reads; an old one falls back
+        write(t, 'g0.actions.tsv', 'round id team type action a b c seq src d e f', [x[:-1] for x in acts])
+        check(KR.analyse(t, 0)[0]['hpBy']['throw'] == 20, 'king_report: an old dump without g')
+        json.dump({'map': 'M', 'teamA': 'a', 'teamB': 'b', 'dumpVersion': 2}, open(os.path.join(t, 'g0.meta.json'), 'w'))
+        try:
+            KR.analyse(t, 0); msg = ''
+        except ValueError as e:
+            msg = str(e)
+        check('no column g' in msg, f'king_report: need= on a v2 dump {msg!r}')
 
     # ---- econ_report: v2 rows (kind, amounts), partial pickups, the old tile model, the mirror check, the ledger
     with tempfile.TemporaryDirectory() as t:
@@ -244,6 +319,12 @@ try:
             o3 = ER.analyse(t)
         check('without their symmetric partner' in err.getvalue() and [m['mine'] for m in o3['mines']] == [[3, 5], [16, 5]],
               'econ: a lone mine is reported and its partner added')
+        json.dump(dict(meta, mines=[[3, 5], [16, 5]], dumpVersion=2), open(os.path.join(t, 'g0.meta.json'), 'w'))
+        try:
+            ER.analyse(t); msg = ''
+        except ValueError as e:
+            msg = str(e)
+        check('actions.tsv: no column seq, d, e, f, g' in msg, f'econ: need= on a v2 dump {msg!r}')
     # the ledger on a hand-made game, one window a round: r2 A spawns (4 babies: cost 20), B's king starves (no
     # upkeep), a B rat dies dropping 30; r3 A forms a king (-50, its turn eats 2) and takes 15 from a B rat; r4 an A rat
     # picks 20 and builds a rat trap, A's king digs, A has 2 kings

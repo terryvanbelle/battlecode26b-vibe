@@ -2,26 +2,32 @@
 """Our replica (field) games, from their replays: how they end, the points at the end, kings over time, cat damage
 and bytecode overruns, per opponent and per our build.
 
-  field_report.py [--dir DIR] [--ids SPEC] [--last N] [--by opp,build] [--json]
+  field_report.py [--dir DIR] [--ids SPEC] [--last N] [--by opp,build] [--json] [--builds FILE]
       aggregate over the downloaded matches (DIR/<id>/replay.bc26 + match.json; default
-      ~/projects/vibe/bc26b-galaxy-replays); SPEC '420-425,430'; --last N: the N highest match ids
-  field_report.py games [--dir DIR] [--ids SPEC] [--last N] [--csv]
+      ~/projects/vibe/bc26b-galaxy-replays); SPEC '420-425,430'; --last N: the N highest match ids;
+      --builds: games.py replica's file (default build/replica-matches.json)
+  field_report.py games [--dir DIR] [--ids SPEC] [--last N] [--csv] [--builds FILE]
       one record per game (JSON lines, or CSV of the scalar fields): see record()
   field_report.py graded SPEC [--dir DIR] [--write]
       per game: opponent, map, our start side, won, graded score (score.cell / 100: 1/0 for a game decided by kings,
-      else our points share); --write also stores DIR/<id>/graded.json (for contest.py paired)
+      else our points share); --write also stores DIR/<id>/graded.json with what the scores depend on: the replay's
+      sha1, the dumper hash (dumper()) and score.VERSION. graded_cached() (contest.py paired --graded) uses a stored
+      file only while all three and the team match, else grades the match again and rewrites the file
   field_report.py bc REPLAY.bc26|TSVDIR [--game N]
       bytecode use per team and unit type (bytecode())
 
 Replays are dumped once through game_report.dump (cached under build/dumpcache; the first run over many matches takes
 a while). Our team is games.TEAM; our build is the submission that played (games.our_build over
-build/replica-matches.json from games.py replica; '?' for a match not in it). Our start side is the map position we
-played from (contest.py our_view: team A starts at B's position in a reversed game). How a game ends (end):
-kings (a king destroyed or starved: the win the contest counts), cats (points before the round limit: every cat
-died in cooperation), limit (points at the round limit), other (tiebreaks, coin flip). Exceptions are not in
-replays (a runtime exception only shows as a termination), and replica replays have no indicator strings.
+build/replica-matches.json from games.py replica; '?' for a match not in it). It is checked against the replay's
+package for our team (build_fits): a game whose package cannot be that build is flagged (buildOk false, a stderr
+line, BUILD MISMATCH in the report). Our start side is the map position we played from (contest.py our_view: team A
+starts at B's position in a reversed game). How a game ends (end): kings (a king destroyed or starved: the win the
+contest counts; also both teams' last kings dying in the same round, which the engine decides on points), cats
+(points before the round limit: every cat died in cooperation), limit (points at the round limit), other
+(tiebreaks, coin flip). Exceptions are not in replays (a runtime exception only shows as a termination), and replica
+replays have no indicator strings.
 """
-import argparse, collections, csv, json, os, sys
+import argparse, collections, csv, fcntl, json, os, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import game_report as GR  # noqa: E402
@@ -70,6 +76,14 @@ def builds(path=MATCHES, team=games.TEAM):
         if p and m.get('created'):
             out[m['id']] = games.our_build(p, games.when_utc(m['created']), pk, subs)
     return out
+
+
+def build_fits(build, pkg):
+    """Whether the replay's package for our team fits the build attributed by time: a submission's build is its
+    package, or a snapshot submitted from the dev package ratbot (games.codename); None when either is unknown."""
+    if not pkg or build in (None, '?'):
+        return None
+    return pkg in (build, 'ratbot')
 
 
 def limits(meta):
@@ -121,7 +135,12 @@ def record(d, g, mg, team=games.TEAM, build='?', match=None):
     SU, ST = s.get(us) or {}, s.get(th) or {}
     side = 'A' if (mg.get('team_a') == team) != bool(mg.get('reversed')) else 'B'
     wt, rounds = s.get('winType'), s.get('rounds')
-    end = END.get(wt) or ('other' if wt != 'MORE_POINTS' else 'limit' if rounds >= (s.get('maxRounds') or 2000) else 'cats')
+    nk = [s['numKings' + t] if s.get('numKings' + t) is not None else score.kings(s.get('kings' + t)) for t in 'AB']
+    if wt == 'MORE_POINTS':     # GameWorld.checkWin: both teams' last kings dead in one round go to points
+        end = 'kings' if nk == [0, 0] else 'limit' if rounds >= (s.get('maxRounds') or 2000) else 'cats'
+    else:
+        end = END.get(wt) or 'other'
+    pkg = s.get('package' + us)
     pts = score.points(s)
     c = score.cell(s)
     bs, bsby = s.get('backstabRound', -1), s.get('backstabBy') or 0
@@ -133,7 +152,8 @@ def record(d, g, mg, team=games.TEAM, build='?', match=None):
         if rn in AT:
             rats[rn] = [int(r['babies' + us]), int(r['babies' + th])]
     kat = {rn: [k, ks[th][i][1]] for i, (rn, k) in enumerate(ks[us]) if rn in AT}
-    rec = {'match': match, 'game': g, 'map': s.get('map'), 'opp': s['team' + th], 'build': build, 'us': us, 'side': side,
+    rec = {'match': match, 'game': g, 'map': s.get('map'), 'opp': s['team' + th], 'build': build, 'pkg': pkg,
+           'buildOk': build_fits(build, pkg), 'us': us, 'side': side,
            'won': s.get('winner') == us, 'type': wt, 'end': end, 'rounds': rounds, 'cell': c[0 if us == 'A' else 1],
            'ptsUs': pts[0 if us == 'A' else 1], 'ptsThem': pts[1 if us == 'A' else 0],
            'bs': bs, 'bsBy': '' if bs is None or bs < 0 else 'us' if bsby == ' AB'.index(us) else 'them',
@@ -157,20 +177,21 @@ def record(d, g, mg, team=games.TEAM, build='?', match=None):
     return rec
 
 
-def match_records(mid, root=REPLAYS, team=games.TEAM, build='?'):
-    """The records of every game of ours in a downloaded match (raises GR.DumpError / OSError)."""
+def match_records(mid, root=REPLAYS, team=games.TEAM, build='?', d=None):
+    """The records of every game of ours in a downloaded match (raises GR.DumpError / OSError); d: its dump, when
+    the caller has it."""
     with open(os.path.join(root, str(mid), 'match.json')) as f:
         mj = json.load(f)
-    d = GR.dump(os.path.join(root, str(mid), 'replay.bc26'))
+    d = d or GR.dump(os.path.join(root, str(mid), 'replay.bc26'))
     gs = GR.games(d)
     if len(gs) != len(mj['games']):
         raise GR.DumpError(f'match {mid}: {len(gs)} games in the replay, {len(mj["games"])} in match.json')
     return [r for r in (record(d, g, mj['games'][g], team, build, mid) for g in gs) if r]
 
 
-def collect(mids, root=REPLAYS, team=games.TEAM, quiet=False):
-    """(records, {match id: error}) over the matches, in order."""
-    bl = builds(team=team)
+def collect(mids, root=REPLAYS, team=games.TEAM, quiet=False, builds_from=MATCHES):
+    """(records, {match id: error}) over the matches, in order; builds_from: games.py replica's file."""
+    bl = builds(builds_from, team)
     recs, errs = [], {}
     for n, mid in enumerate(mids, 1):
         if not quiet:
@@ -236,7 +257,7 @@ def aggregate(recs):
         'maxBcKing': max((r['maxBcKingUs'] or 0 for r in recs), default=0),
         'maxBcRat': max((r['maxBcRatUs'] or 0 for r in recs), default=0),
         'meanBcRatUs': mean(r['meanBcRatUs'] for r in recs), 'meanBcRatThem': mean(r['meanBcRatThem'] for r in recs),
-        'terminated': sum(r['termUs'] or 0 for r in recs),
+        'terminated': sum(r['termUs'] or 0 for r in recs), 'buildMismatch': sum(r['buildOk'] is False for r in recs),
     }
 
 
@@ -259,7 +280,8 @@ def text(name, a):
     at = '  '.join(f"r{rn} {f0(x['kUs'], '.1f')}-{f0(x['kThem'], '.1f')}/{f0(x['ratsUs'])}-{f0(x['ratsThem'])} ({x['n']})"
                    for rn, x in a['at'].items())
     return [f"{str(name)[:40]:40} {a['games']:3d} games  W-L {a['wins']}-{a['games'] - a['wins']}  cell {f0(a['cell'], '.1f')}"
-            f"  start side {sides}",
+            f"  start side {sides}" + (f"  BUILD MISMATCH in {a['buildMismatch']} games (replay package)"
+                                       if a['buildMismatch'] else ''),
             f"  ends     {ends}  | backstab {b['games']} (by us {b['byUs']}, mean r{f0(b['meanRound'])})",
             f"  at end   pts {f0(a['ptsUs'])}-{f0(a['ptsThem'])}  cat share {f0(a['catShare'])}% (traps {f0(a['catTrapPct'])}% of ours)"
             f"  xfer share {f0(a['xferShare'])}%  kings {f0(a['kUs'], '.2f')}-{f0(a['kThem'], '.2f')}"
@@ -282,20 +304,61 @@ def report(recs, by=('opp', 'build')):
     return out
 
 
-def graded(mid, root=REPLAYS, team=games.TEAM):
+def graded(mid, root=REPLAYS, team=games.TEAM, d=None):
     """Per game of a downloaded match: {game, map, opp, side, won, type, rounds, cell (ours, 0-100), score (cell/100)}."""
     return [{'game': r['game'], 'map': r['map'], 'opp': r['opp'], 'side': r['side'], 'won': r['won'], 'type': r['type'],
              'rounds': r['rounds'], 'cell': r['cell'], 'score': r['cell'] / 100.0}
-            for r in match_records(mid, root, team)]
+            for r in match_records(mid, root, team, d=d)]
 
 
-def write_graded(mid, root=REPLAYS, team=games.TEAM):
-    gs = graded(mid, root, team)
+def dumper():
+    """The current ReplayDump build's hash as the dump cache keys it (12 hex), after tools/build-tools.sh (as
+    game_report.dump); GR.DumpError when the build fails."""
+    b = subprocess.run([os.path.join(REPO, 'tools', 'build-tools.sh')], capture_output=True, text=True)
+    if b.returncode != 0:
+        raise GR.DumpError(f'tools/build-tools.sh failed:\n{b.stderr.strip()}')
+    with open(os.path.join(REPO, 'build', '.tools.lock'), 'a') as lk:
+        fcntl.flock(lk, fcntl.LOCK_SH)
+        return GR.dumper_hash(os.path.realpath(GR.TOOLS))[:12]
+
+
+def write_graded(mid, root=REPLAYS, team=games.TEAM, strict=True):
+    """graded(), stored in DIR/<id>/graded.json with the replay's sha1, the dumper hash of its dump and score.VERSION;
+    strict=False: a file that cannot be written is skipped."""
+    replay = os.path.join(root, str(mid), 'replay.bc26')
+    d = GR.dump(replay)
+    gs = graded(mid, root, team, d)
     p = os.path.join(root, str(mid), 'graded.json')
-    with open(p + '.tmp', 'w') as f:
-        json.dump({'match': mid, 'team': team, 'replay_sha1': GR.file_sha(os.path.join(root, str(mid), 'replay.bc26')),
-                   'games': gs}, f, indent=1)
-    os.replace(p + '.tmp', p)
+    try:
+        with open(p + '.tmp', 'w') as f:
+            json.dump({'match': mid, 'team': team, 'replay_sha1': GR.file_sha(replay), 'dumper': os.path.basename(d)[-12:],
+                       'score_version': score.VERSION, 'games': gs}, f, indent=1)
+        os.replace(p + '.tmp', p)
+    except OSError:
+        if strict:
+            raise
+    return gs
+
+
+def stored_graded(mid, root=REPLAYS, team=games.TEAM, dumper_hash=None):
+    """The games of DIR/<id>/graded.json while it is current (the same team, replay sha1, dumper hash (default
+    dumper()) and score.VERSION), else None."""
+    try:
+        with open(os.path.join(root, str(mid), 'graded.json')) as f:
+            j = json.load(f)
+    except (OSError, ValueError):
+        return None
+    now = (team, GR.file_sha(os.path.join(root, str(mid), 'replay.bc26')), dumper_hash or dumper(), score.VERSION)
+    return j.get('games') if (j.get('team'), j.get('replay_sha1'), j.get('dumper'), j.get('score_version')) == now else None
+
+
+def graded_cached(mid, root=REPLAYS, team=games.TEAM, dumper_hash=None):
+    """stored_graded(), else write_graded() (the scores only, when DIR/<id> is not writable), said on stderr (a
+    replay not dumped yet takes a while)."""
+    gs = stored_graded(mid, root, team, dumper_hash)
+    if gs is None:
+        print(f'field_report: grading match {mid} (no current graded.json)', file=sys.stderr, flush=True)
+        gs = write_graded(mid, root, team, strict=False)
     return gs
 
 
@@ -345,12 +408,13 @@ def main(argv=None):
             print(f'not downloaded: {missing}', file=sys.stderr)
         return 1 if bad or missing else 0
     ap.add_argument('--ids', default=None); ap.add_argument('--last', type=int, default=None)
+    ap.add_argument('--builds', default=MATCHES)
     if cmd == 'games':
         ap.add_argument('--csv', action='store_true')
     else:
         ap.add_argument('--by', default='opp,build'); ap.add_argument('--json', action='store_true')
     o = ap.parse_args(argv[1:] if cmd == 'games' else argv)
-    recs, errs = collect(matches(o.dir, o.ids, o.last), o.dir, o.team)
+    recs, errs = collect(matches(o.dir, o.ids, o.last), o.dir, o.team, builds_from=o.builds)
     if cmd == 'games':
         if o.csv:
             cols = [k for k, v in recs[0].items() if not isinstance(v, dict)] if recs else []
@@ -365,6 +429,10 @@ def main(argv=None):
                                                       for k in by}}, default=str))
     else:
         print('\n'.join(report(recs, [k for k in o.by.split(',') if k])))
+    for r in recs:
+        if r['buildOk'] is False:
+            print(f"match {r['match']} game {r['game']}: our build by time is {r['build']}, but the replay's package is "
+                  f"{r['pkg']}", file=sys.stderr)
     for mid, e in errs.items():
         print(f'match {mid} skipped: {e}', file=sys.stderr)
     return 1 if errs else 0

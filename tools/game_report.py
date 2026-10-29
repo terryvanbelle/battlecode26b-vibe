@@ -4,17 +4,23 @@
   game_report.py REPLAY.bc26|TSVDIR [--game N] [--json] [--timeline N]
 
 Per game: map, rounds, winner and win type, backstab, points (score.points on the game's summary). Per team: global
-cheese curve, starvation rounds, king HP floor, rat-turn stall statistics (same tile for N+ own turns while not within
-dist2 18 of an own king), deaths by victim type and cause, exceptions/overruns from the bot's own indicator tags,
-delivery and cat damage totals. --game N (0-based, match.json game = N+1) keeps one game; --json prints one JSON line
-per game.
+cheese curve, starvation rounds, king HP floor (live king records: a king's dead=1 record is skipped), rat turns
+(own records, dead ones included, as the summary's turnsRat) and their stall statistics (same tile for N+ own turns
+while not within dist2 18 of an own king), deaths by victim type and cause, the bot's own indicator tags
+(exceptions/overruns; n/a when the team has no indicator strings, as in every replica replay), bytecode use per unit
+type (field_report.bytecode: max/mean/p99, turns at the limit and at 90% of it), delivery and cat damage totals.
+--timeline N: every N rounds, per team baby rats and kings alive at the end of the round (babiesA/B, numKingsA/B;
+an old dump: rats with a live own record that round), king HP, global cheese. --game N (0-based, match.json game =
+N+1) keeps one game; --json prints one JSON line per game. SRC may also be a directory holding a replay.bc26 (a
+replica match dir).
 
 Library: dump(replay) -> tsv directory, cached under build/dumpcache/<replay sha1>-<dumper hash>/ (BC_DUMPCACHE
 overrides the root). The key is the replay's content and the ReplayDump classes (built first with
 tools/build-tools.sh), so a rebuilt dumper never serves an old dump. A dump is written to a temp dir and renamed into
 place, so a directory that exists is complete; callers must never delete it (it is made read-only, so a stray
-rmtree(ignore_errors=True) removes nothing). Dumps of the same replay by an older dumper, and temp dirs of crashed
-dumps, are removed an hour after they were made. rows(), own(), games(), summary(), bank() read the files.
+rmtree(ignore_errors=True) removes nothing). Every dump() removes the cache's dumps by any other dumper (of every
+replay) and temp dirs of crashed dumps once they are an hour old; the current dumper's dumps are kept. rows(), own(),
+games(), summary(), bank() read the files; need() gives the columns a reader requires of a dumpVersion 2+ dump.
 """
 import argparse, collections, fcntl, glob, hashlib, json, os, re, shutil, subprocess, sys, tempfile, time
 
@@ -26,7 +32,7 @@ JDK = os.environ.get('BC_JDK', os.path.expanduser('~/opt/jdk21'))
 ENGINE = os.path.join(REPO, 'engine', 'battlecode26-java-1.2.6.jar')
 TOOLS = os.path.join(REPO, 'build', 'tools')
 STALL = 8
-STALE_AGE = 3600        # seconds before an older dumper's dump (or a crashed dump's temp dir) is removed
+STALE_AGE = 3600        # seconds before another dumper's dump (or a crashed dump's temp dir) is removed
 
 
 class DumpError(RuntimeError):
@@ -68,11 +74,15 @@ def _rm(p):
     shutil.rmtree(p, ignore_errors=True)
 
 
-def _sweep(root, keep, sha):
-    now = time.time()
-    for p in glob.glob(os.path.join(root, '.tmp-*')) + glob.glob(os.path.join(root, sha[:20] + '-*')):
+def _sweep(root, keep):
+    """Remove the temp dirs and the dumps by another dumper than `keep`'s (any replay) older than STALE_AGE."""
+    now, cur = time.time(), keep.rsplit('-', 1)[1]
+    for e in os.listdir(root):
+        if not (e.startswith('.tmp-') or re.fullmatch(r'[0-9a-f]{20}-[0-9a-f]{12}', e) and e[21:] != cur):
+            continue
+        p = os.path.join(root, e)
         try:
-            if p != keep and now - os.stat(p).st_mtime > STALE_AGE:
+            if now - os.stat(p).st_mtime > STALE_AGE:
                 _rm(p)
         except OSError:
             pass
@@ -111,18 +121,39 @@ def dump(replay):
             finally:
                 if os.path.exists(tmp):
                     _rm(tmp)
-    _sweep(root, d, sha)
+    _sweep(root, d)
     return d
 
 
 def source(src):
-    """A tsv directory for a command-line argument: the directory itself, or the replay's dump (exit 1 on failure)."""
+    """A tsv directory for a command-line argument: a dump directory itself, else the dump of the replay (or of the
+    replay.bc26 in a directory with no games, such as a replica match dir). Exit 1 on failure."""
+    prog = os.path.basename(sys.argv[0])
     if os.path.isdir(src):
-        return src
+        if games(src):
+            return src
+        if not os.path.isfile(os.path.join(src, 'replay.bc26')):
+            sys.exit(f'{prog}: {src} is not a ReplayDump tsv dir (no g<N>.meta.json) and holds no replay.bc26')
+        src = os.path.join(src, 'replay.bc26')
     try:
         return dump(src)
     except (DumpError, OSError) as e:
-        sys.exit(f'{os.path.basename(sys.argv[0])}: {e}')
+        sys.exit(f'{prog}: {e}')
+
+
+def version(d, game):
+    """The game's dumpVersion (meta.json; 1 for a dump older than the field or a dir without meta)."""
+    try:
+        with open(os.path.join(d, f'g{game}.meta.json')) as f:
+            return json.load(f).get('dumpVersion') or 1
+    except OSError:
+        return 1
+
+
+def need(d, game, cols):
+    """The columns `cols` (space-separated) for rows(need=) when the game's dump is dumpVersion 2 or later, else ()
+    (an old dump has none of the v2 columns; the readers fall back)."""
+    return tuple(cols.split()) if version(d, game) >= 2 else ()
 
 
 def rows(path, need=()):
@@ -192,6 +223,7 @@ def result(s):
 
 
 def analyse(d, game=0):
+    import field_report             # here: field_report imports this module
     pre = os.path.join(d, f'g{game}')
     meta = json.load(open(pre + '.meta.json'))
     s = summary(d, game)
@@ -202,7 +234,7 @@ def analyse(d, game=0):
     curve = {1: {}, 2: {}}
     starving = {1: 0, 2: 0}
     last = None
-    for r in rows(pre + '.rounds.tsv'):
+    for r in rows(pre + '.rounds.tsv', need(d, game, 'round bankA bankB numKingsA numKingsB cheeseXferA cheeseXferB catDmgA catDmgB')):
         rn = int(r['round'])
         for t, name in ((1, 'A'), (2, 'B')):
             cheese, kings = bank(r, name)
@@ -220,14 +252,14 @@ def analyse(d, game=0):
     tags = {1: collections.Counter(), 2: collections.Counter()}
     last_ind = {}                                   # id -> (team, last non-empty indicator string)
     team_of = {}
-    turns = list(rows(pre + '.turns.tsv'))
+    turns = list(rows(pre + '.turns.tsv', need(d, game, 'round id team type x y hp ind src dead')))
     for r in turns:
         team_of[r['id']] = int(r['team'])
         if r.get('ind'):
             last_ind[r['id']] = (int(r['team']), r['ind'])
     turns = own(turns)
     for r in turns:
-        if r['type'] == 'KING':
+        if r['type'] == 'KING' and r.get('dead') != '1':
             kings_at[int(r['round'])].append((int(r['team']), int(r['x']), int(r['y'])))
     for r in turns:
         t = int(r['team'])
@@ -235,7 +267,8 @@ def analyse(d, game=0):
             continue
         rid = int(r['id'])
         if r['type'] == 'KING':
-            king_hp[t] = min(king_hp[t], int(r['hp']))
+            if r.get('dead') != '1':                # the record of the turn it died in (hp <= 0)
+                king_hp[t] = min(king_hp[t], int(r['hp']))
         elif r['type'] == 'RAT':
             rat_turns[t] += 1
             x, y, rn = int(r['x']), int(r['y']), int(r['round'])
@@ -258,7 +291,7 @@ def analyse(d, game=0):
             if m:
                 tags[t][tag] += int(m.group(1))
     deaths = {1: collections.Counter(), 2: collections.Counter()}
-    for r in rows(pre + '.actions.tsv'):
+    for r in rows(pre + '.actions.tsv', need(d, game, 'round action a b c d e')):
         if r['action'] != 'die':
             continue
         if r.get('e'):                              # dumpVersion 2: d victim team, e cause
@@ -266,6 +299,7 @@ def analyse(d, game=0):
                 deaths[int(r['d'])][r['c'] + ':' + r['e']] += 1
         elif team_of.get(r['a']) in (1, 2):         # old dump: the victim's team from its turns
             deaths[team_of[r['a']]][r['c'] + ':' + r['b']] += 1
+    bc = field_report.bytecode(d, game)
     for t, name in ((1, 'A'), (2, 'B')):
         c = curve[t]
         out[name] = {
@@ -276,24 +310,32 @@ def analyse(d, game=0):
             'ratTurns': rat_turns[t],
             'stationaryPct': round(100.0 * stationary[t] / rat_turns[t], 1) if rat_turns[t] else 0.0,
             'stallRuns': len(stall_runs[t]), 'stallMax': max(stall_runs[t]) if stall_runs[t] else 0,
-            'deaths': dict(deaths[t]), 'tags': dict(tags[t]),
+            'deaths': dict(deaths[t]), 'bc': bc[t],
+            'tags': dict(tags[t]) if any(lt == t for lt, _ in last_ind.values()) else None,   # None: no indicator strings
             'xfer': int(last[f'cheeseXfer{name}']) if last else 0, 'catDmg': int(last[f'catDmg{name}']) if last else 0,
         }
     out['rounds'] = rounds
     return out
 
 
-def timeline(d, every, game=0):
-    """Rows every N rounds: per team rats alive (took a turn that round), king HP, global cheese."""
+def timeline(d, every, game=0, kings=False):
+    """Rows every N rounds: (round, baby rats A, B, king HP A, B (lowest live own record), global cheese A, B), and
+    with kings=True the kings A, B appended. Baby rats and kings alive at the end of the round from rounds.tsv
+    (babiesA/B as rebuilt by a dumpVersion 2+ dump; an old dump's babies drift, so its rats are those with a live own
+    record that round; old kings are decoded by bank())."""
     pre = os.path.join(d, f'g{game}')
-    cheese = {}
-    for r in rows(pre + '.rounds.tsv'):
-        cheese[int(r['round'])] = (bank(r, 'A')[0], bank(r, 'B')[0])
+    cheese, nk, babies = {}, {}, {}
+    for r in rows(pre + '.rounds.tsv', need(d, game, 'round babiesA babiesB engBabiesA bankA bankB numKingsA numKingsB')):
+        rn = int(r['round'])
+        (ca, ka), (cb, kb) = bank(r, 'A'), bank(r, 'B')
+        cheese[rn], nk[rn] = (ca, cb), (ka, kb)
+        if r.get('engBabiesA', '') != '':           # babiesA/B are the rebuilt count
+            babies[rn] = (int(r['babiesA']), int(r['babiesB']))
     rats = collections.defaultdict(lambda: [0, 0])
     khp = collections.defaultdict(lambda: [None, None])
-    for r in own(rows(pre + '.turns.tsv')):
+    for r in own(rows(pre + '.turns.tsv', need(d, game, 'round team type hp src dead'))):
         t = int(r['team'])
-        if t not in (1, 2):
+        if t not in (1, 2) or r.get('dead') == '1':
             continue
         rn = int(r['round'])
         if r['type'] == 'RAT':
@@ -304,7 +346,8 @@ def timeline(d, every, game=0):
     out = []
     for rn in sorted(cheese):
         if rn % every == 0 or rn == max(cheese):
-            out.append((rn, rats[rn][0], rats[rn][1], khp[rn][0], khp[rn][1], cheese[rn][0], cheese[rn][1]))
+            ra, rb = babies.get(rn, rats[rn])
+            out.append((rn, ra, rb, khp[rn][0], khp[rn][1], cheese[rn][0], cheese[rn][1]) + (nk[rn] if kings else ()))
     return out
 
 
@@ -325,9 +368,9 @@ def main(argv=None):
     for g in pick(d, o.game):
         if o.timeline:
             print(header(d, g))
-            print('round  ratsA ratsB  kingHpA kingHpB  cheeseA cheeseB')
-            for t in timeline(d, o.timeline, g):
-                print('%5d  %5d %5d  %7s %7s  %7d %7d' % t)
+            print('round  ratsA ratsB  kingsA kingsB  kingHpA kingHpB  cheeseA cheeseB')
+            for t in timeline(d, o.timeline, g, kings=True):
+                print('%5d  %5d %5d  %6d %6d  %7s %7s  %7d %7d' % (t[:3] + t[7:] + t[3:7]))
             continue
         rep = analyse(d, g)
         if o.json:
@@ -335,9 +378,13 @@ def main(argv=None):
         print(header(d, g))
         for name in ('A', 'B'):
             s = rep[name]
+            tags = 'n/a (no indicator strings)' if s['tags'] is None else s['tags']
             print(f"  {name}: cheese {s['cheese@']} min {s['cheeseMin']} starving {s['starvingRounds']} kingHpMin {s['kingHpMin']}"
                   f" | rat-turns {s['ratTurns']} stationary {s['stationaryPct']}% stalls>={STALL}: {s['stallRuns']} (max {s['stallMax']})"
-                  f" | xfer {s['xfer']} cat {s['catDmg']} deaths {s['deaths']} tags {s['tags']}")
+                  f" | xfer {s['xfer']} cat {s['catDmg']} deaths {s['deaths']} tags: {tags}")
+            for ty, x in s['bc'].items():
+                print(f"     bc {ty}: {x['turns']} turns, max {x['max']} mean {x['mean']} p99 {x['p99']};"
+                      f" at the limit ({x['limit']}) {x['over']}, at 90% {x['near90']}")
 
 
 if __name__ == '__main__':

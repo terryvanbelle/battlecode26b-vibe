@@ -14,7 +14,8 @@ import java.util.zip.GZIPInputStream;
  *
  * Usage (build with tools/build-tools.sh; write $HOME, not ~, inside -cp):
  *   java -cp "$HOME/projects/vibe/2026b/build/tools:$HOME/projects/vibe/2026b/engine/battlecode26-java-1.2.6.jar" \
- *        bc26tools.ReplayDump summary FILE...     one JSON line per game on stdout (volume runs; fast)
+ *        bc26tools.ReplayDump summary FILE...     one JSON line per game on stdout (volume runs; fast); a FILE that
+ *                                                 does not parse gets {"file", "error"} instead, and the exit is 1
  *        bc26tools.ReplayDump tsv FILE OUTDIR     the files below, plus the same JSON lines on stdout
  *
  * Conventions. Teams: 1 = A, 2 = B, 0 = neutral (cats). Types: RAT (baby), KING, CAT, NONE. Locations in rows are
@@ -36,7 +37,8 @@ import java.util.zip.GZIPInputStream;
  * Mine spawns run in the round's first record; actions after a round's last record (e.g. the cheese drop of a
  * robot terminated after its turn) land in the next record, possibly next round.
  *
- * OUTDIR/g<i>.meta.json (written at the match header): file, game, map, width, height, symmetry, teamA, teamB,
+ * OUTDIR/g<i>.meta.json (written at the match header): file (the replay's absolute path, so a report can find a
+ *   match.json beside it), game, map, width, height, symmetry, teamA, teamB,
  *   seed, walls ("0/1" per packed loc), dirt, mines [[x,y]] (every mine; pairs fire together), bodies [{id, team,
  *   type, x, y, dir, chirality}] (dir is derived by the engine: maps store CENTER, robots face the centre),
  *   cheese [[x,y,amount]] (initial tile cheese, sparse; zero on every map seen), catWaypoints {catId: [[x,y],...]},
@@ -106,7 +108,9 @@ import java.util.zip.GZIPInputStream;
  *               round's first record, p within 4 of a mine then sym(p); drop = a dying robot's cheese (just
  *               before its die row; a terminated robot's has none); remainder = what a partial pickup left
  *   ratTrap, catTrap  a x,y, b team
- *   trigger     a trap x,y, b triggering robot's team (0 = cat, so a cat trap), d trap owner team, e victim,
+ *   trigger     a trap x,y, b triggering robot's team (0 = cat, so a cat trap), d trap owner team, e victim (a
+ *               robot of team b, or a cat, with a tile within dist2 2 of the trap: the record's landing or dropped
+ *               rat until its carrier's nap or die row, else the record's robot, else whoever is there; 0 if none),
  *               f damage (50 rat trap, 100 cat trap, capped at hp; 0 on a victim an earlier trap killed: the
  *               engine keeps firing the tile's traps), g rat|cat
  *   removeTrap  a x,y, b team (removes only that team's trap)
@@ -119,7 +123,7 @@ import java.util.zip.GZIPInputStream;
  * OUTDIR/g<i>.markers.tsv (only when the footer has timeline markers; none seen in any replay):
  *   round (the client shows it at round+1), team (1/2), label, color
  *
- * Summary JSON (one line per game): file, game, map, w, h, teamA, teamB, winner, winType, rounds, backstabRound,
+ * Summary JSON (one line per game): file (absolute), game, map, w, h, teamA, teamB, winner, winType, rounds, backstabRound,
  *   backstabBy (team whose action started the backstab: the trap OWNER for a rat-trap backstab), cheeseXferA/B,
  *   catDmgA/B, kingsA/B (raw, as rounds.tsv), babiesA/B (rebuilt alive baby rats), A, B (team stats below),
  *   then backstabCause (bite|grab|trap|?; '' when no backstab), packageA/B, maxRounds, numKingsA/B, bankA/B, engBabiesA/B,
@@ -139,20 +143,31 @@ import java.util.zip.GZIPInputStream;
  *   (min(100, cat hp) per trap hit), catDmgBite (catDmg - catDmgTrap: throws never hurt cats), grabsEnemy,
  *   grabsAlly, drops (voluntary), forcedDrops (this team's carriers lost their rat), releases, pickupAmt,
  *   kingPickups, kingPickupAmt, turnsRat, turnsKing, starveDmg (kings' hp lost to starvation: 10 per starving
- *   turn), friendlyDmg (hp lost to this team's own throws: an enemy rat thrown into an own robot, an own rat's
+ *   turn, and a starved king's last hp; a turn starves only if the bank was below 2 then, as far as the rounds'
+ *   banks tell, see record()),
+ *   friendlyDmg (hp lost to this team's own throws: an enemy rat thrown into an own robot, an own rat's
  *   landing).
  * hp accounting: a team's hp lost (rats and kings) = the other team's dmgRat + dmgKing + this team's catDmgTaken +
- *   starveDmg + friendlyDmg (exact on every replay checked, except hp merged into a king).
+ *   starveDmg + friendlyDmg (exact on every replay checked, except hp merged into a king; damage after a robot's
+ *   last record in the game's last round is credited but in no record).
  * Changed in dumpVersion 2: babiesA/B rebuilt; dmgRat/dmgCat redefined (dmgRat was throw damage taken, dmgCat was
  *   always 0); naps = grabs only (was every RatNap); transfers/transferAmt exclude king pickups; deathsRat excludes
  *   merged rats; feeds credited (was always 0); ratTrapHits/catTrapHits per (tile, team); backstabBy fixed for trap
  *   backstabs; bc stats from own records only (duplicate records inflated them); 'feed' rows renamed catSleep;
  *   RatNap rows split into nap/drop/release/swap/land; self CheeseTransfer rows renamed kingPickup.
+ * Changed in dumpVersion 3: starveDmg books a king's unexplained 10 hp only when its team's bank can have been below 2
+ *   at its end of turn (it was booked whatever the bank); otherwise the loss is a bite's cheese boost and goes to the
+ *   biter's dmgKing and dmgBy.bite. The trigger victim must reach the trap, and a dropped rat is it only before its
+ *   carrier's nap or die row (it was the record's landing or dropped rat wherever and whenever, else the record's
+ *   robot), so the trap's damage (dmgBy.trap, capped at the victim's hp) is booked on the robot that lost the hp.
+ *   file (meta, summary, game.json) is absolute. Summary mode exits 1 on a bad FILE.
  *
  * KNOWN GAPS (not in the replay): bite damage beyond the base 10 (inferred from the victim's next record, so a
- * bite boost and a king's starvation in the same turn are split by assuming the starvation is 10); which tiles a rat
- * passed; a cat's pounce vs move except by inference (no CatPounce or RatCollision is ever written: their branches
- * below are dead); non-fatal king starvation (no action: inferred from hp); the robot hit by a thrown rat when it
+ * bite boost and a king's starvation in the same turn are split by assuming the starvation is 10); the bank at a
+ * king's end of turn (bounded from the rounds' banks and the cheese received, not counting the cheese a formation
+ * merges into the bank; a bitten king whose bank may or may not have been below 2 is taken as not starving: none
+ * seen in 205 replica replays); which tiles a rat passed; a cat's pounce vs move except by inference (no CatPounce
+ * or RatCollision is ever written: their branches below are dead); non-fatal king starvation (no action: inferred from hp); the robot hit by a thrown rat when it
  * survives (no action: found by position, so it can be missed); runtime exceptions (only terminations are visible);
  * per-tile cheese is a model (seeded from GameMap.cheese) and cheese moved by kings' formations is not on tiles;
  * where a dropped rat landed (until its next record); robot stdout; TeamInfo.cheeseCollected; GameplayConstants
@@ -163,26 +178,34 @@ public class ReplayDump {
     static final String[] TYPE = {"NONE", "RAT", "KING", "CAT"};
     static final String[] WIN = {"RESIGNATION", "RATKING_DESTROYED", "BACKSTAB_RATKING_DESTROYED", "MORE_POINTS",
             "MORE_ROBOTS", "MORE_CHEESE", "TIE", "COIN_FLIP"};
-    static final int DUMP_VERSION = 2, RAT = 1, KING = 2, CAT = 3;
-    // engine 1.2.6 constants: GameConstants RAT_BITE_DAMAGE, CAT_SCRATCH_DAMAGE, CHEESE_SPAWN_AMOUNT; TrapType damage
-    static final int BITE = 10, SCRATCH = 20, MINE = 20, MINE_R = 4, RAT_TRAP_DMG = 50, CAT_TRAP_DMG = 100;
+    static final int DUMP_VERSION = 3, RAT = 1, KING = 2, CAT = 3;
+    // engine 1.2.6 constants: GameConstants RAT_BITE_DAMAGE, CAT_SCRATCH_DAMAGE, CHEESE_SPAWN_AMOUNT,
+    // RAT_KING_HEALTH_LOSS, RAT_KING_CHEESE_CONSUMPTION; TrapType damage
+    static final int BITE = 10, SCRATCH = 20, MINE = 20, MINE_R = 4, STARVE = 10, EAT = 2, RAT_TRAP_DMG = 50, CAT_TRAP_DMG = 100;
     static final int NO_HP = Integer.MIN_VALUE;
     static final String USAGE = "usage: ReplayDump summary FILE... | ReplayDump tsv FILE OUTDIR";
 
     public static void main(String[] args) throws Exception {
         if (args.length < 2 || args[0].equals("tsv") && args.length != 3) { System.err.println(USAGE); System.exit(2); }
         if (args[0].equals("summary")) {
+            boolean failed = false;   // a replay that does not parse: its error line, then exit 1 after the others
             for (int i = 1; i < args.length; i++) {
                 try { new ReplayDump(args[i], null).run(); }
-                catch (Exception e) { System.out.println("{\"file\":" + q(args[i]) + ",\"error\":" + q(e.toString()) + "}"); }
+                catch (Exception e) {
+                    System.out.println("{\"file\":" + q(abs(args[i])) + ",\"error\":" + q(e.toString()) + "}");
+                    System.err.println("ReplayDump: " + args[i] + ": " + e);
+                    failed = true;
+                }
             }
+            if (failed) System.exit(1);
         } else if (args[0].equals("tsv")) {
             new ReplayDump(args[1], args[2]).run();
         } else { System.err.println("unknown mode " + args[0] + "\n" + USAGE); System.exit(2); }
     }
 
-    final String file; final String outDir;
-    ReplayDump(String file, String outDir) { this.file = file; this.outDir = outDir; }
+    final String file; final String outDir;   // file: absolute, so a report finds match.json beside the replay
+    ReplayDump(String file, String outDir) { this.file = abs(file); this.outDir = outDir; }
+    static String abs(String f) { return Paths.get(f).toAbsolutePath().normalize().toString(); }
 
     // ---- per-file state
     String[] teamName = new String[3], pkg = new String[3];
@@ -202,13 +225,16 @@ public class ReplayDump {
     String backstabCause;
     boolean bsPending;
     int[] lastRoundAgg;            // final round: cheeseXfer A,B, catDmg A,B, kings A,B, babies A,B (engine)
+    int[] bankStart, bankEnd;      // per team: the bank at the end of the previous round (round 1: no bound) and this one
     PrintWriter rounds, turns, actions, indicators;
     // ---- per-round / per-record state
     int rn, seq, mined, dropped;
+    int[][] income;                // income[i][team]: cheese the team's bank received in the round's records before record i
     int[] picked = new int[3];
     String src = "";
     int carrierOfRec;              // the carrier writing the current src=carried record
     Bot hitVictim;                 // a robot killed by the current record's thrown-rat impact
+    int[] arrAt = new int[5];      // where the record's latest arrival (landing or drop) is, see arrived()
 
     static final class Bot {
         final int id, team; int type, x, y, hp, cheese, mcd, carrier, thrower, tdx, tdy, exCarrier, exRound = -1, exSeq, biteTeam;
@@ -384,6 +410,7 @@ public class ReplayDump {
         backstabRound = -1; backstabBy = 0; backstabCause = ""; bsPending = false; lastRound = 0;
         catSleepTurns = 0; cheeseModelErr = 0; trapOrder = 0;
         lastRoundAgg = new int[8];
+        bankStart = new int[]{0, Integer.MAX_VALUE / 2, Integer.MAX_VALUE / 2}; bankEnd = bankStart.clone();
         StringBuilder cheese = new StringBuilder("[");
         for (int i = 0; i < m.cheeseLength() && i < tile.length; i++) {
             tile[i] = m.cheese(i) & 0xff;
@@ -463,6 +490,50 @@ public class ReplayDump {
         return null;
     }
 
+    /** Whether a robot of this type at (x, y) has a tile within dist2 2 of trap tile (tx, ty), give or take slack
+     *  tiles: placeTrap lists a trap on every tile of its 3x3, and kings and cats run processTrapsAtLocation on each
+     *  of their tiles (a king's x,y is its centre, a cat's its SW corner). */
+    static boolean reaches(int type, int x, int y, int tx, int ty, int slack) {
+        int dx = tx - x, dy = ty - y, r = 1 + slack + (type == KING ? 1 : 0), e = type == CAT ? 1 : 0;
+        return dx >= -r && dx <= r + e && dy >= -r && dy <= r + e;
+    }
+
+    /** Whether a trap that TriggerTrap.team trg set off can have hit b: rat traps hit that team's rats and kings,
+     *  cat traps cats. */
+    static boolean fits(Bot b, int trg) { return trg == 0 ? b.type == CAT : b.team == trg && b.type != CAT; }
+
+    /** Where the rat just landed or dropped is: (x, y) or (x2, y2), each give or take slack tiles. */
+    void arrived(int x, int y, int x2, int y2, int slack) { arrAt = new int[]{x, y, x2, y2, slack}; }
+
+    /** The robot the TriggerTrap L[j] hit, of the trap's kind and reaching its tile, in this order: the rat that just
+     *  arrived in this record (a landing, a drop, a release; arrAt; its traps fire right after its RatNap, before the
+     *  grabbed or dying carrier's RatNap or die row, which end it), the record's robot at its record's tile (a rat
+     *  forming a king has the king's 3x3), the previous trigger's victim (the engine fires every trap on the tile, also
+     *  on a robot an earlier one killed), else the nearest other robot. After a voluntary drop of an ally a trap
+     *  goes to the dropped rat when it reaches it, though the carrier may have stepped onto it after (never seen). */
+    Bot trapVictim(Act[] L, int j, Turn t, int arrival) {
+        int tx = L[j].loc % width, ty = L[j].loc / width, trg = L[j].team, id = t.robotId();
+        Bot me = bot(id);
+        int[] p = arrAt;
+        if (arrival != 0 && fits(bot(arrival), trg)
+                && (reaches(RAT, p[0], p[1], tx, ty, p[4]) || reaches(RAT, p[2], p[3], tx, ty, p[4]))) return bot(arrival);
+        int ty0 = later(L, j, Action.UpgradeToRatKing, id) ? KING : me.type;
+        if (fits(me, trg) && reaches(ty0, t.x(), t.y(), tx, ty, 0)) return me;
+        for (int k = j - 1; k >= 0 && (L[k].t == Action.TriggerTrap || L[k].t == Action.CheeseSpawn || L[k].t == Action.DieAction); k--) {
+            if (L[k].t != Action.TriggerTrap) continue;
+            Bot b = bots.get(L[k].victim);
+            if (b != null && fits(b, trg) && reaches(b.type, b.x, b.y, tx, ty, 0)) return b;
+            break;
+        }
+        Bot best = null; int bd = 0;
+        for (Bot b : bots.values()) {
+            int d = Math.max(Math.abs(b.x - tx), Math.abs(b.y - ty));
+            if (b.alive && b.carrier == 0 && !b.flying && fits(b, trg) && reaches(b.type, b.x, b.y, tx, ty, 0)
+                    && (best == null || d < bd || d == bd && b.id < best.id)) { best = b; bd = d; }
+        }
+        return best;
+    }
+
     void round(Round r) {
         rn = r.roundId();
         lastRound = rn; mined = dropped = 0; picked = new int[3];
@@ -470,6 +541,16 @@ public class ReplayDump {
         Turn[] tv = new Turn[n];
         Act[][] av = new Act[n][];
         for (int i = 0; i < n; i++) { tv[i] = r.turns(new Turn(), i); av[i] = decode(tv[i]); }
+        // team arrays are indexed by position in teamIds
+        int ia = 0, ib = 1;
+        for (int i = 0; i < r.teamIdsLength(); i++) { if (r.teamIds(i) == 1) ia = i; else if (r.teamIds(i) == 2) ib = i; }
+        bankStart = bankEnd;
+        if (r.teamAliveRatKingsLength() >= 2) bankEnd = new int[]{0, r.teamAliveRatKings(ia) / 10, r.teamAliveRatKings(ib) / 10};
+        income = new int[n + 1][3];   // deliveries and king pickups (CheeseTransfer); merges into a new king are not counted
+        for (int i = 0; i < n; i++) {
+            income[i + 1] = income[i].clone();
+            for (Act a : av[i]) if (a.t == Action.CheeseTransfer && player(teamOf(a.id))) income[i + 1][teamOf(a.id)] += a.n;
+        }
         // throwRobot writes [thrower split][thrown rat] and queues ThrowRat into the thrower's own record
         String[] srcs = new String[n];
         int[] throwRec = new int[n];
@@ -503,9 +584,6 @@ public class ReplayDump {
             act(v.id, "die", v.id, "terminated", TYPE[v.type], v.team, "terminated", 0, 0);
         }
         if (r.teamCheeseTransferredLength() >= 2) {
-            // team arrays are indexed by position in teamIds
-            int ia = 0, ib = 1;
-            for (int i = 0; i < r.teamIdsLength(); i++) { if (r.teamIds(i) == 1) ia = i; else if (r.teamIds(i) == 2) ib = i; }
             int[] babies = new int[3], raw = new int[3];
             for (Bot b : bots.values()) if (b.alive && b.type == RAT && player(b.team)) { babies[b.team]++; raw[b.team] += b.cheese; }
             int ka = r.teamAliveRatKings(ia), kb = r.teamAliveRatKings(ib);
@@ -699,6 +777,7 @@ public class ReplayDump {
                         act(id, "feed", a.id, cat != null && cat.type == CAT ? cat.id : 0, v.team, killer, teamOf(killer));
                     }
                     v.alive = false; v.uncarry(rn, seq); v.flying = false;
+                    if (a.id != arrival) arrival = 0;   // a dropped rat's traps fire before its carrier's die row
                     act(id, "die", a.id, a.n == DieType.EXCEPTION ? "EXCEPTION" : "damage", TYPE[v.type], v.team, cause, killer, kteam); break;
                 }
                 case Action.RatAttack: {
@@ -787,9 +866,7 @@ public class ReplayDump {
                         if (owner > 0) tr = traps.remove(a.loc * 4 + owner);
                     }
                     if (player(owner)) { ts[owner].trapTriggers++; if (a.team != 0) ts[owner].ratTrapHits++; else ts[owner].catTrapHits++; }
-                    Bot v = null;
-                    if (arrival != 0 && (a.team == 0 ? typeOf(arrival) == CAT : teamOf(arrival) == a.team)) v = bot(arrival);
-                    else if (a.team == 0 ? type == CAT : team == a.team) v = me;
+                    Bot v = trapVictim(L, j, t, arrival);
                     int amt = 0;
                     if (v != null && v.alive) {   // processTrapsAtLocation keeps firing traps on a robot it killed
                         int nom = a.team != 0 ? RAT_TRAP_DMG : CAT_TRAP_DMG, k = impactAfter(L, j, v.id);
@@ -826,29 +903,36 @@ public class ReplayDump {
                     if (j > 0 && L[j - 1].t == Action.DamageAction && L[j - 1].id == a.id) {
                         int st = stunAfter(L, j, a.id);
                         boolean eaten = L[j - 1].n == 10 && t.health() == -10 && !x.alive;
-                        x.flying = false; x.carrier = 0; arrival = a.id;
+                        x.flying = false; x.carrier = 0; arrival = a.id; arrived(t.x(), t.y(), t.x(), t.y(), 0);
                         act(id, "land", a.id, eaten ? "eaten" : st == 20 ? "target" : "ground", x.alive ? 0 : 1, x.thrower, teamOf(x.thrower));
                     } else if (a.id == id) {
                         int c = x.carrier;
                         String why = c == 0 ? "other" : !bot(c).alive ? "carrierDead"
                                 : j + 1 < L.length && L[j + 1].t == Action.RatNap && L[j + 1].id == c ? "swap" : "wriggle";
                         a.cause = why;
-                        x.uncarry(rn, seq); arrival = a.id;
+                        // dropped at or next to its carrier; it may move after
+                        x.uncarry(rn, seq); arrival = a.id; arrived(t.x(), t.y(), t.x(), t.y(), 1);
                         if (s != null) s.releases++;
                         act(id, "release", a.id, c, why);
                     } else if (x.carrier != 0) {
                         int c = x.carrier, k = nextMain(L, j, a.id);
                         String why = k < L.length && L[k].id == c && L[k].t == Action.RatNap ? "grabbed"
                                 : k < L.length && L[k].id == c && L[k].t == Action.DieAction ? "killed" : c == id ? "carrier" : "other";
+                        // dropped at its carrier's tile: this record's if the carrier is its robot, else the carrier's latest;
+                        // a voluntary drop next to it, and the carrier may move before (x's tile was its) or after
+                        Bot cb = bot(c);
+                        if (why.equals("carrier")) arrived(t.x(), t.y(), x.x, x.y, 1);
+                        else if (c == id) arrived(t.x(), t.y(), t.x(), t.y(), 0);
+                        else arrived(cb.x, cb.y, cb.x, cb.y, why.equals("other") ? 1 : 0);
                         x.uncarry(rn, seq); arrival = a.id;
                         if (why.equals("carrier")) { if (s != null) s.drops++; }
                         else if (player(teamOf(c))) ts[teamOf(c)].forcedDrops++;
                         act(id, "drop", a.id, x.team, why, c, teamOf(c));
                     } else if (j > 0 && L[j - 1].t == Action.RatNap && L[j - 1].id == id && "swap".equals(L[j - 1].cause)) {
-                        x.carrier = id;
+                        x.carrier = id; arrival = 0;
                         act(id, "swap", a.id, x.team, "");
                     } else {
-                        x.carrier = id;
+                        x.carrier = id; arrival = 0;   // a grabbed carrier's rat was dropped (its traps fired) before this
                         boolean enemy = player(x.team) && x.team != team;
                         if (s != null) { s.naps++; if (enemy) s.grabsEnemy++; else s.grabsAlly++; }
                         if (enemy) bs(team, "grab");
@@ -906,9 +990,16 @@ public class ReplayDump {
             turns.printf("%d\t%d\t%d\t%s\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%s\t%d\t%d%n", rn, id, team, TYPE[type], t.x(), t.y(), t.dir(),
                     t.health(), t.cheese(), t.moveCooldown(), t.turningCooldown(), t.actionCooldown(), t.bytecodesUsed(),
                     coop ? 1 : 0, ind == null ? "" : clean(ind.toString()), seq, src, t.health() <= 0 ? 1 : 0, src.equals("carried") ? carrierOfRec : me.carrier);
-        // hp lost with no action: a king's starvation (10, in its own record) and the cheese boost of a bite
+        // hp lost with no action: a king's starvation and the cheese boost of a bite. processEndOfTurn, just before a
+        // king's own record, takes 10 hp instead of 2 cheese when its team's bank is below 2. The bank then is at
+        // least the round's final bank minus what the team received after this record (spending after it only
+        // lowered the final bank) and at most the previous round's bank plus what it received up to this record.
+        // Below 2 for sure, or possibly and no bite to explain the loss: starvation; else the bites' cheese boost.
         int rest = Math.max(0, me.hp) - Math.max(0, t.health());
-        if (rest > 0 && type == KING && own && rest >= 10 && s != null) { s.starveDmg += 10; rest -= 10; }
+        if (rest >= STARVE && type == KING && own && s != null) {
+            int lo = bankEnd[team] - (income[income.length - 1][team] - income[seq + 1][team]), hi = bankStart[team] + income[seq + 1][team];
+            if (lo < EAT && (hi < EAT || me.biteTeam == 0)) { s.starveDmg += STARVE; rest -= STARVE; }
+        }
         if (rest > 0 && me.biteTeam != 0) credit(me.biteTeam, me, rest, "bite");
         me.biteTeam = 0;
         me.x = t.x(); me.y = t.y(); me.hp = t.health(); me.cheese = t.cheese(); me.mcd = t.moveCooldown();

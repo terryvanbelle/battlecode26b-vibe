@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 """ReplayDump (tools/java/bc26tools/ReplayDump.java): builds it with tools/build-tools.sh, dumps
 test/fixtures/throws.bc26 and king.bc26 (a king formation, a trap backstab) and checks invariants of the output. Fails, never skips, if the class does not build.
+Replays outside the repo (replica matches 425, 459, 604; build/diag/cf4) add regression checks when present.
 Usage: test_replaydump.py [OUTDIR...]   with arguments, only checks existing tsv dumps (no build)."""
-import collections, csv, json, os, subprocess, sys, tempfile
+import bisect, collections, csv, glob, json, os, subprocess, sys, tempfile
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 JDK = os.environ.get('BC_JDK', os.path.expanduser('~/opt/jdk21'))
 ENGINE = os.path.join(REPO, 'engine', 'battlecode26-java-1.2.6.jar')
 CP = os.path.join(REPO, 'build', 'tools') + ':' + ENGINE
 FX = os.path.join(REPO, 'test', 'fixtures', 'throws.bc26')
 KING = os.path.join(REPO, 'test', 'fixtures', 'king.bc26')   # build/diag/cf6: B forms a king, B's trap backstab
-REPLICA = os.path.expanduser('~/projects/vibe/bc26b-galaxy-replays/425/replay.bc26')   # outside the repo: optional
+REPLICAS = os.path.expanduser('~/projects/vibe/bc26b-galaxy-replays')                     # outside the repo: optional
+REPLICA = os.path.join(REPLICAS, '425', 'replay.bc26')
+CF4 = (glob.glob(os.path.join(REPO, 'build', 'diag', 'cf4', '*.bc26')) or [''])[0]      # a local run: optional
 fails = checks = 0
 
 HEAD = {
@@ -33,9 +36,9 @@ def rows(path):
         return list(csv.DictReader(f, delimiter='\t', quoting=csv.QUOTE_NONE))
 
 
-def java(*args):
+def java(*args, cwd=None):
     return subprocess.run([os.path.join(JDK, 'bin', 'java'), '-cp', CP, 'bc26tools.ReplayDump', *args],
-                          capture_output=True, text=True, timeout=300)
+                          capture_output=True, text=True, timeout=300, cwd=cwd)
 
 
 def game(d, g, tag):
@@ -173,6 +176,31 @@ def game(d, g, tag):
            and any(x['action'] == 'trigger' and x['e'] == a['a'] for x in A[max(0, i - 4):i] if (x['round'], x['seq']) == (a['round'], a['seq']))]
     check(not bad, f'{tag} trap kills after an impact are trap deaths {bad[:3]}')
     check(all(int(r['mapCheese']) >= 0 for r in R), f'{tag} tile cheese never negative')
+    # a trap only hits a robot within reach of it: the victim, unless it died, has lost the damage by its next record
+    rec = collections.defaultdict(list)
+    for r in T:
+        rec[r['id']].append(((int(r['round']), int(r['seq'])), int(r['hp'])))
+    formed = {a['id'] for a in A if a['action'] == 'upgradeKing'}
+    bad = []
+    for a in A:
+        if a['action'] == 'trigger' and a['e'] != '0' and a['f'] != '0' and a['e'] not in formed:
+            L = rec[a['e']]
+            i = bisect.bisect_left(L, ((int(a['round']), int(a['seq'])),))
+            if 0 < i < len(L) and L[i][1] > 0 and L[i - 1][1] - L[i][1] < int(a['f']):
+                bad.append((a['round'], a['seq'], a['a'], a['e'], L[i - 1][1], L[i][1]))
+    check(not bad, f'{tag} trap victims lose the trap damage {bad[:3]}')
+    # starvation (10 hp a king's own record instead of eating 2) needs a bank below 2 then: at least the round's
+    # final bank minus the cheese the team received after the record; a king starved to death adds its last hp
+    recv = collections.defaultdict(list)
+    for a in A:
+        if a['action'] in ('transfer', 'kingPickup'):
+            recv[(a['round'], team.get(a['a'], a['team']))].append((int(a['seq']), int(a['b'])))
+    bank = {(r['round'], t): int(r['bank' + k]) for r in R for t, k in (('1', 'A'), ('2', 'B'))}
+    for t, k in (('1', 'A'), ('2', 'B')):
+        can = sum(1 for r in T if r['src'] == 'own' and r['type'] == 'KING' and r['team'] == t
+                  and bank[(r['round'], t)] - sum(n for q, n in recv[(r['round'], t)] if q > int(r['seq'])) < 2)
+        died = sum(1 for a in die if a['e'] == 'starve' and a['d'] == t)
+        check(s[k]['starveDmg'] <= 10 * can + 600 * died, f'{tag} {k} starveDmg {s[k]["starveDmg"]} only when the bank was low ({can} turns)')
     # babies: rebuilt count = the engine's count minus the kings formed so far (becomeRatKing never decrements it)
     formed = {'1': 0, '2': 0}
     up = collections.Counter((a['round'], a['team']) for a in A if a['action'] == 'upgradeKing')
@@ -198,23 +226,31 @@ def game(d, g, tag):
 
 
 def hploss(T, A, team):
-    """hp lost by a team's rats and kings (100/600 each; killed = all of it, terminated = up to its last record).
+    """hp lost by a team's rats and kings (100/600 each; killed = all of it, terminated = up to its last record),
+    plus the damage rows of the game's last round after a survivor's last record (no record shows that loss).
     Robots are seeded from spawn rows: a rat can die before its first record."""
-    hp, ty, tm = {}, {}, {}
+    hp, ty, tm, at = {}, {}, {}, {}
     for a in A:
         if a['action'] == 'spawn':
             hp[a['a']] = 100 if a['b'] == 'RAT' else 600; ty[a['a']] = a['b']; tm[a['a']] = a['team']
     for r in T:
         hp[r['id']] = int(r['hp']); ty.setdefault(r['id'], r['type']); tm[r['id']] = r['team']
+        at[r['id']] = (int(r['round']), int(r['seq']))
     dead = {a['a'] for a in A if a['action'] == 'die' and a['e'] != 'terminated'}
-    return sum((600 if ty[i] == 'KING' else 100) - (0 if i in dead else hp[i]) for i in hp if tm[i] == team)
+    late, end = 0, max((int(r['round']) for r in T), default=0)
+    hit = {'bite': ('a', 'd'), 'scratch': ('d', 'f'), 'trigger': ('e', 'f'), 'throwHit': ('a', 'b')}   # victim, damage
+    for a in A:
+        v, n = hit.get(a['action'], (0, 0))
+        if v and int(a['round']) == end and tm.get(a[v]) == team and a[v] not in dead and (end, int(a['seq'])) > at.get(a[v], (0, 0)):
+            late += int(a[n] or 0)
+    return late + sum((600 if ty[i] == 'KING' else 100) - (0 if i in dead else hp[i]) for i in hp if tm[i] == team)
 
 
 def fixture(d):
     s, T, A, R = game(d, 0, 'fixture')
     check((s['winner'], s['winType'], s['rounds'], s['backstabRound'], s['backstabBy'], s['backstabCause'])
           == ('B', 'RATKING_DESTROYED', 138, 16, 2, 'bite'), f'fixture match facts {s["winner"]} {s["winType"]} {s["rounds"]}')
-    check((s['numKingsA'], s['numKingsB'], s['bankB'], s['maxRounds'], s['dumpVersion']) == (0, 1, 1372, 2000, 2), 'fixture kings/bank/meta')
+    check((s['numKingsA'], s['numKingsB'], s['bankB'], s['maxRounds'], s['dumpVersion']) == (0, 1, 1372, 2000, 3), 'fixture kings/bank/meta')
     a, b = s['A'], s['B']
     check((a['naps'], b['naps'], a['forcedDrops'], b['forcedDrops']) == (11, 35, 3, 3), f'fixture grabs {a["naps"]} {b["naps"]}')
     check((a['ratTrapHits'], b['ratTrapHits'], a['throws'], b['throws'], b['feeds']) == (30, 24, 8, 32, 1), 'fixture traps/throws/feeds')
@@ -237,7 +273,10 @@ def fixture(d):
     check(len(meta['catWaypoints']) == 2 and meta['specVersion'] == '1' and meta['packageB'] == 'Version41'
           and {'RAT', 'KING', 'CAT'} <= set(meta['types']) and all('chirality' in b for b in meta['bodies']), 'fixture meta.json')
     with open(os.path.join(d, 'game.json')) as f:
-        check(json.load(f)['winner'] == 'B', 'fixture game.json')
+        gj = json.load(f)
+    check(gj['winner'] == 'B', 'fixture game.json')
+    # dumped by a relative path: file is absolute everywhere, so a report finds match.json beside the replay
+    check(meta['file'] == gj['file'] == s['file'] == os.path.realpath(FX), f'fixture file is the absolute path {meta["file"]}')
     ind = rows(os.path.join(d, 'g0.indicators.tsv'))
     check(len(ind) > 1000 and {r['kind'] for r in ind} <= {'dot', 'line'}, 'fixture indicators.tsv')
     check(all('\t' not in r['ind'] for r in T), 'fixture indicator strings')
@@ -261,6 +300,40 @@ def king(d):
           'king fixture: upgradeKing row; turns.tsv type is the start-of-turn type')
 
 
+def trigger(e, g, rn, rid, at):
+    """(victim, damage) of the trigger rows at tile `at` in robot rid's records of round rn."""
+    return [(x['e'], x['f']) for x in rows(os.path.join(e, f'g{g}.actions.tsv'))
+            if x['round'] == rn and x['id'] == rid and x['action'] == 'trigger' and x['a'] == at]
+
+
+def regressions(d):
+    """dumpVersion 3 fixes on replays outside the repo (skipped when absent)."""
+    for name, path in (('459', os.path.join(REPLICAS, '459', 'replay.bc26')), ('604', os.path.join(REPLICAS, '604', 'replay.bc26')),
+                       ('cf4', CF4)):
+        if not os.path.exists(path):
+            print(f'replaydump: SKIP {name} checks (no {path or "build/diag/cf4"})'); continue
+        e = os.path.join(d, name)
+        r = java('tsv', path, e)
+        check(r.returncode == 0, f'{name} dump {r.stderr[-300:]}')
+        if r.returncode != 0:
+            continue
+        if name == '459':
+            # r32: 11587 grabs the carrier of 13937 (dropped at 18,17) and steps to 17,18, next to A's trap at 16,17
+            game(e, 2, 'replica459 g2')
+            v = trigger(e, 2, '32', '11587', '16,17')
+            check(v == [('11587', '50')], f'replica 459 g2 r32: the trap hits the robot next to it {v}')
+        elif name == '604':
+            # B's bank stays >= 66: its king's unexplained 10s are bite boosts (king_report: bite 366 + throw 122 + boost 72)
+            s = game(e, 0, 'replica604 g0')[0]
+            check(s['B']['starveDmg'] == 0 and s['A']['dmgKing'] == 560 and s['A']['dmgBy']['bite'] == 838,
+                  f'replica 604 g0: no starvation with a full bank {s["B"]["starveDmg"]} {s["A"]["dmgKing"]}')
+        else:
+            # r336: 12173 grabs 11638's carrier (11638 dropped at 6,7) and its own step sets off A's trap at 3,7
+            game(e, 0, 'cf4')
+            v = trigger(e, 0, '336', '12173', '3,7')
+            check(v == [('12173', '50')], f'cf4 r336: the trap hits the robot next to it {v}')
+
+
 def main():
     if len(sys.argv) > 1:
         for d in sys.argv[1:]:
@@ -278,7 +351,7 @@ def main():
         with tempfile.TemporaryDirectory() as d:
             r = java('tsv', FX)
             check(r.returncode == 2 and 'usage' in r.stderr, 'tsv without OUTDIR prints usage, exits 2')
-            r = java('tsv', FX, d)
+            r = java('tsv', os.path.relpath(FX, REPO), d, cwd=REPO)
             check(r.returncode == 0 and len(r.stdout.splitlines()) == 1, f'tsv dump of the fixture {r.stderr[-300:]}')
             if r.returncode == 0:
                 with open(os.path.join(d, 'g0.summary.json')) as f:
@@ -286,6 +359,15 @@ def main():
                 sm = java('summary', FX).stdout.strip()
                 check(sj == r.stdout.strip() == sm, 'summary mode = tsv stdout = g0.summary.json')
                 fixture(d)
+            # summary mode: a replay that does not parse prints its error line after the others' lines and exits 1
+            bad = os.path.join(d, 'bad.bc26')
+            with open(FX, 'rb') as f, open(bad, 'wb') as g:
+                g.write(f.read(4000))   # a truncated gzip
+            r = java('summary', KING, bad)
+            out = [json.loads(x) for x in r.stdout.splitlines()]
+            check(r.returncode == 1 and len(out) == 2 and out[0].get('winType') and out[1]['file'] == bad and 'error' in out[1]
+                  and 'bad.bc26' in r.stderr, f'summary mode exits 1 on a bad replay {r.returncode} {r.stdout[-200:]}')
+            check(java('summary', KING).returncode == 0, 'summary mode exits 0 on good replays')
             e = os.path.join(d, 'king')
             r = java('tsv', KING, e)
             check(r.returncode == 0 and len(r.stdout.splitlines()) == 1, f'king fixture dump {r.stderr[-300:]}')
@@ -305,6 +387,7 @@ def main():
                     A = rows(os.path.join(e, 'g2.actions.tsv'))
                     check([x['d'] for x in A if x['round'] == '118' and x['seq'] == '0' and x['action'] == 'cheesespawn']
                           == ['mine', 'mine', 'drop'], 'replica 425 g2 r118: a pounced rat\'s 20-cheese drop after the mines is a drop')
+            regressions(d)
     print(f'replaydump: {checks - fails}/{checks} passed')
     sys.exit(1 if fails else 0)
 

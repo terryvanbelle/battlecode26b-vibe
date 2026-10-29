@@ -7,11 +7,12 @@ Our bot is meant to be side-symmetric (G.java's side-symmetric random stream, Ba
 team A of X should play exactly the mirror image of team B of Y, and X's B the mirror of Y's A. Per round this
 compares the multisets of (type, x, y, dir, hp[, cheese]) of each team's turns (src=own records), Y's mapped through
 the map's symmetry (kings by their centre, like rats; directions flipped as GameWorld.flipDirBySymmetry). Cats are
-the same robots in both games: they are compared by id, unmirrored. Robot ids differ between the games, so a
-divergence prints both sides' robots with their turn index in their team's round, their previous record and
-indicator string, then the turn orders where they differ. Known sources of asymmetry: anything derived from
-rc.getID() (Baby.java's scout slot) and side-dependent bytecode counts.
-Exit 0 when every group mirrors through the shorter game, 1 when one diverges, 2 on bad input.
+the same robots in both games: they are compared by id, unmirrored, and only reported (each cat meets different bots
+in X and Y, so it diverges once it reacts to rats; a team divergence after the cats' may come from them). Robot ids
+differ between the games, so a divergence prints both sides' robots with their turn index in their team's round,
+their previous record and indicator string, then the turn orders where they differ. Known sources of asymmetry:
+anything derived from rc.getID() (Baby.java's scout slot) and side-dependent bytecode counts.
+Exit 0 when both teams mirror through the shorter game, 1 when a team diverges, 2 on bad input or a failed dump.
 """
 import argparse, collections, json, os, sys
 
@@ -132,6 +133,10 @@ def check(dx, dy, gx=0, gy=0, cheese=False, show=8):
         lines += ls
     out['cats'], _, ls = compare('cats (by id, unmirrored)', Side(bx, 0, ids=True), Side(by, 0, ids=True), min(rx, ry), show)
     lines += ls
+    for k, v in out.items():
+        if k != 'cats' and v is not None and out['cats'] is not None and out['cats'] < v:
+            lines.append(f"  note: {k} diverges after the cats (r{out['cats']}): that may come from them "
+                         f"(the cats do not count in the exit status)")
     return out, lines
 
 
@@ -142,7 +147,13 @@ def main(argv=None):
     ap.add_argument('--cheese', action='store_true', help='compare carried cheese too')
     ap.add_argument('--show', type=int, default=8, help='robots / turn positions listed per divergence')
     o = ap.parse_args(argv)
-    dx, dy = GR.source(o.x), GR.source(o.y)
+    try:
+        dx, dy = GR.source(o.x), GR.source(o.y)
+    except SystemExit as e:      # GR.source exits with its message when the dump fails
+        if isinstance(e.code, int):
+            raise
+        print(e.code, file=sys.stderr)
+        return 2
     for d, src in ((dx, o.x), (dy, o.y)):
         if o.game not in GR.games(d):
             print(f'{src}: no game {o.game}; games are {GR.games(d)}', file=sys.stderr)
@@ -153,7 +164,7 @@ def main(argv=None):
         print(f'mirror_check: {e}', file=sys.stderr)
         return 2
     print('\n'.join(lines))
-    return 1 if any(v is not None for v in res.values()) else 0
+    return 1 if any(v is not None for k, v in res.items() if k != 'cats') else 0
 
 
 if __name__ == '__main__':

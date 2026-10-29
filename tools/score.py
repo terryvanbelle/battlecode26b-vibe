@@ -12,6 +12,7 @@ no winType) is scored only when its server reason shows a decisive win; a points
 guessed one.
 """
 
+VERSION = 1     # of points() and cell(): bump on any change, so stored scores (field_report's graded.json) are rebuilt
 DECISIVE = ('RATKING_DESTROYED', 'KILL_ALL_RAT_KINGS', 'RESIGNATION')
 # the server's "Reason:" line (Server.java, DominationFactor) -> ReplayDump win type
 REASONS = (("destroyed all of the enemy team's rat kings", 'RATKING_DESTROYED'), ('more points', 'MORE_POINTS'),

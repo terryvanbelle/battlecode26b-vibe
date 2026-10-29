@@ -7,6 +7,7 @@ OUT="$REPO/build/tests"; rm -rf "$OUT"; mkdir -p "$OUT"
 "$JDK/bin/javac" -nowarn --release 21 -proc:none -d "$OUT" -cp "$ENGINE" "$REPO"/bots/ratbot/*.java "$REPO"/test/ratbot/*.java
 for t in "$REPO"/test/ratbot/*Test.java; do "$JDK/bin/java" -cp "$OUT:$ENGINE" "ratbot.$(basename "$t" .java)"; done
 PY=python3; [ -x "$REPO/tools/.venv/bin/python" ] && PY="$REPO/tools/.venv/bin/python"
+"$REPO/tools/build-tools.sh"      # the tool tests run the dumper: a compile error stops here, with javac's output
 "$PY" -I "$REPO/tools/test_tools.py"
 # per-tool test modules (one file per tool, so tools can gain tests independently)
 for t in "$REPO"/tools/tests/test_*.py; do [ -e "$t" ] && "$PY" -I "$t"; done

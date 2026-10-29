@@ -4,7 +4,8 @@
 pts is the spec's points; NOSCORE (score.missing: a summary error, or a points game with no summary) marks a row the
 screens leave out. Per side: rat deaths, terminations (a runtime exception kills the robot and shows only as one;
 'exc' counts player load failures), overruns and near90 (bytecode turns at >= 100% / 90% of the limit) with the max
-bytecodes (rat/king). v1 marks a row summarized by dumpVersion 1 (deaths include rats merged into a king).
+bytecodes (rat/king). v1 marks a row summarized by dumpVersion 1 (deaths include rats merged into a king); TOOLS a
+row summarized by the classes of an earlier tools build because the rebuild failed (arena's tools_warning).
 """
 import json, os, sys
 
@@ -26,7 +27,7 @@ def line(r):
             f" {str(r.get('winType') or score.reason_type(r.get('reason')))[:18]:18}")
     if why:
         return f"{head} NOSCORE {why}: {str(r.get('summary_error') or '')[:80]!r}"
-    v = '' if r.get('dumpVersion') else ' v1'
+    v = ('' if r.get('dumpVersion') else ' v1') + (' TOOLS' if r.get('tools_warning') else '')
     return (f"{head} pts {r.get('ptsA')}-{r.get('ptsB')} xfer {r.get('cheeseXferA')}-{r.get('cheeseXferB')}"
             f" cat {r.get('catDmgA')}-{r.get('catDmgB')} bs {r.get('backstabRound')}"
             f" | die/term/exc/ovr/bc A {side(A)} B {side(B)}{v}")

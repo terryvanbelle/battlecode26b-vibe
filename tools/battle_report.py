@@ -1,28 +1,34 @@
 #!/usr/bin/env python3
 """Combat analysis of each game in a ReplayDump tsv directory (or a .bc26, dumped on the fly; dumpVersion >= 2).
 
-  battle_report.py REPLAY.bc26|TSVDIR [--game N] [--lo R] [--hi R] [--step 10] [--json]
+  battle_report.py REPLAY.bc26|TSVDIR|MATCHDIR [--game N] [--lo R] [--hi R] [--step 10] [--json]
 
-Every game by default (a header per game: map, rounds, teams, winner); --game N reports only game N. --json prints
-one line per game. Team 1 = A, 2 = B; rounds lo..hi. A robot's state in a round is its last record that round,
-whatever its src (split/thrown/carried records repeat a robot); dead records are skipped; carried rats count as
-alive but not at the front.
-  front    per step rounds: baby rats alive, their HP, rats within dist2 20 of an enemy rat, carried rats, mean
-           Chebyshev distance to the nearest own king alive that round
+MATCHDIR: a directory holding replay.bc26 (a replica match), dumped; a directory with neither exits 1. Every game by
+default (a header per game: map, rounds, teams, winner; 'match.json reversed' from the match.json beside the replay);
+--game N reports only game N. --json prints one line per game. Team 1 = A, 2 = B; rounds lo..hi (an empty window
+prints only the header). A robot's state in a round is its last record that round, whatever its src
+(split/thrown/carried records repeat a robot); dead records are skipped; carried rats count as alive but not at
+the front.
+  front    per step rounds: baby rats alive at the end of the round (the dump's rebuilt babiesA/B), and over the same
+           rats (last records less later deaths, plus spawns): their HP, rats within dist2 20 of an enemy rat,
+           carried rats, mean Chebyshev distance to the nearest own king alive that round
   hploss   HP lost by baby rats (kingloss: by kings) by cause, killing blows included (bite, scratch, crush, pounce,
            trap, throwHit, throwLand, fed, form, starve; other = an hp drop no row explains); hpby: the same by
            source (enemy, cat, own = this team's own throws, starve, other). Matches the dump's summary accounting
   deaths   baby-rat and king deaths by cause, by killer (enemy, cat, own, other), rats merged into an own king,
            kills (enemy rats/kings, cats); kd = enemy rats this team killed / own rats the enemy killed (cat kills,
            merges and terminations count for neither)
-  grabs    grabs of another rat (enemy, ally) and what freed the victim first: throw, drop:<why>, release:<how>,
-           died, held (to the end); mean rounds held per fate; whether the victim was weaker than the carrier
-           and could see it the round before
+  grabs    grabs of another rat (enemy, ally) and what freed the victim first: throw (a point-blank fatal throw
+           too), drop:<why>, release:<how>, died (while carried), held (to the end); mean rounds held per fate;
+           whether the victim was weaker than the carrier and could see it the round before
   throws   landing damage the thrown rat took (42 = point-blank on the throw turn, 10 = landed on nothing);
            throwOut: thrown rats by side, landing (ground, target, eaten, fed, none), fatal landings, robots hit
-           (hitEnemy, hitAlly), enemy rats killed by throws (the hp is in the enemy's hploss throwLand/throwHit)
-  traps    per owner: rat/cat traps placed, fired, removed, live at the end, hit rate, mean rounds placed->fired,
-           damage, kills, rat-trap victims by team; cat damage split into traps and bites (catDmg minus traps)
+           (hitEnemy, hitAlly), enemy rats (kills) and kings (killsKing) killed by throws (the hp is in the enemy's
+           hploss/kingloss throwLand/throwHit)
+  traps    per owner: rat/cat traps placed in the window and what became of those by the game's end (hit = fired,
+           removed, live: placed = hit + removed + live), hitRate = hit / placed, meanLife (rounds placed->fired);
+           triggers in the window (fired, by kind), their damage, kills, rat-trap victims by team; the window's cat
+           damage split into traps and bites (catDmg minus traps)
   xfer     per max(step, 50) rounds: cheese delivered to kings, kings' own pickups, rat pickups (count, amount)
 """
 import argparse, collections, json, os, sys
@@ -37,10 +43,7 @@ NO_HIT = ('crush', 'pounce', 'form', 'fed', 'starve')   # die causes with no dam
 
 
 def games(d):
-    n = 0
-    while os.path.exists(os.path.join(d, f'g{n}.meta.json')):
-        n += 1
-    return list(range(n))
+    return game_report.games(d)                        # every gN.meta.json, the same set source() accepted
 
 
 def load(path, game=0):
@@ -72,16 +75,31 @@ def sees(vx, vy, vdir, tx, ty):
     return dx * dx + dy * dy <= 20 and dx * fx + dy * fy >= abs(dx * fy - dy * fx)
 
 
-def front(turns, acts, lo, hi, step):
+def front(turns, acts, lo, hi, step, rounds=(), meta=None):
+    """n: the dump's rebuilt end-of-round baby count (rounds.tsv babiesA/B); the other columns from the robots alive
+    at the end of the round: last records less robots that died later that round, plus this round's spawns (no
+    record yet: full hp at the spawn tile)."""
     fk = formed(acts)
-    rats, kings = collections.defaultdict(list), collections.defaultdict(list)
+    health = (meta or {}).get('types', {}).get('RAT', {}).get('health', 0)
+    died, born = collections.defaultdict(set), collections.defaultdict(list)
+    for a in acts:
+        if a['action'] == 'die':
+            died[int(a['round'])].add(a['a'])
+        elif a['action'] == 'spawn' and a['b'] == 'RAT':
+            x, y = a['c'].split(',')
+            born[int(a['round'])].append((a['a'], a['team'], int(x), int(y)))
+    rats, kings, seen = collections.defaultdict(list), collections.defaultdict(list), set()
     for (r, i), t in last_rows(turns).items():
-        if t['dead'] == '1' or t['team'] not in ('1', '2'):
+        seen.add((r, i))
+        if t['dead'] == '1' or t['team'] not in ('1', '2') or i in died[r]:
             continue
         if t['type'] == 'KING' or fk.get(i, 10 ** 9) <= r:
             kings[r].append((t['team'], int(t['x']), int(t['y'])))
         elif t['type'] == 'RAT':
             rats[r].append((t['team'], int(t['x']), int(t['y']), int(t['hp']), t['carrier'] != '0'))
+    for r, b in born.items():
+        rats[r] += [(tm, x, y, health, False) for i, tm, x, y in b if (r, i) not in seen and i not in died[r]]
+    babies = {int(x['round']): {'1': int(x['babiesA']), '2': int(x['babiesB'])} for x in rounds if x.get('babiesA', '') != ''}
     out = []
     for r in range(lo, hi + 1, step):
         m = rats.get(r, [])
@@ -92,7 +110,8 @@ def front(turns, acts, lo, hi, step):
             en = [v for v in m if v[0] != tm and not v[4]]
             ks = [k for k in kings.get(r, []) if k[0] == tm]
             dk = [min(max(abs(v[1] - kx), abs(v[2] - ky)) for _, kx, ky in ks) for v in free] if ks else []
-            row[tm] = dict(n=len(mine), hp=sum(v[3] for v in mine), carried=len(mine) - len(free),
+            row[tm] = dict(n=babies[r][tm] if r in babies else len(mine), hp=sum(v[3] for v in mine),
+                           carried=len(mine) - len(free),
                            front=sum(1 for v in free if any((v[1] - e[1]) ** 2 + (v[2] - e[2]) ** 2 <= 20 for e in en)),
                            dk=round(sum(dk) / len(dk), 1) if dk else None)
         out.append(row)
@@ -235,7 +254,8 @@ def grabs(turns, acts, lo, hi):
         elif k == 'release':
             ev[a['id']].append((n, 'release:' + a['c']))
         elif k == 'die':
-            ev[a['a']].append((n, 'died'))
+            # dying in its own thrown record is a point-blank fatal throw: that record precedes the thrower's throw row
+            ev[a['a']].append((n, 'throw' if a['src'] == 'thrown' and a['id'] == a['a'] else 'died'))
 
     def state(i, r):
         for k in range(r, r - 3, -1):
@@ -306,19 +326,17 @@ def throws(turns, acts, lo, hi):
         if not lo <= r <= hi:
             continue
         if k == 'die' and a['e'] in ('throwHit', 'throwLand', 'fed') and a['g'] in res and a['d'] in res and a['d'] != a['g']:
-            res[a['g']]['kills'] += 1
+            res[a['g']]['kills' if a['c'] == 'RAT' else 'killsKing'] += 1
     return {tm: dict(sorted(c.items())) for tm, c in out.items()}, {tm: dict(c) for tm, c in res.items()}
 
 
 def traps(acts, rounds, lo, hi):
     live = {}                                          # (tile, owner) -> (kind, round placed)
-    out = {tm: dict(placed=collections.Counter(), fired=collections.Counter(), removed=0, live=0, life=[],
+    out = {tm: dict(placed=collections.Counter(), hit=0, removed=0, live=0, fired=collections.Counter(), life=[],
                     dmg=collections.Counter(), kills=collections.Counter(), victims=collections.Counter(), wasted=0)
            for tm in '12'}
-    end = 0
     for a in acts:
         r, k = int(a['round']), a['action']
-        end = max(end, r)
         if k in ('ratTrap', 'catTrap'):
             live[(a['a'], a['b'])] = (k[:3], r)
             if a['b'] in out and lo <= r <= hi:
@@ -330,32 +348,34 @@ def traps(acts, rounds, lo, hi):
         elif k == 'trigger':
             p = live.pop((a['a'], a['d']), None)
             o = out.get(a['d'])
-            if o is None or not lo <= r <= hi:
+            if o is None:
+                continue
+            if p and lo <= p[1] <= hi:
+                o['hit'] += 1
+                o['life'].append(r - p[1])
+            if not lo <= r <= hi:
                 continue
             o['fired'][a['g']] += 1
             o['dmg'][a['g']] += int(a['f'] or 0)
             o['wasted'] += a['f'] == '0'
             if a['g'] == 'rat':
                 o['victims'][a['b']] += 1
-            if p:
-                o['life'].append(r - p[1])
         elif k == 'die' and a['e'] == 'trap' and a['g'] in out and lo <= r <= hi:
             out[a['g']]['kills'][a['c']] += 1
     for (_, tm), p in live.items():
         if tm in out and lo <= p[1] <= hi:
             out[tm]['live'] += 1
-    cat = {}
-    for r in rounds:
-        cat[int(r['round'])] = (int(r['catDmgA']), int(r['catDmgB']))
-    c_hi = cat.get(min(hi, max(cat)) if cat else 0, (0, 0))
-    c_lo = cat.get(lo - 1, (0, 0))
+    cat = sorted((int(r['round']), int(r['catDmgA']), int(r['catDmgB'])) for r in rounds)
+
+    def cum(r):                                        # cumulative cat damage at the end of round r
+        return next((c[1:] for c in reversed(cat) if c[0] <= r), (0, 0))
     for i, tm in enumerate('12'):
         o = out[tm]
         placed = sum(o['placed'].values())
-        o['hitRate'] = round(sum(o['fired'].values()) / placed, 2) if placed else None
+        o['hitRate'] = round(o['hit'] / placed, 2) if placed else None
         o['meanLife'] = round(sum(o['life']) / len(o['life']), 1) if o['life'] else None
         del o['life']
-        o['catDmg'] = c_hi[i] - c_lo[i]
+        o['catDmg'] = cum(hi)[i] - cum(lo - 1)[i] if lo <= hi else 0
         o['catDmgTrap'] = o['dmg']['cat']
         o['catDmgBite'] = o['catDmg'] - o['catDmgTrap']
         for k in ('placed', 'fired', 'dmg', 'kills', 'victims'):
@@ -382,29 +402,33 @@ def xfer(acts, lo, hi, step):
                  pick1=p[(w, '1')], pick2=p[(w, '2')], pickAmt1=pa[(w, '1')], pickAmt2=pa[(w, '2')]) for w in ws]
 
 
-def header(d, game):
+def header(d, game, replay=None):
+    """Map, teams, result; `reversed` from the match.json beside the replay (replica matches: the side swap is not in
+    the replay): `replay` (the .bc26 reported), else the dump's own meta file path when it is absolute."""
     pre = os.path.join(d, f'g{game}')
     meta = json.load(open(pre + '.meta.json'))
     h = dict(game=game, map=meta.get('map'), teamA=meta.get('teamA'), teamB=meta.get('teamB'))
     if os.path.exists(pre + '.summary.json'):
         s = json.load(open(pre + '.summary.json'))
         h.update(rounds=s.get('rounds'), winner=s.get('winner'), winType=s.get('winType'))
-    mj = os.path.join(os.path.dirname(meta.get('file') or ''), 'match.json')
-    if meta.get('file') and os.path.exists(mj):                             # replica matches: the side swap is not in the replay
+    f = os.path.abspath(replay) if replay else meta.get('file') or ''
+    mj = os.path.join(os.path.dirname(f), 'match.json')
+    if os.path.isabs(f) and os.path.exists(mj):
         g = json.load(open(mj)).get('games', [])
         if game < len(g) and g[game].get('map') == h['map']:
             h['reversed'] = g[game].get('reversed')
     return h, meta
 
 
-def report(path, lo=0, hi=2000, step=10, game=0):
-    d = path if os.path.isdir(path) else game_report.dump(path)
+def report(path, lo=0, hi=2000, step=10, game=0, replay=None):
+    """One game's sections; `replay`: the .bc26 the dump directory `path` was made from (for match.json)."""
+    d, replay = (path, replay) if os.path.isdir(path) else (game_report.dump(path), path)
     turns, acts = load(d, game)
-    h, meta = header(d, game)
-    rounds = list(game_report.rows(os.path.join(d, f'g{game}.rounds.tsv')))
+    h, meta = header(d, game, replay)
+    rounds = list(game_report.rows(os.path.join(d, f'g{game}.rounds.tsv'), need=('catDmgA', 'catDmgB', 'babiesA', 'babiesB')))
     hi = min(hi, max(int(t['round']) for t in turns))
     th, to = throws(turns, acts, lo, hi)
-    return dict(h, lo=lo, hi=hi, front=front(turns, acts, max(lo, 1), hi, step), **hploss(turns, acts, lo, hi, meta),
+    return dict(h, lo=lo, hi=hi, front=front(turns, acts, max(lo, 1), hi, step, rounds, meta), **hploss(turns, acts, lo, hi, meta),
                 deaths=deaths(acts, lo, hi), grabs=grabs(turns, acts, lo, hi), throws=th, throwOut=to,
                 traps=traps(acts, rounds, lo, hi), xfer=xfer(acts, lo, hi, max(step, 50)))
 
@@ -412,6 +436,9 @@ def report(path, lo=0, hi=2000, step=10, game=0):
 def show(r):
     print(f"== g{r['game']} {r['map']}  rounds {r.get('rounds')}  A={r['teamA']}  B={r['teamB']}  winner {r.get('winner')}"
           f" {r.get('winType')}" + ('  (match.json reversed)' if r.get('reversed') else '') + f"  [rounds {r['lo']}..{r['hi']}]")
+    if r['lo'] > r['hi']:
+        print('  no rounds in the window')
+        return
     print('round   ' + '   '.join(f'T{tm}: n   hp front carr dK' for tm in '12'))
     for f in r['front']:
         print(f"{f['round']:5d}  " + '   '.join(f"{f[tm]['n']:5d} {f[tm]['hp']:5d} {f[tm]['front']:4d} {f[tm]['carried']:4d} "
@@ -431,8 +458,9 @@ def show(r):
         print(f"T{tm} throws {r['throwOut'][tm]} | thrown rat's landing damage {r['throws'][tm]}")
     for tm in '12':
         t = r['traps'][tm]
-        print(f"T{tm} traps placed {t['placed']} fired {t['fired']} (on dead {t['wasted']}) removed {t['removed']} live {t['live']}"
-              f" hitRate {t['hitRate']} meanLife {t['meanLife']} dmg {t['dmg']} kills {t['kills']} rat-trap victims {t['victims']}"
+        print(f"T{tm} traps placed {t['placed']}: hit {t['hit']} removed {t['removed']} live {t['live']} hitRate {t['hitRate']}"
+              f" meanLife {t['meanLife']} | triggers {t['fired']} (on dead {t['wasted']}) dmg {t['dmg']} kills {t['kills']}"
+              f" rat-trap victims {t['victims']}"
               f" | cat dmg {t['catDmg']} = traps {t['catDmgTrap']} + bites {t['catDmgBite']}")
     for x in r['xfer']:
         print(f"{x['round']:5d} delivered {x['xfer1']:5d} {x['xfer2']:5d}  king pickups {x['kpick1']:4d} {x['kpick2']:4d}"
@@ -448,10 +476,10 @@ def main():
     ap.add_argument('--step', type=int, default=10)
     ap.add_argument('--json', action='store_true')
     o = ap.parse_args()
-    try:
-        d = o.replay if os.path.isdir(o.replay) else game_report.dump(o.replay)
-    except Exception as e:  # noqa: BLE001  (ReplayDump's error, whatever dump() wraps it in)
-        sys.exit(f'battle_report: cannot dump {o.replay}: {e}')
+    d = game_report.source(o.replay)                   # a dir with no games: its replay.bc26 (else exit 1)
+    rp = None if d == o.replay else o.replay           # the replay dumped: its match.json
+    if rp and os.path.isdir(rp):
+        rp = os.path.join(rp, 'replay.bc26')
     gs = games(d)
     if o.game is not None:
         if o.game not in gs:
@@ -459,7 +487,7 @@ def main():
             sys.exit(2)
         gs = [o.game]
     for g in gs:
-        r = report(d, o.lo, o.hi, o.step, g)
+        r = report(d, o.lo, o.hi, o.step, g, rp)
         if o.json:
             print(json.dumps(r))
         else:

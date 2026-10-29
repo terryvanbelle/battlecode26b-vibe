@@ -14,8 +14,10 @@ Commands:
 Every game runs with no network (unshare -rn), a heap cap and a wall-clock cap, and holds one machine-wide slot
 (flock on $BC_SLOTS_DIR/slot<i>, i < $BC_SLOTS) so that every tool shares one concurrency limit.
 The row's summary fields come from one ReplayDump run (tsv mode with --tsv, else summary mode; its stdout is never
-passed through). The tools are rebuilt first when a source is newer (tools/build-tools.sh). A replay that fails to
-summarize gets summary_error and no winType/ptsA/ptsB, so score.cell leaves a points game unscored.
+passed through). The tools are rebuilt first when a source is newer (tools/build-tools.sh); when that build fails,
+the classes of the last good build are used and the row gets tools_warning (its dumpVersion says which dumper).
+A replay that fails to summarize gets summary_error and no winType/ptsA/ptsB, so score.cell leaves a points game
+unscored.
 """
 import argparse, fcntl, hashlib, json, os, re, shutil, subprocess, sys, tempfile, threading, time
 
@@ -115,13 +117,15 @@ def map_dir(seed):
         if not os.path.isdir(d):
             names = sorted(f[:-6] for f in os.listdir(MAPS) if f.endswith('.map26'))
             tmp = d + f'.tmp{os.getpid()}'
-            err = build_tools()
+            err, warn = tools_ready('bc26tools.MapReseed')
             if err:
-                raise SystemExit(err)
+                raise RuntimeError(err)
+            if warn:
+                print(f'arena: {warn}\narena: MapReseed runs from the existing build/tools classes', file=sys.stderr)
             p = java_tool('bc26tools.MapReseed', MAPS, tmp, str(seed), *names)
             if p.returncode != 0:
                 shutil.rmtree(tmp, ignore_errors=True)
-                raise SystemExit(f'MapReseed failed: {p.stderr.strip()[-1000:]}')
+                raise RuntimeError(f'MapReseed failed: {p.stderr.strip()[-1000:]}')
             try: os.rename(tmp, d)
             except OSError: shutil.rmtree(tmp, ignore_errors=True)
     return d
@@ -139,18 +143,30 @@ def points(row):
 SUMMARY_KEYS = ('winType', 'backstabRound', 'backstabBy', 'cheeseXferA', 'cheeseXferB', 'catDmgA', 'catDmgB', 'kingsA',
                 'kingsB', 'babiesA', 'babiesB', 'A', 'B', 'backstabCause', 'numKingsA', 'numKingsB', 'bankA', 'bankB',
                 'dumpVersion')
+TOOLS_RETRY = 60        # seconds before a failed tools build is tried again
 _tools_lock = threading.Lock()
-_tools_ok = [None]
+_tools = {'ok': False, 'err': None, 'at': None}
 
 
 def build_tools():
-    """Run tools/build-tools.sh once per process (it recompiles only when a source is newer than the classes); None,
-    or its error text."""
+    """Run tools/build-tools.sh (it recompiles only when a source is newer than the classes): None once it has
+    succeeded in this process (it is not run again), else its error text. A failure is not kept: a call TOOLS_RETRY
+    seconds later builds again."""
     with _tools_lock:
-        if _tools_ok[0] is None:
+        if not _tools['ok'] and (_tools['at'] is None or time.time() - _tools['at'] >= TOOLS_RETRY):
             b = subprocess.run([os.path.join(REPO, 'tools', 'build-tools.sh')], capture_output=True, text=True)
-            _tools_ok[0] = '' if b.returncode == 0 else f'build-tools.sh failed: {b.stderr.strip()[-1000:]}'
-    return _tools_ok[0] or None
+            _tools.update(ok=b.returncode == 0, at=time.time(),
+                          err=None if b.returncode == 0 else f'build-tools.sh failed: {b.stderr.strip()[-1000:]}')
+        return _tools['err']
+
+
+def tools_ready(cls):
+    """(error, warning) before running the build/tools class cls: a failed build is only a warning while the class is
+    there from an earlier build (build-tools.sh fails before it touches build/tools), else it is the error."""
+    err = build_tools()
+    if err and os.path.isfile(os.path.join(TOOLS_CP, *cls.split('.')) + '.class'):
+        return None, err
+    return err, None
 
 
 def java_tool(*args):
@@ -163,8 +179,8 @@ def java_tool(*args):
 
 
 def parse_summary(p):
-    """(game 0's summary dict, None) or (None, error) from a ReplayDump run: a non-zero exit, no output, an 'error'
-    line (summary mode prints one and exits 0) and a summary without winType are all errors."""
+    """(game 0's summary dict, None) or (None, error) from a ReplayDump run: a non-zero exit (summary mode exits 1 on
+    a bad replay, after an 'error' line), no output, an 'error' line and a summary without winType are all errors."""
     if p.returncode != 0:
         return None, f'ReplayDump exit {p.returncode}: {(p.stderr or "").strip()[-500:]}'
     try:
@@ -180,16 +196,20 @@ def parse_summary(p):
 
 
 def summarize(replay, tsv_dir=None):
-    """(summary, error) of a replay's game 0 (parse_summary); with tsv_dir, the tsv dump is written there in the same
-    run."""
-    err = build_tools()
+    """(summary, error, tools warning) of a replay's game 0 (parse_summary; tools_ready); with tsv_dir, the tsv dump
+    is written there in the same run."""
+    err, warn = tools_ready('bc26tools.ReplayDump')
     if err:
-        return None, err
-    return parse_summary(java_tool('bc26tools.ReplayDump', *(('tsv', replay, tsv_dir) if tsv_dir else ('summary', replay))))
+        return None, err, None
+    p = java_tool('bc26tools.ReplayDump', *(('tsv', replay, tsv_dir) if tsv_dir else ('summary', replay)))
+    return (*parse_summary(p), warn)
 
 
-def add_summary(row, summ, err):
-    """Copy a summary's fields and the points into a result row, or record summary_error (no winType, no points)."""
+def add_summary(row, summ, err, warn=None):
+    """Copy a summary's fields and the points into a result row, or record summary_error (no winType, no points);
+    a tools build failure that the existing classes covered goes in tools_warning."""
+    if warn:
+        row['tools_warning'] = warn
     if err:
         row['summary_error'] = err
         return row
@@ -268,6 +288,8 @@ def matrix(cells_file, run, jobs, keep_losses_for=None):
                 bots[s] = Bot(s)
         if cell_key(bots[sa].hash, bots[sb].hash, mp, int(sd)) not in done:
             cells.append((bots[sa], bots[sb], mp, int(sd)))
+    for sd in sorted({c[3] for c in cells}):
+        map_dir(sd)          # here, not in the workers: a failure stops the run before any game
     lock = threading.Lock()
     it = iter(cells)
     n = [0]
@@ -302,10 +324,14 @@ def main():
     args = ap.parse_args()
     if args.cmd == 'compile':
         print(Bot(args.spec).cls)
-    elif args.cmd == 'game':
-        print(json.dumps(run_game(Bot(args.a), Bot(args.b), args.map, args.seed, args.out, args.keep, args.tsv)))
-    elif args.cmd == 'matrix':
-        matrix(args.cells, args.run, args.jobs)
+        return
+    try:
+        if args.cmd == 'game':
+            print(json.dumps(run_game(Bot(args.a), Bot(args.b), args.map, args.seed, args.out, args.keep, args.tsv)))
+        elif args.cmd == 'matrix':
+            matrix(args.cells, args.run, args.jobs)
+    except RuntimeError as e:      # map_dir: a tools build or MapReseed failure
+        sys.exit(f'arena: {e}')
 
 
 if __name__ == '__main__':

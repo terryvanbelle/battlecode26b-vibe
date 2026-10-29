@@ -34,6 +34,9 @@ TRAP = {'ratTrap': 20, 'catTrap': 10}           # TrapType.buildCost
 DIG, UPKEEP, FORM = 5, 2, 50                    # DIG_DIRT_CHEESE_COST, RAT_KING_CHEESE_CONSUMPTION, RAT_KING_UPGRADE_CHEESE_COST
 LEDGER = ('start', 'picked', 'absorbed', 'spawns', 'spawnCost', 'traps', 'digs', 'upkeep', 'formations', 'dropped',
           'lostToForm', 'end', 'rest')
+# the columns read, required of a dumpVersion 2+ dump (game_report.need)
+ACTS, TURNS = 'round id team type action a b c seq d e f g', 'round id team type x y cheese seq src dead'
+ROUNDS = 'round bankA bankB rawCheeseA rawCheeseB pickedA pickedB engBabiesA engBabiesB'
 
 
 def side(loc, kings):
@@ -122,7 +125,7 @@ def analyse(d, game=0, hi=None, window=0):
         if b.get('type') == 'KING' and b.get('team') in (1, 2) and b['team'] not in kings:
             kings[b['team']] = (b['x'], b['y'])
     if len(kings) < 2:
-        for r in game_report.rows(pre + '.turns.tsv'):
+        for r in game_report.rows(pre + '.turns.tsv', game_report.need(d, game, TURNS)):
             t = int(r['team'])
             if r['type'] == 'KING' and t in (1, 2) and t not in kings:
                 kings[t] = (int(r['x']), int(r['y']))
@@ -133,7 +136,7 @@ def analyse(d, game=0, hi=None, window=0):
                 for m in mines}
     team = {t: {'pickups': 0, 'picked': 0, 'drops': 0, 'byside': collections.Counter()} for t in (1, 2)}
     rounds = 0
-    for ev in events(game_report.rows(pre + '.actions.tsv'), mines, hi):
+    for ev in events(game_report.rows(pre + '.actions.tsv', game_report.need(d, game, ACTS)), mines, hi):
         rounds = max(rounds, ev[1])
         if ev[0] == 'spawn':
             _, rn, loc, amt, src = ev
@@ -165,7 +168,7 @@ def analyse(d, game=0, hi=None, window=0):
             s = side(p[2], kings)
             team[t]['byside']['own' if s == 'AB'[t - 1] else 'mid' if s == '-' else 'enemy'] += take
     rats = collections.Counter()             # (mine, team) -> rat-rounds within R of the mine
-    for r in game_report.own(game_report.rows(pre + '.turns.tsv')):
+    for r in game_report.own(game_report.rows(pre + '.turns.tsv', game_report.need(d, game, TURNS))):
         t = int(r['team'])
         if r['type'] != 'RAT' or t not in (1, 2) or r.get('dead') == '1' or hi is not None and int(r['round']) > hi:
             continue
@@ -212,7 +215,7 @@ def ledger(d, game, hi=None, window=0):
     pre = os.path.join(d, f'g{game}')
     if not os.path.exists(pre + '.rounds.tsv'):
         return None
-    rnd = {int(r['round']): r for r in game_report.rows(pre + '.rounds.tsv')}
+    rnd = {int(r['round']): r for r in game_report.rows(pre + '.rounds.tsv', game_report.need(d, game, ROUNDS))}
     if not rnd or 'rawCheeseA' not in next(iter(rnd.values())):
         return None
     last = min(max(rnd), hi) if hi is not None else max(rnd)
@@ -223,11 +226,11 @@ def ledger(d, game, hi=None, window=0):
     for o in king_report.analyse(d, game):
         for rn in o['starved']:
             starved[(rn, 1 if o['side'] == 'A' else 2)] += 1
-    acts = list(game_report.rows(pre + '.actions.tsv'))
+    acts = list(game_report.rows(pre + '.actions.tsv', game_report.need(d, game, ACTS)))
     formed = {r['a'] for r in acts if r['action'] == 'die' and r['e'] == 'form'}
     kturns = collections.Counter()               # (round, team) -> kings' own turns
     cheese = collections.defaultdict(dict)       # id -> {(round, seq): carried cheese} of rats a formation killed
-    for r in game_report.rows(pre + '.turns.tsv'):
+    for r in game_report.rows(pre + '.turns.tsv', game_report.need(d, game, TURNS)):
         if r['src'] == 'own' and r['type'] == 'KING' and r['team'] in ('1', '2') and r['dead'] == '0':
             kturns[(int(r['round']), int(r['team']))] += 1
         elif r['id'] in formed:

@@ -345,13 +345,19 @@ with tempfile.TemporaryDirectory() as d:
         '1\t3\t1\tKING\t0\t0\t600\n1\t4\t2\tKING\t9\t9\t600\n2\t3\t1\tKING\t0\t0\t590\n2\t50\t1\tRAT\t1\t1\t100\n2\t50\t1\tRAT\t1\t1\t100\n')
     tl = gr.timeline(d, 1)
     check(tl == [(1, 0, 0, 600, 600, 2500, 2500), (2, 1, 0, 590, None, 2498, 2499)], f"timeline {tl}")
-# ReplayDump on a real replay with throws: a thrown rat's landing is a 'land' row, never a self 'nap'
+# ReplayDump on a real replay with throws: a thrown rat's landing is a 'land' row. The fixture and the dumper must be
+# there (gr.dump builds it); the reports below run on a copy of the cached dump, which is never removed.
 fx = os.path.join(REPO, 'test', 'fixtures', 'throws.bc26')
-if os.path.exists(fx) and os.path.isdir(os.path.join(REPO, 'build', 'tools', 'bc26tools')):
-    d = gr.dump(fx)
+d = None
+try:
+    src, cp = gr.dump(fx), os.path.join(tempfile.mkdtemp(prefix='tt-dump-'), 'dump')
+    shutil.copytree(src, cp)
+    os.chmod(cp, 0o755)
+    d = cp
+except (gr.DumpError, OSError) as e:
+    check(False, f"ReplayDump on {fx}: {e}")
+if d:
     acts = list(gr.rows(os.path.join(d, 'g0.actions.tsv')))
-    naps = [a for a in acts if a['action'] == 'nap']
-    check(naps and all(a['a'] != a['id'] for a in naps), "replaydump naps are grabs of another rat")
     check(any(a['action'] == 'land' for a in acts), "replaydump logs landings")
 # battle_report: vision cone, and the sections on the fixture replay
 br = load('battle_report')
@@ -360,14 +366,14 @@ check(br.sees(5, 5, 7, 5, 6) and br.sees(5, 5, 7, 6, 6) and not br.sees(5, 5, 7,
       "battle_report cone (north)")
 check(br.sees(5, 5, 6, 6, 5) and br.sees(5, 5, 6, 5, 6) and not br.sees(5, 5, 6, 4, 6), "battle_report cone (northeast)")
 check(br.sees(5, 5, 1, 4, 5) and not br.sees(5, 5, 1, 6, 5) and br.sees(5, 5, 0, 6, 5), "battle_report cone (west; centre sees all)")
-if os.path.exists(fx) and os.path.isdir(os.path.join(REPO, 'build', 'tools', 'bc26tools')):
+if d:
     rep = br.report(d, 60, 140, 20)
     check([f['round'] for f in rep['front']] == [60, 80, 100, 120, 140][:len(rep['front'])] and rep['front'][0]['1']['n'] > 0,
           f"battle_report front {rep['front'][:1]}")
     check(rep['grabs']['2']['n'] > rep['grabs']['1']['n'] > 0 and sum(rep['grabs']['2']['fate'].values()) == rep['grabs']['2']['n'],
           f"battle_report grabs {rep['grabs']}")
     check(all(v > 0 for tm in '12' for v in rep['hploss'][tm].values()) and 42 in rep['throws']['2'], "battle_report hploss/throws")
-    shutil.rmtree(d, ignore_errors=True)
+    shutil.rmtree(os.path.dirname(d))
 # snapshot.sh refuses a source without java files and leaves nothing behind
 # econ_report: piles followed from spawn to pickup, mine sides, a drop, a pile never taken
 er = load('econ_report')

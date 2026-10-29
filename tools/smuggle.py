@@ -21,7 +21,7 @@ import argparse, collections, json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import game_report as GR  # noqa: E402
 
-WHY = "-CDEHKMPSWacdfghkmprswyz"
+WHY = "-CDEHKMPSWacdfghkmprswyzx"
 KWHY = "-nsfcbd"
 TAG_MIN_LEFT = 400              # Debug.TAG_MIN_LEFT: no pad with fewer bytecodes left
 LIMIT = {'KING': 20000}         # bytecode limit by type (others 17500)
@@ -119,7 +119,7 @@ def main(argv=None):
         meta = json.load(open(os.path.join(d, f'g{g}.meta.json')))
         name = {'1': meta.get('teamA'), '2': meta.get('teamB')}
         print(f"game {g} ({meta.get('map')}): A {name['1']} vs B {name['2']}" + GR.result(GR.summary(d, g)))
-        rows = list(GR.rows(os.path.join(d, f'g{g}.turns.tsv')))
+        rows = list(GR.rows(os.path.join(d, f'g{g}.turns.tsv'), GR.need(d, g, 'round id team type bc src dead')))
         for t, (ok, rate, n) in sorted(tagged_teams(rows).items()):
             print(f"  {name[t]}: {'tagged' if ok else 'not tagged'} (decodes {100 * rate:.1f}% of {n} robot-rounds)")
         for t, c in sorted(summarize(rows).items()):

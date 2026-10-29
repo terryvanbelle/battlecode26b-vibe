@@ -37,15 +37,19 @@ as a team on the official site would act. Standard library only; run on the driv
         line, '#' comments; a block also named as a candidate is left out of the pool): wins - E over sqrt(V), side-
         blind (cell = opponent, map) and side-aware (cell = opponent, map, our side). A candidate block with a match
         not downloaded (finished) is refused (exit 3) unless --partial. Local files only
-  python3 tools/galaxy26/contest.py paired [--partial] [--studied ...] REF BLOCK [BLOCK...]
+  python3 tools/galaxy26/contest.py paired [--partial] [--graded] [--studied ...] REF BLOCK [BLOCK...]
         candidate blocks against the champion's own games on the same cells (REF: match ids, or a file of them one
         block a line, '#' comments), each (opponent, map, side) cell once: d = candidate mean - champion mean, t = net
         / sqrt(sum d^2) (TRAINING_ALGORITHM, paired fresh-cell rule). Refused (exit 3) while a candidate match is
-        not downloaded or a candidate cell has no reference game, unless --partial. Local files only
+        not downloaded or a candidate cell has no reference game, unless --partial. --graded: a game's result is its
+        graded score (tools/field_report.py: 1/0 for a game decided by kings, else our points share) instead of won,
+        from <dir>/<id>/graded.json while it is current, else graded from the replay and stored; a candidate match
+        that cannot be graded is refused like one not downloaded. Local files only
 A "side" here is the start position our team plays from in a game: A or B of the map (in the odd games of an
 alternate-order match the engine reverses the map, so team A starts at B's position).
 """
 import argparse
+import functools
 import json
 import math
 import os
@@ -264,6 +268,48 @@ def block_cells_all(ids, root=REPLAYS, team=TEAM):
     return out
 
 
+@functools.lru_cache(maxsize=None)
+def field_report():
+    """(tools/field_report.py, the current dumper hash), once per process: imported here, as only --graded needs the
+    dump tools."""
+    sys.path.insert(1, os.path.join(REPO, 'tools'))
+    import field_report as fr
+    return fr, fr.dumper()
+
+
+def graded_cells(ids, root=REPLAYS, team=TEAM, bad=None):
+    """block_cells_all with each game's graded score in place of won (tools/field_report.py graded_cached: its stored
+    graded.json while the replay, the dumper and the score version are the same, else graded now). A match that
+    cannot be graded adds no cells and goes into `bad` ({id: error})."""
+    bad = {} if bad is None else bad
+    try:
+        fr, dh = field_report()
+    except RuntimeError as e:     # the dumper does not build (field_report's GR.DumpError)
+        bad.update((i, str(e).strip().splitlines()[0][:200]) for i in ids)
+        return []
+    out = []
+    for i in ids:
+        f = os.path.join(root, str(i), 'match.json')
+        if not os.path.exists(f):
+            continue
+        try:
+            with open(f) as fh:
+                gs = json.load(fh)['games']
+            sc = {x['game']: x for x in fr.graded_cached(i, root, team, dh)}
+            cells = []
+            for j, g in enumerate(gs):
+                opp, side, won = our_view(g, team)
+                x = sc[j]
+                if (x['map'], x['side'], x['won']) != (g['map'], side, won):
+                    raise ValueError(f'game {j}: graded {x["map"]} {x["side"]} won {x["won"]}, match.json {g["map"]} '
+                                     f'{side} won {won}')
+                cells.append((opp, g['map'], side, x['score']))
+            out += cells
+        except (fr.GR.DumpError, OSError, ValueError, KeyError) as e:
+            bad[i] = str(e).strip().splitlines()[0][:200]
+    return out
+
+
 def compare_blocks(ctrl, cand):
     """Cells of both blocks in order, each (key, ctrl cell or None, cand cell or None, '+' / '-' / ''); then gained,
     lost and t = net / sqrt(gained + lost) (0 when no cell differs)."""
@@ -395,9 +441,10 @@ def pool_cmd(a):
 def paired_score(ref, cand):
     """The candidate's cells (opponent, map, our side, won) against the champion's reference games on the same cells,
     each cell counted once however many games it has (TRAINING_ALGORITHM §4, paired fresh-cell rule): d = the
-    candidate's mean result there minus the champion's. Returns rows (opponent, map, side, ref wins, ref games, cand
-    wins, cand games, d), the candidate's cells with no reference game, and {'cells', 'D' (cells with d != 0),
-    'gained', 'lost', 'net' (sum of d), 't' (net / sqrt(sum of d^2), 0 when no cell differs)}."""
+    candidate's mean result there minus the champion's (won is 0/1, or a graded score in [0, 1]). Returns rows
+    (opponent, map, side, ref wins, ref games, cand wins, cand games, d), the candidate's cells with no reference
+    game, and {'cells', 'D' (cells with d != 0), 'gained', 'lost', 'net' (sum of d), 't' (net / sqrt(sum of d^2), 0
+    when no cell differs)}."""
     def tally(games):
         t = {}
         for o, m, s, w in games:
@@ -415,7 +462,11 @@ def paired_score(ref, cand):
 
 
 def paired_cmd(a):
-    games = lambda spec: block_cells_all(block_ids(spec), a.dir)
+    bad, graded = {}, getattr(a, 'graded', False)
+    if graded:
+        games = lambda spec: graded_cells(block_ids(spec), a.dir, bad=bad)
+    else:
+        games = lambda spec: block_cells_all(block_ids(spec), a.dir)
     missing = lambda spec: [i for i in block_ids(spec) if not os.path.exists(os.path.join(a.dir, str(i), 'match.json'))]
     specs = [a.ref]
     if os.path.isfile(a.ref):
@@ -425,21 +476,31 @@ def paired_cmd(a):
     miss = [i for s in specs for i in missing(s)]
     if miss:
         print(f'~ reference matches not downloaded: {miss}')
+    if bad:
+        print(f'~ reference matches not graded (left out): {sorted(bad)}: {bad[min(bad)]}')
     todo = [i for b in a.blocks for i in missing(b)]
     if todo and not a.partial:
         print(f'~ PARTIAL: matches not finished or not downloaded: {todo}; refused (--partial scores the rest)')
         return 3
+    bad.clear()
     cand = [g for b in a.blocks for g in games(b)]
+    if bad:
+        print(f'~ candidate matches not graded: {sorted(bad)}: {bad[min(bad)]}'
+              + ('' if a.partial else '; refused (--partial scores the rest)'))
+        if not a.partial:
+            return 3
     rows, unref, s = paired_score(ref, cand)
     if unref and not a.partial:
         print(f'~ NO REFERENCE: the champion has no game on {len(unref)} cells (play its control block on that set '
               f'first): {unref[:6]}; refused')
         return 3
+    res = lambda w, n: f'{w:.2f}/{n}' if isinstance(w, float) else f'{w}/{n}'
     for opp, mp, sd, rw, rn, cw, cn, d in rows:
         if d:
-            print(f'{opp[:40]:40} {mp:24} {sd:2}  champion {rw}/{rn}  cand {cw}/{cn}  d {d:+.2f}')
-    print(f'~ paired: {s["cells"]} cells, {s["cells"] - s["D"]} alike; D {s["D"]} (gained {s["gained"]}, lost '
-          f'{s["lost"]}), net {s["net"]:+.2f}, t {s["t"]:.2f}')
+            print(f'{opp[:40]:40} {mp:24} {sd:2}  champion {res(rw, rn)}  cand {res(cw, cn)}  d {d:+.2f}')
+    print(f'~ paired{" (graded)" if graded else ""}: {s["cells"]} cells, '
+          f'{s["cells"] - s["D"]} alike; D {s["D"]} (gained {s["gained"]}, lost {s["lost"]}), net {s["net"]:+.2f}, '
+          f't {s["t"]:.2f}')
     if a.studied:
         # A candidate designed from some cells must also hold its own (t >= 0) on the others.
         marks = [x.split(':', 1) for x in a.studied.split(',')]
@@ -482,6 +543,7 @@ def main(argv=None):
     p.add_argument('--studied', help='OPPONENT_PREFIX:MAP,... the cells the candidate was designed from')
     p = sub.add_parser('paired'); p.add_argument('ref'); p.add_argument('blocks', nargs='+')
     p.add_argument('--partial', action='store_true'); p.add_argument('--dir', default=REPLAYS)
+    p.add_argument('--graded', action='store_true', help="a game's graded score (field_report) instead of won")
     p.add_argument('--studied', help='OPPONENT_PREFIX:MAP,... the cells the candidate was designed from')
     a = ap.parse_args(argv)
     if a.cmd == 'compare':
