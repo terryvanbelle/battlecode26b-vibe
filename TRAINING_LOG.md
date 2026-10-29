@@ -1226,3 +1226,13 @@
   - Throw kills are close: 156 ours, 186 theirs.
   - The gap is the king. 36 of their throws hit our king, and none of ours hit theirs. The fights happen beside our
     king.
+- Where the rats thrown into our king come from (kingammo.py, s6m's set-2 block):
+
+  | Opponent | Throws hitting our king | Damage | Victim within 3 tiles of our king at the grab | Rounds from grab to hit |
+  |---|---|---|---|---|
+  | AlexT101 | 50 | 1778 | 39 of 46 | 2-3 (35 of 46) |
+  | abcdezyxwv | 21 | 848 | 20 of 21 | 2-3 (19 of 21) |
+
+  The ammunition is our own rats in the war near our king (their last move tag was mostly 'w' war or 'f' facing
+  an enemy). The carrier throws at its first ready action. The king also takes 170-570 in bites a game in those
+  losses, so throws are about a third of its damage.
