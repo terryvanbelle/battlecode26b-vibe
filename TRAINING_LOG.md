@@ -495,3 +495,9 @@
 ## 2026-10-28 21:00 PDT: s4d replica block 2
 - s4d block 2 (set 2, matches 1310-1313 and 1352-1363) vs s3y: D 9 (+7 -2), net +5, block t 1.67. Blocks 1-2: 94
   cells, D 18 (+12 -6), net +6, t 1.41, above the block-2 bar (t <= 1 rejects); block 3 on set 3 is going out.
+
+## 2026-10-28 21:15 PDT: the trap budget is neutral against the rush
+- rx4_s4f (s4f = s4e + RAT_TRAP_MIN_CHEESE 400 + FORT_TRAPS 4, vs abrk) against control rx2_s4d: +2.1 pts, t +0.56,
+  cells +13 -12, 49-31, king-kill losses 16 (17): neutral. The intended effect did not happen: we placed 3020 rat
+  traps over the 80 games against 2171 for s4d. A higher bank floor probably keeps more babies above their own trap
+  threshold. Unexplained for now; trap spending is not where the rush losses come from.
