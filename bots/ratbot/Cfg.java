@@ -236,6 +236,8 @@ public final class Cfg {
      *  unsigned offset from the king), not the robot id: mirrored rats got different ids, so different scout roles and
      *  mines, and the two sides of a symmetric game played differently (mirror_check's known asymmetry). */
     public static final boolean SYM_SLOT = false;
+    /** Flow\'s search expands neighbours in the side frame (Flow.frame), so mirrored rats find mirrored paths. */
+    public static final boolean SYM_FLOW = false;
     /** Mine seeking (0 = off): a gatherer at its mine that sees SEEK_CROWD or more allied babies nearer that mine
      *  explores never-seen tiles of our half for SEEK_TTL rounds, at most once per SEEK_RETRY rounds, and reports what
      *  it finds (streetsofnewyork: two of our three mines sat behind 5-deep dirt bands, unseen all game, while

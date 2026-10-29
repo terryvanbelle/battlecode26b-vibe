@@ -12,6 +12,18 @@ import battlecode.common.*;
 public final class Flow {
     static final int SPAN = 1 << 16, RING = 1024, RMASK = RING - 1, NB = 8, BMASK = NB - 1;
     static final int[] DX = {0, 1, 1, 1, 0, -1, -1, -1}, DY = {1, 1, 0, -1, -1, -1, 0, 1};
+    /** Neighbour order of the search: DX/DY in our side frame (Cfg.SYM_FLOW), so a mirrored rat's search expands
+     *  mirrored neighbours in the same order and breaks ties between equal paths the mirrored way. */
+    static int[] ox = DX, oy = DY;
+
+    /** Side frame (signs of the home king's offset from the centre), set once at birth. */
+    static void frame(int fu, int fv) { if (Cfg.SYM_FLOW) setFrame(fu, fv); }
+
+    static void setFrame(int fu, int fv) {
+        ox = new int[8];
+        oy = new int[8];
+        for (int k = 0; k < 8; k++) { ox[k] = DX[k] * fu; oy[k] = DY[k] * fv; }
+    }
     static int[] g, par;
     static int gen;
     static MapLocation tgt;
@@ -106,7 +118,7 @@ public final class Flow {
             path = new int[1024];
             seed();
         }
-        int[] gg = g, pp = par, mem = Sym.mem;
+        int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
         int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = tx, Y = ty, blk = block;
         while (pending > 0) {
             if (left() < reserve) return;
@@ -124,7 +136,7 @@ public final class Flow {
                 return;
             }
             for (int k = 0; k < 8; k++) {
-                int vx = ux + DX[k], vy = uy + DY[k];
+                int vx = ux + OX[k], vy = uy + OY[k];
                 if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
                 int v = vx + vy * W, m = mem[v];
                 if ((m & blk) != 0 && v != tIdx) continue;
@@ -153,7 +165,7 @@ public final class Flow {
         while (v != s && len < path.length - 1) {
             path[len++] = v;
             int k = par[v];
-            v = v - DX[k] - DY[k] * W;
+            v = v - ox[k] - oy[k] * W;
         }
         path[len++] = s;
         for (int i = 0, j = len - 1; i < j; i++, j--) { int t = path[i]; path[i] = path[j]; path[j] = t; }

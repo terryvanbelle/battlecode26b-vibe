@@ -643,6 +643,56 @@ public class BotTest {
         check(!Flow.searching(t) && !Flow.building, "flow: slow search times out");
     }
 
+    /** The path from a to t under frame (fu, fv), as tile indices, over cells {x, y, 1 wall | 2 dirt}. */
+    static int[] flowPath(MapLocation a, MapLocation t, int fu, int fv, int[][] cells) {
+        reset(); W = 15; H = 11; install();
+        for (int[] c : cells) Sym.record(c[0], c[1], c[2] == 1, c[2] == 2, false);
+        Flow.setFrame(fu, fv);
+        me = a; G.startTurn();
+        Flow.request(t);
+        Flow.work(0);
+        return Flow.ready(t) ? java.util.Arrays.copyOf(Flow.path, Flow.plen) : new int[0];
+    }
+
+    /** True when path q is path p mapped through (x, y) -> (sx < 0 ? W-1-x : x, sy < 0 ? H-1-y : y). */
+    static boolean mirrored(int[] p, int[] q, int sx, int sy) {
+        if (p.length == 0 || p.length != q.length) return false;
+        for (int i = 0; i < p.length; i++) {
+            int x = p[i] % W, y = p[i] / W;
+            if (q[i] != (sx < 0 ? W - 1 - x : x) + (sy < 0 ? H - 1 - y : y) * W) return false;
+        }
+        return true;
+    }
+
+    static int[][] mirrorCells(int[][] half, int sx, int sy) {
+        int[][] c = new int[2 * half.length][];
+        for (int i = 0; i < half.length; i++) {
+            c[2 * i] = half[i];
+            c[2 * i + 1] = new int[]{sx < 0 ? 14 - half[i][0] : half[i][0], sy < 0 ? 10 - half[i][1] : half[i][1], half[i][2]};
+        }
+        return c;
+    }
+
+    static void testFlowMirror() {
+        // a rotationally symmetric 15x11 layout (walls and dirt) where the fixed neighbour order breaks a tie between
+        // equal paths differently for the twin (1 of 211 random layouts did)
+        int[][] rot = mirrorCells(new int[][]{{14, 7, 1}, {2, 5, 2}, {4, 3, 1}, {7, 5, 2}, {2, 9, 2}, {5, 4, 2}, {13, 5, 1},
+            {14, 4, 2}, {14, 0, 1}, {8, 5, 1}, {0, 4, 1}, {1, 5, 1}, {7, 9, 1}, {2, 7, 2}}, -1, -1);
+        MapLocation a = new MapLocation(3, 10), t = new MapLocation(11, 1);
+        MapLocation ra = new MapLocation(14 - a.x, 10 - a.y), rt = new MapLocation(14 - t.x, 10 - t.y);
+        int[] p = flowPath(a, t, 1, 1, rot);
+        check(mirrored(p, flowPath(ra, rt, -1, -1, rot), -1, -1), "flow mirror: the rotated twin with the rotated frame takes the rotated path");
+        check(!mirrored(p, flowPath(ra, rt, 1, 1, rot), -1, -1), "flow mirror: without the frame this twin breaks the tie another way");
+        // horizontal symmetry (y flipped): the frame flips y only
+        int[][] hor = mirrorCells(new int[][]{{6, 2, 1}, {6, 3, 1}, {8, 7, 2}, {9, 1, 2}}, 1, -1);
+        a = new MapLocation(2, 3);
+        t = new MapLocation(12, 8);
+        p = flowPath(a, t, 1, 1, hor);
+        check(mirrored(p, flowPath(new MapLocation(a.x, 10 - a.y), new MapLocation(t.x, 10 - t.y), 1, -1, hor), 1, -1),
+            "flow mirror: the reflected twin with the reflected frame takes the reflected path");
+        Flow.ox = Flow.DX; Flow.oy = Flow.DY;
+    }
+
     static void testExploreUnseen() throws GameActionException {
         reset(); W = 20; H = 20; install();
         // everything seen except an 8x8 block (16%): 12 samples land in it ~88% of the time
@@ -1386,7 +1436,7 @@ public class BotTest {
         testNavDigsDirt();
         testNavUShape();
         testNavFlowSealedRoom();
-        testFlowField();
+        testFlowField(); testFlowMirror();
         testFlowJam();
         testCheeseBan();
         testNavSameTarget();

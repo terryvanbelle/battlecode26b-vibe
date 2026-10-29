@@ -203,6 +203,7 @@ public final class Baby {
         int px = 2 * home.x - G.cx2, py = 2 * home.y - G.cy2;
         fu = px >= 0 ? 1 : -1;
         fv = py >= 0 ? 1 : -1;
+        Flow.frame(fu, fv);
         // mirror-invariant seed: round and the unsigned offset from the king
         int seed = birthSeed(G.round, G.me, home);
         G.seed(seed);
