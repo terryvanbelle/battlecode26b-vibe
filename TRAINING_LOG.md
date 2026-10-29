@@ -1590,3 +1590,23 @@
 - A raised baby cap was already tried (s5r, rejected on the replica: it spent the bank and both kings starved),
   so the next lever is how the king is defended, not how many rats we hold. kingperim (our king's open
   16-tile bite ring vs the damage it takes) and per-opponent combat and king-HP aggregates are running.
+
+## 2026-10-29 11:29 PDT: s7h rejected on the replica; we win the rat war but never touch their king
+- s7h's v3 set-1 block (2261-2274) against s7d's reference: 42 cells, 38 alike, D 4 (gained CS50Crab
+  dirtfulcat B and streetsofnewyork A, lost AlexT101 uneasy_alliance A and CS50Crab Nofreecheese A), net 0,
+  t 0.00. Rejected (block 1 rejects at t <= 0): CARRY_AIM v2 is neutral on the field. ra_s7q passed its screen
+  (-0.2 pts, net +1).
+- First kings over s7d's 126 field games (king_report aggregated): against AlexT101 our king lost 166 HP a game
+  to bites and 206 to throws, theirs 6 and 2; abcdezyxwv 223 + 192 against 7 + 11; AdamTan12 299 + 13 against
+  1 + 8. Their kings lose HP mainly to cats. Our rats come within dist2 20 of AlexT101's king at r20 (theirs
+  reach ours at r76), so reaching it is not the problem; biting it is.
+- Combat to r250 (battle_report aggregated): rat losses are even against all three (AlexT101 32.7 to 32.5,
+  abcdezyxwv 29.2 to 31.4, AdamTan12 20.7 to 21.0), but thrown rats hit a king 3.5 times a game for AlexT101
+  and 3.7 for abcdezyxwv against our 0.1 and 0.3, and they hold 18 rats at r250 to our 11 after equal losses.
+- kingperim (our king's open 16-tile bite ring, mean over its turns from r100): 13-16 open, 76 games, lost 50%,
+  bite + throw 140 + 92 HP a game; 9-12, 27 games, 52%, 112 + 108; 8 or fewer, 15 games, 40%, 87 + 70. Weak and
+  confounded by map, so not a reason to rebuild king placement.
+- Next on the replica: s8a (s7d + KING_PRESS + PRESS_SHARED, wider reach): at war healthy rats go to a fresh
+  enemy-king sighting and bite it. WAR_STRIKE 1 (every fighter strikes) lost on the replica as s5g; the press
+  is reactive and has never met the field. Sanity games kp1 (vs araid on tiny and knifefight) first; its
+  screen ra_s8a is moved to the front of the queue.
