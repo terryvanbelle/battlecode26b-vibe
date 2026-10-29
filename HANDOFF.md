@@ -81,12 +81,13 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   18:40: panel v2 blocks 1-3 vs s2o, 142 cells, D 38 (+26 -12), net +14, t 2.27. Its panel matches are the new
   reference: `research/panel/v2-ref-s3y.txt` (898-913 / 914-917,976-987 / 1196-1211). Candidates now score with
   `contest.py paired research/panel/v2-ref-s3y.txt BLOCK1 [BLOCK2 BLOCK3]`.
-- Replica candidate in play: s4b (#67 = s3z + CAT_DEFEND_R2 36; s3z = s3t + FORM_KING behind FORM_NET100 -100 and
-  FORM_JOIN 8), block 1 on set 1 (`v2-set1.json`; 4 sent, 12 queued for the drain loop at 18:40). Block 1 rejects
-  at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4. Re-submit s3y after a reject.
+- Replica candidate in play: s4d (#68 = s4b + SEEK_CROWD 6; s4b = s3z + CAT_DEFEND_R2 36; s3z = s3t + FORM_KING
+  behind FORM_NET100 -100 and FORM_JOIN 8), block 1 on set 1 (`v2-set1.json`; 16 queued for the drain loop at 18:55).
+  s4b's block was withdrawn after 4 matches (1222-1225) because s4d screened +3.3 over it. Block 1 rejects at t <= 0,
+  block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4. Re-submit s3y after a reject.
 - Dev = s3h behaviour plus off-by-default switches: KING_DODGE + YIELD_KING, HUNGRY, CARRY_MAX, BITE_GUARD,
   BITE_CARRIER, MINE_BALANCE, RICH_BABIES, FORM_KING (FORM_MAX, FORM_NET100, FORM_JOIN), CAT_DEFEND_R2, SEEK_CROWD
-  (mine seeking; decision code 'x'), MINE_MIRROR (king lists the our-half twin of every known mine once the
+  (mine seeking; decision code 'x'), GLANCE_MEM (end the turn facing back when a threat was recent), MINE_MIRROR (king lists the our-half twin of every known mine once the
   symmetry is unique), RUSH + RUSH_BREAK (archetypes only). Debug.TAG is on.
 - Owner rule (PROMPTS.md #14): assume every map is symmetric in all aspects. A read-only symmetry audit workflow
   (four areas, each finding checked by a skeptic) is ranking where the bot should mirror what it knows.
@@ -99,7 +100,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   cooperation) is too weak a proxy: s4b beat it 51-29 and lost its king in only 6 of 29 losses (rx1_s4b). `bots/abrk`
   = arush + RUSH_BREAK (its attackers also bite and grab enemy rats during cooperation, ending it early like the field
   rushers): runs/rx2_s4b (s4b vs abrk) after the screen chain; diagnostic runs/diag_abrk1 (DefaultMedium).
-- VM queue (serial, `--jobs 4`): sp14_s4d (s4d = s4b + SEEK_CROWD 6, control sp12_s4b) -> sp15_s4e (s4e = s4d +
-  MINE_MIRROR) -> sp16_s4f (s4f = s4e + RAT_TRAP_MIN_CHEESE 400 + FORT_TRAPS 4) -> rx2_s4b. Screens score with
+- VM queue (serial, `--jobs 4`): sp15_s4e (s4e = s4d + MINE_MIRROR; control sp14_s4d) -> sp16_s4f (s4f = s4e +
+  RAT_TRAP_MIN_CHEESE 400 + FORT_TRAPS 4; control sp15_s4e) -> rx2_s4d (s4d vs abrk) -> sp17_s4g (s4g = s4d +
+  GLANCE_MEM 20; control sp14_s4d) -> rx3_s4g (s4g vs abrk; compare with rx2_s4d). Screens score with
   `gauntlet.py selfplay RUN/results.jsonl --base s2o --control CTRL/results.jsonl`.
 - Against examplefuncsplayer (all 74 maps, both sides): v0d won 134-14.

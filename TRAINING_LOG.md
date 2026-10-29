@@ -449,3 +449,14 @@
   are closed under their symmetry. A read-only audit of where the bot should mirror its map knowledge (terrain and
   navigation, mines and cheese, enemy kings and cats, inference speed) is running, with a skeptic checking each
   finding against the code and the data.
+
+## 2026-10-28 19:00 PDT: s4d passes and replaces s4b on the replica; GLANCE_MEM
+- s4d (s4b + SEEK_CROWD 6) passes its screen against control sp12_s4b: +3.3 pts, t +2.48, cells +7 -3 (best:
+  corridorofdoomanddespair +32, peaceinourtime +19, houseofcards +19; worst: sunandmoon -7, DefaultLarge -5).
+- Diagnostics on streetsofnewyork vs s2o (VM): s4b lost 21-78 on points, delivering 4295 cheese to s2o's 8624. s4d won
+  63-36, delivering 12974. s4e (s4d + MINE_MIRROR) played the identical game: there, mirroring added no mine that
+  seeking had not already found.
+- s4b's replica block 1 was withdrawn after 4 matches; s4d (#68) is the candidate, and its block 1 is queued.
+- New switch GLANCE_MEM (default 0): at war, a turn that ends with no enemy rat known near spends the unused turn
+  facing back, when an enemy rat was seen or heard in the last GLANCE_MEM rounds. s4g = s4d + GLANCE_MEM 20, screened
+  as sp17_s4g and tested against abrk as rx3_s4g (vs rx2_s4d).

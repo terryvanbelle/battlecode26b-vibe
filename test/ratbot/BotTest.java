@@ -755,6 +755,11 @@ public class BotTest {
         Baby.role = r0; G.coop = c0;
     }
 
+    static void testGlance() {
+        check(!Baby.glanceDue(500, 495, 0) && Baby.glanceDue(500, 495, 10) && Baby.glanceDue(500, 490, 10)
+              && !Baby.glanceDue(500, 489, 10) && !Baby.glanceDue(500, -1000, 10), "glance: only within GLANCE_MEM rounds of a threat, never when 0");
+    }
+
     static void testCarryCap() {
         check(Baby.takeOk(0, 500, 120) && Baby.takeOk(100, 20, 120) && !Baby.takeOk(100, 40, 120) && Baby.takeOk(400, 400, 0),
               "carry cap: empty-handed takes any pile; loaded only within the cap; 0 = no cap");
@@ -994,6 +999,7 @@ public class BotTest {
         testScout();
         testSeek();
         testHostile();
+        testGlance();
         testMineMirror();
         testKingDig();
         testKingDodge();

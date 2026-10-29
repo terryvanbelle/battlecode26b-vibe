@@ -51,6 +51,7 @@ public final class Baby {
             }
         }
         if (cat != null) { catSeen = cat.location; catSeenRound = G.round; }
+        if (enemy != null) threatRound = G.round;
 
         Debug.mark(2);
         if (role != ATTACK) pickUp();
@@ -134,6 +135,17 @@ public final class Baby {
         sense2();
     }
 
+    static int threatRound = -1000, glances;
+
+    /** Whether a turn with no enemy known near should end facing back: an enemy was seen or heard within mem rounds. */
+    static boolean glanceDue(int round, int threat, int mem) { return mem > 0 && round - threat <= mem; }
+
+    /** Face the opposite way with the turn this turn left unused (the next step turns back at no movement cost). */
+    static void glance() throws GameActionException {
+        Direction back = G.rc.getDirection().opposite();
+        if (back != Direction.CENTER && G.rc.canTurn(back)) { G.rc.turn(back); G.facing = back; glances++; }
+    }
+
     /** Whether this rat bites and grabs enemy rats now: after cooperation, or a RUSH_BREAK attacker at any time. */
     static boolean hostile() { return !G.coop || Cfg.RUSH_BREAK && role == ATTACK; }
 
@@ -162,7 +174,8 @@ public final class Baby {
             }
         }
         if (t == null) t = Nav.guard;
-        if (t == null) return;
+        if (TrapRisk.nHeard > 0) threatRound = G.round;
+        if (t == null) { if (glanceDue(G.round, threatRound, Cfg.GLANCE_MEM)) glance(); return; }
         Direction to = G.me.directionTo(t);
         if (to != Direction.CENTER && rc.getDirection() != to && rc.canTurn(to)) { rc.turn(to); G.facing = to; }
     }

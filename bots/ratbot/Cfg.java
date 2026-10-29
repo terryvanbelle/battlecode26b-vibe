@@ -99,6 +99,10 @@ public final class Cfg {
     public static final int GUARD_DIST2 = 13;
     /** Guard also faces enemies seen at the start of the turn or squeaked by allies when none is in view. */
     public static final boolean GUARD_MEMORY = true;
+    /** At war, a turn that ends with no enemy rat known near spends the unused turn facing back, when an enemy rat
+     *  was seen or heard within GLANCE_MEM rounds (0 = off). A rat is grabbed when it cannot see the grabber: on
+     *  knifefight 32 of bestsofar's 61 grabs came from behind, from enemies we never saw. */
+    public static final int GLANCE_MEM = 0;
     /** Bite cheese (c = k*k gives +k damage), only when it makes the bite a kill: a king pays up to KING_BITE_MAX
      *  above KING_BITE_FLOOR, a baby up to FINISH_K*FINISH_K above FINISH_FLOOR. */
     public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;
