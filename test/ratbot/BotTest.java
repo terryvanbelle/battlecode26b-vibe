@@ -1207,6 +1207,19 @@ public class BotTest {
         for (int i = 0; i < 16; i++) tick(t);
         check(Nav.swaps == 0 && carrying == null, "swap: never an enemy");
         Nav.swapHold = Cfg.SWAP_HOLD;
+        // SWAP_YIELD's mask: the tiles next to an ally carrying an ally (not one carrying an enemy, not a plain ally)
+        reset(); install();
+        G.startTurn();
+        RobotInfo held = new RobotInfo(79, Team.A, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, null);
+        RobotInfo foe = new RobotInfo(80, Team.B, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, null);
+        RobotInfo carrier = new RobotInfo(81, Team.A, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, held);
+        int m = Baby.carrierMask(new RobotInfo[] { carrier });
+        int want = 0;
+        for (int i = 0; i < 8; i++) if (G.cheb(me.add(G.DIRS[i]), p(5, 7)) <= 1) want |= 1 << i;
+        check(want != 0 && m == want, "swap yield: avoid the carrier's neighbours (" + me + " mask " + m + " want " + want + ")");
+        RobotInfo thrower = new RobotInfo(82, Team.A, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, foe);
+        RobotInfo plain = new RobotInfo(83, Team.A, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, null);
+        check(Baby.carrierMask(new RobotInfo[] { thrower, plain }) == 0, "swap yield: a rat carrying an enemy or nothing is passed as usual");
     }
 
     static void testFlank() throws GameActionException {

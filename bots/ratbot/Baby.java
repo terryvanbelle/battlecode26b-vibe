@@ -64,6 +64,7 @@ public final class Baby {
         Debug.mark(2);
         if (role != ATTACK) pickUp();
         Nav.avoid = cat != null ? laneMask(cat) : 0;
+        if (Cfg.SWAP_YIELD && Nav.swapHold > 0 && rc.getCarrying() == null) Nav.avoid |= carrierMask(robots);
         // a newborn's first turn pays for array allocation and a full first sense: skip optional work when short
         if (!G.coop && Cfg.TRAP_RISK && Flow.left() > Cfg.BC_OPTIONAL) {
             TrapRisk.observe(robots);
@@ -237,6 +238,16 @@ public final class Baby {
     }
 
     /** Bit d set when stepping in DIRS[d] lands in the cat's next two footprints along its facing. */
+    /** Cfg.SWAP_YIELD: the directions whose tile is next to an allied baby carrying an ally (its drop tile). */
+    static int carrierMask(RobotInfo[] robots) {
+        int mask = 0;
+        for (RobotInfo r : robots) {
+            if (r.team != G.us || r.carryingRobot == null || r.carryingRobot.team != G.us) continue;
+            for (int i = 0; i < 8; i++) if (G.cheb(G.me.add(G.DIRS[i]), r.location) <= 1) mask |= 1 << i;
+        }
+        return mask;
+    }
+
     static int laneMask(RobotInfo c) {
         Direction cd = c.direction;
         int mask = 0;

@@ -332,6 +332,10 @@ public final class Cfg {
      *  rose: s6m's outbound and inbound gatherers met head-on at r160 in the 1-wide stem out of the king's walled
      *  pocket and held there to the end; the king starved at r1375 with 20 babies (spsquared 2/2, araid 2/2). */
     public static final int SWAP_HOLD = 0;
+    /** With SWAP_HOLD: a baby does not step next to an allied baby that carries an ally, so the tile the carrier left
+     *  stays free for the drop. rose (s7j as B): followers filled each carrier's old tile in the 1-wide stem, the
+     *  carriers could set nobody down, and the stem held three carriers for 800 rounds (1259 grabs, king starved). */
+    public static final boolean SWAP_YIELD = false;
     /** Mine seeking (0 = off): a gatherer at its mine that sees SEEK_CROWD or more allied babies nearer that mine
      *  explores never-seen tiles of our half for SEEK_TTL rounds, at most once per SEEK_RETRY rounds, and reports what
      *  it finds (streetsofnewyork: two of our three mines sat behind 5-deep dirt bands, unseen all game, while
