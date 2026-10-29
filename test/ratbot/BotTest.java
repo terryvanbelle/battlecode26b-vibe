@@ -52,7 +52,7 @@ public class BotTest {
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; ratCost = 10; built.clear();
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0; Sym.listDone = 0;
-        Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0;
+        Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null;
     }
 
@@ -368,6 +368,42 @@ public class BotTest {
         check(me.equals(t), "flow: leaves a room sealed by a dirt plug (steps=" + steps + ", at " + me + ", digs=" + digsDone + ")");
         check(digsDone <= 2, "flow: digs only the plug (" + digsDone + ")");
         check(steps < 120, "flow: bounded detour (steps=" + steps + ")");
+    }
+
+    static void testKingBlock() {
+        reset(); W = 20; H = 12; install();
+        me = new MapLocation(5, 5); G.startTurn();
+        Comms.kings[0] = new MapLocation(10, 5); Comms.numKings = 1;
+        Nav.kingMarks = new MapLocation[Comms.KING_SLOTS]; Nav.kingMarkN = 0;
+        Nav.markKings();
+        int n = 0;
+        for (int i = 0; i < W * H; i++) if ((Sym.mem[i] & Sym.KING) != 0) n++;
+        check(n == 9 && (Sym.mem[G.idx(new MapLocation(11, 6))] & Sym.KING) != 0, "king block: the king's 3x3 is marked (" + n + ")");
+        Sym.record(11, 6, false, false, false);
+        check((Sym.mem[G.idx(new MapLocation(11, 6))] & Sym.KING) != 0 && Nav.terrainBlocked(new MapLocation(11, 6)),
+              "king block: re-sensing a body tile keeps the mark; bug walks treat it as terrain");
+        check(Nav.atKing(new MapLocation(10, 5)) && Nav.atKing(new MapLocation(9, 6)) && !Nav.atKing(new MapLocation(12, 5)),
+              "king block: atKing covers the body only");
+        // a path past the king goes around its body when the search blocks king tiles
+        MapLocation t = new MapLocation(15, 5);
+        Flow.request(t);
+        Flow.block = Sym.WALL | Sym.KING;
+        Flow.work(0);
+        boolean crosses = false;
+        for (int i = 0; i < Flow.plen; i++) if ((Sym.mem[Flow.path[i]] & Sym.KING) != 0) crosses = true;
+        check(Flow.ready(t) && !crosses, "king block: the path goes around the king's body");
+        // the king moves two tiles east: its old column is cleared, the new one marked
+        Comms.kings[0] = new MapLocation(12, 5);
+        Nav.markKings();
+        n = 0;
+        for (int i = 0; i < W * H; i++) if ((Sym.mem[i] & Sym.KING) != 0) n++;
+        check(n == 9 && (Sym.mem[G.idx(new MapLocation(9, 5))] & Sym.KING) == 0 && (Sym.mem[G.idx(new MapLocation(13, 4))] & Sym.KING) != 0,
+              "king block: a moved king is re-marked (" + n + ")");
+        Comms.numKings = 0;
+        Nav.markKings();
+        n = 0;
+        for (int i = 0; i < W * H; i++) if ((Sym.mem[i] & Sym.KING) != 0) n++;
+        check(n == 0, "king block: marks clear when the king is gone (" + n + ")");
     }
 
     static void testFlowJam() {
@@ -1151,6 +1187,7 @@ public class BotTest {
         testNavFlowSealedRoom();
         testFlowField();
         testFlowJam();
+        testKingBlock();
         testExploreUnseen();
         testKingNeverWritesOutOfRange();
         System.out.println("BotTest: " + (checks - fails) + "/" + checks + " passed");

@@ -27,7 +27,39 @@ public final class Nav {
     static boolean terrainBlocked(MapLocation l) {
         if (!G.onMap(l.x, l.y)) return true;
         int m = Sym.mem[G.idx(l)];
-        return (m & (Sym.WALL | Sym.DIRT)) != 0;
+        return (m & (Sym.WALL | Sym.DIRT | Sym.KING)) != 0;
+    }
+
+    static MapLocation[] kingMarks = new MapLocation[Comms.KING_SLOTS];
+    static int kingMarkN;
+
+    /** Keep Sym.KING on our kings' 3x3 bodies (from the shared array; Cfg.KING_BLOCK): re-marked when a king moves,
+     *  appears or dies. */
+    public static void markKings() {
+        int n = Comms.numKings;
+        if (n == kingMarkN) {
+            int k = 0;
+            while (k < n && kingMarks[k].equals(Comms.kings[k])) k++;
+            if (k == n) return;
+        }
+        for (int k = 0; k < kingMarkN; k++) body(kingMarks[k], 0);
+        for (int k = 0; k < n; k++) { kingMarks[k] = Comms.kings[k]; body(kingMarks[k], Sym.KING); }
+        kingMarkN = n;
+    }
+
+    static void body(MapLocation c, int bit) {
+        int[] mem = Sym.mem;
+        for (int x = Math.max(0, c.x - 1), x1 = Math.min(G.W - 1, c.x + 1); x <= x1; x++)
+            for (int y = Math.max(0, c.y - 1), y1 = Math.min(G.H - 1, c.y + 1); y <= y1; y++) {
+                int i = x + y * G.W;
+                mem[i] = mem[i] & ~Sym.KING | bit;
+            }
+    }
+
+    /** True when t is inside one of our kings' bodies (a delivery target): such paths may cross king tiles. */
+    static boolean atKing(MapLocation t) {
+        for (int k = 0; k < Comms.numKings; k++) if (G.cheb(Comms.kings[k], t) <= 1) return true;
+        return false;
     }
 
     static boolean free(Direction d) {

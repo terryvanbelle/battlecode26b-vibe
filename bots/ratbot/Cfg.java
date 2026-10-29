@@ -160,6 +160,10 @@ public final class Cfg {
      *  path tile, dropping it only after FLOW_JAM_HOLD turns. Dropping starts a fresh search, which holds the rat still
      *  for up to FLOW_MAX_TURNS turns and blocks the rats queued behind it (EscapeTheNight: 4-5 babies stuck 500+ rounds). */
     public static final boolean FLOW_JAM = false;
+    /** Our kings' 3x3 bodies count as walls for flow paths and bug walks (not when the target is at a king).
+     *  EscapeTheNight: A* routed babies through the king that stood between them and the room's exit; they waited behind
+     *  it, dropped the path and searched again, 500+ rounds. */
+    public static final boolean KING_BLOCK = false;
     public static final int FLOW_JAM_HOLD = 12;
     /** Path cost of a dirt tile (a dig is 5 cheese and 2.5 turns of action cooldown, plus the step). */
     public static final int DIG_COST = 4;

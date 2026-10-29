@@ -17,6 +17,9 @@ public final class Flow {
     static MapLocation tgt;
     static int tIdx, tx, ty, base, sIdx;
     static boolean building;
+    /** Tile bits a path may not cross (the target tile excepted): walls, and our kings' bodies (Cfg.KING_BLOCK) unless
+     *  the target is inside one. */
+    static int block = Sym.WALL;
     /** Round the current path was completed, or -1. */
     static int builtRound = -1;
     static int[] path;
@@ -55,6 +58,7 @@ public final class Flow {
         if (failTgt != null && G.cheb(failTgt, t) <= 1 && G.round - failRound < Cfg.FLOW_RETRY) return;
         tgt = t;
         tIdx = G.idx(t);
+        block = Cfg.KING_BLOCK && !Nav.atKing(t) ? Sym.WALL | Sym.KING : Sym.WALL;
         tx = t.x; ty = t.y;
         builtRound = -1;
         building = true;
@@ -95,7 +99,7 @@ public final class Flow {
             seed();
         }
         int[] gg = g, pp = par, mem = Sym.mem;
-        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = tx, Y = ty;
+        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = tx, Y = ty, blk = block;
         while (pending > 0) {
             if (left() < reserve) return;
             int b = curF & BMASK;
@@ -115,7 +119,7 @@ public final class Flow {
                 int vx = ux + DX[k], vy = uy + DY[k];
                 if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
                 int v = vx + vy * W, m = mem[v];
-                if ((m & Sym.WALL) != 0) continue;
+                if ((m & blk) != 0 && v != tIdx) continue;
                 int ng = gu + ((m & Sym.DIRT) != 0 ? dig : 1);
                 int gv = gg[v];
                 if (gv >= bs && gv - bs <= ng) continue;
@@ -198,7 +202,7 @@ public final class Flow {
         if (nxi >= plen) { drop(); return false; }
         int nx = path[nxi];
         MapLocation n = new MapLocation(nx % G.W, nx / G.W);
-        if ((Sym.mem[nx] & Sym.WALL) != 0) { drop(); return false; } // newly seen wall on the path
+        if ((Sym.mem[nx] & block) != 0) { drop(); return false; } // newly seen wall (or a king moved) on the path
         RobotController rc = G.rc;
         Direction d = G.me.directionTo(n);
         if ((Sym.mem[nx] & Sym.DIRT) != 0) {

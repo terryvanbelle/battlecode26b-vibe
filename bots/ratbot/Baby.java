@@ -30,6 +30,7 @@ public final class Baby {
         RobotController rc = G.rc;
         if (role < 0) born();
         Comms.readKings();
+        if (Cfg.KING_BLOCK) Nav.markKings();
         Comms.readMines();
         int s = Comms.read(Comms.SYM);
         if (s != 0) Sym.merge(s);
