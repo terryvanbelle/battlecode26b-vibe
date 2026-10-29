@@ -1554,3 +1554,16 @@
 - New, all @s7d: s8e = TRAP_CAP 25 (engine max), s8f = RISK_IN_FIGHT, s8g = RISK_GATHER, s8h = TRAP_CAP 25 +
   RISK_IN_FIGHT. Diag tr1 (each with s7d vs atrap, 6 high-trap maps x 2 sides); screens ra_s8e and ra_s8h are
   queued after ra_s8d.
+
+## 2026-10-29 10:50 PDT: s8c rejected on the replica; s7h (CARRY_AIM v2 alone) submitted
+- s8c's v3 set-1 block (2247-2260) against s7d's reference: 42 cells, D 8 (gained 3, lost 5), net -2, t -0.71.
+  Rejected (block 1 rejects at t <= 0). progress/ refreshed.
+- What did work: CARRY_AIM v2. Throws that hit an enemy robot rose from 0.18 a throw (s7d, set 1) to 0.28, and
+  hits on the enemy king from 11 to 26 in as many games. Pickups per opponent by r300/r600 match s7d's, so the
+  economy pair did not visibly cost income. Against AlexT101 and abcdezyxwv both versions pick about half of
+  what the opponent picks by r300.
+- The five lost cells: Nofreecheese A+B vs CS50Crab (king starved late), AlexT101 popthecork A (a cat scratched
+  our king to death) and uneasy_alliance A (throw hits on the king), outercloud heart B (both kings starving;
+  s7d won the same race at r347-360). At t -0.71 this reads as noise as much as harm.
+- s7h (s7d + CARRY_AIM v2, screen +4.4 pts, net +3) is replica submission #86. Its set-1 block starts at 2261.
+  The trap candidates (s8e/s8h) wait on diag tr1.
