@@ -176,6 +176,10 @@ public final class Cfg {
     public static final boolean MINE_BALANCE = false;
     /** Raw cheese at which a gatherer heads home. */
     public static final int DELIVER_AT = 30;
+    /** Raw cheese at which a gatherer with no pile in sight heads home (at or above DELIVER_AT it goes anyway). The
+     *  top field bots carry 33-41 cheese a transfer to our 24-31 (pipes, safelycontained, sittingducks vs AlexT101 and
+     *  abcdezyxwv); our gatherers spend 29-39% of their turns walking to a mine ('M') and 11-19% delivering. */
+    public static final int DELIVER_IDLE = 10;
     /** Global cheese below which any rat carrying cheese delivers it before fighting or running errands (0 = off):
      *  31 of our 45 king deaths on the replica were starvation, once with 728 cheese in our rats' paws. */
     public static final int HUNGRY = 0;

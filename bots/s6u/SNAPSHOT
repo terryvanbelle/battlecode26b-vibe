@@ -1,0 +1,5 @@
+name=s6u
+source=bots/ratbot
+source_sha=70372c0d7cb9
+commit=588f467
+created=2026-10-29 06:16 PDT

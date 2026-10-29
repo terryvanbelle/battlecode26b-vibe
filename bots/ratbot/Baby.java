@@ -806,7 +806,7 @@ public final class Baby {
             if (approachCat(cat)) return;
         }
 
-        if ((raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= 10))) && deliver()) return;
+        if ((raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= Cfg.DELIVER_IDLE))) && deliver()) return;
         if (Cfg.COURIER && Comms.numMines == 0 && myMineCount > 0) {
             // we found a mine nobody else knows: squeaks only reach the king from dist2 16, so carry the news home
             MapLocation k = Comms.nearestKing(G.me);
