@@ -1126,7 +1126,7 @@
   with no amount), and the cooldown penalty is 1% per cheese with no cap. Rats carrying 455-2375 cheese crawl home
   for 50-130 rounds. Not addressed yet.
 
-### 2026-10-29 07:04 PDT: walking on while the search runs (FLOW_REV) nearly ends the idling; FLOW_FAST
+## 2026-10-29 07:04 PDT: walking on while the search runs (FLOW_REV) nearly ends the idling; FLOW_FAST
 
 - Diagnostic games vs araid (one game each, local VM):
 
