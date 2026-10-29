@@ -3,6 +3,9 @@ package ratbot;
 /** Indicator-string telemetry. Tags are stable so replay tools can grep them. */
 public final class Debug {
     public static final boolean ON = false;
+    /** Bytecode probe: search pops and work() bytecodes, and the indicator's own cost, in the indicator (fx=). */
+    public static final boolean PROBE = false;
+    public static int indBc;
 
     /** Overrun locator: mark(k) at turn stages; the first stage reached after the round advanced is kept. */
     public static int stage, ovStage = -1, startRound;
@@ -38,6 +41,7 @@ public final class Debug {
               .append(Flow.building ? 'b' : Flow.builtRound >= 0 ? 'r' : '-').append(Flow.held).append('/').append(Flow.plen - Flow.ppos);
             int[] fe = Flow.ends;
             sb.append(" fe=").append(fe[0]).append(':').append(fe[1]).append(':').append(fe[2]).append(':').append(fe[3]).append(':').append(fe[4]).append(':').append(fe[5]).append(':').append(Flow.fails).append(':').append(Flow.hits);
+            if (PROBE) sb.append(" fx=").append(Flow.pops).append(':').append(Flow.workBc).append(':').append(indBc);
         }
         if (Baby.raidTarget != null) sb.append(" rz=").append(Baby.raidTarget.x).append(',').append(Baby.raidTarget.y);
         sb.append(" sym=").append(Sym.mask);

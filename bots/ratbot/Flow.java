@@ -49,6 +49,8 @@ public final class Flow {
     static int[] head = new int[NB], tail = new int[NB];
     static int curF, pending, held;
     public static int builds, steps, done, lastTurns, fails;
+    /** Debug: nodes popped and bytecodes spent in work() (Debug.PROBE). */
+    public static int pops, workBc;
     /** Target and tile count of the last completed path (kept after the path is dropped). */
     static MapLocation lastTgt;
     static int lastLen;
@@ -115,6 +117,16 @@ public final class Flow {
     /** Continue the search while more than reserve bytecodes are left. */
     public static void work(int reserve) {
         if (!building) return;
+        if (Debug.PROBE) {
+            int b0 = Clock.getBytecodeNum();
+            work0(reserve);
+            workBc += Clock.getBytecodeNum() - b0;
+            return;
+        }
+        work0(reserve);
+    }
+
+    static void work0(int reserve) {
         int n = G.W * G.H;
         if (g == null) {
             if (left() < 2 * n + reserve) return;
@@ -137,6 +149,7 @@ public final class Flow {
             int u = bucket[b][head[b] & RMASK];
             head[b]++;
             pending--;
+            if (Debug.PROBE) pops++;
             int ux = u % W, uy = u / W, gu = gg[u] - bs;
             if (gu + Math.max(Math.abs(ux - X), Math.abs(uy - Y)) != curF) continue; // stale entry
             if (u == tIdx) {

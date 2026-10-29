@@ -11,6 +11,10 @@ lost rounds by code, and the --top longest episodes: id, first-last round, box c
 carried, and the Chebyshev distance from the box centre to the nearest own king centre when it began (2 = touching
 the king's 3x3 body; '-' = no king record that round). With several sources or games a total line per team name
 follows. --team keeps one team (by name); --game N (0-based) one game.
+
+Idle travel turns (short holds the episodes miss): a usable turn of a baby with a travel code that could move (mcd
+under 10 after its turn) but stands on the tile it held the round before, split by whether an own baby stands beside
+it that round (a crowd or queue) or not (alone: a path search or a wait). Shown as shares of the usable baby turns.
 """
 import argparse, collections, json, os, sys
 
@@ -19,7 +23,7 @@ import game_report as GR, smuggle as SG  # noqa: E402
 
 TRAVEL = set('dMC')
 SPAN = 30
-COLS = 'round id team type x y bc cheese src dead'
+COLS = 'round id team type x y bc cheese src dead mcd'
 
 
 def cheb(a, b):
@@ -63,8 +67,32 @@ def episodes(turn_rows, team, span=SPAN):
     return out, turns
 
 
+def idle(turn_rows, team):
+    """Counter of team's idle travel turns: 'ally' with an own baby beside it that round, 'alone' without."""
+    rr = SG.robot_rounds(turn_rows)
+    at = collections.defaultdict(set)              # round -> own baby tiles
+    for r in rr:
+        if r['team'] == team and r['type'] == 'RAT' and r.get('dead') != '1':
+            at[int(r['round'])].add((int(r['x']), int(r['y'])))
+    prev, out = {}, collections.Counter()
+    for r in SG.usable(rr):
+        if r['team'] != team or r['type'] != 'RAT':
+            continue
+        rn, p = int(r['round']), (int(r['x']), int(r['y']))
+        was = prev.get(r['id'])
+        prev[r['id']] = (rn, p)
+        d = SG.decode(r['bc'], False)
+        if not d or d[0] not in TRAVEL or was != (rn - 1, p) or int(r.get('mcd') or 0) >= 10:
+            continue
+        near = at[rn]
+        beside = any((p[0] + dx, p[1] + dy) in near for dx in (-1, 0, 1) for dy in (-1, 0, 1) if dx or dy)
+        out['ally' if beside else 'alone'] += 1
+    return out
+
+
 def analyse(d, g, span=SPAN):
-    """[{team, name, tagged, episodes, lost, turns, byCode}] for teams 1 and 2 of game g (untagged: no episodes)."""
+    """[{team, name, tagged, episodes, lost, turns, byCode, idle}] for teams 1 and 2 of game g (untagged: no
+    episodes; idle {'ally': n, 'alone': n})."""
     meta = json.load(open(os.path.join(d, f'g{g}.meta.json')))
     rows = list(GR.rows(os.path.join(d, f'g{g}.turns.tsv'), GR.need(d, g, COLS)))
     tagged = SG.tagged_teams(rows)
@@ -76,7 +104,8 @@ def analyse(d, g, span=SPAN):
         for e in eps:
             for c, k in e['codes'].items():
                 by[c] += k
-        o.update(episodes=eps, lost=sum(e['rounds'] for e in eps), turns=n, byCode=dict(by))
+        o.update(episodes=eps, lost=sum(e['rounds'] for e in eps), turns=n, byCode=dict(by),
+                 idle=dict(idle(rows, t)) if o['tagged'] else {})
         res.append(o)
     return meta, res
 
@@ -118,17 +147,21 @@ def main(argv=None):
                     continue
                 c = tot[o['name']]
                 c['games'] += 1; c['episodes'] += len(o['episodes']); c['lost'] += o['lost']; c['turns'] += o['turns']
+                c['ally'] += o['idle'].get('ally', 0); c['alone'] += o['idle'].get('alone', 0)
                 if a.json:
                     continue
                 by = ' '.join(f'{k} {v}' for k, v in sorted(o['byCode'].items(), key=lambda x: (-x[1], x[0])))
                 print(f"  {o['name']}: {len(o['episodes'])} episodes, {o['lost']} rounds lost "
-                      f"({pct(o['lost'], o['turns'])} of {o['turns']} baby turns){'; ' + by if by else ''}")
+                      f"({pct(o['lost'], o['turns'])} of {o['turns']} baby turns){'; ' + by if by else ''}; "
+                      f"idle in travel {pct(o['idle'].get('ally', 0), o['turns'])} beside an ally, "
+                      f"{pct(o['idle'].get('alone', 0), o['turns'])} alone")
                 for e in o['episodes'][:a.top]:
                     print('    ' + line(e))
     if not a.json and any(c['games'] > 1 for c in tot.values()):
         for name, c in sorted(tot.items()):
             print(f"total {name}: {c['games']} games, {c['episodes']} episodes, {c['lost']} rounds lost "
-                  f"({pct(c['lost'], c['turns'])} of {c['turns']} baby turns)")
+                  f"({pct(c['lost'], c['turns'])} of {c['turns']} baby turns); idle in travel "
+                  f"{pct(c['ally'], c['turns'])} beside an ally, {pct(c['alone'], c['turns'])} alone")
     return 0
 
 
