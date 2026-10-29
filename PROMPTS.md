@@ -74,3 +74,7 @@ I want to dig into this further to make sure you're not engaging in faulty reaso
 ## 14. 2026-10-28 18:30 PDT
 
 The court will ignore the witness's comment.  From now on, please assume that all maps are always symmetrical in all aspects
+
+## 15. 2026-10-28 19:20 PDT
+
+Ah, I see what you meant now, and yes, I did misunderstand.  I now understand that when you said "Mines aren’t mirrored through symmetry", you meant "Our bot isn’t taking advantage of mine symmetry"
