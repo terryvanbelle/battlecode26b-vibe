@@ -824,3 +824,30 @@
   king died at r48 holding 1105 cheese with 20 rats to their 31. s3u (RICH_BABIES 30) passed self-play but never
   went to the replica on its own, and s4h/s4j raised only the war cap. s5r = s4d + MAX_BABIES 30 +
   MAX_BABIES_WAR 40 is on the ra screen (vs araid) and the sp screen.
+
+## 2026-10-29 02:41 PDT: s5g rejected; Stash's through-the-wall chase (CHEESE_LOS, s5t); enemy traps on our half
+- s5g (WAR_STRIKE 1) replica block 1770-1785: net -5 (gained 4, lost 9), t -1.39; graded -3.16, t -0.94. It
+  took the CS50Crab cells and lost ask8000 fullofsecrets, bc26vibe krotus, AlexT101 popthecork/uneasy_alliance,
+  outercloudstudio heart and abcdezyxwv DefaultLarge. Rejected. s5o (early insurance king) on the ra screen:
+  -5.9 pts, t -1.19, net -3 vs ra_s4d. It is not going to the replica.
+- Stash vs abcdezyxwv (1210/1211): the map has a wall row at y=22 (dirt gaps at x=0,1,28,29). Our 'M' rats stay
+  on the far side and chase piles they see through the wall ('C'). Each new target resets the stall count, so
+  Flow is never asked for a path. To r100 we picked up 9 piles to their 52. In r100-200 it was 0 to 63, and by
+  r300 they had taken 78 piles on our half to our 16. CHEESE_LOS (Baby.walledOff walks the greedy line through
+  the known map) skips such piles. s5t = s4d + CHEESE_LOS. In self-play on Stash and pipes it changes nothing
+  (own-half pickups to r300 84/79 vs s4d's 89/83), because s2o never raids our half. Only the replica can test it.
+  The ra and sp no-harm screens are queued.
+- The same own-half count over s3y's 144 panel games: the large deficits are Stash (us 16 / them 78),
+  AlexT101 safelycontained (58/96) and outercloudstudio seepastyourgreed (11/48, which we won anyway).
+- Enemy traps are our biggest single killer against two panel opponents. Our rat deaths per game by cause:
+  CS50Crab 59.3, of which trap 40.9; AlexT101 46.2, of which trap 18.8 (throw landings 11.8).
+  CS50Crab lays 86 of its 115 traps per game on our half; AlexT101 lays 48 of 54. AlexT101 lays them early: 262
+  of its traps on our half (18 games) went down in r0-100, mostly 4-12 tiles from our king. That is a ring around
+  our delivery approach. On starvation (1204 g1) the trap exchange to r125 was even (39 hits each way). Our
+  economy lost: pickups 16 vs 31 to r125, then 13 vs 39. Our bank sat at 130-190, under the 300 spawn floor,
+  while theirs held ~550 and kept spawning. Our gatherers spent most turns as 'W' (waiting at an empty mine).
+- A rat trap fires on an enemy entering any tile within r2 2 of it, and the layer must stand within r2 2 to
+  place it. Our traps don't block theirs (one trap per team per tile). Enemy traps are invisible to us.
+- s3y is resubmitted for a 6-match reference block (1786-1791) against spsquared_TSPAARK_QUALS,
+  amcsz_fighterrats and AdamTan12_Finals (maps drawn into research/panel/v3-set1.json), so the v3 panel can
+  replace the three opponents we beat 17-18/18.
