@@ -1732,3 +1732,14 @@
   mm1 check shows the mirrored mine list feeding our home economy.
 - s8k (s7u + RAT_TRAP_MIN_CHEESE 600) is submission #89, set-1 block from 2384. Behind it: s8l (s8k +
   MINE_EXPLORE 2), then s7w alone if s8l's block points that way.
+
+## 2026-10-29 14:30 PDT: s8k rejected after block 1; s7w on the replica
+- s8k (s7u + RAT_TRAP_MIN_CHEESE 600) on v3 set 1 against s7d's reference: 42 cells, 31 alike, D 11 (+4 -7),
+  net -3, t -0.90. Block 1 rejects at t <= 0. It gained CS50Crab dirtfulcat B and streetsofnewyork A,
+  abcdezyxwv sunandmoon B and spsquared bed B. It lost all three AlexT101 cells s7d had won (popthecork A/B,
+  uneasy_alliance A; 0/6, every game a king kill, backstabs by r4-r47), plus CS50Crab Nofreecheese A and
+  dirtfulcat A, outercloudstudio heart A and spsquared fullofsecrets B. AdamTan12 was 0/6 for both.
+- So a reserve for the next spawn, kept by holding war traps back, does not change the result against the top
+  three. AlexT101 swings a lot between blocks (s8j 5/6, s7d 3/6, s8k 0/6), so one block says little about it.
+- s7w (s7d + MINE_EXPLORE 2, working every home mine) is submission #90, set-1 block from 2439. s8l was
+  s8k + MINE_EXPLORE 2, so it waits on s7w's result.
