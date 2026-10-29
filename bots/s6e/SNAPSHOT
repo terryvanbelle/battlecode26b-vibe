@@ -1,0 +1,5 @@
+name=s6e
+source=bots/ratbot
+source_sha=eac9505d1bd5
+commit=cf051f9
+created=2026-10-29 04:22 PDT
