@@ -182,3 +182,5 @@ s6v,2026-10-29 06:36,s6m,"S6M + FLOW_CACHE: keep the last 4 flow paths; a reques
 s6w,2026-10-29 06:50,s6m,"S6M + FLOW_REV: flow searches grow from the target back to the rat, which walks on (greedy/bug) meanwhile instead of standing still; the path starts where the rat is when the search reaches a tile beside it (Hike: 35% of rat-turns stood still in searches)",pending
 s6x,2026-10-29 06:51,s6m,"S6M + FLOW_REV + FLOW_LIFO + FLOW_CACHE: reverse search while walking, LIFO ties (fewer pops), and the last 4 paths kept for reuse",pending
 s6y,2026-10-29 06:56,s6m,"S6M + FLOW_REV + FLOW_FAST (unrolled reverse A* expansion, same path, more nodes per turn)",pending
+s6z,2026-10-29 07:01,s6y,"S6Y + FLOW_RESERVE 1300 (from 2500): the indicator costs ≤241 and the tag 400, so searches get ~1200 more bytecodes a turn (~3.5 nodes at 344)",pending
+s7a,2026-10-29 07:01,s6y,"S6Y + FLOW_STALL 2 (from 4): with FLOW_REV a rat walks on while it searches, so it can ask for a path sooner",pending

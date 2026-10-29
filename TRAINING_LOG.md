@@ -1125,3 +1125,33 @@
 - A side finding: piles of 100-355 cheese build up at unattended mines. A rat takes the whole pile (pickUpCheese
   with no amount), and the cooldown penalty is 1% per cheese with no cap. Rats carrying 455-2375 cheese crawl home
   for 50-130 rounds. Not addressed yet.
+
+### 2026-10-29 07:04 PDT: walking on while the search runs (FLOW_REV) nearly ends the idling; FLOW_FAST
+
+- Diagnostic games vs araid (one game each, local VM):
+
+  | build | map | points | cheese delivered | rounds lost (stuck_report) | idle in travel, beside an ally / alone |
+  |---|---|---|---|---|---|
+  | s6m | Hike | 79 | 2092 | 9.7% | 20.7% / 7.3% |
+  | s6w (REV) | Hike | 88 | 5813 | 0.6% | 2.8% / 0.4% |
+  | s6x (REV+LIFO+CACHE) | Hike | 88 | 4836 | 1.4% | 5.6% / 0.8% |
+  | s6m | where_are_you | — | 10100 | 3.4% | 11.5% / 10.3% |
+  | s6v (CACHE) | where_are_you | 53 | 8797 | — | — |
+  | s6w (REV) | where_are_you | 55 | 12292 | 2.1% | 4.5% / 0.9% |
+  | s6x (REV+LIFO+CACHE) | where_are_you | 54 | 10275 | 1.6% | 5.6% / 0.7% |
+
+  - FLOW_REV alone gives the best economy. The cache and LIFO ties add nothing on top of it.
+- FLOW_FAST: the reverse search with its eight neighbours unrolled for tiles off the map edge, the queue state in
+  locals, and the heuristic read from a fixed |d| table.
+  - It follows the side-frame neighbour order (ox/oy), so a mirrored rat runs the mirrored search at the same
+    cost.
+  - BotTest compares it with the plain loop: the same path in 96 of 96 searches (random walls and dirt, all 4
+    frames, FIFO and LIFO ties, a rat that walked on).
+  - Probe: 543 bytecodes per node for the plain reverse loop, 344 with FLOW_FAST (37% cheaper).
+  - The first version rebuilt per-search heuristic columns at every search start (about 2,100 bytecodes). On the
+    turn that allocates the queue arrays this caused one overrun in the probe game, so it was replaced by a
+    129-entry table built once inside the existing guarded allocation.
+- New candidates, all on S6M:
+  - s6y = REV + FAST.
+  - s6z = s6y + FLOW_RESERVE 1300 (from 2500; the indicator costs at most 241 and the tag 400).
+  - s7a = s6y + FLOW_STALL 2: with REV a rat no longer pays for searching, so it can ask for a path sooner.
