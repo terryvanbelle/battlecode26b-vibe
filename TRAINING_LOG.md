@@ -882,3 +882,37 @@
 - superioristhmus vs spsquared (1786/1787): we finished on 10904 and 8758 cheese, with 39.6k rat-turns to their
   93.7k and 109k, and lost on points 27-72 and 26-73 (xfer 19k vs 55k-58k). The 18-baby cap again. ra_s5r (caps
   30/40) is at 62/80 cells, net +7 cells, -1.9 pts, t -0.37: no harm. It goes to the replica next, on v3 set 1.
+
+## 2026-10-29 03:31 PDT: the second king; formation v2; seepastyourgreed
+- s3y has formation off, and in 41 long panel games we never had more than one king. Opponents had 2-5 in 8 of
+  them, and we lost 6 of those 8. Over all 45 s3y panel games that reached round 2000 we won 32 and lost 13 on
+  points. 8 of the 13 losses came with fewer kings than the opponent, and at equal kings 5 of those 8 would have
+  been wins. We finished those games on 2k-24k unspent cheese. Kings alive at round 2000 weigh 0.5 of war points;
+  "cheese transferred" counts baby-to-king transfers plus a king's own pickups.
+- s4d's formation (on its replica games, 1287-1302 and 1770-1785): in most long games the first king never named a
+  site. The income test (rate x 0.75 - every king's upkeep >= -100) ignores the bank: seepastyourgreed reached
+  8819 at r1000 with no site. pickFormSite needs a home mine whose 3x3 the king has seen, which almost never
+  happens because the king hardly moves. Its fallback, four tiles behind the king, is often a wall. Where sites
+  were named (cheesebottles), the king chased piles onto its own site: 900-1300 'K' rat-turns per game and no
+  king.
+- Formation v2, five switches (off by default):
+  - FORM_SURPLUS: Econ's projected round-2000 bank with one more king >= 500.
+  - FORM_RING: a site just off the king's body (centre 3 out, all of it in view; side-frame order).
+  - FORM_STILL: the first king stays put while a site is open.
+  - FORM_GAP 30: the next site may open 30 rounds after a king forms.
+  - FORM_LATE: a lone king may form a second up to r1940. The engine's r1200 cutoff binds only at 2 kings.
+  - Candidates: s5x = s4d + all of it, FORM_MAX 5. s5y = s5x from r600. s5z = s5x + s5r's caps 30/40.
+  - Check vs s4d (fk_s5x, 6 maps x 2 sides): 5-7. superioristhmus formed 4 kings on both sides (r82-421) and won
+    both; the kings settled on four different mines. diamond formed 2. DefaultMedium formed 2-3 at r103-210 and
+    lost both early (r148, r273). No site on cheesebottles, wallsofparadis, seepastyourgreed (surplus negative).
+    ra_s5x and ra_s5y are queued; 40 of ra_s4d's 80 games go to round 2000.
+- seepastyourgreed is a serpentine of wall rows with gaps at alternate ends. In fk_s5x neither side had income for
+  500 rounds (s5x starved on both sides; s4d's bank reached 52 on one). The babies chase piles seen through the
+  wall rows ('C' was 60-70% of their turns). s5t (CHEESE_LOS) vs s4d there, both sides: won both, income from
+  r300-500 (bank 6060 at r500 vs 1190).
+- AdamTan12 beat s3y 0-3 twice on wallsofparadis, keepout, where_are_you (1798/1799), forming 2-5 kings per
+  game. Their extra kings form 6-48 tiles from the first, often at the centre or a far mine, from r120-260 on,
+  with a bank of 1150-2900. On tiny and DefaultSmall (1790/1791) both sides laid 25-56 rat traps by r120, and
+  nearly every one hit. Our king died to bites after our bank fell to about 100 by r70-80 (spawn replacements at
+  60 apiece).
+- s5r (caps 30/40) is on the replica: v3 set 1, from match 1800.
