@@ -175,6 +175,9 @@ public final class Cfg {
      *  of them but behind it on 5-9%; AlexT101 and abcdezyxwv threw ours into our king 5-7 times a game for 36-41. */
     public static final boolean RESCUE = false;
     public static final int RESCUE_D2 = 8;
+    /** With RESCUE: when no blind tile next to the carrier is one step away, walk toward the nearest one (useful
+     *  with RESCUE_D2 above 8, two or more steps out). */
+    public static final boolean RESCUE_WALK = false;
     /** Standoff: do not step toward an enemy rat that sees us and is not weaker; face it and hold instead. */
     public static final boolean STANDOFF = true;
     /** Throws: an enemy baby hit beyond tile 2 counts THROW_FAR_PCT percent; below a THROW_MIN score (42 = a

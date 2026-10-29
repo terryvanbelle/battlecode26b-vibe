@@ -1254,13 +1254,29 @@ public final class Baby {
             int sc = (d == rc.getDirection() ? 0 : 1) * 2 + (G.hand(G.me, d) > 0 ? 1 : 0);
             if (sc < bs) { bs = sc; bestD = d; }
         }
-        if (bestD == null) return false;
+        if (bestD == null) return Cfg.RESCUE_WALK && walkBehind(c);
         MapLocation g = Nav.guard;
         Nav.guard = c;
         boolean moved = Nav.step(bestD);
         Nav.guard = g;
         if (moved) rescues++;
         return moved;
+    }
+
+    /** Cfg.RESCUE_WALK: no blind tile next to rescueT is one step away; walk toward the nearest open one. */
+    static boolean walkBehind(MapLocation c) throws GameActionException {
+        MapLocation best = null;
+        int bd = Integer.MAX_VALUE;
+        for (int i = 0; i < 8; i++) {
+            MapLocation t = c.add(G.DIRS[i]);
+            if (sees(rescueT, t) || !G.rc.onTheMap(t) || G.rc.canSenseLocation(t) && !G.rc.sensePassability(t)) continue;
+            int d = (G.me.distanceSquaredTo(t) * 2) + (G.pickBit(G.me, t) ? 0 : 1);
+            if (d < bd) { bd = d; best = t; }
+        }
+        if (best == null) return false;
+        Nav.goTo(best);
+        rescues++;
+        return true;
     }
 
     /** Step onto a tile adjacent to an enemy baby that it cannot see, keeping it in view; the post-move carry grabs it. */

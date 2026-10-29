@@ -91,6 +91,7 @@ public class BotTest {
                     case "getRawCheese": return raw;
                     case "getAllCheese": return global + raw;
                     case "onTheMap": return onMap((MapLocation) a[0]);
+                    case "sensePassability": return passable((MapLocation) a[0]);
                     case "canSenseLocation": return sensable((MapLocation) a[0]);
                     case "readSharedArray": return shared[(Integer) a[0]];
                     case "writeSharedArray": {
@@ -585,6 +586,11 @@ public class BotTest {
         // only tiles it sees are in reach: no rescue
         me = new MapLocation(7, 7); facing = Direction.SOUTH; G.me = me; actCd = 0; moveCd = 0; turnCd = 0;
         check(!Baby.rescue() && me.equals(new MapLocation(7, 7)), "rescue: no step when every tile next to it is in its view");
+        // RESCUE_WALK: from two steps out, walk toward the nearest blind tile beside it (not into its front)
+        me = new MapLocation(7, 8); facing = Direction.SOUTH; G.me = me; actCd = 0; moveCd = 0; turnCd = 0;
+        int before = me.distanceSquaredTo(carrier.location);
+        check(Baby.walkBehind(carrier.location) && me.distanceSquaredTo(carrier.location) < before && !me.equals(new MapLocation(7, 6)),
+              "rescue walk: closer, around its front (" + me + ")");
         Baby.rescueT = null;
     }
 
