@@ -1681,3 +1681,25 @@
   r300 while they hold 26-28% on ours, and against AdamTan12 our king still dies in all 6 games (mean r250,
   565 HP a game to bites). Raiders hold their half against a passive s7d (rd1, 8-18%) but not against the top
   bots.
+
+## 2026-10-29 13:10 PDT: against the top three we are broke for half the war; s8k
+- Over s7d's 126 field games (v3 sets 1-3), the share of war rounds (after the backstab, our first king alive)
+  in which our bank is under 350 with fewer than 18 babies, so the king cannot spawn at WAR_FLOOR, is 62%
+  against AlexT101, 49% against abcdezyxwv and 32% against AdamTan12; theirs is 5-7%. Mean babies at war
+  12.9 to 20.6 (AlexT101) and 13.8 to 23.4 (abcdezyxwv); their banks average 3675 and 1497 to our 513 and 626.
+  Against the other four we are stranded 0-25% of the time.
+- How it happens on the small maps (s8j vs AdamTan12, 2346; income there is negligible for both): on
+  DefaultSmall the war opens at r15 (their trap). By r40 we have laid 65 rat traps (1300 cheese) and fall to
+  295 cheese against their 1060. Our traps kill 22 of their rats before r49 and they kill 16 of ours, but from
+  r49 they spawn 15 to our 2. Our king, at 185 cheese with 13 babies, is under WAR_FLOOR and its spawn tiles
+  are taken. tiny: 47 traps by r40, bank 195 against 1065, kills even at 29-29, spawns 35 against 45.
+- Jail (same match, r778) is the slow version: from r150 to r740 our bank sits at 175-250 with 8-15 babies
+  and no spawns, while babies keep laying traps (51 to 67), until a fight at r740 wipes us. Their bank climbs
+  past 1000 with 16 babies.
+- In those king fights AdamTan12 keeps our defenders carried: 21 grabs within 5 of our king in r49-94 on
+  DefaultSmall, while their carriers keep biting (a carrier can still act) and our babies bit 10 times to
+  their 60 on the king.
+- s7u (SIEGE_FLOOR 20 + TRAP_SPAWN_FIRST: no trap while it would cost the next spawn, and spawn floors drop
+  to 20 with enemies in the king's sight) is aimed at exactly this and goes to the replica after s8j. s8k is s7u
+  plus RAT_TRAP_MIN_CHEESE 600, which keeps a 600 reserve that only spawns can spend. Local check tf1 (s7d, s7u,
+  s8k vs araid on DefaultSmall and tiny, both sides) is on the VM.
