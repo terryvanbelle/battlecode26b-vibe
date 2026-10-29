@@ -570,3 +570,12 @@
   cells +14 -9, 53-27, king-kill losses 12 (17), king kills by us 23 (18). The two passes stack, with the largest
   points gain of the rush arms. It is already the replica candidate (set-1 block running). The full suite passed
   (BotTest, test_tools 109, battle 64, replaydump 489, reports 67, scoring 102).
+
+## 2026-10-29 00:10 PDT: s4j rejected on the replica after block 1
+- s4j block 1 (set 1, matches 1446-1457 and 1494-1497) vs s3y: 48 cells, 39 alike, D 9 (+4 -5), net -1, t -0.33:
+  rejected (block-1 bar t <= 0). It gained where_are_you (C0derTang), dirtfulcat and streetsofnewyork (CS50Crab) and
+  wallsofparadis (bc26vibe_bot). It lost Nofreecheese (CS50Crab), DefaultLarge (abcdezyxwv), fullofsecrets (ask8000),
+  krotus (bc26vibe_bot) and heart (outercloud). abcdezyxwv swept DefaultLarge, knifefight and sunandmoon on both
+  sides against both versions. Against abrk, our own rush archetype, war-time fixes move few panel cells. s3y is
+  back (submission 71). The next candidate goes out when the early-king screens (sp17) or the stacked rush run
+  (rx_s4n) are scored.
