@@ -1,0 +1,5 @@
+name=s6l
+source=bots/ratbot
+source_sha=713971e9663d
+commit=2c832d3
+created=2026-10-29 05:01 PDT

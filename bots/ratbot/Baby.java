@@ -835,7 +835,7 @@ public final class Baby {
             if (ct != null) { Nav.goTo(ct); return; }
             if (Cfg.RAID && raider && rc.getHealth() >= Cfg.RAID_HP && raid()) { why = 'z'; return; }
         }
-        if (scout && role == GATHER && G.round < Cfg.SCOUT_UNTIL) {
+        if (scout && role == GATHER && G.round < scoutUntil(Cfg.SCOUT_AREA)) {
             // a scout with news the king lacks carries it home (squeaks reach the king from dist2 16 only)
             MapLocation k = Comms.nearestKing(G.me);
             if (k != null && unreported() >= 0) { Nav.goTo(k); why = 's'; return; }
@@ -1394,6 +1394,9 @@ public final class Baby {
 
     /** Scout movement: the nearest never-seen tile of EXPLORE_TRIES samples on our half; false (no move) when no
      *  sample is one. */
+    /** The round scouting ends: SCOUT_UNTIL, or W*H/area on a map big enough to make that later (area 0: off). */
+    static int scoutUntil(int area) { return area > 0 ? Math.max(Cfg.SCOUT_UNTIL, G.W * G.H / area) : Cfg.SCOUT_UNTIL; }
+
     static boolean exploreHome() throws GameActionException {
         if (exploreTarget == null || G.cheb(G.me, exploreTarget) <= 2 || Nav.stall > 20 || Sym.known(G.idx(exploreTarget.x, exploreTarget.y))) {
             int x = -1, y = -1, bd = Integer.MAX_VALUE;

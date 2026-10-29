@@ -1522,7 +1522,15 @@ public class BotTest {
         check(same, "mine traps: mirrored twins rank mirrored sites alike");
     }
 
+    static void testScoutUntil() {
+        reset(); W = 60; H = 60; install();
+        check(Baby.scoutUntil(6) == 600 && Baby.scoutUntil(0) == Cfg.SCOUT_UNTIL, "scout area: 60x60 scouts to r600; off = SCOUT_UNTIL");
+        reset(); W = 30; H = 30; install();
+        check(Baby.scoutUntil(6) == Math.max(Cfg.SCOUT_UNTIL, 150), "scout area: a small map keeps SCOUT_UNTIL");
+    }
+
     public static void main(String[] args) throws Exception {
+        testScoutUntil();
         testMineTraps();
         testTrapRisk();
         testMineSpread();
