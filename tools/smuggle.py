@@ -10,15 +10,16 @@ the end of each turn so that bc mod 128 is a 7-bit tag:
   bit 6     even parity of bits 0-5
 A team is tagged when nearly all its turns decode (an untagged build passes about half) and its counts vary.
 Row rules (engine InternalRobot.throwRobot / processEndOfTurn): a robot-round can have several turns.tsv rows;
-rows written for a thrower, a thrown rat or a carried rat during someone's turn repeat the PREVIOUS turn's count,
-and the robot's own row comes last, so the last row of each (round, id) is the real one. bc 0 means the robot died
-in its own turn (no tag); a count within TAG_MIN_LEFT of the limit may be a turn whose pad was skipped, and the
-turn after an overrun ran late. turns.tsv gives a robot's type at the start of its turn, so a baby that becomes a
-king that turn decodes with WHY, as it was written.
+rows written for a thrower, a thrown rat or a carried rat during someone's turn repeat the PREVIOUS turn's count.
+The real one is the robot's own record: src=own in a dumpVersion 2 dump, else the last row of the (round, id). bc 0
+or dead=1 means the robot died in its own turn (no tag); a count within TAG_MIN_LEFT of the limit may be a turn whose
+pad was skipped, and the turn after an overrun ran late. turns.tsv gives a robot's type at the start of its turn, so
+a baby that becomes a king that turn decodes with WHY, as it was written.
 """
-import argparse, collections, csv, json, os, re, sys
+import argparse, collections, json, os, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import game_report as GR  # noqa: E402
 
 WHY = "-CDEHKMPSWacdfghkmprswyz"
 KWHY = "-nsfcbd"
@@ -53,12 +54,8 @@ def decode(bc, king):
 
 
 def robot_rounds(turn_rows):
-    """The real row of each robot-round of teams 1 and 2 (the last one), in input order of first appearance."""
-    last = {}
-    for r in turn_rows:
-        if r['team'] in ('1', '2'):
-            last[(r['round'], r['id'])] = r
-    return list(last.values())
+    """The real row of each robot-round of teams 1 and 2 (GR.own: src=own, or the last row), in input order."""
+    return [r for r in GR.own(turn_rows) if r['team'] in ('1', '2')]
 
 
 def usable(rows):
@@ -71,7 +68,7 @@ def usable(rows):
         late.discard(r['id'])
         if bc >= lim:
             late.add(r['id'])
-        if bc == 0 or bc >= lim - (TAG_MIN_LEFT - 5) or prev_over:
+        if bc == 0 or r.get('dead') == '1' or bc >= lim - (TAG_MIN_LEFT - 5) or prev_over:
             continue
         out.append(r)
     return out
@@ -112,33 +109,17 @@ def summarize(turn_rows):
     return out
 
 
-def games(d):
-    return sorted(int(m.group(1)) for m in (re.match(r'g(\d+)\.turns\.tsv$', f) for f in os.listdir(d)) if m)
-
-
 def main(argv=None):
-    import game_report as GR
     ap = argparse.ArgumentParser()
     ap.add_argument('src')
     ap.add_argument('--game', type=int, default=None, help='0-based game index (match.json game = N+1); default all')
     a = ap.parse_args(argv)
-    d = a.src
-    if os.path.isfile(d):
-        d = GR.dump(d)
-        import atexit, shutil
-        atexit.register(shutil.rmtree, d, True)
-    gs = games(d)
-    if a.game is not None:
-        if a.game not in gs:
-            print(f'no game {a.game} in this replay; games are {gs} (0-based, match.json game = N+1)', file=sys.stderr)
-            return 2
-        gs = [a.game]
-    for g in gs:
+    d = GR.source(a.src)
+    for g in GR.pick(d, a.game):
         meta = json.load(open(os.path.join(d, f'g{g}.meta.json')))
         name = {'1': meta.get('teamA'), '2': meta.get('teamB')}
-        print(f"game {g} ({meta.get('map')}): A {name['1']} vs B {name['2']}")
-        with open(os.path.join(d, f'g{g}.turns.tsv')) as f:
-            rows = list(csv.DictReader(f, delimiter='\t'))
+        print(f"game {g} ({meta.get('map')}): A {name['1']} vs B {name['2']}" + GR.result(GR.summary(d, g)))
+        rows = list(GR.rows(os.path.join(d, f'g{g}.turns.tsv')))
         for t, (ok, rate, n) in sorted(tagged_teams(rows).items()):
             print(f"  {name[t]}: {'tagged' if ok else 'not tagged'} (decodes {100 * rate:.1f}% of {n} robot-rounds)")
         for t, c in sorted(summarize(rows).items()):

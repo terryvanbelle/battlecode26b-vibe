@@ -13,6 +13,9 @@ Commands:
                                                           DIR/results.jsonl, skipping cells already present
 Every game runs with no network (unshare -rn), a heap cap and a wall-clock cap, and holds one machine-wide slot
 (flock on $BC_SLOTS_DIR/slot<i>, i < $BC_SLOTS) so that every tool shares one concurrency limit.
+The row's summary fields come from one ReplayDump run (tsv mode with --tsv, else summary mode; its stdout is never
+passed through). The tools are rebuilt first when a source is newer (tools/build-tools.sh). A replay that fails to
+summarize gets summary_error and no winType/ptsA/ptsB, so score.cell leaves a points game unscored.
 """
 import argparse, fcntl, hashlib, json, os, re, shutil, subprocess, sys, tempfile, threading, time
 
@@ -112,8 +115,13 @@ def map_dir(seed):
         if not os.path.isdir(d):
             names = sorted(f[:-6] for f in os.listdir(MAPS) if f.endswith('.map26'))
             tmp = d + f'.tmp{os.getpid()}'
-            subprocess.run([os.path.join(JDK, 'bin', 'java'), '-cp', f'{ENGINE}:{TOOLS_CP}', 'bc26tools.MapReseed',
-                            MAPS, tmp, str(seed)] + names, check=True, capture_output=True)
+            err = build_tools()
+            if err:
+                raise SystemExit(err)
+            p = java_tool('bc26tools.MapReseed', MAPS, tmp, str(seed), *names)
+            if p.returncode != 0:
+                shutil.rmtree(tmp, ignore_errors=True)
+                raise SystemExit(f'MapReseed failed: {p.stderr.strip()[-1000:]}')
             try: os.rename(tmp, d)
             except OSError: shutil.rmtree(tmp, ignore_errors=True)
     return d
@@ -126,6 +134,69 @@ REASON_RE = re.compile(r'\[server\] Reason: (.*)')
 def points(row):
     """The spec's points from the final aggregates (tools/score.py)."""
     return score.points(row)
+
+
+SUMMARY_KEYS = ('winType', 'backstabRound', 'backstabBy', 'cheeseXferA', 'cheeseXferB', 'catDmgA', 'catDmgB', 'kingsA',
+                'kingsB', 'babiesA', 'babiesB', 'A', 'B', 'backstabCause', 'numKingsA', 'numKingsB', 'bankA', 'bankB',
+                'dumpVersion')
+_tools_lock = threading.Lock()
+_tools_ok = [None]
+
+
+def build_tools():
+    """Run tools/build-tools.sh once per process (it recompiles only when a source is newer than the classes); None,
+    or its error text."""
+    with _tools_lock:
+        if _tools_ok[0] is None:
+            b = subprocess.run([os.path.join(REPO, 'tools', 'build-tools.sh')], capture_output=True, text=True)
+            _tools_ok[0] = '' if b.returncode == 0 else f'build-tools.sh failed: {b.stderr.strip()[-1000:]}'
+    return _tools_ok[0] or None
+
+
+def java_tool(*args):
+    """Run a build/tools class (args: class, then its arguments); CompletedProcess. Holds the build lock shared, so
+    build-tools.sh cannot swap or delete the class tree while the JVM loads from it."""
+    with open(os.path.join(REPO, 'build', '.tools.lock'), 'a') as lk:
+        fcntl.flock(lk, fcntl.LOCK_SH)
+        return subprocess.run([os.path.join(JDK, 'bin', 'java'), '-cp', f'{ENGINE}:{os.path.realpath(TOOLS_CP)}',
+                               *args], capture_output=True, text=True)
+
+
+def parse_summary(p):
+    """(game 0's summary dict, None) or (None, error) from a ReplayDump run: a non-zero exit, no output, an 'error'
+    line (summary mode prints one and exits 0) and a summary without winType are all errors."""
+    if p.returncode != 0:
+        return None, f'ReplayDump exit {p.returncode}: {(p.stderr or "").strip()[-500:]}'
+    try:
+        lines = [json.loads(x) for x in p.stdout.splitlines() if x.strip()]
+    except ValueError as e:
+        return None, f'ReplayDump output is not JSON: {e}'
+    bad = next((x for x in lines if 'error' in x), None)
+    if bad:
+        return None, f"ReplayDump: {bad['error']}"
+    if not lines or lines[0].get('winType') is None:
+        return None, 'ReplayDump: no summary with a winType'
+    return lines[0], None
+
+
+def summarize(replay, tsv_dir=None):
+    """(summary, error) of a replay's game 0 (parse_summary); with tsv_dir, the tsv dump is written there in the same
+    run."""
+    err = build_tools()
+    if err:
+        return None, err
+    return parse_summary(java_tool('bc26tools.ReplayDump', *(('tsv', replay, tsv_dir) if tsv_dir else ('summary', replay))))
+
+
+def add_summary(row, summ, err):
+    """Copy a summary's fields and the points into a result row, or record summary_error (no winType, no points)."""
+    if err:
+        row['summary_error'] = err
+        return row
+    for k in SUMMARY_KEYS:
+        row[k] = summ.get(k)
+    row['ptsA'], row['ptsB'] = points(row)
+    return row
 
 
 def run_game(a, b, mapname, seed=0, out=None, keep=False, tsv=False):
@@ -163,19 +234,7 @@ def run_game(a, b, mapname, seed=0, out=None, keep=False, tsv=False):
     if p.returncode != 0 or not m:
         row['error'] = (p.stderr or p.stdout)[-1500:]
     if os.path.exists(replay):
-        s = subprocess.run([os.path.join(JDK, 'bin', 'java'), '-cp', f'{ENGINE}:{TOOLS_CP}', 'bc26tools.ReplayDump',
-                            'summary', replay], capture_output=True, text=True)
-        try:
-            summ = json.loads(s.stdout.strip().splitlines()[-1])
-            for k in ('winType', 'backstabRound', 'backstabBy', 'cheeseXferA', 'cheeseXferB', 'catDmgA', 'catDmgB',
-                      'kingsA', 'kingsB', 'babiesA', 'babiesB', 'A', 'B'):
-                row[k] = summ.get(k)
-            row['ptsA'], row['ptsB'] = points(row)
-        except Exception as e:
-            row['summary_error'] = str(e)
-        if tsv:
-            subprocess.run([os.path.join(JDK, 'bin', 'java'), '-cp', f'{ENGINE}:{TOOLS_CP}', 'bc26tools.ReplayDump',
-                            'tsv', replay, os.path.join(out, tag)], check=False)
+        add_summary(row, *summarize(replay, os.path.join(out, tag) if tsv else None))
         if keep or tsv:
             row['replay'] = replay
         else:

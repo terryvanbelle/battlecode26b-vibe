@@ -12,7 +12,9 @@ Sources:
 
 Columns: source,run,seq,teamA,teamB,map,scoreA,scoreB,winner,rounds,reason,seed,ptsA,ptsB. ptsA/ptsB: a local game's
 cell score (tools/score.py cell(): 100/0 to the winner of a game decided by kings, else the spec's points share), a
-replica match's share of its games won (%).
+replica match's share of its games won (%). A local game score.cell cannot score (a points game whose replay summary
+failed) is left out and counted in build's output line. Per-game replica rows with graded scores: tools/field_report.py
+games (not here: the ladder rates replica matches, and per-game rows would count them twice).
 Players: our builds are us:<package> (a replica match's package is the submission it played), the stock
 examplefuncsplayer/lectureplayer keep their names, field bots use their research/field/FIELD.tsv name.
 """
@@ -48,7 +50,8 @@ def player(spec, field):
     return name if name in STOCK else 'us:' + name
 
 
-def local_rows(runs_dir, field):
+def local_rows(runs_dir, field, unscored=None):
+    """One row per scored game; games with a winner but no score are counted in the list `unscored` (path:line)."""
     rows = []
     for f in sorted(glob.glob(os.path.join(runs_dir, '*', 'results.jsonl'))):
         run = os.path.basename(os.path.dirname(f))
@@ -60,6 +63,10 @@ def local_rows(runs_dir, field):
             w = j.get('winner')
             if w not in ('A', 'B') or 'a_spec' not in j:
                 continue
+            if score.missing(j):
+                if unscored is not None:
+                    unscored.append(f'{f}:{seq}')
+                continue
             sc = score.cell(j)
             rows.append({'source': 'local', 'run': run, 'seq': seq,
                          'teamA': player(j['a_spec'], field), 'teamB': player(j['b_spec'], field),
@@ -69,17 +76,21 @@ def local_rows(runs_dir, field):
     return rows
 
 
-def replica_rows(matches, packages, subs=()):
-    """matches: galaxy match dicts; packages: our submission id -> package; subs: our (created, package) list. The
-    match API hides participants' submission ids, so a match without one played our latest accepted submission
-    created before the match."""
-    subs = sorted(subs)
+def our_build(p, created, packages, subs):
+    """The build (package) of our participant p in a match created at `created` (UTC ISO): its submission's, else
+    our latest accepted submission created before the match (the match API hides participants' submission ids);
+    '?' when none. subs: sorted (created, package) list."""
+    if p.get('submission') in packages:
+        return packages[p['submission']]
+    prior = [pkg for when, pkg in subs if when <= created]
+    return prior[-1] if prior else '?'
 
-    def ours(p, created):
-        if p.get('submission') in packages:
-            return packages[p['submission']]
-        prior = [pkg for when, pkg in subs if when <= created]
-        return prior[-1] if prior else '?'
+
+def replica_rows(matches, packages, subs=()):
+    """matches: galaxy match dicts; packages: our submission id -> package; subs: our (created, package) list
+    (our_build)."""
+    subs = sorted(subs)
+    ours = lambda p, created: our_build(p, created, packages, subs)
     rows = []
     for m in sorted(matches, key=lambda m: m['id']):
         ps = sorted(m.get('participants') or [], key=lambda p: p['player_index'])
@@ -147,7 +158,8 @@ def main(argv=None):
         os.makedirs(os.path.dirname(a.out), exist_ok=True)
         return fetch_replica(a.out)
     field = field_names(a.field)
-    rows = local_rows(a.runs, field)
+    unscored = []
+    rows = local_rows(a.runs, field, unscored)
     nl = len(rows)
     if os.path.exists(a.replica):
         r = json.load(open(a.replica))
@@ -159,6 +171,9 @@ def main(argv=None):
         w.writeheader()
         w.writerows(rows)
     print(f'{len(rows)} rows ({nl} local games, {len(rows) - nl} replica matches) -> {a.out}')
+    if unscored:
+        print(f'left out {len(unscored)} local games with no score (summary error or no summary): {unscored[:5]}',
+              file=sys.stderr)
 
 
 if __name__ == '__main__':
