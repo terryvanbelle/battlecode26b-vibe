@@ -1513,3 +1513,19 @@
   overruns.
 - Not in the bundle yet (screens or diags still running): BREAKOUT_TTL (s7z, brk1), KING_PRESS + PRESS_SHARED (s8a),
   RETREAT_HP 0 (s8b), SIEGE_FLOOR (s7t/s7u), MINE_EXPLORE (s7v/s7w, eco3).
+
+## 2026-10-29 10:29 PDT: mine discovery against the field; eco3, sh2 and brk1 results
+- minedisc.py (scratch) had the replay direction codes wrong: turns.tsv uses the schema codes (0 centre, 1 W ...
+  8 NW, as in battle_report.py), not Java ordinals, so its cone test was off. Rerun on 56 replica replays
+  (s6m/s7d era, 1915-2095): our rats first see the nearest home-half mine about when opponents do (median r17 vs
+  r13), but the 2nd at r64 (theirs r29), the 3rd at r143 (r68) and the 4th at r335 (r90).
+- eco3 (MINE_EXPLORE against s7d, 6 maps x 2 sides) closes part of that gap in self-play. s7w found the 4th and
+  5th nearest home mines at r63/r48 against s7d's r110/r81, s7v (one exploring slot) at r87/r61. Results:
+  s7v 5/12 wins, -0.3 pts a game, pickups x0.97; s7w 6/12, +1.2 pts, x1.03. Neutral against our own bot, which
+  explores the same way. The gap it targets is against other bots, so s7w is held for a field bundle.
+- sh2 (corridor maps rose, EscapeTheNight, Stash, minimaze; vs araid, 2 sides): s7x (SWAP_HOLD + SWAP_YIELD +
+  SWAP_NO_ALONG) 7/8, s7y (+ SWAP_PAIR 30) 6/8, s7l (no NO_ALONG) 4/8. s7x's form is already in s8c.
+- brk1 (s7z = BREAKOUT_TTL 150 vs s7d on the 9 dig maps x 2 sides): 8/18 wins, +5.7 pts a game. The mean
+  rests on one 100-0 king kill on EscapeTheNight; 10 of 18 games lost, pickups x1.04. Mixed; screen ra_s7z
+  decides.
+- sc1 (s8c vs s7d, 3 maps x 2 sides) finished 5/6 with no exceptions or overruns. s8c's replica block is running.
