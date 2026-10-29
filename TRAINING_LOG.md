@@ -983,3 +983,26 @@
   gauntlet. s6i = s4d + RAID_EVERY 2 (a quarter of the babies raid enemy-half mines) + RAID_TRAPS 8 is queued
   after the trapped-mine screens (ra_s6g running; ra_s6f, ra_s6h next). sp22_s5t and ra_s5g were dropped from
   the queue: the replica had already rejected s5t and s5g.
+
+## 2026-10-29 05:19 PDT: big maps: our rats never see most of our own half; HOME_PICK
+- where_are_you (60x60, rotational, 8 mines a half), s4d and s6l vs araid locally (wau1, wau2): the king knows 3
+  mines (`km=..3`) all game; each baby's `mm` is 1-3. Reporting is not the problem. No rat of ours ever comes
+  within sight (r² 20) of 5 of our half's 8 mines. Through r400 every rat-turn falls in x < 36, y < 24. Both kings
+  starve in s6l's game (1556 of 7720 home-half cheese picked by r300).
+- The cause is how scouts and seekers pick targets. exploreHome takes the nearest never-seen tile of 12 random
+  samples. Each baby has its own memory, so every new scout re-crawls the ground next to the king. Scout 13705 was
+  at (25,9) at r248, 22 tiles from where it started. SCOUT_AREA 6 (scouting until r600) changed nothing.
+- HOME_PICK (off by default): 1 takes the first valid sample (uniform over what is unseen), 2 the farthest.
+  Diagnostic games vs araid on where_are_you:
+
+  | Bot | Result | Our pickups | Home mines first seen (of 8) |
+  |---|---|---|---|
+  | s4d (wau1) | lost r1234 | - | 3: r3, r57, r236 |
+  | s6l (wau2) | lost r1406 | 5850 | 3: r3, r60, r152 |
+  | s6m = s4d + HOME_PICK 1 | won on points r2000 | 12187 | 4: r3, r115, r157, r806 |
+  | s6n = s4d + HOME_PICK 2 | lost on points r2000 | 10257 | 3: r3, r37, r931 |
+  | s6o = s6m + SCOUT_AREA 6 | won on points r2000 | 13199 | 4: r3, r115, r157, r816 |
+
+- The four mines still unseen are gated: (39,9), (38,20) and (9,29) sit behind 5-tile dirt bands, and (51,4) is
+  at the far end of the bottom corridor (about 46 tiles from the king).
+- ra_s6m and ra_s6o are at the head of the VM queue. s6n is not screened.
