@@ -743,6 +743,18 @@ public class BotTest {
         Baby.seen = new RobotInfo[0]; Baby.myMineCount = 0; Comms.numMines = 0; Baby.mineTarget = null;
     }
 
+    static void testHostile() {
+        int r0 = Baby.role; boolean c0 = G.coop;
+        G.coop = false; Baby.role = Baby.GATHER;
+        boolean war = Baby.hostile();
+        G.coop = true;
+        boolean gatherCoop = Baby.hostile();
+        Baby.role = Baby.ATTACK;
+        boolean attackCoop = Baby.hostile();
+        check(war && !gatherCoop && attackCoop == Cfg.RUSH_BREAK, "hostile: after cooperation all; during it only RUSH_BREAK attackers");
+        Baby.role = r0; G.coop = c0;
+    }
+
     static void testCarryCap() {
         check(Baby.takeOk(0, 500, 120) && Baby.takeOk(100, 20, 120) && !Baby.takeOk(100, 40, 120) && Baby.takeOk(400, 400, 0),
               "carry cap: empty-handed takes any pile; loaded only within the cap; 0 = no cap");
@@ -981,6 +993,7 @@ public class BotTest {
         testMineSpread();
         testScout();
         testSeek();
+        testHostile();
         testMineMirror();
         testKingDig();
         testKingDodge();

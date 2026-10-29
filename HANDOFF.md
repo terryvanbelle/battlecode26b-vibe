@@ -77,22 +77,29 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (see TRAINING_LOG.md for the history)
-- Incumbent on the replica: s2o (#62, re-submitted as #65 to play its panel v2 set-3 control, matches 1168-1183,
-  queued). s3y (#64 = s3t + MINE_BALANCE + the bytecode tag) scored t 1.83 on sets 1+2 vs s2o (94 cells, D 30, net
-  +10): block 3 on set 3 (`research/panel/v2-set3.json`) after the control. Then add the s2o set-3 ids as a line in
-  `research/panel/v2-ref-s2o.txt`, `contest.py submit bots/s3y`, queue its set-3 requests and score with
-  `contest.py paired research/panel/v2-ref-s2o.txt 898-913 914-917,976-987 SET3_IDS` (block 3 rejects at t <= 1.5).
-- Next replica candidate: s4b (s3z + CAT_DEFEND_R2 36; screen +2.6 vs s3z, attack_on_cat fixed). s3z = s3t +
-  FORM_KING behind the income gate FORM_NET100 -100 and FORM_JOIN 8.
+- Incumbent on the replica: s3y (#66 = s3t + the bytecode tag; s3t = s3h + MINE_BALANCE), accepted 2026-10-28
+  18:40: panel v2 blocks 1-3 vs s2o, 142 cells, D 38 (+26 -12), net +14, t 2.27. Its panel matches are the new
+  reference: `research/panel/v2-ref-s3y.txt` (898-913 / 914-917,976-987 / 1196-1211). Candidates now score with
+  `contest.py paired research/panel/v2-ref-s3y.txt BLOCK1 [BLOCK2 BLOCK3]`.
+- Replica candidate in play: s4b (#67 = s3z + CAT_DEFEND_R2 36; s3z = s3t + FORM_KING behind FORM_NET100 -100 and
+  FORM_JOIN 8), block 1 on set 1 (`v2-set1.json`; 4 sent, 12 queued for the drain loop at 18:40). Block 1 rejects
+  at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4. Re-submit s3y after a reject.
 - Dev = s3h behaviour plus off-by-default switches: KING_DODGE + YIELD_KING, HUNGRY, CARRY_MAX, BITE_GUARD,
   BITE_CARRIER, MINE_BALANCE, RICH_BABIES, FORM_KING (FORM_MAX, FORM_NET100, FORM_JOIN), CAT_DEFEND_R2, SEEK_CROWD
-  (mine seeking; decision code 'x'). Debug.TAG is on.
-- Field diagnosis (`tools/field_report.py --ids 898-917,976-987 --by opp`, s3y's 96 panel games): we beat the
-  peaceful bots 11-12 of 12; we lose to the early rushers (abcdezyxwv 1-11, AlexT101 2-10: backstab r35-50, our king
-  dead by ~r300-330); 27 of our 40 losses are king kills. In brawls they grab and throw about twice as often and
-  thrown rats hit our king; we spend the bank on rat traps and spawns early and then cannot reinforce (`K:sE`).
-  Mine coverage: 44 of 96 games leave a home-side mine untouched (streetsofnewyork: two mines behind dirt).
-- Local rusher archetype `bots/arush` (s4b + RUSH) for rush-defence tests: `runs/rx1_s4b` (s4b vs arush, 80 games).
-- VM queue (serial, ~20 min each): rx1_s4b (s4b vs arush) -> sp14_s4d (s4d = s4b + SEEK_CROWD 6, control
-  sp12_s4b). Screens score with `gauntlet.py selfplay RUN/results.jsonl --base s2o --control CTRL/results.jsonl`.
+  (mine seeking; decision code 'x'), MINE_MIRROR (king lists the our-half twin of every known mine once the
+  symmetry is unique), RUSH + RUSH_BREAK (archetypes only). Debug.TAG is on.
+- Owner rule (PROMPTS.md #14): assume every map is symmetric in all aspects. A read-only symmetry audit workflow
+  (four areas, each finding checked by a skeptic) is ranking where the bot should mirror what it knows.
+- Field diagnosis (`tools/field_report.py --ids 898-917,976-987 --by opp`, s3y's 96 panel games; set 3 the same):
+  we beat the peaceful bots 11-12 of 12; we lose to the early rushers (abcdezyxwv 1-11, AlexT101 2-10: backstab
+  r35-50, our king dead by ~r300-330); 27 of our 40 losses are king kills. In brawls they grab and throw about twice
+  as often and thrown rats hit our king; we spend the bank on rat traps and spawns early and then cannot reinforce
+  (`K:sE`). Mine coverage: 44 of 96 games leave a home-half mine untouched (streetsofnewyork: two behind dirt).
+- Rush archetypes: `bots/arush` (s4b + RUSH: spawn indices 4-15 go for the enemy king, biting only the king during
+  cooperation) is too weak a proxy: s4b beat it 51-29 and lost its king in only 6 of 29 losses (rx1_s4b). `bots/abrk`
+  = arush + RUSH_BREAK (its attackers also bite and grab enemy rats during cooperation, ending it early like the field
+  rushers): runs/rx2_s4b (s4b vs abrk) after the screen chain; diagnostic runs/diag_abrk1 (DefaultMedium).
+- VM queue (serial, `--jobs 4`): sp14_s4d (s4d = s4b + SEEK_CROWD 6, control sp12_s4b) -> sp15_s4e (s4e = s4d +
+  MINE_MIRROR) -> sp16_s4f (s4f = s4e + RAT_TRAP_MIN_CHEESE 400 + FORT_TRAPS 4) -> rx2_s4b. Screens score with
+  `gauntlet.py selfplay RUN/results.jsonl --base s2o --control CTRL/results.jsonl`.
 - Against examplefuncsplayer (all 74 maps, both sides): v0d won 134-14.

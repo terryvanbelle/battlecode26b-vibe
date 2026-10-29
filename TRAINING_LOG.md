@@ -426,3 +426,26 @@
   SEEK_CROWD 6.
 - New local archetype `arush` = s4b + RUSH (spawn indices 4-15 attack the enemy king from birth), so rush defence
   can be measured locally (field bots stay on the replica). s4b vs arush queued on the VM (rx1_s4b).
+
+## 2026-10-28 18:45 PDT: s3y accepted; s4b to the replica; a stronger rush archetype
+- s3y's block 3 (set 3, matches 1196-1211) against s2o's set-3 control (1168-1183): block t +1.41 (+6 -2). All three
+  blocks: 142 cells, D 38 (+26 -12), net +14, t 2.27: accepted. s3y (#66) is the incumbent and its panel matches are
+  the new reference (`research/panel/v2-ref-s3y.txt`). Set 3 by opponent: 6-0 against bc26vibe, CS50Crab, XSercia,
+  ask8000 and C0derTang; 3-3 against outercloudstudio; 0-6 against AlexT101 and 1-5 against abcdezyxwv. Rush defence
+  is still the gap.
+- s4b (#67) submitted; block 1 on set 1 is going out through the drain loop.
+- rx1_s4b: s4b beat arush 51-29. arush won 23 of its 29 on points and killed our king only 6 times, while the field
+  rushers kill it in most of our losses. arush only bites the king during cooperation, so it never opens the war
+  the way they do.
+- New switch RUSH_BREAK (archetype only, default off): rush attackers bite and grab enemy rats during cooperation
+  (Baby.hostile()). `bots/abrk` = s4b + RUSH + RUSH_BREAK. s4b vs abrk (rx2_s4b) is queued after the screen chain;
+  one diagnostic game is running first.
+- Engine check for the back-grabs: a rat can be grabbed when it cannot sense the grabber (outside its 90-degree cone)
+  or when the grabber has more health (HEALTH_GRAB_THRESHOLD 0), so any bitten rat can be grabbed from the front.
+  Turning has its own cooldown (10, separate from movement), and a baby moving off its facing pays 18 instead of 10.
+  We already strafe to keep a seen enemy within r^2 13 in the cone (Nav.guard) and end the turn facing it
+  (guardTurn). The 32 of 61 grabs from behind come from enemies we never saw.
+- Owner rule (PROMPTS.md #14): every map is symmetric in all aspects. The mine sets of all 45 maps in the dump cache
+  are closed under their symmetry. A read-only audit of where the bot should mirror its map knowledge (terrain and
+  navigation, mines and cheese, enemy kings and cats, inference speed) is running, with a skeptic checking each
+  finding against the code and the data.

@@ -137,6 +137,8 @@ public final class Cfg {
     /** Rush: babies with spawn index in [RUSH_FROM, RUSH_TO) attack the enemy king from birth. */
     public static final boolean RUSH = false;
     public static final int RUSH_FROM = 4, RUSH_TO = 16;
+    /** Rush attackers bite and grab enemy rats during cooperation too (the first bite ends it for everyone). */
+    public static final boolean RUSH_BREAK = false;
     /** Squared distance (to the cat's 2x2 centre, doubled coords /4) a gatherer keeps from cats. */
     public static final int GATHER_CAT_DIST = 20;
     /** A cat within dist2 CAT_DEFEND_R2 of one of our kings draws every rat that sees it, gatherers included

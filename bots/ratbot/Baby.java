@@ -96,10 +96,11 @@ public final class Baby {
         // 1. bites: enemy rats once cooperation is over (they shoot back; cats wait), then cats.
         //    Attackers open the war themselves, but only on the enemy king.
         Debug.mark(4);
-        if (!G.coop && Cfg.NAP) tryCarry(robots);
+        boolean hostile = hostile();
+        if (hostile && Cfg.NAP) tryCarry(robots);
         if (!G.coop && Cfg.BABY_RAT_TRAPS) tryRatTrap();
         Debug.mark(5);
-        if (!G.coop) biteEnemies(robots);
+        if (hostile) biteEnemies(robots);
         else if (role == ATTACK && enemyKing != null) biteEnemies(new RobotInfo[]{enemyKing});
         if (cat != null) tryBiteCat(cat);
         // 2. cat trap ahead of an approaching cat
@@ -118,9 +119,9 @@ public final class Baby {
         pickUp();
         if (rc.getCarrying() != null && moved && Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(rc.senseNearbyRobots(-1, null));
         Debug.mark(21);
-        if (!G.coop && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
+        if (hostile && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
         Debug.mark(22);
-        if (!G.coop) biteEnemies(rc.senseNearbyRobots(2, G.them));
+        if (hostile) biteEnemies(rc.senseNearbyRobots(2, G.them));
         else if (role == ATTACK) {
             RobotInfo[] near = rc.senseNearbyRobots(8, G.them);
             for (RobotInfo r : near) if (r.type == UnitType.RAT_KING) biteEnemies(new RobotInfo[]{r});
@@ -132,6 +133,9 @@ public final class Baby {
         Debug.mark(9);
         sense2();
     }
+
+    /** Whether this rat bites and grabs enemy rats now: after cooperation, or a RUSH_BREAK attacker at any time. */
+    static boolean hostile() { return !G.coop || Cfg.RUSH_BREAK && role == ATTACK; }
 
     /** End the turn facing the nearest enemy rat close enough to grab us next round. */
     static void guardTurn() throws GameActionException {

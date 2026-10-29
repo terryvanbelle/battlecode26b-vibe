@@ -62,3 +62,15 @@ I'd like you to start a file called BEST_PRACTICES.md in the battlecode-vibe rep
 ## 11. 2026-10-28 13:03 PDT
 
 An addition to BEST_PRACTICES, point 1:  Often the replays strip out debug information like indicator strings.  To get around this problem, you can smuggle out some additional per-robot information in the low-order bits of the bytecode count by artificially adding some no-op steps
+
+## 12. 2026-10-28 18:25 PDT
+
+You're saying mines aren't symmetric?  They look pretty symmetric to me.  On which map are they not?
+
+## 13. 2026-10-28 18:28 PDT
+
+I want to dig into this further to make sure you're not engaging in faulty reasoning.  By what process did you come to the conclusion "Mines aren’t mirrored through symmetry. A raider that sees an enemy-side mine doesn’t tell us its twin on our side. I’ll add an off-by-default switch for that." ?
+
+## 14. 2026-10-28 18:30 PDT
+
+The court will ignore the witness's comment.  From now on, please assume that all maps are always symmetrical in all aspects
