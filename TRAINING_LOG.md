@@ -473,3 +473,15 @@
   runs against abrk (rx2_s4d is the control; rx3_s4g = GLANCE_MEM, rx4_s4f = trap economy), then on the replica.
 - progress/ refreshed after s3y's acceptance (owner rule, PROMPTS.md #16): s0e -> s2o -> s3y on progress.png, about
   1320 -> 1490 -> 1600 BT, expected field score 36% -> 47% -> 54%; replica ladder #27 of 54.
+
+## 2026-10-28 20:10 PDT: abrk is a usable rush instrument; s4d's replica block 1
+- rx2_s4d (s4d vs abrk, 80 games): s4d 48-32. abrk killed our king in 17 of our 32 losses at median round 314, after
+  breaking the truce at median round 36. That is close to what the field rushers do to us on the replica (king dead
+  r306-333, backstab r35-50); arush managed only 6 king kills at median r440. rx2_s4d is the control for rush
+  defence.
+- In the king-kill losses our delivered cheese falls far behind once the war starts (EscapeTheNight 390 vs 5004,
+  gridlock 320 vs 887) and we often have fewer rats spawned. At war the baby cap stays 18 (MAX_BABIES_WAR = MAX_BABIES).
+- Queued rush runs against abrk: rx3_s4g (GLANCE_MEM 20), rx4_s4f (trap economy), rx_s4h (MAX_BABIES_WAR 30),
+  rx_s4i (BITE_GUARD + BITE_CARRIER).
+- s4d on the replica, block 1 (set 1, matches 1287-1302) vs s3y: 48 cells, D 9 (+5 -4), net +1, t 0.33: above the
+  block 1 bar (t <= 0 rejects); block 2 on set 2 is going out.
