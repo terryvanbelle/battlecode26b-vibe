@@ -25,3 +25,9 @@
 11. **Check the replay tooling against the engine before trusting a count.** The engine emits RatNap both for a grab
     and for a thrown rat's own landing; counting both hid that the enemy grabs us almost three times as often as we
     grab them. The grabs come from behind: any movement code that always turns to face its step exposes the back.
+12. **A peaceful self-play screen cannot see war-time behaviour.** Against the incumbent, neither side ever breaks
+    cooperation: 0 backstabs and 0 rat traps in every 80-game `sp` screen since benchmark bots left the local arena. A
+    switch that acts only at war (trap budget, bite priorities, grab defence, glancing back) plays identical games
+    there (s4f vs s4e: 80 of 80 identical), so "neutral on screen" meant untested for s3m, s3r, s3s, KING_PRESS and
+    s4f. War changes need an instrument that goes to war: the rush archetypes (`rx` runs against arush/abrk: 67 of 80
+    games had a backstab) and the replica.

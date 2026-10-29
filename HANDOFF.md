@@ -102,8 +102,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   cooperation) is too weak a proxy: s4b beat it 51-29 and lost its king in only 6 of 29 losses (rx1_s4b). `bots/abrk`
   = arush + RUSH_BREAK (its attackers also bite and grab enemy rats during cooperation, ending it early like the field
   rushers): runs/rx2_s4b (s4b vs abrk) after the screen chain; diagnostic runs/diag_abrk1 (DefaultMedium).
-- VM queue (serial, `--jobs 4`): sp15_s4e (s4e = s4d + MINE_MIRROR; control sp14_s4d) -> sp16_s4f (s4f = s4e +
-  RAT_TRAP_MIN_CHEESE 400 + FORT_TRAPS 4; control sp15_s4e) -> rx2_s4d (s4d vs abrk) -> sp17_s4g (s4g = s4d +
-  GLANCE_MEM 20; control sp14_s4d) -> rx3_s4g (s4g vs abrk; compare with rx2_s4d). Screens score with
-  `gauntlet.py selfplay RUN/results.jsonl --base s2o --control CTRL/results.jsonl`.
+- VM queue (serial, `--jobs 4`): rx2_s4d (s4d vs abrk, the rush control) -> rx3_s4g (s4g = s4d + GLANCE_MEM 20)
+  -> rx4_s4f (s4f = s4e + RAT_TRAP_MIN_CHEESE 400 + FORT_TRAPS 4). sp17_s4g was emptied: the `sp` screens against
+  s2o never leave cooperation (LEARNINGS #12), so war-only switches are judged in `rx` runs against abrk. Screens
+  score with `gauntlet.py selfplay RUN/results.jsonl --base s2o --control CTRL/results.jsonl`; rush runs with
+  `--base abrk --control build/vmruns/runs/rx2_s4d/results.jsonl`.
 - Against examplefuncsplayer (all 74 maps, both sides): v0d won 134-14.

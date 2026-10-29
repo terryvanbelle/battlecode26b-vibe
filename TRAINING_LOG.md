@@ -460,3 +460,16 @@
 - New switch GLANCE_MEM (default 0): at war, a turn that ends with no enemy rat known near spends the unused turn
   facing back, when an enemy rat was seen or heard in the last GLANCE_MEM rounds. s4g = s4d + GLANCE_MEM 20, screened
   as sp17_s4g and tested against abrk as rx3_s4g (vs rx2_s4d).
+
+## 2026-10-28 19:45 PDT: the self-play screen has no war; s4e neutral; s4f untested
+- s4e (s4d + MINE_MIRROR) against control sp14_s4d: only 4 of 80 games differ, -0.1 pts, t -0.38: neutral.
+- s4f (s4e + RAT_TRAP_MIN_CHEESE 400 + FORT_TRAPS 4) played all 80 games exactly as s4e did. The reason: no game in
+  any `sp` screen against s2o ever left cooperation (0 backstabs, 0 rat traps in sp14, sp15 and sp16), so every
+  war-only switch is inert there. The old local gauntlets had a backstab in nearly every game, because the benchmark
+  bots break the truce. Since protocol M4 (field bots only on the replica), the screens have been blind to war.
+  Re-read as untested: s3m (trap economy), s3r (BITE_GUARD), s3s (grab-war bundle), KING_PRESS (s3g), s4f. LEARNINGS
+  #12.
+- Consequences: sp17_s4g (GLANCE_MEM acts only at war) is dropped from the VM chain. War changes are judged in rush
+  runs against abrk (rx2_s4d is the control; rx3_s4g = GLANCE_MEM, rx4_s4f = trap economy), then on the replica.
+- progress/ refreshed after s3y's acceptance (owner rule, PROMPTS.md #16): s0e -> s2o -> s3y on progress.png, about
+  1320 -> 1490 -> 1600 BT, expected field score 36% -> 47% -> 54%; replica ladder #27 of 54.
