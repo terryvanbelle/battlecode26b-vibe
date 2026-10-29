@@ -59,6 +59,8 @@ public final class Cfg {
     public static final int FORM_FROM = 80, FORM_BABIES = 16, FORM_CHEESE = 300, FORM_TTL = 60, FORM_RETRY = 150, FORM_PULL_R2 = 72;
     /** Kings we form up to (engine max 5 before round 1200). */
     public static final int FORM_MAX = 2;
+    /** At war: kings we form up to (0 = FORM_MAX). After a backstab living kings weigh 0.5 of round-2000 points. */
+    public static final int FORM_MAX_WAR = 0;
     /** Form only while the trusted income (x100 per round) beats every king's upkeep, the new one's included, by
      *  FORM_NET100 (Integer.MIN_VALUE = no income test). */
     public static final int FORM_NET100 = Integer.MIN_VALUE;

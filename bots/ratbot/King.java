@@ -496,7 +496,7 @@ public final class King {
     /** The first king names a formation site and keeps it fresh until a second king exists or it times out. */
     static void formation() {
         if (slot != 0) return;
-        if (Comms.numKings >= Math.min(Cfg.FORM_MAX, Comms.KING_SLOTS)) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
+        if (Comms.numKings >= Math.min(formCap(G.coop), Comms.KING_SLOTS)) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
         if (formSite != null) {
             if (G.round - formStart > Cfg.FORM_TTL) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
             Comms.write(Comms.FORM_T, Comms.stamp());
@@ -512,6 +512,9 @@ public final class King {
         Comms.write(Comms.FORM_Y, formSite.y + 1);
         Comms.write(Comms.FORM_T, Comms.stamp());
     }
+
+    /** Kings we form up to: FORM_MAX, or FORM_MAX_WAR once cooperation is over (kings weigh 0.5 of points then, 0.3 before). */
+    static int formCap(boolean coop) { return coop ? Cfg.FORM_MAX : Math.max(Cfg.FORM_MAX, Cfg.FORM_MAX_WAR); }
 
     /** The income test for one more king (Cfg.FORM_NET100). */
     static boolean formIncome() {

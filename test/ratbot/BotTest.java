@@ -861,6 +861,8 @@ public class BotTest {
         check(!King.nearKing(new MapLocation(20, 20)), "near king: only live slots count");
         Comms.numKings = 0;
         check(Cfg.FORM_MAX >= 1 && Cfg.FORM_MAX <= 5, "form max: within the engine's 5");
+        check(King.formCap(true) == Cfg.FORM_MAX && King.formCap(false) == Math.max(Cfg.FORM_MAX, Cfg.FORM_MAX_WAR)
+              && King.formCap(false) <= 5, "form cap: FORM_MAX in peace, FORM_MAX_WAR at war when higher");
     }
 
     static void testNearerAllies() {
