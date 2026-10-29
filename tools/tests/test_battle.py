@@ -135,6 +135,15 @@ with tempfile.TemporaryDirectory() as d:
     check(t1['placed'] == {'rat': 3} and t1['fired'] == {'rat': 1} and t1['removed'] == 1 and t1['live'] == 1
           and t1['hitRate'] == 0.33 and t1['meanLife'] == 1.0 and t1['victims'] == {'2': 1} and t1['dmg'] == {'rat': 50}, f"traps A {t1}")
     check(t2['placed'] == {'cat': 1} and t2['catDmg'] == 130 and t2['catDmgTrap'] == 100 and t2['catDmgBite'] == 30, f"traps B {t2}")
+    check((t1['byKing'], t1['ratLiveMax'], t1['ratLiveAtMax'], t2['ratLiveMax'], t2['ratLiveAtMax']) == (0, 3, 1, 0, 0),
+          f"traps: live rat-trap peak (3 placed in round 2, one removed and one fired in round 3) {t1} {t2}")
+    t = br.report(d, 3, 4, 1, 0)['traps']['1']
+    check((t['ratLiveMax'], t['ratLiveAtMax']) == (1, 2), f"traps: live count carried into the window {t}")
+    kt = [dict(round='1', id='1', team='1', type='KING', action='ratTrap', a='5,5', b='1'),
+          dict(round='1', id='9', team='1', type='RAT', action='ratTrap', a='7,7', b='1'),
+          dict(round='2', id='20', team='2', type='RAT', action='trigger', a='5,5', b='2', d='1', e='20', f='50', g='rat')]
+    t = br.traps(kt, [], 0, 3)['1']
+    check((t['byKing'], t['ratLiveMax'], t['ratLiveAtMax'], t['hit']) == (1, 2, 1, 1), f"traps: placed by a king, peak 2 for one round {t}")
     x = r['xfer'][0]
     check((x['xfer2'], x['kpick2'], x['pick2'], x['pickAmt2']) == (5, 7, 1, 5), f"xfer: king pickups apart {x}")
     g = r['grabs']['1']

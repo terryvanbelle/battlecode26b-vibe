@@ -28,7 +28,8 @@ the front.
   traps    per owner: rat/cat traps placed in the window and what became of those by the game's end (hit = fired,
            removed, live: placed = hit + removed + live), hitRate = hit / placed, meanLife (rounds placed->fired);
            triggers in the window (fired, by kind), their damage, kills, rat-trap victims by team; the window's cat
-           damage split into traps and bites (catDmg minus traps)
+           damage split into traps and bites (catDmg minus traps); byKing: placed by kings; ratLiveMax: the most
+           rat traps live at once, ratLiveAtMax: window rounds that ended at that count (a binding cap shows as many)
   xfer     per max(step, 50) rounds: cheese delivered to kings, kings' own pickups, rat pickups (count, amount)
 """
 import argparse, collections, json, os, sys
@@ -335,20 +336,29 @@ def throws(turns, acts, lo, hi):
 def traps(acts, rounds, lo, hi):
     live = {}                                          # (tile, owner) -> (kind, round placed)
     out = {tm: dict(placed=collections.Counter(), hit=0, removed=0, live=0, fired=collections.Counter(), life=[],
-                    dmg=collections.Counter(), kills=collections.Counter(), victims=collections.Counter(), wasted=0)
+                    dmg=collections.Counter(), kills=collections.Counter(), victims=collections.Counter(), wasted=0,
+                    byKing=0)
            for tm in '12'}
+    delta = collections.Counter()                      # (owner, round) -> change in its live rat-trap count
     for a in acts:
         r, k = int(a['round']), a['action']
         if k in ('ratTrap', 'catTrap'):
             live[(a['a'], a['b'])] = (k[:3], r)
+            if k == 'ratTrap':
+                delta[(a['b'], r)] += 1
             if a['b'] in out and lo <= r <= hi:
                 out[a['b']]['placed'][k[:3]] += 1
+                out[a['b']]['byKing'] += a['type'] == 'KING'
         elif k == 'removeTrap':
             p = live.pop((a['a'], a['b']), None)
+            if p and p[0] == 'rat':
+                delta[(a['b'], r)] -= 1
             if p and a['b'] in out and lo <= p[1] <= hi:
                 out[a['b']]['removed'] += 1
         elif k == 'trigger':
             p = live.pop((a['a'], a['d']), None)
+            if p and p[0] == 'rat':
+                delta[(a['d'], r)] -= 1
             o = out.get(a['d'])
             if o is None:
                 continue
@@ -367,6 +377,16 @@ def traps(acts, rounds, lo, hi):
     for (_, tm), p in live.items():
         if tm in out and lo <= p[1] <= hi:
             out[tm]['live'] += 1
+    for tm, o in out.items():                          # the live rat-trap count at each round's end over the window
+        n, peak, at = 0, 0, 0
+        for r in range(0, hi + 1):
+            n += delta.get((tm, r), 0)
+            if r < lo:
+                continue
+            if n > peak:
+                peak, at = n, 0
+            at += n == peak
+        o['ratLiveMax'], o['ratLiveAtMax'] = peak, at if peak else 0
     cat = sorted((int(r['round']), int(r['catDmgA']), int(r['catDmgB'])) for r in rounds)
 
     def cum(r):                                        # cumulative cat damage at the end of round r
@@ -460,9 +480,9 @@ def show(r):
         print(f"T{tm} throws {r['throwOut'][tm]} | thrown rat's landing damage {r['throws'][tm]}")
     for tm in '12':
         t = r['traps'][tm]
-        print(f"T{tm} traps placed {t['placed']}: hit {t['hit']} removed {t['removed']} live {t['live']} hitRate {t['hitRate']}"
+        print(f"T{tm} traps placed {t['placed']} (by kings {t['byKing']}): hit {t['hit']} removed {t['removed']} live {t['live']} hitRate {t['hitRate']}"
               f" meanLife {t['meanLife']} | triggers {t['fired']} (on dead {t['wasted']}) dmg {t['dmg']} kills {t['kills']}"
-              f" rat-trap victims {t['victims']}"
+              f" rat-trap victims {t['victims']} | live rat traps peak {t['ratLiveMax']} for {t['ratLiveAtMax']} rounds"
               f" | cat dmg {t['catDmg']} = traps {t['catDmgTrap']} + bites {t['catDmgBite']}")
     for x in r['xfer']:
         print(f"{x['round']:5d} delivered {x['xfer1']:5d} {x['xfer2']:5d}  king pickups {x['kpick1']:4d} {x['kpick2']:4d}"
