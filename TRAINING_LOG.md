@@ -1626,3 +1626,19 @@
   RAID_TRAPS 8 (half). RAID_TRAPS also lifts the combat trap cap to 20. Screens ra_s8i and ra_s8j are queued
   after ra_s8a; diag rd1 (each vs s7d, DefaultMedium, sunandmoon, DefaultLarge, constrictinglattice, 2 sides)
   checks that the posture actually moves.
+
+## 2026-10-29 12:22 PDT: s8a (KING_PRESS) rejected; s8j (raiders) on the replica; replica blocks are fast
+- s8a's v3 set-1 block against s7d's reference: 42 cells, 37 alike, D 5 (gained 2, lost 3), net -1, t -0.45.
+  Rejected. It lost popthecork both sides to AlexT101 (an s7d win) and spsquared fullofsecrets B. Its two gains
+  are the CS50Crab cells s7h also gained (dirtfulcat B, streetsofnewyork A), so the reference was probably
+  unlucky there rather than either change helping.
+- rd1 (s8i, s8j each vs s7d, 4 maps x 2 sides): every game stayed at peace. Raiders move the posture a little:
+  s8j keeps 8-18% of its rats (1.6-3.6) on the enemy half in r100-300 to s7d's 5-10%; s8i 6-14%. Results
+  neutral: s8j 5/8, +2.2 pts, pick x1.02; s8i 3/8, +0.2. The war effect needs araid or the field.
+- tr2 was inert: atrap2 never breaks the truce, so all 32 games ended on points and the trap variants played
+  s7d's games. A trap test needs a war-opening opponent; atrap2 is recorded as such. ra_s7z passed its screen
+  (+4.7 pts, t +1.11, net 0).
+- A replica block runs in under an hour (s8a's: 11:31-12:10), while an 80-game screen on the VM (load about 22)
+  takes several hours. From now on candidates whose case rests on war play go to the replica directly and
+  the screens run behind as a backstop. s8j is submission #88 (block from match 2310); queued after it: s7q
+  (economy), s8e (trap cap 25), s8b (no retreat), s7z (breakout).
