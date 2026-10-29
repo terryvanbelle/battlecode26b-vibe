@@ -1529,3 +1529,28 @@
   rests on one 100-0 king kill on EscapeTheNight; 10 of 18 games lost, pickups x1.04. Mixed; screen ra_s7z
   decides.
 - sc1 (s8c vs s7d, 3 maps x 2 sides) finished 5/6 with no exceptions or overruns. s8c's replica block is running.
+
+## 2026-10-29 10:45 PDT: the trap war: our trap cap is full of the king's fort traps (s8e-s8h)
+- s8c's set-1 block stands at 36 of 42 cells, D 7 (gained 2, lost 5), net -3: block 1 rejects at t <= 0. Two of
+  the losses are Nofreecheese against CS50Crab. Both sides lose 84-94 rats to its traps there; s7d's king lived
+  to r2000 and won on cat damage, s8c's starved (r1949, r1562) after CS50Crab took our mines late. Diag tp1
+  (s8c, s7d, s7q, s7i vs atrap on Nofreecheese) is looking for which part does it.
+- Engine (GameWorld.placeTrap/triggerTrap): a rat trap fires on an enemy rat entering any tile within dist2 2
+  of it (its 3x3), deals 50, sets movement cooldown 30 and starts the backstab. A team sees only its own traps.
+- Enemy rat-trap firings on our rats in s7d's 126 replica games, per game: CS50Crab 134, AlexT101 72, AdamTan12
+  59, spsquared 53, abcdezyxwv 20, outercloud 9. Of the traps we fire, 43% were placed 0-1 rounds earlier and
+  68% within 5; the placer stood next to it. With our nearest rat 2 away, the trap went on the placer's tile
+  toward it 54% of the time and beside that tile 36%. The commonest firing (1532 of 5650) is our rat stepping
+  from 2 to 1 of an enemy rat. 47% of firings were within 1 tile of one we fired in the previous 25 rounds.
+- Our side, per game: babies place 17.5 rat traps and 16.9 fire (97%); kings place 16.1 and 12.1 fire; enemy
+  babies place 49.7. In rounds with any trap of ours down, the live count sat at 10 in 84% of them: TRAP_CAP
+  (10) is the team count, and the king's FORT_TRAPS (10, laid at war around it toward the centre) fill it, so
+  babies stop laying traps until an enemy walks into the fort. On 2070 g0 we sat at 10 for 1928 of 2000 rounds
+  while CS50Crab peaked at 24. battle_report's traps line now shows kings' placements and the live-count peak
+  and rounds at it.
+- TrapRisk (marks every visible enemy baby's three front tiles, avoids entering their 3x3) already exists, but
+  RISK_IN_FIGHT and RISK_GATHER are off, so the mask is dropped exactly when an enemy rat is near. Both were
+  dropped unrun with the S4D base.
+- New, all @s7d: s8e = TRAP_CAP 25 (engine max), s8f = RISK_IN_FIGHT, s8g = RISK_GATHER, s8h = TRAP_CAP 25 +
+  RISK_IN_FIGHT. Diag tr1 (each with s7d vs atrap, 6 high-trap maps x 2 sides); screens ra_s8e and ra_s8h are
+  queued after ra_s8d.
