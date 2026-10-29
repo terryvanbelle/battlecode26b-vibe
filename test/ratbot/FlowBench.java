@@ -14,6 +14,7 @@ public class FlowBench {
     public static void main(String[] a) throws Exception {
         Flow.lifo = Boolean.getBoolean("lifo");
         Flow.rev = Boolean.getBoolean("rev");
+        Flow.fast = Boolean.getBoolean("fast");
         File dir = new File(a[0]);
         List<String> names = a.length > 1 ? Arrays.asList(a).subList(1, a.length) : GameMapIO.getAvailableMaps(dir);
         long allS = 0, allR = 0, allL = 0;

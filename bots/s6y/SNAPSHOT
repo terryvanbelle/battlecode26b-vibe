@@ -1,0 +1,5 @@
+name=s6y
+source=bots/ratbot
+source_sha=513261a79386
+commit=4ad8f04
+created=2026-10-29 06:56 PDT

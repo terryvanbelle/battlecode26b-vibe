@@ -55,7 +55,7 @@ public class BotTest {
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
         Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE;
-        Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO;
+        Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST;
         Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false;
     }
 
@@ -525,6 +525,44 @@ public class BotTest {
             }
         }
         return null;
+    }
+
+    /** FLOW_FAST's unrolled reverse search finds the same path as the plain loop, in every side frame and with
+     *  LIFO ties, on random walls and dirt, from the start tile and after the rat walked on. */
+    static void testFlowFast() throws GameActionException {
+        java.util.Random rnd = new java.util.Random(7);
+        int same = 0, runs = 0, found = 0;
+        String diff = null;
+        for (int trial = 0; trial < 6; trial++) {
+            List<MapLocation> wl = new ArrayList<>(), dl = new ArrayList<>();
+            for (int i = 0; i < 110; i++) wl.add(new MapLocation(rnd.nextInt(30), rnd.nextInt(20)));
+            for (int i = 0; i < 40; i++) dl.add(new MapLocation(rnd.nextInt(30), rnd.nextInt(20)));
+            MapLocation a = new MapLocation(rnd.nextInt(30), rnd.nextInt(20)), t = new MapLocation(rnd.nextInt(30), rnd.nextInt(20));
+            MapLocation moved = new MapLocation(Math.min(29, a.x + 1), a.y);
+            for (int fr = 0; fr < 4; fr++)
+                for (int v = 0; v < 4; v++) {
+                    int[][] got = new int[2][];
+                    for (int fast = 0; fast < 2; fast++) {
+                        reset(); W = 30; H = 20; install();
+                        for (MapLocation w : wl) if (!w.equals(a) && !w.equals(t) && !w.equals(moved)) { walls.add(w); Sym.record(w.x, w.y, true, false, false); }
+                        for (MapLocation d : dl) if (!walls.contains(d)) Sym.record(d.x, d.y, false, true, false);
+                        Flow.setFrame(fr % 2 == 0 ? 1 : -1, fr < 2 ? 1 : -1);
+                        Flow.rev = true; Flow.lifo = (v & 1) != 0; Flow.fast = fast == 1;
+                        me = a; G.startTurn();
+                        Flow.request(t);
+                        if ((v & 2) != 0) { me = moved; G.startTurn(); }
+                        Flow.work(0);
+                        got[fast] = Flow.ready(t) ? java.util.Arrays.copyOf(Flow.path, Flow.plen) : new int[] {-1, Flow.fails};
+                    }
+                    runs++;
+                    if (got[1][0] >= 0) found++;
+                    if (java.util.Arrays.equals(got[0], got[1])) same++;
+                    else if (diff == null) diff = "trial " + trial + " frame " + fr + " v " + v + ": " + got[0].length + " vs " + got[1].length;
+                }
+        }
+        Flow.ox = Flow.DX; Flow.oy = Flow.DY;
+        check(same == runs && found * 4 > runs * 3, "flow fast: the unrolled search finds the plain loop's path (" + same + "/" + runs + ", "
+              + found + " found" + (diff == null ? "" : ", " + diff) + ")");
     }
 
     /** The reverse search (FLOW_REV) finds a path as short as the forward one, from wherever the rat stands when it
@@ -1671,6 +1709,7 @@ public class BotTest {
         testFlowProgress();
         testFlowCache();
         testFlowRev();
+        testFlowFast();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

@@ -53,6 +53,10 @@ public final class Flow {
     static boolean rev = Cfg.FLOW_REV;
     /** The rat's tile when a reverse search began: the goal its heuristic aims at. */
     static int sx0, sy0;
+    /** Cfg.FLOW_FAST (a field so tests can set it), and its heuristic columns: HX[x + 1] = |x - sx0| for x in -1..W,
+     *  HY likewise. */
+    static boolean fast = Cfg.FLOW_FAST;
+    static int[] HX, HY;
     static int[][] bucket;
     static int[] head = new int[NB], tail = new int[NB];
     static int curF, pending, held;
@@ -116,6 +120,13 @@ public final class Flow {
         if (rev) {
             // the target is the root; the heuristic aims at where the rat stands now
             sx0 = G.me.x; sy0 = G.me.y;
+            if (fast) {
+                int W = G.W, H = G.H;
+                if (HX == null || HX.length != W + 2 || HY.length != H + 2) { HX = new int[W + 2]; HY = new int[H + 2]; }
+                int[] hx = HX, hy = HY;
+                for (int x = -1, i = 0; x <= W; x++, i++) hx[i] = x < sx0 ? sx0 - x : x - sx0;
+                for (int y = -1, i = 0; y <= H; y++, i++) hy[i] = y < sy0 ? sy0 - y : y - sy0;
+            }
             g[tIdx] = base;
             curF = Math.max(Math.abs(tx - sx0), Math.abs(ty - sy0));
             int b = curF & BMASK;
@@ -206,6 +217,7 @@ public final class Flow {
     /** The reverse search: pops in f order (g from the target + Chebyshev to where the rat stood at the start) until a
      *  tile beside the rat's current tile comes up; the cost of a step is that of the tile entered (the popped one). */
     static void workRev(int reserve) {
+        if (fast) { workRevFast(reserve); return; }
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
         int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = sx0, Y = sy0, blk = block, mx = G.me.x, my = G.me.y;
         while (pending > 0) {
@@ -246,6 +258,101 @@ public final class Flow {
             }
         }
         // the rat is unreachable from the target over what we know
+        building = false;
+        fails++;
+        failTgt = tgt;
+        failRound = G.round;
+    }
+
+    /** workRev with the eight neighbours unrolled off the map edge, heuristic columns from HX/HY and the queue state
+     *  in locals (Cfg.FLOW_FAST): the same pops in the same order. The neighbour order is ox/oy (k's step is
+     *  (DX[k]·fu, DY[k]·fv)), so a mirrored rat runs the mirrored search at the same cost. */
+    static void workRevFast(int reserve) {
+        int[] gg = g, pp = par, mem = Sym.mem, hx = HX, hy = HY, hd = head, tl = tail, OX = ox, OY = oy;
+        int[][] bk = bucket;
+        int W = G.W, W1 = W - 1, H1 = G.H - 1, bs = base, dig = Cfg.DIG_COST, blk = block, cf = curF, pend = pending;
+        int FU = OX[1], FV = OY[0], WV = FV * W;
+        int mx0 = G.me.x - 1, mx1 = G.me.x + 1, my0 = G.me.y - 1, my1 = G.me.y + 1;
+        boolean st = lifo;
+        while (pend > 0) {
+            if (left() < reserve) { pending = pend; curF = cf; return; }
+            int b = cf & BMASK, u;
+            if (hd[b] == tl[b]) { cf++; continue; }
+            if (st) u = bk[b][--tl[b] & RMASK];
+            else u = bk[b][hd[b]++ & RMASK];
+            pend--;
+            if (Debug.PROBE) pops++;
+            int ux = u % W, uy = u / W, gu = gg[u] - bs, a = hx[ux + 1], c = hy[uy + 1];
+            if (gu + (a > c ? a : c) != cf) continue; // stale entry
+            if (ux >= mx0 && ux <= mx1 && uy >= my0 && uy <= my1) {
+                if (left() < reserve + (cache ? 50 : 40) * (gu + 3)) {
+                    if (st) tl[b]++; else hd[b]--;
+                    pending = pend + 1; curF = cf;
+                    return;
+                }
+                pending = pend; curF = cf;
+                finishRev(u);
+                return;
+            }
+            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : 1), nb = bs + ng, v, gv, f, fb;
+            if (ux > 0 && uy > 0 && ux < W1 && uy < H1) {
+                // xr/yu: the heuristic one step along +ox/+oy
+                int xr = hx[ux + 1 + FU], xl = hx[ux + 1 - FU], yu = hy[uy + 1 + FV], yd = hy[uy + 1 - FV];
+                v = u + WV; // N
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 0; f = ng + (a > yu ? a : yu); fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v; pend++;
+                }
+                v = u + WV + FU; // NE
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 1; f = ng + (xr > yu ? xr : yu); fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v; pend++;
+                }
+                v = u + FU; // E
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 2; f = ng + (xr > c ? xr : c); fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v; pend++;
+                }
+                v = u - WV + FU; // SE
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 3; f = ng + (xr > yd ? xr : yd); fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v; pend++;
+                }
+                v = u - WV; // S
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 4; f = ng + (a > yd ? a : yd); fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v; pend++;
+                }
+                v = u - WV - FU; // SW
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 5; f = ng + (xl > yd ? xl : yd); fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v; pend++;
+                }
+                v = u - FU; // W
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 6; f = ng + (xl > c ? xl : c); fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v; pend++;
+                }
+                v = u + WV - FU; // NW
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 7; f = ng + (xl > yu ? xl : yu); fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v; pend++;
+                }
+            } else {
+                for (int k = 0; k < 8; k++) {
+                    int vx = ux + OX[k], vy = uy + OY[k];
+                    if (vx < 0 || vy < 0 || vx > W1 || vy > H1) continue;
+                    v = vx + vy * W;
+                    if ((mem[v] & blk) != 0 || (gv = gg[v]) >= bs && gv <= nb) continue;
+                    gg[v] = nb; pp[v] = k;
+                    int h1 = hx[vx + 1], h2 = hy[vy + 1];
+                    f = ng + (h1 > h2 ? h1 : h2); fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v; pend++;
+                }
+            }
+        }
+        // the rat is unreachable from the target over what we know
+        pending = 0; curF = cf;
         building = false;
         fails++;
         failTgt = tgt;

@@ -181,3 +181,4 @@ s6u,2026-10-29 06:16,s4d,S4D + DELIVER_AT 50 + DELIVER_IDLE 50 + HUNGRY 100: lon
 s6v,2026-10-29 06:36,s6m,"S6M + FLOW_CACHE: keep the last 4 flow paths; a request toward a cached target (or its start) from beside the path walks the rest at once instead of searching (where_are_you: 16% of rat-turns held still for searches, 57% toward a target with an earlier path)",pending
 s6w,2026-10-29 06:50,s6m,"S6M + FLOW_REV: flow searches grow from the target back to the rat, which walks on (greedy/bug) meanwhile instead of standing still; the path starts where the rat is when the search reaches a tile beside it (Hike: 35% of rat-turns stood still in searches)",pending
 s6x,2026-10-29 06:51,s6m,"S6M + FLOW_REV + FLOW_LIFO + FLOW_CACHE: reverse search while walking, LIFO ties (fewer pops), and the last 4 paths kept for reuse",pending
+s6y,2026-10-29 06:56,s6m,"S6M + FLOW_REV + FLOW_FAST (unrolled reverse A* expansion, same path, more nodes per turn)",pending

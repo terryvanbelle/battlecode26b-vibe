@@ -259,6 +259,8 @@ public final class Cfg {
      *  searches of ~10 turns (621 bytecodes a node, ~15 nodes a turn). Searches give up after FLOW_REV_TURNS. */
     public static final boolean FLOW_REV = false;
     public static final int FLOW_REV_TURNS = 25;
+    /** FLOW_REV's search with the neighbour loop unrolled (621 bytecodes a node measured for the loop). */
+    public static final boolean FLOW_FAST = false;
     /** Our kings' 3x3 bodies count as walls for flow paths and bug walks (not when the target is at a king).
      *  EscapeTheNight: A* routed babies through the king that stood between them and the room's exit; they waited behind
      *  it, dropped the path and searched again, 500+ rounds. */
