@@ -178,6 +178,9 @@ public final class Cfg {
     /** With RESCUE: when no blind tile next to the carrier is one step away, walk toward the nearest one (useful
      *  with RESCUE_D2 above 8, two or more steps out). */
     public static final boolean RESCUE_WALK = false;
+    /** With RESCUE: when no blind tile next to the carrier is one step away, step into the tile in front of it
+     *  (a throw needs that tile empty), before RESCUE_WALK. */
+    public static final boolean RESCUE_BLOCK = false;
     /** Standoff: do not step toward an enemy rat that sees us and is not weaker; face it and hold instead. */
     public static final boolean STANDOFF = true;
     /** Throws: an enemy baby hit beyond tile 2 counts THROW_FAR_PCT percent; below a THROW_MIN score (42 = a

@@ -1254,7 +1254,7 @@ public final class Baby {
             int sc = (d == rc.getDirection() ? 0 : 1) * 2 + (G.hand(G.me, d) > 0 ? 1 : 0);
             if (sc < bs) { bs = sc; bestD = d; }
         }
-        if (bestD == null) return Cfg.RESCUE_WALK && walkBehind(c);
+        if (bestD == null) return Cfg.RESCUE_BLOCK && blockMuzzle(c) || Cfg.RESCUE_WALK && walkBehind(c);
         MapLocation g = Nav.guard;
         Nav.guard = c;
         boolean moved = Nav.step(bestD);
@@ -1262,6 +1262,22 @@ public final class Baby {
         if (moved) rescues++;
         return moved;
     }
+
+    /** Cfg.RESCUE_BLOCK: a throw needs the tile in front of the carrier empty; step into it, facing the carrier. */
+    static boolean blockMuzzle(MapLocation c) throws GameActionException {
+        MapLocation m = c.add(rescueT.direction);
+        if (G.cheb(G.me, m) != 1) return false;
+        Direction d = G.me.directionTo(m);
+        if ((Nav.avoid & (1 << d.ordinal())) != 0 || !G.rc.canMove(d)) return false;
+        MapLocation g = Nav.guard;
+        Nav.guard = c;
+        boolean moved = Nav.step(d);
+        Nav.guard = g;
+        if (moved) blocks++;
+        return moved;
+    }
+
+    public static int blocks;
 
     /** Cfg.RESCUE_WALK: no blind tile next to rescueT is one step away; walk toward the nearest open one. */
     static boolean walkBehind(MapLocation c) throws GameActionException {

@@ -586,6 +586,11 @@ public class BotTest {
         // only tiles it sees are in reach: no rescue
         me = new MapLocation(7, 7); facing = Direction.SOUTH; G.me = me; actCd = 0; moveCd = 0; turnCd = 0;
         check(!Baby.rescue() && me.equals(new MapLocation(7, 7)), "rescue: no step when every tile next to it is in its view");
+        // RESCUE_BLOCK: from there, step into the tile in front of it (its throw needs that tile empty), facing it
+        check(Baby.blockMuzzle(carrier.location) && me.equals(new MapLocation(7, 6)) && facing == Direction.SOUTH,
+              "rescue block: in front of it (" + me + " " + facing + ")");
+        me = new MapLocation(5, 5); facing = Direction.NORTH; G.me = me; actCd = 0; moveCd = 0; turnCd = 0;
+        check(!Baby.blockMuzzle(carrier.location) && me.equals(new MapLocation(5, 5)), "rescue block: not from two steps away");
         // RESCUE_WALK: from two steps out, walk toward the nearest blind tile beside it (not into its front)
         me = new MapLocation(7, 8); facing = Direction.SOUTH; G.me = me; actCd = 0; moveCd = 0; turnCd = 0;
         int before = me.distanceSquaredTo(carrier.location);
