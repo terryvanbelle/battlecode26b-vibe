@@ -452,6 +452,26 @@ public class BotTest {
         check(steps < 120, "flow: bounded detour (steps=" + steps + ")");
     }
 
+    /** Cfg.FLOW_PROGRESS: a detour of 40+ tiles round a wall (seepastyourgreed's corridors) is walked with the stall
+     *  kept low; without it the stall passes the cheese chase's 12 on the way. */
+    static void testFlowProgress() throws GameActionException {
+        int[] worst = new int[2];
+        boolean[] got = new boolean[2];
+        for (int k = 0; k < 2; k++) {
+            reset(); W = 40; H = 14; install();
+            for (int x = 5; x < W; x++) walls.add(new MapLocation(x, 5));
+            me = new MapLocation(25, 3); facing = Direction.NORTH;
+            Nav.progress = k == 1;
+            MapLocation t = new MapLocation(25, 8);
+            int steps = 0;
+            while (!me.equals(t) && steps < 300) { tick(t); steps++; worst[k] = Math.max(worst[k], Nav.stall); }
+            got[k] = me.equals(t);
+        }
+        Nav.progress = Cfg.FLOW_PROGRESS;
+        check(got[1] && worst[1] <= 12, "flow progress: the detour is walked with the stall at most 12 (" + got[1] + ", " + worst[1] + ")");
+        check(worst[0] > 12, "flow progress: without it the stall passes 12 on the way (" + worst[0] + ")");
+    }
+
     static void testKingBlock() {
         reset(); W = 20; H = 12; install();
         me = new MapLocation(5, 5); G.startTurn();
@@ -1561,6 +1581,7 @@ public class BotTest {
     }
 
     public static void main(String[] args) throws Exception {
+        testFlowProgress();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

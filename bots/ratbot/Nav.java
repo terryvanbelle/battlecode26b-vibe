@@ -22,6 +22,8 @@ public final class Nav {
     public static int digs;
     /** Cfg.NAV_SAME_R (a field so tests can set it). */
     static int sameR = Cfg.NAV_SAME_R;
+    /** Cfg.FLOW_PROGRESS (a field so tests can set it). */
+    static boolean progress = Cfg.FLOW_PROGRESS;
 
     public static void reset() { bugging = false; bugTurns = 0; }
 
@@ -93,14 +95,19 @@ public final class Nav {
             Direction d = G.me.directionTo(t);
             return free(d) && step(d);
         }
-        int d0 = G.me.distanceSquaredTo(t);
+        int d0 = G.me.distanceSquaredTo(t), s0 = stall;
         if (d0 < bestDist) { bestDist = d0; stall = 0; } else stall++;
         if (Cfg.FLOW && G.cheb(G.me, t) > 1) {
             if (stall >= Cfg.FLOW_STALL || bugging && bugTurns >= Cfg.FLOW_STALL) Flow.request(t);
             MapLocation was = G.me;
-            if (Flow.follow(t)) return !G.me.equals(was);
+            boolean on = Flow.ready(t);
+            int pp = Flow.ppos;
+            if (Flow.follow(t)) {
+                if (progress && on && Flow.ppos > pp) stall = 0;
+                return !G.me.equals(was);
+            }
             // hold while a search toward t runs: it starts from here, so moving would strand the path
-            if (Flow.searching(t)) return false;
+            if (Flow.searching(t)) { if (progress) stall = Math.min(stall, s0); return false; }
         }
         if (!Cfg.FLOW && !Cfg.DIG_FIRST && digToward(t)) return false;
         Direction d = choose(t);

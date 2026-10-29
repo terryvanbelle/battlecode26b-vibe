@@ -236,6 +236,12 @@ public final class Cfg {
      *  path tile, dropping it only after FLOW_JAM_HOLD turns. Dropping starts a fresh search, which holds the rat still
      *  for up to FLOW_MAX_TURNS turns and blocks the rats queued behind it (EscapeTheNight: 4-5 babies stuck 500+ rounds). */
     public static final boolean FLOW_JAM = false;
+    /** A step along a flow path is progress: it resets Nav's stall, and a turn held still for a search does not add
+     *  to it. Without it the stall counts straight-line distance only, so a detour that leads away from the target for
+     *  13+ turns ends a cheese chase (25 a mine errand, 20 a raid or explore) on the way. seepastyourgreed (s4d vs araid):
+     *  gatherers in the bottom corridor see the mines through the wall above; each errand held 3-11 turns for its
+     *  search, walked part of the 45-tile detour, gave up, and the next errand searched again (1840 pickups to 22240). */
+    public static final boolean FLOW_PROGRESS = false;
     /** Our kings' 3x3 bodies count as walls for flow paths and bug walks (not when the target is at a king).
      *  EscapeTheNight: A* routed babies through the king that stood between them and the room's exit; they waited behind
      *  it, dropped the path and searched again, 500+ rounds. */
