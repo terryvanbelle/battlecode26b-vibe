@@ -564,3 +564,9 @@
 - Field endings for our bot over all replica games: 502 of 759 end in a king kill (263 lost), 178 on points at r2000
   (52 lost), 79 on points at an early cat death (27 lost). A tally of what killed our king in the s3y/s4d-era losses
   is running.
+
+## 2026-10-28 23:20 PDT: s4j passes the rush run
+- rx_s4j (s4j = s4d + GLANCE_MEM 20 + MAX_BABIES_WAR 30, vs abrk) against control rx2_s4d: +6.2 pts, t +1.53,
+  cells +14 -9, 53-27, king-kill losses 12 (17), king kills by us 23 (18). The two passes stack, with the largest
+  points gain of the rush arms. It is already the replica candidate (set-1 block running). The full suite passed
+  (BotTest, test_tools 109, battle 64, replaydump 489, reports 67, scoring 102).
