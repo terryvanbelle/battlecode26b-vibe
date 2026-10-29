@@ -99,8 +99,33 @@ public final class Flow {
         if (tgt != null && G.cheb(tgt, t) <= 1 && (building || ready(t))) return;
         if (cache && adopt(t)) return;
         if (failTgt != null && G.cheb(failTgt, t) <= 1 && G.round - failRound < Cfg.FLOW_RETRY) return;
+        start(t, false);
+    }
+
+    /** The current search is a frontier search (Cfg.BREAKOUT_TTL): forward from here with no heuristic, ending at the
+     *  first never-seen tile it pops, which becomes its target. */
+    static boolean frontier;
+    /** Round the last frontier search found nothing reachable that is unseen. */
+    static int frontierFail = -1000;
+
+    /** Ask for a path to the never-seen tile nearest by path cost over what we know (open 1, dirt DIG_COST, walls
+     *  blocked); no-op while one is being built or one is ready toward a still-unseen tile. */
+    public static void requestFrontier() {
+        if (frontier && (building || builtRound >= 0 && !Sym.known(tIdx) && G.round - builtRound <= Cfg.FLOW_TTL)) return;
+        if (G.round - frontierFail < Cfg.FLOW_RETRY) return;
+        start(G.me, true);
+    }
+
+    /** A frontier search is running, or its path is ready toward a still-unseen tile. */
+    public static boolean frontierLive() {
+        if (frontier && building && G.round - startRound > Cfg.FLOW_REV_TURNS) { building = false; fails++; frontierFail = G.round; }
+        return frontier && (building || builtRound >= 0 && !Sym.known(tIdx) && G.round - builtRound <= Cfg.FLOW_TTL);
+    }
+
+    static void start(MapLocation t, boolean front) {
         if (building) ends[5]++;
         else if (tgt != null && builtRound >= 0 && G.round - builtRound <= Cfg.FLOW_TTL) ends[4]++;
+        frontier = front;
         tgt = t;
         tIdx = G.idx(t);
         block = (Cfg.KING_BLOCK || Cfg.KING_FLOW) && !Nav.atKing(t) ? Sym.WALL | Sym.KING : Sym.WALL;
@@ -118,7 +143,7 @@ public final class Flow {
     }
 
     static void seed() {
-        if (rev) {
+        if (rev && !frontier) {
             // the target is the root; the heuristic aims at where the rat stands now
             sx0 = G.me.x; sy0 = G.me.y;
             g[tIdx] = base;
@@ -131,7 +156,7 @@ public final class Flow {
         }
         int s = sIdx = G.idx(G.me);
         g[s] = base;
-        curF = Math.max(Math.abs(G.me.x - tx), Math.abs(G.me.y - ty));
+        curF = frontier ? 0 : Math.max(Math.abs(G.me.x - tx), Math.abs(G.me.y - ty));
         int b = curF & BMASK;
         bucket[b][tail[b] & RMASK] = s;
         tail[b]++;
@@ -151,7 +176,7 @@ public final class Flow {
     }
 
     static void work0(int reserve) {
-        if (rev && g != null && bucket != null) { workRev(reserve); return; }
+        if (rev && !frontier && g != null && bucket != null) { workRev(reserve); return; }
         int n = G.W * G.H;
         if (g == null) {
             if (left() < 2 * n + reserve + (fast ? 1700 : 0)) return;
@@ -169,6 +194,7 @@ public final class Flow {
             path = buf = new int[1024];
             seed();
         }
+        if (frontier) { workFrontier(reserve); return; }
         if (rev) { workRev(reserve); return; }
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
         int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = tx, Y = ty, blk = block;
@@ -210,6 +236,48 @@ public final class Flow {
         fails++;
         failTgt = tgt;
         failRound = G.round;
+    }
+
+    /** The frontier search: Dijkstra from the rat (Dial buckets on g) until it pops a never-seen tile, which becomes the
+     *  target; nothing unseen reachable sets frontierFail. Neighbours expand in the side frame order (ox/oy). */
+    static void workFrontier(int reserve) {
+        int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
+        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, blk = block, s = sIdx;
+        while (pending > 0) {
+            if (left() < reserve) return;
+            int b = curF & BMASK, u;
+            if (head[b] == tail[b]) { curF++; continue; }
+            u = bucket[b][head[b] & RMASK]; head[b]++;
+            pending--;
+            int gu = gg[u] - bs;
+            if (gu != curF) continue; // stale entry
+            if ((mem[u] & Sym.SEEN) == 0 && u != s) {
+                if (left() < reserve + (cache ? 50 : 40) * (gu + 2)) { head[b]--; pending++; return; }
+                tIdx = u; tx = u % W; ty = u / W;
+                tgt = new MapLocation(tx, ty);
+                finish();
+                return;
+            }
+            int ux = u % W, uy = u / W;
+            for (int k = 0; k < 8; k++) {
+                int vx = ux + OX[k], vy = uy + OY[k];
+                if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
+                int v = vx + vy * W, m = mem[v];
+                if ((m & blk) != 0) continue;
+                int ng = gu + ((m & Sym.DIRT) != 0 ? dig : 1);
+                int gv = gg[v];
+                if (gv >= bs && gv - bs <= ng) continue;
+                gg[v] = bs + ng;
+                pp[v] = k;
+                int fb = ng & BMASK;
+                bucket[fb][tail[fb] & RMASK] = v;
+                tail[fb]++;
+                pending++;
+            }
+        }
+        building = false;
+        fails++;
+        frontierFail = G.round;
     }
 
     /** The reverse search: pops in f order (g from the target + Chebyshev to where the rat stood at the start) until a
@@ -449,6 +517,7 @@ public final class Flow {
                 c = s;
             }
             if (at < 0) continue;
+            frontier = false;
             tgt = new MapLocation(c % W, c / W);
             tIdx = c;
             block = (Cfg.KING_BLOCK || Cfg.KING_FLOW) && !Nav.atKing(tgt) ? Sym.WALL | Sym.KING : Sym.WALL;

@@ -527,6 +527,50 @@ public class BotTest {
         }
     }
 
+    /** Breakout: a walled room (x 3-9, y 3-9) whose one exit is a dirt tile at (9,6); inside and the ring are seen,
+     *  the rest is not. The frontier search from (5,6) ends on a never-seen tile just outside the exit, through the
+     *  dirt; the x-mirrored room in the mirrored side frame gives the mirrored path; a room of solid walls finds
+     *  nothing. Two walled-off chases given up within 100 rounds start a breakout, two 150 apart do not. */
+    static void testFrontier() throws GameActionException {
+        MapLocation[] tg = new MapLocation[2];
+        for (int mir = 0; mir < 3; mir++) {
+            reset(); W = 20; H = 20; install();
+            Flow.setFrame(mir == 1 ? -1 : 1, 1);
+            for (int x = 3; x <= 9; x++)
+                for (int y = 3; y <= 9; y++) {
+                    int mx = mir == 1 ? W - 1 - x : x;
+                    boolean ring = x == 3 || x == 9 || y == 3 || y == 9, exit = x == 9 && y == 6 && mir != 2;
+                    Sym.record(mx, y, ring && !exit, exit, false);
+                }
+            me = new MapLocation(mir == 1 ? W - 1 - 5 : 5, 6); G.startTurn();
+            Flow.drop();
+            Flow.requestFrontier();
+            Flow.work(0);
+            if (mir == 2) {
+                check(!Flow.frontierLive() && Flow.frontierFail == G.round, "frontier: a sealed room finds nothing unseen");
+                continue;
+            }
+            MapLocation t = Flow.tgt;
+            boolean viaDirt = false;
+            for (int i = 0; i < Flow.plen; i++) if (Flow.path[i] == G.idx(mir == 1 ? W - 1 - 9 : 9, 6)) viaDirt = true;
+            check(Flow.frontierLive() && !Flow.building && t != null && !Sym.known(G.idx(t)) && viaDirt
+                  && Math.abs(t.x - (mir == 1 ? W - 1 - 10 : 10)) == 0,
+                  "frontier: the nearest unseen tile is outside the dirt exit (" + t + ", " + viaDirt + ")");
+            tg[mir] = t;
+        }
+        check(tg[0] != null && tg[1] != null && tg[1].x == W - 1 - tg[0].x && tg[1].y == tg[0].y,
+              "frontier: the mirrored room in the mirrored frame gives the mirrored target (" + tg[0] + ", " + tg[1] + ")");
+        Flow.setFrame(1, 1);
+        Baby.breakoutUntil = -1; Baby.wallStrikes = 0; Baby.lastStrike = -1000;
+        Baby.wallStrike(100, 150);
+        boolean one = Baby.breakoutUntil < 0;
+        Baby.wallStrike(180, 150);
+        check(one && Baby.breakoutUntil == 330, "breakout: the second strike within 100 rounds starts it (" + Baby.breakoutUntil + ")");
+        Baby.breakoutUntil = -1; Baby.wallStrikes = 0; Baby.lastStrike = -1000;
+        Baby.wallStrike(100, 150); Baby.wallStrike(250, 150);
+        check(Baby.breakoutUntil < 0, "breakout: strikes 150 rounds apart start nothing");
+    }
+
     /** A walk of adjacent free tiles from a to b (no walls), or why not. */
     static String pathCheck(MapLocation a, MapLocation b) {
         if (Flow.plen < 2 || Flow.path[0] != G.idx(a) || Flow.path[Flow.plen - 1] != G.idx(b)) return "ends";
@@ -1894,6 +1938,7 @@ public class BotTest {
         testSpawnFace();
         testSwapPast();
         testMineExplore();
+        testFrontier();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

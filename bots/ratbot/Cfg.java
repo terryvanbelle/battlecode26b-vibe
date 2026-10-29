@@ -206,6 +206,12 @@ public final class Cfg {
      *  rats saw the piles round the mines through it and chased them into the wall ('C'), each pick resetting the
      *  stall that would start a flow search to the mine, so they made 9 pickups to r100 (they 52) and none r100-200. */
     public static final boolean CHEESE_LOS = false;
+    /** Breakout (0 = off): a baby that gives up two chases of walled-off cheese within 100 rounds, or whose explore
+     *  search fails, spends BREAKOUT_TTL rounds with CHEESE_LOS on and exploring toward the never-seen tile nearest by
+     *  path cost (Flow's frontier search; dirt on the way is dug). EscapeTheNight 2233 and local etn1: the king's
+     *  room opens only through 12 dirt tiles; all 20 babies chased piles seen through its wall ('C' 52-85%) and
+     *  explore searches toward the map centre timed out (25 turns), so the team dug 3 tiles in 1000 rounds. */
+    public static final int BREAKOUT_TTL = 0;
     /** A goTo target within Chebyshev NAV_SAME_R of the last one keeps the stall count and bug state (0 = only an
      *  equal tile does). fullofsecrets: carriers with up to 490 cheese sat 76 rounds outside the wall of the king's
      *  pocket; each step of the roaming king was a new target, so the stall never reached FLOW_STALL. */

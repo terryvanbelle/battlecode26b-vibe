@@ -15,6 +15,9 @@ public final class Baby {
     static final MapLocation[] banned = new MapLocation[4];
     static final int[] bannedAt = new int[4];
     static int banHead;
+    /** Cfg.BREAKOUT_TTL: breaking out (no chase of walled-off cheese; explore by frontier search) until this round;
+     *  wallStrikes counts chases of walled-off cheese given up on a stall, the last in round lastStrike. */
+    static int breakoutUntil = -1, wallStrikes, lastStrike = -1000;
     static MapLocation mineTarget;    // sticky assigned mine
     static MapLocation exploreTarget;
     static MapLocation catSeen;       // bottom-left of nearest cat sensed this turn
@@ -271,20 +274,21 @@ public final class Baby {
         MapInfo[] infos = G.rc.senseNearbyMapInfos();
         MapLocation bestCheese = null;
         int bd = Integer.MAX_VALUE, np = 0;
+        boolean los = Cfg.CHEESE_LOS || breakingOut();
         for (MapInfo mi : infos) {
             MapLocation l = mi.getMapLocation();
             boolean mine = mi.hasCheeseMine();
             if (Sym.record(l.x, l.y, mi.isWall(), mi.isDirt(), mine)) { }
             if (mine) noteMine(l.x, l.y);
             if (mi.getCheeseAmount() > 0) {
-                if (Cfg.CHEESE_LOS) { if (np < piles.length) piles[np++] = l; continue; }
+                if (los) { if (np < piles.length) piles[np++] = l; continue; }
                 int d = G.me.distanceSquaredTo(l);
                 if (d < bd && (Cfg.CHEESE_BAN == 0 || !bannedCheese(l, Cfg.CHEESE_BAN))) { bd = d; bestCheese = l; }
             } else if (cheeseTarget != null && cheeseTarget.equals(l)) {
                 cheeseTarget = null;
             }
         }
-        if (Cfg.CHEESE_LOS) {
+        if (los) {
             for (int i = 0; i < np; i++) {
                 MapLocation l = piles[i];
                 int d = G.me.distanceSquaredTo(l);
@@ -931,6 +935,7 @@ public final class Baby {
             Nav.goTo(cheeseTarget);
             if (Nav.stall > 12) {
                 if (Cfg.CHEESE_BAN > 0 && (!Cfg.CHEESE_BAN_WALL || Flow.detour(cheeseTarget))) banCheese(cheeseTarget);
+                if (Cfg.BREAKOUT_TTL > 0 && walledOff(G.me, cheeseTarget)) wallStrike(G.round, Cfg.BREAKOUT_TTL);
                 cheeseTarget = null;
             }
             return;
@@ -1500,7 +1505,33 @@ public final class Baby {
         return false;
     }
 
+    /** Cfg.BREAKOUT_TTL is on and this rat is breaking out. */
+    static boolean breakingOut() { return Cfg.BREAKOUT_TTL > 0 && G.round < breakoutUntil; }
+
+    /** A chase of walled-off cheese given up in round r: the second within 100 rounds of the last starts a breakout. */
+    static void wallStrike(int r, int ttl) {
+        wallStrikes = r - lastStrike > 100 ? 1 : wallStrikes + 1;
+        lastStrike = r;
+        if (wallStrikes >= 2) breakoutUntil = r + ttl;
+    }
+
+    /** Breakout exploring: follow a frontier path (to the never-seen tile nearest by path cost, digging dirt on the
+     *  way), holding still while its forward search runs. False when none is found (nothing unseen is reachable). */
+    static boolean exploreFrontier() throws GameActionException {
+        if (!Flow.frontierLive()) Flow.requestFrontier();
+        if (!Flow.frontierLive()) return false;
+        if (Flow.building) return true;
+        exploreTarget = Flow.tgt;
+        Nav.goTo(exploreTarget);
+        return true;
+    }
+
     static void explore() throws GameActionException {
+        if (Cfg.BREAKOUT_TTL > 0) {
+            if (exploreTarget != null && Flow.failTgt != null && G.cheb(Flow.failTgt, exploreTarget) <= 1
+                    && G.round - Flow.failRound < Cfg.FLOW_RETRY) breakoutUntil = G.round + Cfg.BREAKOUT_TTL;
+            if (breakingOut() && exploreFrontier()) return;
+        }
         if (exploreTarget == null || G.cheb(G.me, exploreTarget) <= 2 || Nav.stall > 20) {
             // target in our side frame: mirrored rats pick mirrored targets. Take the nearest never-seen
             // sample: once open ground is mapped, what is left unseen is buried in dirt, and Flow digs to it.
