@@ -1,0 +1,5 @@
+name=s6a
+source=bots/ratbot
+source_sha=dff6ea95451b
+commit=f924688
+created=2026-10-29 03:31 PDT
