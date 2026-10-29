@@ -77,4 +77,4 @@ The court will ignore the witness's comment.  From now on, please assume that al
 
 ## 15. 2026-10-28 19:20 PDT
 
-Ah, I see what you meant now, and yes, I did misunderstand.  I now understand that when you said "Mines aren’t mirrored through symmetry", you meant "Our bot isn’t taking advantage of mine symmetry"
+Ah, I see what you meant now, and yes, I did misunderstand.  I now understand that when you said "Mines aren’t mirrored through symmetry", you meant "Our bot isn't taking advantage of mine symmetry"
