@@ -231,6 +231,11 @@ public final class Cfg {
     /** Gatherers spread over every known mine, not only those on our half: the field rushers pick 600-700 cheese a game
      *  on our half in rounds 100-400 (abrk 156). */
     public static final boolean MINE_ANY = false;
+    /** MINE_ANY during cooperation only: gatherers pick among every known mine, and drop an enemy-half mine once the
+     *  war starts. With MINE_MIRROR the king lists each listed mine's twin on either half. Replica, s6m's blocks: by r200
+     *  the mines had produced 5199 cheese a game and both teams together had picked up 2154; through r300 mines ranked
+     *  6th and beyond from our king gave us 0-11% of their spawn (DefaultLarge (32,54): 760 of 760 lying). */
+    public static final boolean MINE_ANY_COOP = false;
     /** Squared distance (to the cat's 2x2 centre, doubled coords /4) a gatherer keeps from cats. */
     public static final int GATHER_CAT_DIST = 20;
     /** A cat within dist2 CAT_DEFEND_R2 of one of our kings draws every rat that sees it, gatherers included

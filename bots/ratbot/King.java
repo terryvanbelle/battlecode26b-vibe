@@ -80,12 +80,13 @@ public final class King {
         mirroredMask = s;
     }
 
-    /** List the twin under symmetry s of every listed mine that is nearer home than home's own twin is. */
+    /** List the twin under symmetry s of every listed mine that is nearer home than home's own twin is (with
+     *  Cfg.MINE_ANY_COOP, every twin). */
     static void mirrorInto(MapLocation home, int s) {
         MapLocation away = G.mirror(home, s);
         for (int k = 0, n = Comms.numMines; k < n; k++) {
             MapLocation t = G.mirror(Comms.mines[k], s);
-            if (t.distanceSquaredTo(home) < t.distanceSquaredTo(away)) Comms.addMine(t.x, t.y);
+            if (Cfg.MINE_ANY_COOP || t.distanceSquaredTo(home) < t.distanceSquaredTo(away)) Comms.addMine(t.x, t.y);
         }
     }
 

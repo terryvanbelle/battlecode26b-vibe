@@ -951,6 +951,7 @@ public final class Baby {
         if (role == GATHER && G.round < seekUntil && seek()) { why = 'x'; return; }
         if (role == GATHER || role == FIGHT && Cfg.FIGHT_MINE) {
             if (Cfg.MINE_BALANCE && mineTarget != null && Comms.numMines != minesAtPick) mineTarget = null;
+            if (Cfg.MINE_ANY_COOP && !G.coop && mineTarget != null && !homeHalf(mineTarget)) mineTarget = null;
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
                 if (atMine(mineTarget, Cfg.MINE_KING_R)) {
@@ -1340,9 +1341,16 @@ public final class Baby {
         if (n == 0) return null;
         int ours = 0;
         for (int i = 0; i < n; i++) if (homeHalf(cand[i])) { MapLocation t = cand[ours]; cand[ours++] = cand[i]; cand[i] = t; }
-        int m = ours > 0 && !Cfg.MINE_ANY ? ours : n;
-        for (int i = 1; i < m; i++)   // insertion sort of the first m by mineKey
-            for (int j = i; j > 0 && mineKey(cand[j]) < mineKey(cand[j - 1]); j--) { MapLocation t = cand[j]; cand[j] = cand[j - 1]; cand[j - 1] = t; }
+        int m = ours > 0 && !(Cfg.MINE_ANY || Cfg.MINE_ANY_COOP && G.coop) ? ours : n;
+        long[] key = candKey;
+        for (int i = 0; i < m; i++) key[i] = mineKey(cand[i]);
+        for (int i = 1; i < m; i++) {   // insertion sort of the first m by mineKey
+            long k = key[i];
+            MapLocation c = cand[i];
+            int j = i;
+            for (; j > 0 && k < key[j - 1]; j--) { key[j] = key[j - 1]; cand[j] = cand[j - 1]; }
+            key[j] = k; cand[j] = c;
+        }
         minesAtPick = Comms.numMines;
         if (Cfg.MINE_BALANCE) return cand[slot % m];
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
@@ -1352,6 +1360,7 @@ public final class Baby {
     static int slot, minesAtPick;
 
     static final MapLocation[] cand = new MapLocation[40];
+    static final long[] candKey = new long[40];
 
     static int addCand(MapLocation l, int n) {
         for (int i = 0; i < n; i++) if (cand[i].equals(l)) return n;
