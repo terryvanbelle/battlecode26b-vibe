@@ -1,0 +1,5 @@
+name=s6j
+source=bots/ratbot
+source_sha=77233cc248c2
+commit=dd0e1d8
+created=2026-10-29 04:52 PDT
