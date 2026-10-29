@@ -148,6 +148,10 @@ public final class Cfg {
      *  mine (0 = off: always 2), and wanders only to tiles off the kings' bodies. FreeTheCheese: the king's 3x3 covered
      *  the mine, the free tiles within 2 were taken, and a gatherer pathed into the king for 60 rounds. */
     public static final int MINE_KING_R = 0;
+    /** A delivery that has not got closer (Chebyshev) to the nearest king for FLOW_STALL turns walks back along the
+     *  rat's own trail of walked tiles from its spawn instead (Trail). Flow paths to a pocketed king were rarely of
+     *  use: on fullofsecrets 131 of 490 searches failed, and no path was followed to its end in 3 games. */
+    public static final boolean TRAIL = false;
     /** A rat already carrying cheese takes no pile that would lift it above this (0 = no cap). */
     public static final int CARRY_MAX = 0;
     /** Babies spawned before any fighter is assigned. */

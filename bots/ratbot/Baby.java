@@ -33,6 +33,7 @@ public final class Baby {
     public static void turn() throws GameActionException {
         RobotController rc = G.rc;
         if (role < 0) born();
+        if (Cfg.TRAIL) Trail.record();
         Comms.readKings();
         if (Cfg.KING_BLOCK) Nav.markKings();
         Comms.readMines();
@@ -805,9 +806,30 @@ public final class Baby {
             why = 'D';
             return true;
         }
-        Nav.goTo(k);
         why = 'd';
+        if (Cfg.TRAIL && homeLeg(k)) return true;
+        Nav.goTo(k);
         return true;
+    }
+
+    static int homeBest, homeStall, homeRound = -10, homeHeld;
+    static boolean homing;
+
+    /** Cfg.TRAIL: after FLOW_STALL turns of delivery without getting closer to the nearest king (a roaming king does
+     *  not reset the count, unlike Nav's stall), walk the trail back until it ends; while it is held by robots, wait
+     *  FLOW_HOLD turns, then let Nav route around them. True when this took the turn. */
+    static boolean homeLeg(MapLocation k) throws GameActionException {
+        if (homeRound != G.round - 1) { homing = false; homeBest = Integer.MAX_VALUE; homeStall = 0; homeHeld = 0; }
+        homeRound = G.round;
+        int c = G.cheb(G.me, k);
+        if (c < homeBest) { homeBest = c; homeStall = 0; } else homeStall++;
+        if (!homing && homeStall < Cfg.FLOW_STALL) return false;
+        homing = true;
+        if (!G.rc.isMovementReady()) return true;
+        int r = Trail.back();
+        if (r == Trail.MOVED) { homeHeld = 0; return true; }
+        if (r == Trail.END) { homing = false; homeStall = 0; homeBest = c; return false; }
+        return ++homeHeld <= Cfg.FLOW_HOLD;
     }
 
     static int noKing;               // symmetry candidates whose enemy-king spot we saw empty

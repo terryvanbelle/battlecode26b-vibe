@@ -667,3 +667,27 @@
   1383 steps over 487 paths), after 4+ turns of holding still to build them. Per-path end counters (fe=: reached
   the end, robot-held, wall, drift, replaced while ready, replaced while building, failed) are in the indicator
   now. dbgv (s4v + counters) is running to show where the paths go.
+
+## 2026-10-29 00:16 PDT: s4t rejected; flow paths end at robots; a trail home
+- s4t (s4d + KING_BLOCK) is rejected on replica block 1 against s3y (matches 1578-1601): 48 cells, 9 differ,
+  2 gained, 7 lost, net -5, t -1.67. Most of the lost cells were war games (heart and uneasy_alliance against
+  AlexT101, DefaultLarge against abcdezyxwv), plus two 49-50 cooperation losses on krotus against bc26vibe_bot. The
+  self-play screen agrees: sp18_s4t was net -4 over 64 cells (+3 -7, t -0.64) when it was stopped. KING_BLOCK
+  fixed stuck babies but does not pay in results. s3y is back on the ladder (submission 75).
+- s5a (s4v + MINE_KING_R 4) and s5b (s5a + CHEESE_BAN_WALL) on the five diagnostic maps: 2709 and 3830 stuck
+  rounds (s4v 1386). Most of it is carriers ('d') on pipes and fullofsecrets, where single games swing widely:
+  s5a starved on fullofsecrets (cheese delivered 240) while s5b won it 89-10 (2520). Both are withdrawn.
+- dbgv's path-end counters on EscapeTheNight / Nofreecheese / fullofsecrets: no path was followed to its end
+  (0 / 0 / 0). Paths ended when a robot held the next tile (231 / 19 / 184), when the target moved (185 / 66 / 86),
+  at a newly seen wall (53 / 2 / 64), or by drift (45 / 37 / 4). Searches failed 54 / 83 / 131 times. The A* is
+  per request and starts from scratch each time.
+- Trail (Cfg.TRAIL, off by default): each baby keeps the loop-free chain of tiles it has walked since its spawn
+  beside a king. Stepping back onto the chain cuts the loop, and a jump (carried, thrown) starts a new chain. A
+  delivery that has not got closer to the nearest king in Chebyshev distance for FLOW_STALL turns walks the chain
+  back. Each turn it steps to the free neighbour earliest on the chain, which cuts corners. If robots hold every
+  earlier neighbour it waits FLOW_HOLD turns, then lets Nav route around them. A roaming king does not reset this
+  count. The chain is walked ground, so it gets through any pocket the rat came out of. It costs about 50
+  bytecodes a turn and two W*H int arrays. Unit tests cover loop cuts, corner cuts, HELD, the avoid mask, jumps,
+  and a carrier behind a wall.
+- s5c = s4d + CHEESE_BAN 60 (no KING_BLOCK); s5d = s5c + TRAIL. Diagnostics on the five maps are running, and
+  sp18/rx screens for s5c and s4v are queued after them.

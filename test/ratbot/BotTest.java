@@ -54,6 +54,7 @@ public class BotTest {
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0; Sym.listDone = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
+        Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false;
     }
 
     static RobotController fakeRc() {
@@ -439,6 +440,75 @@ public class BotTest {
         Nav.sameR = Cfg.NAV_SAME_R;
         check(roamingTarget(2), "nav same target: reaches a roaming target behind a wall");
         check(!roamingTarget(0), "nav same target: without it the roaming target behind a wall is never reached");
+    }
+
+    static MapLocation p(int x, int y) { return new MapLocation(x, y); }
+
+    /** Stand on each tile in turn (a round each) and extend the trail. */
+    static void trailWalk(MapLocation... ls) {
+        for (MapLocation l : ls) { round++; me = l; G.startTurn(); Trail.record(); }
+    }
+
+    static void testTrail() throws GameActionException {
+        reset(); W = 30; H = 20; install();
+        trailWalk(p(5, 5), p(6, 5), p(7, 5), p(7, 6), p(6, 6));
+        check(Trail.n == 5, "trail: five tiles walked (" + Trail.n + ")");
+        trailWalk(p(6, 5));
+        check(Trail.n == 2 && Trail.at[G.idx(p(7, 5))] == 0 && Trail.at[G.idx(p(6, 6))] == 0 && Trail.at[G.idx(p(6, 5))] == 2,
+            "trail: stepping back onto it cuts the loop (" + Trail.n + ")");
+        trailWalk(p(7, 5), p(7, 6), p(6, 6));
+        moveCd = 0;
+        check(Trail.back() == Trail.MOVED && me.equals(p(5, 5)), "trail: back cuts the corner to the earliest neighbour (" + me + ")");
+        trailWalk(me);
+        check(Trail.n == 1, "trail: at the start one tile is left (" + Trail.n + ")");
+        moveCd = 0;
+        check(Trail.back() == Trail.END && me.equals(p(5, 5)), "trail: END at its start");
+        trailWalk(p(6, 5), p(7, 5), p(7, 6), p(6, 6));
+        for (MapLocation l : new MapLocation[] { p(5, 5), p(6, 5), p(7, 5), p(7, 6) })
+            robots.put(l, new RobotInfo(3, Team.A, UnitType.BABY_RAT, 100, l, Direction.NORTH, 0, 0, null));
+        moveCd = 0;
+        check(Trail.back() == Trail.HELD && me.equals(p(6, 6)), "trail: HELD when every earlier neighbour is occupied");
+        robots.clear();
+        Nav.avoid = 1 << Direction.SOUTHWEST.ordinal();
+        moveCd = 0;
+        check(Trail.back() == Trail.MOVED && me.equals(p(6, 5)), "trail: an avoided step is skipped for the next earliest (" + me + ")");
+        Nav.avoid = 0;
+        moveCd = 20;
+        trailWalk(me);
+        check(Trail.back() == Trail.HELD && me.equals(p(6, 5)), "trail: HELD while movement is not ready");
+        trailWalk(p(12, 12));
+        check(Trail.n == 1 && Trail.at[G.idx(p(5, 5))] == 0 && Trail.at[G.idx(p(12, 12))] == 1, "trail: a jump starts a new chain");
+        int with = homeRun(true), without = homeRun(false);
+        check(with > 0 && with <= 40, "trail: a stalled carrier walks its trail back to a king behind a wall (" + with + " turns)");
+        check(with > 0 && (without < 0 || with <= without), "trail: no slower than nav alone (" + with + " vs " + without + ")");
+    }
+
+    /** Turns until a carrier at (16,5) is in transfer reach of a king at (5,5) behind a wall at x=10 (y 0..16), having
+     *  walked out round the wall's end; -1 if not within 150. With trail, Baby.homeLeg takes the turns it wants. */
+    static int homeRun(boolean trail) throws GameActionException {
+        reset(); W = 30; H = 20; install();
+        for (int y = 0; y <= 16; y++) walls.add(p(10, y));
+        MapLocation k = p(5, 5);
+        for (int x = 4; x <= 6; x++)
+            for (int y = 4; y <= 6; y++) robots.put(p(x, y), new RobotInfo(1, Team.A, UnitType.RAT_KING, 600, k, Direction.NORTH, 0, 0, null));
+        List<MapLocation> out = new ArrayList<>(List.of(p(7, 6), p(8, 7), p(9, 8)));
+        for (int y = 9; y <= 17; y++) out.add(p(9, y));
+        out.add(p(10, 17));
+        for (int y = 16; y >= 6; y--) out.add(p(11, y));
+        for (int x = 12; x <= 16; x++) out.add(p(x, 5));
+        trailWalk(out.toArray(new MapLocation[0]));
+        facing = Direction.WEST;
+        for (int i = 1; i <= 150; i++) {
+            round++;
+            moveCd = Math.max(0, moveCd - 10); turnCd = Math.max(0, turnCd - 10); actCd = Math.max(0, actCd - 10);
+            G.startTurn();
+            for (MapInfo mi : G.rc.senseNearbyMapInfos()) Sym.record(mi.getMapLocation().x, mi.getMapLocation().y, mi.isWall(), mi.isDirt(), false);
+            Trail.record();
+            if (Baby.inTransferReach(me, k)) return i;
+            if (!(trail && Baby.homeLeg(k))) Nav.goTo(k);
+            Flow.work(0);
+        }
+        return -1;
     }
 
     static void testAtMine() {
@@ -1272,6 +1342,7 @@ public class BotTest {
         testCheeseBan();
         testNavSameTarget();
         testAtMine();
+        testTrail();
         testKingBlock();
         testExploreUnseen();
         testKingNeverWritesOutOfRange();
