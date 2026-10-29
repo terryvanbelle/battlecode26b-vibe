@@ -1,0 +1,5 @@
+name=s6f
+source=bots/ratbot
+source_sha=cf16e763daba
+commit=5e46852
+created=2026-10-29 04:35 PDT

@@ -358,7 +358,7 @@ public final class Baby {
 
     static RobotInfo eKing, nearestEnemy;
     static RobotInfo[] seen = new RobotInfo[0];
-    public static int naps, throwsDone, ratTraps;
+    public static int naps, throwsDone, ratTraps, mineTraps;
     static int carryRound = -100;
 
     /** Grab an adjacent enemy baby rat (the engine allows it when it cannot see us or is weaker). */
@@ -455,7 +455,7 @@ public final class Baby {
     /** Rat trap on the front tile nearest an approaching enemy rat (50 damage + stun when it enters the 3x3). */
     static boolean tryRatTrap() throws GameActionException {
         RobotController rc = G.rc;
-        if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= Cfg.TRAP_CAP) return false;
+        if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= trapCap()) return false;
         if (rc.getAllCheese() < Econ.floor(Cfg.RAT_TRAP_MIN_CHEESE) || King.trapStarvesSpawn(rc)) return false;
         int d0 = G.me.distanceSquaredTo(nearestEnemy.location);
         if (d0 <= 2 || d0 > Cfg.BABY_TRAP_DIST2) return false;
@@ -474,6 +474,44 @@ public final class Baby {
         rc.placeRatTrap(best);
         ratTraps++;
         return true;
+    }
+
+    /** The live rat traps past which no combat trap is laid (TRAP_CAP, plus MINE_TRAP_CAP with trapped mines). */
+    static int trapCap() { return Cfg.MINE_TRAPS > 0 ? Math.min(25, Cfg.TRAP_CAP + Cfg.MINE_TRAP_CAP) : Cfg.TRAP_CAP; }
+
+    /** Trap sites around a mine in our side frame (offsets times fu, fv); the order breaks distance ties. */
+    static final int[][] MINE_SITES = {{-3, -3}, {-3, 0}, {0, -3}, {-3, 3}, {3, -3}, {0, 3}, {3, 0}, {3, 3}};
+
+    /** l's rank among mine m's eight trap sites by distance to ek (ties in MINE_SITES order), or 99 if l is no site. */
+    static int mineSiteRank(MapLocation m, MapLocation l, MapLocation ek) {
+        int ox = l.x - m.x, oy = l.y - m.y;
+        if (ox % 3 != 0 || oy % 3 != 0 || ox < -3 || ox > 3 || oy < -3 || oy > 3 || ox == 0 && oy == 0) return 99;
+        int dl = l.distanceSquaredTo(ek), rank = 0;
+        boolean seen = false;
+        for (int[] s : MINE_SITES) {
+            int sx = s[0] * fu, sy = s[1] * fv;
+            if (sx == ox && sy == oy) { seen = true; continue; }
+            int d = m.translate(sx, sy).distanceSquaredTo(ek);
+            if (d < dl || d == dl && !seen) rank++;
+        }
+        return rank;
+    }
+
+    /** MINE_TRAPS: a rat trap on a front tile that is one of mine m's first MINE_TRAPS trap sites. */
+    static boolean mineTrap(MapLocation m) throws GameActionException {
+        RobotController rc = G.rc;
+        if (G.coop || !rc.isActionReady() || rc.getNumberRatTraps() >= Cfg.MINE_TRAP_CAP) return false;
+        if (rc.getAllCheese() < Econ.floor(Cfg.MINE_TRAP_CHEESE) || King.trapStarvesSpawn(rc)) return false;
+        MapLocation ek = G.mirror(home, firstSym()), me = rc.getLocation();
+        for (Direction d : G.fan(me, rc.getDirection())) {
+            MapLocation l = me.add(d);
+            if (mineSiteRank(m, l, ek) < Cfg.MINE_TRAPS && rc.canPlaceRatTrap(l)) {
+                rc.placeRatTrap(l);
+                ratTraps++; mineTraps++;
+                return true;
+            }
+        }
+        return false;
     }
 
     /** Bite the best adjacent enemy: a king first, then the lowest health (BITE_CARRIER: a rat carrying one of ours
@@ -816,10 +854,12 @@ public final class Baby {
                         // hold still (moves set off traps laid at our mines) and sweep the cone around the spawn square
                         Direction t = G.facing.rotateRight().rotateRight();
                         if (rc.canTurn(t)) { rc.turn(t); G.facing = t; }
+                        if (Cfg.MINE_TRAPS > 0) mineTrap(mineTarget);
                         return;
                     }
                     // wander inside the spawn square, facing outward to see new cheese
                     wanderAround(mineTarget);
+                    if (Cfg.MINE_TRAPS > 0) mineTrap(mineTarget);
                     why = 'W';
                 } else {
                     why = 'M';

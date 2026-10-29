@@ -1500,7 +1500,30 @@ public class BotTest {
         check(bad == 0, "traprisk: mask matches risky() everywhere (bad=" + bad + ")");
     }
 
+    static void testMineTraps() {
+        reset(); W = 20; H = 20; install();
+        Sym.mask = Sym.ROT;
+        Baby.home = new MapLocation(3, 3); Baby.fu = -1; Baby.fv = -1;
+        MapLocation m = new MapLocation(5, 5), ek = new MapLocation(16, 16);
+        check(Baby.mineSiteRank(m, new MapLocation(8, 8), ek) == 0, "mine traps: the site toward the enemy first");
+        check(Baby.mineSiteRank(m, new MapLocation(8, 5), ek) == 1 && Baby.mineSiteRank(m, new MapLocation(5, 8), ek) == 2,
+            "mine traps: a distance tie goes by the side-frame order");
+        check(Baby.mineSiteRank(m, new MapLocation(2, 2), ek) == 7, "mine traps: the site away from the enemy last");
+        check(Baby.mineSiteRank(m, new MapLocation(6, 5), ek) == 99 && Baby.mineSiteRank(m, m, ek) == 99
+            && Baby.mineSiteRank(m, new MapLocation(11, 5), ek) == 99, "mine traps: no site off the 3-grid, on the mine, or past 3");
+        // the mirrored twin (ROT about the centre of 20x20) ranks the mirrored sites the same
+        int[] ranks = new int[9];
+        for (int i = 0; i < 9; i++) ranks[i] = Baby.mineSiteRank(m, m.translate(3 * (i / 3) - 3, 3 * (i % 3) - 3), ek);
+        Baby.home = new MapLocation(16, 16); Baby.fu = 1; Baby.fv = 1;
+        MapLocation m2 = new MapLocation(14, 14), ek2 = new MapLocation(3, 3);
+        boolean same = true;
+        for (int i = 0; i < 9; i++)
+            same &= ranks[i] == Baby.mineSiteRank(m2, m2.translate(3 - 3 * (i / 3), 3 - 3 * (i % 3)), ek2);
+        check(same, "mine traps: mirrored twins rank mirrored sites alike");
+    }
+
     public static void main(String[] args) throws Exception {
+        testMineTraps();
         testTrapRisk();
         testMineSpread();
         testScout();

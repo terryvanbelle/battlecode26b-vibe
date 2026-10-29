@@ -30,6 +30,12 @@ public final class Cfg {
     public static final int RAT_TRAP_MIN_CHEESE = 200;
     /** Most live rat traps we keep (engine max 25): new ones are bought only as old ones fire. */
     public static final int TRAP_CAP = 10;
+    /** Trapped mines: a gatherer at its mine lays rat traps on the mine's MINE_TRAPS trap sites nearest the enemy
+     *  start (offsets 0 or +-3 in each axis: eight 3x3 trigger blocks tiling the 9x9 spawn square). Our traps never
+     *  fire on us, so they only hit raiders (the field rushers pick 20-90 piles on our half by r300). Only after
+     *  cooperation (a fired trap is a backstab), with MINE_TRAP_CHEESE banked, while we have fewer than MINE_TRAP_CAP
+     *  live traps; the combat cap rises by MINE_TRAP_CAP so these don't crowd out traps in fights. */
+    public static final int MINE_TRAPS = 0, MINE_TRAP_CAP = 10, MINE_TRAP_CHEESE = 400;
     /** No rat trap (baby or king) while the king, under the baby cap, lacks the cheese for its next spawn plus
      *  SPAWN_FLOOR and the trap: bodies before traps (1204 constrictinglattice vs AlexT101: r100-150 we laid 7 traps
      *  while the king sat under the spawn floor, and the army fell 12 -> 8). */

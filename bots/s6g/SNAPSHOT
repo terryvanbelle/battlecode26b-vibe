@@ -1,0 +1,5 @@
+name=s6g
+source=bots/ratbot
+source_sha=5742c708094c
+commit=5e46852
+created=2026-10-29 04:36 PDT
