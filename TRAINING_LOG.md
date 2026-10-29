@@ -1494,3 +1494,22 @@
   ours) was rejected on the replica as part of s4i (net -2).
 - battle_report.py's throws section now counts hitKing (enemy-king hits, a subset of hitEnemy); test_battle checks
   it on a synthetic throw.
+
+## 2026-10-29 10:08 PDT: s7d's sets 2-3 done; bundle s8c on the replica
+- s7d's control blocks for sets 2 (2115-2128) and 3 (2233-2246) are done and recorded in v3-ref-s7d.txt. All three
+  sets against s6m's reference: 126 cells, 23 differ (gained 16, lost 7), net +9, t 1.88. progress/ refreshed:
+  s7d rates about 1558 (52% expected field score).
+- Screens since the last entry: ra_s7j (S6M + SWAP_HOLD 2) passes against ra_s6m, +7.4 pts, t +1.64, net +11
+  (+18 -7). ra_s7h (CARRY_AIM v2) passes at 60/80 against ra_s6y, +5.7 pts, net +5. In the corridor diag sh2
+  (half done) s7x (SWAP_HOLD + SWAP_YIELD + SWAP_NO_ALONG) beat araid on 7 of 8 rose/EscapeTheNight/Stash/minimaze
+  games, s7l (without NO_ALONG) on 4 of 8.
+- s8c bundles the parts that have passed, on @s7d:
+  - s7i's symmetry switches (SYM_SLOT/FLOW/CENTRE/HAND/FACE) with KING_SENSE_RESERVE 7000;
+  - s7x's corridor swap (SWAP_HOLD 2 + SWAP_YIELD + SWAP_NO_ALONG);
+  - s7h's CARRY_AIM v2;
+  - s7q's economy pair (SEEK_CROWD 3 + MINE_ANY_COOP; eco2 9 wins of 12 against s7d, +8.8 pts a game).
+- s8c is replica submission #85. Its v3 set-1 block against s7d's reference started at 2247 (8 sent, 6 queued for
+  the drain). Sanity diag sc1 (s8c vs s7d, 3 maps x 2 sides) is running: the first game had no exceptions and no
+  overruns.
+- Not in the bundle yet (screens or diags still running): BREAKOUT_TTL (s7z, brk1), KING_PRESS + PRESS_SHARED (s8a),
+  RETREAT_HP 0 (s8b), SIEGE_FLOOR (s7t/s7u), MINE_EXPLORE (s7v/s7w, eco3).
