@@ -1765,3 +1765,12 @@
   s8n = s7d + RESCUE. Screen ra_s8n and rs1 (s8n vs s7d, 8 maps x 2 sides) are on the VM.
 - Screens: ra_s8k +7.2 pts, t +1.54, net +5; ra_s8l +1.7, t +0.37, net +6. Both pass, but s8k lost its
   replica block and s8l is parked behind it.
+
+## 2026-10-29 15:12 PDT: s7w rejected after block 1; s7q on the replica
+- s7w (s7d + MINE_EXPLORE 2) on v3 set 1 against s7d's reference: 42 cells, 35 alike, D 7 (+3 -4), net -1,
+  t -0.38. Gained CS50Crab dirtfulcat B, abcdezyxwv sunandmoon B, outercloudstudio seepastyourgreed B. Lost
+  AlexT101 popthecork B, CS50Crab Nofreecheese B and dirtfulcat A, outercloudstudio heart A. Exploring for
+  every home mine moved nothing on the field.
+- s7q (s7d + SEEK_CROWD 3 + MINE_ANY_COOP; eco2 vs s7d 9/12, pick x1.20) is submission #91, set-1 block
+  from 2491. s8n (RESCUE) waits on its local runs: rs1 vs s7d was all cooperation, since our bot never
+  backstabs, so it is being rerun vs abrk on gk1's 8 king-kill maps.
