@@ -145,3 +145,5 @@ araid,2026-10-29 01:13,s4d,"archetype: s4d switch set + SYM_SLOT + RUSH + RUSH_B
 s5m,2026-10-29 01:24,s5k,"s5k + SYM_FLOW: Flow's A* expands neighbours in the side frame, so mirrored rats find mirrored paths (the s5k/s5l mirror pairs split at DefaultMedium r40 on two 17-tile flow paths)",pending (mirror check)
 s5n,2026-10-29 01:24,s5l,dev + SYM_SLOT + SYM_FLOW: s5m's partner for mirror checks,tool
 s5o,2026-10-29 01:31,s4d,"s4d + early insurance king: FORM_FROM 25, FORM_BABIES 8, FORM_CHEESE 150, no income test (s3y never had a second king in 144 panel games; s5e formed one in 3 of 12 rusher games, at r105-228, after their r36-40 backstab)",pending (araid screen ra_s5o)
+s5p,2026-10-29 01:47,s5m,s5m + SYM_CENTRE (map-centre goals about the true centre; cats fled from their 2x2 centre) + SYM_HAND (candidate fans and hand()'s on-axis tie use the side's chirality),pending (mirror check)
+s5q,2026-10-29 01:47,s5n,dev + all four SYM switches: s5p's partner for mirror checks,tool

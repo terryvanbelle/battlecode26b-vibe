@@ -262,6 +262,56 @@ public class BotTest {
             if (!cross0 && (hh != -h || hv != -h)) bad++;
         }
         check(bad == 0, "hand(): mirrored robots choose mirrored sides (bad=" + bad + ")");
+        // with the side chirality (Cfg.SYM_HAND: G.chir from the home king) the twin mirrors on the line through the
+        // centre too, for every symmetry
+        MapLocation home = new MapLocation(6, 17);
+        int[] ch = {G.chirOf(home), G.chirOf(G.mirror(home, Sym.ROT)), G.chirOf(G.mirror(home, Sym.HOR)), G.chirOf(G.mirror(home, Sym.VER))};
+        check(ch[1] == ch[0] && ch[2] == -ch[0] && ch[3] == -ch[0], "chirOf: same for the rotated king, opposite for reflected ones");
+        int bad2 = 0, ties = 0;
+        for (int i = 0; i < 3000; i++) {
+            MapLocation p = new MapLocation(r.nextInt(W), r.nextInt(H));
+            Direction d = G.DIRS[r.nextInt(8)];
+            if (i % 3 == 0) {
+                // aim at a tie: p on the centre column (x 15 of 31) gives one for N and S (H is even, so no other ties)
+                int k = r.nextInt(5) - 2;
+                p = new MapLocation(15 + 2 * k * d.dx, 11 + 2 * k * d.dy);
+            }
+            Direction dh = d, dv = d;
+            for (Direction q : G.DIRS) { if (q.dx == d.dx && q.dy == -d.dy) dh = q; if (q.dx == -d.dx && q.dy == d.dy) dv = q; }
+            G.chir = ch[0]; int h = G.hand(p, d);
+            G.chir = ch[1]; int hr = G.hand(G.mirror(p, Sym.ROT), d.opposite());
+            G.chir = ch[2]; int hh = G.hand(G.mirror(p, Sym.HOR), dh);
+            G.chir = ch[3]; int hv = G.hand(G.mirror(p, Sym.VER), dv);
+            int px = 2 * p.x - G.cx2, py = 2 * p.y - G.cy2;
+            if (px * d.dy - py * d.dx == 0) ties++;
+            if (hr != h || hh != -h || hv != -h) bad2++;
+        }
+        G.chir = 1;
+        check(bad2 == 0 && ties > 100, "hand() with chirality: every twin mirrors, ties included (bad=" + bad2 + " ties=" + ties + ")");
+    }
+
+    static void testCentreMirror() {
+        reset(); W = 30; H = 20; install();
+        Random r = new Random(11);
+        int bad = 0, oldBad = 0;
+        MapLocation half = new MapLocation(W / 2, H / 2);
+        for (int i = 0; i < 2000; i++) {
+            MapLocation l = new MapLocation(r.nextInt(W), r.nextInt(H)), cat = new MapLocation(r.nextInt(W - 1), r.nextInt(H - 1));
+            for (int s : new int[]{Sym.ROT, Sym.HOR, Sym.VER}) {
+                MapLocation m = G.mirror(l, s);
+                // a 2x2 cat's low corner mirrors to the far corner of the twin body: the twin's low corner is one less
+                MapLocation mc = G.mirror(cat, s);
+                mc = new MapLocation(s == Sym.HOR ? mc.x : mc.x - 1, s == Sym.VER ? mc.y : mc.y - 1);
+                if (G.centreD2x4(m) != G.centreD2x4(l) || G.centreCheb2(m.x, m.y) != G.centreCheb2(l.x, l.y)) bad++;
+                if (Baby.catDist4(mc, m) != Baby.catDist4(cat, l)) bad++;
+                Direction t = G.toCentre(l), tm = G.toCentre(m);
+                int sx = s == Sym.HOR ? 1 : -1, sy = s == Sym.VER ? 1 : -1;
+                if (tm.dx != sx * t.dx || tm.dy != sy * t.dy) bad++;
+                if (m.distanceSquaredTo(half) != l.distanceSquaredTo(half)) oldBad++;
+            }
+        }
+        check(bad == 0, "centre: true-centre distances, directions and cat-centre distances mirror (bad=" + bad + ")");
+        check(oldBad > 0, "centre: W / 2, H / 2 does not (it sits half a tile off on an even map)");
     }
 
     static void testSymElimination() {
@@ -1425,7 +1475,7 @@ public class BotTest {
         testFormation();
         testReportPriority();
         testKingMine();
-        testHandMirror();
+        testHandMirror(); testCentreMirror();
         testSymElimination();
         testSymMineList();
         testSymRelay();

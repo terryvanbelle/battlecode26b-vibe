@@ -224,18 +224,24 @@ public final class Nav {
 
     /** Step away from a threat location, preferring directions that increase distance most. */
     public static boolean flee(MapLocation threat) throws GameActionException {
+        return flee2(2 * threat.x, 2 * threat.y);
+    }
+
+    /** flee() from a point in doubled coordinates (a 2x2 cat's centre, so mirror twins flee mirrored ways). */
+    public static boolean flee2(int tx2, int ty2) throws GameActionException {
         if (!G.rc.isMovementReady()) return false;
-        Direction away = threat.directionTo(G.me);
+        int ax = 2 * G.me.x - tx2, ay = 2 * G.me.y - ty2;
+        Direction away = G.dirOf(ax, ay);
         if (away == Direction.CENTER) away = G.facing.opposite();
         Direction best = null;
-        int bd = G.me.distanceSquaredTo(threat);
+        int bd = ax * ax + ay * ay;
         int h = G.hand(G.me, away);
         Direction[] cand = {away, h > 0 ? away.rotateLeft() : away.rotateRight(), h > 0 ? away.rotateRight() : away.rotateLeft(),
             h > 0 ? away.rotateLeft().rotateLeft() : away.rotateRight().rotateRight(),
             h > 0 ? away.rotateRight().rotateRight() : away.rotateLeft().rotateLeft()};
         for (Direction d : cand) {
             if (!G.rc.canMove(d)) continue;
-            int dd = G.me.add(d).distanceSquaredTo(threat);
+            int dx = ax + 2 * d.dx, dy = ay + 2 * d.dy, dd = dx * dx + dy * dy;
             if (dd > bd) { bd = dd; best = d; }
         }
         return best != null && step(best);

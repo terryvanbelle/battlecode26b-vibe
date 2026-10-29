@@ -1,0 +1,5 @@
+name=s5p
+source=bots/ratbot
+source_sha=adb220293a41
+commit=9f277a8
+created=2026-10-29 01:47 PDT

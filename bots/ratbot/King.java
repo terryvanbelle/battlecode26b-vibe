@@ -22,6 +22,7 @@ public final class King {
         if (slot < 0) {
             claimSlot();
             start = G.me;
+            G.frame(start);
             if (G.round <= 1) initialSymmetry();
         }
         Debug.mark(41);
@@ -245,6 +246,7 @@ public final class King {
         MapLocation goal = new MapLocation(G.W / 2, G.H / 2);
         MapLocation cat = null;
         for (RobotInfo r : cats) { cat = r.location; break; }
+        boolean centreGoal = G.coop || enemies.length == 0;
         if (!G.coop && enemies.length > 0) goal = enemies[0].location; // fresh rats join the fight at once
         MapLocation best = null;
         int bs = Integer.MIN_VALUE;
@@ -257,6 +259,11 @@ public final class King {
                 if (cat != null) s += 4 * l.distanceSquaredTo(cat);
                 // ring corners are poorer delivery lanes; keep them as last choice
                 if (Math.abs(dx) == 2 && Math.abs(dy) == 2) s -= 50;
+                if (Cfg.SYM_CENTRE && centreGoal) {
+                    // the same score x4 about the true centre (W / 2 sits half a tile off it on even sizes)
+                    s = -G.centreD2x4(l) - 200 * (Math.abs(dx) == 2 && Math.abs(dy) == 2 ? 1 : 0);
+                    if (cat != null) s += 4 * Baby.catDist4(cat, l);
+                }
                 s = s * 4 + (G.hand(c, c.directionTo(l)) > 0 ? 1 : 0);
                 if (s > bs) { bs = s; best = l; }
             }
@@ -284,10 +291,12 @@ public final class King {
             int d = c.distanceSquaredTo(e.location);
             if (d < fd) { fd = d; foe = e.location; }
         }
+        boolean mid = false;
         if (foe == null || fd > Cfg.KING_TRAP_DIST2) {
             // fortress: no one close yet, so pre-lay a few traps on the side facing the map centre
             if (Cfg.FORT_TRAPS <= 0 || rc.getNumberRatTraps() >= Cfg.FORT_TRAPS) return;
             foe = new MapLocation(G.W / 2, G.H / 2);
+            mid = Cfg.SYM_CENTRE;
         }
         MapLocation best = null;
         int bs = Integer.MAX_VALUE;
@@ -297,7 +306,7 @@ public final class King {
                 MapLocation l = c.translate(dx, dy);
                 if (!rc.canPlaceRatTrap(l)) continue;
                 // the trap fires when the enemy enters its 3x3: covering the tile next to the foe's line in
-                int s2 = l.distanceSquaredTo(foe) * 2 + (G.hand(c, c.directionTo(l)) > 0 ? 1 : 0);
+                int s2 = (mid ? G.centreD2x4(l) : l.distanceSquaredTo(foe)) * 2 + (G.hand(c, c.directionTo(l)) > 0 ? 1 : 0);
                 if (s2 < bs) { bs = s2; best = l; }
             }
         if (best != null) { rc.placeRatTrap(best); traps++; }
@@ -330,9 +339,10 @@ public final class King {
         if (Cfg.KING_DODGE) {
             if (dodge(c, cats)) { mineWhy = 'c'; return; }
         } else for (RobotInfo cat : cats) {
-            if (c.distanceSquaredTo(cat.location) <= 20) {
-                Direction away = cat.location.directionTo(c);
-                Direction[] cand = {away, away.rotateLeft(), away.rotateRight()};
+            MapLocation b = cat.location;
+            if (Cfg.SYM_CENTRE ? Baby.catDist4(b, c) <= 80 : c.distanceSquaredTo(b) <= 20) {
+                Direction away = Cfg.SYM_CENTRE ? G.dirOf(2 * c.x - 2 * b.x - 1, 2 * c.y - 2 * b.y - 1) : b.directionTo(c);
+                Direction[] cand = G.fan(c, away);
                 for (Direction d : cand) if (rc.canMove(d)) { rc.move(d); return; }
             }
         }
@@ -449,7 +459,7 @@ public final class King {
         RobotController rc = G.rc;
         Direction to = c.directionTo(t);
         int d0 = c.distanceSquaredTo(t);
-        Direction[] cand = {to, to.rotateLeft(), to.rotateRight()};
+        Direction[] cand = G.fan(c, to);
         for (Direction d : cand) {
             if (!rc.canMove(d) || c.add(d).distanceSquaredTo(t) >= d0) continue;
             rc.move(d); G.me = rc.getLocation(); return true;
@@ -463,7 +473,7 @@ public final class King {
     static MapLocation digTile(MapLocation c, MapLocation t) {
         Direction to = c.directionTo(t);
         if (to == Direction.CENTER) return null;
-        Direction[] cand = {to, to.rotateLeft(), to.rotateRight()};
+        Direction[] cand = G.fan(c, to);
         MapLocation best = null;
         int bn = Integer.MAX_VALUE;
         for (Direction d : cand) {
@@ -493,7 +503,7 @@ public final class King {
     static boolean step(MapLocation c, MapLocation t) throws GameActionException {
         RobotController rc = G.rc;
         Direction to = c.directionTo(t);
-        Direction[] cand = {to, to.rotateLeft(), to.rotateRight(), to.rotateLeft().rotateLeft(), to.rotateRight().rotateRight()};
+        Direction[] cand = G.fan5(c, to);
         for (Direction d : cand) {
             if (!rc.canMove(d)) continue;
             if (G.cheb(c.add(d), t) > G.cheb(c, t)) continue;

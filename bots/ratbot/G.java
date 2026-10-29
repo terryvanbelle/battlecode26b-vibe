@@ -51,6 +51,41 @@ public final class G {
 
     public static boolean onMap(int x, int y) { return x >= 0 && y >= 0 && x < W && y < H; }
 
+    /** d, then its two 45-degree neighbours: left first, or (Cfg.SYM_HAND) the side hand(from, d) names, so mirror
+     *  twins (a reflection swaps left and right) try mirrored candidates in the same order. */
+    public static Direction[] fan(MapLocation from, Direction d) {
+        Direction l = d.rotateLeft(), r = d.rotateRight();
+        return Cfg.SYM_HAND && hand(from, d) < 0 ? new Direction[]{d, r, l} : new Direction[]{d, l, r};
+    }
+
+    /** fan() plus the two 90-degree neighbours, in the same side order. */
+    public static Direction[] fan5(MapLocation from, Direction d) {
+        Direction l = d.rotateLeft(), r = d.rotateRight();
+        return Cfg.SYM_HAND && hand(from, d) < 0 ? new Direction[]{d, r, l, r.rotateRight(), l.rotateLeft()}
+            : new Direction[]{d, l, r, l.rotateLeft(), r.rotateRight()};
+    }
+
+    /** 4x the squared distance from l to the true map centre (doubled coordinates, so exact on even-sized maps:
+     *  mirror twins get equal values). */
+    public static int centreD2x4(MapLocation l) {
+        int dx = 2 * l.x - cx2, dy = 2 * l.y - cy2;
+        return dx * dx + dy * dy;
+    }
+
+    /** 2x the Chebyshev distance from (x, y) to the true map centre. */
+    public static int centreCheb2(int x, int y) { return Math.max(Math.abs(2 * x - cx2), Math.abs(2 * y - cy2)); }
+
+    static final MapLocation ORIGIN = new MapLocation(0, 0);
+
+    /** The compass direction of vector (dx, dy) (directionTo is scale-free, so doubled vectors work). */
+    public static Direction dirOf(int dx, int dy) { return ORIGIN.directionTo(new MapLocation(dx, dy)); }
+
+    /** Direction from l toward the true map centre (directionTo is scale-free and sign-symmetric, so mirror twins
+     *  get mirrored directions). */
+    public static Direction toCentre(MapLocation l) {
+        return dirOf(cx2 - 2 * l.x, cy2 - 2 * l.y);
+    }
+
     public static int cheb(MapLocation a, MapLocation b) {
         return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
     }
@@ -66,8 +101,22 @@ public final class G {
         int c = px * d.dy - py * d.dx;
         if (c > 0) return 1;
         if (c < 0) return -1;
+        // d points along the line through the centre: the dot product is the same for a reflected twin, so the
+        // side frame's chirality (Cfg.SYM_HAND) breaks the tie the mirrored way
         int dot = px * d.dx + py * d.dy;
-        return dot >= 0 ? 1 : -1;
+        return dot >= 0 ? chir : -chir;
+    }
+
+    /** Side chirality for hand()'s tie: the product of the signs of the home king's offset from the centre (the same
+     *  for a rotated twin, opposite for a reflected one), or 1. */
+    public static int chir = 1;
+
+    /** Set the chirality from our home king's position (Cfg.SYM_HAND). */
+    public static void frame(MapLocation home) { if (Cfg.SYM_HAND) chir = chirOf(home); }
+
+    static int chirOf(MapLocation home) {
+        int px = 2 * home.x - cx2, py = 2 * home.y - cy2;
+        return (px >= 0 ? 1 : -1) * (py >= 0 ? 1 : -1);
     }
 
     /** Mirror of a location under symmetry s (Sym.ROT/HOR/VER bit). */

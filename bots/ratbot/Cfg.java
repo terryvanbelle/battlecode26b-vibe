@@ -238,6 +238,11 @@ public final class Cfg {
     public static final boolean SYM_SLOT = false;
     /** Flow\'s search expands neighbours in the side frame (Flow.frame), so mirrored rats find mirrored paths. */
     public static final boolean SYM_FLOW = false;
+    /** Map-centre goals (spawn tile, fort facing and traps, centre-ranked exploring) about the true centre, not
+     *  W / 2, H / 2, which sits half a tile toward +x/+y on even-sized maps and so favours one side. */
+    public static final boolean SYM_CENTRE = false;
+    /** Candidate fans (a direction, then its neighbours) try the side G.hand names first, not always the left. */
+    public static final boolean SYM_HAND = false;
     /** Mine seeking (0 = off): a gatherer at its mine that sees SEEK_CROWD or more allied babies nearer that mine
      *  explores never-seen tiles of our half for SEEK_TTL rounds, at most once per SEEK_RETRY rounds, and reports what
      *  it finds (streetsofnewyork: two of our three mines sat behind 5-deep dirt bands, unseen all game, while

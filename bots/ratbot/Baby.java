@@ -204,6 +204,7 @@ public final class Baby {
         fu = px >= 0 ? 1 : -1;
         fv = py >= 0 ? 1 : -1;
         Flow.frame(fu, fv);
+        G.frame(home);
         // mirror-invariant seed: round and the unsigned offset from the king
         int seed = birthSeed(G.round, G.me, home);
         G.seed(seed);
@@ -312,7 +313,7 @@ public final class Baby {
         MapLocation c = rc.getLocation();
         if (canTake(c)) { rc.pickUpCheese(c); picked++; }
         Direction f = rc.getDirection();
-        Direction[] fr = {f, f.rotateLeft(), f.rotateRight()};
+        Direction[] fr = G.fan(c, f);
         for (Direction d : fr) {
             MapLocation l = c.add(d);
             if (canTake(l)) { rc.pickUpCheese(l); picked++; }
@@ -437,7 +438,7 @@ public final class Baby {
         if (d0 <= 2 || d0 > Cfg.BABY_TRAP_DIST2) return false;
         MapLocation me = rc.getLocation();
         Direction f = rc.getDirection();
-        Direction[] fr = {f, f.rotateLeft(), f.rotateRight()};
+        Direction[] fr = G.fan(me, f);
         MapLocation best = null;
         int bs = Integer.MAX_VALUE;
         for (Direction d : fr) {
@@ -564,7 +565,7 @@ public final class Baby {
         int bs = Integer.MAX_VALUE;
         MapLocation me = rc.getLocation();
         Direction f = rc.getDirection();
-        Direction[] fr = {f, f.rotateLeft(), f.rotateRight()};
+        Direction[] fr = G.fan(me, f);
         MapLocation n1 = c.location.add(c.direction), n2 = n1.add(c.direction), n3 = n2.add(c.direction);
         for (Direction d : fr) {
             MapLocation l = me.add(d);
@@ -715,8 +716,8 @@ public final class Baby {
         if (Cfg.CAT_DEFEND_R2 > 0 && cat != null && catAtKing(cat.location) && approachCat(cat)) { why = 'g'; return; }
         // keep gatherers out of cat reach
         if (cat != null && role == GATHER && catDist4(cat.location, G.me) <= 4 * Cfg.GATHER_CAT_DIST) {
-            MapLocation cc = new MapLocation(cat.location.x, cat.location.y);
-            if (Nav.flee(cc)) { why = 'c'; return; }
+            // flee the cat's centre (its location is the 2x2 body's low corner, which mirrors to the far corner)
+            if (Cfg.SYM_CENTRE ? Nav.flee2(2 * cat.location.x + 1, 2 * cat.location.y + 1) : Nav.flee(cat.location)) { why = 'c'; return; }
         }
         if (Cfg.YIELD_KING && cat != null && raw == 0 && yieldKing()) { why = 'y'; return; }
         Debug.mark(10);
@@ -1104,7 +1105,7 @@ public final class Baby {
         if (G.cheb(G.me, k) > Cfg.FORT_R) { Nav.goTo(k); return true; }
         // on station: face outward, toward the map centre
         MapLocation mid = new MapLocation(G.W / 2, G.H / 2);
-        Direction f = k.directionTo(mid);
+        Direction f = Cfg.SYM_CENTRE ? G.toCentre(k) : k.directionTo(mid);
         if (f != Direction.CENTER && G.rc.getDirection() != f && G.rc.canTurn(f)) { G.rc.turn(f); G.facing = f; }
         return true;
     }
@@ -1316,7 +1317,8 @@ public final class Baby {
             for (int k = 0; k < Cfg.EXPLORE_TRIES; k++) {
                 int ax = G.rand(G.W), ay = G.rand(G.H);
                 int cx = fu > 0 ? ax : G.W - 1 - ax, cy = fv > 0 ? ay : G.H - 1 - ay;
-                int d = Sym.known(G.idx(cx, cy)) ? 1 << 20 : Math.max(Math.abs(cx - ox), Math.abs(cy - oy));
+                int d = Sym.known(G.idx(cx, cy)) ? 1 << 20 : Cfg.SYM_CENTRE && centre ? G.centreCheb2(cx, cy)
+                    : Math.max(Math.abs(cx - ox), Math.abs(cy - oy));
                 if (d < bd) { bd = d; x = cx; y = cy; }
             }
             exploreTarget = new MapLocation(x, y);
