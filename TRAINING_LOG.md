@@ -1610,3 +1610,19 @@
   enemy-king sighting and bite it. WAR_STRIKE 1 (every fighter strikes) lost on the replica as s5g; the press
   is reactive and has never met the field. Sanity games kp1 (vs araid on tiny and knifefight) first; its
   screen ra_s8a is moved to the front of the queue.
+
+## 2026-10-29 11:34 PDT: we never leave our half; raiders s8i and s8j
+- Posture over s7d's 126 field games (territory.py: share of each team's babies nearer the other king's start
+  than their own, sampled every 10 rounds while both first kings live). In r100-300 our share on the enemy half
+  is 1-5% (0.1-1 rat) against every opponent. Theirs on ours: AlexT101 23-30% (about 4-5 rats), abcdezyxwv
+  25-32% (14.8 rats by r600), AdamTan12 24-31%, bc26vibe_bot 19-25%, CS50Crab 11-22%, outercloud 9-16%.
+- That one fact fits the rest: their own mines run untouched while they take from ours (about 2x our pickups
+  by r300), the fighting is always at our king, and their king is never bitten. It is the posture gap, not the
+  rat trade (even) or the king's perimeter (weak), that the top three exploit.
+- The raider role exists in the code (one in RAID_EVERY cat fighters goes to an enemy-half mine, a known one
+  or the mirror of ours, picks its piles, and with RAID_TRAPS lays traps on its sites) but is off. Its s6i/s6k
+  recipes were dropped unrun when S4D was superseded; raiders were last measured on s2i, a much weaker base.
+- New, both @s7d: s8i = RAID_EVERY 2 + RAID_TRAPS 8 (a quarter of later babies raid), s8j = RAID_EVERY 1 +
+  RAID_TRAPS 8 (half). RAID_TRAPS also lifts the combat trap cap to 20. Screens ra_s8i and ra_s8j are queued
+  after ra_s8a; diag rd1 (each vs s7d, DefaultMedium, sunandmoon, DefaultLarge, constrictinglattice, 2 sides)
+  checks that the posture actually moves.
