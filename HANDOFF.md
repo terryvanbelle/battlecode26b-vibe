@@ -17,6 +17,19 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - `tools/gauntlet.py` (field cells/table, from `research/field/FIELD.tsv`).
   - `tools/game_report.py` (basics report, `--timeline N`), `tools/rows.py`.
   - `tools/battle_report.py` (combat: front line, HP loss by cause, grabs and their fate, throw damage, cheese per window).
+    It takes a .bc26, a dump directory or a replica match directory (MATCHDIR, dumped from its replay.bc26; side
+    reversal read from the match.json beside it). Trap keys: `placed` = `hit` + `removed` + `live` for traps placed
+    in the window, `fired` = triggers in the window; throwOut `kills` counts rats, `killsKing` kings. An empty
+    window prints only the header.
+  - `tools/king_report.py [--json] REPLAY` (per king: died, deathCause, starveHp, hpBy incl. `ownThrow`/`ownThrowHits`,
+    firstFoe, broke). `game_report.py` rows carry `bc`; `tags` is null for an untagged team; the timeline has kings
+    columns.
+  - `tools/java/bc26tools/ReplayDump.java`, dumpVersion 3 (2026-10-29 audit round 2): trap victims by the engine's
+    footprint rule, starvation booked only when the bank is surely below 2 (else the hp goes to the biter as boosted
+    bite), summary mode exits 1 on a parse failure, meta `file` absolute. Known gap: a king that starves on the turn
+    it forms is not booked (never seen).
+  - Stuck-baby scan (2026-10-29, not yet a tool): a tagged baby whose code is travel (d, M, C) inside a 3x3 box for
+    30+ rounds. `arena.py game A B MAP --keep --tsv --out DIR` keeps indicator strings (fl=builds:done:turns:steps).
 - Progress (laid out like battlecode23-vibe's `progress/`): `tools/progress-refresh.sh` pulls VM `runs/*/results.jsonl` and replica matches into `progress/games.csv`, then writes ELO.md + elo.png + ratings.csv (Bradley-Terry, `tools/elo.py`: local games count their points share, our-vs-field games carry a per-map handicap so builds gauntleted on different maps compare), ladder.md/png and rating-history.md/png (replica, `tools/replica_report.py`), progress.png (bc23 layout: our builds' rating +- 95% and expected field score in date order, adopted builds filled) and metrics.png (raw gauntlet metrics from `research/progress.tsv`) (`tools/plot_progress.py`) and ATTEMPTS.md (`tools/attempts.py render` from the hand-kept `progress/attempts.csv`; `attempts.py init` adds new snapshots, `attempts.py set NAME outcome=...` records verdicts). Run it after each gauntlet and commit progress/.
 - VM: `source tools/vm.sh && ensure_vm && vm_sync`. All volume games run on battlecode-dev.
   - Local games use `BC_SLOTS` up to 6.
@@ -73,7 +86,10 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   REF_IDS CAND_IDS` (win/loss per cell; accept at t >= 2 with D >= 4, blocks 1-3 reject at t <= 0 / 1 / 1.5).
   On every accept (owner rule, PROMPTS.md #16): `attempts.py set NAME "outcome=accepted ..."`, then
   `tools/progress-refresh.sh`, then commit progress/ and push, before the next candidate goes out.
-  GAP: graded (points) score from panel replays; autoscrim can pair us while a candidate is active.
+  `contest.py paired --graded` scores each game by its graded score instead of won (field_report: 1/0 when kings
+  decide, else our points share), cached in `<id>/graded.json` with the dumper hash and score version.
+  `field_report --builds` names the build per match; rows.py marks rows whose tools changed (`tools_warning`, TOOLS);
+  mirror_check exits 2 when a dump fails (cats not counted). GAP: autoscrim can pair us while a candidate is active.
 - Ratings and progress: `tools/progress-refresh.sh` (see above); milestones `tools/milestones.py add LABEL`.
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
