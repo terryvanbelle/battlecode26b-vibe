@@ -155,6 +155,27 @@ public final class Flow {
 
     static void drop() { builtRound = -1; tgt = null; }
 
+    /** A free step that lands beside one of the next few path tiles after the blocked one (the farthest wins; ties go
+     *  by G.hand so mirrored rats pick mirrored sides), or null. follow() rejoins the path from there next turn. */
+    static Direction sidestep(int nxi) {
+        RobotController rc = G.rc;
+        int hi = Math.min(plen - 1, nxi + 3), bs = -1;
+        Direction best = null;
+        for (Direction d : G.DIRS) {
+            if ((Nav.avoid & (1 << d.ordinal())) != 0 || !rc.canMove(d)) continue;
+            MapLocation l = G.me.add(d);
+            int s = -1;
+            for (int j = hi; j > nxi; j--) {
+                int p = path[j], dx = p % G.W - l.x, dy = p / G.W - l.y;
+                if (Math.abs(dx) <= 1 && Math.abs(dy) <= 1) { s = j * 4 - dx * dx - dy * dy; break; }
+            }
+            if (s < 0) continue;
+            s = s * 2 + (G.hand(G.me, d) > 0 ? 1 : 0);
+            if (s > bs) { bs = s; best = d; }
+        }
+        return best;
+    }
+
     /**
      * One step along the path toward t: move to the next tile, or dig it when it is dirt.
      * Returns false (caller falls back to greedy) when no path is ready or we have left it.
@@ -191,8 +212,15 @@ public final class Flow {
             return true;
         }
         if ((Nav.avoid & (1 << d.ordinal())) != 0 || !rc.canMove(d)) {
-            // blocked by a robot: hold briefly, then let greedy route around it
-            if (++held > Cfg.FLOW_HOLD) { held = 0; drop(); return false; }
+            // blocked by a robot: hold briefly, then step around it on the path (FLOW_JAM) or let greedy route around it
+            if (++held > Cfg.FLOW_HOLD) {
+                if (Cfg.FLOW_JAM && held <= Cfg.FLOW_JAM_HOLD) {
+                    Direction s = sidestep(nxi);
+                    if (s != null) Nav.step(s);
+                    return true;
+                }
+                held = 0; drop(); return false;
+            }
             return true;
         }
         held = 0;

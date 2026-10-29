@@ -595,3 +595,24 @@
   the workforce. Spawns stopped below LOW_FLOOR 100. Two kings at 4 per round ran the bank to 0 at r258, and
   both kings starved by r311. Rat traps cost 1300 of our 2488 starting cheese in the first 150 rounds (65 traps,
   all triggered, 23 enemy kills).
+
+## 2026-10-29 00:00 PDT: starvation is mostly lost income; stuck babies are a navigation bug
+- In the 150 rounds before the bank first hit 0, spawns and traps cost little in most of the 20 starvation games. Upkeep
+  dominated: 300 per king, with income of 0-600, and the bank at 150-400 when the window opened. The early-war rat
+  traps and spawns spent the starting 2488 long before that. In several games income was near 0 while 16-20 babies
+  were alive: EscapeTheNight (1197, no cheese delivered in 150 rounds), fullofsecrets (1298), Stash. Two s4r screen
+  facts: s4r played the same 80 games as s4q (FORM_BABIES and FORM_CHEESE never bind; the income test is the gate),
+  rejected.
+- Smuggled tags plus positions: a stuck-baby scan counts episodes where a baby whose decision is travel (deliver,
+  to mine, to cheese) stays inside a 3x3 box for 30+ rounds. Over the 54 games in those 17 replays it finds 485
+  episodes and 35k baby-rounds. On EscapeTheNight babies sat 300-660 rounds in a room corner chasing cheese or a mine
+  across a wall. On Nofreecheese a carrier sat on open ground for 130 rounds. On FreeTheCheese one held 840 cheese
+  for 175 rounds.
+- Local repro (s4d vs s2o, VM, indicator strings kept): EscapeTheNight, 36 episodes, 4220 baby-rounds. Four babies
+  in the corner of the king's room each finish an A* search (12 turns), find the next path tile held by another
+  stuck baby, drop the path after FLOW_HOLD 3 turns, and search again, holding still during every search. Baby 11175:
+  48 searches done, 23 steps in 600 rounds.
+- s4s = s4d + FLOW_JAM: when a robot holds the next path tile, keep the path and sidestep onto a free tile beside one
+  of the next three path tiles. The farthest wins; ties go by G.hand, so mirrored rats take mirrored sides. The path
+  is dropped only after FLOW_JAM_HOLD 12 turns. Unit test testFlowJam (straight path, ally on the next tile, ROT
+  mirror, boxed-in case); BotTest 196/196. Diagnostic games on the five worst maps are running, before a screen.

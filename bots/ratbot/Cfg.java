@@ -156,6 +156,11 @@ public final class Cfg {
     /** Dig-aware flow-field navigation, requested after FLOW_STALL turns without progress. */
     public static final boolean FLOW = true;
     public static final int FLOW_STALL = 4, FLOW_TTL = 200, FLOW_RESERVE = 2500, FLOW_HOLD = 3, FLOW_REJOIN = 40, FLOW_MAX_TURNS = 12, FLOW_RETRY = 30;
+    /** A path tile held by a robot past FLOW_HOLD turns: keep the path and sidestep onto a free tile beside a later
+     *  path tile, dropping it only after FLOW_JAM_HOLD turns. Dropping starts a fresh search, which holds the rat still
+     *  for up to FLOW_MAX_TURNS turns and blocks the rats queued behind it (EscapeTheNight: 4-5 babies stuck 500+ rounds). */
+    public static final boolean FLOW_JAM = false;
+    public static final int FLOW_JAM_HOLD = 12;
     /** Path cost of a dirt tile (a dig is 5 cheese and 2.5 turns of action cooldown, plus the step). */
     public static final int DIG_COST = 4;
     /** Random samples per explore target, taking the first never-seen tile. */

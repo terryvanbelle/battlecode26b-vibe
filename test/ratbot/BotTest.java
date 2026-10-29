@@ -370,6 +370,34 @@ public class BotTest {
         check(steps < 120, "flow: bounded detour (steps=" + steps + ")");
     }
 
+    static void testFlowJam() {
+        // a path straight east with an ally parked on its next tile: sidestep lands diagonally beside a later path
+        // tile, never on the ally; the ROT-mirrored scene picks the mirrored side
+        Direction[] got = new Direction[2];
+        for (int m = 0; m < 2; m++) {
+            reset(); W = 30; H = 20; install();
+            MapLocation a = new MapLocation(5, 10), t = new MapLocation(15, 10);
+            if (m == 1) { a = G.mirror(a, Sym.ROT); t = G.mirror(t, Sym.ROT); }
+            me = a; G.startTurn();
+            // a straight path, laid by hand (A* ties zigzag)
+            Flow.path = new int[1024];
+            int sx = Integer.signum(t.x - a.x);
+            for (int i = 0; i <= 10; i++) Flow.path[i] = G.idx(new MapLocation(a.x + sx * i, a.y));
+            Flow.plen = 11; Flow.ppos = 0;
+            MapLocation block = new MapLocation(Flow.path[1] % W, Flow.path[1] / W);
+            robots.put(block, new RobotInfo(2, Team.A, UnitType.BABY_RAT, 100, block, Direction.NORTH, 0, 0, null));
+            Direction d = Flow.sidestep(1);
+            got[m] = d;
+            MapLocation l = d == null ? null : me.add(d);
+            check(l != null && !l.equals(block) && Math.abs(l.x - Flow.path[2] % W) <= 1 && Math.abs(l.y - Flow.path[2] / W) <= 1,
+                  "flow jam: sidestep lands beside the next free path tile (" + d + ")");
+            // boxed in on every side: no sidestep
+            for (Direction e : G.DIRS) { MapLocation q = me.add(e); robots.put(q, new RobotInfo(3, Team.A, UnitType.BABY_RAT, 100, q, Direction.NORTH, 0, 0, null)); }
+            check(Flow.sidestep(1) == null, "flow jam: no sidestep when boxed in");
+        }
+        check(got[0] != null && got[1] != null && got[1] == got[0].opposite(), "flow jam: mirrored rats sidestep to mirrored sides (" + got[0] + ", " + got[1] + ")");
+    }
+
     static void testFlowField() {
         reset(); W = 12; H = 8; install();
         // dirt column x=5 beside a wall column x=6 with a gap at y=0: the path digs once and uses the gap
@@ -1122,6 +1150,7 @@ public class BotTest {
         testNavUShape();
         testNavFlowSealedRoom();
         testFlowField();
+        testFlowJam();
         testExploreUnseen();
         testKingNeverWritesOutOfRange();
         System.out.println("BotTest: " + (checks - fails) + "/" + checks + " passed");
