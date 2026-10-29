@@ -771,7 +771,7 @@
 - rx_s5g (WAR_STRIKE) vs rx2_s4d: 80 cells, D 53, +4.1 pts, t +0.77, net -2. That's neutral, but it's the best
   signal on deck and aims at the rushers' unbitten king, so s5g is on the replica now (submission 78).
 
-## 2026-10-29 01:45 PDT: araid replaces abrk as the rush screen; an early insurance king; mirrored flow search
+## 2026-10-29 01:35 PDT: araid replaces abrk as the rush screen; an early insurance king; mirrored flow search
 - rxa_s3y (s3y vs araid, 16 kept games on the eight rusher maps): s3y won 5 of 16. Its profile (`profile.py`):
 
   | Measure | araid | Field rushers |
