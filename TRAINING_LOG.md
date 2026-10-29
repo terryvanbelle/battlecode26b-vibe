@@ -1774,3 +1774,15 @@
 - s7q (s7d + SEEK_CROWD 3 + MINE_ANY_COOP; eco2 vs s7d 9/12, pick x1.20) is submission #91, set-1 block
   from 2491. s8n (RESCUE) waits on its local runs: rs1 vs s7d was all cooperation, since our bot never
   backstabs, so it is being rerun vs abrk on gk1's 8 king-kill maps.
+
+## 2026-10-29 15:48 PDT: s7q passes block 1; RESCUE results so far
+- s7q (s7d + SEEK_CROWD 3 + MINE_ANY_COOP) on v3 set 1 against s7d's reference: 42 cells, 32 alike, D 10
+  (+6 -4), net +2, t +0.63. It gained CS50Crab dirtfulcat B and streetsofnewyork A/B, AlexT101 heart B,
+  abcdezyxwv sunandmoon B and spsquared bed B. It lost AlexT101 popthecork B and uneasy_alliance A, CS50Crab
+  Nofreecheese B and outercloudstudio heart A. Block 2 (v3 set 2) is queued from 2522 and rejects at t <= 1
+  over both blocks.
+- RESCUE locally: s8n (one step) screens +3.5 pts, t +0.91, net +5; vs abrk on gk1's 8 maps x 2 sides 11/16
+  (s7d 13/16). s8o (two steps, RESCUE_WALK) vs abrk 14/16, no exceptions or overruns; its screen is running.
+  Our grabs of enemy carriers rise from 13.8 to 19-21 a game against abrk.
+- Our own holds (s7d's field games): 38-52% thrown after 2 rounds, 23-51% held the full THROW_HOLD 6, and the
+  field takes back 13-26% of our grabs about 1.6 rounds in. s8p = s8o + THROW_HOLD 3 is queued (screen + rs4).
