@@ -535,6 +535,8 @@ public final class Flow {
             return true;
         }
         if ((Nav.avoid & (1 << d.ordinal())) != 0 || !rc.canMove(d)) {
+            // an ally baby on the path is carried past (Cfg.SWAP_HOLD)
+            if (Nav.swapHold > 0 && held + 1 >= Nav.swapHold && Nav.swapPast(d)) { held = 0; steps++; ppos = nxi; return true; }
             // blocked by a robot: hold briefly, then step around it on the path (FLOW_JAM) or let greedy route around it
             if (++held > Cfg.FLOW_HOLD) {
                 if (Cfg.FLOW_JAM && held <= Cfg.FLOW_JAM_HOLD) {

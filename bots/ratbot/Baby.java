@@ -101,7 +101,7 @@ public final class Baby {
             Nav.avoid |= TrapRisk.mask(G.me);
         Debug.mark(31);
         // 0. a carried enemy is thrown as soon as we can act
-        if (rc.getCarrying() != null) tryThrow(robots);
+        if (rc.getCarrying() != null) { if (rc.getCarrying().team == G.us) dropAlly(); else tryThrow(robots); }
         // 1. bites: enemy rats once cooperation is over (they shoot back; cats wait), then cats.
         //    Attackers open the war themselves, but only on the enemy king.
         Debug.mark(4);
@@ -126,7 +126,10 @@ public final class Baby {
         if (rc.getType() == UnitType.RAT_KING) return;   // just promoted: the king code runs from next turn
         Debug.mark(20);
         pickUp();
-        if (rc.getCarrying() != null && moved && Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(rc.senseNearbyRobots(-1, null));
+        if (rc.getCarrying() != null && moved) {
+            if (rc.getCarrying().team == G.us) dropAlly();
+            else if (Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(rc.senseNearbyRobots(-1, null));
+        }
         Debug.mark(21);
         if (hostile && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
         Debug.mark(22);
@@ -479,6 +482,23 @@ public final class Baby {
     static final int[] AIM_TX = new int[24], AIM_TY = new int[24], AIM_TV = new int[24];
 
     static int aimThrows;
+
+    /** Set down the ally carried past (Nav.swapPast) once we can act: on the tile it was taken from when that is free
+     *  and beside us, else on the free tile farthest from our errand. */
+    static void dropAlly() throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady()) return;
+        MapLocation me = rc.getLocation(), t = Nav.target, f = Nav.swapFrom;
+        Direction best = null;
+        int bs = -1;
+        for (Direction d : G.DIRS) {
+            if (!rc.canDropRat(d)) continue;
+            MapLocation l = me.add(d);
+            int s = (l.equals(f) ? 1 << 24 : 0) + 2 * (t != null ? l.distanceSquaredTo(t) : 0) + (G.hand(me, d) > 0 ? 1 : 0);
+            if (s > bs) { bs = s; best = d; }
+        }
+        if (best != null) { rc.dropRat(best); Nav.swapFrom = null; }
+    }
 
     static boolean tryThrow(RobotInfo[] robots) throws GameActionException {
         RobotController rc = G.rc;

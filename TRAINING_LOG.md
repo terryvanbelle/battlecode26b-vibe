@@ -1287,3 +1287,42 @@
 - SYM_FACE (off by default): the king turns to face each spawn tile before it builds, so the newborn looks
   outward along a line its twin mirrors. s7i = s7g + SYM_FACE takes ra_s7g's place in the queue (ra_s7g hadn't
   started). Mirror self-play ms3 covers knifefight, cheesefarm, sunandmoon and Hike.
+
+## 2026-10-29 08:17 PDT: kings starve in corridors; carry an ally past it (SWAP_HOLD)
+- Points in the s6m control games against spsquared and AdamTan12 (2001-2002, 2008-2009, 2036-2037, 2039-2040):
+  most losses are king kills at war (12 lost, 0 won). Points games split 4-2 in coop and 0-2 at war.
+- How our kings died in those 24 games (ReplayDump die rows, cause column):
+  - AdamTan12: bites, in every game it won.
+  - spsquared: starvation. Our last king starved in 6 games: bed 2001 and 2002, fullofsecrets 2002, rose 2036 and
+    2037, and where_are_you 2040. Each had 50-64 rounds with the bank under 2. Four of them were coop games with
+    13-20 babies alive.
+- rose (2036 g2): our king's 3x3 body sits in a walled pocket whose only exit is a diagonal into a 1-wide stem
+  (x = 9, y 0-5) that winds out to the mines. From r160 three gatherers carrying cheese home ('d') at (9,3)-(9,5)
+  faced six outbound ones ('M') at (9,0)-(9,2), (10,2) and (11,0)-(11,1). Neither line moved again, and four more
+  'M' rats stood in the pocket behind them. Pickups were 0 from r150, the 460 cheese the rats held was never
+  delivered after r850, and 18000 cheese lay unmined. The king starved at r1375 with 20 babies.
+  spsquared, in the mirrored pocket, delivered 3700-4280.
+- Local: s6m starved on rose in both ra_s6m games against araid (it delivered 430 and 200 to araid's 2320 and
+  1620), and in 14 of its 80 ra_s6m games overall: Hike, rose, averyfineline, Stash, krotus, bed, 5t4rv4t10n,
+  whereisthecheese, minimaze, EscapeTheNight.
+- Engine: carryRat takes the carried rat off the grid (getGrabbed removes it). Carrying an ally always succeeds,
+  and a carried rat can't move, turn or act. So a rat can pass an ally in a 1-wide corridor: carry it, step into
+  its tile, and drop it behind once the action cooldown allows. That's 20 action cooldown for the carry and 20 for
+  the drop, so the drop comes two turns later.
+- SWAP_HOLD (off by default):
+  - A rat held SWAP_HOLD turns behind an ally baby on its next step does the swap. The step can be a flow-path tile
+    or the blocked greedy step.
+  - It skips the swap when an enemy rat is near, or when the ally is carrying a rat.
+  - Baby.dropAlly sets the ally down on the tile it came from when that is free and beside us, else on the free tile
+    farthest from our errand. A carried ally is never thrown: both tryThrow calls check the carried rat's team.
+  - BotTest covers a 1-wide gap: off by default the ally holds us; with SWAP_HOLD 2 we pass and the ally lands
+    behind us; an enemy rat is never carried.
+- s7j = @s6m + SWAP_HOLD 2. ra_s7j is at the front of the queue. Diag sj1 runs rose and fullofsecrets on both
+  sides. sv1 runs s6m and s7j against araid on Stash, minimaze, EscapeTheNight, krotus and whereisthecheese, on
+  the side where s6m starved.
+- Also done:
+  - CARRY_AIM v2 (ca2): 0 overruns on all four maps (v1 had 102/18/8/4). Thrown rats hitting enemies did
+    682/544/700/84 damage (s7d 490/658/122/0), with the same win/loss as s7d. Its screen ra_s7h is queued.
+  - s7i mirror self-play (ms3): knifefight now splits at r10, not r1. There the twins chose explore targets that
+    aren't mirrors (17,26 against 22,26 in X's frame). Hike r28, cheesefarm r20 and sunandmoon r21 are unchanged.
+  - Screens: s6s (FLOW_PROGRESS) was rejected (-8.9, t -1.95). s6v (FLOW_CACHE) passed (+4.8, t +1.17, net +7).

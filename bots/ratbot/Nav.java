@@ -24,6 +24,11 @@ public final class Nav {
     static int sameR = Cfg.NAV_SAME_R;
     /** Cfg.FLOW_PROGRESS (a field so tests can set it). */
     static boolean progress = Cfg.FLOW_PROGRESS;
+    /** Cfg.SWAP_HOLD (a field so tests can set it). */
+    static int swapHold = Cfg.SWAP_HOLD;
+    /** The tile the ally we carry past was taken from (where Baby sets it down when it is still beside us), or null. */
+    static MapLocation swapFrom;
+    public static int swaps;
 
     public static void reset() { bugging = false; bugTurns = 0; }
 
@@ -113,9 +118,31 @@ public final class Nav {
         if (!Cfg.FLOW && !Cfg.DIG_FIRST && digToward(t)) return false;
         Direction d = choose(t);
         if (d == null) {
+            Direction s = G.me.directionTo(t);
+            if (swapHold > 0 && stall >= swapHold && !terrainBlocked(G.me.add(s)) && swapPast(s)) return true;
             tryDig(t);
             return false;
         }
+        return step(d);
+    }
+
+    /** Cfg.SWAP_HOLD: carry the ally baby on the next step (direction d, not avoided) and step into its tile, unless
+     *  an enemy rat is near (the carry costs 20 action cooldown, the drop 20 more). True when we moved. */
+    static boolean swapPast(Direction d) throws GameActionException {
+        RobotController rc = G.rc;
+        if ((avoid & (1 << d.ordinal())) != 0 || rc.getCarrying() != null || Baby.nearestEnemy != null
+                || !rc.isActionReady() || !rc.isMovementReady()) return false;
+        MapLocation n = G.me.add(d);
+        if (rc.getDirection() != d) {
+            if (!rc.canTurn(d)) return false;
+            rc.turn(d);
+            G.facing = d;
+        }
+        RobotInfo r = rc.canSenseLocation(n) ? rc.senseRobotAtLocation(n) : null;
+        if (r == null || r.team != G.us || r.type != UnitType.BABY_RAT || r.carryingRobot != null || !rc.canCarryRat(n)) return false;
+        rc.carryRat(n);
+        swapFrom = G.me;
+        swaps++;
         return step(d);
     }
 

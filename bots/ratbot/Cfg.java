@@ -327,6 +327,11 @@ public final class Cfg {
     /** The king turns to face each spawn tile before it builds: a newborn takes its king's facing, and the maps'
      *  starting king facings are not mirrored (knifefight), so the first rats looked along unmirrored lines. */
     public static final boolean SYM_FACE = false;
+    /** A rat held SWAP_HOLD turns behind an ally baby on its next step carries the ally, steps into its tile and sets
+     *  it down behind once it can act (a carried rat leaves the grid), so two rats pass in a 1-wide corridor (0 = off).
+     *  rose: s6m's outbound and inbound gatherers met head-on at r160 in the 1-wide stem out of the king's walled
+     *  pocket and held there to the end; the king starved at r1375 with 20 babies (spsquared 2/2, araid 2/2). */
+    public static final int SWAP_HOLD = 0;
     /** Mine seeking (0 = off): a gatherer at its mine that sees SEEK_CROWD or more allied babies nearer that mine
      *  explores never-seen tiles of our half for SEEK_TTL rounds, at most once per SEEK_RETRY rounds, and reports what
      *  it finds (streetsofnewyork: two of our three mines sat behind 5-deep dirt bands, unseen all game, while

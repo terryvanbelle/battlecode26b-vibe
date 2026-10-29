@@ -30,6 +30,7 @@ public class BotTest {
     static int digsDone;
     static List<MapLocation> bitten = new ArrayList<>();
     static Direction thrown;
+    static RobotInfo carrying;
 
     static boolean onMap(MapLocation l) { return l.x >= 0 && l.y >= 0 && l.x < W && l.y < H; }
 
@@ -48,7 +49,7 @@ public class BotTest {
 
     static void reset() {
         canPromote = promoted = false;
-        walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null;
+        walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null; carrying = null;
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; ratCost = 10; built.clear();
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0; Sym.listDone = 0;
@@ -57,6 +58,7 @@ public class BotTest {
         Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE;
         Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST; King.faceSpawn = Cfg.SYM_FACE;
         Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false;
+        Nav.swapHold = Cfg.SWAP_HOLD; Nav.swapFrom = null; Nav.swaps = 0; Baby.nearestEnemy = null;
     }
 
     static RobotController fakeRc() {
@@ -71,7 +73,19 @@ public class BotTest {
                     case "getType": return type;
                     case "getLocation": return me;
                     case "getDirection": return facing;
-                    case "getCarrying": return null;
+                    case "getCarrying": return carrying;
+                    case "canCarryRat": {
+                        MapLocation l = (MapLocation) a[0];
+                        return actCd < 10 && carrying == null && sensable(l) && me.distanceSquaredTo(l) <= 2 && robots.containsKey(l);
+                    }
+                    case "carryRat": carrying = robots.remove((MapLocation) a[0]); actCd += 20; return null;
+                    case "canDropRat": { MapLocation t = me.add((Direction) a[0]); return actCd < 10 && carrying != null && passable(t) && !robots.containsKey(t); }
+                    case "dropRat": {
+                        MapLocation t = me.add((Direction) a[0]);
+                        RobotInfo c = carrying;
+                        robots.put(t, new RobotInfo(c.ID, c.team, c.type, c.health, t, c.direction, c.chirality, c.cheeseAmount, null));
+                        carrying = null; actCd += 20; return null;
+                    }
                     case "isCooperation": return true;
                     case "getGlobalCheese": return global;
                     case "getRawCheese": return raw;
@@ -1163,6 +1177,38 @@ public class BotTest {
         King.faceSpawn = Cfg.SYM_FACE;
     }
 
+    static void testSwapPast() throws GameActionException {
+        // a wall band y 6..8 with a 1-wide gap at x = 5 and an ally standing in the gap, facing us
+        reset(); install();
+        for (int y = 6; y <= 8; y++) for (int x = 0; x < W; x++) if (x != 5) walls.add(new MapLocation(x, y));
+        MapLocation a = new MapLocation(5, 7), t = new MapLocation(5, 11);
+        robots.put(a, new RobotInfo(77, Team.A, UnitType.BABY_RAT, 100, a, Direction.SOUTH, 0, 0, null));
+        for (int i = 0; i < 16; i++) tick(t);
+        check(me.y < a.y && robots.containsKey(a) && carrying == null && Nav.swaps == 0, "swap: off by default, the ally holds us (" + me + ")");
+        reset(); install();
+        for (int y = 6; y <= 8; y++) for (int x = 0; x < W; x++) if (x != 5) walls.add(new MapLocation(x, y));
+        robots.put(a, new RobotInfo(77, Team.A, UnitType.BABY_RAT, 100, a, Direction.SOUTH, 0, 0, null));
+        Nav.swapHold = 2;
+        RobotInfo after = null;
+        for (int i = 0; i < 16 && after == null; i++) {
+            tick(t);
+            if (carrying != null) {
+                for (int j = 0; j < 4 && carrying != null; j++) { round++; moveCd = Math.max(0, moveCd - 10); turnCd = Math.max(0, turnCd - 10); actCd = Math.max(0, actCd - 10); G.startTurn(); Baby.dropAlly(); }
+                for (RobotInfo r : robots.values()) if (r.ID == 77) after = r;
+            }
+        }
+        check(Nav.swaps == 1 && after != null && after.location.y < me.y && me.y >= a.y && carrying == null,
+              "swap: carry the ally past and set it down behind (" + me + " ally " + (after == null ? null : after.location) + ")");
+        // an enemy rat in the corridor is not carried
+        reset(); install();
+        for (int y = 6; y <= 8; y++) for (int x = 0; x < W; x++) if (x != 5) walls.add(new MapLocation(x, y));
+        robots.put(a, new RobotInfo(78, Team.B, UnitType.BABY_RAT, 100, a, Direction.SOUTH, 0, 0, null));
+        Nav.swapHold = 2;
+        for (int i = 0; i < 16; i++) tick(t);
+        check(Nav.swaps == 0 && carrying == null, "swap: never an enemy");
+        Nav.swapHold = Cfg.SWAP_HOLD;
+    }
+
     static void testFlank() throws GameActionException {
         reset(); install();
         G.coop = false; Nav.avoid = 0;
@@ -1812,6 +1858,7 @@ public class BotTest {
         testCarryAim();
         testPickBit();
         testSpawnFace();
+        testSwapPast();
         testRingArcs();
         testHomeRank();
         testScoutUntil();
