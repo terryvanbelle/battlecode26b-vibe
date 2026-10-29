@@ -1,0 +1,3 @@
+# s6m (accepted 2026-10-29): its own games per v3 set. Sets 1 and 3 get control blocks (queued at acceptance);
+# their rows are added when they finish. No candidate is scored on a set before its row is here.
+1915-1918,1934-1935,1943-1946,1949-1950,1963-1964  # set 2 (accepting block)

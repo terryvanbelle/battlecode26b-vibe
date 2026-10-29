@@ -1063,3 +1063,22 @@
   - The idle rule sends a gatherer home with only 10 cheese when no pile is in sight. Cfg.DELIVER_IDLE now names
     that threshold. s6t = s4d + DELIVER_IDLE 30 + HUNGRY 50; s6u = s4d + DELIVER_AT/IDLE 50 + HUNGRY 100. Both
     screens are queued behind ra_s6s.
+
+## 2026-10-29 06:21 PDT: s6m accepted (HOME_PICK 1)
+- s6m = s4d + HOME_PICK 1: scouts and seekers take the first unseen sample, so they no longer re-crawl the
+  ground beside the king. It played v3 set 2 against s3y's reference (1915-1918, 1934-1935, 1943-1946,
+  1949-1950, 1963-1964): 42 cells, D 9 (+8 -1), net +7, t 2.33. That passes the bar on block 1 (t ≥ 2,
+  D ≥ 4), so s6m is accepted as replica submission #83.
+  - Gained: bc26vibe_bot DefaultLarge and sittingducks (both sides), outercloudstudio cheesefarm (both sides),
+    CS50Crab tornadoes, AdamTan12 attack_on_cat (A).
+  - Lost: AdamTan12 attack_on_cat (B).
+  - The gains are on medium and large maps, where the old nearest-unseen pick left most of our half unvisited.
+  - Still 0-12 against AlexT101 and abcdezyxwv.
+- New reference, research/panel/v3-ref-s6m.txt: set 2 is the accepting block. s6m's control blocks on sets 1 and
+  3 are queued (24 requests, drained as the hourly limit allows). No candidate is scored on a set before s6m's row
+  for it is in.
+- Candidates from now on are built on S6M = S4D + HOME_PICK 1. Screens already running against ra_s4d (s6o-s6u)
+  still filter. A screen pass is rebuilt on S6M before it goes to the replica, and ra_s6m becomes the screen
+  control once it finishes.
+- The BT rating puts s6m at 1540 ± 65 (s3y 1561 ± 51). It has played only the panel block and the strongest
+  opponents, and ratings never accept.
