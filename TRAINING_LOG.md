@@ -1786,3 +1786,14 @@
   Our grabs of enemy carriers rise from 13.8 to 19-21 a game against abrk.
 - Our own holds (s7d's field games): 38-52% thrown after 2 rounds, 23-51% held the full THROW_HOLD 6, and the
   field takes back 13-26% of our grabs about 1.6 rounds in. s8p = s8o + THROW_HOLD 3 is queued (screen + rs4).
+
+## 2026-10-29 16:39 PDT: s7q rejected after block 2; s8o (RESCUE) on the replica
+- s7q's block 2 (v3 set 2) on its own: 42 cells, 38 alike, D 4 (+2 -2), net 0. It gained spsquared
+  thunderdome A and lost spsquared evileye A. Over both blocks: 84 cells, D 14 (+8 -6), net +2, t +0.53.
+  Block 2 rejects at t <= 1. Its local economy gain (eco2 pick x1.20) doesn't carry over to the field.
+- s8o (s7d + RESCUE + RESCUE_D2 18 + RESCUE_WALK) is submission #92, set-1 block from 2588. Its screen was
+  +6.0 pts, t +1.42, net +5 (+2.4 over s8n), and it went 14/16 vs abrk.
+- Local RESCUE variants vs abrk on gk1's maps, 16 games each: s7d 13, s8n 11, s8o 14, s8p (THROW_HOLD 3) 11,
+  s8q (RESCUE_BLOCK) 13. All in the noise. Screens ra_s8p and ra_s8q are on the VM.
+- A background waiter (ra_s8p's scorer) was stopped by Claude Code for low local memory (2 GB machine). The
+  screen itself runs on the VM; I'll score it in one foreground call once it's done.
