@@ -159,3 +159,5 @@ s5y,2026-10-29 03:11,s5x,s5x + FORM_FROM 600: extra kings only from round 600 (e
 s5z,2026-10-29 03:15,s5x,"s5x + s5r's caps (MAX_BABIES 30, MAX_BABIES_WAR 40): rich long games end with 2-24k cheese unspent; spsquared delivered 55-58k on superioristhmus to our 18-19k with 2.5x our rat-turns",pending
 s6a,2026-10-29 03:31,s5x,"s5x + CHEESE_LOS (formation v2 with s5t's no-chase-through-walls; seepastyourgreed: s5t had income from r300-500, s4d/s5x none for 500+ rounds)","parked: carries CHEESE_LOS, which ra_s5t rejected"
 s6b,2026-10-29 03:31,s6a,s6a + s5r's caps 30/40 (formation v2 + CHEESE_LOS + caps: the rich-map stack),"parked: carries CHEESE_LOS, which ra_s5t rejected"
+s6c,2026-10-29 04:16,s5x,"s5x + FLOOR_PER_KING (spawn floors, upkeep reserve and trap minimums x live kings: s5r's two kings starved on cheesebottles after spawning to the cap)",pending
+s6d,2026-10-29 04:16,s5y,"s5y + FLOOR_PER_KING (formation v2 from r600, floors per king)",pending

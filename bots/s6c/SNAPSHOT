@@ -1,0 +1,5 @@
+name=s6c
+source=bots/ratbot
+source_sha=b2ed7aa1786a
+commit=90eef1f
+created=2026-10-29 04:16 PDT
