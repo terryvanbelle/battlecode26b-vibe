@@ -1155,3 +1155,37 @@
   - s6y = REV + FAST.
   - s6z = s6y + FLOW_RESERVE 1300 (from 2500; the indicator costs at most 241 and the tag 400).
   - s7a = s6y + FLOW_STALL 2: with REV a rat no longer pays for searching, so it can ask for a path sooner.
+
+## 2026-10-29 07:19 PDT: points weights; s6m's replica losses; the throw gap
+
+- The engine's round-2000 points: in cooperation 50% share of cat damage, 30% share of kings alive, 20% share of
+  cheese delivered; at war 30/50/20. No new king after round 1200 once a team has 2 (kings formed earlier stay,
+  up to 5). Formation v2 (s6j, up to 5 kings) was neutral on the replica.
+- s6m's 42 replica games so far:
+  - Points games: coop 6-0, war 5-7.
+  - King-destroyed games at war: 8-14. Coop: 2-0.
+  - All 12 games vs AlexT101_usqualsbot and abcdezyxwv_bestsofar were lost by king kill. Some end very early:
+    averyfineline at round 96-113, evileye at 220-267.
+- 1946 g0 (averyfineline vs abcdezyxwv, our king dead at r96):
+  - Kills were even to r100 (their 31 rats, our 29).
+  - They spent 1610 cheese (40 on traps) and still banked 777. We spent 2440: 41 rat traps (820), 15 cat traps,
+    and 35 spawns at the 20-baby cap. Our bank was 263 at r49, when theirs was 1290.
+  - From r55 they rebuilt and we could not: 16 -> 4 babies vs their 15 -> 13 by r79. Then four or more of their
+    rats bit our king to death in 16 rounds while it bit back once a round.
+  - We bit the cat 69 times and laid 15 cat traps in that early war.
+- The grab war (grabs.py, r <= 400, 4 matches each):
+
+  | | grabs | throws | dmg per throw | throws hitting an enemy robot | throw kills |
+  |---|---|---|---|---|---|
+  | us vs abcdezyxwv | 264 | 208 | 16.9 | 11 (and 9 into our own) | 88 |
+  | abcdezyxwv | 349 | 252 | 26.4 | 57 (50 rats, 7 king) | 122 |
+  | us vs AlexT101 | 237 | 185 | 17.8 | 8 | 68 |
+  | AlexT101 | 280 | 230 | 15.2 | 48 | 100 |
+
+  - Whole games (hitvict.py): 190 of abcdezyxwv's throws and 139 of AlexT101's hit our robots; 50 of AlexT101's
+    hit our king.
+  - Most hits are point-blank: in the throw round, 2-3 tiles from the thrower. They throw a grabbed rat of ours
+    into our other rats or our king, which costs us twice.
+  - The victims were mostly moving (140 of 186 had moved in the 3 rounds before), so dodging is not the fix.
+  - Our throws mostly end on the ground (10) or a wall.
+- s6p (S4D + THROW_FAR_PCT 80) is on the ra screen.
