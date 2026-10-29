@@ -1184,6 +1184,10 @@ public class BotTest {
               && King.babyCap(false, Cfg.RICH_BANK - 1) == Cfg.MAX_BABIES, "baby cap: the base caps below RICH_BANK");
         check(King.babyCap(false, Cfg.RICH_BANK) == Math.max(Cfg.MAX_BABIES, Cfg.RICH_BABIES)
               && King.babyCap(true, 1 << 20) == Math.max(Cfg.MAX_BABIES_WAR, Cfg.RICH_BABIES), "baby cap: a rich bank raises it, never lowers it");
+        // trap vs spawn: cost 50 = 16-19 babies; the next spawn plus SPAWN_FLOOR plus the trap must remain
+        int need = 50 + Cfg.SPAWN_FLOOR + 20;
+        check(King.starves(50, need - 1, 30) && !King.starves(50, need, 30), "trap/spawn: a trap waits below the next spawn + floor");
+        check(!King.starves(50, 0, 16) && King.starves(50, 0, 17), "trap/spawn: at the cap (count from the cost step) traps never wait");
     }
 
     static void testNearKing() {

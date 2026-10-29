@@ -26,6 +26,10 @@ public final class Cfg {
     public static final int RAT_TRAP_MIN_CHEESE = 200;
     /** Most live rat traps we keep (engine max 25): new ones are bought only as old ones fire. */
     public static final int TRAP_CAP = 10;
+    /** No rat trap (baby or king) while the king, under the baby cap, lacks the cheese for its next spawn plus
+     *  SPAWN_FLOOR and the trap: bodies before traps (1204 constrictinglattice vs AlexT101: r100-150 we laid 7 traps
+     *  while the king sat under the spawn floor, and the army fell 12 -> 8). */
+    public static final boolean TRAP_SPAWN_FIRST = false;
     /** Keep enemies within two tiles inside our cone (anti-ratnap) instead of moving. */
     public static final boolean FACE_ENEMY = true;
     /** Scored combat movement (Micro) for babies at war. */

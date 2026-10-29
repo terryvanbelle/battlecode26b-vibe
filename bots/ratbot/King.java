@@ -215,6 +215,19 @@ public final class King {
         return Cfg.RICH_BABIES > cap && bank >= Cfg.RICH_BANK ? Cfg.RICH_BABIES : cap;
     }
 
+    /** Cfg.TRAP_SPAWN_FIRST: a rat trap now would leave the king, under the baby cap, short of its next spawn. */
+    static boolean trapStarvesSpawn(RobotController rc) {
+        if (!Cfg.TRAP_SPAWN_FIRST) return false;
+        int global = rc.getGlobalCheese();
+        return starves(rc.getCurrentRatCost(), global, babyCap(!G.coop, global));
+    }
+
+    /** At rat cost `cost` (the cost step gives the baby count) and `global` cheese, a 20-cheese trap would leave
+     *  less than the next spawn plus SPAWN_FLOOR while the count is under `cap`. */
+    static boolean starves(int cost, int global, int cap) {
+        return (cost - 10) / 10 * 4 < cap && global < cost + Cfg.SPAWN_FLOOR + 20;
+    }
+
     /** The last spawn() outcome (Debug.KWHY): n not action-ready, s no surplus, f under the floor, c at the cap,
      *  b built, d no free tile (dug the ring). sawEnemy: enemies in view after cooperation. */
     static char spawnWhy = '-';
@@ -283,6 +296,7 @@ public final class King {
     static void ratTrap(RobotInfo[] enemies) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady() || rc.getGlobalCheese() < Cfg.RAT_TRAP_MIN_CHEESE || rc.getNumberRatTraps() >= Cfg.TRAP_CAP) return;
+        if (trapStarvesSpawn(rc)) return;
         MapLocation c = rc.getLocation();
         MapLocation foe = null;
         int fd = Integer.MAX_VALUE;
