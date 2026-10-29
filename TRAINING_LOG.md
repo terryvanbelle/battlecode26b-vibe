@@ -550,3 +550,17 @@
   first king name sites up to that count once cooperation is over. s4o = s4d + FORM_MAX_WAR 3 is queued as rx_s4o.
   FORM_MAX 4 in peace (s3x) starved kings: 42 formed, 30 died.
 - VM queue: rx_s4j (running), rx_s4n, rx_s4m, rx_s4o, sp16_s4k, sp16_s4l.
+
+## 2026-10-28 23:00 PDT: an early second king for the cat-death endings
+- Our replica losses on uneasy_alliance to bc26vibe_bot (1375, 1376) were 49-50 and 50-49 on points. The game
+  ended in cooperation when the last cat died (r344, r346), with one king each. We won the cat share (8068 vs 7932)
+  and lost on cheese transferred (4064 vs 4481), with 1900-3400 cheese unspent in the bank.
+- 40 of the 80 games in s4d's self-play screen end the same way (r63-r383). s4d formed a second king in 23 of the
+  80 games, and in none of the early-ending ones: FORM_FROM 80, FORM_BABIES 16 and FORM_CHEESE 300 come too late.
+  With one king each, a second king moves the margin by about 10 points (king share 2/3 vs 1/3 at weight 0.3), and
+  those games are decided by 1-10 points. Against a rusher it also means two kings to kill.
+- Arms on the self-play screen (sp17 vs s2o, control sp14_s4d): s4q = s4d + FORM_FROM 30; s4r = s4q + FORM_BABIES 12
+  + FORM_CHEESE 150. They go first in the VM queue, after rx_s4j.
+- Field endings for our bot over all replica games: 502 of 759 end in a king kill (263 lost), 178 on points at r2000
+  (52 lost), 79 on points at an early cat death (27 lost). A tally of what killed our king in the s3y/s4d-era losses
+  is running.
