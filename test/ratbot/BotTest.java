@@ -1232,6 +1232,12 @@ public class BotTest {
               && Nav.headOn(Direction.SOUTHEAST, Direction.NORTH) && !Nav.headOn(Direction.NORTH, Direction.NORTH)
               && !Nav.headOn(Direction.EAST, Direction.NORTH) && Nav.headOn(Direction.NORTHWEST, Direction.SOUTHEAST),
               "swap head-on: opposite facings only");
+        // SWAP_NO_ALONG: an ally facing our step (within 45 degrees) is along; SWAP_PAIR: the same ally not twice soon
+        check(Nav.along(Direction.NORTH, Direction.NORTH) && Nav.along(Direction.NORTHEAST, Direction.NORTH)
+              && Nav.along(Direction.NORTHWEST, Direction.NORTH) && !Nav.along(Direction.EAST, Direction.NORTH)
+              && !Nav.along(Direction.SOUTH, Direction.NORTH), "swap along: same-way facings only");
+        check(Nav.pairBlocked(7, 110, 7, 100, 30) && !Nav.pairBlocked(7, 130, 7, 100, 30) && !Nav.pairBlocked(8, 110, 7, 100, 30)
+              && !Nav.pairBlocked(7, 110, 7, 100, 0), "swap pair: the last ally carried is skipped for ttl rounds");
     }
 
     static void testFlank() throws GameActionException {
