@@ -552,6 +552,42 @@ public class BotTest {
         Comms.numKings = 0;
     }
 
+    static void testRescue() throws GameActionException {
+        reset(); install();
+        G.round = 200; G.coop = false; Nav.avoid = 0;
+        me = new MapLocation(5, 5); facing = Direction.NORTH; G.me = me;
+        RobotInfo ours = new RobotInfo(40, Team.A, UnitType.BABY_RAT, 50, new MapLocation(7, 5), Direction.NORTH, 0, 0, null);
+        RobotInfo carrier = new RobotInfo(41, Team.B, UnitType.BABY_RAT, 90, new MapLocation(7, 5), Direction.NORTH, 0, 0, ours);
+        RobotInfo held = new RobotInfo(43, Team.B, UnitType.BABY_RAT, 50, new MapLocation(4, 5), Direction.NORTH, 0, 0, null);
+        RobotInfo theirs = new RobotInfo(42, Team.B, UnitType.BABY_RAT, 90, new MapLocation(4, 5), Direction.NORTH, 0, 0, held);
+        RobotInfo near = new RobotInfo(44, Team.B, UnitType.BABY_RAT, 30, new MapLocation(5, 6), Direction.SOUTH, 0, 0, null);
+        RobotInfo far = new RobotInfo(45, Team.B, UnitType.BABY_RAT, 90, new MapLocation(9, 5), Direction.NORTH, 0, 0, ours);
+        check(Baby.rescueTarget(new RobotInfo[]{near, theirs, far, carrier}) == carrier,
+              "rescue: the enemy carrying one of ours, not a nearer rat or a carrier of their own");
+        check(Baby.rescueTarget(new RobotInfo[]{near, theirs, far}) == null, "rescue: none beyond RESCUE_D2");
+        G.coop = true;
+        check(Baby.rescueTarget(new RobotInfo[]{carrier}) == null, "rescue: none in cooperation");
+        G.coop = false;
+        // it faces north from (7, 5): (6, 5) and (6, 4) are beside or behind it, (6, 6) is in its cone
+        robots.put(carrier.location, carrier);
+        Baby.rescueT = carrier;
+        check(Baby.rescue() && G.cheb(me, carrier.location) == 1 && !Baby.sees(carrier, me)
+              && me.directionTo(carrier.location) == facing, "rescue: steps beside it, facing it (" + me + " " + facing + ")");
+        check(Baby.tryCarry(robots.values().toArray(new RobotInfo[0])) && carrying == carrier, "rescue: then grabs it");
+        // already beside it and unseen: only turns to it
+        reset(); install();
+        G.round = 200; G.coop = false; Nav.avoid = 0;
+        me = new MapLocation(6, 4); facing = Direction.WEST; G.me = me;
+        robots.put(carrier.location, carrier);
+        Baby.rescueT = carrier;
+        check(Baby.rescue() && me.equals(new MapLocation(6, 4)) && facing == Direction.NORTHEAST,
+              "rescue: beside it already, turns to it (" + me + " " + facing + ")");
+        // only tiles it sees are in reach: no rescue
+        me = new MapLocation(7, 7); facing = Direction.SOUTH; G.me = me; actCd = 0; moveCd = 0; turnCd = 0;
+        check(!Baby.rescue() && me.equals(new MapLocation(7, 7)), "rescue: no step when every tile next to it is in its view");
+        Baby.rescueT = null;
+    }
+
     static void testFrontier() throws GameActionException {
         MapLocation[] tg = new MapLocation[2];
         for (int mir = 0; mir < 3; mir++) {
@@ -1961,6 +1997,7 @@ public class BotTest {
         testMineExplore();
         testFrontier();
         testKingBiter();
+        testRescue();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

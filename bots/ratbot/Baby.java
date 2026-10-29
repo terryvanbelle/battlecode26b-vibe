@@ -99,6 +99,7 @@ public final class Baby {
                 RobotInfo b = kingBiter(robots, Cfg.GUARD_KING_R);
                 if (b != null) { nearestEnemy = b; hunting = true; guards++; }
             }
+            rescueT = Cfg.RESCUE && rc.getCarrying() == null ? rescueTarget(robots) : null;
         }
         Debug.mark(30);
         if (Flow.left() < Cfg.BC_BAIL) { lowBc++; return; }
@@ -116,9 +117,11 @@ public final class Baby {
         Debug.mark(4);
         boolean hostile = hostile();
         if (hostile && Cfg.NAP) tryCarry(robots);
-        if (!G.coop && Cfg.BABY_RAT_TRAPS) tryRatTrap();
+        // a rescue one step away keeps the action for the grab after the move
+        boolean saving = rescueT != null && rc.isMovementReady() && rc.isActionReady();
+        if (!G.coop && Cfg.BABY_RAT_TRAPS && !saving) tryRatTrap();
         Debug.mark(5);
-        if (hostile) biteEnemies(robots);
+        if (hostile && !saving) biteEnemies(robots);
         else if (role == ATTACK && enemyKing != null) biteEnemies(new RobotInfo[]{enemyKing});
         if (cat != null) tryBiteCat(cat);
         // 2. cat trap ahead of an approaching cat
@@ -384,16 +387,19 @@ public final class Baby {
     public static int naps, throwsDone, ratTraps, mineTraps;
     static int carryRound = -100;
 
-    /** Grab an adjacent enemy baby rat (the engine allows it when it cannot see us or is weaker). */
+    /** Grab an adjacent enemy baby rat (the engine allows it when it cannot see us or is weaker): the healthiest,
+     *  or under Cfg.RESCUE first one carrying one of ours (it drops it). */
     static boolean tryCarry(RobotInfo[] robots) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady() || rc.getCarrying() != null) return false;
         RobotInfo best = null;
+        int bs = Integer.MIN_VALUE;
         for (RobotInfo r : robots) {
             if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
             if (G.me.distanceSquaredTo(r.location) > 2) continue;
             if (!rc.canCarryRat(r.location)) continue;
-            if (best == null || r.health > best.health) best = r;
+            int s = r.health + (Cfg.RESCUE && holdsOurs(r) ? 1000 : 0);
+            if (s > bs) { bs = s; best = r; }
         }
         if (best == null) return false;
         rc.carryRat(best.location);
@@ -897,6 +903,7 @@ public final class Baby {
         }
         if (Cfg.YIELD_KING && cat != null && raw == 0 && yieldKing()) { why = 'y'; return; }
         if (Cfg.CARRY_AIM && !G.coop && rc.getCarrying() != null && rc.getCarrying().team == G.them && aimCarry()) { why = 'T'; return; }
+        if (rescueT != null && rescue()) { why = 'R'; return; }
         Debug.mark(10);
         if (!G.coop && retreat()) { why = 'r'; return; }
         // the bank is nearly empty and the king starves at 0: whatever we carry goes home before any fight or errand
@@ -1200,6 +1207,60 @@ public final class Baby {
         Direction f = r.direction;
         if (f == null || f == Direction.CENTER) return true;
         return dx * dx + dy * dy <= 20 && dx * f.dx + dy * f.dy >= Math.abs(dx * f.dy - dy * f.dx);
+    }
+
+    /** Cfg.RESCUE: this turn's enemy carrier of one of ours within RESCUE_D2, or null. */
+    static RobotInfo rescueT;
+    public static int rescues;
+
+    static boolean holdsOurs(RobotInfo r) { return r.carryingRobot != null && r.carryingRobot.team == G.us; }
+
+    /** The nearest enemy baby within dist2 RESCUE_D2 carrying one of ours (ties: the healthier one held, then
+     *  G.pickBit), or null; none in cooperation (a grab is a backstab). */
+    static RobotInfo rescueTarget(RobotInfo[] robots) {
+        if (G.coop) return null;
+        RobotInfo best = null;
+        int bd = Integer.MAX_VALUE;
+        for (RobotInfo r : robots) {
+            if (r.team != G.them || r.type != UnitType.BABY_RAT || !holdsOurs(r)) continue;
+            int d = G.me.distanceSquaredTo(r.location);
+            if (d > Cfg.RESCUE_D2) continue;
+            int s = (d * 128 + 100 - Math.min(100, r.carryingRobot.health)) * 2 + (G.pickBit(G.me, r.location) ? 0 : 1);
+            if (s < bd) { bd = s; best = r; }
+        }
+        return best;
+    }
+
+    /** Get behind rescueT: on a tile next to it that it cannot see, turn to it (the post-move carry grabs it); else
+     *  step to such a tile (turning to it first, as flank does). False when neither is possible. */
+    static boolean rescue() throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady()) return false;
+        MapLocation c = rescueT.location;
+        if (G.cheb(G.me, c) == 1 && !sees(rescueT, G.me)) {
+            Direction f = G.me.directionTo(c);
+            if (rc.getDirection() != f && rc.canTurn(f)) { rc.turn(f); G.facing = f; }
+            rescues++;
+            return true;
+        }
+        if (!rc.isMovementReady()) return false;
+        Direction bestD = null;
+        int bs = Integer.MAX_VALUE;
+        for (int i = 0; i < 8; i++) {
+            Direction d = G.DIRS[i];
+            MapLocation t = G.me.add(d);
+            if (G.cheb(t, c) != 1 || sees(rescueT, t)) continue;
+            if ((Nav.avoid & (1 << i)) != 0 || !rc.canMove(d)) continue;
+            int sc = (d == rc.getDirection() ? 0 : 1) * 2 + (G.hand(G.me, d) > 0 ? 1 : 0);
+            if (sc < bs) { bs = sc; bestD = d; }
+        }
+        if (bestD == null) return false;
+        MapLocation g = Nav.guard;
+        Nav.guard = c;
+        boolean moved = Nav.step(bestD);
+        Nav.guard = g;
+        if (moved) rescues++;
+        return moved;
     }
 
     /** Step onto a tile adjacent to an enemy baby that it cannot see, keeping it in view; the post-move carry grabs it. */

@@ -48,6 +48,7 @@ public final class Debug {
         if (Sym.contradictions > 0) sb.append(" SYMX=").append(Sym.contradictions);
         if (!G.king && Baby.lowBc > 0) sb.append(" lb=").append(Baby.lowBc);
         if (!G.king && Baby.defends > 0) sb.append(" df=").append(Baby.defends);
+        if (!G.king && Baby.rescues > 0) sb.append(" rs=").append(Baby.rescues);
         if (!G.king && Baby.presses > 0) sb.append(" pk=").append(Baby.presses);
         if (!G.king && Baby.guards > 0) sb.append(" gd=").append(Baby.guards);
         if (RobotPlayer.overruns > 0) sb.append(" OVR=").append(RobotPlayer.overruns).append(" OVS=").append(ovStage);
@@ -64,7 +65,7 @@ public final class Debug {
      *  bit 6: even parity of bits 0-5.
      *  tools/smuggle.py decodes it; keep the alphabets in step with it. */
     public static final boolean TAG = true;
-    public static final String WHY = "-CDEHKMPSWacdfghkmprswyzxT", KWHY = "-nsfcbd";
+    public static final String WHY = "-CDEHKMPSWacdfghkmprswyzxTR", KWHY = "-nsfcbd";
     /** Bytecodes the engine counts after tag()'s getBytecodeNum() read, the pad aside (calibrated on a local game:
      *  11 in tag() plus its return). Recalibrate if the engine jar or javac changes (smuggle.py: decode rate < 98%). */
     static final int TAG_K = 12;

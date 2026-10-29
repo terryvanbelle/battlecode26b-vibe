@@ -168,6 +168,13 @@ public final class Cfg {
     public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;
     /** Flank: step onto a tile next to an enemy rat that it cannot see, facing it, then grab it after moving. */
     public static final boolean FLANK = true;
+    /** Rescue: an enemy baby carrying one of ours within dist2 RESCUE_D2 comes first. We keep our action for it (no
+     *  bite or trap before moving), step to a tile next to it that it cannot see (any rat may grab an enemy that
+     *  cannot see it, and a grabbed carrier drops what it holds) and grab it. s7d's 126 field games: enemy
+     *  carriers held ours 137-244 rounds a game, with a free rat of ours within Chebyshev 2 of the carrier on 55-64%
+     *  of them but behind it on 5-9%; AlexT101 and abcdezyxwv threw ours into our king 5-7 times a game for 36-41. */
+    public static final boolean RESCUE = false;
+    public static final int RESCUE_D2 = 8;
     /** Standoff: do not step toward an enemy rat that sees us and is not weaker; face it and hold instead. */
     public static final boolean STANDOFF = true;
     /** Throws: an enemy baby hit beyond tile 2 counts THROW_FAR_PCT percent; below a THROW_MIN score (42 = a
