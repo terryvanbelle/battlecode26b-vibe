@@ -4,6 +4,7 @@
 #   nohup sh tools/screenq.sh JOBS > /dev/null 2>&1 < /dev/null &      (one worker; start more for more streams)
 #   echo ra_s5s >> runs/screenq.txt                                       (queue a run; order is play order)
 # The take is under flock, so two workers never claim the same run. Log: runs/screenq.log.
+# A run with a runs/NAME/KEEP file keeps its replays (BC_KEEP=1, under runs/NAME/replays).
 cd "$(dirname "$0")/.." || exit 1
 JOBS="${1:-4}"; Q=runs/screenq.txt; L=runs/screenq.lock
 touch "$Q"
@@ -14,6 +15,7 @@ while [ ! -e build/screenq.stop ]; do
     echo "$(date -u '+%m-%d %H:%M') skip $R (no cells or already done)" >> runs/screenq.log; continue
   fi
   echo "$(date -u '+%m-%d %H:%M') start $R (jobs $JOBS)" >> runs/screenq.log
-  python3 -I tools/arena.py matrix "runs/$R/cells.tsv" --run "runs/$R" --jobs "$JOBS" > "runs/$R/log" 2>&1
+  K=; [ -e "runs/$R/KEEP" ] && K=1
+  BC_KEEP=$K python3 -I tools/arena.py matrix "runs/$R/cells.tsv" --run "runs/$R" --jobs "$JOBS" > "runs/$R/log" 2>&1
   echo "$(date -u '+%m-%d %H:%M') end $R" >> runs/screenq.log
 done

@@ -97,7 +97,7 @@ public final class Baby {
         if (!G.coop && Cfg.GUARD_DIST2 > 0 && nearestEnemy != null && rc.getCarrying() == null
                 && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
         boolean engaged = nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= 20;
-        if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8 && !(hunting && Cfg.HUNT_IGNORES_RISK) && (Cfg.RISK_IN_FIGHT || !engaged))
+        if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8 && !(hunting && Cfg.HUNT_IGNORES_RISK) && (Cfg.RISK_IN_FIGHT || !engaged || Cfg.RISK_GATHER && role == GATHER))
             Nav.avoid |= TrapRisk.mask(G.me);
         Debug.mark(31);
         // 0. a carried enemy is thrown as soon as we can act

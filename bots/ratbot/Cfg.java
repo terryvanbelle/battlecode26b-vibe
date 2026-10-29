@@ -109,6 +109,9 @@ public final class Cfg {
     public static final boolean HUNT_IGNORES_RISK = true;
     /** False: the trap-risk mask is dropped while a visible enemy rat is within dist2 20 (so we can close to bite). */
     public static final boolean RISK_IN_FIGHT = false;
+    /** Gatherers keep the trap-risk mask while engaged (RISK_IN_FIGHT false then drops it for fighters only): the
+     *  trap layers' front tiles are where our gatherers stepped in 50% of the enemy trap hits. */
+    public static final boolean RISK_GATHER = false;
     /** Guard facing: with an enemy rat within this squared distance, steps strafe so we keep facing it, and a
      *  turn ends facing it (rats are grabbed from behind). 0 = off. */
     public static final int GUARD_DIST2 = 13;
