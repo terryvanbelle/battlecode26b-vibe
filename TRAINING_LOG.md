@@ -501,3 +501,8 @@
   cells +13 -12, 49-31, king-kill losses 16 (17): neutral. The intended effect did not happen: we placed 3020 rat
   traps over the 80 games against 2171 for s4d. A higher bank floor probably keeps more babies above their own trap
   threshold. Unexplained for now; trap spending is not where the rush losses come from.
+
+## 2026-10-28 21:30 PDT: a higher war baby cap leans positive against the rush
+- rx_s4h (s4h = s4d + MAX_BABIES_WAR 30, vs abrk) against control rx2_s4d: +3.1 pts, t +0.93, cells +11 -7, 52-28,
+  king-kill losses 16 (17), king kills by us 21 (18). We spawned 4572 babies against 4108 and moved 718702 cheese
+  against 703869. Lean positive; it joins GLANCE_MEM 20 in the next stack. It is inert in peace.
