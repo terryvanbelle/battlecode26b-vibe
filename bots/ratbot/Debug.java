@@ -63,7 +63,7 @@ public final class Debug {
      *  bit 6: even parity of bits 0-5.
      *  tools/smuggle.py decodes it; keep the alphabets in step with it. */
     public static final boolean TAG = true;
-    public static final String WHY = "-CDEHKMPSWacdfghkmprswyzx", KWHY = "-nsfcbd";
+    public static final String WHY = "-CDEHKMPSWacdfghkmprswyzxT", KWHY = "-nsfcbd";
     /** Bytecodes the engine counts after tag()'s getBytecodeNum() read, the pad aside (calibrated on a local game:
      *  11 in tag() plus its return). Recalibrate if the engine jar or javac changes (smuggle.py: decode rate < 98%). */
     static final int TAG_K = 12;

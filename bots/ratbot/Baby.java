@@ -398,12 +398,9 @@ public final class Baby {
         gridAt[i] = stamp;
     }
 
-    static boolean tryThrow(RobotInfo[] robots) throws GameActionException {
-        RobotController rc = G.rc;
-        if (!rc.isActionReady()) return false;
-        MapLocation me = rc.getLocation();
-        if (robots == null) robots = rc.senseNearbyRobots(-1, null);
-        // robots we see by offset from us (kings cover their 3x3), so the flight scan never senses tile by tile
+    /** The robots we see by offset from me (kings cover their 3x3, cats their 2x2), so flight scans never sense tile
+     *  by tile; returns the stamp that marks this fill. */
+    static int gridFill(MapLocation me, RobotInfo[] robots) {
         int stamp = ++gridStamp;
         for (RobotInfo r : robots) {
             int ox = r.location.x - me.x, oy = r.location.y - me.y;
@@ -413,6 +410,65 @@ public final class Baby {
                 for (int ex = 0; ex <= 1; ex++) for (int ey = 0; ey <= 1; ey++) gridPut(ox + ex, oy + ey, r, stamp);
             } else gridPut(ox, oy, r, stamp);
         }
+        return stamp;
+    }
+
+    /** Point-blank value of a throw from offset (mx, my) of me toward d (tryThrow's tile-2 scale: an enemy baby 84, an
+     *  enemy king 126, a wall or dirt 42, an ally -42, a cat -50, nothing 0), or MIN_VALUE when the first tile is
+     *  blocked. Robots come from the gridFill with this stamp; the tile we leave counts as empty. */
+    static int aimValue(MapLocation me, int mx, int my, Direction d, int stamp) {
+        int ddx = d.dx, ddy = d.dy, w = G.W, h = G.H, blk = Sym.WALL | Sym.DIRT;
+        int[] mem = Sym.mem;
+        int x = me.x + mx + ddx, y = me.y + my + ddy, ox = mx + ddx, oy = my + ddy;
+        if (x < 0 || y < 0 || x >= w || y >= h || (mem[x + w * y] & blk) != 0
+                || (ox != 0 || oy != 0) && gridAt[(ox + 8) + 17 * (oy + 8)] == stamp) return Integer.MIN_VALUE;
+        x += ddx; y += ddy; ox += ddx; oy += ddy;
+        if (x < 0 || y < 0 || x >= w || y >= h) return 0;
+        if ((mem[x + w * y] & blk) != 0) return 42;
+        if ((ox == 0 && oy == 0) || gridAt[(ox + 8) + 17 * (oy + 8)] != stamp) return 0;
+        RobotInfo r = grid[(ox + 8) + 17 * (oy + 8)];
+        if (r.team == G.them) return r.type == UnitType.RAT_KING ? 126 : 84;
+        return r.team == G.us ? -42 : -50;
+    }
+
+    /** Carrying an enemy (Cfg.CARRY_AIM): from our tile or a neighbour we can step to, the throw direction whose
+     *  point-blank tile holds an enemy robot (aimValue >= Cfg.AIM_MIN); turn to it, step there (a strafe when it is
+     *  not ahead) and throw now if the action is ready, else hold the aim for next turn. Ties: stay, then G.hand. */
+    static boolean aimCarry() throws GameActionException {
+        RobotController rc = G.rc;
+        if (seen == null || Flow.left() < Cfg.THROW_BC) return false;
+        MapLocation me = rc.getLocation();
+        int stamp = gridFill(me, seen);
+        int best = Integer.MIN_VALUE;
+        Direction bm = null, bt = null;
+        boolean canMove = rc.isMovementReady();
+        for (int j = -1; j < 8; j++) {
+            Direction m = j < 0 ? Direction.CENTER : G.DIRS[j];
+            if (j >= 0 && (!canMove || !rc.canMove(m))) continue;
+            MapLocation p = me.add(m);
+            for (int i = 0; i < 8; i++) {
+                Direction d = G.DIRS[i];
+                int v = aimValue(me, m.dx, m.dy, d, stamp);
+                if (v < Cfg.AIM_MIN) continue;
+                int key = v * 8 + (j < 0 ? 4 : G.hand(me, m) > 0 ? 2 : 0) + (G.hand(p, d) > 0 ? 1 : 0);
+                if (key > best) { best = key; bm = m; bt = d; }
+            }
+        }
+        if (bt == null) return false;
+        if (rc.getDirection() != bt) { if (!rc.canTurn(bt)) return false; rc.turn(bt); G.facing = bt; }
+        if (bm != Direction.CENTER) { rc.move(bm); G.me = rc.getLocation(); }
+        if (rc.canThrowRat()) { rc.throwRat(); throwsDone++; aimThrows++; }
+        return true;
+    }
+
+    static int aimThrows;
+
+    static boolean tryThrow(RobotInfo[] robots) throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady()) return false;
+        MapLocation me = rc.getLocation();
+        if (robots == null) robots = rc.senseNearbyRobots(-1, null);
+        int stamp = gridFill(me, robots);
         Direction bestD = null;
         int bs = Integer.MIN_VALUE;
         int[] mem = Sym.mem;
@@ -781,6 +837,7 @@ public final class Baby {
             if (Cfg.SYM_CENTRE ? Nav.flee2(2 * cat.location.x + 1, 2 * cat.location.y + 1) : Nav.flee(cat.location)) { why = 'c'; return; }
         }
         if (Cfg.YIELD_KING && cat != null && raw == 0 && yieldKing()) { why = 'y'; return; }
+        if (Cfg.CARRY_AIM && !G.coop && rc.getCarrying() != null && rc.getCarrying().team == G.them && aimCarry()) { why = 'T'; return; }
         Debug.mark(10);
         if (!G.coop && retreat()) { why = 'r'; return; }
         // the bank is nearly empty and the king starves at 0: whatever we carry goes home before any fight or errand

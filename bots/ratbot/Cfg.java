@@ -161,6 +161,11 @@ public final class Cfg {
     /** Throws: an enemy baby hit beyond tile 2 counts THROW_FAR_PCT percent; below a THROW_MIN score (42 = a
      *  point-blank wall or rat) the carrier holds for up to THROW_HOLD rounds after the grab. */
     public static final int THROW_FAR_PCT = 40, THROW_MIN = 42, THROW_HOLD = 6;
+    /** A carrier of an enemy rat steps (or turns) to the throw whose point-blank tile holds an enemy robot worth at least
+     *  AIM_MIN (84 a baby, 126 a king) and throws in the same turn when it can: our throws hit enemy robots 11 times to
+     *  abcdezyxwv's 57 (r <= 400, 4 matches), because our carriers never lined a throw up. */
+    public static final boolean CARRY_AIM = false;
+    public static final int AIM_MIN = 84;
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;

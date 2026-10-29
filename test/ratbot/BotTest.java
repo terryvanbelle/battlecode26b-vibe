@@ -978,6 +978,50 @@ public class BotTest {
         check(b && bitten.size() == 1 && bitten.get(0).equals(new MapLocation(6, 6)), "bite: king's nearest body tile (" + bitten + ")");
     }
 
+    static void testCarryAim() throws GameActionException {
+        // an enemy rat three tiles north: step north and throw it point-blank in the same turn
+        reset(); install();
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, false, false, false);
+        RobotInfo e = enemyRat(80, 5, 8, 100);
+        robots.put(e.location, e);
+        Baby.seen = new RobotInfo[]{e};
+        check(Baby.aimCarry() && me.equals(new MapLocation(5, 6)) && thrown == Direction.NORTH,
+              "carry aim: step to the point-blank line and throw (" + me + " " + thrown + ")");
+        // action not ready: take the aim and keep the rat
+        reset(); install();
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, false, false, false);
+        robots.put(e.location, e);
+        Baby.seen = new RobotInfo[]{e};
+        facing = Direction.EAST; actCd = 20;
+        check(Baby.aimCarry() && me.equals(new MapLocation(5, 6)) && facing == Direction.NORTH && thrown == null,
+              "carry aim: cooling down, it steps and faces the line (" + me + " " + facing + ")");
+        // an enemy king's edge on the point-blank tile from here: no step, throw east
+        reset(); install();
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, false, false, false);
+        RobotInfo k = new RobotInfo(81, G.them, UnitType.RAT_KING, 600, new MapLocation(8, 5), Direction.NORTH, 0, 0, null);
+        robots.put(k.location, k);
+        Baby.seen = new RobotInfo[]{k};
+        check(Baby.aimCarry() && me.equals(new MapLocation(5, 5)) && thrown == Direction.EAST,
+              "carry aim: the king from where we stand (" + me + " " + thrown + ")");
+        // only an ally or a wall on point-blank tiles: no aim
+        reset(); install();
+        walls.add(new MapLocation(5, 7));
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, walls.contains(new MapLocation(x, y)), false, false);
+        RobotInfo a = new RobotInfo(82, G.us, UnitType.BABY_RAT, 100, new MapLocation(7, 5), Direction.NORTH, 0, 0, null);
+        robots.put(a.location, a);
+        Baby.seen = new RobotInfo[]{a};
+        check(!Baby.aimCarry() && me.equals(new MapLocation(5, 5)) && thrown == null, "carry aim: no enemy in a point-blank line");
+        // the first flight tile must be empty: an enemy adjacent north with another behind it is not a line
+        reset(); install();
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, false, false, false);
+        RobotInfo e1 = enemyRat(83, 5, 6, 100), e2 = enemyRat(84, 5, 7, 100);
+        robots.put(e1.location, e1); robots.put(e2.location, e2);
+        Baby.seen = new RobotInfo[]{e1, e2};
+        moveCd = 20;
+        check(!Baby.aimCarry() && thrown == null, "carry aim: a blocked first tile is no throw");
+        Baby.seen = null;
+    }
+
     static void testThrowDirection() throws GameActionException {
         reset(); install();
         // a wall two tiles east, an enemy two tiles west, open north/south: the wall throw (42) beats nothing (10)
@@ -1723,6 +1767,7 @@ public class BotTest {
         testFlowRev();
         testFlowFast();
         testTrapRiskNear();
+        testCarryAim();
         testRingArcs();
         testHomeRank();
         testScoutUntil();
