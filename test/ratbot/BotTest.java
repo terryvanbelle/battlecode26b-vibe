@@ -1199,6 +1199,21 @@ public class BotTest {
         check(King.catRisk(new MapLocation(59 - 15, 39 - 28), new RobotInfo[]{mc}) == east, "king dodge: rotation-symmetric score");
     }
 
+    static void testBirthSeed() {
+        // the same for a rat and its mirror twin under each symmetry (60x40 map), different for another offset or round
+        MapLocation me = new MapLocation(12, 7), home = new MapLocation(10, 8);
+        int s = Baby.birthSeed(33, me, home);
+        boolean ok = true;
+        for (int sym = 0; sym < 3; sym++) {
+            MapLocation m = sym == 0 ? new MapLocation(59 - me.x, 39 - me.y) : sym == 1 ? new MapLocation(59 - me.x, me.y) : new MapLocation(me.x, 39 - me.y);
+            MapLocation h = sym == 0 ? new MapLocation(59 - home.x, 39 - home.y) : sym == 1 ? new MapLocation(59 - home.x, home.y) : new MapLocation(home.x, 39 - home.y);
+            if (Baby.birthSeed(33, m, h) != s) ok = false;
+        }
+        check(ok, "birth seed: mirror twins share it");
+        check(Baby.birthSeed(33, new MapLocation(11, 7), home) != s && Baby.birthSeed(34, me, home) != s,
+              "birth seed: another offset or round differs");
+    }
+
     static void testKingPress() throws GameActionException {
         reset(); install();
         G.round = 200; G.coop = false; G.me = me; Baby.role = Baby.FIGHT; Baby.eKing = null; Baby.lastEKing = null;
@@ -1342,7 +1357,7 @@ public class BotTest {
         testFormIncome();
         testCatAtKing();
         testNearerAllies();
-        testKingPress();
+        testBirthSeed(); testKingPress();
         testDefend();
         testGuard();
         testBiteCheese();

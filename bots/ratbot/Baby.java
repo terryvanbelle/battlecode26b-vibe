@@ -191,8 +191,6 @@ public final class Baby {
     static void born() {
         RobotController rc = G.rc;
         birthRound = G.round;
-        slot = (rc.getID() * 0x9E3779B1) >>> 8;
-        scout = Cfg.SCOUT_EVERY > 0 && (slot >>> 4) % Cfg.SCOUT_EVERY == 0;
         int cost = rc.getCurrentRatCost();
         int idx = (cost - 10) / 10 * 4; // approximate spawn index from the cost step
         role = GATHER;
@@ -206,7 +204,15 @@ public final class Baby {
         fu = px >= 0 ? 1 : -1;
         fv = py >= 0 ? 1 : -1;
         // mirror-invariant seed: round and the unsigned offset from the king
-        G.seed(G.round * 977 + Math.abs(G.me.x - home.x) * 31 + Math.abs(G.me.y - home.y) * 7 + 1);
+        int seed = birthSeed(G.round, G.me, home);
+        G.seed(seed);
+        slot = ((Cfg.SYM_SLOT ? seed : rc.getID()) * 0x9E3779B1) >>> 8;
+        scout = Cfg.SCOUT_EVERY > 0 && (slot >>> 4) % Cfg.SCOUT_EVERY == 0;
+    }
+
+    /** A rat's birth seed: its round and unsigned offset from the king that spawned it, the same for its mirror twin. */
+    static int birthSeed(int round, MapLocation me, MapLocation home) {
+        return round * 977 + Math.abs(me.x - home.x) * 31 + Math.abs(me.y - home.y) * 7 + 1;
     }
 
     /** Cfg.WAR_STRIKE k: whether a rat of this role born in this round is one of the 1 in k fighters that strike at
@@ -1172,7 +1178,7 @@ public final class Baby {
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
     }
 
-    /** A per-rat hash (Cfg.MINE_BALANCE), and the team's known-mine count when mineTarget was picked. */
+    /** A per-rat hash (the scout pick, Cfg.MINE_BALANCE), and the team's known-mine count when mineTarget was picked. */
     static int slot, minesAtPick;
 
     static final MapLocation[] cand = new MapLocation[40];

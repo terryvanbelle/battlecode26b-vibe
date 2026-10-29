@@ -226,6 +226,10 @@ public final class Cfg {
     /** Scouts: one in SCOUT_EVERY gatherers explores our half (never-seen tiles) until round SCOUT_UNTIL, then
      *  gathers (0 = off). */
     public static final int SCOUT_EVERY = 4, SCOUT_UNTIL = 150;
+    /** The per-rat hash behind the scout pick and MINE_BALANCE's mine comes from the mirror-invariant birth seed (round,
+     *  unsigned offset from the king), not the robot id: mirrored rats got different ids, so different scout roles and
+     *  mines, and the two sides of a symmetric game played differently (mirror_check's known asymmetry). */
+    public static final boolean SYM_SLOT = false;
     /** Mine seeking (0 = off): a gatherer at its mine that sees SEEK_CROWD or more allied babies nearer that mine
      *  explores never-seen tiles of our half for SEEK_TTL rounds, at most once per SEEK_RETRY rounds, and reports what
      *  it finds (streetsofnewyork: two of our three mines sat behind 5-deep dirt bands, unseen all game, while
