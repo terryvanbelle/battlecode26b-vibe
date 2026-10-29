@@ -24,7 +24,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - `tools/king_report.py [--json] REPLAY` (per king: died, deathCause, starveHp, hpBy incl. `ownThrow`/`ownThrowHits`,
     firstFoe, broke). `game_report.py` rows carry `bc`; `tags` is null for an untagged team; the timeline has kings
     columns.
-  - `tools/java/bc26tools/ReplayDump.java`, dumpVersion 3 (2026-10-29 audit round 2): trap victims by the engine's
+  - `tools/java/bc26tools/ReplayDump.java`, dumpVersion 3 (2026-10-28 audit round 2): trap victims by the engine's
     footprint rule, starvation booked only when the bank is surely below 2 (else the hp goes to the biter as boosted
     bite), summary mode exits 1 on a parse failure, meta `file` absolute. Known gap: a king that starves on the turn
     it forms is not booked (never seen).

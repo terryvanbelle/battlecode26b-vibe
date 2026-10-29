@@ -11,6 +11,10 @@ public final class Baby {
     static int fu = 1, fv = 1;        // side frame (signs of our king's offset from centre)
 
     static MapLocation cheeseTarget;  // last seen cheese tile
+    /** Cheese given up after a stall (Cfg.CHEESE_BAN): a ring of the latest, with the round each was banned. */
+    static final MapLocation[] banned = new MapLocation[4];
+    static final int[] bannedAt = new int[4];
+    static int banHead;
     static MapLocation mineTarget;    // sticky assigned mine
     static MapLocation exploreTarget;
     static MapLocation catSeen;       // bottom-left of nearest cat sensed this turn
@@ -241,7 +245,7 @@ public final class Baby {
             if (mine) noteMine(l.x, l.y);
             if (mi.getCheeseAmount() > 0) {
                 int d = G.me.distanceSquaredTo(l);
-                if (d < bd) { bd = d; bestCheese = l; }
+                if (d < bd && (Cfg.CHEESE_BAN == 0 || !bannedCheese(l, Cfg.CHEESE_BAN))) { bd = d; bestCheese = l; }
             } else if (cheeseTarget != null && cheeseTarget.equals(l)) {
                 cheeseTarget = null;
             }
@@ -249,6 +253,22 @@ public final class Baby {
         if (bestCheese != null) {
             if (cheeseTarget == null || G.me.distanceSquaredTo(cheeseTarget) > bd) cheeseTarget = bestCheese;
         }
+    }
+
+    /** Give up on cheese at l for Cfg.CHEESE_BAN rounds, its Chebyshev-2 neighbourhood with it. */
+    static void banCheese(MapLocation l) {
+        banned[banHead] = l;
+        bannedAt[banHead] = G.round;
+        banHead = (banHead + 1) & 3;
+    }
+
+    /** Cheese at l lies within Chebyshev 2 of a pile banned less than ttl rounds ago. */
+    static boolean bannedCheese(MapLocation l, int ttl) {
+        for (int i = 0; i < 4; i++) {
+            MapLocation b = banned[i];
+            if (b != null && G.round - bannedAt[i] < ttl && G.cheb(b, l) <= 2) return true;
+        }
+        return false;
     }
 
     /** Re-sense after moving (new cone) only to refresh cheese; terrain is caught next turn. */
@@ -727,7 +747,10 @@ public final class Baby {
             }
             why = 'C';
             Nav.goTo(cheeseTarget);
-            if (Nav.stall > 12) cheeseTarget = null;
+            if (Nav.stall > 12) {
+                if (Cfg.CHEESE_BAN > 0) banCheese(cheeseTarget);
+                cheeseTarget = null;
+            }
             return;
         }
         if (role == FIGHT) {

@@ -571,7 +571,7 @@
   points gain of the rush arms. It is already the replica candidate (set-1 block running). The full suite passed
   (BotTest, test_tools 109, battle 64, replaydump 489, reports 67, scoring 102).
 
-## 2026-10-29 00:10 PDT: s4j rejected on the replica after block 1
+## 2026-10-28 22:40 PDT: s4j rejected on the replica after block 1
 - s4j block 1 (set 1, matches 1446-1457 and 1494-1497) vs s3y: 48 cells, 39 alike, D 9 (+4 -5), net -1, t -0.33:
   rejected (block-1 bar t <= 0). It gained where_are_you (C0derTang), dirtfulcat and streetsofnewyork (CS50Crab) and
   wallsofparadis (bc26vibe_bot). It lost Nofreecheese (CS50Crab), DefaultLarge (abcdezyxwv), fullofsecrets (ask8000),
@@ -596,7 +596,7 @@
   both kings starved by r311. Rat traps cost 1300 of our 2488 starting cheese in the first 150 rounds (65 traps,
   all triggered, 23 enemy kills).
 
-## 2026-10-29 00:00 PDT: starvation is mostly lost income; stuck babies are a navigation bug
+## 2026-10-28 23:15 PDT: starvation is mostly lost income; stuck babies are a navigation bug
 - In the 150 rounds before the bank first hit 0, spawns and traps cost little in most of the 20 starvation games. Upkeep
   dominated: 300 per king, with income of 0-600, and the bank at 150-400 when the window opened. The early-war rat
   traps and spawns spent the starting 2488 long before that. In several games income was near 0 while 16-20 babies
@@ -616,3 +616,31 @@
   of the next three path tiles. The farthest wins; ties go by G.hand, so mirrored rats take mirrored sides. The path
   is dropped only after FLOW_JAM_HOLD 12 turns. Unit test testFlowJam (straight path, ally on the next tile, ROT
   mirror, boxed-in case); BotTest 196/196. Diagnostic games on the five worst maps are running, before a screen.
+
+## 2026-10-28 23:45 PDT: KING_BLOCK, the stuck report, and cheese across a wall
+- s4s (FLOW_JAM) made things worse on the five diagnostic maps: stuck rounds went from 7295 to 10335. The longer hold
+  sat behind a tile that never clears, our own king's body. The A* search treated the king's 3x3 as open ground, so
+  babies beside the king followed paths into it.
+- KING_BLOCK (s4t = s4d + KING_BLOCK): our kings' bodies are marked in Sym.mem with a KING bit that survives
+  re-sensing. Flow paths and bug walks treat it as a wall unless the target is at the king. testKingBlock covers it.
+  Stuck rounds over the five maps fell from 7295 to 4755: EscapeTheNight 4220 -> 1809, FreeTheCheese 571 -> 139,
+  fullofsecrets 2173 -> 1543. pipes rose from 89 to 1161; that is one game, and results there are within noise.
+  Results matched s4d's (EscapeTheNight W 57-42 vs 52-47; the other four kept their winners). s4u (KING_BLOCK + FLOW_JAM)
+  reached 8182, so FLOW_JAM is rejected twice.
+- tools/stuck_report.py turns the scratch scan into a tested tool. It adds the distance to the nearest own king when
+  an episode starts. Field games (54, tagged builds): 7.2% of baby turns are lost to stuck episodes. 58% of those
+  rounds are touching our king's body, 29% within 3-5 of it, and 13% farther away (mostly carriers, code d).
+- The rest of EscapeTheNight, traced with a debug build that writes the nav target, flow target and held turns to the
+  indicator: five babies in the king's room target a cheese pile at (18,21), 3 tiles east through the room wall. A*
+  finds the 19-tile way out, but each baby's next path tile is held by another of them. Each holds 3 turns, drops,
+  and searches again (4 turns). After 12 stalled turns it gives up the cheese and picks the same pile the next turn,
+  because nothing remembers the give-up. This lasted 110 rounds, until someone else took the pile.
+- s4v = s4t + CHEESE_BAN 60: a pile given up after a stall is ignored, with its Chebyshev-2 neighbourhood, for 60
+  rounds (a ring of 4). testCheeseBan. Diagnostic games are running. s4t's self-play screen (sp18_s4t) and rush
+  run (rx_s4t) are first in the VM queue after rx_s4n.
+- s4i (s4d + BITE_GUARD + BITE_CARRIER) is rejected on replica block 1 against s3y: 48 cells, 12 differ, 5 gained,
+  7 lost, net -2, t -0.58. s3y was re-submitted (submission 73). Then s4t went up (submission 74) and its set-1
+  block started at match 1578, in parallel with its self-play screen. The replica would otherwise sit idle, and a
+  screen rejection would end the block.
+- The block waiter had a bug: `contest.py matches` shows one page by default, so older block games fell off the list
+  and the count could not reach 16. Waiters now pass `--pages 5`.

@@ -32,6 +32,10 @@ public final class Debug {
               .append(" tr=").append(Baby.trapsPlaced)
               .append(" rt=").append(Baby.ratTraps).append(" nap=").append(Baby.naps).append(" th=").append(Baby.throwsDone).append(" gl=").append(Baby.glances)
               .append(" dg=").append(Nav.digs).append(" fl=").append(Flow.builds).append(":").append(Flow.done).append(":").append(Flow.lastTurns).append(":").append(Flow.steps).append(" mv=").append(Baby.why);
+            // navigation state: nav target and stall, flow target (b building, r ready, - stale) and robot-held turns
+            if (Nav.target != null) sb.append(" nt=").append(Nav.target.x).append(',').append(Nav.target.y).append('/').append(Nav.stall);
+            if (Flow.tgt != null) sb.append(" ft=").append(Flow.tgt.x).append(',').append(Flow.tgt.y)
+              .append(Flow.building ? 'b' : Flow.builtRound >= 0 ? 'r' : '-').append(Flow.held).append('/').append(Flow.plen - Flow.ppos);
         }
         if (Baby.raidTarget != null) sb.append(" rz=").append(Baby.raidTarget.x).append(',').append(Baby.raidTarget.y);
         sb.append(" sym=").append(Sym.mask);

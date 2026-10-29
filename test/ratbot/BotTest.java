@@ -406,6 +406,24 @@ public class BotTest {
         check(n == 0, "king block: marks clear when the king is gone (" + n + ")");
     }
 
+    static void testCheeseBan() {
+        reset(); W = 20; H = 20; install();
+        Arrays.fill(Baby.banned, null); Baby.banHead = 0;
+        MapLocation a = new MapLocation(18, 21 - 10);
+        round = 100; G.startTurn();
+        Baby.banCheese(a);
+        check(Baby.bannedCheese(a, 60) && Baby.bannedCheese(new MapLocation(16, 13), 60) && !Baby.bannedCheese(new MapLocation(15, 11), 60),
+              "cheese ban: the pile and its Chebyshev-2 neighbourhood, nothing farther");
+        round = 159; G.startTurn();
+        check(Baby.bannedCheese(a, 60), "cheese ban: still banned on its last round");
+        round = 160; G.startTurn();
+        check(!Baby.bannedCheese(a, 60), "cheese ban: expires after ttl rounds");
+        for (int i = 0; i < 4; i++) Baby.banCheese(new MapLocation(2 + 5 * i, 2));
+        check(!Baby.bannedCheese(a, 1000) && Baby.bannedCheese(new MapLocation(17, 2), 60) && Baby.bannedCheese(new MapLocation(2, 2), 60),
+              "cheese ban: a ring of four, the oldest overwritten");
+        Arrays.fill(Baby.banned, null); Baby.banHead = 0;
+    }
+
     static void testFlowJam() {
         // a path straight east with an ally parked on its next tile: sidestep lands diagonally beside a later path
         // tile, never on the ally; the ROT-mirrored scene picks the mirrored side
@@ -1187,6 +1205,7 @@ public class BotTest {
         testNavFlowSealedRoom();
         testFlowField();
         testFlowJam();
+        testCheeseBan();
         testKingBlock();
         testExploreUnseen();
         testKingNeverWritesOutOfRange();

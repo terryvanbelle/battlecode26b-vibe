@@ -133,6 +133,10 @@ public final class Cfg {
     /** Global cheese below which any rat carrying cheese delivers it before fighting or running errands (0 = off):
      *  31 of our 45 king deaths on the replica were starvation, once with 728 cheese in our rats' paws. */
     public static final int HUNGRY = 0;
+    /** Rounds a cheese pile given up after a stall stays ignored, with every pile within Chebyshev 2 of it (0 = off).
+     *  EscapeTheNight: five babies in the king's room chased a pile 3 tiles away through a wall for 110 rounds, each
+     *  re-picking it the turn after giving up, while their 19-tile path out was held by one another. */
+    public static final int CHEESE_BAN = 0;
     /** A rat already carrying cheese takes no pile that would lift it above this (0 = no cap). */
     public static final int CARRY_MAX = 0;
     /** Babies spawned before any fighter is assigned. */
