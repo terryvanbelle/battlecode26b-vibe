@@ -341,6 +341,10 @@ public final class Cfg {
      *  stays free for the drop. rose (s7j as B): followers filled each carrier's old tile in the 1-wide stem, the
      *  carriers could set nobody down, and the stem held three carriers for 800 rounds (1259 grabs, king starved). */
     public static final boolean SWAP_YIELD = false;
+    /** With SWAP_HOLD: only an ally coming the other way (facing within 45 degrees of our step's opposite) is carried
+     *  past. rose (s7k as A): two outbound rats bound for one mine carried each other back and forth in the queue out
+     *  of the pocket; 9 of 20 babies were being carried at r600 and r1200, and the king starved at r1875. */
+    public static final boolean SWAP_HEADON = false;
     /** Mine seeking (0 = off): a gatherer at its mine that sees SEEK_CROWD or more allied babies nearer that mine
      *  explores never-seen tiles of our half for SEEK_TTL rounds, at most once per SEEK_RETRY rounds, and reports what
      *  it finds (streetsofnewyork: two of our three mines sat behind 5-deep dirt bands, unseen all game, while

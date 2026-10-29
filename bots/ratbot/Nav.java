@@ -128,11 +128,21 @@ public final class Nav {
 
     /** Cfg.SWAP_HOLD: carry the ally baby on the next step (direction d, not avoided) and step into its tile, unless
      *  an enemy rat is near (the carry costs 20 action cooldown, the drop 20 more). True when we moved. */
+    /** Cfg.SWAP_HEADON: an ally facing f blocks our step d head-on (f within 45 degrees of d's opposite). */
+    static boolean headOn(Direction f, Direction d) {
+        Direction o = d.opposite();
+        return f == o || f == o.rotateLeft() || f == o.rotateRight();
+    }
+
     static boolean swapPast(Direction d) throws GameActionException {
         RobotController rc = G.rc;
         if ((avoid & (1 << d.ordinal())) != 0 || rc.getCarrying() != null || Baby.nearestEnemy != null
                 || !rc.isActionReady() || !rc.isMovementReady()) return false;
         MapLocation n = G.me.add(d);
+        if (Cfg.SWAP_HEADON && rc.canSenseLocation(n)) {
+            RobotInfo a = rc.senseRobotAtLocation(n);
+            if (a != null && a.team == G.us && !headOn(a.direction, d)) return false;
+        }
         if (rc.getDirection() != d) {
             if (!rc.canTurn(d)) return false;
             rc.turn(d);
@@ -140,6 +150,7 @@ public final class Nav {
         }
         RobotInfo r = rc.canSenseLocation(n) ? rc.senseRobotAtLocation(n) : null;
         if (r == null || r.team != G.us || r.type != UnitType.BABY_RAT || r.carryingRobot != null || !rc.canCarryRat(n)) return false;
+        if (Cfg.SWAP_HEADON && !headOn(r.direction, d)) return false;
         rc.carryRat(n);
         swapFrom = G.me;
         swaps++;

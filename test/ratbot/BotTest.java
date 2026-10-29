@@ -1220,6 +1220,11 @@ public class BotTest {
         RobotInfo thrower = new RobotInfo(82, Team.A, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, foe);
         RobotInfo plain = new RobotInfo(83, Team.A, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, null);
         check(Baby.carrierMask(new RobotInfo[] { thrower, plain }) == 0, "swap yield: a rat carrying an enemy or nothing is passed as usual");
+        // SWAP_HEADON: only an ally facing back at our step (within 45 degrees) is head-on
+        check(Nav.headOn(Direction.SOUTH, Direction.NORTH) && Nav.headOn(Direction.SOUTHWEST, Direction.NORTH)
+              && Nav.headOn(Direction.SOUTHEAST, Direction.NORTH) && !Nav.headOn(Direction.NORTH, Direction.NORTH)
+              && !Nav.headOn(Direction.EAST, Direction.NORTH) && Nav.headOn(Direction.NORTHWEST, Direction.SOUTHEAST),
+              "swap head-on: opposite facings only");
     }
 
     static void testFlank() throws GameActionException {
