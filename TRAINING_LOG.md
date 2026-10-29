@@ -1642,3 +1642,16 @@
   takes several hours. From now on candidates whose case rests on war play go to the replica directly and
   the screens run behind as a backstop. s8j is submission #88 (block from match 2310); queued after it: s7q
   (economy), s8e (trap cap 25), s8b (no retreat), s7z (breakout).
+
+## 2026-10-29 12:23 PDT: on the small maps we buy traps instead of rats; s7u next
+- AdamTan12 takes all six set-1 games from every build so far (DefaultSmall, tiny, jail). In 2308 our rats
+  never came within dist2 20 of its king on DefaultSmall or jail. DefaultSmall: kills were even (36 to 37), but
+  from r68 to r84 we lost 12 rats and they 8, and they held 16 by spawning while we fell from 20 to 8. Our king
+  died at r117 to 60 bites.
+- The ledger to the king's death: tiny (r92) traps 990 cheese for us against 440, spawns 35 against 53;
+  DefaultSmall (r117) traps 1010 against 940, spawns 42 against 48. Both banks ended at 100-130.
+- The priority is inverted: a baby lays a rat trap down to the RAT_TRAP_MIN_CHEESE floor (200), while the king
+  stops spawning at war below WAR_FLOOR (300) plus the rat cost, so in a squeeze traps drain the 200-300 band
+  and spawns stop. s7u (s7d + SIEGE_FLOOR 20 + TRAP_SPAWN_FIRST: spawn floors drop to 20 with enemies in the
+  king's sight, and no baby or king rat trap while the king lacks its next spawn) was written for exactly this
+  case (2094 DefaultSmall) and has never met the field. It goes to the replica after s8j.
