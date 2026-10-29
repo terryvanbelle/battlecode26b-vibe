@@ -48,6 +48,7 @@ public final class King {
         spawn(cats, enemies);
         Debug.mark(46);
         if (!G.coop) bite(enemies);
+        if (Cfg.PRESS_SHARED && !G.coop) noteEKing(enemies);
         if (!G.coop && enemies.length > 0) {
             int threat = 0;
             for (RobotInfo e : enemies)
@@ -173,6 +174,17 @@ public final class King {
                 MapLocation l = c.translate(dx, dy);
                 if (G.rc.canPickUpCheese(l)) G.rc.pickUpCheese(l);
             }
+    }
+
+    /** An enemy king we see goes in the shared enemy-king slot (as a squeaked sighting does in readSqueaks). */
+    static void noteEKing(RobotInfo[] enemies) {
+        for (RobotInfo e : enemies) {
+            if (e.type != UnitType.RAT_KING) continue;
+            Comms.write(Comms.EKING, e.location.x + 1);
+            Comms.write(Comms.EKING + 1, e.location.y + 1);
+            Comms.write(Comms.EKING + 2, Comms.stamp());
+            return;
+        }
     }
 
     static void bite(RobotInfo[] enemies) throws GameActionException {

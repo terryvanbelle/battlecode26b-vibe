@@ -84,6 +84,11 @@ public final class Cfg {
      *  carrying less than DELIVER_AT: PRESS_GATHER_D2) and bites it, ahead of standoffs and facing. */
     public static final boolean KING_PRESS = false;
     public static final int PRESS_HOPS = 2, PRESS_HP = 40, PRESS_AGE = 8, PRESS_D2 = 100, PRESS_GATHER_D2 = 20;
+    /** KING_PRESS also chases the kings' shared enemy-king slot (Comms.EKING: sightings a king heard squeaked, and enemy
+     *  kings a king sees itself), so a sighting reaches every rat, not only those within PRESS_HOPS squeaks. Rusher
+     *  kings sit 7-15 tiles from ours for hundreds of rounds (DefaultLarge, heart, uneasy_alliance, Excavation) and
+     *  were never bitten; the kings wrote the slot but no rat read it. */
+    public static final boolean PRESS_SHARED = false;
     /** Fighters target the nearest enemy rat with less health than theirs (it can be ratnapped). */
     public static final boolean POUNCE = true;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */

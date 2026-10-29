@@ -1237,6 +1237,23 @@ public class BotTest {
         reset(); install(); G.coop = false; G.me = me; Baby.role = Baby.FIGHT; G.round = 200; Baby.eKing = null;
         Baby.lastEKing = new MapLocation(5, 7); Baby.lastEKingRound = 199;
         check(!Baby.pressKing() && Baby.lastEKing == null, "king press: an empty sighting spot is forgotten");
+        // the kings' shared slot: what a king sees itself, read back by any rat while fresh
+        reset(); install(); G.coop = false; G.me = me; G.round = 300;
+        check(Baby.sharedEKing() == null, "king press: no shared sighting");
+        RobotInfo ek2 = new RobotInfo(71, G.them, UnitType.RAT_KING, 600, new MapLocation(20, 9), Direction.SOUTH, 0, 0, null);
+        RobotInfo er = new RobotInfo(72, G.them, UnitType.BABY_RAT, 100, new MapLocation(6, 6), Direction.SOUTH, 0, 0, null);
+        type = UnitType.RAT_KING;   // only kings write the shared array
+        King.noteEKing(new RobotInfo[]{er});
+        check(shared[Comms.EKING] == 0, "king press: a king seeing only rats writes no sighting");
+        King.noteEKing(new RobotInfo[]{er, ek2});
+        check(new MapLocation(20, 9).equals(Baby.sharedEKing()), "king press: a seen king is shared " + Baby.sharedEKing());
+        G.round = 300 + Cfg.PRESS_AGE;
+        check(new MapLocation(20, 9).equals(Baby.sharedEKing()), "king press: shared sighting PRESS_AGE old still counts");
+        G.round = 300 + Cfg.PRESS_AGE + 1;
+        check(Baby.sharedEKing() == null, "king press: a stale shared sighting is not chased");
+        G.round = 1023; King.noteEKing(new RobotInfo[]{ek2}); G.round = 1024 + 3;
+        check(new MapLocation(20, 9).equals(Baby.sharedEKing()), "king press: shared sighting across the 1024 wrap");
+        type = UnitType.BABY_RAT;
         Baby.eKing = null; Baby.lastEKing = null; Baby.lastEKingRound = -100;
     }
 

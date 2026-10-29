@@ -863,6 +863,7 @@ public final class Baby {
     static boolean pressKing() throws GameActionException {
         RobotController rc = G.rc;
         MapLocation ek = eKing != null ? eKing.location : G.round - lastEKingRound <= Cfg.PRESS_AGE ? lastEKing : null;
+        if (ek == null && Cfg.PRESS_SHARED) ek = sharedEKing();
         if (ek == null || rc.getHealth() < Cfg.PRESS_HP) return false;
         if (role == GATHER && rc.getRawCheese() >= Cfg.DELIVER_AT) return false;
         int d = G.me.distanceSquaredTo(ek);
@@ -881,6 +882,13 @@ public final class Baby {
         }
         Nav.goTo(ek);
         return true;
+    }
+
+    /** The kings' shared enemy-king sighting (Comms.EKING) when at most PRESS_AGE rounds old, else null. */
+    static MapLocation sharedEKing() {
+        int x = Comms.read(Comms.EKING);
+        if (x == 0 || !Comms.fresh(Comms.read(Comms.EKING + 2), Cfg.PRESS_AGE)) return null;
+        return new MapLocation(x - 1, Comms.read(Comms.EKING + 1) - 1);
     }
 
     /** Attacker movement: the visible enemy king, else the last place we saw it, else the nearest live mirror spot. */

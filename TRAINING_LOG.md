@@ -712,3 +712,28 @@
   bites it. s5g = s4d + WAR_STRIKE 1 is on the replica (block 1 from match 1629) and on the rush run vs abrk
   (rx_s5g). s5h = s4d + WAR_STRIKE 2 follows. Almost every field bot backstabs eventually (all but bc26vibe_bot), so
   war play matters in most panel games, and the sp screens never reach war.
+
+## 2026-10-29 01:05 PDT: how the rushers win, and the enemy-king slot no rat read
+- s5g's replica block was dropped once its rush run showed the cost. In the first 6 cells vs abrk our king died
+  every time; at 26 of 80 cells it is net -2 (t -1.20). s5e (s5c + KING_FLOW) took its replica slot (submission 77,
+  block from match 1633).
+- Field forensics on s3y's 144 panel games (replica replays, actions.tsv):
+  - Rat deaths are even against both rushers (abcdezyxwv 34.4 ours vs 34.3 theirs per game; AlexT101 33.7 vs
+    30.9). The games are lost at the king. Our king takes about 200 bite damage and 230 (abcdezyxwv) or 150
+    (AlexT101) thrown-rat damage, mostly from our own rats that they grabbed and threw. Their king is never bitten.
+  - The grab war: abcdezyxwv grabs 66.7 of our rats a game and we grab 44.1 of theirs. 69% of their grabs take a
+    rat with less hp than the grabber, and 52% come from outside the victim's cone. Most victims were facing an
+    enemy ('f', 16.9) or in war movement ('w', 15.8).
+  - Income: in rounds 100-400 their rats pick up 600-700 cheese a game on our half, close to our own 680-850. We
+    pick up almost nothing on theirs (0-114). Against peaceful bots they take 3-226 from our half.
+  - Rat traps: about 1.7 hp of damage per cheese for us and 1.95 for them. We place 40 a game against abcdezyxwv,
+    twice their count, and they keep a bank of about 1900 while ours drains.
+  - The kings sit 7-15 tiles apart (Chebyshev) for hundreds of rounds on DefaultLarge, heart, uneasy_alliance,
+    Excavation and knifefight. Both kings roam 5-18 tiles from their starts.
+  - All 126 of our bytecode overruns are a newborn's first turn (array allocation), 84 of them with no enemy near.
+- King-press reach: kings write squeaked enemy-king sightings into a shared slot (Comms.EKING), but no rat ever
+  read it. A sighting reached only the rats within PRESS_HOPS squeaks (d2 16 each).
+- PRESS_SHARED (off by default): KING_PRESS also chases a fresh shared sighting, and kings write the enemy kings
+  they see themselves. Unit tests cover it.
+- s5i = s4d + KING_PRESS with PRESS_D2 225, PRESS_AGE 16, PRESS_HOPS 3. s5j = s5i + PRESS_SHARED. Their rush runs
+  vs abrk follow sp18_s5c on the VM. rx_s4m (plain KING_PRESS) now runs right after rx_s5g.
