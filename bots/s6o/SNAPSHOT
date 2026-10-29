@@ -1,0 +1,5 @@
+name=s6o
+source=bots/ratbot
+source_sha=6bc55005504c
+commit=17858f4
+created=2026-10-29 05:12 PDT

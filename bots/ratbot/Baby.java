@@ -1392,11 +1392,14 @@ public final class Baby {
 
     static boolean scout;
 
-    /** Scout movement: the nearest never-seen tile of EXPLORE_TRIES samples on our half; false (no move) when no
-     *  sample is one. */
     /** The round scouting ends: SCOUT_UNTIL, or W*H/area on a map big enough to make that later (area 0: off). */
     static int scoutUntil(int area) { return area > 0 ? Math.max(Cfg.SCOUT_UNTIL, G.W * G.H / area) : Cfg.SCOUT_UNTIL; }
 
+    /** exploreHome's sample rank (lower wins) for a sample at Chebyshev distance d: Cfg.HOME_PICK 2 prefers far. */
+    static int homeRank(int pick, int d) { return pick == 2 ? -d : d; }
+
+    /** Scout movement: the never-seen tile of our half that Cfg.HOME_PICK takes from EXPLORE_TRIES samples; false
+     *  (no move) when no sample is one. */
     static boolean exploreHome() throws GameActionException {
         if (exploreTarget == null || G.cheb(G.me, exploreTarget) <= 2 || Nav.stall > 20 || Sym.known(G.idx(exploreTarget.x, exploreTarget.y))) {
             int x = -1, y = -1, bd = Integer.MAX_VALUE;
@@ -1404,8 +1407,9 @@ public final class Baby {
                 int ax = G.rand(G.W), ay = G.rand(G.H);
                 int cx = fu > 0 ? ax : G.W - 1 - ax, cy = fv > 0 ? ay : G.H - 1 - ay;
                 if (Sym.known(G.idx(cx, cy)) || !homeHalf(new MapLocation(cx, cy))) continue;
-                int d = Math.max(Math.abs(cx - G.me.x), Math.abs(cy - G.me.y));
+                int d = homeRank(Cfg.HOME_PICK, Math.max(Math.abs(cx - G.me.x), Math.abs(cy - G.me.y)));
                 if (d < bd) { bd = d; x = cx; y = cy; }
+                if (Cfg.HOME_PICK == 1) break;
             }
             if (x < 0) return false;
             exploreTarget = new MapLocation(x, y);

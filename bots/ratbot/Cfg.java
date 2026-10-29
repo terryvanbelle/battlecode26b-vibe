@@ -244,6 +244,10 @@ public final class Cfg {
     public static final int DIG_COST = 4;
     /** Random samples per explore target, taking the first never-seen tile. */
     public static final int EXPLORE_TRIES = 12, EXPLORE_CENTER_FROM = 0;
+    /** How a scout or seeker picks its next never-seen tile of our half from the EXPLORE_TRIES samples: 0 the nearest
+     *  to it, 1 the first (uniform over what is unseen), 2 the farthest. Nearest crawls outward from the king, and each
+     *  new scout crawls the same ground again (where_are_you: 5 of our half's 8 mines never seen in 1400 rounds). */
+    public static final int HOME_PICK = 0;
     /** A rat that finds the first mine walks it home to the king. */
     public static final boolean COURIER = true;
     /** Babies relay mine squeaks to each other while the team knows no mine. */

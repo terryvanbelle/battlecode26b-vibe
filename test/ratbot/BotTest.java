@@ -1529,7 +1529,13 @@ public class BotTest {
         check(Baby.scoutUntil(6) == Math.max(Cfg.SCOUT_UNTIL, 150), "scout area: a small map keeps SCOUT_UNTIL");
     }
 
+    static void testHomeRank() {
+        check(Baby.homeRank(0, 3) < Baby.homeRank(0, 9) && Baby.homeRank(1, 3) < Baby.homeRank(1, 9), "home pick 0/1: nearer ranks first");
+        check(Baby.homeRank(2, 9) < Baby.homeRank(2, 3), "home pick 2: farther ranks first");
+    }
+
     public static void main(String[] args) throws Exception {
+        testHomeRank();
         testScoutUntil();
         testMineTraps();
         testTrapRisk();

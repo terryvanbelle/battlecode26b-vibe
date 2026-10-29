@@ -1,0 +1,5 @@
+name=s6n
+source=bots/ratbot
+source_sha=cd86f15c4f1e
+commit=17858f4
+created=2026-10-29 05:12 PDT
