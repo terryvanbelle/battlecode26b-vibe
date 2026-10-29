@@ -1722,3 +1722,13 @@
   and keeping a spawn reserve (s8k). s8k goes to the replica after s8j, then s7w. MINE_MIRROR (off in s7d)
   would let s8j's raiders list the home twin of each enemy mine they see.
 - s8i's screen: ra_s8i vs ra_s6y, 80 cells, D 58, -6.2 pts, t -1.11, net -2: a weak pass, parked behind s8j.
+
+## 2026-10-29 13:39 PDT: s8j rejected after block 2; s8k on the replica
+- s8j (raiders) on v3 sets 1+2 against s7d's reference: 84 cells, 71 alike, D 13 (+7 -6), net +1, t +0.28.
+  Block 2 rejects at t <= 1. Block 2 on its own netted -1: it gained CS50Crab wallsofparadis B and spsquared
+  thunderdome B, and lost AdamTan12 attack_on_cat (both sides) and abcdezyxwv ultimatestarvation B. Block 1's
+  AlexT101 gain was cat damage to their king, not raiding (13:01).
+- Raiding as built does not shift posture against the top three. s8m (s8j + MINE_MIRROR) is parked unless the
+  mm1 check shows the mirrored mine list feeding our home economy.
+- s8k (s7u + RAT_TRAP_MIN_CHEESE 600) is submission #89, set-1 block from 2384. Behind it: s8l (s8k +
+  MINE_EXPLORE 2), then s7w alone if s8l's block points that way.
