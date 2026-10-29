@@ -1006,3 +1006,60 @@
 - The four mines still unseen are gated: (39,9), (38,20) and (9,29) sit behind 5-tile dirt bands, and (51,4) is
   at the far end of the bottom corridor (about 46 tiles from the king).
 - ra_s6m and ra_s6o are at the head of the VM queue. s6n is not screened.
+
+## 2026-10-29 06:17 PDT: unseen mines, fruitless chases, KING_PLUG, FLOW_PROGRESS, the economy gap
+- Home mines never seen (replica replays, 53 maps): by r300, 69 of 193 home-half mines (36%) were never in any
+  of our rats' sight. They spawned 74k of the 187k cheese on our half (39%). Most are gated by dirt or walls:
+  - heart: the king sits in a walled heart whose exits are all dirt.
+  - popthecork: 4 mines inside a walled bottle; the only way in is a 3-tile dirt cork.
+  - TheHeist: a vault reached only by a gap at x 51-59.
+  - seepastyourgreed: a wall row at y=5 that opens only at x 0-4.
+- Fruitless chases: runs of 40+ rounds decoded C or M with no pickup take 12.3% of all our baby turns.
+  seepastyourgreed 89%, rose 75%, TheHeist 46%, diamond 46%, cheesebottles 36%, fullofsecrets 32%.
+- Grabs and throws vs the top bots:
+  - abcdezyxwv makes 73.8 grabs a game to our 52.6. 54% of its throws hit our robots (5.4 king hits and 24 rat
+    hits a game); 21% of ours hit theirs.
+  - They throw our own rats into our king: 226 king damage a game from abcdezyxwv, 144 from AlexT101.
+  - s6p (THROW_FAR_PCT 80) and s6q (THROW_MIN 60, THROW_HOLD 8) are queued.
+- KING_PLUG (s6r):
+  - The trigger was rose vs spsquared (1796): our king stood at (13,1) for 1937 rounds, and its 3x3 was the only
+    exit from the pocket it spawned in. 20 babies were trapped behind it.
+  - King.ringArcs counts the open arcs of the 16 tiles around the 3x3 (walls, dirt and the edge close a tile).
+    The king never steps where that ring splits into 2+ arcs, unless where it stands is as bad, and it steps out
+    of such a spot when it can.
+  - Rose diag vs araid: s6r lost both sides (r1060 and r1125; its king starved). s4d won one side on points and
+    lost the other at r1985.
+  - Once the pocket is open, its rats meet the returning carriers head-on in the 1-wide exit corridor. In
+    r200-600 that was 3635 corridor rat-turns (s4d: 334) and 2180 'd' turns, with pickups near 0.
+  - spsquared's mirrored king roams (41-46, 1-3), its rats flow through the same corridor (1786 corridor turns,
+    mixed traffic), and it picks 382 piles to our 199.
+  - Head-on jams (an outbound rat next to a carrier, neither moving for 10+ rounds) are 0.07% of our rat-turns
+    over replica matches 1700-1935, most of them on rose and fullofsecrets. A traffic system isn't worth building
+    yet. ra_s6r will decide KING_PLUG.
+- FLOW_PROGRESS (s6s):
+  - Nav's stall counted straight-line progress only. A detour that leads away from the target ended a cheese
+    chase at 13 turns, a mine errand at 25, and a raid or explore at 20, while the flow path was still being
+    walked. Turns held still for a flow search counted as stall too.
+  - On seepastyourgreed, gatherers in the bottom corridor see the mines through the wall above. Each errand held
+    3-11 turns for its search, walked part of the 45-tile detour, gave up, and the next errand searched again.
+  - Now a step along a flow path resets the stall, and a search hold doesn't add to it. In testFlowProgress
+    (a 40+ tile detour) the stall peaks at 3 with it and 78 without. ra_s6s is at the head of the queue, with
+    replays kept.
+- Why we lose to AlexT101 and abcdezyxwv (block 1943-1946, all 12 games lost):
+  - Kills trade evenly. By r150 vs abcdezyxwv, 123 of ours died to 135 of theirs; by r300 vs AlexT101, 187 to
+    189. We spend 3120 on traps to their 120 (vs abcdezyxwv).
+  - The gap is cheese:
+
+    | Map (r300) | They pick on their half | We pick on ours | They pick on ours |
+    |---|---|---|---|
+    | pipes | 2700-3140 | 1318-1740 | 500-600 |
+    | safelycontained | 3460 | 2320 | 1260 |
+    | sittingducks | 3120 | 1615 | 575 |
+
+  - Production on the two halves is identical (spawn events 162/159, 269/268, 171/171). We leave 900-1800 of our
+    half's cheese unpicked by r300; they leave 260-1900 of theirs.
+  - Our baby turns break down as M (to a mine) 29-39%, W (at the mine) 9-28%, d 11-19% and C 6-11%. We carry
+    24-31 cheese a transfer; they carry 33-41.
+  - The idle rule sends a gatherer home with only 10 cheese when no pile is in sight. Cfg.DELIVER_IDLE now names
+    that threshold. s6t = s4d + DELIVER_IDLE 30 + HUNGRY 50; s6u = s4d + DELIVER_AT/IDLE 50 + HUNGRY 100. Both
+    screens are queued behind ra_s6s.
