@@ -34,8 +34,17 @@ public final class Flow {
     static int block = Sym.WALL;
     /** Round the current path was completed, or -1. */
     static int builtRound = -1;
-    static int[] path;
+    static int[] path, buf;
     static int plen, ppos;
+    /** Completed paths kept for reuse (Cfg.FLOW_CACHE): a request toward a cached target from beside its path (or toward
+     *  its start, walked backwards) adopts the rest of it at once instead of searching. cround is the build round. */
+    static final int CK = 4;
+    static int[][] cpath = new int[CK][];
+    static int[] ctgt = new int[CK], cround = new int[CK];
+    static int cnext;
+    public static int hits;
+    /** Cfg.FLOW_CACHE (a field so tests can set it). */
+    static boolean cache = Cfg.FLOW_CACHE;
     static int[][] bucket;
     static int[] head = new int[NB], tail = new int[NB];
     static int curF, pending, held;
@@ -73,6 +82,7 @@ public final class Flow {
     /** Ask for a path toward t (no-op if one is ready or already being built toward t). */
     public static void request(MapLocation t) {
         if (tgt != null && G.cheb(tgt, t) <= 1 && (building || ready(t))) return;
+        if (cache && adopt(t)) return;
         if (failTgt != null && G.cheb(failTgt, t) <= 1 && G.round - failRound < Cfg.FLOW_RETRY) return;
         if (building) ends[5]++;
         else if (tgt != null && builtRound >= 0 && G.round - builtRound <= Cfg.FLOW_TTL) ends[4]++;
@@ -115,7 +125,7 @@ public final class Flow {
         if (bucket == null) {
             if (left() < NB * RING + 1024 + reserve) return;
             bucket = new int[NB][RING];
-            path = new int[1024];
+            path = buf = new int[1024];
             seed();
         }
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
@@ -131,7 +141,7 @@ public final class Flow {
             if (gu + Math.max(Math.abs(ux - X), Math.abs(uy - Y)) != curF) continue; // stale entry
             if (u == tIdx) {
                 // backtrack + reverse costs ~40 bc per tile and the path has at most gu + 1 tiles: wait a turn if short
-                if (left() < reserve + 40 * (gu + 2)) { head[b]--; pending++; return; }
+                if (left() < reserve + (cache ? 50 : 40) * (gu + 2)) { head[b]--; pending++; return; }
                 finish();
                 return;
             }
@@ -161,14 +171,25 @@ public final class Flow {
 
     static void finish() {
         int W = G.W, s = sIdx, v = tIdx, len = 0;
+        int[] p = buf;
         // walk parents back from the target, then reverse
-        while (v != s && len < path.length - 1) {
-            path[len++] = v;
+        while (v != s && len < p.length - 1) {
+            p[len++] = v;
             int k = par[v];
             v = v - ox[k] - oy[k] * W;
         }
-        path[len++] = s;
-        for (int i = 0, j = len - 1; i < j; i++, j--) { int t = path[i]; path[i] = path[j]; path[j] = t; }
+        p[len++] = s;
+        if (cache) {
+            // an exact-size copy, kept: buf is reused by the next search
+            int[] c = new int[len];
+            for (int i = 0, j = len - 1; j >= 0; i++, j--) c[i] = p[j];
+            p = c;
+            int k = 0;
+            while (k < CK && (cpath[k] == null || ctgt[k] != tIdx)) k++;
+            if (k == CK) { k = cnext; cnext = (cnext + 1) % CK; }
+            cpath[k] = c; ctgt[k] = tIdx; cround[k] = G.round;
+        } else for (int i = 0, j = len - 1; i < j; i++, j--) { int t = p[i]; p[i] = p[j]; p[j] = t; }
+        path = p;
         plen = len;
         ppos = 0;
         lastTgt = tgt;
@@ -180,6 +201,54 @@ public final class Flow {
     }
 
     static void drop() { builtRound = -1; tgt = null; }
+
+    /** Take a cached path toward t (or one that started beside t, walked backwards) that passes beside us: the path
+     *  becomes ready from its farthest tile beside us. False when none fits. */
+    static boolean adopt(MapLocation t) {
+        int W = G.W, mx = G.me.x, my = G.me.y, tx0 = t.x, ty0 = t.y;
+        for (int k = 0; k < CK; k++) {
+            int[] p = cpath[k];
+            if (p == null || G.round - cround[k] > Cfg.FLOW_CACHE_TTL) continue;
+            int n = p.length, c = ctgt[k], s = p[0], at = -1;
+            if (Math.max(Math.abs(c % W - tx0), Math.abs(c / W - ty0)) <= 1) {
+                for (int i = n - 1; i >= 0; i--) {
+                    int q = p[i];
+                    if (Math.abs(q % W - mx) <= 1 && Math.abs(q / W - my) <= 1) { at = i; break; }
+                }
+            } else if (Math.max(Math.abs(s % W - tx0), Math.abs(s / W - ty0)) <= 1) {
+                for (int i = 0; i < n; i++) {
+                    int q = p[i];
+                    if (Math.abs(q % W - mx) <= 1 && Math.abs(q / W - my) <= 1) { at = i; break; }
+                }
+                if (at < 0) continue;
+                int[] r = new int[n];
+                for (int i = 0, j = n - 1; j >= 0; i++, j--) r[i] = p[j];
+                p = r;
+                at = n - 1 - at;
+                c = s;
+            }
+            if (at < 0) continue;
+            tgt = new MapLocation(c % W, c / W);
+            tIdx = c;
+            block = (Cfg.KING_BLOCK || Cfg.KING_FLOW) && !Nav.atKing(tgt) ? Sym.WALL | Sym.KING : Sym.WALL;
+            if (building) { building = false; ends[5]++; }
+            path = p;
+            plen = n;
+            ppos = p[at] == G.idx(G.me) ? at : Math.max(0, at - 1);
+            held = 0;
+            builtRound = G.round;
+            lastTgt = tgt;
+            lastLen = n - at;
+            hits++;
+            return true;
+        }
+        return false;
+    }
+
+    /** Forget the cached copy of the current path (a wall was found on it). */
+    static void uncache() {
+        for (int k = 0; k < CK; k++) if (cpath[k] == path) cpath[k] = null;
+    }
 
     /** The way to t is known to be long: the last path toward t was longer than 2 * Chebyshev distance + 2 tiles, or
      *  the last failed search was toward t. */
@@ -231,7 +300,7 @@ public final class Flow {
         if (nxi >= plen) { ends[0]++; drop(); return false; }
         int nx = path[nxi];
         MapLocation n = new MapLocation(nx % G.W, nx / G.W);
-        if ((Sym.mem[nx] & block) != 0) { ends[2]++; drop(); return false; } // newly seen wall (or a king moved) on the path
+        if ((Sym.mem[nx] & block) != 0) { ends[2]++; if (cache) uncache(); drop(); return false; } // newly seen wall (or a king moved) on the path
         RobotController rc = G.rc;
         Direction d = G.me.directionTo(n);
         if ((Sym.mem[nx] & Sym.DIRT) != 0) {

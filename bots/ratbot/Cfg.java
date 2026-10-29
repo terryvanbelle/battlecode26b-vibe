@@ -246,6 +246,11 @@ public final class Cfg {
      *  gatherers in the bottom corridor see the mines through the wall above; each errand held 3-11 turns for its
      *  search, walked part of the 45-tile detour, gave up, and the next errand searched again (1840 pickups to 22240). */
     public static final boolean FLOW_PROGRESS = false;
+    /** Keep the last 4 completed flow paths: a request toward one's target (or its start) from beside it walks the rest at
+     *  once instead of searching. where_are_you: 16% of rat-turns stood still for searches (6 turns each), 57% of them
+     *  toward a target the rat had found a path to before; paths averaged 3.5 steps before they were dropped. */
+    public static final boolean FLOW_CACHE = false;
+    public static final int FLOW_CACHE_TTL = 600;
     /** Our kings' 3x3 bodies count as walls for flow paths and bug walks (not when the target is at a king).
      *  EscapeTheNight: A* routed babies through the king that stood between them and the room's exit; they waited behind
      *  it, dropped the path and searched again, 500+ rounds. */

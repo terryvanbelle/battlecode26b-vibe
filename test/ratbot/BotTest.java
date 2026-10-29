@@ -54,6 +54,7 @@ public class BotTest {
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0; Sym.listDone = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
+        Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE;
         Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false;
     }
 
@@ -470,6 +471,45 @@ public class BotTest {
         Nav.progress = Cfg.FLOW_PROGRESS;
         check(got[1] && worst[1] <= 12, "flow progress: the detour is walked with the stall at most 12 (" + got[1] + ", " + worst[1] + ")");
         check(worst[0] > 12, "flow progress: without it the stall passes 12 on the way (" + worst[0] + ")");
+    }
+
+    /** A wall at x 15 (gap at the top) between a rat and its target: a dropped path is adopted again from the cache
+     *  from beside it, walked backwards toward its start, forgotten when a wall turns up on it; off, a new search runs. */
+    static void testFlowCache() throws GameActionException {
+        for (int on = 0; on < 2; on++) {
+            reset(); W = 30; H = 20; install();
+            for (int y = 0; y < 16; y++) walls.add(new MapLocation(15, y));
+            for (MapLocation w : walls) Sym.record(w.x, w.y, true, false, false);
+            Flow.cache = on == 1;
+            MapLocation a = new MapLocation(5, 5), t = new MapLocation(25, 5);
+            me = a; G.startTurn();
+            Flow.request(t); Flow.work(0);
+            int b0 = Flow.builds, L = Flow.plen;
+            int[] p = new int[L];
+            for (int i = 0; i < L; i++) p[i] = Flow.path[i];
+            check(Flow.ready(t) && L > 20, "flow cache: the first search finds the detour (" + L + ")");
+            // dropped (held by a robot) a few tiles on; asked again from there
+            me = new MapLocation(p[6] % W, p[6] / W); G.startTurn();
+            Flow.drop(); Flow.request(t);
+            if (on == 0) { check(Flow.building && Flow.builds == b0 + 1, "flow cache: off, a dropped path means a new search"); continue; }
+            check(Flow.ready(t) && !Flow.building && Flow.builds == b0 && Flow.hits == 1 && Flow.path[Flow.ppos] == p[6] && Flow.plen == L,
+                  "flow cache: a dropped path is taken again from the rat's tile (" + Flow.hits + ", " + Flow.ppos + ")");
+            // near the target, heading back to the start: the path walked backwards
+            me = new MapLocation(p[L - 3] % W + 1, p[L - 3] / W); G.startTurn();
+            Flow.drop(); Flow.request(a);
+            boolean back = Flow.ready(a) && Flow.hits == 2 && Flow.path[Flow.plen - 1] == p[0] && Flow.builds == b0;
+            int nx = Flow.path[Flow.ppos + 1];
+            check(back && Math.abs(nx % W - me.x) <= 1 && Math.abs(nx / W - me.y) <= 1,
+                  "flow cache: toward the start, the path is walked backwards from beside us (" + back + ")");
+            // a new wall on the cached path: following it drops and forgets the path, the next request searches
+            me = new MapLocation(p[6] % W, p[6] / W); G.startTurn();
+            Flow.drop(); Flow.request(t);
+            int ahead = Flow.path[Flow.ppos + 1];
+            Sym.mem[ahead] |= Sym.WALL;
+            boolean f = Flow.follow(t);
+            Flow.request(t);
+            check(!f && Flow.building && Flow.builds == b0 + 1 && Flow.hits == 3, "flow cache: a wall on the path forgets it (" + f + ", " + Flow.hits + ")");
+        }
     }
 
     static void testKingBlock() {
@@ -1582,6 +1622,7 @@ public class BotTest {
 
     public static void main(String[] args) throws Exception {
         testFlowProgress();
+        testFlowCache();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

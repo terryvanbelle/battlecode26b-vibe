@@ -1,0 +1,5 @@
+name=s6v
+source=bots/ratbot
+source_sha=2f2b5508d6cc
+commit=a1a5b4b
+created=2026-10-29 06:36 PDT
