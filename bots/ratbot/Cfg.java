@@ -11,6 +11,11 @@ public final class Cfg {
     public static final int SPAWN_FLOOR = 300;
     /** With fewer than LOW_BABIES babies every floor drops to LOW_FLOOR: a king without rats has no income. */
     public static final int LOW_BABIES = 8, LOW_FLOOR = 100;
+    /** At war with enemies in the king's sight every spawn floor drops to SIEGE_FLOOR (0 = off): a king killed holding
+     *  its upkeep reserve wasted it. 2094 DefaultSmall vs AdamTan12: from r60 our bank sat at 308 then 148-108 (the
+     *  300 floor, 8 babies) while theirs went 802 -> 12 into spawns; at r100 their 9 rats round our king met our 8,
+     *  and it died at r117 holding 102. */
+    public static final int SIEGE_FLOOR = 0;
     /** The spawn floors, the rest-of-game upkeep reserve and the rat-trap minimums scale with our live kings (each
      *  king eats 2 a round): s5r on cheesebottles (1800) formed a second king, spawned to its 30-baby cap down to
      *  the one-king floor, and both kings starved from r650. */

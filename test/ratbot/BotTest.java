@@ -1506,6 +1506,9 @@ public class BotTest {
         int need = 50 + Cfg.SPAWN_FLOOR + 20;
         check(King.starves(50, need - 1, 30) && !King.starves(50, need, 30), "trap/spawn: a trap waits below the next spawn + floor");
         check(!King.starves(50, 0, 16) && King.starves(50, 0, 17), "trap/spawn: at the cap (count from the cost step) traps never wait");
+        check(King.spawnFloor(300, false, 0) == 300 && King.spawnFloor(300, true, 0) == Cfg.LOW_FLOOR, "spawn floor: off, and low babies");
+        check(King.spawnFloor(300, false, 20) == 20 && King.spawnFloor(300, true, 20) == Math.min(20, Cfg.LOW_FLOOR)
+              && King.spawnFloor(10, false, 20) == 10, "spawn floor: a siege floor caps every floor, never raises one");
     }
 
     static void testNearKing() {
