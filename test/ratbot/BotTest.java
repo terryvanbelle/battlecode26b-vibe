@@ -1177,6 +1177,13 @@ public class BotTest {
         King.faceSpawn = Cfg.SYM_FACE;
     }
 
+    static void testMineExplore() {
+        int ex1 = 0, ex2 = 0;
+        for (int s = 0; s < 600; s++) { if (Baby.explorer(s, 1, 1)) ex1++; if (Baby.explorer(s, 2, 1)) ex2++; }
+        check(ex1 == 300 && ex2 == 200, "mine explore: half the gatherers explore with one mine known, a third with two");
+        check(Baby.explorer(7, 0, 1) && !Baby.explorer(3, 4, 1) && Baby.explorer(4, 4, 1) && Baby.explorer(4, 3, 2) && !Baby.explorer(5, 3, 2), "mine explore: no mine known -> explore; slot past m explores");
+    }
+
     static void testSwapPast() throws GameActionException {
         // a wall band y 6..8 with a 1-wide gap at x = 5 and an ally standing in the gap, facing us
         reset(); install();
@@ -1880,6 +1887,7 @@ public class BotTest {
         testPickBit();
         testSpawnFace();
         testSwapPast();
+        testMineExplore();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

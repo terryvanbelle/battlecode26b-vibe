@@ -949,6 +949,8 @@ public final class Baby {
             return;
         }
         if (role == GATHER && G.round < seekUntil && seek()) { why = 'x'; return; }
+        if (Cfg.MINE_EXPLORE > 0 && role == GATHER && G.round < Cfg.MINE_EXPLORE_UNTIL
+                && explorer(slot, homeMineCount(), Cfg.MINE_EXPLORE) && exploreHome()) { mineTarget = null; why = 'x'; return; }
         if (role == GATHER || role == FIGHT && Cfg.FIGHT_MINE) {
             if (Cfg.MINE_BALANCE && mineTarget != null && Comms.numMines != minesAtPick) mineTarget = null;
             if (Cfg.MINE_ANY_COOP && !G.coop && mineTarget != null && !homeHalf(mineTarget)) mineTarget = null;
@@ -1354,6 +1356,21 @@ public final class Baby {
         minesAtPick = Comms.numMines;
         if (Cfg.MINE_BALANCE) return cand[slot % m];
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
+    }
+
+    /** Cfg.MINE_EXPLORE: the rat with hash `slot` explores while it knows m mines on our half (extra exploring slots). */
+    static boolean explorer(int slot, int m, int extra) {
+        return slot % (m + extra) >= m;
+    }
+
+    /** Distinct mines on our half that we know (the king's list and our own). */
+    static int homeMineCount() {
+        int n = 0;
+        for (int i = 0; i < Comms.numMines && n < cand.length; i++) n = addCand(Comms.mines[i], n);
+        for (int i = 0; i < myMineCount && n < cand.length; i++) n = addCand(new MapLocation(myMines[i] / 64, myMines[i] % 64), n);
+        int ours = 0;
+        for (int i = 0; i < n; i++) if (homeHalf(cand[i])) ours++;
+        return ours;
     }
 
     /** A per-rat hash (the scout pick, Cfg.MINE_BALANCE), and the team's known-mine count when mineTarget was picked. */

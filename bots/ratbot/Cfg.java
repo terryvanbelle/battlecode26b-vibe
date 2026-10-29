@@ -323,6 +323,12 @@ public final class Cfg {
      *  (60x60) the king knew 3 of our half's 8 mines until r850, and five mines 25-50 tiles out dropped 5900 cheese
      *  by r300 that nobody picked. */
     public static final int SCOUT_AREA = 0;
+    /** Mine exploring (0 = off): until round MINE_EXPLORE_UNTIL, a gatherer that knows m mines on our half takes
+     *  slot % (m + MINE_EXPLORE) and explores never-seen tiles of our half when that is m or more (with 1: half the
+     *  gatherers while one mine is known, a third with two), else gathers as before. Replica s6m/s7d games (56 matches): our rats first saw the 2nd nearest home mine at r60 (median;
+     *  the field's at r33), the 3rd at r147 (r71) and the 4th at r329 (r103); the field picked 2x our pickups on its
+     *  own half by r300. */
+    public static final int MINE_EXPLORE = 0, MINE_EXPLORE_UNTIL = 300;
     /** The per-rat hash behind the scout pick and MINE_BALANCE's mine comes from the mirror-invariant birth seed (round,
      *  unsigned offset from the king), not the robot id: mirrored rats got different ids, so different scout roles and
      *  mines, and the two sides of a symmetric game played differently (mirror_check's known asymmetry). */
