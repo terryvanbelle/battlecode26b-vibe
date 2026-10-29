@@ -28,8 +28,10 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     footprint rule, starvation booked only when the bank is surely below 2 (else the hp goes to the biter as boosted
     bite), summary mode exits 1 on a parse failure, meta `file` absolute. Known gap: a king that starves on the turn
     it forms is not booked (never seen).
-  - Stuck-baby scan (2026-10-29, not yet a tool): a tagged baby whose code is travel (d, M, C) inside a 3x3 box for
-    30+ rounds. `arena.py game A B MAP --keep --tsv --out DIR` keeps indicator strings (fl=builds:done:turns:steps).
+  - `tools/stuck_report.py SRC... [--team NAME] [--span 30]`: stuck babies from the tag: travel code (d, M, C) on
+    every turn inside a 3x3 box for 30+ rounds; lost rounds by code, longest episodes with the distance to the nearest
+    own king (2 = touching its body). s4d baseline on runs/diag_stuck1 (5 maps vs s2o): 105 episodes, 7295 rounds.
+    `arena.py game A B MAP --keep --tsv --out DIR` keeps indicator strings (fl=builds:done:turns:steps).
 - Progress (laid out like battlecode23-vibe's `progress/`): `tools/progress-refresh.sh` pulls VM `runs/*/results.jsonl` and replica matches into `progress/games.csv`, then writes ELO.md + elo.png + ratings.csv (Bradley-Terry, `tools/elo.py`: local games count their points share, our-vs-field games carry a per-map handicap so builds gauntleted on different maps compare), ladder.md/png and rating-history.md/png (replica, `tools/replica_report.py`), progress.png (bc23 layout: our builds' rating +- 95% and expected field score in date order, adopted builds filled) and metrics.png (raw gauntlet metrics from `research/progress.tsv`) (`tools/plot_progress.py`) and ATTEMPTS.md (`tools/attempts.py render` from the hand-kept `progress/attempts.csv`; `attempts.py init` adds new snapshots, `attempts.py set NAME outcome=...` records verdicts). Run it after each gauntlet and commit progress/.
 - VM: `source tools/vm.sh && ensure_vm && vm_sync`. All volume games run on battlecode-dev.
   - Local games use `BC_SLOTS` up to 6.
