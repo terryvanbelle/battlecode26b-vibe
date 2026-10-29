@@ -324,6 +324,9 @@ public final class Cfg {
     public static final boolean SYM_CENTRE = false;
     /** Candidate fans (a direction, then its neighbours) try the side G.hand names first, not always the left. */
     public static final boolean SYM_HAND = false;
+    /** The king turns to face each spawn tile before it builds: a newborn takes its king's facing, and the maps'
+     *  starting king facings are not mirrored (knifefight), so the first rats looked along unmirrored lines. */
+    public static final boolean SYM_FACE = false;
     /** Mine seeking (0 = off): a gatherer at its mine that sees SEEK_CROWD or more allied babies nearer that mine
      *  explores never-seen tiles of our half for SEEK_TTL rounds, at most once per SEEK_RETRY rounds, and reports what
      *  it finds (streetsofnewyork: two of our three mines sat behind 5-deep dirt bands, unseen all game, while

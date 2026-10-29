@@ -55,7 +55,7 @@ public class BotTest {
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
         Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE;
-        Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST;
+        Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST; King.faceSpawn = Cfg.SYM_FACE;
         Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false;
     }
 
@@ -1154,6 +1154,15 @@ public class BotTest {
         check(built.size() == 1, "spawn: a king with few babies spends its reserve on rats (" + built + ")");
     }
 
+    static void testSpawnFace() throws GameActionException {
+        reset(); install();
+        type = UnitType.RAT_KING; G.coop = true; G.round = 2; global = 2000; facing = Direction.SOUTH;
+        King.faceSpawn = true;
+        King.spawn(new RobotInfo[0], new RobotInfo[0]);
+        check(built.size() == 1 && facing == me.directionTo(built.get(0)), "spawn face: the king faces the spawn tile before it builds (" + built + " " + facing + ")");
+        King.faceSpawn = Cfg.SYM_FACE;
+    }
+
     static void testFlank() throws GameActionException {
         reset(); install();
         G.coop = false; Nav.avoid = 0;
@@ -1802,6 +1811,7 @@ public class BotTest {
         testTrapRiskNear();
         testCarryAim();
         testPickBit();
+        testSpawnFace();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

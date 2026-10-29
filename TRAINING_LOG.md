@@ -1284,3 +1284,6 @@
   aren't mirrors of each other. The engine gives a newborn its king's direction (and chirality), so the first
   rats look along unmirrored lines. By r2 one side's rat had ruled out a symmetry (sym=5) and its twin hadn't
   (sym=7).
+- SYM_FACE (off by default): the king turns to face each spawn tile before it builds, so the newborn looks
+  outward along a line its twin mirrors. s7i = s7g + SYM_FACE takes ra_s7g's place in the queue (ra_s7g hadn't
+  started). Mirror self-play ms3 covers knifefight, cheesefarm, sunandmoon and Hike.

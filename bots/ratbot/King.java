@@ -281,6 +281,8 @@ public final class King {
                 if (s > bs) { bs = s; best = l; }
             }
         if (best != null) {
+            // a newborn takes its king's facing: face the spawn tile, so it looks outward along a line its twin mirrors
+            if (faceSpawn) { Direction f = c.directionTo(best); if (rc.getDirection() != f && rc.canTurn(f)) rc.turn(f); }
             rc.buildRat(best);
             spawned++;
             spawnWhy = 'b';
@@ -291,6 +293,8 @@ public final class King {
     }
 
     public static int traps;
+    /** Cfg.SYM_FACE (a field, so tests can switch it). */
+    static boolean faceSpawn = Cfg.SYM_FACE;
 
     /** War defense: a rat trap on the reachable tile nearest an approaching enemy rat (50 damage + stun). */
     static void ratTrap(RobotInfo[] enemies) throws GameActionException {
