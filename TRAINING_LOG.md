@@ -1379,3 +1379,52 @@
   about 3 rats at mines at a time can't cover 5+ mines. Levers: more rats at mines, larger loads from far mines
   (s6t/s6u test longer trips), and spreading over every mine the team knows of (with symmetry, the enemy half's
   twins too).
+
+## 2026-10-29 09:15 PDT: how the top three kill our king; slow mine discovery; SIEGE_FLOOR, MINE_EXPLORE, SWAP_HEADON
+- s7k's corridor diag (sk1, vs araid, 9 maps): it won rose B on points (4590 delivered), both fullofsecrets games,
+  minimaze, krotus, EscapeTheNight (17155 delivered) and whereisthecheese. It lost rose A and Stash. On rose A,
+  two outbound rats bound for the same mine kept carrying each other back and forth. 9 of 20 babies were being
+  carried at r600 and r1200, and the king starved at r1875. SWAP_HEADON (off by default): a rat carries an ally
+  past it only when the ally is coming the other way (facing within 45 degrees of the opposite of our step).
+  s7r = S7D + SWAP_HOLD 2 + SWAP_HEADON, and s7s adds SWAP_YIELD. Diag sh1 is running.
+- Replica results, s6m and s7d blocks (168 games): 76 losses came from a king kill after their backstab, with 26
+  wins of that kind. Nearly all of those losses were against AdamTan12, AlexT101 and abcdezyxwv (18-22 lost of
+  21-24 each). Their median backstab is r20, and our king dies at a median r374.
+- warcmp.py (backstab +0/+40/+80/+120 rounds, means over the lost games):
+  - Rat deaths are even or in our favour (+40: 5/10, 8/9 and 6/10, ours/theirs). Spawns are within 3.
+  - Their bank holds 1000-1500. Ours is 950 at +40 and 400-800 by +120. The difference is traps: by +40 we have
+    laid 24-27 rat traps to their 10, 15 and 1, plus 5-10 cat traps to their 0-2.
+  - Over whole games against the three, they spawn 77 to our 53, pick up 6671 cheese to our 2514, deliver 4747 to
+    our 1788, and dig 70 dirt to our 22.
+- Two sieges:
+  - tiny (2094 g2, vs AdamTan12): we laid 37 rat traps in r20-40 (bank 1650 -> 395). From r44 we couldn't spawn
+    (bank 192-116 under the floors) while they spawned 14 more from 987. Their fresh wave reached our worn-down
+    rats at r52-56, and the king died at r74.
+  - DefaultSmall (2094 g0): we out-killed them in r55-100 (26 of theirs died to 16 of ours). But our bank sat at
+    308, then 148-108 (the 300 floor with 8 babies), so we spawned 9 to their 20 in r60-100. The king died at r117
+    holding 102.
+  - DefaultLarge (1982 g0, vs abcdezyxwv): at r190 we had 15 rats near our king (avg 45 hp) to their 8 (avg 74).
+    In r180-200 their throws killed 13 of ours (10 on landing), and the king fell 464 -> 178 by r200. The engine
+    lets a rat grab any enemy that can't see it or that has strictly less hp, so worn-down rats are ammunition.
+- SIEGE_FLOOR (off by default): at war, with enemies in the king's sight, every spawn floor drops to SIEGE_FLOOR.
+  - s7t = S7D + SIEGE_FLOOR 20.
+  - s7u = s7t + TRAP_SPAWN_FIRST. s7b is the same switch on S6Y; it passed on S5R.
+  - ra_s7t and ra_s7u are at the head of the screen queue. The queue was pruned of S4D-era screens
+    (s6h/i/k/q/r/t/u, and earlier s4m/s5i/s5s/s5u/s5v).
+- Mine discovery (minedisc.py, the same 56 replica matches): by mine rank, the first round any of our rats saw
+  each home-half mine against the field's first sight of its own.
+
+  | Home mine by distance | Our median first sight | Field's | Seen by r50, ours / field's |
+  |---|---|---|---|
+  | nearest | r20 | r14 | 121 / 120 of 160 |
+  | 2nd | r60 | r33 | 67 / 96 of 140 |
+  | 3rd | r147 | r71 | 31 / 53 of 114 |
+  | 4th | r329 | r103 | 21 / 28 of 76 |
+  | 6th | never (median) | r209 | 4 / 10 of 32 |
+
+  By r300 the three top bots make about 2x our pickups on their own half (80-212 against our 52-136 on ours),
+  and they take another 0-68 on our half.
+- MINE_EXPLORE (off by default): until r300, a gatherer that knows m home-half mines explores never-seen home tiles
+  when its slot % (m + k) is m or more. With k = 1 that is half the gatherers while one mine is known and a third
+  with two. s7v (k = 1) and s7w (k = 2) are in diag eco3 against s7d, with replays kept for the same discovery
+  measure. md1 (an s7d mirror on the same maps) is the reference.
