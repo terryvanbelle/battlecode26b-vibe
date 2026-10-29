@@ -1575,3 +1575,18 @@
 - atrap2 = s7d + TRAP_CAP 25 + RAT_TRAP_MIN_CHEESE 40 + BABY_TRAP_DIST2 20: a trap layer as strong as the
   incumbent otherwise. tr2 on Nofreecheese, constrictinglattice, wallsofparadis and evileye (2 sides): s8e vs
   s7d, and s7d, s8f (RISK_IN_FIGHT), s8h (TRAP_CAP 25 + RISK_IN_FIGHT) each vs atrap2.
+
+## 2026-10-29 11:23 PDT: where s7d loses on the field: early king kills by the three top bots
+- s7d's 42 replica matches (126 games) by opponent: bc26vibe_bot 16-2, CS50Crab 13-5, outercloud 13-5,
+  spsquared 9-9, AdamTan12 6-12, AlexT101 3-15, abcdezyxwv 2-16. The panel weighs each opponent equally, so the
+  room is in the last three (cell 29.9, 17.9 and 11.1 of 100).
+- Those losses are king kills, and early ones: AlexT101 14 of 15 at mean r259, abcdezyxwv 16 of 16 at r340,
+  AdamTan12 11 of 12 at r872. The opponent backstabs first in 95 of 126 games (mean r81; r38 for AlexT101, r32
+  for abcdezyxwv); we never do. Rats at r100 are even (16-18 each), but by r250 we hold 11 to their 18, and
+  abcdezyxwv runs 42 at r500 to our 16.
+- On small maps the rush decides by r120: tiny (r49-218, 4 losses), knifefight (r67, r73), averyfineline (r90,
+  r112), DefaultSmall (r117). On tiny vs AlexT101 (2239 g2) we won the rat trade (19 kills to 12, kd 1.58), but
+  their 25 rats to our 20 went past ours and bit the king 45 times; it died at r49 with no starvation.
+- A raised baby cap was already tried (s5r, rejected on the replica: it spent the bank and both kings starved),
+  so the next lever is how the king is defended, not how many rats we hold. kingperim (our king's open
+  16-tile bite ring vs the damage it takes) and per-opponent combat and king-HP aggregates are running.
