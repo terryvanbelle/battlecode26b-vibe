@@ -1567,3 +1567,11 @@
   s7d won the same race at r347-360). At t -0.71 this reads as noise as much as harm.
 - s7h (s7d + CARRY_AIM v2, screen +4.4 pts, net +3) is replica submission #86. Its set-1 block starts at 2261.
   The trap candidates (s8e/s8h) wait on diag tr1.
+
+## 2026-10-29 11:05 PDT: atrap is too weak to test trap play; atrap2 and diag tr2
+- tp1 (s8c, s7d, s7q, s7i vs atrap on Nofreecheese, 2 sides x 2 seeds): all 16 games won by king kill, 74-77
+  pts a game, so it cannot say which part of s8c starved on Nofreecheese against CS50Crab. tr1 (the trap
+  variants vs atrap) was stopped after 5 of 60 games for the same reason.
+- atrap2 = s7d + TRAP_CAP 25 + RAT_TRAP_MIN_CHEESE 40 + BABY_TRAP_DIST2 20: a trap layer as strong as the
+  incumbent otherwise. tr2 on Nofreecheese, constrictinglattice, wallsofparadis and evileye (2 sides): s8e vs
+  s7d, and s7d, s8f (RISK_IN_FIGHT), s8h (TRAP_CAP 25 + RISK_IN_FIGHT) each vs atrap2.
