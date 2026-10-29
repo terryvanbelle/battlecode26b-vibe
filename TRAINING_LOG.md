@@ -916,3 +916,45 @@
   nearly every one hit. Our king died to bites after our bank fell to about 100 by r70-80 (spawn replacements at
   60 apiece).
 - s5r (caps 30/40) is on the replica: v3 set 1, from match 1800.
+
+## 2026-10-29 04:38 PDT: where s3y's losses come from; trapped mines
+- Screens since 03:31:
+  - s5r (caps 30/40): rejected on the replica (v3 set 1, net -4, t -1.07). On cheesebottles it formed a second
+    king through s4d's income test and both kings starved; on superioristhmus its cheese transfer barely moved
+    (19-23k vs their 53-61k).
+  - ra_s5t (CHEESE_LOS): reject, -7.6 pts, t -1.75. ra_s5s (TRAP_SPAWN_FIRST): pass, +1.2, net +12.
+  - mt_s5w (MINE_TIES): strong pass on the four tie maps, +27.2 pts, t +2.84. On EscapeTheNight our pickups
+    at the axis mines rose from 778 to 2620. s5w is on the replica (v3 set 3).
+  - ra_s5x (formation v2) stopped at 35 of 80: -9.7 pts, t -1.92. On evileye (s5x and s6c vs araid, both
+    sides) all four games were lost to kings bitten to death, not to starvation. The second king formed at
+    r739/818 with the bank pinned near 300, because the surplus projection ignores spawn spending.
+- FLOOR_PER_KING (off by default): spawn floors, the upkeep reserve and the trap minimums scale with live kings.
+  s6e = s5x + FLOOR_PER_KING + FORM_CHEESE 1200 is on ra_s6e.
+- s3y's reference record by opponent (66 replica matches): AlexT101 2/18, abcdezyxwv 2/18, AdamTan12 4/18,
+  spsquared 9/18, CS50Crab 11/18, everyone else 12-18/18. 41 of the 56 lost games end with our king destroyed;
+  15 are lost on points.
+- Against AlexT101 the kills to r150 are even (our rats lost 428, theirs 419 over 18 games), and so is the spend
+  (spawns 25.0k vs 25.2k, traps 12.0k vs 9.1k). What differs is income. Pickup events to r300
+  (`halfpick.py`):
+  - They take nearly every pile on their own half (50-280 a game); we take 0-15 there.
+  - They also take 20-95 on ours, about 30% of it.
+  - Mines spawn paired piles, so both halves produce the same cheese. They get about 1.3 halves and we get
+    0.7, a 1.9x income gap. It shows as a bank of 100-300 for us at r150 against their 500-1000. Their army
+    then outlasts ours, and the king falls.
+- Engine facts behind traps (TrapType, GameWorld.triggerTrap):
+  - A rat trap costs 20, deals 50, and adds 30 movement cooldown (3 turns rooted; the victim can still act).
+  - It fires on an enemy entering any tile within dist2 2 and is used up.
+  - It never fires on its own team, and enemy traps can't be sensed.
+  - A fired rat trap starts a backstab by its owner, so traps go down only after cooperation.
+  - The team cap is 25 live traps, and a baby places only on an adjacent tile in its cone.
+  - Cheese spawns uniformly in the 9x9 square around a mine and is picked up from dist2 2.
+- MINE_TRAPS (off by default): a gatherer at its mine lays rat traps on the mine's MINE_TRAPS trap sites nearest
+  the enemy start.
+  - The sites are offsets 0/+-3 in each axis: eight 3x3 trigger blocks that tile the spawn square, ranked by
+    distance to the enemy start, with ties broken in side-frame order (a mirror unit test covers it).
+  - It runs only after cooperation, with 400 banked, and while we have fewer than MINE_TRAP_CAP (10) live traps.
+    The combat cap rises by 10 so these traps don't crowd out the ones laid in fights.
+  - s6f = s4d + 4 sites per mine; s6g = s4d + all 8.
+  - Sanity game s6g vs araid on DefaultMedium: 129 traps laid, 118 hit (4610 damage), rat kills 82-30. It still
+    lost at r553: a cat scratched one king and a throw finished the other.
+  - ra_s6g and ra_s6f are at the head of the VM queue.
