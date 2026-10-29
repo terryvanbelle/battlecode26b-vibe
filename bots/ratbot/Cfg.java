@@ -251,6 +251,14 @@ public final class Cfg {
      *  toward a target the rat had found a path to before; paths averaged 3.5 steps before they were dropped. */
     public static final boolean FLOW_CACHE = false;
     public static final int FLOW_CACHE_TTL = 600;
+    /** Flow search buckets as stacks: among tiles of equal f (g + Chebyshev) the deepest is expanded first. Chebyshev is
+     *  exact on open ground, so FIFO ties fan out over every tile of the optimal cost; the path cost is the same. */
+    public static final boolean FLOW_LIFO = false;
+    /** Reverse flow search (target to rat): the rat walks on (greedy/bug) while it runs instead of standing still, and the
+     *  path starts wherever the rat is when a tile beside it is reached. Hike: 35% of rat-turns stood still in
+     *  searches of ~10 turns (621 bytecodes a node, ~15 nodes a turn). Searches give up after FLOW_REV_TURNS. */
+    public static final boolean FLOW_REV = false;
+    public static final int FLOW_REV_TURNS = 25;
     /** Our kings' 3x3 bodies count as walls for flow paths and bug walks (not when the target is at a king).
      *  EscapeTheNight: A* routed babies through the king that stood between them and the room's exit; they waited behind
      *  it, dropped the path and searched again, 500+ rounds. */

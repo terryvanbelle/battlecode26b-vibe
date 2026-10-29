@@ -1082,3 +1082,46 @@
   control once it finishes.
 - The BT rating puts s6m at 1540 ± 65 (s3y 1561 ± 51). It has played only the panel block and the strongest
   opponents, and ratings never accept.
+
+## 2026-10-29 06:51 PDT: rats stand still for path searches (16-35% of their turns)
+- ra_s6m (s6m against araid on the 80-cell screen) came in at -7.3 points, t -1.59, net -4 against ra_s4d. That
+  was the build the replica just accepted, which is more evidence that the ra screen can only reject. ra_s6m is now
+  the control for S6M-based screens. ra_s6f is rejected (-5.4, t -1.15, net -3).
+- The M analysis on where_are_you (s6m vs araid, local replay with indicators):
+  - Re-picking mines is not where M time goes.
+  - 59 "wasteful" M trips (more than twice the distance) hold 36% of all M turns.
+  - The longest one is a three-rat convoy in a 1-wide corridor, head-on against a returning carrier. The flow
+    path holds 3 turns, drops, steps back, searches again and steps forward: 13 tiles in 194 rounds.
+- A new measure, stuck_report "idle in travel": a baby with a travel code that could move (mcd < 10) but stayed on
+  its tile. Replica matches 1850-1964 (99 of our games): 8.3% of all baby turns idle beside an ally, 2.6% alone.
+  The worst maps:
+  - rose 68%
+  - Hike 36%
+  - Stash 20%
+  - Nofreecheese 12%
+  - Most of the "beside an ally" turns (61%) are M rats within 3 tiles of our king, and 62% of them have nothing
+    in the tile ahead.
+- The indicators show what those turns are. Flow.request starts a multi-turn A* search, and Nav holds the rat
+  still until it finishes:
+  - where_are_you: 16.2% of rat-turns stand still in a search, 877 searches averaging 6 turns. Paths get 3.5 steps
+    before they are dropped (343 held by a robot, 293 replaced by a new target, 159 walls).
+  - Hike: 35.2% of rat-turns; 41% of all M turns and 50% of all E (explore) turns. 155 of 597 searches time out
+    after 12 turns.
+  - Bytecode probe (Debug.PROBE): 621 bytecodes per A* node, about 9,400 spare a turn, so about 15 nodes a turn.
+    The indicator string costs 235.
+  - Offline bench (test/ratbot/FlowBench, every map, king-to-mine trips, full terrain knowledge): about 530 tiles
+    reached per search, paths of about 40 tiles.
+- Three new switches, all off by default:
+  - FLOW_CACHE: keep the last 4 paths; a request beside one is taken at once, also walked backwards toward its
+    start. s6v = S6M + FLOW_CACHE.
+    - where_are_you holds went from 16.2% to 14.3%, and Hike from 35.2% to 26.8% (582 cache hits).
+    - The searches left are the long first-time ones.
+  - FLOW_REV: the search grows from the target back toward the rat. Every tile it reaches knows its way, so the
+    rat walks on (greedy/bug) instead of standing still. The path starts wherever the rat is when a tile beside
+    it is reached. On the bench it is node-for-node equal to the forward search, with the same path lengths.
+    s6w = S6M + FLOW_REV.
+  - FLOW_LIFO: buckets as stacks, deepest tile first among equal f, so fewer nodes (0-48% fewer on the bench)
+    for the same path cost. s6x = S6M + REV + LIFO + CACHE.
+- A side finding: piles of 100-355 cheese build up at unattended mines. A rat takes the whole pile (pickUpCheese
+  with no amount), and the cooldown penalty is 1% per cheese with no cap. Rats carrying 455-2375 cheese crawl home
+  for 50-130 rounds. Not addressed yet.

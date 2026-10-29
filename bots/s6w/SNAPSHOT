@@ -1,0 +1,5 @@
+name=s6w
+source=bots/ratbot
+source_sha=e72d4f9b477f
+commit=8eed7c3
+created=2026-10-29 06:50 PDT

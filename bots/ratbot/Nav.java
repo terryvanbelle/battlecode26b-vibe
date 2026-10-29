@@ -107,7 +107,8 @@ public final class Nav {
                 return !G.me.equals(was);
             }
             // hold while a search toward t runs: it starts from here, so moving would strand the path
-            if (Flow.searching(t)) { if (progress) stall = Math.min(stall, s0); return false; }
+            // (a reverse search grows from the target and takes the path from wherever we are: walk on)
+            if (Flow.searching(t) && !Flow.rev) { if (progress) stall = Math.min(stall, s0); return false; }
         }
         if (!Cfg.FLOW && !Cfg.DIG_FIRST && digToward(t)) return false;
         Direction d = choose(t);

@@ -45,6 +45,14 @@ public final class Flow {
     public static int hits;
     /** Cfg.FLOW_CACHE (a field so tests can set it). */
     static boolean cache = Cfg.FLOW_CACHE;
+    /** Cfg.FLOW_LIFO (a field so tests can set it): each bucket is a stack, so ties on f go to the newest (deepest)
+     *  tile first. */
+    static boolean lifo = Cfg.FLOW_LIFO;
+    /** Cfg.FLOW_REV (a field so tests can set it): the search grows from the target back toward the rat, so every tile
+     *  it reaches knows its way to the target; the rat keeps walking meanwhile and the path starts where it ends up. */
+    static boolean rev = Cfg.FLOW_REV;
+    /** The rat's tile when a reverse search began: the goal its heuristic aims at. */
+    static int sx0, sy0;
     static int[][] bucket;
     static int[] head = new int[NB], tail = new int[NB];
     static int curF, pending, held;
@@ -71,7 +79,7 @@ public final class Flow {
 
     /** True while a search toward t is running. */
     public static boolean searching(MapLocation t) {
-        if (building && G.round - startRound > Cfg.FLOW_MAX_TURNS) {
+        if (building && G.round - startRound > (rev ? Cfg.FLOW_REV_TURNS : Cfg.FLOW_MAX_TURNS)) {
             // too slow (little spare bytecode, or a huge open search): give up so the rat moves again
             building = false;
             fails++;
@@ -105,6 +113,17 @@ public final class Flow {
     }
 
     static void seed() {
+        if (rev) {
+            // the target is the root; the heuristic aims at where the rat stands now
+            sx0 = G.me.x; sy0 = G.me.y;
+            g[tIdx] = base;
+            curF = Math.max(Math.abs(tx - sx0), Math.abs(ty - sy0));
+            int b = curF & BMASK;
+            bucket[b][tail[b] & RMASK] = tIdx;
+            tail[b]++;
+            pending = 1;
+            return;
+        }
         int s = sIdx = G.idx(G.me);
         g[s] = base;
         curF = Math.max(Math.abs(G.me.x - tx), Math.abs(G.me.y - ty));
@@ -127,6 +146,7 @@ public final class Flow {
     }
 
     static void work0(int reserve) {
+        if (rev && g != null && bucket != null) { workRev(reserve); return; }
         int n = G.W * G.H;
         if (g == null) {
             if (left() < 2 * n + reserve) return;
@@ -140,21 +160,22 @@ public final class Flow {
             path = buf = new int[1024];
             seed();
         }
+        if (rev) { workRev(reserve); return; }
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
         int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = tx, Y = ty, blk = block;
         while (pending > 0) {
             if (left() < reserve) return;
-            int b = curF & BMASK;
+            int b = curF & BMASK, u;
             if (head[b] == tail[b]) { curF++; continue; }
-            int u = bucket[b][head[b] & RMASK];
-            head[b]++;
+            if (lifo) u = bucket[b][--tail[b] & RMASK];
+            else { u = bucket[b][head[b] & RMASK]; head[b]++; }
             pending--;
             if (Debug.PROBE) pops++;
             int ux = u % W, uy = u / W, gu = gg[u] - bs;
             if (gu + Math.max(Math.abs(ux - X), Math.abs(uy - Y)) != curF) continue; // stale entry
             if (u == tIdx) {
                 // backtrack + reverse costs ~40 bc per tile and the path has at most gu + 1 tiles: wait a turn if short
-                if (left() < reserve + (cache ? 50 : 40) * (gu + 2)) { head[b]--; pending++; return; }
+                if (left() < reserve + (cache ? 50 : 40) * (gu + 2)) { if (lifo) tail[b]++; else head[b]--; pending++; return; }
                 finish();
                 return;
             }
@@ -182,6 +203,91 @@ public final class Flow {
         failRound = G.round;
     }
 
+    /** The reverse search: pops in f order (g from the target + Chebyshev to where the rat stood at the start) until a
+     *  tile beside the rat's current tile comes up; the cost of a step is that of the tile entered (the popped one). */
+    static void workRev(int reserve) {
+        int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
+        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = sx0, Y = sy0, blk = block, mx = G.me.x, my = G.me.y;
+        while (pending > 0) {
+            if (left() < reserve) return;
+            int b = curF & BMASK, u;
+            if (head[b] == tail[b]) { curF++; continue; }
+            if (lifo) u = bucket[b][--tail[b] & RMASK];
+            else { u = bucket[b][head[b] & RMASK]; head[b]++; }
+            pending--;
+            if (Debug.PROBE) pops++;
+            int ux = u % W, uy = u / W, gu = gg[u] - bs;
+            if (gu + Math.max(Math.abs(ux - X), Math.abs(uy - Y)) != curF) continue; // stale entry
+            if (Math.abs(ux - mx) <= 1 && Math.abs(uy - my) <= 1) {
+                // the path walks parents from here to the target: ~40 bc per tile
+                if (left() < reserve + (cache ? 50 : 40) * (gu + 3)) {
+                    if (lifo) tail[b]++; else head[b]--;
+                    pending++;
+                    return;
+                }
+                finishRev(u);
+                return;
+            }
+            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : 1);
+            for (int k = 0; k < 8; k++) {
+                int vx = ux + OX[k], vy = uy + OY[k];
+                if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
+                int v = vx + vy * W;
+                if ((mem[v] & blk) != 0) continue;
+                int gv = gg[v];
+                if (gv >= bs && gv - bs <= ng) continue;
+                gg[v] = bs + ng;
+                pp[v] = k;
+                int f = ng + Math.max(Math.abs(vx - X), Math.abs(vy - Y));
+                int fb = f & BMASK;
+                bucket[fb][tail[fb] & RMASK] = v;
+                tail[fb]++;
+                pending++;
+            }
+        }
+        // the rat is unreachable from the target over what we know
+        building = false;
+        fails++;
+        failTgt = tgt;
+        failRound = G.round;
+    }
+
+    /** Path from the rat's tile through u and its parents to the target (reverse search). */
+    static void finishRev(int u) {
+        int W = G.W, me = G.idx(G.me), v = u, len = 0, T = tIdx;
+        int[] p = buf;
+        if (u != me) p[len++] = me;
+        while (v != T && len < p.length - 1) {
+            p[len++] = v;
+            int k = par[v];
+            v = v - ox[k] - oy[k] * W;
+        }
+        p[len++] = T;
+        if (cache) {
+            int[] c = new int[len];
+            for (int i = 0; i < len; i++) c[i] = p[i];
+            p = c;
+            store(c);
+        }
+        path = p;
+        plen = len;
+        ppos = 0;
+        lastTgt = tgt;
+        lastLen = len;
+        building = false;
+        builtRound = G.round;
+        done++;
+        lastTurns = G.round - startRound;
+    }
+
+    /** Keep a completed path in the cache (the slot holding the same target, else the oldest). */
+    static void store(int[] c) {
+        int k = 0;
+        while (k < CK && (cpath[k] == null || ctgt[k] != tIdx)) k++;
+        if (k == CK) { k = cnext; cnext = (cnext + 1) % CK; }
+        cpath[k] = c; ctgt[k] = tIdx; cround[k] = G.round;
+    }
+
     static void finish() {
         int W = G.W, s = sIdx, v = tIdx, len = 0;
         int[] p = buf;
@@ -197,10 +303,7 @@ public final class Flow {
             int[] c = new int[len];
             for (int i = 0, j = len - 1; j >= 0; i++, j--) c[i] = p[j];
             p = c;
-            int k = 0;
-            while (k < CK && (cpath[k] == null || ctgt[k] != tIdx)) k++;
-            if (k == CK) { k = cnext; cnext = (cnext + 1) % CK; }
-            cpath[k] = c; ctgt[k] = tIdx; cround[k] = G.round;
+            store(c);
         } else for (int i = 0, j = len - 1; i < j; i++, j--) { int t = p[i]; p[i] = p[j]; p[j] = t; }
         path = p;
         plen = len;

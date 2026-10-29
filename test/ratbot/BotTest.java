@@ -55,6 +55,7 @@ public class BotTest {
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
         Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE;
+        Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO;
         Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false;
     }
 
@@ -510,6 +511,52 @@ public class BotTest {
             Flow.request(t);
             check(!f && Flow.building && Flow.builds == b0 + 1 && Flow.hits == 3, "flow cache: a wall on the path forgets it (" + f + ", " + Flow.hits + ")");
         }
+    }
+
+    /** A walk of adjacent free tiles from a to b (no walls), or why not. */
+    static String pathCheck(MapLocation a, MapLocation b) {
+        if (Flow.plen < 2 || Flow.path[0] != G.idx(a) || Flow.path[Flow.plen - 1] != G.idx(b)) return "ends";
+        for (int i = 0; i < Flow.plen; i++) {
+            int p = Flow.path[i];
+            if (walls.contains(new MapLocation(p % W, p / W))) return "wall at " + i;
+            if (i > 0) {
+                int q = Flow.path[i - 1];
+                if (Math.max(Math.abs(p % W - q % W), Math.abs(p / W - q / W)) != 1) return "gap at " + i;
+            }
+        }
+        return null;
+    }
+
+    /** The reverse search (FLOW_REV) finds a path as short as the forward one, from wherever the rat stands when it
+     *  completes; with LIFO buckets as well; a walled-in rat fails it. */
+    static void testFlowRev() throws GameActionException {
+        int[] len = new int[4];
+        for (int v = 0; v < 4; v++) {
+            reset(); W = 30; H = 20; install();
+            for (int y = 0; y < 16; y++) walls.add(new MapLocation(15, y));
+            for (MapLocation w : walls) Sym.record(w.x, w.y, true, false, false);
+            Flow.rev = v >= 1; Flow.lifo = v == 3;
+            MapLocation a = new MapLocation(5, 5), t = new MapLocation(25, 5);
+            me = a; G.startTurn();
+            Flow.request(t);
+            if (v == 2) { me = new MapLocation(9, 9); G.startTurn(); }   // walked on while the search ran
+            Flow.work(0);
+            String bad = Flow.ready(t) ? pathCheck(me, t) : "not ready";
+            len[v] = Flow.plen;
+            check(bad == null, "flow rev " + v + ": a clean path from the rat's tile to the target (" + bad + ")");
+        }
+        check(len[1] == len[0] && len[3] == len[0], "flow rev: as short as the forward search (" + len[0] + " " + len[1] + " " + len[3] + ")");
+        check(len[2] < len[0], "flow rev: the path starts where the rat walked to (" + len[2] + ")");
+        reset(); W = 20; H = 20; install();
+        for (int x = 3; x <= 7; x++) for (int y = 3; y <= 7; y++) if (x == 3 || x == 7 || y == 3 || y == 7) walls.add(new MapLocation(x, y));
+        for (MapLocation w : walls) Sym.record(w.x, w.y, true, false, false);
+        Flow.rev = true;
+        me = new MapLocation(5, 5); G.startTurn();
+        MapLocation t = new MapLocation(15, 15);
+        int f0 = Flow.fails;
+        Flow.request(t); Flow.work(0);
+        check(!Flow.ready(t) && !Flow.building && Flow.fails == f0 + 1 && Flow.searching(t) == false,
+              "flow rev: a walled-in rat is unreachable: the search fails");
     }
 
     static void testKingBlock() {
@@ -1623,6 +1670,7 @@ public class BotTest {
     public static void main(String[] args) throws Exception {
         testFlowProgress();
         testFlowCache();
+        testFlowRev();
         testRingArcs();
         testHomeRank();
         testScoutUntil();
