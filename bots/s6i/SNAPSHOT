@@ -1,0 +1,5 @@
+name=s6i
+source=bots/ratbot
+source_sha=b0d7bff2032c
+commit=872a2e0
+created=2026-10-29 04:46 PDT
