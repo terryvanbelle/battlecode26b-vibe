@@ -32,6 +32,7 @@ public final class King {
         sense();
         Debug.mark(43);
         readSqueaks();
+        if (Cfg.MINE_MIRROR) mirrorMines();
         publish();
         Debug.mark(44);
 
@@ -62,6 +63,27 @@ public final class King {
         publish();
         Comms.write(Comms.BUDGET, Math.max(0, Math.min(1023, Econ.surplus() / 4)));
         Econ.endTurn();
+    }
+
+    static int mirroredN = -1, mirroredMask;
+
+    /** Cfg.MINE_MIRROR: with one symmetry left, list each listed mine's twin when it lies on our half. Runs when the
+     *  list or the symmetry changed since the last run. */
+    static void mirrorMines() {
+        int s = Sym.mask;
+        if (Integer.bitCount(s) != 1 || Comms.numMines == mirroredN && s == mirroredMask) return;
+        mirrorInto(start, s);
+        mirroredN = Comms.numMines;
+        mirroredMask = s;
+    }
+
+    /** List the twin under symmetry s of every listed mine that is nearer home than home's own twin is. */
+    static void mirrorInto(MapLocation home, int s) {
+        MapLocation away = G.mirror(home, s);
+        for (int k = 0, n = Comms.numMines; k < n; k++) {
+            MapLocation t = G.mirror(Comms.mines[k], s);
+            if (t.distanceSquaredTo(home) < t.distanceSquaredTo(away)) Comms.addMine(t.x, t.y);
+        }
     }
 
     /** Round 1: our start and the enemy start are mirror images; a candidate that maps us onto ourselves is impossible. */

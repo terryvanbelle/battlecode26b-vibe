@@ -167,6 +167,10 @@ public final class Cfg {
      *  it finds (streetsofnewyork: two of our three mines sat behind 5-deep dirt bands, unseen all game, while
      *  17846 rat-rounds crowded the third). */
     public static final int SEEK_CROWD = 0, SEEK_TTL = 150, SEEK_RETRY = 200;
+    /** Once one symmetry is left the king lists the twin on our half of every listed mine (mines come in mirror pairs;
+     *  raiders see enemy-half mines whose twins on our half nobody found: DefaultLarge vs abcdezyxwv left 1140 cheese
+     *  on two such mines). */
+    public static final boolean MINE_MIRROR = false;
     public static final int DIG_MIN_CHEESE = 60;
     /** Live babies kept unconditionally (while CORE_FLOOR cheese remain) before the income test applies. */
     public static final int CORE_BABIES = 18, CORE_FLOOR = 300;

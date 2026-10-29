@@ -698,6 +698,22 @@ public class BotTest {
         check(!Baby.exploreHome() && Baby.exploreTarget == null, "scout: no target once our half is seen");
     }
 
+    static void testMineMirror() {
+        reset(); W = 30; H = 30; install();
+        MapLocation home = new MapLocation(3, 3);
+        Comms.numMines = 0;
+        Comms.addMine(25, 20);   // enemy half under ROT: twin (4, 9) is ours
+        Comms.addMine(6, 4);     // our half: its twin (23, 25) is theirs, not listed
+        King.mirrorInto(home, Sym.ROT);
+        check(Comms.numMines == 3 && Comms.hasMine(4, 9) && !Comms.hasMine(23, 25), "mine mirror: lists our-half twins only");
+        King.mirrorInto(home, Sym.ROT);
+        check(Comms.numMines == 3, "mine mirror: no duplicates");
+        Comms.numMines = 0; Comms.addMine(25, 20);
+        King.mirrorInto(home, Sym.VER);   // x -> 29 - x: twin (4, 20)
+        check(Comms.hasMine(4, 20), "mine mirror: follows the symmetry");
+        Comms.numMines = 0;
+    }
+
     static void testSeek() throws GameActionException {
         reset(); W = 30; H = 30; install();
         Sym.mask = Sym.HOR; Baby.home = new MapLocation(1, 5); Baby.fu = -1; Baby.fv = -1;
@@ -965,6 +981,7 @@ public class BotTest {
         testMineSpread();
         testScout();
         testSeek();
+        testMineMirror();
         testKingDig();
         testKingDodge();
         testBiteGuard();

@@ -77,18 +77,22 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (see TRAINING_LOG.md for the history)
-- Incumbent on the replica: s2o (submission #62). s3h (#63) was rejected on panel v2 (t 0.58). s3y (#64) = s3t
-  behaviour (s3h + MINE_BALANCE) + the bytecode tag; its panel v2 blocks (sets 1 and 2) are queued in
-  research/panel/queue.tsv and the drain loop sends them under the hourly limit. Score with
-  `contest.py paired research/panel/v2-ref-s2o.txt SET1_IDS SET2_IDS`, then re-submit s2o if s3y is rejected.
+- Incumbent on the replica: s2o (#62, re-submitted as #65 to play its panel v2 set-3 control, matches 1168-1183,
+  queued). s3y (#64 = s3t + MINE_BALANCE + the bytecode tag) scored t 1.83 on sets 1+2 vs s2o (94 cells, D 30, net
+  +10): block 3 on set 3 (`research/panel/v2-set3.json`) after the control. Then add the s2o set-3 ids as a line in
+  `research/panel/v2-ref-s2o.txt`, `contest.py submit bots/s3y`, queue its set-3 requests and score with
+  `contest.py paired research/panel/v2-ref-s2o.txt 898-913 914-917,976-987 SET3_IDS` (block 3 rejects at t <= 1.5).
+- Next replica candidate: s4b (s3z + CAT_DEFEND_R2 36; screen +2.6 vs s3z, attack_on_cat fixed). s3z = s3t +
+  FORM_KING behind the income gate FORM_NET100 -100 and FORM_JOIN 8.
 - Dev = s3h behaviour plus off-by-default switches: KING_DODGE + YIELD_KING, HUNGRY, CARRY_MAX, BITE_GUARD,
-  BITE_CARRIER, MINE_BALANCE, RICH_BABIES, FORM_KING (FORM_MAX). Debug.TAG is on (no behaviour change).
-- Field diagnosis: combat with the top 10 is even; the loss is collection (fixed locally by MINE_BALANCE: s3t picks
-  14-141% more cheese to r300) and kings. In 12 of 21 round-2000 losses the opponent had 2-5 kings to our 1; the
-  top bots form king 2 at r150-650. s3v (FORM_KING) forms kings but was neutral on self-play (-0.6) with king
-  deaths 9 vs 2: forming at FORM_CHEESE 300 likely starves poor maps. Next: a bank+income gate, then a tagged king
-  variant for the replica.
-- VM queue (serial, ~20 min each): sp8 s3w (MINE_BALANCE + RICH_BABIES 30 + FORM_KING) -> sp9 s3x (s3w +
-  FORM_MAX 4) -> sp4 s3n -> sp6 s3r -> sp3 s3m -> sp5 s3o/s3p/s3q. Controls: s3w vs sp7_s3t, s3x vs sp8_s3w, s3n/s3m
-  vs sp2_s3i, s3r/s3o/s3p/s3q vs sp2_s3h.
+  BITE_CARRIER, MINE_BALANCE, RICH_BABIES, FORM_KING (FORM_MAX, FORM_NET100, FORM_JOIN), CAT_DEFEND_R2, SEEK_CROWD
+  (mine seeking; decision code 'x'). Debug.TAG is on.
+- Field diagnosis (`tools/field_report.py --ids 898-917,976-987 --by opp`, s3y's 96 panel games): we beat the
+  peaceful bots 11-12 of 12; we lose to the early rushers (abcdezyxwv 1-11, AlexT101 2-10: backstab r35-50, our king
+  dead by ~r300-330); 27 of our 40 losses are king kills. In brawls they grab and throw about twice as often and
+  thrown rats hit our king; we spend the bank on rat traps and spawns early and then cannot reinforce (`K:sE`).
+  Mine coverage: 44 of 96 games leave a home-side mine untouched (streetsofnewyork: two mines behind dirt).
+- Local rusher archetype `bots/arush` (s4b + RUSH) for rush-defence tests: `runs/rx1_s4b` (s4b vs arush, 80 games).
+- VM queue (serial, ~20 min each): rx1_s4b (s4b vs arush) -> sp14_s4d (s4d = s4b + SEEK_CROWD 6, control
+  sp12_s4b). Screens score with `gauntlet.py selfplay RUN/results.jsonl --base s2o --control CTRL/results.jsonl`.
 - Against examplefuncsplayer (all 74 maps, both sides): v0d won 134-14.
