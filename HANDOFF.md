@@ -113,12 +113,17 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - Replica games are deterministic against most of the panel: t0f (s9s's twin, #111) replayed set 4
     (3610-3613, 3718-3727) 42 of 42 cells alike, 38 of 42 games identical in rounds. A candidate's differing cells
     are its own change's chaos plus its real effect, never seed luck; a twin on the same set adds nothing.
-  - Next to submit: u0e (@s9s + SENSE2_LEFT 6000 + IND_LEFT 1000) as a basics repair (TRAINING_ALGORITHM §1.11:
-    zero overruns on first turns on the largest map), which accepts at t >= 0 after block 2, if diag bh1 shows the
-    first-turn overruns gone. Its block 2 is set 2, re-anchored first by t0f there.
-  - In diags: u0c (BitFlow navigation, bf1: on averystrangespace it digs out and picks 11.7-13.8k to s9s's 5.0-7.3k,
-    but delivers no more: carriers hold 1-4.8k raw from r1500 and never reach the king, and side B starved two kings),
-    u0d (END_KING 1850, ek1), u0a (KING_CAT_BITE; kc1 8 of 16, grove 2-0), u0b (RUSH_STICK; st1 6 of 13).
+  - Set 2 is re-anchored by u0f (s9s + HAND_FLIP, #112): 3728-3741, 18 of 42 (s9s's set-2 draw 2115-2128 was 23 of
+    42: D 11, +3 -8, t -1.51). Score a candidate's set-2 block against 3728-3741.
+  - On the replica: u0e (#113, @s9s + SENSE2_LEFT 6000 + IND_LEFT 1000) as a basics repair (TRAINING_ALGORITHM
+    §1.11: zero overruns on first turns on the largest map; bh1: 0 overruns in 4 games vs s9s 1 in 2 of 4). Block 1 =
+    set 4 from 3742 (reference 3284-3297), block 2 = set 2 (reference 3728-3741). Reading of the repair rule: two
+    blocks without the block-1 reject, then accept at pooled t >= 0.
+  - Next after u0e: u0h (@s9s + HOME_ALL_SYM: a mine is on our half only when every live symmetry agrees; on Meow
+    s9s sent 1 in 5 gatherers to the enemy mine (14,18) while rotation was live), if diag hs1 looks sound. Also a
+    basics repair (map symmetry: no action on an unrefuted symmetry).
+  - In diags: u0d (END_KING 1850, ek1), u0g (END_KING + END_KING_CROWD, ek2), u0h (hs1). Done: u0a (kc1 8 of 16),
+    u0b (st1 8 of 16, dropped), u0c (BitFlow, bf1 5 of 16, parked).
   - Rejected: t0p (MINE_ANY + MINE_TIES) on set 4, net -2, t -1.00.
   - Rejected: t0i (FORM_MINE) on set 4, net -3, t -1.00; t0o (MINE_TIES) on set 4, net -1, t -1.00; t0g (RUSH_LIFE 150) on set 4, net -4, t -2.00; t0h (FORM_RING) on set 4, net -1, t -0.45 (evileye: two kings starved); t0c (KING_TRAPS) on set 4,
     net -1, t -0.45; s9z (BREAKOUT_TTL 150) on set 4, net 0; t0b (RISK_FRESH 2)

@@ -2747,3 +2747,29 @@
   evileye 0-2; the rest 1-1. st1 (u0b, RUSH_STICK) 4 of 8 so far.
 - My mistake: re-adding ra_t0r to screenq.txt while it ran started duplicate workers twice. I killed both
   duplicates and the original kept going. Rule: never put a running run back in screenq.txt.
+
+## 2026-10-30 10:36 PDT: set 2 re-anchored (u0f); diags in (u0b, u0c, u0e); Meow's enemy mine (u0h); u0e submitted
+
+- u0f (s9s with every G.hand tie flipped, #112) re-anchored set 2: 3728-3741, 18 of 42. Against s9s's own
+  accepting set-2 games 2115-2128 (23 of 42): 42 cells, 31 alike, D 11 (+3 -8), net -5, t -1.51. So a neutral
+  salt flips about a quarter of the cells, and s9s's set-2 draw was about 5 games lucky. Set 2's reference is now
+  u0f's block.
+- Diags against s9s on the set-4 maps (16 games, both sides): u0b (RUSH_STICK) 8 of 16, dropped. u0c (BitFlow)
+  5 of 16, parked: overruns on where_are_you and superioristhmus, two starvations. On averystrangespace it picks
+  twice s9s's cheese but transfers no more. bh1 (u0e, superioristhmus seeds 0-3): u0e 0 overruns in 4 games (max
+  16012), s9s 1 in 2 of 4. Results 2 of 4.
+- Field loss study, abcdezyxwv on Meow (3292 g0, lost r477). Our deliveries fell to 1.2-3.2 a round, theirs were
+  8-20. From r100 they work all 4 of their mines plus our (14,11), and from r200 our (23,2) as well. We work 2-3.
+  Their 50 rat traps had a mean life of 1.6 rounds (hit 98%): reactive traps on our rats' next tile.
+  - The cause on our side, found in a local s9s vs abrk game on Meow from the indicator strings (mt=, sym=). The map
+    is a flip, but rotation stays live until about r600. homeHalf() tests only the first live symmetry (rotation),
+    and under rotation the enemy mine (14,18) is nearer our king than its twin. So it counts as ours, and
+    MINE_BALANCE (slot mod 5) sent 1 in 5 gatherers there, where they died. Survivors crowd the two nearest mines:
+    5-8 waiting at each, for 2.26 cheese a round per mine.
+  - u0h = @s9s + HOME_ALL_SYM: a tile is on our half only when every live symmetry agrees, and MINE_BALANCE
+    re-picks when the mask changes. bccmp: only new members with the switch off. BotTest 445. Diag hs1 (u0h vs s9s,
+    8 maps including Meow, both sides) is running.
+- cheesebottles (3292 g1): we never saw our corner mine (2,2). Its cheese mostly lands on the mine tile itself (880
+  by r663), and abcdezyxwv took 840 off its twin. Not yet acted on.
+- Next: u0e (#113) as a basics repair on set 4 (3742 on). Reading of the repair rule (§1.11): a repair runs two
+  blocks (set 4, then the re-anchored set 2) without the block-1 reject, and accepts at pooled t >= 0.
