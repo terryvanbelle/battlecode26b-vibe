@@ -2129,3 +2129,20 @@
 - s9n = s9k + AMMO_AWAY: low-HP rats near our king step away from it rather than be thrown into it. On s7d as
   s8y it passed the screen at +4.8 pts, net +2. Screen ra_s9n is queued.
 - s9k's set-1 block after 6 of 14 matches: 18 cells, 13 alike, gained 2, lost 3, net -1.
+
+## 2026-10-29 22:19 PDT: s9k rejected after block 1; s9i to the replica; agrab
+- s9k (the symmetric harvest bundle) on v3 set 1 against s7d's reference: 42 cells, 34 alike, D 8 (+3 -5),
+  net -2, t -0.71. Block 1 rejects at t <= 0.
+  - Gained: AdamTan12 tiny A, CS50Crab dirtfulcat B, outercloudstudio seepastyourgreed B.
+  - Lost: AlexT101 popthecork B and uneasy_alliance A, CS50Crab Nofreecheese B and dirtfulcat A, bc26vibe_bot
+    wallsofparadis B.
+- hb2 so far, against s7d:
+  - s9k 10/20, delivered 4687 to 3823 (lost knifefight, cheesebottles and Stash on both sides).
+  - s9i 5/5, delivered 10187 to 4806 (rose A 4450 to 2295, where s9k delivered 830 to 1195).
+  - s9i is s9k without HOME_START, MINE_RR and the symmetry switches, so it goes next: submission #99, set-1
+    block from 2964. Its screen ra_s9i replaces ra_s9n.
+  - s9n is dropped (its base s9k is rejected); AMMO_AWAY goes on s9i if s9i holds.
+- agrab, a local archetype on s7d copying abcdezyxwv's observed play: RUSH + RUSH_BREAK + BREAK_ROUND 30,
+  baby caps 40/40, no rat traps, CARRY_AIM + THROW_MIN 84. ag1 (s7d and s9k against agrab, 10 small and medium
+  maps, both sides, replays kept) is on the VM. If it beats s7d the way abcdezyxwv does, it becomes the local
+  test for rush defence.
