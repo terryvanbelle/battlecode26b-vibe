@@ -114,7 +114,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - Rejected: t0g (RUSH_LIFE 150) on set 4, net -4, t -2.00; t0h (FORM_RING) on set 4, net -1, t -0.45 (evileye: two kings starved); t0c (KING_TRAPS) on set 4,
     net -1, t -0.45; s9z (BREAKOUT_TTL 150) on set 4, net 0; t0b (RISK_FRESH 2)
     at its screen, t -1.73. Dropped: t0d (t0c + BABY_RAT_TRAPS).
-  - Screens (runs/screenq.txt; ra_t0e, ra_t0g, ra_t0i running), then ra_t0j, t0n, t0l, t0m, t0o, t0p:
+  - Screens (runs/screenq.txt; ra_t0i, ra_t0o, ra_t0p running), then ra_t0j, ra_t0r, ra_t0n, ra_t0l, ra_t0m:
     - t0e = @s9s + RISK_ROWS (screen done: 80 cells, t -0.75, a weak pass).
     - t0i = @s9s + FORM_MINE (extra kings on home mines, no income test for mine sites; fm3 10 of 16 vs s9s).
       t0j = t0i + FORM_MAX 3. t0m = @s9s + FORM_MINE + FORM_RING + FORM_MAX 4 (fm4 9 of 16, delivers 11.9k to 14.8k).
@@ -124,6 +124,10 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     - t0o = @s9s + MINE_TIES (axis mines count as ours; diag mt2 on the 4 tie maps).
     - t0p = @s9s + MINE_ANY + MINE_TIES (gatherers over every known mine, either half; ma1 9 of 16).
     - t0q = @s9s + SYM_FLOW + SYM_CENTRE + SYM_HAND + SYM_FACE (side symmetry; s9s diverges at r2 on Stash; run sym1).
+    - t0r = t0q + SYM_TIE + FLOW_QUOTA 18 (t0q still split at r27 superioristhmus on a tied spawn tile and r38 Stash
+      on flow search depth; self-mirror run sym2, screen queued). Mirror checks: `tools/mirror_check.py F F` on a
+      self-play replay; knifefight splits at r4 on turn order (first to move bites), which no bot change removes.
+    - t0s = @s9s + DELIVER_AT 50 (longer gather trips; diag dl1 on ma1's maps).
   - t0f = twin of s9s from current code, for re-anchoring sets 2/3/1.
 - Owner rules: assume every map is symmetric in all aspects (PROMPTS.md #14); refresh and commit progress/ after
   every acceptance and every scored replica block (#16).
