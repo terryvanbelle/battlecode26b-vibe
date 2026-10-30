@@ -150,6 +150,11 @@ public final class Cfg {
      *  and kingless), the ring beside the king only without one. ZeroDay (ek1, u0d side B): the ring site (34,2) lay
      *  between the king's body and the map edge; 25 babies queued for it from r1850 (stall up to 48) and none formed. */
     public static final boolean END_KING_MINE = false;
+    /** END_KING names FORM_MINE's mine site first (mineSite: the babies' listed mines, no king sight needed; a mine
+     *  whose formation failed is banned). u0i's END_KING_MINE was inert: pickFormSite's clear3 wants tiles the king
+     *  has seen, and on ZeroDay B the king sat in its start pocket (x 32-39, y 0-6) with three home mines out of view,
+     *  so the ring site (37,1) won again, its only entrance plugged by the king's own body. */
+    public static final boolean END_KING_MSITE = false;
     /** Gatherers at their mine turn in place instead of wandering. */
     public static final boolean GATHER_STILL = false;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines

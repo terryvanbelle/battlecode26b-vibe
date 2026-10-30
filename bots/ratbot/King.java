@@ -740,7 +740,7 @@ public final class King {
         if (formSite != null) {
             boolean formed = Cfg.FORM_GAP > 0 && Comms.numKings > formKings;
             if (formed || G.round - formStart > Cfg.FORM_TTL) {
-                if (Cfg.FORM_MINE && Comms.numKings <= formKings) ban(formSite);
+                if ((Cfg.FORM_MINE || Cfg.END_KING_MSITE) && Comms.numKings <= formKings) ban(formSite);
                 formSite = null;
                 Comms.write(Comms.FORM_T, 0);
                 if (formed) formStart = G.round + Cfg.FORM_GAP - Cfg.FORM_TTL - Cfg.FORM_RETRY;
@@ -755,7 +755,8 @@ public final class King {
             if (Cfg.END_KING_CROWD && Clock.getBytecodesLeft() < Cfg.END_KING_LEFT) return;
             int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
             // END_KING_MINE: a home mine first (its 5x5 is wall-free and its gatherers already wait there)
-            formSite = Cfg.END_KING_MINE ? pickFormSite(G.me) : null;
+            // END_KING_MSITE: FORM_MINE's site from the babies' mine list (pickFormSite wants tiles the king has seen)
+            formSite = Cfg.END_KING_MSITE ? mineSite(G.me, G.mirror(start, s)) : Cfg.END_KING_MINE ? pickFormSite(G.me) : null;
             if (formSite == null) formSite = Cfg.END_KING_CROWD ? crowdSite(G.me, G.mirror(start, s)) : ringSite(G.me, G.mirror(start, s));
             if (formSite == null) formSite = pickFormSite(G.me);
             if (formSite == null) return;
