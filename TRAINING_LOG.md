@@ -2170,3 +2170,19 @@
   - This is the same pattern abcdezyxwv showed on the replica (2074 knifefight: 56 grabs, 38 of 43 throws
     hitting our robots).
 - ra_s9k finished after the replica verdict: +0.8 pts, net -1 (pass).
+
+## 2026-10-29 23:12 PDT: s9i rejected after block 1; s9r (the grab-rush archetype) to the replica
+- s9i on v3 set 1 against s7d's reference: 42 cells, 31 alike, D 11 (+3 -8), net -5, t -1.51. Block 1 rejects
+  at t <= 0.
+  - Lost AlexT101 popthecork A/B and uneasy_alliance A, CS50Crab Nofreecheese A/B, abcdezyxwv sunandmoon A,
+    bc26vibe_bot wallsofparadis B and outercloudstudio heart A.
+  - hb2 had it 14/20 against s7d. Self-play against the incumbent did not predict the field again; s9b (hb2
+    10/20, replica net 0) and s9k (10/20, net -2) agree with that.
+  - The harvest switches (SCOUT_FRONTIER, SCOUT_MINES/DRY, BREAKOUT_TTL) are parked.
+- s9r = s7d + agrab's switches (RUSH + RUSH_BREAK + BREAK_ROUND 30, baby caps 40/40, no rat traps, CARRY_AIM +
+  THROW_MIN 84, SYM_SLOT). It is submission #100, set-1 block from 3012.
+  - This is the big swing: copy the style that beats us. In ag1's first 25 games agrab beat s7d 8 of 11 and
+    s9k 9 of 12.
+  - s9q (the same switches on s9i) is dropped with its base. Screen ra_s9r is queued; ra_s9i and ra_s9q were
+    stopped.
+- ra_s9m passed (-0.8 pts, net +1); its base s9k is rejected, so RICH_BABIES waits for a base that holds.
