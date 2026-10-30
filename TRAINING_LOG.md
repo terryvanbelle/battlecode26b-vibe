@@ -2469,3 +2469,28 @@
   - A formed king squeaks its old home king's tile, so its babies keep our first king's half and mirrored enemy
     start. Without that, its attackers would go to the mirror of the far mine.
   - BotTest 397/397. Diag fm2 (t0i vs s9s on 8 mine-rich maps, both sides); screens ra_t0i and ra_t0j queued.
+
+## 2026-10-30 04:51 PDT: FORM_MINE skips the income test; our rushers idle through cooperation
+- where_are_you (rl1, s9s): the king lists all four home mines by r400, but its income stays 100-330 per 100 rounds
+  (bank ~960 at r100, 31 babies). The formation income test (FORM_NET100) alone kept it from forming. Under FORM_MINE
+  a mine site now skips that test: a king on a far mine is the cure for a low income. t0i and t0j were rebuilt with
+  it before their screens started. fm2 was stopped before its first game and restarted as fm3.
+- t0b (RISK_FRESH 2) is rejected at its screen: stopped by hand at 43/80 cells, t -1.73, net -9 (sign p 0.011).
+  It fired fewer traps (7.3 vs 8.1 a cell), but our rats died more (51 vs 46), killed fewer (19 vs 23) and moved
+  less cheese (7.9k vs 8.4k).
+- kt1 (t0c vs s9s, stopped at 16/64 for VM load): t0c won 6 of 16. Its king laid 8.8 traps a game, and 1.6 of them
+  fired.
+- Turn budget, rounds 400-1200 of s9s's 126 field games (whyagg.py, movestall.py). Of all baby turns, non-fighters
+  walking to a mine take 18.4%, attacking 15.0%, at the mine 10.7%, delivering 10.5% and stepping to cheese 10.1%.
+  Fighters: to a mine 10.1%, at it 5.8%. Delivering rats carry 68 cheese on average and move on 65% of turns
+  (1.68x cooldown).
+- Our attackers hoard cheese. The pickUp after the move runs for every role, and attack() comes before deliver().
+  From r400, attack-move turns carry 43-82 cheese on average, 10-33% of them carry 100 or more, and those rats move
+  on only 31-39% of turns. 95% of the attack turns from r400 are 16+ tiles from every enemy king.
+- Cooperation games (coopatk.py): from r200, 25.4% of our baby turns during cooperation are attack moves, against
+  5.5% at war. 25 of the 126 games never reached war; we won 14. On rift, rose and averystrangespace, the 12 rush
+  attackers (spawn index 4-15) sat on our side of the divide from r200 to r2000.
+  - averystrangespace vs bc26vibe_bot, two round-2000 losses: points 0.344 and 0.493, cat damage 0/230 and 0/0,
+    cheese delivered 4.5k against 5.1k. Twelve more gatherers would likely have won both.
+  - rose vs spsquared: cat damage 0 against 8080.
+  - This is what RUSH_LIFE (t0g) targets; ra_t0g is next in the screen queue.
