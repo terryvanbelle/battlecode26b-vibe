@@ -2186,3 +2186,14 @@
   - s9q (the same switches on s9i) is dropped with its base. Screen ra_s9r is queued; ra_s9i and ra_s9q were
     stopped.
 - ra_s9m passed (-0.8 pts, net +1); its base s9k is rejected, so RICH_BABIES waits for a base that holds.
+
+## 2026-10-29 23:20 PDT: ag1 final: agrab beats s7d 14 of 20
+- ag1 (10 small and medium maps x 2 sides):
+  - s7d won 6 of 20 against agrab, s9k 7 of 20.
+  - agrab killed s7d's king in 9 of its 14 wins (tiny r70-83, knifefight r31, Excavation r463-791,
+    averyfineline r358) and won the rest on points at r2000 (sunandmoon, constrictinglattice, pipes).
+  - s7d's wins: knifefight A, averyfineline B, DefaultSmall A, starvation A/B, Stash B.
+- agrab's overruns: 5 in 25 games, each a rat in a crowded fight near the 17500 limit. Exceptions: 0.
+- So the switch set that copies the top three beats our champion locally by about the margin abcdezyxwv and
+  AlexT101 beat it on the replica. s9r (the same switches as a candidate) is on the replica. ag2 splits agrab:
+  agrw (the early war and rush alone) and agtr (agrab keeping our rat traps), each against s7d on ag1's maps.
