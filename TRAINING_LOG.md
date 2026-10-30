@@ -2315,3 +2315,19 @@
     the field only inside the s9i/s9k bundles, which were rejected on set 1 (no EscapeTheNight there).
   - New candidate s9z = @s9s + BREAKOUT_TTL 150. bk1 (VM): s9z vs s9s on brk1's 9 dig maps both sides, and both vs
     araid on EscapeTheNight.
+
+## 2026-10-30 02:14 PDT: s9s block 2 (set 3): net +1; pooled t 1.51, on to block 3
+- s9s on set 3 (3256-3269) against s7d's set-3 control block (2233-2246): 42 cells, 39 alike, D 3 (gained 2, lost 1),
+  net +1, t 0.58.
+  - Gained: AlexT101 tiny B, bc26vibe uneasy_alliance A. Lost: spsquared rift A.
+  - Both sides of EscapeTheNight vs outercloud are lost by starvation with 0 cheese picked (s7d the same).
+- Pooled over sets 2 and 3: 84 cells, D 11 (gained 8, lost 3), net +5, t 1.51. Block 2 rejects at t <= 1 and accepts
+  at t >= 2, so s9s goes on to block 3.
+- Block 3 is set 1, s7d's accepting set. Its reference there is the draw that crowned it, so it is re-anchored first:
+  twin t0a (@s7d @kfix from the current code; the later switches are all off) is replica submission #102 and plays
+  set 1 from match 3270.
+  - s9s's set-1 record block (3067-3070, 3077-3078, 3087-3094) is then scored against t0a's games as block 3.
+  - Block 3 rejects at a pooled t <= 1.5 and accepts at t >= 2. Otherwise block 4 is final.
+- bk1 (VM) so far: s9z (@s9s + BREAKOUT_TTL 150) beat s9s on EscapeTheNight both sides by king kill, delivering
+  7969 to 225 as A (122 tiles dug to 9) and 12065 to 150 as B. The breakout works from both sides on the s9s base.
+  Screen ra_s9z is queued.
