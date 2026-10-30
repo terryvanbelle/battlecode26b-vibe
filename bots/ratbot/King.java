@@ -48,9 +48,9 @@ public final class King {
         // a fresh rat (100 HP, bites every turn) is worth far more than one king bite: spawn first
         int sp = spawned;
         spawn(cats, enemies);
-        if (Cfg.HOME_START && spawned > sp && cats.length == 0) {
+        if ((Cfg.HOME_START || Cfg.MINE_RR) && spawned > sp && cats.length == 0) {
             MapLocation o = Baby.origin != null ? Baby.origin : start;
-            rc.squeak(Comms.squeak(Comms.SQ_START, o.x, o.y, 0));
+            rc.squeak(Comms.squeak(Comms.SQ_START, o.x, o.y, Cfg.MINE_RR ? rrNext() : 0));
         }
         Debug.mark(46);
         if (!G.coop) bite(enemies);
@@ -253,6 +253,15 @@ public final class King {
      *  b built, d no free tile (dug the ring). sawEnemy: enemies in view after cooperation. */
     static char spawnWhy = '-';
     static boolean sawEnemy;
+    static final int[] rrCount = new int[3];
+
+    /** Cfg.MINE_RR: the newborn's place in its role's spawn order, 1-based (the rat reads its role off the rat cost
+     *  after this spawn, as we do here). */
+    static int rrNext() throws GameActionException {
+        int idx = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
+        int r = Baby.roleFor(idx, G.round);
+        return ++rrCount[r] % 4096 + 1;
+    }
 
     static void spawn(RobotInfo[] cats, RobotInfo[] enemies) throws GameActionException {
         RobotController rc = G.rc;

@@ -582,6 +582,16 @@ public class BotTest {
         check(!Cfg.AMMO_AWAY, "ammo: off by default");
     }
 
+    static void testRoleFor() {
+        // MINE_RR: the king counts spawns per role with the same rule born() applies
+        check(Baby.roleFor(0, 10) == Baby.GATHER && Baby.roleFor(Cfg.GATHER_FIRST - 1, 10) == Baby.GATHER, "roleFor: the first babies gather");
+        check(Baby.roleFor(Cfg.GATHER_FIRST, Cfg.FIGHT_EVERY * 7) == Baby.FIGHT, "roleFor: later babies on FIGHT_EVERY rounds fight");
+        check(Baby.roleFor(Cfg.GATHER_FIRST, Cfg.FIGHT_EVERY * 7 + 1) == Baby.GATHER, "roleFor: later babies off those rounds gather");
+        int c = Comms.squeak(Comms.SQ_START, 11, 15, 4096);
+        check(Comms.sqType(c) == Comms.SQ_START && Comms.sqX(c) == 11 && Comms.sqY(c) == 15 && Comms.sqExtra(c) == 4096, "roleFor: the largest spawn place survives the squeak");
+        check(!Cfg.MINE_RR, "roleFor: MINE_RR off by default");
+    }
+
     static void testRusher() {
         // RUSH is off in the development Cfg: no baby attacks from birth, whatever its index or round
         for (int idx = 0; idx < 20; idx += 4) check(!Baby.rusher(idx, 10) && !Baby.rusher(idx, 500), "rusher: off with RUSH off");
@@ -2047,6 +2057,7 @@ public class BotTest {
         testHomeStart();
         testRusher();
         testAmmo();
+        testRoleFor();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

@@ -216,7 +216,7 @@ public final class Baby {
         Comms.readKings();
         home = Comms.nearestKing(G.me);
         if (home == null) home = G.me;
-        if (Cfg.HOME_START) origin = heardStart(rc.readSqueaks(-1));
+        if (Cfg.HOME_START || Cfg.MINE_RR) origin = heardStart(rc.readSqueaks(-1));
         int px = 2 * home.x - G.cx2, py = 2 * home.y - G.cy2;
         fu = px >= 0 ? 1 : -1;
         fv = py >= 0 ? 1 : -1;
@@ -230,6 +230,12 @@ public final class Baby {
     }
 
     /** Cfg.RUSH: a baby born with idx live babies in round r attacks the enemy king. */
+    /** The role born() gives a rat with idx live babies in round r. */
+    static int roleFor(int idx, int r) {
+        if (rusher(idx, r)) return ATTACK;
+        return idx >= Cfg.GATHER_FIRST && (r % Cfg.FIGHT_EVERY) == 0 ? FIGHT : GATHER;
+    }
+
     static boolean rusher(int idx, int r) {
         return Cfg.RUSH && idx >= Cfg.RUSH_FROM && idx < Cfg.RUSH_TO && (Cfg.RUSH_UNTIL == 0 || r < Cfg.RUSH_UNTIL);
     }
@@ -1493,7 +1499,9 @@ public final class Baby {
         for (int i = 0; i < n; i++) if (homeHalf(cand[i])) { MapLocation t = cand[ours]; cand[ours++] = cand[i]; cand[i] = t; }
         int m = ours > 0 && !(Cfg.MINE_ANY || Cfg.MINE_ANY_COOP && G.coop) ? ours : n;
         long[] key = candKey;
-        for (int i = 0; i < m; i++) key[i] = mineKey(cand[i]);
+        boolean rr = Cfg.MINE_RR && rrSlot >= 0 && origin != null;
+        MapLocation kh = rr ? origin : home;
+        for (int i = 0; i < m; i++) key[i] = mineKey(cand[i], kh);
         for (int i = 1; i < m; i++) {   // insertion sort of the first m by mineKey
             long k = key[i];
             MapLocation c = cand[i];
@@ -1502,6 +1510,7 @@ public final class Baby {
             key[j] = k; cand[j] = c;
         }
         minesAtPick = Comms.numMines;
+        if (rr) return cand[rrSlot % m];
         if (Cfg.MINE_BALANCE) return cand[slot % m];
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
     }
@@ -1533,9 +1542,9 @@ public final class Baby {
         return n + 1;
     }
 
-    /** Sort key: squared distance from home, then the offset along our outward axes (same for mirrored rats). */
-    static long mineKey(MapLocation m) {
-        return ((long) m.distanceSquaredTo(home) << 16) + ((m.x - home.x) * fu + 64) * 128 + (m.y - home.y) * fv + 64;
+    /** Sort key: squared distance from h, then the offset along our outward axes (same for mirrored rats). */
+    static long mineKey(MapLocation m, MapLocation h) {
+        return ((long) m.distanceSquaredTo(h) << 16) + ((m.x - h.x) * fu + 64) * 128 + (m.y - h.y) * fv + 64;
     }
 
     /** The site the king named for a second king, while its heartbeat is fresh. */
@@ -1589,14 +1598,20 @@ public final class Baby {
         return a < b || Cfg.MINE_TIES && a == b;
     }
 
-    /** The king start squeaked to us (Comms.SQ_START), or null. */
+    /** The king start squeaked to us (Comms.SQ_START), or null; sets rrSlot from its spawn-order field. */
     static MapLocation heardStart(Message[] ms) {
         for (Message m : ms) {
             int c = m.getBytes();
-            if (Comms.sqType(c) == Comms.SQ_START) return new MapLocation(Comms.sqX(c), Comms.sqY(c));
+            if (Comms.sqType(c) == Comms.SQ_START) {
+                rrSlot = Comms.sqExtra(c) - 1;
+                return new MapLocation(Comms.sqX(c), Comms.sqY(c));
+            }
         }
         return null;
     }
+
+    /** Cfg.MINE_RR: our place in our role's spawn order, squeaked by the king that spawned us (-1: not heard). */
+    static int rrSlot = -1;
 
     /** Home for the half test and mirrors: our first king's start with Cfg.HOME_START once heard, else home. */
     static MapLocation ref() { return Cfg.HOME_START && origin != null ? origin : home; }

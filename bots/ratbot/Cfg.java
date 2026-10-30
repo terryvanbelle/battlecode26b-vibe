@@ -413,6 +413,11 @@ public final class Cfg {
      *  (11,15) to (8,21) and with the symmetry unresolved all game the rotational half from (8,21) put 3 of our 6 home
      *  mines on the enemy half; no gatherer went there (field 2072: AlexT101 picked 1140 a game on our half). */
     public static final boolean HOME_START = false;
+    /** MINE_BALANCE by spawn order: the king's start squeak (as HOME_START's) also carries the newborn's place n in
+     *  its role's spawn order, and the rat takes mine n % m of our m home-half mines, sorted from our first king's
+     *  start, instead of its id hash mod m. ue2 (uneasy_alliance vs araid, as A): 29 of 62 rats took (8,27) and 3 took
+     *  (2,7); the id hash plus a sort from each rat's birth tile (the king walked to (7,22)) piled them on one mine. */
+    public static final boolean MINE_RR = false;
     /** The first king also rules out a symmetry that mirrors its start within Chebyshev 2 of itself (the two kings'
      *  3x3 bodies would overlap), not only onto itself: uneasy_alliance's kings start 7 apart on one row. */
     public static final boolean SYM_KING_GAP = false;
