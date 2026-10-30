@@ -99,12 +99,12 @@ public final class G {
     public static int hand(MapLocation from, Direction d) {
         int px = 2 * from.x - cx2, py = 2 * from.y - cy2;
         int c = px * d.dy - py * d.dx;
-        if (c > 0) return 1;
-        if (c < 0) return -1;
+        if (c > 0) return Cfg.HAND_FLIP ? -1 : 1;
+        if (c < 0) return Cfg.HAND_FLIP ? 1 : -1;
         // d points along the line through the centre: the dot product is the same for a reflected twin, so the
         // side frame's chirality (Cfg.SYM_HAND) breaks the tie the mirrored way
         int dot = px * d.dx + py * d.dy;
-        return dot >= 0 ? chir : -chir;
+        return Cfg.HAND_FLIP ? (dot >= 0 ? -chir : chir) : (dot >= 0 ? chir : -chir);
     }
 
     /** Tie bit for ranking candidate tiles l seen from {@code from} (spawn, trap and target picks), the same for a

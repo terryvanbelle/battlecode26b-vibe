@@ -480,6 +480,10 @@ public final class Cfg {
      *  the same and had the same pick bit, so the dx/dy loop took the corner on one side and the edge on the other
      *  (r27, the first move that differed). */
     public static final boolean SYM_TIE = false;
+    /** A salted twin: G.hand's every tie goes the other way (mirror-consistent still). Replica games repeat exactly
+     *  against most of the panel (t0f replayed s9s's set-4 block alike in 42 of 42 cells), so a plain twin of an
+     *  incumbent replays its accepting luck; a flipped hand is the same play with a fresh draw of the chaos. */
+    public static final boolean HAND_FLIP = false;
     /** A rat held SWAP_HOLD turns behind an ally baby on its next step carries the ally, steps into its tile and sets
      *  it down behind once it can act (a carried rat leaves the grid), so two rats pass in a 1-wide corridor (0 = off).
      *  rose: s6m's outbound and inbound gatherers met head-on at r160 in the 1-wide stem out of the king's walled
