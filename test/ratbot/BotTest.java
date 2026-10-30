@@ -1750,6 +1750,11 @@ public class BotTest {
         Baby.home = new MapLocation(3, 3);
         check(Baby.homeHalf(new MapLocation(15, 9)) == Cfg.MINE_TIES && Baby.homeHalf(new MapLocation(14, 9))
               && !Baby.homeHalf(new MapLocation(16, 9)), "home half: an axis tie is ours only with MINE_TIES");
+        // Meow (50x30, flip y): with rotation still live, (14,18) is ours under rotation only; (14,11) under both
+        W = 50; H = 30; install();
+        MapLocation k = new MapLocation(5, 5), em = new MapLocation(14, 18), om = new MapLocation(14, 11);
+        check(Baby.nearerAll(om, k, Sym.ROT | Sym.HOR) && !Baby.nearerAll(em, k, Sym.ROT | Sym.HOR) && Baby.nearerAll(em, k, Sym.ROT)
+              && !Baby.nearerAll(em, k, Sym.HOR), "home half: every live symmetry must agree (HOME_ALL_SYM)");
         Comms.numMines = 0;
     }
 

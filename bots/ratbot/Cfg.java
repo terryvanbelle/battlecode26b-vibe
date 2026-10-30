@@ -254,6 +254,10 @@ public final class Cfg {
      *  mod the count, re-picked whenever the team's known-mine count changes (instead of MINE_SPREAD at random, picked
      *  once: on cheesefarm 10-12 of our rats sat at one mine all game while 2 of our 5 were never visited). */
     public static final boolean MINE_BALANCE = false;
+    /** A tile is on our half only when it is nearer home than its twin under every live symmetry, not just the first;
+     *  MINE_BALANCE also re-picks when the symmetry mask changes. On Meow (flip, rotation live until ~r600) s9s sent 1
+     *  in 5 gatherers to the enemy's mine (14,18), the twin of our (14,11) under the flip, and lost them. */
+    public static final boolean HOME_ALL_SYM = false;
     /** Raw cheese at which a gatherer heads home. */
     public static final int DELIVER_AT = 30;
     /** Raw cheese at which a gatherer with no pile in sight heads home (at or above DELIVER_AT it goes anyway). The

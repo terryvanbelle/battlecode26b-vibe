@@ -1033,7 +1033,7 @@ public final class Baby {
         if (Cfg.MINE_EXPLORE > 0 && role == GATHER && G.round < Cfg.MINE_EXPLORE_UNTIL
                 && explorer(slot, homeMineCount(), Cfg.MINE_EXPLORE) && exploreHome()) { mineTarget = null; why = 'x'; return; }
         if (role == GATHER || role == FIGHT && Cfg.FIGHT_MINE) {
-            if (Cfg.MINE_BALANCE && mineTarget != null && Comms.numMines != minesAtPick) mineTarget = null;
+            if (Cfg.MINE_BALANCE && mineTarget != null && (Cfg.HOME_ALL_SYM ? Comms.numMines != minesAtPick || Sym.mask != maskAtPick : Comms.numMines != minesAtPick)) mineTarget = null;
             if (Cfg.MINE_ANY_COOP && !G.coop && mineTarget != null && !homeHalf(mineTarget)) mineTarget = null;
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
@@ -1588,6 +1588,7 @@ public final class Baby {
             key[j] = k; cand[j] = c;
         }
         minesAtPick = Comms.numMines;
+        if (Cfg.HOME_ALL_SYM) maskAtPick = Sym.mask;
         if (rr) return cand[rrSlot % m];
         if (Cfg.MINE_BALANCE) return cand[slot % m];
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
@@ -1609,7 +1610,7 @@ public final class Baby {
     }
 
     /** A per-rat hash (the scout pick, Cfg.MINE_BALANCE), and the team's known-mine count when mineTarget was picked. */
-    static int slot, minesAtPick;
+    static int slot, minesAtPick, maskAtPick;
 
     static final MapLocation[] cand = new MapLocation[40];
     static final long[] candKey = new long[40];
@@ -1676,7 +1677,14 @@ public final class Baby {
     static boolean raider;           // a fighter that leaves our half to contest theirs
 
     /** l is closer to our king than to its mirror under the first live symmetry. */
-    static boolean homeHalf(MapLocation l) { return nearer(l, ref(), firstSym()); }
+    static boolean homeHalf(MapLocation l) { return Cfg.HOME_ALL_SYM ? nearerAll(l, ref(), Sym.mask) : nearer(l, ref(), firstSym()); }
+
+    /** Cfg.HOME_ALL_SYM: l is nearer h than h's twin under every symmetry in mask (the first live one if none is). */
+    static boolean nearerAll(MapLocation l, MapLocation h, int mask) {
+        if (mask == 0) return nearer(l, h, firstSym());
+        for (int s = Sym.ROT; s <= Sym.VER; s <<= 1) if ((mask & s) != 0 && !nearer(l, h, s)) return false;
+        return true;
+    }
 
     /** Whether l is nearer h than h's twin under symmetry s (ties count with Cfg.MINE_TIES). */
     static boolean nearer(MapLocation l, MapLocation h, int s) {
