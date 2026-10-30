@@ -2773,3 +2773,31 @@
   by r663), and abcdezyxwv took 840 off its twin. Not yet acted on.
 - Next: u0e (#113) as a basics repair on set 4 (3742 on). Reading of the repair rule (§1.11): a repair runs two
   blocks (set 4, then the re-anchored set 2) without the block-1 reject, and accepts at pooled t >= 0.
+
+## 2026-10-30 11:27 PDT: u0e's block in; stuck rushers on cheesebottles; u0m (basics bundle) submitted
+
+- u0e (#113) set-4 block 1 (3742-3755) vs s9s's 3284-3297: 42 cells, 38 alike, D 4 (+1 -3), net -2, t -1.00.
+  Its repair worked: 0 overruns in 42 field games (reference 2). Folded into u0m instead of a second block alone.
+- Diags against s9s: ek2 (u0g, END_KING_CROWD) 8 of 12, the same per-map results as u0d. hs1 (u0h,
+  HOME_ALL_SYM) 6 of 16, dropped. Screen ra_t0t (RUSH_TO 12): +4.0 pts, t +0.92, net +4, pass.
+- minesee scan (set-4 reference): our home mines are often seen late or never. uneruesansfin: 32,49 first seen
+  r562, and AlexT101 took 6334 there. averystrangespace: 2 of 3 never seen. cheesebottles: the corner (2,2) never
+  seen. Most "never" cells on grove/knifefight are just short games.
+- uneruesansfin vs AlexT101 (3290 g1): their king walked 49 tiles to its corner mine by r751 and formed a second
+  king by our straight-line mine at r~900, with 45 rats at r1200. Our king never moved (KING_MINE only walks
+  within dist2 400). Our deliveries were 3080 in 2000 rounds, less than the king ate (4000); our bank ran down
+  2488 -> 20. Our rats step forward 99% of the time (theirs strafe 35-42%), so the losses aren't in movement.
+- cheesebottles vs abcdezyxwv (3292 g1, lost r684): they kept a ~1900 bank on 16 rats to r300. We spent ours on
+  30 rats by r200, delivered a third as much, and fell to 4 rats. We dealt 0 damage to their king. In r1-150,
+  59% of our baby turns were attack moves.
+  - The rushers never left our half. A local s9s/t0v vs abrk game on cheesebottles shows why (indicator strings):
+    10-12 of the 12 sat in the walled room round our (20,13) mine from r75 to r400. Greedy and bug walks lead east
+    into it. Each reverse flow search toward the king spot ran ~11k bytecodes a turn and was given up at
+    FLOW_REV_TURNS 25, then retried 30 rounds later (fl builds 2-3, done 0-1, stall 50). With two symmetries live,
+    the target also flipped between (56,11) and (56,8) almost every turn to r72, and each flip resets the stall.
+  - flowstat (local games): s9s has a search building on 29% of rat-turns on cheesebottles (10% ZeroDay, Meow),
+    and 100-230 searches a game are given up.
+  - u0k = t0v + FLOW_REV_TURNS 60 (cb4 vs abrk): failed searches 3 (t0v 105, s9s 234), rushers in the room 11 at
+    r100 and 2 at r200, xfer 12395 (t0v 11177). u0l (+RUSH_STICK): 0 failed, 4 in the room at r100.
+- u0m = @s9s + u0e's margins + FLOW_ALLOC + FLOW_REV_TURNS 60, the basics repair bundle, submitted as #114 (set 4
+  from 3756). Diag fx1 and screen ra_u0m are running. I stopped ra_u0b at 27/80 (u0b was already dropped).
