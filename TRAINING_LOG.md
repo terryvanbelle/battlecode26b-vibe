@@ -2543,3 +2543,15 @@
   - t0o = @s9s + MINE_TIES. s5w (the same switch on s4d) was +27.2 pts vs araid on the tie maps (t +2.84) and net 0
     on replica set 3, which had one tie map. Diag mt2 (vs s9s, the 4 tie maps, both sides, seeds 0-1); screen
     ra_t0o queued.
+
+## 2026-10-30 06:04 PDT: t0h rejected; a second king starves on evileye; t0g on the replica
+- t0h (FORM_RING) on set 4 against s9s's reference (3284-3297): 3401-3406, 3418-3423, 3436-3437. 42 cells, 37 alike,
+  D 5 (+2 -3), net -1, t -0.45: rejected at block 1. It gained spsquared Meow A/B and lost spsquared evileye A/B and
+  CS50Crab grove B. On evileye both games formed a second king (r~100-125). The bank ran out at r374 and r550, and
+  both kings starved, while spsquared's own king was starving too (100 hp from r325 in 3423). One king eats half as
+  much, so s9s outlasted them. Any extra-king switch needs a starvation guard on cheese-poor maps; t0i/t0m (FORM_MINE
+  sites skip the income test) carry the same risk.
+- ra_t0h stopped by hand at 42 cells (t -1.17, net -2) once the replica had decided; ra_t0i took its worker.
+- t0g (@s9s + RUSH_LIFE 150) goes to the replica as #107 for set 4, block 1, from match 3450. Its screen is at 30
+  cells, t +1.51. Its target on set 4 is uneruesansfin vs AlexT101 and averystrangespace vs bc26vibe_bot, where
+  s9s's rushers walk for hundreds of rounds without reaching the enemy king.
