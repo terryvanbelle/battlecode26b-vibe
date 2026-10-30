@@ -75,6 +75,10 @@ public final class Cfg {
     public static final int KING_DODGE_R2 = 25;
     /** A dodging king boxed in by dirt digs out (KING_DIG_MIN cheese and up). */
     public static final boolean KING_DODGE_DIG = true;
+    /** The king bites a cat in reach when its action is still free after spawning (plain bites, no cheese). Kings
+     *  never bit cats: groveisbeingdesecrated (gr1, every side-A game): the band's cat pinned our king in the corner
+     *  from r120 and scratched it dead at r190 with 90 HP of its 4000 left after our babies' bites. */
+    public static final boolean KING_CAT_BITE = false;
     /** Cats walk a fixed waypoint loop and scratch whatever blocks it: the king marks every cat footprint it sees or
      *  hears squeaked as lane, its walks and digs never add lane to its 3x3, and it steps off lane when on it.
      *  bed (3091, 2086-2087): the king dug out of its start pocket into cat 3's lane at (1..2,11) and was scratched
@@ -306,6 +310,10 @@ public final class Cfg {
     /** Rush: babies with spawn index in [RUSH_FROM, RUSH_TO) attack the enemy king from birth. */
     public static final boolean RUSH = false;
     public static final int RUSH_FROM = 4, RUSH_TO = 16;
+    /** An attacker keeps the mirror spot it walks to until that spot is seen empty, not the nearest live one each turn.
+     *  groveisbeingdesecrated (gr1): the rushers stood at the band's wall midway between (7,2) and (52,2) and flipped
+     *  targets 14-21 times by r190; every flip restarted their flow search, which never finished. */
+    public static final boolean RUSH_STICK = false;
     /** Rush spawns stop at this round (0 = never): the spawn index is the live-baby count, so without it every
      *  replacement born with 4-15 babies alive is an attacker all game (rsu1: s8u lost both DefaultSmall games to s7d
      *  in a long war, 7 rats to 13-15 at r150). */

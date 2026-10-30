@@ -2116,6 +2116,14 @@ public class BotTest {
         check(Baby.rushFailed(171, 20, -10000, 150), "rush life: 151 rounds old, never saw the king: failed");
         check(!Baby.rushFailed(300, 20, 200, 150), "rush life: saw the enemy king 100 rounds ago: still rushing");
         check(Baby.rushFailed(351, 20, 200, 150), "rush life: 151 rounds since it saw the king: failed");
+        // RUSH_STICK: an attacker keeps its symmetry while that spot is live, else takes this turn's nearest
+        check(Baby.stickSym(Sym.ROT | Sym.VER, Sym.ROT, Sym.VER) == Sym.ROT, "rush stick: a live target is kept");
+        check(Baby.stickSym(Sym.VER, Sym.ROT, Sym.VER) == Sym.VER, "rush stick: a target seen empty gives way");
+        check(Baby.stickSym(Sym.ROT | Sym.HOR, 0, Sym.HOR) == Sym.HOR, "rush stick: the first pick is the nearest");
+        // KING_CAT_BITE: the weakest cat in reach, the nearer on equal health
+        check(King.betterCat(100, 50, 200, 10), "king cat bite: less health first");
+        check(!King.betterCat(200, 10, 100, 50), "king cat bite: more health loses even if nearer");
+        check(King.betterCat(100, 10, 100, 50) && !King.betterCat(100, 50, 100, 50), "king cat bite: equal health, nearer");
         // TrapRows (RISK_ROWS) keeps the same marks one row at a time: risky/mask/clear agree with the flat array
         TrapRisk.mark = null; TrapRisk.init(); TrapRows.rows = null; TrapRows.init();
         rnd = new java.util.Random(11);

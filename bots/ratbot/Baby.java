@@ -1165,6 +1165,7 @@ public final class Baby {
     }
 
     static MapLocation rushTarget() throws GameActionException {
+        if (Cfg.RUSH_STICK) return rushStick();
         RobotController rc = G.rc;
         MapLocation best = null;
         int bd = Integer.MAX_VALUE;
@@ -1180,6 +1181,35 @@ public final class Baby {
         }
         if (best == null && noKing != 0) { noKing = 0; return null; }
         return best;
+    }
+
+    /** Cfg.RUSH_STICK: the symmetry whose enemy-king spot this attacker walks to (0 = none yet). */
+    static int rushSym;
+
+    /** rushTarget with Cfg.RUSH_STICK: the nearest live mirror spot is picked once and kept while it stays live. */
+    static MapLocation rushStick() throws GameActionException {
+        RobotController rc = G.rc;
+        MapLocation best = null;
+        int bd = Integer.MAX_VALUE, bs = 0, live = 0;
+        for (int s = 1; s <= 4; s <<= 1) {
+            if ((Sym.mask & s) == 0 || (noKing & s) != 0) continue;
+            MapLocation c = G.mirror(ref(), s);
+            if (G.me.distanceSquaredTo(c) <= 13 && rc.canSenseLocation(c)) {
+                RobotInfo r = rc.senseRobotAtLocation(c);
+                if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { noKing |= s; continue; }
+            }
+            live |= s;
+            int d = G.me.distanceSquaredTo(c) * 2 + (G.pickBit(G.me, c) ? 1 : 0);
+            if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(G.me, c, best)) { bd = d; best = c; bs = s; }
+        }
+        if (best == null && noKing != 0) { noKing = 0; rushSym = 0; return null; }
+        rushSym = stickSym(live, rushSym, bs);
+        return rushSym == bs ? best : G.mirror(ref(), rushSym);
+    }
+
+    /** The symmetry an attacker walks to: its current one while still live, else this turn's nearest. */
+    static int stickSym(int live, int cur, int best) {
+        return (live & cur) != 0 ? cur : best;
     }
 
     /**

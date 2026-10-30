@@ -58,6 +58,7 @@ public final class King {
         }
         Debug.mark(46);
         if (!G.coop) bite(enemies);
+        if (Cfg.KING_CAT_BITE) biteCat(cats);
         if (Cfg.PRESS_SHARED && !G.coop) noteEKing(enemies);
         if (!G.coop && enemies.length > 0) {
             int threat = 0;
@@ -220,6 +221,37 @@ public final class King {
         int c = biteCheese(best.health, G.rc.getGlobalCheese());
         if (c > 0 && G.rc.canAttack(best.location, c)) G.rc.attack(best.location, c);
         else G.rc.attack(best.location);
+    }
+
+    /** Cfg.KING_CAT_BITE: bite the weakest cat in reach (nearest to our centre on equal health), any tile of its 2x2. */
+    static void biteCat(RobotInfo[] cats) throws GameActionException {
+        RobotController rc = G.rc;
+        if (cats.length == 0 || !rc.isActionReady()) return;
+        MapLocation c = rc.getLocation(), at = null;
+        int bh = 0, bd = 0;
+        for (RobotInfo k : cats) {
+            MapLocation t = catTile(k.location);
+            if (t == null) continue;
+            int d = Baby.catDist4(k.location, c);
+            if (at == null || betterCat(k.health, d, bh, bd)) { at = t; bh = k.health; bd = d; }
+        }
+        if (at != null) rc.attack(at);
+    }
+
+    /** A tile of the cat's 2x2 (bottom-left bl) the king can attack, or null. */
+    static MapLocation catTile(MapLocation bl) {
+        RobotController rc = G.rc;
+        for (int dx = 0; dx <= 1; dx++)
+            for (int dy = 0; dy <= 1; dy++) {
+                MapLocation t = bl.translate(dx, dy);
+                if (rc.canAttack(t)) return t;
+            }
+        return null;
+    }
+
+    /** Cat pick for KING_CAT_BITE: less health first, then nearer (dist4 from the cat's centre). */
+    static boolean betterCat(int hp, int d4, int bhp, int bd4) {
+        return hp < bhp || hp == bhp && d4 < bd4;
     }
 
     /** Cheese for a king bite on a target with hp: the least that kills now (at most KING_BITE_MAX), else 0. */
