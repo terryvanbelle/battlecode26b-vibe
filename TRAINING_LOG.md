@@ -2190,8 +2190,9 @@
 ## 2026-10-29 23:20 PDT: ag1 final: agrab beats s7d 14 of 20
 - ag1 (10 small and medium maps x 2 sides):
   - s7d won 6 of 20 against agrab, s9k 7 of 20.
-  - agrab killed s7d's king in 9 of its 14 wins (tiny r70-83, knifefight r31, Excavation r463-791,
-    averyfineline r358) and won the rest on points at r2000 (sunandmoon, constrictinglattice, pipes).
+  - agrab killed s7d's king in 8 of its 14 wins (knifefight r31, tiny r70-83, averyfineline r358, DefaultSmall
+    r502, Excavation r463-791, Stash r794) and won the other 6 on points at r2000 (sunandmoon,
+    constrictinglattice and pipes, both sides).
   - s7d's wins: knifefight A, averyfineline B, DefaultSmall A, starvation A/B, Stash B.
 - agrab's overruns: 5 in 25 games, each a rat in a crowded fight near the 17500 limit. Exceptions: 0.
 - So the switch set that copies the top three beats our champion locally by about the margin abcdezyxwv and
