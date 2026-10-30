@@ -102,8 +102,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   u0f 3728-3741 (25 of 42 to 18); pooled 84 cells, D 18, +11 -7, net +4, t +0.94. u0m = `snapvar.py @s9s` +
   'SENSE2_LEFT = 4000, IND_LEFT = 0=>SENSE2_LEFT = 6000, IND_LEFT = 1000' 'FLOW_ALLOC = false=>FLOW_ALLOC = true'
   'FLOW_REV_TURNS = 25=>FLOW_REV_TURNS = 60'. Previous: s9s (#101/#103), accepted 2026-10-30 02:44 PDT over s7d.
-- u0m's reign: set 2 carries its accepting luck (+7) and needs a salted twin before anyone is scored there. Set 3 is
-  u0m's fresh reference block (from 3819, queued 12:52). Candidates' block 1 = set 3 (reference u0m's set-3 draw),
+- u0m's reign: set 2 carries its accepting luck (+7) and needs a salted twin before anyone is scored there. Set 3
+  reference: u0m's block 3819-3822, 3836-3837, 3849-3856, 25 of 42 (outercloud, bc26vibe, CS50Crab 6 of 6 each;
+  AlexT101 1, abcdezyxwv 0, spsquared 4, AdamTan12 2). Candidates' block 1 = set 3 (reference that draw),
   block 2 = set 4 (reference 3756-3767, 3785-3786, an unlucky draw, so also score with `contest.py pool`), then set 1
   after a u0m reference block there, set 2 last after a twin.
 - Per opponent over the last blocks: abcdezyxwv 1 of 18, AlexT101 1 of 18; outercloud 15, CS50Crab 13, bc26vibe 12,
@@ -111,6 +112,16 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
+- On the replica now: **u0q** (#115, submitted 13:37) = u0m + BABY_RAT_TRAPS + TRAP_ADJ + TRAP_SPAWN_FIRST, block 1
+  on set 3 (matches from 3867; score `contest.py paired 3819-3822,3836-3837,3849-3856 <ids>`). Why: every field bot
+  but bc26vibe lays rat traps, 30-310 a game, ~95% of them fire on us (set 2: 3801 constrictinglattice 305 fires,
+  126 of our deaths; AlexT101 sittingducks 224), mostly as our rat closes from d2 4-20 or steps off an adjacent
+  enemy; we lay none (s9s dropped them in agrab's bundle; s9a, traps off alone on s7d, lost net -3 on the replica).
+  RISK_ADAPT (u0u) cut u0q's fires on us by 4% only (ad1 377 vs adc 391, 7 games), and TrapRisk's mark array is never
+  allocated on 60x60 maps (needs 18.8k bytecodes left).
+- Mine coverage: we work 1-2 of 3-8 home mines on the big walled maps; the field finds their twins 5-10x sooner
+  (wallsofparadis 3800: rings first seen r392-503, field r54-135). u0w = u0m + SEEK_IDLE 40, u0x = u0w + IDLE_SHIFT;
+  diags iw1/ix1 vs control iwc (8 maps, both sides, vs s9s), screen ra_u0w queued.
 - Submit a candidate only after a block finishes (`contest.py submit bots/NAME -m TEXT`, then
   `contest.py scrim --vs ... --panel research/panel/v3-setN.json --queue research/panel/queue.tsv`; the drain loop
   sends the queue under the hourly limit). Score: `contest.py paired REF CAND`.

@@ -2877,3 +2877,21 @@
 - fg1 (u0s KING_FORAGE vs s9s) against fgc (u0m) on the starvation maps, 15 of 16 cells: 7 wins to 5, +3 -1,
   xfer 125k to 111k. where_are_you B: u0m starved (both kings) and lost, u0s won with 19k delivered; Hike A: u0s
   starved twice and lost where u0m won.
+
+## 2026-10-30 13:39 PDT: u0m's set-3 reference (25 of 42); the field's trap war; u0q submitted
+- u0m's set-3 reference block (3819-3822, 3836-3837, 3849-3856): 25 of 42. outercloud, bc26vibe and CS50Crab 6 of 6
+  each; spsquared 4, AdamTan12 2 (wallsofparadis and keepout lost on both sides), AlexT101 1, abcdezyxwv 0.
+- Rat traps across set 2 (diag26b/trapsum.py): every field bot but bc26vibe lays them, 30-310 a game, and 90-98% fire
+  on our rats. CS50Crab constrictinglattice 3801: 310 laid, 305 fired, 126 of our 134 deaths were traps. AlexT101
+  sittingducks 3802: 242 laid, 94 trap deaths, 38 more from thrown landings. Our side: 0 traps laid in every game.
+  The engine fires a rat trap when an enemy rat enters any tile of the 3x3 around it, by walking, being dropped or
+  landing from a throw, and a fired rat trap also starts the backstab. In the replays (trapmove.py) most fires come
+  as our rat closes on an enemy from d2 4-20, or steps off an adjacent one; trap age 0-3 rounds. The '?' why codes at
+  fire turns are rats the trap killed (no indicator, no tag).
+- RISK_ADAPT (u0u) against u0q, 7 of 20 diag games: u0q's traps fired 377 times on u0u and 391 on u0m (-4%), deaths
+  by enemy 220 vs 297, wins 2 vs 3. In u0u's local replays the fires come in every mode: attackers with the full
+  150-round mask on, hunters, retreats. TrapRisk's flat mark array waits for 3*W*H + 8000 bytecodes, so on 60x60 maps
+  no rat ever has marks.
+- u0q (u0m + BABY_RAT_TRAPS + TRAP_ADJ + TRAP_SPAWN_FIRST) is submitted (#115), block 1 on set 3 against the draw
+  above. Self-play can't judge it: s9s lays no traps, and our screen opponents barely do. The field's evidence: s9a
+  (traps off alone on s7d) lost net -3 on the replica; s9s dropped traps only as part of agrab's bundle.
