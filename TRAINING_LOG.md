@@ -1878,3 +1878,16 @@
   birth and bite or grab during cooperation, and every baby fights from r36. The top three open the war in 95% of
   games and take 38 of 48 cells from s7d, and we have never opened it ourselves. Screen ra_s8u and diag rsu1 (s8u vs
   s7d, 6 maps x 2 sides) are on the VM.
+
+## 2026-10-29 17:55 PDT: s8t rejected after block 1; s8u beats s7d 8/12 and goes to the replica
+- s8t's v3 set-1 block (2726-2739) against s7d's reference: 42 cells, 38 alike, D 4 (+1 -3), net -2, t -1.00.
+  Rejected. It lost AlexT101 popthecork B, AlexT101 uneasy_alliance A and CS50Crab Nofreecheese A, and gained
+  CS50Crab dirtfulcat B. s7d's uneasy_alliance A win was luck: 4 of our rats to their 25 at r280, and their king
+  died to 29 cat scratches at r316. s8t's game there went the same way, without the cat.
+- Screens: ra_s8r (FIGHT_EVERY 3) -2.3 pts, t -0.46, net +5; ra_s8s (GATHER_FIRST 10) +2.7 pts, t +0.56, net +4.
+  Both pass (the screen only rejects) and are replica candidates.
+- rsu1, s8u (s7d + RUSH + RUSH_BREAK + BREAK_ROUND 36) against s7d head-to-head, 6 maps x 2 sides: s8u wins 8 of
+  12. It takes both tiny (r60, r65), both knifefight (r48, r46), both DefaultLarge (on points), uneasy_alliance A
+  (r89) and heart B. It loses both DefaultSmall, uneasy_alliance B and heart A. 0 exceptions, 0 overruns. No
+  candidate since s7d has beaten it head-to-head this clearly, so s8u is submission #94, set-1 block from 2740,
+  ahead of its screen (ra_s8u, 28/80).
