@@ -1944,3 +1944,20 @@
     stand near mines and 1.1 carry cheese; 2.5 of theirs stand near mines and 4.5 carry.
   - ue1 (s7d self-play and s7d vs araid on uneasy_alliance and popthecork, kept replays) checks how much of our
     own half we harvest when the opponent can't explain it.
+
+## 2026-10-29 19:31 PDT: s8x rejected; what kills our king; s9a (no baby traps) to the replica
+- s8x's v3 set-1 block (2754-2763, 2765-2766, 2773-2774) against s7d's reference: 42 cells, 36 alike, D 6 (+1 -5),
+  net -4, t -1.63. Rejected. Both heart losses to outercloud were the trap-for-rats trade described above.
+- King deaths across s7d's 126 reference games (sets 1-3): the first king died in 62. HP lost in those deaths:
+  bites 36%, starvation 23%, throws 22%, cat scratches 9%, traps 7%, our own throws 2%. Starvation is spread over
+  many maps: EscapeTheNight, Stash, constrictinglattice, heart, pipes, rose, streetsofnewyork, tiny and wallsofparadis.
+- tiny vs AdamTan12 (2094 g2): we spent 930 on 46 rat traps by r74 (babies laid 40 of them); they spent 520. Bank
+  at r40: 395 to their 1235. We spawned 33 to their 48, our army fell 19 -> 9 by r56 while theirs held at 16, and
+  60 bites killed our king at r74. Our traps hit 98% of the time and killed 14 rats, but the same cheese was about
+  25 rats at the time.
+- s9a = @s7d @kfix + BABY_RAT_TRAPS false (kings still lay their FORT_TRAPS). Submission #96, set-1 block from
+  2781, ahead of its screen (ra_s9a) and its defence run (dr3, against s8w on dr0's cells).
+- uneasy_alliance, locally (ue1): s7d vs araid as A left (2,7) at 160 of 800 picked, though araid never went
+  there. From r151 our gatherers worked only (8,21), (8,27) and (2,22). The map's mines are symmetric under all
+  three candidate symmetries, so the mask stays 7 all game and MINE_MIRROR (which waits for one symmetry) never acts.
+  In self-play both sides pick about 90% of their half, so the gap opens when an opponent disturbs us.
