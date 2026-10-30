@@ -110,20 +110,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   sends the queue under the hourly limit). Score: `contest.py paired REF CAND`.
 - Candidates on the s9s base (screens use `gauntlet.py selfplay RUN/results.jsonl --base araid --control
   build/vmruns/runs/ra_s9s/results.jsonl`):
-  - On the replica: t0g = @s9s + RUSH_LIFE 150 as #107, set-4 block 1 from match 3450 (screen 30 cells t +1.51).
-  - Rejected: t0h (FORM_RING) on set 4, net -1, t -0.45 (evileye: two kings starved); t0c (KING_TRAPS) on set 4,
+  - On the replica: t0o = @s9s + MINE_TIES as #108, set-4 block 1 from match 3491 (mt2 11 of 16 on the tie maps).
+  - Rejected: t0g (RUSH_LIFE 150) on set 4, net -4, t -2.00; t0h (FORM_RING) on set 4, net -1, t -0.45 (evileye: two kings starved); t0c (KING_TRAPS) on set 4,
     net -1, t -0.45; s9z (BREAKOUT_TTL 150) on set 4, net 0; t0b (RISK_FRESH 2)
     at its screen, t -1.73. Dropped: t0d (t0c + BABY_RAT_TRAPS).
   - Screens (runs/screenq.txt; ra_t0e, ra_t0g, ra_t0i running), then ra_t0j, t0n, t0l, t0m, t0o, t0p:
-    - t0e = @s9s + RISK_ROWS (45 cells, t -1.14).
-    - t0g = @s9s + RUSH_LIFE 150 (attackers that never meet the enemy king turn gatherer; 30 cells, t +1.51).
+    - t0e = @s9s + RISK_ROWS (screen done: 80 cells, t -0.75, a weak pass).
     - t0i = @s9s + FORM_MINE (extra kings on home mines, no income test for mine sites; fm3 10 of 16 vs s9s).
-      t0j = t0i + FORM_MAX 3. t0m = @s9s + FORM_MINE + FORM_RING + FORM_MAX 4 (diag fm4).
+      t0j = t0i + FORM_MAX 3. t0m = @s9s + FORM_MINE + FORM_RING + FORM_MAX 4 (fm4 9 of 16, delivers 11.9k to 14.8k).
     - t0k = @s9s + CAT_LAY (cat traps on the cats' lanes in cooperation; cy1 10 of 16 vs s9s, trap damage 1424 to
-      1169). t0n = t0k + CAT_RING (diag cy2).
+      1169). t0n = t0k + CAT_RING (cy2 11 of 16).
     - t0l = @s9s + ATK_CARRY 25 (attackers stay light).
     - t0o = @s9s + MINE_TIES (axis mines count as ours; diag mt2 on the 4 tie maps).
-    - t0p = @s9s + MINE_ANY + MINE_TIES (gatherers over every known mine, either half; diag ma1 on 8 abcdezyxwv maps).
+    - t0p = @s9s + MINE_ANY + MINE_TIES (gatherers over every known mine, either half; ma1 9 of 16).
+    - t0q = @s9s + SYM_FLOW + SYM_CENTRE + SYM_HAND + SYM_FACE (side symmetry; s9s diverges at r2 on Stash; run sym1).
   - t0f = twin of s9s from current code, for re-anchoring sets 2/3/1.
 - Owner rules: assume every map is symmetric in all aspects (PROMPTS.md #14); refresh and commit progress/ after
   every acceptance and every scored replica block (#16).
