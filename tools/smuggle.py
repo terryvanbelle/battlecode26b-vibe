@@ -21,7 +21,7 @@ import argparse, collections, json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import game_report as GR  # noqa: E402
 
-WHY = "-CDEHKMPSWacdfghkmprswyzxTR"
+WHY = "-CDEHKMPSWacdfghkmprswyzxTRA"
 KWHY = "-nsfcbd"
 TAG_MIN_LEFT = 400              # Debug.TAG_MIN_LEFT: no pad with fewer bytecodes left
 LIMIT = {'KING': 20000}         # bytecode limit by type (others 17500)

@@ -573,6 +573,15 @@ public class BotTest {
         check(start.equals(Baby.heardStart(new Message[]{other, st})), "start: read from the king's squeak");
     }
 
+    static void testAmmo() {
+        check(Baby.ammo(Cfg.AMMO_HP, Cfg.AMMO_HP + 10, Cfg.AMMO_D2, Cfg.AMMO_R), "ammo: low, weaker, close, near the king");
+        check(!Baby.ammo(Cfg.AMMO_HP + 1, 100, 2, 1), "ammo: healthy rats stay");
+        check(!Baby.ammo(30, 30, 2, 1), "ammo: an enemy with no more health can't grab us facing it");
+        check(!Baby.ammo(30, 100, Cfg.AMMO_D2 + 1, 1), "ammo: no enemy close");
+        check(!Baby.ammo(30, 100, 2, Cfg.AMMO_R + 1), "ammo: away from the king already");
+        check(!Cfg.AMMO_AWAY, "ammo: off by default");
+    }
+
     static void testRusher() {
         // RUSH is off in the development Cfg: no baby attacks from birth, whatever its index or round
         for (int idx = 0; idx < 20; idx += 4) check(!Baby.rusher(idx, 10) && !Baby.rusher(idx, 500), "rusher: off with RUSH off");
@@ -2037,6 +2046,7 @@ public class BotTest {
         testRescue();
         testHomeStart();
         testRusher();
+        testAmmo();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

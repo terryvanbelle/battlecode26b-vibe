@@ -912,6 +912,7 @@ public final class Baby {
         if (Cfg.CARRY_AIM && !G.coop && rc.getCarrying() != null && rc.getCarrying().team == G.them && aimCarry()) { why = 'T'; return; }
         if (rescueT != null && rescue()) { why = 'R'; return; }
         Debug.mark(10);
+        if (Cfg.AMMO_AWAY && !G.coop && ammoAway()) { why = 'A'; return; }
         if (!G.coop && retreat()) { why = 'r'; return; }
         // the bank is nearly empty and the king starves at 0: whatever we carry goes home before any fight or errand
         if (raw > 0 && G.globalCheese < Cfg.HUNGRY && deliver()) { why = 'H'; return; }
@@ -1381,6 +1382,21 @@ public final class Baby {
         }
         if (best != null) guardKing = k;
         return best;
+    }
+
+    /** Cfg.AMMO_AWAY: step away from our king (or hold) while ammo(...) holds; false when it doesn't. */
+    static boolean ammoAway() throws GameActionException {
+        if (nearestEnemy == null) return false;
+        MapLocation k = Comms.nearestKing(G.me);
+        if (k == null || !ammo(G.rc.getHealth(), nearestEnemy.health, G.me.distanceSquaredTo(nearestEnemy.location), G.cheb(G.me, k))) return false;
+        Nav.flee(k);
+        return true;
+    }
+
+    /** True when a baby with health hp, cheb from our king's centre, is grabbable ammunition for an enemy rat with
+     *  health ehp at dist2 d2 (Cfg.AMMO_AWAY). */
+    static boolean ammo(int hp, int ehp, int d2, int cheb) {
+        return hp <= Cfg.AMMO_HP && ehp > hp && d2 <= Cfg.AMMO_D2 && cheb <= Cfg.AMMO_R;
     }
 
     static boolean retreat() throws GameActionException {

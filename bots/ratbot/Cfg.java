@@ -133,6 +133,12 @@ public final class Cfg {
     public static final boolean POUNCE = true;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */
     public static final int RETREAT_HP = 40;
+    /** At war a baby with health <= AMMO_HP within Chebyshev AMMO_R of our king's centre, whose nearest enemy rat is
+     *  within dist2 AMMO_D2 and has more health (so it can grab us facing it or not), steps away from the king ahead of
+     *  retreat(): such rats are the enemy's ammunition. tiny (rsu1): s8u killed s7d's king with 11 of our own rats
+     *  thrown point-blank into it (about 42 each); field kings died the same way to rats at Chebyshev 2-3, many <= 40 HP. */
+    public static final boolean AMMO_AWAY = false;
+    public static final int AMMO_HP = 50, AMMO_R = 3, AMMO_D2 = 8;
     /** At war a baby within GUARD_KING_R (Chebyshev) of our king targets, ahead of its own nearest enemy, the visible
      *  enemy rat nearest it among those within Chebyshev 2 of the king's centre (in reach to bite it), skips the
      *  standoff against it and bites such rats first (0 = off). 2239 tiny: in r16-48 our king fell 540 -> 32 to 43
