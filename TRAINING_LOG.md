@@ -2373,3 +2373,35 @@
   learn_your_lesson 2/2, mincemeat 0/2; three maps were identical games. On EscapeTheNight vs araid, s9z won both
   sides and s9s lost both.
 - HANDOFF.md's State section is rewritten for s9s's reign (it still named s3y).
+
+## 2026-10-30 03:56 PDT: s9s's set-4 reference; trap marks are seen but not used in fights; king traps back on
+- s9s's set-4 reference block (3284-3297): 26 of 42 games. 0/6 against abcdezyxwv (Meow, superioristhmus,
+  cheesebottles), 1/6 against AlexT101. s9z (@s9s + BREAKOUT_TTL 150) went to the replica as #104 on set 4 as block 1.
+- CAT_LANE is neutral. Screens: s9x vs ra_s6y +0.7 pts, net -2; s9y vs ra_s9s +0.7 pts, net 0. cl2 (8 cat maps,
+  both sides): s9x 8/16 vs s7d, s9y 8/16 vs s9s, 0 overruns (the bytecode fix holds). Both dropped.
+- rf1 (t0b = @s9s + RISK_FRESH 2 and s9s, each vs atrap2 on 8 trap-heavy maps, both sides): t0b 12/16, s9s 9/16.
+  But atrap2's traps hit t0b 99.9 times a game and s9s 91.9.
+- New scratch tool trapvis.py: for each enemy trap one of our rats fires, could that rat itself have marked the tile
+  (it saw the layer, dist2 20 and 90-degree cone, with the trap tile among the layer's three front tiles)?
+  - s9s's 126 field games, 3867 triggers: 54% fired on a tile the victim had marked within 2 rounds, 7% within 150,
+    18% the rat saw the layer but not facing that tile, 21% never saw the layer.
+  - So TrapRisk sees most traps coming; the rats walk in anyway because the mask is dropped once an enemy is within
+    dist2 20 (80% of triggers are on combat moves).
+  - rf1: RISK_FRESH cut fresh-mark triggers from 465 to 318. But the rats then fired older marks (138 -> 348) and
+    unseen layers (425 -> 510) in atrap2's 100-400-trap fields. Attack-role rats ('a') fire the most in every class.
+    Screen ra_t0b queued.
+- Bug, not yet fixed: TrapRisk allocates its W*H mark array only with 3*W*H + 8000 bytecodes left at the observe
+  point. That is 18800 on a 60x60 map, above a baby's 17500 limit: no rat ever has marks there (9 of 45 field maps),
+  and on 50x50 or 60x40 maps it needs 15.2-15.5k left. The trigger rates barely differ by map class (29.5, 28.9 and
+  36.0 a game on ok, hard and dead maps), because the fights drop the mask anyway. A row-lazy array is the fix,
+  behind a switch.
+- s9s's losses (field_report, 126 games): 47 of 57 are king kills (mean r384). abcdezyxwv 1-17 and AlexT101 5-13.
+  Against abcdezyxwv on superioristhmus they delivered 35472 to our 11455 with five kings to our one. Our army fell
+  40 -> 6 (r700-r1100) while theirs rose 48 -> 59. We lost 43 rats to traps and 78 to throws. When our king died,
+  4-6 of their rats were near it and none of ours.
+  - We form a second king in 26 of 126 games; the field forms one in 15, and we lost 14 of those 15.
+- Trap-laying is back on two candidates. A trap does 50 damage and stuns for 30 rounds, which leaves a full-HP rat
+  grabbable. That is the field's combo against us, and s7d's traps hit field rats 86% of the time.
+  - t0c = @s9s + KING_TRAPS: the king's ring traps, toward the nearest enemy or pre-laid toward the centre.
+  - t0d = @s9s + KING_TRAPS + BABY_RAT_TRAPS (s7d's trap behaviour).
+  - kt1 (VM): both vs s9s and agrab on the 8 maps of these losses, both sides. Screens ra_t0c and ra_t0d queued.
