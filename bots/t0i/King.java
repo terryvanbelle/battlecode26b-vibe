@@ -720,8 +720,15 @@ public final class King {
         int babies = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
         int last = Cfg.FORM_LATE && Comms.numKings < 2 ? 1940 : 1150;
         if (G.round < Cfg.FORM_FROM || G.round > last || G.round - formStart < Cfg.FORM_TTL + Cfg.FORM_RETRY
-                || babies < Cfg.FORM_BABIES || G.rc.getGlobalCheese() < Cfg.FORM_CHEESE || !formIncome()) return;
-        formSite = pickFormSite(G.me);
+                || babies < Cfg.FORM_BABIES || G.rc.getGlobalCheese() < Cfg.FORM_CHEESE) return;
+        if (formIncome()) formSite = pickFormSite(G.me);
+        // Cfg.FORM_MINE: a king on a far mine is the cure for a low income (where_are_you: income 100-330 a hundred
+        // rounds with all four home mines listed, 19-30 tiles out, and 2000 cheese lying at each by r1000), so a mine
+        // site needs no income test
+        else if (Cfg.FORM_MINE) {
+            int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
+            formSite = mineSite(G.me, G.mirror(start, s));
+        }
         if (formSite == null) return;
         formStart = G.round;
         formKings = Comms.numKings;

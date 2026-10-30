@@ -120,8 +120,10 @@ public final class Cfg {
      *  mine beside the first king, as the old site needs tiles the king has seen. To r400 in s9s's field games our
      *  mines ranked 4th+ from the king hold 1-2 of our babies and lose 49-59% of their cheese unpicked. Babies within
      *  FORM_MINE_PULL_R2 of a mine site join (beyond FORM_PULL_R2) when (slot >>> 3) % FORM_MINE_SHARE is 0, attackers
-     *  never. A formed king squeaks its old home king's tile with each spawn, and its babies use that for the half
-     *  test and the mirrored enemy start. */
+     *  never. A mine site skips the income test (FORM_NET100): on where_are_you all four home mines are listed by
+     *  r400, 19-30 tiles out, income stays 100-330 a hundred rounds and 2000 cheese lies at each by r1000. A formed
+     *  king squeaks its old home king's tile with each spawn, and its babies use that for the half test and the
+     *  mirrored enemy start. */
     public static final boolean FORM_MINE = true;
     public static final int FORM_MINE_SAFE = 2, FORM_MINE_PULL_R2 = 400, FORM_MINE_SHARE = 2;
     /** Gatherers at their mine turn in place instead of wandering. */
