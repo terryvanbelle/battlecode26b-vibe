@@ -2801,3 +2801,32 @@
     r100 and 2 at r200, xfer 12395 (t0v 11177). u0l (+RUSH_STICK): 0 failed, 4 in the room at r100.
 - u0m = @s9s + u0e's margins + FLOW_ALLOC + FLOW_REV_TURNS 60, the basics repair bundle, submitted as #114 (set 4
   from 3756). Diag fx1 and screen ra_u0m are running. I stopped ra_u0b at 27/80 (u0b was already dropped).
+
+## 2026-10-30 12:23 PDT: u0m's set-4 block; set 4's winner's curse; traps, endgame king and starvation diags
+- u0m (#114) set-4 block (3756-3767, 3785-3786) vs s9s's 3284-3297: 42 cells, 33 alike, D 9 (+3 -6), net -3,
+  t -1.00. Lost: AdamTan12 attack_on_cat B, closeup B, AlexT101 where_are_you B (our kings starved), CS50Crab grove
+  B, outercloud tornadoes B (both kings starved), spsquared evileye B. Gained: AlexT101 Excavation B, spsquared
+  Meow A and B. u0e had lost two of the same cells. Delivery is not the cause: over the differing games u0m
+  delivers 4.09 cheese/round to s9s's 4.0 (sd 1.62), u0e 4.5 to 4.58 (sd 0.84).
+- Set 4 carries s9s's luck. All 9 candidates scored there against 3284-3297 came out net <= 0 (mean -1.9). Pooled
+  cell rates over those 9 draws (`research/panel/v3-set4-pool.txt`, `contest.py pool`) put s9s's draw about 1.7
+  wins above the pool, and u0m at 22 of 42 vs 23.4 expected, z -0.82: no reject, so u0m goes on to block 2
+  (set 2 from 3796, reference u0f 3728-3741) under the basics-repair rule (accept at pooled t >= 0 after two).
+- Reactive traps: in 3290 g0 (Excavation vs AlexT101) 35 of their 39 rat traps fired on us, most within 0-1 rounds
+  of being laid next to our rats, for 1622 of the 2270 damage our rats took; our 20 rats were 0 by r301. Our copy
+  of the tactic, u0j (@s9s + BABY_RAT_TRAPS + TRAP_ADJ), hits with 95% of its traps but went 7 of 16 vs s9s (tj1):
+  it spawns fewer and its king starved on Excavation A. u0q (u0m + the same + TRAP_SPAWN_FIRST) is no better
+  (tq1 6 of 16; hits 91%, spawns fewer in 13 of 16; Meow lost both on points with more cheese delivered). Not
+  submitted. Local opponents don't lay reactive traps, so this local test can't show the defensive side.
+- u0i's END_KING_MINE was inert (ei1 identical to u0d's ek1 in all 16 cells): pickFormSite's clear3 wants tiles
+  the king itself has seen, and on ZeroDay B the king sat in its start pocket with the home mines out of view.
+  u0r = u0n (u0m + END_KING 1850) + END_KING_MSITE takes FORM_MINE's site from the babies' mine list; diag er1.
+- Starvation: king_report over 50 replica matches (3284-3297, 3728-3763) finds 78 king deaths: bite 32, starve
+  27, scratch 9, throwHit 7, trap 3. 16 starved with no enemy damage at all (10 games: where_are_you 5,
+  uneruesansfin 2, Hike 2, ...). where_are_you 3763 B: the second king formed at (56,56) beside the first with no
+  mine, 25k cheese lay on the map at r1000, our rats never came within d2 20 of 4 of the 8 home mines, income
+  ~3.7/round against 4 upkeep, and cats took 42 rats. Hike 3728 A: second king at r250 on 1-6/round; both kings
+  starved by r680. u0s = u0m + KING_FORAGE: a king bound to starve (projected surplus < 0, from r200, every 50
+  rounds) with no mine of its own walks to the nearest home mine no other king holds. Diag fg1 (u0s vs s9s) and
+  control fgc (u0m vs s9s) on the starvation maps, both sides.
+- Screen ra_u0a (KING_CAT_BITE) passed neutral (t +0.46, net -2): not submitted.

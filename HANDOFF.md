@@ -116,14 +116,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - Set 2 is re-anchored by u0f (s9s + HAND_FLIP, #112): 3728-3741, 18 of 42 (s9s's set-2 draw 2115-2128 was 23 of
     42: D 11, +3 -8, t -1.51). Score a candidate's set-2 block against 3728-3741.
   - On the replica: u0m (#114) = @s9s + u0e's margins (SENSE2_LEFT 6000, IND_LEFT 1000) + FLOW_ALLOC (t0v) +
-    FLOW_REV_TURNS 60 (u0k), the basics repair bundle. Block 1 = set 4 from 3756 (reference 3284-3297), block 2 =
-    set 2 (reference 3728-3741). Reading of the repair rule: two blocks without the block-1 reject, then accept at
-    pooled t >= 0. Why: on cheesebottles s9s's 12 rushers sit in the walled room by our (20,13) mine from r75 to
-    r400, their reverse searches dropped at 25 turns (234 given up a game; u0k 3). Diag fx1, screen ra_u0m running.
+    FLOW_REV_TURNS 60 (u0k), the basics repair bundle. Block 1 = set 4 (3756-3767, 3785-3786) vs 3284-3297: net -3,
+    t -1.00 (D 9, +3 -6); pooled over the 9 set-4 draws 22 of 42 vs 23.4 expected, z -0.82. Block 2 = set 2 from
+    3796 (reference u0f 3728-3741). Reading of the repair rule: two blocks without the block-1 reject, then accept
+    at pooled t >= 0. Why: on cheesebottles s9s's 12 rushers sit in the walled room by our (20,13) mine from r75 to
+    r400, their reverse searches dropped at 25 turns (234 given up a game; u0k 3). fx1 (u0m vs s9s) 7 of 16.
+  - Set 4 carries s9s's luck: all 9 candidates scored there against 3284-3297 came out net <= 0 (mean -1.9), and
+    s9s's own draw sits ~1.7 wins above the pooled cell rates. Score set-4 blocks with
+    `contest.py pool 3284-3297 research/panel/v3-set4-pool.txt CAND` as well as `paired`.
   - u0e (#113) alone: set-4 block net -2, t -1.00 (D 4), 0 overruns in 42 (reference 2); folded into u0m.
-  - Next after u0m: u0d (END_KING 1850; ek1 11 of 16 vs s9s, won every game it ended 2 kings to 1; u0g's crowd
-    site changes no result, ek2) or t0t (RUSH_TO 12; screen t +0.92, rz1 10 of 16). Build them on u0m if it passes.
-    u0i = u0d + END_KING_MINE, diag ei1. u0j = @s9s + BABY_RAT_TRAPS + TRAP_ADJ (the field's reactive traps), tj1.
+  - Next after u0m (all built on u0m): u0n = END_KING 1850 (u0d; ek1 11 of 16 vs s9s), u0r = u0n + END_KING_MSITE
+    (u0i's END_KING_MINE was inert: clear3 wants king-seen tiles; er1 running), u0s = KING_FORAGE (27 of 78 king
+    deaths in 50 replica matches were starvation, 16 with no enemy damage; fg1 vs fgc running on the starvation
+    maps), u0o = RUSH_TO 12 (t0t), u0p = RUSH_STICK. u0q = BABY_RAT_TRAPS + TRAP_ADJ + TRAP_SPAWN_FIRST: weak
+    (tq1 6 of 16; traps hit 91% but it spawns fewer). u0j (reactive traps on s9s) weak, tj1 7 of 16.
   - Dropped: u0h (HOME_ALL_SYM, hs1 6 of 16), u0b (RUSH_STICK, st1 8 of 16). Parked: u0c (BitFlow, bf1 5 of 16).
     u0l = u0k + RUSH_STICK (rushers stop flipping between the two king spots; cb4: 4 in the room at r100, u0k 11).
   - Rejected: t0p (MINE_ANY + MINE_TIES) on set 4, net -2, t -1.00.
