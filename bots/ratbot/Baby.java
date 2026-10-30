@@ -212,7 +212,7 @@ public final class Baby {
         role = GATHER;
         if (idx >= Cfg.GATHER_FIRST && (G.round % Cfg.FIGHT_EVERY) == 0) role = FIGHT;
         raider = role == FIGHT && Cfg.RAID_EVERY > 0 && (G.round / Cfg.FIGHT_EVERY) % Cfg.RAID_EVERY == 0;
-        if (Cfg.RUSH && idx >= Cfg.RUSH_FROM && idx < Cfg.RUSH_TO) role = ATTACK;
+        if (rusher(idx, G.round)) role = ATTACK;
         Comms.readKings();
         home = Comms.nearestKing(G.me);
         if (home == null) home = G.me;
@@ -227,6 +227,11 @@ public final class Baby {
         G.seed(seed);
         slot = ((Cfg.SYM_SLOT ? seed : rc.getID()) * 0x9E3779B1) >>> 8;
         scout = Cfg.SCOUT_EVERY > 0 && (slot >>> 4) % Cfg.SCOUT_EVERY == 0;
+    }
+
+    /** Cfg.RUSH: a baby born with idx live babies in round r attacks the enemy king. */
+    static boolean rusher(int idx, int r) {
+        return Cfg.RUSH && idx >= Cfg.RUSH_FROM && idx < Cfg.RUSH_TO && (Cfg.RUSH_UNTIL == 0 || r < Cfg.RUSH_UNTIL);
     }
 
     /** A rat's birth seed: its round and unsigned offset from the king that spawned it, the same for its mirror twin. */

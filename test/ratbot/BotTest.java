@@ -573,6 +573,12 @@ public class BotTest {
         check(start.equals(Baby.heardStart(new Message[]{other, st})), "start: read from the king's squeak");
     }
 
+    static void testRusher() {
+        // RUSH is off in the development Cfg: no baby attacks from birth, whatever its index or round
+        for (int idx = 0; idx < 20; idx += 4) check(!Baby.rusher(idx, 10) && !Baby.rusher(idx, 500), "rusher: off with RUSH off");
+        check(Cfg.RUSH_UNTIL == 0, "rusher: RUSH_UNTIL defaults to never");
+    }
+
     static void testRescue() throws GameActionException {
         reset(); install();
         G.round = 200; G.coop = false; Nav.avoid = 0;
@@ -2030,6 +2036,7 @@ public class BotTest {
         testKingBiter();
         testRescue();
         testHomeStart();
+        testRusher();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

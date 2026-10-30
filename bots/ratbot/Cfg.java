@@ -253,6 +253,10 @@ public final class Cfg {
     /** Rush: babies with spawn index in [RUSH_FROM, RUSH_TO) attack the enemy king from birth. */
     public static final boolean RUSH = false;
     public static final int RUSH_FROM = 4, RUSH_TO = 16;
+    /** Rush spawns stop at this round (0 = never): the spawn index is the live-baby count, so without it every
+     *  replacement born with 4-15 babies alive is an attacker all game (rsu1: s8u lost both DefaultSmall games to s7d
+     *  in a long war, 7 rats to 13-15 at r150). */
+    public static final int RUSH_UNTIL = 0;
     /** Rush attackers bite and grab enemy rats during cooperation too (the first bite ends it for everyone). */
     public static final boolean RUSH_BREAK = false;
     /** From this round on (0 = never) every baby bites and grabs enemy rats during cooperation too: the field rushers
