@@ -2464,7 +2464,121 @@ public class BotTest {
         check(Baby.homeRank(2, 9) < Baby.homeRank(2, 3), "home pick 2: farther ranks first");
     }
 
+
+    /** GrabMicro enemies: offsets, health, facing (G.DIRS index, -1 none), can grab; returns the count. */
+    static int gmSet(int[][] es) {
+        for (int i = 0; i < es.length; i++) {
+            GrabMicro.ex[i] = es[i][0]; GrabMicro.ey[i] = es[i][1]; GrabMicro.ehp[i] = es[i][2];
+            GrabMicro.edir[i] = es[i][3]; GrabMicro.ecan[i] = true;
+        }
+        return es.length;
+    }
+
+    /** All window tiles within Chebyshev 2 free except ours and the listed offsets. */
+    static long gmFree(int... blocked) {
+        long f = GrabMicro.INNER & ~GrabMicro.CBIT;
+        for (int i = 0; i < blocked.length; i += 2) f &= ~GrabMicro.bit(blocked[i], blocked[i + 1]);
+        return f;
+    }
+
+    static void testGrabMicro() {
+        // facing sets and the cone
+        check(GrabMicro.vis(0) == (GrabMicro.bit(0, 1) | GrabMicro.bit(-1, 1) | GrabMicro.bit(1, 1))
+                && GrabMicro.vis(1) == (GrabMicro.bit(1, 1) | GrabMicro.bit(0, 1) | GrabMicro.bit(1, 0)),
+                "grab micro: a facing sees ahead and the two front diagonals");
+        check(GrabMicro.sees(0, 2, 4, 0, 0) && !GrabMicro.sees(2, 0, 2, 1, 0) && GrabMicro.sees(2, 0, 6, 1, 0)
+                && !GrabMicro.sees(0, 1, 4, 1, 1) && GrabMicro.sees(0, 0, -1, 3, 3),
+                "grab micro: an enemy's cone (ahead within 45 degrees, radius squared 20)");
+        check(GrabMicro.shift(GrabMicro.CBIT, 2, -1) == GrabMicro.bit(2, -1) && GrabMicro.shift(GrabMicro.CBIT, -3, -3) == 1L,
+                "grab micro: window shifts");
+        int px = 7, py = 3;
+        // an enemy two ahead facing us: facing it, every tile it can step to next to us is in view
+        int n = gmSet(new int[][] {{0, 2, 100, 4}});
+        GrabMicro.evaluate(100, 0, true, 255, false, n, gmFree(), px, py, 1);
+        check(GrabMicro.curS == 0 && GrabMicro.bestD == 8 && GrabMicro.bestF == 0 && GrabMicro.grabI < 0,
+                "grab micro: facing an enemy two ahead is safe; stay");
+        // with the action: a diagonal step next to it, facing it, bites with every tile it can reach in view
+        GrabMicro.evaluate(100, 0, true, 255, true, n, gmFree(), px, py, 1);
+        check(GrabMicro.biteI == 0 && GrabMicro.bestS == GrabMicro.FLIP - 1 && Math.abs(GrabMicro.DX[GrabMicro.bestD]) == 1
+                && GrabMicro.DY[GrabMicro.bestD] == 1, "grab micro: a safe step to bite");
+        // the same enemy behind us: one threat now; turning to it is the fix
+        GrabMicro.evaluate(100, 4, true, 255, false, n, gmFree(), px, py, 1);
+        check(GrabMicro.curS == -GrabMicro.THREAT && GrabMicro.bestS == 0 && GrabMicro.bestD == 8 && GrabMicro.bestF == 0,
+                "grab micro: an enemy that can step into our blind spot is a threat; turn to it");
+        // no turn and no step: walls on our blind tiles next to its reach make it safe
+        n = gmSet(new int[][] {{2, 0, 100, 6}});
+        GrabMicro.evaluate(100, 0, false, 0, true, n, gmFree(), px, py, 1);
+        int open = GrabMicro.curS;
+        GrabMicro.evaluate(100, 0, false, 0, true, n, gmFree(1, 0, 1, -1), px, py, 1);
+        check(open == -GrabMicro.THREAT && GrabMicro.curS == 0, "grab micro: walls and robots block the enemy's step");
+        // an enemy facing away two tiles east: step behind it, face it and grab
+        n = gmSet(new int[][] {{2, 0, 100, 2}});
+        GrabMicro.evaluate(100, 0, true, 255, true, n, gmFree(), px, py, 1);
+        check(GrabMicro.bestD == 2 && GrabMicro.bestF == 2 && GrabMicro.grabI == 0 && GrabMicro.bestS == GrabMicro.GRAB + 10,
+                "grab micro: a step into an enemy's blind spot grabs it");
+        GrabMicro.evaluate(100, 0, true, 255, false, n, gmFree(), px, py, 1);
+        check(GrabMicro.grabI < 0, "grab micro: no grab without the action");
+        // a weaker enemy in front of us is grabbed from where we stand
+        n = gmSet(new int[][] {{0, 1, 80, 4}});
+        GrabMicro.evaluate(100, 0, true, 255, true, n, gmFree(), px, py, 1);
+        check(GrabMicro.bestD == 8 && GrabMicro.bestF == 0 && GrabMicro.grabI == 0, "grab micro: a weaker enemy ahead is grabbed");
+        // a healthier enemy two ahead threatens us even in view: back off out of its reach
+        n = gmSet(new int[][] {{0, 2, 100, 4}});
+        GrabMicro.evaluate(50, 0, true, 255, true, n, gmFree(), px, py, 1);
+        check(GrabMicro.curS == -GrabMicro.THREAT && GrabMicro.bestS >= -1 && GrabMicro.bestD != 8
+                && Math.max(Math.abs(GrabMicro.DX[GrabMicro.bestD]), Math.abs(GrabMicro.DY[GrabMicro.bestD] - 2)) >= 3,
+                "grab micro: a healthier enemy grabs from anywhere next to us; step away");
+        // an equal enemy adjacent ahead: the bite ends its health edge
+        n = gmSet(new int[][] {{0, 1, 100, 4}});
+        GrabMicro.evaluate(100, 0, false, 0, true, n, gmFree(), px, py, 1);
+        check(GrabMicro.biteI == 0 && GrabMicro.curS == GrabMicro.FLIP - GrabMicro.THREAT, "grab micro: a flip bite on an equal enemy");
+        // a carrier cannot grab
+        n = gmSet(new int[][] {{0, -2, 100, 0}});
+        GrabMicro.ecan[0] = false;
+        GrabMicro.evaluate(100, 0, false, 0, true, n, gmFree(), px, py, 1);
+        check(GrabMicro.curS == 0, "grab micro: an enemy carrying a rat is no threat");
+
+        // mirrored and rotated twins choose mirrored options, whatever the enemy order
+        java.util.Random rnd = new java.util.Random(7);
+        int bad = 0, cases = 0;
+        int[] mirX = {0, 7, 6, 5, 4, 3, 2, 1}, mirY = {4, 3, 2, 1, 0, 7, 6, 5}, rot = {4, 5, 6, 7, 0, 1, 2, 3};
+        for (int c = 0; c < 3000; c++) {
+            int ne = 1 + rnd.nextInt(4);
+            int[][] es = new int[ne][];
+            for (int i = 0; i < ne; i++) {
+                int x, y;
+                do { x = rnd.nextInt(7) - 3; y = rnd.nextInt(7) - 3; } while (x == 0 && y == 0);
+                es[i] = new int[] {x, y, 10 * (1 + rnd.nextInt(10)), rnd.nextInt(8)};
+            }
+            int hp = 10 * (1 + rnd.nextInt(10)), cur = rnd.nextInt(8), mm = rnd.nextInt(256);
+            boolean tOk = rnd.nextBoolean(), aOk = rnd.nextInt(4) != 0;
+            long fr = GrabMicro.INNER & ~GrabMicro.CBIT;
+            for (int k = 0; k < 4; k++) fr &= ~GrabMicro.bit(rnd.nextInt(5) - 2, rnd.nextInt(5) - 2);
+            for (int[] e : es) if (Math.abs(e[0]) <= 2 && Math.abs(e[1]) <= 2) fr &= ~GrabMicro.bit(e[0], e[1]);
+            int qx = rnd.nextInt(41) - 20, qy = rnd.nextInt(41) - 20, ch = rnd.nextBoolean() ? 1 : -1;
+            if (qx == 0 && qy == 0) qx = 3;
+            GrabMicro.evaluate(hp, cur, tOk, mm, aOk, gmSet(es), fr, qx, qy, ch);
+            int d0 = GrabMicro.bestD, f0 = GrabMicro.bestF, s0 = GrabMicro.bestS;
+            for (int t = 0; t < 3; t++) {
+                int[] m = t == 0 ? mirX : t == 1 ? mirY : rot;
+                int sx = t == 1 ? 1 : -1, sy = t == 0 ? 1 : -1;
+                int[][] ms = new int[ne][];
+                for (int i = 0; i < ne; i++) { int[] e = es[(i + t + 1) % ne]; ms[i] = new int[] {sx * e[0], sy * e[1], e[2], m[e[3]]}; }
+                long mf = 0;
+                for (int oy = -2; oy <= 2; oy++) for (int ox = -2; ox <= 2; ox++)
+                    if ((fr & GrabMicro.bit(ox, oy)) != 0) mf |= GrabMicro.bit(sx * ox, sy * oy);
+                int mmm = 0;
+                for (int d = 0; d < 8; d++) if ((mm & (1 << d)) != 0) mmm |= 1 << m[d];
+                GrabMicro.evaluate(hp, m[cur], tOk, mmm, aOk, gmSet(ms), mf, sx * qx, sy * qy, t == 2 ? ch : -ch);
+                cases++;
+                if (GrabMicro.bestS != s0 || GrabMicro.bestF != m[f0] || GrabMicro.bestD != (d0 == 8 ? 8 : m[d0])) bad++;
+            }
+        }
+        check(bad == 0, "grab micro: mirrored twins pick mirrored options (bad=" + bad + " of " + cases + ")");
+    }
+
     public static void main(String[] args) throws Exception {
+        testGrabMicro();
         testFlowProgress();
         testFlowCache();
         testFlowRev();

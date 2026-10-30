@@ -2940,3 +2940,45 @@
   another. At war the points are 0.5 king share, 0.3 cat-damage share and 0.2 cheese-transferred share.
 - Submitted u1a (#117) = u0z + SEEK_IDLE 40 + IDLE_SHIFT. Diags: ix1 (u0x) vs iwc 11 wins to 8 at 16 cells,
   delivered +11%; iw1 (u0w) 9 to 7 at 15, +18%. Block 1 is on set 3, matches after 3945.
+
+## 2026-10-30 16:08 PDT: u1a rejected; the Stash pocket; who grabs whom; GRAB_MICRO
+- u1a (#117) block 1 on set 3 (3951-3952, 3956-3957, 3972-3973, 3986-3993) vs u0m's reference: 42 cells, 37
+  alike, D 5 (+0 -5), net -5, t -2.24, rejected. It lost where_are_you A and B (AdamTan12), rose A and B
+  (spsquared) and dirtfulcat B (outercloud). u0z, the same bundle without SEEK_IDLE + IDLE_SHIFT, tied u0m on this
+  set, so the mine-coverage pair is what lost. Its screen ra_u0w (u0w = SEEK_IDLE alone) passed weakly: t -0.59,
+  +5 -10.
+- u1b (WOUNDED_HP 50) and u1e (WOUNDED_HP + AMMO_AWAY) are both weak against u0q: 8 wins to the control's 11 on
+  adc's 20 cells (wd1, wa1). Neither goes to the replica.
+- Stash pocket (local stz1, u1a vs araid): our king starts in a walled pocket (wall row y=22, dirt at both ends,
+  serpentine dirt stripes). None of our rats got out before r53; 12 attackers were stuck r10-100, and 40-50% of
+  rat-turns were in flow 'building'. One attacker's trace: r8-14 it heads for (15,26), the VER mirror of our own
+  king, a symmetry that is impossible because the twin kings would overlap (SYM_KING_GAP rules it out at round 1).
+  Then its target flips between the ROT and HOR spots, and each flip resets the stall (RUSH_STICK fixes that). Its
+  reverse searches take 17 turns while the rat wanders, and finished paths are dropped after FLOW_HOLD 3 turns when
+  the next tile is held by a robot (the pocket is crowded). u1f = u0m + SYM_KING_GAP: diag kg1 vs kgc on the 8
+  gapAlt maps. Halfway: Stash won faster (706 and 891 rounds against 826 and 1047), FreeTheCheese B lost by
+  starvation.
+- Flow search cost (popbench, a Stash-like harness): one 30-tile path costs 640-890 pops in reverse against ~250
+  forward when the rat is in a pocket. LIFO buckets and weighted A* (w 2, 3) don't help the reverse search. In
+  game, the fast reverse loop pays ~245 bytecodes a pop to the plain forward loop's ~621, so a forward search for
+  unknown targets would only pay if it were unrolled too.
+- The field's rat war (3934-3937 vs AlexT101 and abcdezyxwv; throwsum.py, kingdmg.py). Thrown rats do 40-70% of
+  the damage to our king (throwHit 232-430 a game). On tiny vs AlexT101 our king spawns every turn and first bites
+  at r34, by when it has taken 31 bites and throws to the 4 bites it gave. We lose 1.3-2.3x more rats, mostly to
+  throwLand and throwHit, then traps (2-35 a game ours, 0 theirs). They grab more (116-186 to our 93-148) and throw
+  a larger share (78% to 63%).
+- grabopp.py over the 12 games: per our rat-turn at war near enemies, it checks whether a grab was open and whether
+  an enemy could step next to us into our blind spot (or anywhere next to us, when healthier). End-of-turn
+  exposure 0, 1, 2, 3+ was grabbed before the next turn 0.0-0.4%, 5-20%, 8-32% and 14-65% of the time. We left
+  most grabs unused: per game 33-305 open where we stood (24-74 taken) and 33-320 one step away (8-45 taken). A
+  grab needs the grabber to face its victim (the engine checks canSenseLocation), so our tryCarry, which never
+  turns, misses every grab that needs a turn.
+- New switch GRAB_MICRO, off by default (GrabMicro.java, 7x7 bitboards). In the war, not carrying, before the
+  pre-move bite: score each end tile (stay or one step) and facing by a grab there (100 + victim hp/10), a bite
+  (GRAB_BITE 20, +15 when it ends the victim's health edge, +40 a kill), and -GRAB_THREAT 25 per enemy that can step
+  next to us into our blind spot (anywhere next to us when healthier). Walls, dirt and robots block the enemy's
+  step. Act (move, turn, then grab or bite) when the best beats standing by GRAB_MARGIN 10. Otherwise put steps worse
+  than standing by 10 into Nav.avoid. Ties are broken by a mirror-invariant key. BotTest has 11 cases plus 9000
+  mirrored and rotated twins (all pick the mirrored option). bccmp: only new members with the switch off.
+  u1g = u0m + GRAB_MICRO: diag gm1 vs agrab, agaim, abrk on tiny, constrictinglattice, starvation, Excavation,
+  knifefight and Meow, both sides, control gmc (u0m).

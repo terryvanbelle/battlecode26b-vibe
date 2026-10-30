@@ -609,4 +609,11 @@ public final class Cfg {
      *  by 3-11 there on superioristhmus (rz1, al1; field 3292, 3293), once at 17424 used before the indicator, once
      *  in the re-sense or flow work, and the next turn went to finishing it. Replica replays drop indicators. */
     public static final int SENSE2_LEFT = 4000, IND_LEFT = 0;
+    /** Grab-aware micro (GrabMicro) in the rat war: before its bites a rat scores staying and each step, with each
+     *  facing, by a grab it gets there (100 + victim hp / 10), a bite (GRAB_BITE; +15 when it ends the victim's
+     *  health edge, +40 for a kill) and GRAB_THREAT per enemy that can step next to it into its blind spot (anywhere
+     *  next to it when healthier), and takes the best when it beats standing still by GRAB_MARGIN; else steps worse
+     *  than standing by GRAB_MARGIN are avoided. Needs GRAB_BC bytecodes left. */
+    public static final boolean GRAB_MICRO = false;
+    public static final int GRAB_THREAT = 25, GRAB_BITE = 20, GRAB_MARGIN = 10, GRAB_BC = 9000;
 }

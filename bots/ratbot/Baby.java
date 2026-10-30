@@ -138,6 +138,7 @@ public final class Baby {
         if (hostile && Cfg.NAP) tryCarry(robots);
         // a rescue one step away keeps the action for the grab after the move
         boolean saving = rescueT != null && rc.isMovementReady() && rc.isActionReady();
+        if (Cfg.GRAB_MICRO && hostile && !saving && GrabMicro.act(robots)) saving = true;
         if (!G.coop && Cfg.BABY_RAT_TRAPS && !saving) tryRatTrap();
         Debug.mark(5);
         if (hostile && !saving) biteEnemies(robots);
@@ -164,7 +165,8 @@ public final class Baby {
         Debug.mark(21);
         if (hostile && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
         Debug.mark(22);
-        if (hostile) biteEnemies(rc.senseNearbyRobots(2, G.them));
+        if (Cfg.GRAB_MICRO && GrabMicro.round == G.round) { }
+        else if (hostile) biteEnemies(rc.senseNearbyRobots(2, G.them));
         else if (role == ATTACK) {
             RobotInfo[] near = rc.senseNearbyRobots(8, G.them);
             for (RobotInfo r : near) if (r.type == UnitType.RAT_KING) biteEnemies(new RobotInfo[]{r});
@@ -1000,6 +1002,7 @@ public final class Baby {
     static char why = '-';
 
     static void moveDecision() throws GameActionException {
+        if (Cfg.GRAB_MICRO && GrabMicro.round == G.round) return;
         why = '-';
         RobotController rc = G.rc;
         int raw = rc.getRawCheese();
