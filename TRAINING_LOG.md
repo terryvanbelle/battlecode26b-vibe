@@ -2112,7 +2112,7 @@
 - hb2 partial: s9b 10/20, delivered 3314 to 3538 (neutral, as on the replica). s9k 6/8, delivered 6373 to 3790
   (seepastyourgreed 20875 to 11900 as A, 9620 to 650 as B). Screen ra_s9g: +0.3 pts, net 0, pass.
 
-## 2026-10-29 22:14 PDT: where s7d loses; s9n (s9k + AMMO_AWAY)
+## 2026-10-29 22:11 PDT: where s7d loses; s9n (s9k + AMMO_AWAY)
 - s7d's 126 reference games (v3 sets 1-3) by opponent (our game wins):
   - bc26vibe_bot 16/18, CS50Crab 13/18, outercloudstudio 13/18, spsquared 9/18.
   - AdamTan12 6/18, AlexT101 3/18, abcdezyxwv 2/18.
