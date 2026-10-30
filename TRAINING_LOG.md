@@ -2111,3 +2111,21 @@
   - Screen ra_s9m is queued.
 - hb2 partial: s9b 10/20, delivered 3314 to 3538 (neutral, as on the replica). s9k 6/8, delivered 6373 to 3790
   (seepastyourgreed 20875 to 11900 as A, 9620 to 650 as B). Screen ra_s9g: +0.3 pts, net 0, pass.
+
+## 2026-10-29 22:14 PDT: where s7d loses; s9n (s9k + AMMO_AWAY)
+- s7d's 126 reference games (v3 sets 1-3) by opponent (our game wins):
+  - bc26vibe_bot 16/18, CS50Crab 13/18, outercloudstudio 13/18, spsquared 9/18.
+  - AdamTan12 6/18, AlexT101 3/18, abcdezyxwv 2/18.
+- The top three win almost entirely by killing our king (abcdezyxwv 16 of 16 losses, AlexT101 14 of 15, AdamTan12
+  11 of 12), often early: knifefight r67-73, averyfinel r90-112, tiny r49-218, evileye r155-247.
+- How the rats are spent in those 12 matches (alloc, mean babies per class):
+  - At r<=100 we field more rats (18.5-20 to 15.6-17) and as many fighting.
+  - By r200-300 we are down to 11-12 to their 15-18; abcdezyxwv reaches 29 by r500.
+- knifefight 2074 (king dead r67):
+  - abcdezyxwv grabbed 56 of ours and threw 42, hitting a robot with 38 of them; 7 hit our king (290 HP).
+  - Of those 56 grabs, 29 worked because our rat had less HP than theirs (no threshold: HEALTH_GRAB_THRESHOLD 0) and
+    28 came from outside our 90-degree cone.
+  - Our 52 rat traps hit 96% (22 kills), so traps are not where this fight is lost; grab and throw is.
+- s9n = s9k + AMMO_AWAY: low-HP rats near our king step away from it rather than be thrown into it. On s7d as
+  s8y it passed the screen at +4.8 pts, net +2. Screen ra_s9n is queued.
+- s9k's set-1 block after 6 of 14 matches: 18 cells, 13 alike, gained 2, lost 3, net -1.
