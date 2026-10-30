@@ -2198,3 +2198,17 @@
 - So the switch set that copies the top three beats our champion locally by about the margin abcdezyxwv and
   AlexT101 beat it on the replica. s9r (the same switches as a candidate) is on the replica. ag2 splits agrab:
   agrw (the early war and rush alone) and agtr (agrab keeping our rat traps), each against s7d on ag1's maps.
+
+## 2026-10-29 23:44 PDT: ag2: agrab's edge is not the rush and not dropping traps
+- ag2 (against s7d on ag1's 10 maps, both sides):
+  - agrw (s7d + RUSH + RUSH_BREAK + BREAK_ROUND 30 only) won 6/20. The early war and rush on their own are
+    worse than s7d.
+  - agtr (agrab keeping our baby and king rat traps) won 14/20, the same as agrab, including constrictinglattice
+    and pipes on points on both sides.
+- That leaves the 40/40 baby cap and the aimed throws (CARRY_AIM + THROW_MIN 84). ag4 splits them:
+  - agaim = s7d + caps 40 + aim, with no rush and traps kept.
+  - agcap = s7d + caps 40 alone.
+- s9r's block so far (8 of 14): CS50Crab 6/6. All three losses to outercloudstudio were starvations with no
+  enemy near (cheese out r558-1280). s9s (the 40 cap only while the bank holds 1000) is in ag3 against s7d.
+- ra_s9r's first start failed ('no java sources': queued before bots/s9r reached the VM); it is queued again
+  behind ra_s9s. Sync the bots before queueing a screen.
