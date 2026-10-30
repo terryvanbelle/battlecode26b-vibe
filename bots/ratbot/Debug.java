@@ -43,6 +43,9 @@ public final class Debug {
             if (Nav.target != null) sb.append(" nt=").append(Nav.target.x).append(',').append(Nav.target.y).append('/').append(Nav.stall);
             if (Flow.tgt != null) sb.append(" ft=").append(Flow.tgt.x).append(',').append(Flow.tgt.y)
               .append(Flow.building ? 'b' : Flow.builtRound >= 0 ? 'r' : '-').append(Flow.held).append('/').append(Flow.plen - Flow.ppos);
+            if (Cfg.BFLOW && BitFlow.tgt != null) sb.append(" bf=").append(BitFlow.tgt.x).append(',').append(BitFlow.tgt.y)
+              .append(BitFlow.building ? 'b' : '-').append(BitFlow.wave).append(':').append(BitFlow.meD).append(':').append(BitFlow.builds)
+              .append(':').append(BitFlow.steps).append(':').append(BitFlow.fails).append(':').append(BitFlow.restarts).append(':').append(BitFlow.held);
             int[] fe = Flow.ends;
             sb.append(" fe=").append(fe[0]).append(':').append(fe[1]).append(':').append(fe[2]).append(':').append(fe[3]).append(':').append(fe[4]).append(':').append(fe[5]).append(':').append(Flow.fails).append(':').append(Flow.hits);
             if (PROBE) sb.append(" fx=").append(Flow.pops).append(':').append(Flow.workBc).append(':').append(indBc);

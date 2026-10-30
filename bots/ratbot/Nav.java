@@ -96,13 +96,26 @@ public final class Nav {
         if (!G.rc.isMovementReady()) return false;
         // a dirt tile straight ahead with no closer free side step is dug and entered at once; flow (below) is for
         // stalls the local rule cannot see past. Not while a flow path is being followed or searched.
-        if (Cfg.DIG_FIRST && !(Cfg.FLOW && (Flow.ready(t) || Flow.building)) && digToward(t)) {
+        if (Cfg.BFLOW) {
+            if (Cfg.DIG_FIRST && !BitFlow.active(t) && digToward(t)) {
+                Direction d = G.me.directionTo(t);
+                return free(d) && step(d);
+            }
+        } else if (Cfg.DIG_FIRST && !(Cfg.FLOW && (Flow.ready(t) || Flow.building)) && digToward(t)) {
             Direction d = G.me.directionTo(t);
             return free(d) && step(d);
         }
         int d0 = G.me.distanceSquaredTo(t), s0 = stall;
         if (d0 < bestDist) { bestDist = d0; stall = 0; } else stall++;
-        if (Cfg.FLOW && G.cheb(G.me, t) > 1) {
+        if (Cfg.BFLOW && G.cheb(G.me, t) > 1) {
+            // a distance field toward t (BitFlow): walk down it from wherever we stand; greedy and bug walks meanwhile
+            if (stall >= Cfg.FLOW_STALL || bugging && bugTurns >= Cfg.FLOW_STALL) BitFlow.request(t);
+            MapLocation was = G.me;
+            if (BitFlow.follow(t)) {
+                if (!G.me.equals(was)) stall = 0;
+                return !G.me.equals(was);
+            }
+        } else if (Cfg.FLOW && G.cheb(G.me, t) > 1) {
             if (stall >= Cfg.FLOW_STALL || bugging && bugTurns >= Cfg.FLOW_STALL) Flow.request(t);
             MapLocation was = G.me;
             boolean on = Flow.ready(t);
@@ -270,6 +283,7 @@ public final class Nav {
             rc.removeDirt(n);
             digs++;
             Sym.mem[G.idx(n)] &= ~Sym.DIRT;
+            if (Cfg.BFLOW) BitFlow.undirt(n.x, n.y);
             bugging = false;
             return true;
         }
@@ -287,6 +301,7 @@ public final class Nav {
             rc.removeDirt(n);
             digs++;
             Sym.mem[G.idx(n)] &= ~Sym.DIRT;
+            if (Cfg.BFLOW) BitFlow.undirt(n.x, n.y);
         }
     }
 

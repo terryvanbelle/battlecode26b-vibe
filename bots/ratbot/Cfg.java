@@ -384,6 +384,12 @@ public final class Cfg {
      *  rat-turns (Stash 25.9%) were spent waiting on a requested search; EscapeTheNight self-play: one twin stood 6
      *  turns short of the arrays while the other searched (6410 bytecodes a turn to 12810). */
     public static final boolean FLOW_ALLOC = false;
+    /** Navigation by BitFlow's distance fields instead of Flow's paths: waves over row bitboards from the target, no
+     *  per-tile search work; the rat walks down the field from wherever it stands. gr1 (grove, 60x60 bands): Flow's
+     *  reverse A* ran ~15.5k bytecodes a turn and never finished inside FLOW_REV_TURNS. A field is grown until the
+     *  rat's tile is BFLOW_EXTRA waves inside it (more as the rat leaves it). */
+    public static final boolean BFLOW = false;
+    public static final int BFLOW_EXTRA = 12;
     /** Our kings' 3x3 bodies count as walls for flow paths and bug walks (not when the target is at a king).
      *  EscapeTheNight: A* routed babies through the king that stood between them and the room's exit; they waited behind
      *  it, dropped the path and searched again, 500+ rounds. */

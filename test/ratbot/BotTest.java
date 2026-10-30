@@ -1147,6 +1147,121 @@ public class BotTest {
         check(!Flow.searching(t) && !Flow.building, "flow: slow search times out");
     }
 
+    /** A clean BitFlow over the installed map (its row masks follow Sym.record through bfRecord). */
+    static void bfReset() {
+        BitFlow.init();
+        BitFlow.reach = null; BitFlow.tgt = null; BitFlow.building = false; BitFlow.seeded = false; BitFlow.failTgt = null;
+        BitFlow.lo = 0; BitFlow.hi = -1; BitFlow.held = 0;
+    }
+
+    static void bfRecord(int x, int y, boolean wall, boolean dirtTile) {
+        Sym.record(x, y, wall, dirtTile, false);
+        BitFlow.mark(x, y, Sym.mem[x + y * W]);
+    }
+
+    /** BitFlow's field: Chebyshev distance on open ground, a dirt tile costs DIG_COST, walls are gone round, a walled-off
+     *  rat fails. */
+    static void testBitFlow() {
+        reset(); W = 12; H = 8; install(); bfReset();
+        me = new MapLocation(2, 4); G.startTurn();
+        MapLocation t = new MapLocation(10, 4);
+        BitFlow.request(t);
+        BitFlow.work(0);
+        check(BitFlow.find(2, 4, 0) == 8 && BitFlow.find(10, 4, 5) == 0 && BitFlow.find(9, 0, 3) == 4,
+              "bitflow: open ground is Chebyshev distance (" + BitFlow.find(2, 4, 0) + ")");
+        check(BitFlow.building && BitFlow.wave >= 8 + Cfg.BFLOW_EXTRA || !BitFlow.building, "bitflow: grown past the rat");
+        // dirt column x=5 beside a wall column x=6 with a gap at y=0: 8 steps, one dig (+DIG_COST - 1)
+        reset(); W = 12; H = 8; install(); bfReset();
+        for (int y = 0; y < H; y++) { bfRecord(5, y, false, true); if (y > 0) bfRecord(6, y, true, false); }
+        me = new MapLocation(2, 4); G.startTurn();
+        BitFlow.request(t);
+        BitFlow.work(0);
+        int d = BitFlow.find(2, 4, 0);
+        check(d == 8 + Cfg.DIG_COST - 1, "bitflow: through the gap with one dig (" + d + ")");
+        check(BitFlow.find(6, 3, 0) < 0 && BitFlow.find(6, 0, 0) == 4, "bitflow: walls never settle, the gap does");
+        // a sealed target fails cleanly and is not retried at once
+        reset(); W = 12; H = 8; install(); bfReset();
+        for (int y = 0; y < H; y++) bfRecord(6, y, true, false);
+        me = new MapLocation(2, 4); G.startTurn();
+        int f0 = BitFlow.fails;
+        BitFlow.request(t);
+        BitFlow.work(0);
+        check(!BitFlow.building && BitFlow.fails == f0 + 1, "bitflow: walled-off rat fails");
+        BitFlow.request(t);
+        check(!BitFlow.building, "bitflow: a failed target is not retried at once");
+        // the wave a neighbour sits in, from ours
+        reset(); W = 12; H = 8; install(); bfReset();
+        me = new MapLocation(2, 4); G.startTurn();
+        BitFlow.request(t);
+        BitFlow.work(0);
+        check(BitFlow.near(3, 4, 8) == 7 && BitFlow.near(1, 4, 8) == -1 && BitFlow.near(2, 5, 8) == 8, "bitflow: neighbour waves");
+        check(BitFlow.turns(Direction.NORTH, Direction.SOUTH) == 4 && BitFlow.turns(Direction.NORTHWEST, Direction.NORTHEAST) == 2,
+              "bitflow: turns between directions");
+    }
+
+    /** One turn of a rat walking a BitFlow field toward t: sense, follow (asking for a field when off one), grow. */
+    static void bfTick(MapLocation t) throws GameActionException {
+        round++;
+        moveCd = Math.max(0, moveCd - 10); turnCd = Math.max(0, turnCd - 10); actCd = Math.max(0, actCd - 10);
+        G.startTurn();
+        for (MapInfo mi : G.rc.senseNearbyMapInfos()) bfRecord(mi.getMapLocation().x, mi.getMapLocation().y, mi.isWall(), mi.isDirt());
+        if (!BitFlow.follow(t)) BitFlow.request(t);
+        BitFlow.work(0);
+    }
+
+    /** A room sealed by a wall with a dirt plug at one end: the field walk finds the plug as walls come into view
+     *  (stale fields regrow) and digs only it. */
+    static void testBitFlowWalk() throws GameActionException {
+        reset(); W = 30; H = 30; install(); bfReset();
+        for (int x = 2; x < W; x++) walls.add(new MapLocation(x, 12));
+        dirt.add(new MapLocation(0, 12)); dirt.add(new MapLocation(1, 12));
+        me = new MapLocation(15, 5); facing = Direction.SOUTH;
+        MapLocation t = new MapLocation(15, 20);
+        int steps = 0;
+        while (G.cheb(me, t) > 1 && steps < 250) { bfTick(t); steps++; }
+        check(G.cheb(me, t) <= 1, "bitflow: leaves a room sealed by a dirt plug (steps=" + steps + ", at " + me + ", digs=" + digsDone + ")");
+        check(digsDone <= 2, "bitflow: digs only the plug (" + digsDone + ")");
+        check(steps < 120, "bitflow: bounded detour (steps=" + steps + ")");
+        // a robot on the only downhill step: the rat waits, then gives the turn to greedy
+        reset(); W = 12; H = 3; install(); bfReset();
+        for (int x = 0; x < W; x++) { if (x != 6) { walls.add(new MapLocation(x, 0)); walls.add(new MapLocation(x, 2)); } }
+        me = new MapLocation(2, 1); facing = Direction.EAST;
+        t = new MapLocation(10, 1);
+        robots.put(new MapLocation(3, 1), null);
+        bfTick(t); bfTick(t);
+        check(me.equals(new MapLocation(2, 1)) && BitFlow.held >= 1, "bitflow: holds behind a robot on the path (" + me + ")");
+        robots.clear();
+        for (int i = 0; i < 12 && G.cheb(me, t) > 1; i++) bfTick(t);
+        check(G.cheb(me, t) <= 1, "bitflow: goes on once it moves (" + me + ")");
+    }
+
+    /** Mirrored maps and targets grow mirrored fields: every tile's wave equals its rotated twin's. */
+    static void testBitFlowMirror() {
+        int[][] cells = { {4, 2, 1}, {4, 3, 1}, {4, 4, 1}, {5, 4, 1}, {6, 4, 1}, {8, 6, 2}, {9, 6, 2}, {2, 7, 1}, {3, 7, 2}, {10, 1, 1} };
+        int[][] wav = new int[2][];
+        for (int k = 0; k < 2; k++) {
+            reset(); W = 15; H = 11; install(); bfReset();
+            for (int[] c : cells) {
+                int x = k == 0 ? c[0] : W - 1 - c[0], y = k == 0 ? c[1] : H - 1 - c[1];
+                bfRecord(x, y, c[2] == 1, c[2] == 2);
+            }
+            me = k == 0 ? new MapLocation(1, 1) : new MapLocation(W - 2, H - 2); G.startTurn();
+            MapLocation t = k == 0 ? new MapLocation(12, 8) : new MapLocation(W - 13, H - 9);
+            BitFlow.request(t);
+            BitFlow.work(0);
+            while (BitFlow.building && BitFlow.grow()) { }
+            wav[k] = new int[W * H];
+            for (int y = 0; y < H; y++)
+                for (int x = 0; x < W; x++) {
+                    int xx = k == 0 ? x : W - 1 - x, yy = k == 0 ? y : H - 1 - y;
+                    wav[k][x + y * W] = (BitFlow.done[yy] >>> xx & 1) != 0 ? BitFlow.find(xx, yy, 0) : -1;
+                }
+        }
+        boolean same = true;
+        for (int i = 0; i < W * H; i++) if (wav[0][i] != wav[1][i]) same = false;
+        check(same && wav[0][1 + W] > 0, "bitflow: rotated map, rotated field");
+    }
+
     /** The path from a to t under frame (fu, fv), as tile indices, over cells {x, y, 1 wall | 2 dirt}. */
     static int[] flowPath(MapLocation a, MapLocation t, int fu, int fv, int[][] cells) {
         reset(); W = 15; H = 11; install();
@@ -2339,6 +2454,7 @@ public class BotTest {
         testNavUShape();
         testNavFlowSealedRoom();
         testFlowField(); testFlowMirror(); testFlowQuota(); testTieFirst(); testFlowAlloc();
+        testBitFlow(); testBitFlowWalk(); testBitFlowMirror();
         testFlowJam();
         testCheeseBan();
         testNavSameTarget();

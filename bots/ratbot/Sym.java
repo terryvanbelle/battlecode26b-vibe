@@ -23,7 +23,7 @@ public final class Sym {
     /** Count of eliminations rejected because they would have emptied the mask (must stay 0). */
     public static int contradictions;
 
-    public static void init() { mem = new int[G.W * G.H]; }
+    public static void init() { mem = new int[G.W * G.H]; if (Cfg.BFLOW) BitFlow.init(); }
 
     public static boolean known(int i) { return (mem[i] & SEEN) != 0; }
 
@@ -33,6 +33,7 @@ public final class Sym {
         int v = SEEN | (wall ? WALL : 0) | (dirt ? DIRT : 0) | (mine ? MINE : 0);
         int old = mem[i];
         mem[i] = v | (old & (EXP | KING | CAT));
+        if (Cfg.BFLOW && ((old ^ v) & (WALL | DIRT)) != 0) BitFlow.mark(x, y, v);
         if ((old & SEEN) != 0 || mask == ROT || mask == HOR || mask == VER) return false;
         int before = mask;
         if (!mine && (old & EXP) != 0) { int e = (old >> 4) & mask; if (e != 0) eliminate(e); }

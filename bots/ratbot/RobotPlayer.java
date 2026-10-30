@@ -26,6 +26,7 @@ public strictfp class RobotPlayer {
             }
             try {
                 if (Cfg.FLOW && !G.king && rc.getRoundNum() == startRound) Flow.work(Cfg.FLOW_RESERVE);
+                if (Cfg.BFLOW && !G.king && rc.getRoundNum() == startRound) BitFlow.work(Cfg.FLOW_RESERVE);
             } catch (Exception e) {
                 exceptions++;
                 Debug.exception(e);
