@@ -297,6 +297,11 @@ public final class Cfg {
      *  rose vs spsquared, cat damage 0 to 8080 (they laid 73 cat traps to our 6) and lost on points at r2000; rift 26 to
      *  81 and superioristhmus 50 to 80 laid, both lost on points. */
     public static final boolean CAT_LAY = false;
+    /** The cat trap of an approaching cat (tryCatTrap) may also go on any tile beside the cat's body, which the cat sets
+     *  off on its next step, and during cooperation needs only TRAP_FLOOR, not the projected surplus. spsquared on rose
+     *  (3266): when a cat reached their king, 5-6 rats ringed it with cat traps and six fired at r479 alone (63 of 73
+     *  fired; cat damage 8080 to our 0). */
+    public static final boolean CAT_RING = false;
     public static final int CAT_LAY_GAP = 20, CAT_LAY_AGE = 3, CAT_LAY_FLOOR = 400;
     /** Rush: babies with spawn index in [RUSH_FROM, RUSH_TO) attack the enemy king from birth. */
     public static final boolean RUSH = false;

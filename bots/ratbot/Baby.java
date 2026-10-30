@@ -798,7 +798,7 @@ public final class Baby {
         // defending a king is survival: traps there need only the floor; elsewhere they need projected surplus
         MapLocation k = Comms.nearestKing(G.me);
         boolean defend = k != null && k.distanceSquaredTo(c.location) <= Cfg.TRAP_DEFEND_DIST2;
-        if (!defend && Comms.read(Comms.BUDGET) * 4 < Cfg.TRAP_SURPLUS) return;
+        if (!defend && !(Cfg.CAT_RING && G.coop) && Comms.read(Comms.BUDGET) * 4 < Cfg.TRAP_SURPLUS) return;
         if (rc.getNumberCatTraps() >= 10) return;
         int d4 = catDist4(c.location, G.me);
         if (d4 > 4 * 36) return;
@@ -813,6 +813,7 @@ public final class Baby {
             if (!rc.canPlaceCatTrap(l)) continue;
             // trigger zone is the 3x3 around the trap: the cat must pass within Chebyshev 1 of it
             int s = Math.min(Math.min(chebToBody(n1, l), chebToBody(n2, l)), chebToBody(n3, l));
+            if (Cfg.CAT_RING) s = Math.min(s, chebToBody(c.location, l));
             if (s > 1) continue;
             int score = s * 100 + catDist4(c.location, l);
             if (score < bs) { bs = score; best = l; }
