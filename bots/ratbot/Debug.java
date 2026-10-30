@@ -26,7 +26,10 @@ public final class Debug {
     public static void indicator() {
         StringBuilder sb = new StringBuilder(96);
         if (G.king) {
-            sb.append("K sp=").append(King.spawned).append(" tr=").append(King.traps).append(" inc=").append(Econ.rate100()).append(" sur=").append(Econ.surplus()).append(" km=").append(King.mineWhy).append(Comms.numMines).append(" hm=").append(King.homeMine == null ? "-" : King.homeMine.x + "," + King.homeMine.y).append(" kd=").append(King.digs).append(" sw=").append(King.spawnWhy).append(King.sawEnemy ? "E" : "");
+            sb.append("K sp=").append(King.spawned).append(" tr=").append(King.traps).append(" inc=").append(Econ.rate100()).append(" sur=").append(Econ.surplus()).append(" km=").append(King.mineWhy).append(Comms.numMines).append(" ml=");
+            // the team mine list, two characters a mine ('0' + x, '0' + y)
+            for (int k = 0; k < Comms.numMines; k++) sb.append((char) ('0' + Comms.mines[k].x)).append((char) ('0' + Comms.mines[k].y));
+            sb.append(" hm=").append(King.homeMine == null ? "-" : King.homeMine.x + "," + King.homeMine.y).append(" kd=").append(King.digs).append(" sw=").append(King.spawnWhy).append(King.sawEnemy ? "E" : "");
         } else {
             sb.append(Baby.role == Baby.FIGHT ? "F" : Baby.role == Baby.ATTACK ? "A" : "G")
               .append(" dl=").append(Baby.delivered).append(" mm=").append(Baby.myMineCount)
@@ -35,6 +38,7 @@ public final class Debug {
               .append(" tr=").append(Baby.trapsPlaced)
               .append(" rt=").append(Baby.ratTraps).append(" nap=").append(Baby.naps).append(" th=").append(Baby.throwsDone).append(" gl=").append(Baby.glances)
               .append(" dg=").append(Nav.digs).append(" fl=").append(Flow.builds).append(":").append(Flow.done).append(":").append(Flow.lastTurns).append(":").append(Flow.steps).append(" mv=").append(Baby.why);
+            if (Baby.mineTarget != null) sb.append(" mt=").append(Baby.mineTarget.x).append(',').append(Baby.mineTarget.y);
             // navigation state: nav target and stall, flow target (b building, r ready, - stale) and robot-held turns
             if (Nav.target != null) sb.append(" nt=").append(Nav.target.x).append(',').append(Nav.target.y).append('/').append(Nav.stall);
             if (Flow.tgt != null) sb.append(" ft=").append(Flow.tgt.x).append(',').append(Flow.tgt.y)
