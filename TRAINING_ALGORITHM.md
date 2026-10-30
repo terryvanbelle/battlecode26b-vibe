@@ -155,11 +155,18 @@ rarely: price a reallocation against what it displaces; give freed capacity a jo
   Pooling repeated blocks as independent multiplies t by about √blocks while reusing the few cells that changed, passing
   neutral candidates 17-30% of the time, not the nominal 7%. Random opponents add mixed-sign cells: less power, no bias.
 - **Paired fresh-cell rule.** Each panel version draws numbered map sets once (three maps per opponent, both sides),
-  shared by every candidate; a candidate plays sets 1-4 in order, never one twice. The reference on a set is the
-  incumbent's own games there in this version (accepting or control blocks), played once per reign before any candidate
-  is scored there; never another build's, an earlier version's or the ladder's games. t pools the candidate's blocks:
-  any block accepts at t ≥ 2 (which needs D ≥ 4); blocks 1, 2, 3 reject at t ≤ 0, 1, 1.5; block 4 is final and rejects
-  below 2 (below resolution if |t| < 1). A basics repair (a battery row turned to pass) instead accepts at t ≥ 0 after
+  shared by every candidate; a candidate plays the sets in the reign's order, never one twice. The reference on a set is
+  the incumbent's own games there in this version, played once per reign before any candidate is scored there; never
+  another build's, an earlier version's or the ladder's games. t pools the candidate's blocks: from block 2 on, t ≥ 2
+  accepts (which needs D ≥ 4); blocks 1, 2, 3 reject at t ≤ 0, 1, 1.5; block 4 is final and rejects below 2 (below
+  resolution if |t| < 1). One block never accepts: with a dozen candidates a reign, one lucky block crowns noise.
+- **An accepting block is a biased reference.** When games are deterministic and outcomes chaotic (a small code change
+  reshuffles the contested cells), the block that crowned the incumbent is the draw that won, so it overstates the
+  incumbent on those cells, and replaying the incumbent only repeats it. Every candidate then scores low there (the
+  winner's curse), and a lucky crowning stalls the reign. So a reign orders its sets control blocks first and accepting
+  sets last, and an accepting set is re-anchored before anyone is scored on it: play a twin of the incumbent (the same
+  switches from the current code, or a changed tie-break salt) there and use the twin's games as the reference. Test
+  determinism once a season: the same pairing played twice gives the same game. A basics repair (a battery row turned to pass) instead accepts at t ≥ 0 after
   block 2, its false accepts simulated apart. A real but narrow gain usually closes below resolution, not refuted (§8).
 - **Simulate every bar before relying on it**, results in `HANDOFF.md`: the screen's false-reject rate and how well
   screen t predicts panel t; each panel design's false-accept rate (≈ 5%) and power at the effects we actually produce

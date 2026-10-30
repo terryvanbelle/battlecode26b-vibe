@@ -2225,3 +2225,24 @@
 - ag3 so far (21 of 24): s9s (s9r with the 40 cap only while the bank holds 1000) beats s7d 12 of 21. It wins
   cheesebottles A, so the cap gate does stop that starvation. s9s goes to the replica now so the replica isn't
   idle; ag4 (aim vs cap alone) runs on.
+
+## 2026-10-30 00:16 PDT: the field reference is biased; protocol change
+- Games are deterministic: det1 played s7d vs agrab on tiny twice on the VM, with the same winner, round (70) and
+  per-team stats. So a replica result is fixed for a pair of builds; the noise between builds is chaos (a small code
+  change reshuffles the contested cells).
+- So the block that crowned an incumbent is the draw that won, and it overstates the incumbent on those cells:
+  - s7d's set-1 reference is its accepting block (20/42). Its sets 2 and 3 are control blocks (23 and 19).
+  - s6m: set 1 control 12, set 2 accepting 21, set 3 control 20.
+  - s7d's crowning +8 was on set 1 against s6m's unlucky 12. On set 3, where both references are control blocks, s7d
+    is one win behind s6m (19 vs 20).
+  - The 13 candidates scored against s7d on set 1 averaged net -1.5. AlexT101 popthecork A/B and uneasy_alliance A
+    (all s7d wins, one of them a cat kill with one rat of ours left) were lost by 8 of them.
+- Protocol change, logged before s9s's block finishes (I had seen 6 of its 14 matches in the listing, all against mid
+  bots; the reasons for the change come from s6m's and s7d's references):
+  - One block never accepts; from block 2 on, cumulative t >= 2 accepts. The reject bars are unchanged.
+  - For s7d's reign, block 1 is on set 2 and block 2 on set 3. Set 1 comes last and is re-anchored first with a twin
+    (@s7d @kfix from the current code) whose games become the set-1 reference.
+  - s9s: its set-1 block (from 3067) is scored and recorded, but it neither rejects nor accepts. Its set-2 block is
+    queued now as block 1 and set 3 follows as block 2.
+  - Earlier rejections stand. A candidate rejected on set 1 alone reopens only on fresh blocks (sets 2 and 3).
+- TRAINING_ALGORITHM.md section 4: one block never accepts, and the new "accepting block is a biased reference" rule.
