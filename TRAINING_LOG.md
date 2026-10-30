@@ -2830,3 +2830,28 @@
   rounds) with no mine of its own walks to the nearest home mine no other king holds. Diag fg1 (u0s vs s9s) and
   control fgc (u0m vs s9s) on the starvation maps, both sides.
 - Screen ra_u0a (KING_CAT_BITE) passed neutral (t +0.46, net -2): not submitted.
+
+## 2026-10-30 12:53 PDT: u0m accepted (basics repair); the grab-and-trap war against abcdezyxwv; RISK_ADAPT
+- u0m's block 2 on set 2 (3796-3809) against u0f's 3728-3741: 42 cells, 33 alike, D 9 (+8 -1), net +7, t 2.33,
+  25 of 42 to 18. Gains: spsquared jail A and B, thunderdome A, evileye A; outercloud Hike B; bc26vibe sittingducks B;
+  abcdezyxwv ultimatestarvation B; AdamTan12 sunandmoon B. Loss: AdamTan12 attack_on_cat B. Pooled with block 1:
+  84 cells, D 18, +11 -7, net +4, t +0.94. A basics repair accepts at pooled t >= 0 after block 2, so u0m is the
+  incumbent (12:49). progress/ refreshed. u0m's reference block on set 3 (never played by it) runs from 3819.
+- Per opponent over the recent blocks: abcdezyxwv 1 of 18 and AlexT101 1 of 18; the rest 10-15 of 18. Against
+  abcdezyxwv (3764/3765, both sides) we lose the rat war, not the race for cheese: on superioristhmus our rats took
+  10252 damage from 260 throws and 6570 from 159 rat-trap fires (theirs 5670 and 0). They grab ours 78-359 times a
+  game to our 61-228. About 60% of their grabs take a rat that cannot see the grabber, about 35% one weaker than the
+  grabber (the engine lets a strictly healthier rat grab one that sees it). In 60-70% of the grabs the grabber was
+  already adjacent at the end of our rat's turn. The grabbed rats sit at 40-59 health most often (137 of 359 in
+  3765 superioristhmus): a trap's 50, then the throw. averyfineline (3736/3737): our king died r129-131 to 9-11
+  thrown rats (378-440 damage) and bites; 11 of theirs stood by our king at r50 to our 1.
+- Starvation on tornadoes (3757 B vs outercloud): the second king formed at r200-299 on ~4.7 cheese/round; the merge
+  took 7 of 24 babies, cats killed 15 more, we were down to 8 then 3, 3.9k cheese lay unpicked, and both kings
+  starved by r1080. u0t = u0n (END_KING 1850) + FORM_NET100 200 (an early king only on ~8 cheese/round); diag ng1
+  with control ngc (u0n), 10 maps both sides.
+- New switch RISK_ADAPT (default 0): RISK_FRESH's fight-time trap avoidance, switched on only once enemy rat traps
+  are known to be in play. A rat that loses health during its own turn has fired a trap (only a trap fires on our
+  own move); it squeaks SQ_BURN every BURN_EVERY rounds; allies who hear it learn it, and a king that hears it sets
+  Comms.SYM_BURN (512) in the SYM slot for everyone. RISK_FRESH cost t0b -11.5 pts at a screen whose opponents lay
+  no traps; this version costs nothing against them. u0u = u0m + RISK_ADAPT 2; test against u0q (reactive
+  trapper), with u0m vs u0q as control.

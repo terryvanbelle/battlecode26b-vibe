@@ -97,14 +97,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (see TRAINING_LOG.md for the history)
-- Incumbent on the replica: **s9s** (#101, resubmitted as #103), accepted 2026-10-30 02:44 PDT over s7d: v3 set 2
-  (control 2115-2128) + set 3 (control 2233-2246) + set 1 (re-anchored by the s7d twin t0a, 3270-3283), 126 cells,
-  D 25 (+19 -6), net +13, t 2.60. s9s = `snapvar.py @s9s` = @s7d @kfix + RICH_BABIES 40, no king or baby rat traps,
-  THROW_MIN 84 + CARRY_AIM, RUSH + RUSH_BREAK + BREAK_ROUND 30, SYM_SLOT (the agrab archetype's style).
-- s9s's reign: every v3 set 1-3 carries its accepting luck, so none is a reference until a twin of s9s re-plays it.
-  Fresh set 4 (`research/panel/v3-set4.json`) is s9s's reference block from match 3284; candidates' block 1 = set 4.
-  Then sets 2, 3, 1, each re-anchored by a twin (@s9s from the current code) before a candidate is scored there.
-  Block 1 never accepts; blocks 1/2/3 reject at pooled t <= 0/1/1.5; t >= 2 from block 2 on accepts; block 4 final.
+- Incumbent on the replica: **u0m** (#114), accepted 2026-10-30 12:49 PDT over s9s as a basics repair (accept at
+  pooled t >= 0 after block 2): set 4 (3756-3767, 3785-3786) net -3 vs s9s 3284-3297, set 2 (3796-3809) net +7 vs
+  u0f 3728-3741 (25 of 42 to 18); pooled 84 cells, D 18, +11 -7, net +4, t +0.94. u0m = `snapvar.py @s9s` +
+  'SENSE2_LEFT = 4000, IND_LEFT = 0=>SENSE2_LEFT = 6000, IND_LEFT = 1000' 'FLOW_ALLOC = false=>FLOW_ALLOC = true'
+  'FLOW_REV_TURNS = 25=>FLOW_REV_TURNS = 60'. Previous: s9s (#101/#103), accepted 2026-10-30 02:44 PDT over s7d.
+- u0m's reign: set 2 carries its accepting luck (+7) and needs a salted twin before anyone is scored there. Set 3 is
+  u0m's fresh reference block (from 3819, queued 12:52). Candidates' block 1 = set 3 (reference u0m's set-3 draw),
+  block 2 = set 4 (reference 3756-3767, 3785-3786, an unlucky draw, so also score with `contest.py pool`), then set 1
+  after a u0m reference block there, set 2 last after a twin.
+- Per opponent over the last blocks: abcdezyxwv 1 of 18, AlexT101 1 of 18; outercloud 15, CS50Crab 13, bc26vibe 12,
+  spsquared 11, AdamTan12 10. Against abcdezyxwv the rat war is lost: 3764 superioristhmus our rats took 10.3k damage
+  from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
+  ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
+  rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
 - Submit a candidate only after a block finishes (`contest.py submit bots/NAME -m TEXT`, then
   `contest.py scrim --vs ... --panel research/panel/v3-setN.json --queue research/panel/queue.tsv`; the drain loop
   sends the queue under the hourly limit). Score: `contest.py paired REF CAND`.
