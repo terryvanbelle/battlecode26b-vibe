@@ -1843,3 +1843,13 @@
   rule rules out one wrong symmetry on 8 maps (uneasy_alliance, UncomfortablyClose, thunderdome, houseofcards,
   streetsofnewyork: H; Stash, FreeTheCheese, corridorofdoomanddespair: V). With the mask unresolved the bot
   defaults to rotational, which is right on rotational maps.
+
+## 2026-10-29 17:24 PDT: s8o (RESCUE) rejected after block 1; s8t on the replica
+- s8o's v3 set-1 block (2588-2593, 2606-2607, 2611-2612, 2722-2725) against s7d's reference: 42 cells, 35 alike,
+  D 7 (+3 -4), net -1, t -0.38. Rejected. Gained AdamTan12 tiny A, AlexT101 uneasy_alliance B, CS50Crab dirtfulcat
+  B; lost AlexT101 uneasy_alliance A, CS50Crab Nofreecheese A, abcdezyxwv sunandmoon A, spsquared fullofsecrets B.
+  The rescue lifted our grabs of enemy carriers locally (13.8 -> 19-21 a game vs abrk), but it does not show on
+  the field.
+- s8t (HOME_START + SYM_KING_GAP) is submission #93, set-1 block from 2726. It goes ahead of its screen because
+  it is a reference-point fix with a measured mechanism (ua3), and a replica block is faster than a VM screen.
+  Next in line: s8e (TRAP_CAP 25, screen +2.0, net +3).
