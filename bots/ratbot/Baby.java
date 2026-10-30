@@ -405,12 +405,16 @@ public final class Baby {
     static boolean canTake(MapLocation l) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.canPickUpCheese(l)) return false;
+        if (Cfg.ATK_CARRY > 0 && role == ATTACK) return atkTake(rc.getRawCheese(), rc.senseMapInfo(l).getCheeseAmount(), Cfg.ATK_CARRY);
         if (Cfg.CARRY_MAX <= 0) return true;
         int raw = rc.getRawCheese();
         return raw == 0 || takeOk(raw, rc.senseMapInfo(l).getCheeseAmount(), Cfg.CARRY_MAX);
     }
 
     static boolean takeOk(int raw, int pile, int cap) { return cap <= 0 || raw == 0 || raw + pile <= cap; }
+
+    /** Cfg.ATK_CARRY: an attacker's take, capped even when empty-handed. */
+    static boolean atkTake(int raw, int pile, int cap) { return raw + pile <= cap; }
 
     static RobotInfo eKing, nearestEnemy;
     static RobotInfo[] seen = new RobotInfo[0];

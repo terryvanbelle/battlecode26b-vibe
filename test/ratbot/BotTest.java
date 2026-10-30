@@ -574,6 +574,11 @@ public class BotTest {
     }
 
     /** Cfg.FORM_MINE's site pick on a 30x30 map, first king at (3,3), the enemy start (26,26) under rotation. */
+    static void testAtkCarry() {
+        check(Baby.atkTake(0, 20, 25) && Baby.atkTake(5, 20, 25), "atk carry: piles within the cap are taken");
+        check(!Baby.atkTake(0, 40, 25) && !Baby.atkTake(10, 20, 25), "atk carry: an attacker takes no pile past the cap, empty-handed or not");
+    }
+
     static void testCatLay() {
         reset(); W = 30; H = 30; install();
         int g = Cfg.CAT_LAY_GAP;
@@ -2210,6 +2215,7 @@ public class BotTest {
         testHomeStart();
         testFormMine();
         testCatLay();
+        testAtkCarry();
         testCatLane();
         testRusher();
         testAmmo();

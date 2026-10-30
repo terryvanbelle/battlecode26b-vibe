@@ -281,6 +281,10 @@ public final class Cfg {
     public static final boolean TRAIL = false;
     /** A rat already carrying cheese takes no pile that would lift it above this (0 = no cap). */
     public static final int CARRY_MAX = 0;
+    /** An attacker takes no pile that would lift it above this, empty-handed or not (0 = off). Attackers run the
+     *  after-move pickUp but never deliver. s9s's 126 field games from r400: attack-move turns carried 43-82 cheese
+     *  on average and 10-33% of them 100+, and those moved on 31-39% of turns (1% slower per unit carried). */
+    public static final int ATK_CARRY = 0;
     /** Babies spawned before any fighter is assigned. */
     public static final int GATHER_FIRST = 6;
     /** One in FIGHT_EVERY later babies is a cat fighter. */
