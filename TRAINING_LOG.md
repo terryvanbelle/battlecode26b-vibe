@@ -2700,3 +2700,22 @@
   and abcdezyxwv 0 of 6 again. Spreading over every mine doesn't move that matchup. In 3548 (t0i) abcdezyxwv out-picked us
   20.9k to 6.1k on cheesebottles. On Meow it won a throw war we opened at r17 (kills per death 0.76; we were down to
   7 rats by r160 and broke by r200).
+
+## 2026-10-30 08:57 PDT: t0p rejected; a second s9s sample on set 4; rushers stuck in grove's bands
+
+- t0p (MINE_ANY + MINE_TIES, replica #110) set-4 block 1 (3572-3577, 3581-3586, 3603-3604): 42 cells, 38 alike, D 4
+  (+1 -3), net -2, t -1.00. Rejected. It lost CS50Crab grove B and outercloud seepastyourgreed B (two of the
+  reference's lucky cells) and AdamTan12 closeup B, and gained averyfineline A. abcdezyxwv was 0 of 6 again. Its screen
+  ended at t +3.09, net +6: the second strong screen pass (after t0o) to fail on the replica.
+- t0f (the s9s twin) goes up as #111 on set 4, block from match 3610. Set-4 reference cells will average two s9s
+  games (`contest.py paired 3284-3297,<t0f ids> CAND`).
+- groveisbeingdesecrated, where every build loses side A: each king sits by the one exit of a 60-wide band (the
+  top band's gaps are at x 57 and 59 in row 53, beside the top-right king). Our 12 rushers head straight for the
+  enemy king, walk the band's length and sit packed at x 26-33 from r80 on. 3288 (A): a cat scratches our king to
+  death r100-190 while 3 fighters fail to kill it and the other 17 rats are stuck in the band. 3289 (B): the same
+  mirrored, and we won only because CS50Crab's king died to its cat first. The rushers' flow search should take the
+  exit beside home, but on 60x60 a rat whose turn runs past ~5800 bytecodes never allocates the search arrays
+  (the FLOW_ALLOC bug). Diag gr1 (t0v and t0w vs s9s on grove, both sides) checks whether the fix frees them.
+- Stuck travel turns in the reference block (scratch stuck2.py: our rat within 2 tiles of the same spot 30 rounds
+  later while its code is a travel code): 46% overall. averystrangespace 72-87% (attackers in the pocket),
+  attack_on_cat 61-65% and ZeroDay 52-54% (gatherers queued outside a mine's 5x5, carriers queued at the king).
