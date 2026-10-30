@@ -2061,3 +2061,23 @@
     half (own-half share: us 0.52, them 0.92) and spawned 100 rats.
   - In s7d's reference game (2070) CS50Crab spawned 42 and got 43% of its own half. Our rat-rounds at our three
     mines were 1341/1230/544 against s7d's 2919/2168/488.
+
+## 2026-10-29 21:30 PDT: hb1 final; s9k mirrors to r41-48; s9l (corridor swap)
+- hb1 final, each vs s7d on 10 maps x 2 sides (wins; cheese delivered a game, candidate to s7d):
+  - s9c (frontier scouting): 10/20; 3729 to 3504.
+  - s9d (s9c + BREAKOUT_TTL 150): 13/20; 4374 to 3067.
+  - s9e (BREAKOUT_TTL 150 alone, as s7z): 12/20; 4025 to 2357. seepastyourgreed 8770/11120 to s7d's 500/530.
+  - Breakout carries most of the gain. Every bundle since s9i has it. s7z never went to the replica.
+- mc2, s9k self-play (s9j + the five symmetry switches), delivered A/B: EscapeTheNight 6603/5494,
+  seepastyourgreed 20875/22635, knifefight 565/475, rose 830/830, DefaultMedium 772/532. No overruns or
+  exceptions. s7d's self-play delivered 0/14408 and 410/520 on the first two.
+- mirror_check on s9k: the sides now split at r48 (EscapeTheNight) and r41 (seepastyourgreed), not r4.
+  - r48: a flow search took 3 turns on one side and 2 on the other. Flow spends whatever bytecodes are left, and
+    the mirrored turn has a different count.
+  - r41: fighters chasing cats. Cats move on the engine's shared Random(1092) (InternalRobot), so they never
+    mirror each other, and no bot can keep a cat map mirrored past their first random step.
+  - A deterministic per-turn search budget would remove only the first cause, so it is not worth its slower
+    searches.
+- s9l = s9k + SWAP_HOLD 2 + SWAP_YIELD + SWAP_NO_ALONG (s7x's corridor swap, 7/8 vs araid on corridor maps).
+  rose is still a starvation map for s9k (830 a side). hb2 now runs s9k, s9l, s9i and s9b vs s7d (80 games).
+- Screen ra_s9b: +0.2 pts, t +0.05, net 0 (+14 -14): pass.
