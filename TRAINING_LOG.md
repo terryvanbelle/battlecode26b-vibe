@@ -2405,3 +2405,29 @@
   - t0c = @s9s + KING_TRAPS: the king's ring traps, toward the nearest enemy or pre-laid toward the centre.
   - t0d = @s9s + KING_TRAPS + BABY_RAT_TRAPS (s7d's trap behaviour).
   - kt1 (VM): both vs s9s and agrab on the 8 maps of these losses, both sides. Screens ra_t0c and ra_t0d queued.
+
+## 2026-10-30 04:08 PDT: row-lazy trap marks, a rush time limit, and how the field out-harvests us
+- RISK_ROWS (t0e = @s9s + RISK_ROWS): TrapRisk's marks go in TrapRows, one map row allocated on its first mark, so a
+  rat on a 60x60 map has marks from its first turn. BotTest checks it against the flat array (80 random marks, some
+  off-map; clear, risky, mask at TTL and at 4 rounds agree everywhere). Screen ra_t0e queued.
+- t0f is the twin: @s9s built from the current code, to re-anchor sets 2/3/1 if s9z passes set 4.
+- Our attackers (spawn index 4-15) keep the attack role all game. On maps where the enemy king can't be reached, that
+  is most of their turns for nothing.
+  - Attack-code share of turns before r400: uneruesansfin 0.52-0.60 (3291 picked up 60 cheese by r400),
+    where_are_you 0.41, rose 0.44-0.52, EscapeTheNight and grove 0.60.
+  - Field games with a high attack share won 40 of 60, low 29 of 66. That is confounded by the map, so it is no
+    verdict either way.
+  - RUSH_LIFE (t0g = @s9s + RUSH_LIFE 150): an attacker older than 150 rounds that has not seen the enemy king in
+    the last 150 rounds becomes a gatherer. Baby.rushFailed is the pure test, with four BotTest cases. rl1 (VM): t0g
+    vs s9s on 10 such maps, both sides. Screen ra_t0g queued.
+- How abcdezyxwv and AlexT101 out-earn us, up to r400:
+  - They pick up about twice as much per rat-turn (0.60 vs 0.36, 0.97 vs 0.50) and deliver 38-43 a transfer to
+    our 23-29.
+  - abcdezyxwv harvests our half's mines about as much as we do. In 3293 (superioristhmus) they took 26193 from our
+    half and we took 23358; we took 341 from theirs.
+  - Our far home mines go unworked, and the near ones crowd ('W', wander at mine, is 22% of gather turns).
+  - The shared mine list has 16 slots. superioristhmus has 20 mines, TheHeist and grove 18, and the shared array
+    is full, so this one stays on the backlog.
+- s9z's screen (ra_s9z vs ra_s9s): +1.3 pts, t +0.41, net +3 (+7 -4), a pass. Its set-4 block is part done: 3314-3326
+  so far: outercloud 3-0 and 2-1, bc26vibe 2-1 twice, CS50Crab 2-1 and 3-0, AlexT101 0-3 and 2-1, abcdezyxwv 0-3,
+  spsquared 2-1.

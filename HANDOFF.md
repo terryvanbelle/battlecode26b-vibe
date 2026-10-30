@@ -110,11 +110,12 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   sends the queue under the hourly limit). Score: `contest.py paired REF CAND`.
 - Candidates on the s9s base (screens use `gauntlet.py selfplay RUN/results.jsonl --base araid --control
   build/vmruns/runs/ra_s9s/results.jsonl`):
-  - s9z = @s9s + BREAKOUT_TTL 150: EscapeTheNight (sets 1 and 3) picks 0 cheese at s9s; bk1 vs s9s 10/18 on the dig
-    maps, EscapeTheNight 2/2. Screen ra_s9z queued.
-  - t0b = @s9s + RISK_FRESH 2 (trap-risk marks of the last 2 rounds kept in fights): the field lays 44 traps a game
-    and our rats fire 38, 42% fatal. Diag rf1 vs atrap2.
-  - s9y = @s9s + CAT_LANE (fixed); s9w = @s9s + GUARD_KING_R 5; s9v = @s9s + AMMO_AWAY (screen vs ra_s9s t -0.27).
+  - s9z = @s9s + BREAKOUT_TTL 150: screen ra_s9z +1.3 pts, t +0.41 (pass). On the replica as #104, set-4 block 1
+    (reference s9s 3284-3297).
+  - t0b = @s9s + RISK_FRESH 2; t0c = @s9s + KING_TRAPS; t0d = t0c + BABY_RAT_TRAPS; t0e = @s9s + RISK_ROWS (trap marks
+    on 60x60 maps); t0g = @s9s + RUSH_LIFE 150. Screens ra_t0b..ra_t0g; diags kt1 (t0c/t0d) and rl1 (t0g).
+  - t0f = twin of s9s from current code, for re-anchoring sets 2/3/1.
+  - s9x/s9y (CAT_LANE) dropped; s9w = @s9s + GUARD_KING_R 5; s9v = @s9s + AMMO_AWAY (screen t -0.27).
 - Owner rules: assume every map is symmetric in all aspects (PROMPTS.md #14); refresh and commit progress/ after
   every acceptance and every scored replica block (#16).
 - Local machine: 2 GB RAM, 2 cores; one replay analysis at a time. Volume games run on the VM (arena.py matrix,
