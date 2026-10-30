@@ -1065,6 +1065,11 @@ public final class Baby {
             if (Cfg.MINE_ANY_COOP && !G.coop && mineTarget != null && !homeHalf(mineTarget)) mineTarget = null;
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
+                if (Cfg.SEEK_IDLE > 0 && role == GATHER && idle(mineTarget)) {
+                    if (Cfg.IDLE_SHIFT) { mineShift++; mineTarget = pickMine(); }
+                    if (idleSeek() && seek()) { why = 'x'; return; }
+                    if (mineTarget == null) mineTarget = pickMine();
+                }
                 if (atMine(mineTarget, Cfg.MINE_KING_R)) {
                     if (role == GATHER && startSeek(mineTarget) && seek()) { why = 'x'; return; }
                     if (Cfg.GATHER_STILL) {
@@ -1618,7 +1623,7 @@ public final class Baby {
         minesAtPick = Comms.numMines;
         if (Cfg.HOME_ALL_SYM) maskAtPick = Sym.mask;
         if (rr) return cand[rrSlot % m];
-        if (Cfg.MINE_BALANCE) return cand[slot % m];
+        if (Cfg.MINE_BALANCE) return Cfg.IDLE_SHIFT ? cand[(slot % m + mineShift) % m] : cand[slot % m];
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
     }
 
@@ -1897,6 +1902,29 @@ public final class Baby {
     /** Mine seeking (Cfg.SEEK_CROWD) runs until round seekUntil and may start again from seekNext; seekMines is
      *  myMineCount when it started. */
     static int seekUntil, seekNext, seekMines;
+
+    /** Cfg.SEEK_IDLE: turns spent near the mine since the last pickup (idlePicked: Baby.picked then); mineShift is
+     *  Cfg.IDLE_SHIFT's offset into the pick list. */
+    static int idleTurns, idlePicked, mineShift;
+
+    /** Cfg.SEEK_IDLE: count a turn within SEEK_IDLE_R of the mine with no pickup since the last; true (and the count
+     *  restarts) on the SEEK_IDLE-th. */
+    static boolean idle(MapLocation mine) {
+        if (picked != idlePicked) { idlePicked = picked; idleTurns = 0; }
+        if (G.cheb(G.me, mine) > Cfg.SEEK_IDLE_R || ++idleTurns < Cfg.SEEK_IDLE) return false;
+        idleTurns = 0;
+        return true;
+    }
+
+    /** Cfg.SEEK_IDLE: an idle gatherer starts seeking unless it sought within SEEK_RETRY rounds. */
+    static boolean idleSeek() {
+        if (G.round < seekNext) return false;
+        seekUntil = G.round + Cfg.SEEK_TTL;
+        seekNext = G.round + Cfg.SEEK_RETRY;
+        seekMines = myMineCount;
+        exploreTarget = null;
+        return true;
+    }
 
     /** A gatherer at a crowded mine starts seeking: SEEK_CROWD allied babies nearer the mine than us. */
     static boolean startSeek(MapLocation mine) {

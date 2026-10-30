@@ -1885,6 +1885,25 @@ public class BotTest {
                   "mine balance: every home-half mine, evenly " + per);
             check(Baby.minesAtPick == Comms.numMines, "mine balance: remembers the mine count it picked at");
         }
+        // SEEK_IDLE: idle() fires on the SEEK_IDLE-th near-mine turn without a pickup; a pickup restarts the count
+        MapLocation mine = new MapLocation(10, 10);
+        G.me = new MapLocation(12, 10);
+        Baby.picked = 0; Baby.idlePicked = 0; Baby.idleTurns = 0;
+        boolean early = false;
+        for (int i = 1; i < Cfg.SEEK_IDLE; i++) early |= Baby.idle(mine);
+        check(!early && Baby.idle(mine) && Baby.idleTurns == 0, "idle: fires on the SEEK_IDLE-th turn, then restarts");
+        Baby.idleTurns = 3; Baby.picked++;
+        Baby.idle(mine);
+        check(Baby.idlePicked == Baby.picked && (Cfg.SEEK_IDLE <= 1 || Baby.idleTurns == 1), "idle: a pickup restarts the count");
+        G.me = new MapLocation(10 + Cfg.SEEK_IDLE_R + 1, 10);
+        int was = Baby.idleTurns;
+        check(!Baby.idle(mine) && Baby.idleTurns == was, "idle: turns away from the mine do not count");
+        G.round = 500; Baby.seekNext = 600;
+        check(!Baby.idleSeek(), "idle: no seeking within SEEK_RETRY of the last");
+        Baby.seekNext = 0;
+        check(Baby.idleSeek() && Baby.seekUntil == 500 + Cfg.SEEK_TTL && Baby.seekNext == 500 + Cfg.SEEK_RETRY,
+              "idle: seeking starts for SEEK_TTL rounds");
+        Baby.seekUntil = 0; Baby.seekNext = 0; Baby.idleTurns = 0; Baby.picked = 0; Baby.idlePicked = 0;
     }
 
     static void testScout() throws GameActionException {

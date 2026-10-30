@@ -2855,3 +2855,25 @@
   Comms.SYM_BURN (512) in the SYM slot for everyone. RISK_FRESH cost t0b -11.5 pts at a screen whose opponents lay
   no traps; this version costs nothing against them. u0u = u0m + RISK_ADAPT 2; test against u0q (reactive
   trapper), with u0m vs u0q as control.
+
+## 2026-10-30 13:21 PDT: gatherers crowd one home mine; SEEK_IDLE and IDLE_SHIFT
+- wallsofparadis (3800 g2 vs CS50Crab, lost) is a 60x60 map of concentric walled rings with dirt seals; rotational
+  symmetry. Our home half has four mines: (30,3) outside the rings, (27,28), (21,37) and (4,54). 70% of our
+  rat-turns from r200 to r1200 stood within 4 of (30,3), and our rats first came near the other three at r434, r392
+  and r503. The enemy reached their twins by r54-135, dug 17 times in the first 100 rounds to our 2, and took 12920
+  cheese from our three ringed mines to our 770. The team list held one home mine for 400 rounds, so MINE_BALANCE
+  sent every gatherer there. SEEK_CROWD 6 rarely fired (x 1-5% of decisions): it counts allies nearer the mine
+  inside the rat's 90-degree cone only.
+- Across set 2 (3796-3809, tools: diag26b/minecov.py and minesee.py), we work 1-2 of the 3-8 home mines on
+  wallsofparadis, pipes, safelycontained, attack_on_cat, dirtpassageway, jail and sunandmoon. The field reaches our
+  twins far sooner: pipes 47,30 at r167 to our r1164 and 30,30 at r54 to our r491; safelycontained 18,46 at r44 to
+  our r454, and 27,47 we never saw. Known mines are under-worked too: pipes 29,15 was seen at r62, yet they took
+  3135 there to our 702.
+- New switches (default off): SEEK_IDLE (a gatherer that spends SEEK_IDLE turns within Chebyshev SEEK_IDLE_R of its
+  mine without a pickup starts SEEK_CROWD's seeking, once per SEEK_RETRY), and IDLE_SHIFT (each idle spell also
+  moves the gatherer to the next mine of its MINE_BALANCE list). A mine drops 20 cheese about every 12 rounds, so
+  40 idle turns trip at about 3-4 gatherers to a mine. u0w = u0m + SEEK_IDLE 40; u0x = u0w + IDLE_SHIFT. Diag iw1
+  (u0w vs s9s) and control iwc (u0m vs s9s) run on those eight maps on both sides; ix1 (u0x) queued.
+- fg1 (u0s KING_FORAGE vs s9s) against fgc (u0m) on the starvation maps, 15 of 16 cells: 7 wins to 5, +3 -1,
+  xfer 125k to 111k. where_are_you B: u0m starved (both kings) and lost, u0s won with 19k delivered; Hike A: u0s
+  starved twice and lost where u0m won.

@@ -553,6 +553,14 @@ public final class Cfg {
      *  it finds (streetsofnewyork: two of our three mines sat behind 5-deep dirt bands, unseen all game, while
      *  17846 rat-rounds crowded the third). */
     public static final int SEEK_CROWD = 0, SEEK_TTL = 150, SEEK_RETRY = 200;
+    /** Idle seeking (0 = off): a gatherer that spends SEEK_IDLE turns within Chebyshev SEEK_IDLE_R of its mine without
+     *  a pickup seeks as SEEK_CROWD does (that test counts allies in the 90-degree cone only). wallsofparadis (3800):
+     *  70% of our rat-turns crowded one mine while our three other home mines, behind dirt rings, went unseen to
+     *  r392-503; the field reached their twins by r54-135 and took 12920 from them to our 770. */
+    public static final int SEEK_IDLE = 0, SEEK_IDLE_R = 4;
+    /** With SEEK_IDLE: each idle spell also moves the gatherer to the next mine of its pick list (MINE_BALANCE slot + a
+     *  shift), so known mines the crowd ignores get worked (pipes 3804: 29,15 seen at r62, we took 702, they 3135). */
+    public static final boolean IDLE_SHIFT = false;
     /** Once one symmetry is left the king lists the twin on our half of every listed mine (mines come in mirror pairs;
      *  raiders see enemy-half mines whose twins on our half nobody found: DefaultLarge vs abcdezyxwv left 1140 cheese
      *  on two such mines). */
