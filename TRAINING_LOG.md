@@ -2353,3 +2353,23 @@
   - BotTest: mask(me, ttl) keeps and drops marks by age.
   - t0b = @s9s + RISK_FRESH 2. rf1 (VM): t0b and s9s vs atrap2 (our trap layer at incumbent strength) on 8 trap-heavy
     field maps, both sides.
+
+## 2026-10-30 02:47 PDT: s9s accepted (pooled t 2.60); twin shows s7d's crowning block was +4 lucky
+- Twin t0a (@s7d @kfix from the current code, #102) played set 1 (3270-3283). Against s7d's own accepting block on
+  set 1 it scores 42 cells, D 6 (+1 -5), net -4, t -1.63. The block that crowned s7d overstated it by about four
+  cells: the winner's curse that TRAINING_ALGORITHM §4 re-anchors against.
+- s9s block 3 = its set-1 games (3067-3070, 3077-3078, 3087-3094) against t0a: 42 cells, D 14 (+11 -3), net +8,
+  t 2.14.
+  - Gained: AdamTan12 tiny A/B, AlexT101 heart A and popthecork B, CS50Crab Nofreecheese A, dirtfulcat B and
+    streetsofnewyork B, bc26vibe krotus A, outercloud seepastyourgreed A/B, spsquared fullofsecrets B.
+  - Lost: AlexT101 uneasy_alliance A, bc26vibe wallsofparadis A, outercloud cheesebottles B.
+- Pooled over the three blocks: 126 cells, 101 alike, D 25 (+19 -6), net +13, t 2.60, at or above the t >= 2 bar.
+  **s9s is the new incumbent**, resubmitted to the replica as #103.
+- s9s's reign: sets 1-3 all carry its accepting luck. Fresh set 4 (research/panel/v3-set4.json) is its reference
+  block, from match 3284. Each older set gets an s9s twin before a candidate is scored there.
+- Screens of s9s-based candidates now use ra_s9s as the control. Against it s9v (AMMO_AWAY) is -0.8 pts, t -0.27,
+  net -3 (pass, weak). s9u (the overrun build) is neutral.
+- bk1 finished: s9z (@s9s + BREAKOUT_TTL 150) went 10/18 vs s9s on the 9 dig maps. EscapeTheNight 2/2,
+  learn_your_lesson 2/2, mincemeat 0/2; three maps were identical games. On EscapeTheNight vs araid, s9z won both
+  sides and s9s lost both.
+- HANDOFF.md's State section is rewritten for s9s's reign (it still named s3y).
