@@ -573,6 +573,22 @@ public class BotTest {
         check(start.equals(Baby.heardStart(new Message[]{other, st})), "start: read from the king's squeak");
     }
 
+    static void testCatLane() throws GameActionException {
+        reset(); W = 30; H = 30; install();
+        type = UnitType.RAT_KING; me = new MapLocation(5, 6); G.startTurn();
+        King.markLane(new MapLocation(5, 7));
+        King.markLane(new MapLocation(29, 29));   // the 2x2 runs off the map's corner: marks (29,29) only
+        check((Sym.mem[G.idx(new MapLocation(6, 8))] & Sym.CAT) != 0 && (Sym.mem[G.idx(new MapLocation(7, 8))] & Sym.CAT) == 0,
+              "lane: the cat's 2x2 from its bottom-left");
+        check(King.laneCount(new MapLocation(5, 6)) == 2 && King.laneCount(new MapLocation(5, 5)) == 0
+              && King.laneCount(new MapLocation(5, 8)) == 4 && King.laneCount(new MapLocation(29, 29)) == 1, "lane: tiles under a 3x3");
+        Sym.record(5, 7, false, false, false);
+        check((Sym.mem[G.idx(new MapLocation(5, 7))] & Sym.CAT) != 0, "lane: survives a fresh sensing of the tile");
+        check(King.laneOk(me, Direction.NORTH), "lane: laneOk is a no-op with Cfg.CAT_LANE off");
+        check(King.offLane(me, new RobotInfo[0]) && King.laneCount(me) == 0 && me.y == 5, "lane: steps off, south");
+        check(!King.offLane(me, new RobotInfo[0]), "lane: off lane, no step");
+    }
+
     static void testAmmo() {
         check(Baby.ammo(Cfg.AMMO_HP, Cfg.AMMO_HP + 10, Cfg.AMMO_D2, Cfg.AMMO_R), "ammo: low, weaker, close, near the king");
         check(!Baby.ammo(Cfg.AMMO_HP + 1, 100, 2, 1), "ammo: healthy rats stay");
@@ -2064,6 +2080,7 @@ public class BotTest {
         testKingBiter();
         testRescue();
         testHomeStart();
+        testCatLane();
         testRusher();
         testAmmo();
         testRoleFor();

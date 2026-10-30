@@ -13,6 +13,8 @@ public final class Sym {
     public static final int EXP = 112;
     /** A tile under one of our kings' 3x3 bodies (Nav.markKings, Cfg.KING_BLOCK): paths and bug walks go around it. */
     public static final int KING = 128;
+    /** A tile some cat's 2x2 was seen on (King.markLane, Cfg.CAT_LANE): cats patrol fixed waypoint loops. */
+    public static final int CAT = 256;
     /** Mine spacing the map validator enforces (GameConstants.MIN_CHEESE_MINE_SPACING_SQUARED). */
     public static final int MINE_SPACING2 = 25;
 
@@ -30,7 +32,7 @@ public final class Sym {
         int i = x + y * G.W;
         int v = SEEN | (wall ? WALL : 0) | (dirt ? DIRT : 0) | (mine ? MINE : 0);
         int old = mem[i];
-        mem[i] = v | (old & (EXP | KING));
+        mem[i] = v | (old & (EXP | KING | CAT));
         if ((old & SEEN) != 0 || mask == ROT || mask == HOR || mask == VER) return false;
         int before = mask;
         if (!mine && (old & EXP) != 0) { int e = (old >> 4) & mask; if (e != 0) eliminate(e); }

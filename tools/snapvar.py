@@ -5,7 +5,7 @@
 
 Each 'old=>new' must match exactly once in bots/ratbot/Cfg.java (after the presets before it). @PRESET expands to a
 named list of replacements: @s4d is the switch set of s4d, @s6m s6m's, @s7d the incumbent's (accepted 2026-10-29),
-@s8w the rush line's and @kfix the king's first-turn margin, so a
+@s8w the rush line's, @s9s replica #101's and @kfix the king's first-turn margin, so a
 candidate is `snapvar.py s7l @s7d 'X = 0=>X = 1'`. tools/snapshot.sh does the copy, rename and compile check.
 """
 import os, subprocess, sys
@@ -23,6 +23,11 @@ PRESETS['kfix'] = ['KING_SENSE_RESERVE = 5000=>KING_SENSE_RESERVE = 7000']
 # the rush line (s8u/s8v/s8w): we open the war, rush spawns until r150
 PRESETS['s8w'] = PRESETS['s7d'] + ['RUSH = false=>RUSH = true', 'RUSH_BREAK = false=>RUSH_BREAK = true',
                                    'BREAK_ROUND = 0=>BREAK_ROUND = 36', 'RUSH_UNTIL = 0=>RUSH_UNTIL = 150'] + PRESETS['kfix']
+# s9s (replica #101): agrab's rush switches on the incumbent, the baby cap rising to 40 while the bank holds 1000
+PRESETS['s9s'] = PRESETS['s7d'] + PRESETS['kfix'] + [
+    'RICH_BABIES = 0,=>RICH_BABIES = 40,', 'KING_TRAPS = true=>KING_TRAPS = false', 'BABY_RAT_TRAPS = true=>BABY_RAT_TRAPS = false',
+    'THROW_MIN = 42,=>THROW_MIN = 84,', 'CARRY_AIM = false=>CARRY_AIM = true', 'RUSH = false=>RUSH = true',
+    'RUSH_BREAK = false=>RUSH_BREAK = true', 'BREAK_ROUND = 0=>BREAK_ROUND = 30', 'SYM_SLOT = false=>SYM_SLOT = true']
 
 
 def expand(args):

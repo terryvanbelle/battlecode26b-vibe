@@ -40,6 +40,7 @@ public final class King {
 
         RobotInfo[] enemies = rc.senseNearbyRobots(-1, G.them);
         RobotInfo[] cats = rc.senseNearbyRobots(-1, Team.NEUTRAL);
+        if (Cfg.CAT_LANE) for (RobotInfo k : cats) markLane(k.location);
 
         int before = rc.getGlobalCheese();
         pickUp();
@@ -151,7 +152,10 @@ public final class King {
                     Comms.write(Comms.EKING + 1, Comms.sqY(m) + 1);
                     Comms.write(Comms.EKING + 2, Comms.stamp());
                     break;
-                case Comms.SQ_CAT: noteCat(Comms.sqX(m), Comms.sqY(m)); break;
+                case Comms.SQ_CAT:
+                    noteCat(Comms.sqX(m), Comms.sqY(m));
+                    if (Cfg.CAT_LANE) markLane(new MapLocation(Comms.sqX(m), Comms.sqY(m)));
+                    break;
                 default: break;
             }
         }
@@ -396,6 +400,7 @@ public final class King {
                 for (Direction d : cand) if (rc.canMove(d)) { rc.move(d); return; }
             }
         }
+        if (Cfg.CAT_LANE && offLane(c, cats)) { mineWhy = 'l'; return; }
         if (!Cfg.KING_MINE) return;
         if (Cfg.FORM_STILL && formSite != null) { mineWhy = 'f'; return; }
         if (enemies.length > 0 || cats.length > 0) { mineWhy = enemies.length > 0 ? 'e' : 'c'; return; }
@@ -419,6 +424,55 @@ public final class King {
         if (d == null) { mineWhy = 'z'; if (step(c, homeMine)) pickUp(); return; }
         if (!G.rc.canRemoveDirt(d)) { mineWhy = 'q'; return; }
         G.rc.removeDirt(d); digs++; Sym.mem[G.idx(d)] &= ~Sym.DIRT; mineWhy = 'D';
+    }
+
+    /** Mark a cat's 2x2 (bottom-left b) as lane (Cfg.CAT_LANE). */
+    static void markLane(MapLocation b) {
+        int[] mem = Sym.mem;
+        for (int dx = 0; dx <= 1; dx++)
+            for (int dy = 0; dy <= 1; dy++) {
+                int x = b.x + dx, y = b.y + dy;
+                if (x >= 0 && y >= 0 && x < G.W && y < G.H) mem[x + G.W * y] |= Sym.CAT;
+            }
+    }
+
+    /** Lane tiles under a king's 3x3 centred at k. */
+    static int laneCount(MapLocation k) {
+        int[] mem = Sym.mem;
+        int n = 0;
+        for (int x = Math.max(0, k.x - 1); x <= Math.min(G.W - 1, k.x + 1); x++)
+            for (int y = Math.max(0, k.y - 1); y <= Math.min(G.H - 1, k.y + 1); y++)
+                if ((mem[x + G.W * y] & Sym.CAT) != 0) n++;
+        return n;
+    }
+
+    /** A king step in d adds no lane to its 3x3, or leaves less of it than now (Cfg.CAT_LANE; always true off). */
+    static boolean laneOk(MapLocation c, Direction d) {
+        if (!Cfg.CAT_LANE) return true;
+        int n = laneCount(c.add(d));
+        return n == 0 || n < laneCount(c);
+    }
+
+    /** On lane: the step leaving the least lane under the 3x3 (ties: farther from the nearest seen cat, then hand). */
+    static boolean offLane(MapLocation c, RobotInfo[] cats) throws GameActionException {
+        int n0 = laneCount(c);
+        if (n0 == 0) return false;
+        RobotController rc = G.rc;
+        int best = n0 * 1000, bi = -1;
+        for (int i = 0; i < 8; i++) {
+            Direction d = G.DIRS[i];
+            if (!rc.canMove(d) || !unplugged(c, d)) continue;
+            MapLocation nc = c.add(d);
+            int s = laneCount(nc) * 1000 + (G.hand(c, d) > 0 ? 1 : 0);
+            int cd = 1000;
+            for (RobotInfo cat : cats) cd = Math.min(cd, Baby.catDist4(cat.location, nc));
+            s -= Math.min(cd, 998) / 2 * 2;
+            if (laneCount(nc) < n0 && s < best) { best = s; bi = i; }
+        }
+        if (bi < 0) return false;
+        rc.move(G.DIRS[bi]);
+        G.me = rc.getLocation();
+        return true;
     }
 
     /**
@@ -562,7 +616,7 @@ public final class King {
         int d0 = c.distanceSquaredTo(t);
         Direction[] cand = G.fan(c, to);
         for (Direction d : cand) {
-            if (!rc.canMove(d) || c.add(d).distanceSquaredTo(t) >= d0 || !unplugged(c, d)) continue;
+            if (!rc.canMove(d) || c.add(d).distanceSquaredTo(t) >= d0 || !unplugged(c, d) || !laneOk(c, d)) continue;
             rc.move(d); G.me = rc.getLocation(); return true;
         }
         return false;
@@ -579,7 +633,7 @@ public final class King {
         int bn = Integer.MAX_VALUE;
         for (Direction d : cand) {
             MapLocation nc = c.add(d);
-            if (G.cheb(nc, t) > G.cheb(c, t)) continue;
+            if (G.cheb(nc, t) > G.cheb(c, t) || !laneOk(c, d)) continue;
             int n = 0;
             MapLocation first = null;
             boolean ok = true;
@@ -607,7 +661,7 @@ public final class King {
         Direction[] cand = G.fan5(c, to);
         for (Direction d : cand) {
             if (!rc.canMove(d)) continue;
-            if (G.cheb(c.add(d), t) > G.cheb(c, t) || !unplugged(c, d)) continue;
+            if (G.cheb(c.add(d), t) > G.cheb(c, t) || !unplugged(c, d) || !laneOk(c, d)) continue;
             rc.move(d); G.me = rc.getLocation(); return true;
         }
         return false;
