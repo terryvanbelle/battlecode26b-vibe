@@ -2212,3 +2212,16 @@
   enemy near (cheese out r558-1280). s9s (the 40 cap only while the bank holds 1000) is in ag3 against s7d.
 - ra_s9r's first start failed ('no java sources': queued before bots/s9r reached the VM); it is queued again
   behind ra_s9s. Sync the bots before queueing a screen.
+
+## 2026-10-29 23:54 PDT: s9r rejected; s9s to the replica
+- s9r's v3 set-1 block (replica #100; 3012-3017, 3021-3022, 3040-3041, 3046-3047, 3054-3055) against s7d's
+  reference: 42 cells, 29 alike, D 13 (gained 6, lost 7), net -1, t -0.28. Block 1 rejects at t <= 0.
+  - Gained: AdamTan12 tiny B, AlexT101 heart A, CS50Crab dirtfulcat B and streetsofnewyork A/B, outercloud
+    seepastyourgreed B.
+  - Lost: AlexT101 popthecork A/B and uneasy_alliance A, bc26vibe krotus B, outercloud cheesebottles A/B and
+    seepastyourgreed A.
+- agrab's 14/20 against s7d locally became net -1 on the field. The three outercloud losses were starvations,
+  which is what the 40-rat cap invites against a bot that doesn't fight back early.
+- ag3 so far (21 of 24): s9s (s9r with the 40 cap only while the bank holds 1000) beats s7d 12 of 21. It wins
+  cheesebottles A, so the cap gate does stop that starvation. s9s goes to the replica now so the replica isn't
+  idle; ag4 (aim vs cap alone) runs on.
