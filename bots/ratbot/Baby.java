@@ -116,10 +116,13 @@ public final class Baby {
         if (!G.coop && Cfg.GUARD_DIST2 > 0 && nearestEnemy != null && rc.getCarrying() == null
                 && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
         boolean engaged = nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= 20;
+        if (Cfg.RISK_ADAPT > 0) adaptRisk = false;
         if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8) {
             if (!(hunting && Cfg.HUNT_IGNORES_RISK) && (Cfg.RISK_IN_FIGHT || !engaged || Cfg.RISK_GATHER && role == GATHER))
                 Nav.avoid |= TrapRisk.mask(G.me);
             else if (Cfg.RISK_FRESH > 0) Nav.avoid |= TrapRisk.mask(G.me, Cfg.RISK_FRESH);
+            else if (Cfg.RISK_ADAPT > 0 && (adaptRisk = trapsKnown(burnRound, Comms.read(Comms.SYM))))
+                Nav.avoid |= TrapRisk.mask(G.me, Cfg.RISK_ADAPT);
         }
         Debug.mark(31);
         // 0. a carried enemy is thrown as soon as we can act
@@ -181,6 +184,14 @@ public final class Baby {
         Direction back = G.rc.getDirection().opposite();
         if (back != Direction.CENTER && G.rc.canTurn(back)) { G.rc.turn(back); G.facing = back; glances++; }
     }
+
+    /** Cfg.RISK_ADAPT: health at the start of our turn; the round an enemy trap fired on us or we heard of one (0 = never);
+     *  our last SQ_BURN; whether this turn's fresh mask is on. */
+    static int hpStart, burnRound, burnSqueaked;
+    static boolean adaptRisk;
+
+    /** Cfg.RISK_ADAPT: enemy rat traps are known to be in play (our own burn or a heard one, or the kings' shared bit). */
+    static boolean trapsKnown(int burn, int sym) { return burn > 0 || (sym & Comms.SYM_BURN) != 0; }
 
     /** Whether this rat bites and grabs enemy rats now: after cooperation, or a RUSH_BREAK attacker at any time. */
     static boolean hostile() { return !G.coop || Cfg.RUSH_BREAK && role == ATTACK || Cfg.BREAK_ROUND > 0 && G.round >= Cfg.BREAK_ROUND; }
@@ -518,6 +529,7 @@ public final class Baby {
             if (!stay && !canMove) continue;
             Direction m = D3[j];
             if (!stay && Cfg.RISK_FRESH > 0 && (Nav.avoid & (1 << m.ordinal())) != 0) continue;
+            if (Cfg.RISK_ADAPT > 0 && adaptRisk && !stay && (Nav.avoid & (1 << m.ordinal())) != 0) continue;
             boolean checked = stay;
             for (int i = 0; i < n; i++) {
                 int vx = tx[i] - mx, vy = ty[i] - my;
@@ -861,6 +873,13 @@ public final class Baby {
     static void report() {
         MapLocation k = Comms.numKings == 0 ? null : Comms.nearestKing(G.me);
         boolean near = k != null && (Cfg.SYM_HEAR_TILE ? kingInEarshot(G.me) : G.me.distanceSquaredTo(k) <= 16);
+        // RISK_ADAPT: news of an enemy trap goes rat to rat and to the kings until the shared bit is set
+        if (Cfg.RISK_ADAPT > 0 && burnRound > 0 && G.round - burnSqueaked >= Cfg.BURN_EVERY
+                && (Comms.read(Comms.SYM) & Comms.SYM_BURN) == 0) {
+            G.rc.squeak(Comms.squeak(Comms.SQ_BURN, G.me.x, G.me.y, 0));
+            burnSqueaked = G.round;
+            return;
+        }
         if (Cfg.GOSSIP && Comms.numMines == 0) {
             // no mine known to the team yet: pass mine news rat to rat, which outruns a courier walking home
             for (Message m : G.rc.readSqueaks(-1)) {
@@ -888,7 +907,7 @@ public final class Baby {
         }
         // a squeak reaches robots with any tile within dist2 16 of us: the king's centre within 16 is always heard
         if (near) {
-            int sharedSym = Comms.read(Comms.SYM);
+            int sharedSym = Cfg.RISK_ADAPT > 0 ? Comms.read(Comms.SYM) & 7 : Comms.read(Comms.SYM);
             if (sharedSym != 0 && (Sym.mask & sharedSym) != sharedSym) {
                 G.rc.squeak(Comms.squeak(Comms.SQ_SYM, 0, 0, Sym.mask));
                 return;
@@ -939,7 +958,7 @@ public final class Baby {
      *  when an ally can hear it, no enemy is in view at war, and no cat can hear it. */
     static boolean symGossip(boolean on, boolean near) {
         if (!on || near || G.round - symSqueaked < Cfg.SYM_GOSSIP_EVERY) return false;
-        int shared = Comms.read(Comms.SYM);
+        int shared = Cfg.RISK_ADAPT > 0 ? Comms.read(Comms.SYM) & 7 : Comms.read(Comms.SYM);
         if (shared == 0 || (Sym.mask & shared) == shared) return false;
         if (!G.coop && nearestEnemy != null || cat != null && catInEarshot(cat.location, G.me)) return false;
         boolean ally = false;

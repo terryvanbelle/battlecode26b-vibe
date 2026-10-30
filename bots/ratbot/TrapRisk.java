@@ -59,6 +59,7 @@ public final class TrapRisk {
         for (Message m : ms) {
             int c = m.getBytes();
             if (Comms.sqType(c) == Comms.SQ_EKING) { Baby.heardEKing(c); continue; }
+            if (Cfg.RISK_ADAPT > 0 && Comms.sqType(c) == Comms.SQ_BURN) { if (Baby.burnRound == 0) Baby.burnRound = G.round; continue; }
             if (nHeard >= heardE.length) continue;   // bytecode cap: the nearest few squeaks are enough
             if (Comms.sqType(c) != Comms.SQ_TRAP) continue;
             int d = (c >> 12) & 7;

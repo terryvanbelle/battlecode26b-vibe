@@ -2275,6 +2275,9 @@ public class BotTest {
         check(King.forageDue(ff, -1000, -1) && !King.forageDue(ff - 1, -1000, -1) && !King.forageDue(ff, -1000, 0),
               "king forage: from FORAGE_FROM, only while the projected bank is negative");
         check(!King.forageDue(ff + fe - 1, ff, -1) && King.forageDue(ff + fe, ff, -1), "king forage: every FORAGE_EVERY rounds");
+        check(!Baby.trapsKnown(0, 7) && Baby.trapsKnown(5, 7) && Baby.trapsKnown(0, 7 | Comms.SYM_BURN),
+              "risk adapt: traps known from our own burn or the kings' shared bit");
+        check((Comms.SYM_BURN & 7) == 0 && Comms.SYM_BURN < 1024 && Comms.SQ_BURN < 16, "risk adapt: the burn bit misses the symmetry mask and fits a slot");
         // TrapRows (RISK_ROWS) keeps the same marks one row at a time: risky/mask/clear agree with the flat array
         TrapRisk.mark = null; TrapRisk.init(); TrapRows.rows = null; TrapRows.init();
         rnd = new java.util.Random(11);

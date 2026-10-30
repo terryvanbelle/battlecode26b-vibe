@@ -223,6 +223,15 @@ public final class Cfg {
      *  42% of them fatal (21% two or three at once); 62% within 2 rounds of the lay, 80% on combat moves (a/f/w/T/k)
      *  with the mask dropped. RISK_IN_FIGHT (150-round marks) froze our fighters (s8h screen -8.1 pts). */
     public static final int RISK_FRESH = 0;
+    /** Adaptive RISK_FRESH (0 = off): once enemy rat traps are known to be in play, an engaged or hunting rat avoids
+     *  the TrapRisk marks of the last RISK_ADAPT rounds. Known: one of our rats lost health during its own turn (only
+     *  a trap fires on our own move), heard an ally's SQ_BURN, or reads Comms.SYM_BURN, which a king sets in the SYM
+     *  slot on hearing one. RISK_FRESH 2 cost t0b -11.5 pts at a screen whose opponents lay no traps; the field's
+     *  trappers fire theirs on us 0-2 rounds after the lay and grab the stunned half-health rat (3764 superioristhmus:
+     *  abcdezyxwv's 160 traps fired 159 times on us, and 137 of 359 grabs in 3765 took a rat at 40-59 health). */
+    public static final int RISK_ADAPT = 0;
+    /** Rounds between a burned rat's SQ_BURN squeaks while the shared bit is unset. */
+    public static final int BURN_EVERY = 3;
     /** TrapRisk's marks kept one map row at a time, each row allocated on its first mark (TrapRows). The flat W*H
      *  array waits for a turn with 3*W*H + BC_OPTIONAL bytecodes left: 18800 on a 60x60 map, above a baby's 17500,
      *  so on 9 of the 45 field maps no rat ever had marks (15.2-15.5k on 50x50 and 60x40). */

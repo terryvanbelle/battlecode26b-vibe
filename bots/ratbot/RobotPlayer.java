@@ -18,7 +18,13 @@ public strictfp class RobotPlayer {
             Debug.begin(startRound);
             try {
                 G.startTurn();
-                if (G.king) King.turn(); else Baby.turn();
+                if (G.king) King.turn();
+                else {
+                    if (Cfg.RISK_ADAPT > 0) Baby.hpStart = rc.getHealth();
+                    Baby.turn();
+                    // only an enemy trap takes health during our own turn (it fires on our move)
+                    if (Cfg.RISK_ADAPT > 0 && rc.getHealth() < Baby.hpStart && Baby.burnRound == 0) Baby.burnRound = G.round;
+                }
             } catch (Exception e) {
                 exceptions++;
                 Debug.exception(e);

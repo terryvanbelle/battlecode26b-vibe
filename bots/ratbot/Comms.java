@@ -16,9 +16,11 @@ public final class Comms {
     public static final int MINE0 = 24, MINE_SLOTS = 16;         // 2 ints each
     public static final int CAT0 = 56, CAT_SLOTS = 2;            // 3 ints each: x+1, y+1, round%1024
     public static final int BUDGET = 62;                         // spendable surplus / 4 (kings' projection)
+    public static final int SYM_BURN = 512;                      // SYM slot bit (Cfg.RISK_ADAPT): enemy rat traps fired on us
 
     // squeak types (top 4 bits)
     public static final int SQ_MINE = 1, SQ_SYM = 2, SQ_EKING = 3, SQ_CAT = 4, SQ_TRAP = 5, SQ_START = 6;
+    public static final int SQ_BURN = 7;                         // Cfg.RISK_ADAPT: an enemy rat trap fired on us
 
     public static int squeak(int type, int x, int y, int extra) {
         return (type << 28) | (extra << 12) | (x << 6) | y;

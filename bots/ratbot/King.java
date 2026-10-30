@@ -160,7 +160,9 @@ public final class King {
                     noteCat(Comms.sqX(m), Comms.sqY(m));
                     if (Cfg.CAT_LANE) markLane(new MapLocation(Comms.sqX(m), Comms.sqY(m)));
                     break;
-                default: break;
+                default:
+                    if (Cfg.RISK_ADAPT > 0 && Comms.sqType(m) == Comms.SQ_BURN) burnHeard = true;
+                    break;
             }
         }
     }
@@ -187,8 +189,12 @@ public final class King {
         int mask = s == 0 ? Sym.mask : (s & Sym.mask);
         if (mask == 0) mask = Sym.mask;
         Sym.mask = mask;
+        if (Cfg.RISK_ADAPT > 0 && (burnHeard || (s & Comms.SYM_BURN) != 0)) mask |= Comms.SYM_BURN;
         Comms.write(Comms.SYM, mask);
     }
+
+    /** Cfg.RISK_ADAPT: an SQ_BURN reached us (an enemy rat trap fired on one of ours); publish sets Comms.SYM_BURN. */
+    static boolean burnHeard;
 
     static void pickUp() throws GameActionException {
         MapLocation c = G.rc.getLocation();
