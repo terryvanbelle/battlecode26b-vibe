@@ -2146,3 +2146,27 @@
   baby caps 40/40, no rat traps, CARRY_AIM + THROW_MIN 84. ag1 (s7d and s9k against agrab, 10 small and medium
   maps, both sides, replays kept) is on the VM. If it beats s7d the way abcdezyxwv does, it becomes the local
   test for rush defence.
+
+## 2026-10-29 22:56 PDT: hb2 final; s9o (s9i + corridor swap); agrab's first games
+- hb2 (each candidate against s7d, 10 maps x 2 sides; wins, then cheese delivered a game):
+
+  | Candidate | Wins | Delivered (cand / s7d) |
+  |---|---|---|
+  | s9i | 14/20 | 4623 / 3706 |
+  | s9l | 10/20 | 5544 / 4160 |
+  | s9k | 10/20 | 4687 / 3823 |
+  | s9b | 10/20 | 3314 / 3538 |
+
+  - s9i won rose, seepastyourgreed, Stash, attack_on_cat and where_are_you on both sides.
+  - s9l (s9k + swap) cleared rose's 1-wide stem: delivered 4590 and 2830 there, where s9k delivered 830 and 670.
+    But it lost where_are_you, cheesebottles, Stash and popthecork on both sides.
+  - HOME_START, MINE_RR and the symmetry switches did not help s9k in self-play either.
+- s9o = s9i + SWAP_HOLD 2 + SWAP_YIELD + SWAP_NO_ALONG. hb3 plays it against s9i (same 10 maps, replays kept).
+- ag1, first 4 games, all on knifefight:
+  - agrab killed the king of s7d or s9k in 27-31 rounds in 3 games; s7d killed agrab's king at r43 in the fourth.
+  - knifefight's kings start 5 tiles apart ((17,14) and (22,14)).
+  - agrab vs s7d: agrab grabbed 39 rats to s7d's 16. Of its 30 throws, 28 hit our robots and 13 our king,
+    which lost 540 HP to throws by r31. s7d's 35 traps all fired and killed 13 agrab rats.
+  - This is the same pattern abcdezyxwv showed on the replica (2074 knifefight: 56 grabs, 38 of 43 throws
+    hitting our robots).
+- ra_s9k finished after the replica verdict: +0.8 pts, net -1 (pass).
