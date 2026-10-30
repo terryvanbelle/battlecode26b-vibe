@@ -2520,3 +2520,26 @@
   FORM_RING + FORM_MAX 4.
 - t0h goes to the replica next (#106, set 4 from match 3401) on fm1's showing. Its screen ra_t0h started at the same
   time: ra_t0c was stopped, since its candidate is decided. If ra_t0h reaches the reject line, the block is pulled.
+
+## 2026-10-30 05:47 PDT: cy1 done; the top two win on harvest; axis mines; t0o
+- cy1 (t0k = @s9s + CAT_LAY vs s9s, 8 cooperation maps, both sides): t0k 10 of 16. Cat traps laid 18 a game to 13,
+  fired 14 to 12, trap cat damage 1424 to 1169. The gain is on rift, TheHeist and where_are_you; on rose,
+  averystrangespace and EscapeTheNight cats never came near and nobody laid any. cy2 (t0n = t0k + CAT_RING) runs
+  on the same cells.
+- Partial screens vs ra_s9s: ra_t0e 45 cells t -1.14 (net -3), ra_t0g 30 cells t +1.51 (net +2), ra_t0h 25 cells
+  t -1.00 (net -2). t0h's replica block so far (3401-3406, 3418-3419): 24 cells, 23 alike, net -1.
+- s9s's 126 field games: abcdezyxwv 1-17, AlexT101 4-14, AdamTan12 7-11; 47 of 57 losses are king kills, 27 of
+  them before r500. In the abcdezyxwv and AlexT101 games (roles.py, to r300) we pick 0.31 and 0.22 cheese a rat-turn
+  to their 0.63 and 0.43; our attackers are 26-35% of the turns and pick 0.07-0.13.
+  - Stash vs abcdezyxwv (3264, 3265): we picked 180 and 500 to r270, they 3720 and 2959. They reach our three mines
+    first (r31-49) and keep 360-512 rat-rounds there to our 81-278; 36-38% of our turns are the rush.
+  - Excavation (3265): kills were even (33 of theirs, 37 of ours; 28 of ours by throw landing), but they picked 1803
+    to our 898 and kept 16 rats while ours fell from 20 to 7 between r195 and r225; then our king died at r269.
+- Axis mines: a mine as near their start as ours is its own twin, so a spawn drops both piles beside it. s9s never
+  targets one (MINE_TIES is off in every preset since s6j). Tie maps in the corpus: EscapeTheNight (7 of 11 mines),
+  Excavation (1/3), closeup (2/8), starvation (1/3); on gridlock, canyoudig, ultimatestarvation and 5t4rv4t10n every
+  mine is a tie, and with no home-half mine every mine is used anyway. Excavation 3265: the axis mine spawned 840 to
+  r269; abcdezyxwv took 600 and we 240. Set 4 holds two tie maps (Excavation vs AlexT101, closeup vs AdamTan12).
+  - t0o = @s9s + MINE_TIES. s5w (the same switch on s4d) was +27.2 pts vs araid on the tie maps (t +2.84) and net 0
+    on replica set 3, which had one tie map. Diag mt2 (vs s9s, the 4 tie maps, both sides, seeds 0-1); screen
+    ra_t0o queued.
