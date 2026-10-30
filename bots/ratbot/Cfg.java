@@ -369,6 +369,13 @@ public final class Cfg {
      *  finishes a turn earlier on one side and the twins walk different paths. A quota under the bytecode cut makes both
      *  finish on the same turn. */
     public static final int FLOW_QUOTA = 0;
+    /** Flow's search arrays are allocated a piece at a time (g, par, each bucket row, the path), each once its own length
+     *  fits past the reserve, not all in one turn: at once they need 2*W*H + 1700 and then 9216 bytecodes past
+     *  FLOW_RESERVE in a single turn (an allocation costs its length), more than a rat whose turn runs 5800 has left.
+     *  pb2 probe (t0q): on superioristhmus 48 of the 87 rats that asked for a search never got one going, and 9.6% of
+     *  rat-turns (Stash 25.9%) were spent waiting on a requested search; EscapeTheNight self-play: one twin stood 6
+     *  turns short of the arrays while the other searched (6410 bytecodes a turn to 12810). */
+    public static final boolean FLOW_ALLOC = false;
     /** Our kings' 3x3 bodies count as walls for flow paths and bug walks (not when the target is at a king).
      *  EscapeTheNight: A* routed babies through the king that stood between them and the room's exit; they waited behind
      *  it, dropped the path and searched again, 500+ rounds. */

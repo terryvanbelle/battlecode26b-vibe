@@ -1208,6 +1208,25 @@ public class BotTest {
         Flow.quotaMax = Cfg.FLOW_QUOTA; Flow.quotaRound = -1;
     }
 
+    static void testFlowAlloc() {
+        reset(); W = 30; H = 20; install();
+        int n = W * H;
+        Flow.rev = true; Flow.fast = true;
+        Flow.start(new MapLocation(20, 10), false);
+        // earlier turns got g and one bucket row; par is stale from a smaller map
+        Flow.g = new int[n]; Flow.par = null; Flow.bk = new int[Flow.NB][]; Flow.bk[0] = new int[Flow.RING]; Flow.path = null;
+        boolean ok = Flow.alloc(n, 0);
+        boolean rows = true;
+        for (int b = 0; b < Flow.NB; b++) rows &= Flow.bucket != null && Flow.bucket[b] != null && Flow.bucket[b].length == Flow.RING;
+        check(ok && rows && Flow.par.length == n && Flow.path.length == 1024 && Flow.AB != null && Flow.pending == 1,
+              "flow alloc: the missing pieces are allocated and the search seeded");
+        reset(); W = 30; H = 20; install();
+        Flow.rev = true;
+        Flow.start(new MapLocation(20, 10), false);
+        Flow.par = new int[5];
+        check(Flow.alloc(n, 0) && Flow.g.length == n && Flow.par.length == n, "flow alloc: a fresh g reallocates the other pieces");
+    }
+
     static void testTieFirst() {
         reset(); W = 60; H = 60; install();
         // superioristhmus (rotational): the king at (49,56) had a corner (47,54) and an edge (47,55) of equal score
@@ -2311,7 +2330,7 @@ public class BotTest {
         testNavDigsDirt();
         testNavUShape();
         testNavFlowSealedRoom();
-        testFlowField(); testFlowMirror(); testFlowQuota(); testTieFirst();
+        testFlowField(); testFlowMirror(); testFlowQuota(); testTieFirst(); testFlowAlloc();
         testFlowJam();
         testCheeseBan();
         testNavSameTarget();

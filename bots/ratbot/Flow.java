@@ -186,24 +186,54 @@ public final class Flow {
         work0(reserve);
     }
 
+    /** Cfg.FLOW_ALLOC: bucket rows being allocated (bucket is set once all are there). */
+    static int[][] bk;
+
+    /** Cfg.FLOW_ALLOC: allocate the search arrays a piece at a time, each once its own length (an allocation costs its
+     *  length in bytecodes) fits in the bytecodes left past the reserve, and seed once all are there; true then. */
+    static boolean alloc(int n, int reserve) {
+        if (g == null) {
+            if (left() < n + reserve + 50) return false;
+            g = new int[n];
+            par = null; bk = null; path = null;
+        }
+        if (par == null) { if (left() < n + reserve + 50) return false; par = new int[n]; }
+        if (fast && AB == null) {
+            if (left() < 2 * AC + reserve + 1700) return false;
+            int[] ab = AB = new int[2 * AC + 1];
+            for (int i = 0; i <= 2 * AC; i++) ab[i] = i < AC ? AC - i : i - AC;
+        }
+        if (bk == null) bk = new int[NB][];
+        for (int b = 0; b < NB; b++)
+            if (bk[b] == null) { if (left() < RING + reserve + 50) return false; bk[b] = new int[RING]; }
+        if (path == null) { if (left() < 1024 + reserve + 50) return false; path = buf = new int[1024]; }
+        bucket = bk;
+        seed();
+        return true;
+    }
+
     static void work0(int reserve) {
         if (rev && !frontier && g != null && bucket != null) { workRev(reserve); return; }
         int n = G.W * G.H;
-        if (g == null) {
-            if (left() < 2 * n + reserve + (fast ? 1700 : 0)) return;
-            g = new int[n];
-            par = new int[n];
-            if (fast) {
-                int[] ab = AB = new int[2 * AC + 1];
-                for (int i = 0; i <= 2 * AC; i++) ab[i] = i < AC ? AC - i : i - AC;
+        if (Cfg.FLOW_ALLOC) {
+            if (bucket == null && !alloc(n, reserve)) return;
+        } else {
+            if (g == null) {
+                if (left() < 2 * n + reserve + (fast ? 1700 : 0)) return;
+                g = new int[n];
+                par = new int[n];
+                if (fast) {
+                    int[] ab = AB = new int[2 * AC + 1];
+                    for (int i = 0; i <= 2 * AC; i++) ab[i] = i < AC ? AC - i : i - AC;
+                }
+                if (bucket != null) seed();
             }
-            if (bucket != null) seed();
-        }
-        if (bucket == null) {
-            if (left() < NB * RING + 1024 + reserve) return;
-            bucket = new int[NB][RING];
-            path = buf = new int[1024];
-            seed();
+            if (bucket == null) {
+                if (left() < NB * RING + 1024 + reserve) return;
+                bucket = new int[NB][RING];
+                path = buf = new int[1024];
+                seed();
+            }
         }
         if (frontier) { workFrontier(reserve); return; }
         if (rev) { workRev(reserve); return; }
