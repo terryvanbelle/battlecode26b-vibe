@@ -110,12 +110,13 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   sends the queue under the hourly limit). Score: `contest.py paired REF CAND`.
 - Candidates on the s9s base (screens use `gauntlet.py selfplay RUN/results.jsonl --base araid --control
   build/vmruns/runs/ra_s9s/results.jsonl`):
-  - s9z = @s9s + BREAKOUT_TTL 150: screen ra_s9z +1.3 pts, t +0.41 (pass). On the replica as #104, set-4 block 1
-    (reference s9s 3284-3297).
-  - t0b = @s9s + RISK_FRESH 2; t0c = @s9s + KING_TRAPS; t0d = t0c + BABY_RAT_TRAPS; t0e = @s9s + RISK_ROWS (trap marks
-    on 60x60 maps); t0g = @s9s + RUSH_LIFE 150. Screens ra_t0b..ra_t0g; diags kt1 (t0c/t0d) and rl1 (t0g).
+  - t0c = @s9s + KING_TRAPS: on the replica as #105, set-4 block 1 (reference s9s 3284-3297); partial screen
+    ra_t0c t +1.23 at 19 cells. t0d = t0c + BABY_RAT_TRAPS.
+  - s9z (BREAKOUT_TTL 150) rejected on set 4 (net 0, t 0.00). t0b (RISK_FRESH 2) partial screen t -1.50, net -6.
+  - t0e = @s9s + RISK_ROWS; t0g = @s9s + RUSH_LIFE 150; t0h = @s9s + FORM_RING; t0i = @s9s + FORM_MINE (extra kings on
+    home mines, as the field does); t0j = t0i + FORM_MAX 3. Screens ra_t0b..ra_t0j; diags kt1 (t0c/t0d), rl1 (t0g),
+    fm1 (t0h), fm2 (t0i).
   - t0f = twin of s9s from current code, for re-anchoring sets 2/3/1.
-  - s9x/s9y (CAT_LANE) dropped; s9w = @s9s + GUARD_KING_R 5; s9v = @s9s + AMMO_AWAY (screen t -0.27).
 - Owner rules: assume every map is symmetric in all aspects (PROMPTS.md #14); refresh and commit progress/ after
   every acceptance and every scored replica block (#16).
 - Local machine: 2 GB RAM, 2 cores; one replay analysis at a time. Volume games run on the VM (arena.py matrix,
