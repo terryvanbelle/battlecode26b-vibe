@@ -1891,3 +1891,27 @@
   (r89) and heart B. It loses both DefaultSmall, uneasy_alliance B and heart A. 0 exceptions, 0 overruns. No
   candidate since s7d has beaten it head-to-head this clearly, so s8u is submission #94, set-1 block from 2740,
   ahead of its screen (ra_s8u, 28/80).
+
+## 2026-10-29 18:48 PDT: the rush line fails on the field (s8u rejected); s8w becomes the local rush proxy; s8x
+- s8u's v3 set-1 block (2740-2753) against s7d's reference: 42 cells, 34 alike, D 8 (+3 -5), net -2, t -0.71.
+  Rejected. It gained CS50Crab dirtfulcat B, CS50Crab streetsofnewyork B and outercloud seepastyourgreed B. It lost
+  AlexT101 popthecork A and B, abcdezyxwv sunandmoon A, bc26vibe wallsofparadis A and outercloud heart A. Nothing
+  moved against the top three.
+  - popthecork vs AlexT101 (2746 g1): the rush has to go round the bottle. Their king kept 600 HP all game, and
+    our 20 rats were all dead by r399.
+  - heart vs AlexT101 (2746 g0): our bank fell 1535 -> 500 by r50 for one bite on their king. Our king died at r177
+    to cat scratches (400 HP) and starvation (200).
+- The local wins (rsu1 8/12, rsu2 10/20, rsv1 9/12 against s7d) came from s7d's weak defence against a rush.
+  The field's kings are well defended. rsu2: s8u won both averyfineline and krotus, lost both Nofreecheese and
+  superioristhmus, and jail, popthecork, cheesefarm and wallsofparadis went to side B both times.
+- s8v (s8u + RUSH_UNTIL 150; new switch, off by default) fixed s8u's long-war DefaultSmall losses (9/12 against
+  s7d). s8w adds KING_SENSE_RESERVE 7000: the dev code since s7d had pushed the king's first turn on 60x60 maps
+  to 20000-20005 (s7d 19696), which cost the round-2 spawn. ovw1 shows 0 overruns. New snapvar presets: @kfix,
+  and @s8w (the rush line).
+- s8w is a much stronger local stand-in for the field's rushers than araid. s7d beats araid, but it lost 8/12
+  to s8u. It kills s7d's king on tiny (r60-65), knifefight (r46-48) and uneasy_alliance (r89), the pattern the top
+  three show on the field. Defence baseline dr0 (s7d vs s8w on 12 close-king maps, both sides) is running. Defence
+  candidates will be measured against it.
+- s8x = @s7d @kfix + GATHER_FIRST 10 + FIGHT_EVERY 3 + TRAP_CAP 25, a bundle of the three weak screen passes
+  (s8s +2.7 net +4, s8r -2.3 net +5, s8e +2.0 net +3). It is submission #95, set-1 block from 2754; screen ra_s8x is
+  queued.
