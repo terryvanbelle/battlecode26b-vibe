@@ -110,16 +110,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   sends the queue under the hourly limit). Score: `contest.py paired REF CAND`.
 - Candidates on the s9s base (screens use `gauntlet.py selfplay RUN/results.jsonl --base araid --control
   build/vmruns/runs/ra_s9s/results.jsonl`):
-  - t0c = @s9s + KING_TRAPS: on the replica as #105, set-4 block 1 (reference s9s 3284-3297; matches 3355-3360,
-    3378-3385), at 39 cells net -1, t -0.45 with one match (3381) left; kt1: t0c 6 of 16 vs s9s, its traps fire 1.6
-    a game. t0d (t0c + BABY_RAT_TRAPS) dropped (screen stopped at 48 cells, t -0.20).
-  - Rejected: s9z (BREAKOUT_TTL 150) on set 4, net 0, t 0.00; t0b (RISK_FRESH 2) at its screen, t -1.73 at 43 cells.
-  - Queued screens (runs/screenq.txt, ra_t0e and ra_t0g running): t0e = @s9s + RISK_ROWS; t0g = @s9s + RUSH_LIFE 150
-    (attackers that never meet the enemy king turn gatherer: 25.4% of our cooperation turns are attack moves);
-    t0h = @s9s + FORM_RING (fm1: 11 of 16 vs s9s on no-site maps; on the replica as #106 from match 3401); t0i = @s9s + FORM_MINE (extra kings on home
-    mines; mine sites skip the income test; fm3 10 of 16 vs s9s, second king on a mine at r85-299); t0j = t0i +
-    FORM_MAX 3; t0k = @s9s + CAT_LAY (cat traps on the cats' lanes during cooperation; diag cy1); t0l = @s9s +
-    ATK_CARRY 25 (attackers stay light); t0m = @s9s + FORM_MINE + FORM_RING + FORM_MAX 4.
+  - On the replica: t0h = @s9s + FORM_RING as #106, set-4 block 1 from match 3401 (fm1: 11 of 16 vs s9s on
+    no-site maps); at 24 cells net -1.
+  - Rejected: t0c (KING_TRAPS) on set 4, net -1, t -0.45; s9z (BREAKOUT_TTL 150) on set 4, net 0; t0b (RISK_FRESH 2)
+    at its screen, t -1.73. Dropped: t0d (t0c + BABY_RAT_TRAPS).
+  - Screens (runs/screenq.txt; ra_t0e, ra_t0g, ra_t0h running), then ra_t0i, t0j, t0n, t0l, t0m, t0o, t0p:
+    - t0e = @s9s + RISK_ROWS (45 cells, t -1.14).
+    - t0g = @s9s + RUSH_LIFE 150 (attackers that never meet the enemy king turn gatherer; 30 cells, t +1.51).
+    - t0i = @s9s + FORM_MINE (extra kings on home mines, no income test for mine sites; fm3 10 of 16 vs s9s).
+      t0j = t0i + FORM_MAX 3. t0m = @s9s + FORM_MINE + FORM_RING + FORM_MAX 4 (diag fm4).
+    - t0k = @s9s + CAT_LAY (cat traps on the cats' lanes in cooperation; cy1 10 of 16 vs s9s, trap damage 1424 to
+      1169). t0n = t0k + CAT_RING (diag cy2).
+    - t0l = @s9s + ATK_CARRY 25 (attackers stay light).
+    - t0o = @s9s + MINE_TIES (axis mines count as ours; diag mt2 on the 4 tie maps).
+    - t0p = @s9s + MINE_ANY + MINE_TIES (gatherers over every known mine, either half; diag ma1 on 8 abcdezyxwv maps).
   - t0f = twin of s9s from current code, for re-anchoring sets 2/3/1.
 - Owner rules: assume every map is symmetric in all aspects (PROMPTS.md #14); refresh and commit progress/ after
   every acceptance and every scored replica block (#16).
