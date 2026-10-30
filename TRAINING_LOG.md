@@ -2494,3 +2494,29 @@
     cheese delivered 4.5k against 5.1k. Twelve more gatherers would likely have won both.
   - rose vs spsquared: cat damage 0 against 8080.
   - This is what RUSH_LIFE (t0g) targets; ra_t0g is next in the screen queue.
+
+## 2026-10-30 05:12 PDT: t0c rejected; cat traps, light attackers and more kings; t0h on the replica
+- t0c (KING_TRAPS) is rejected at set-4 block 1 (3355-3360, 3378-3385 vs s9s's 3284-3297): 42 cells, 37 alike, D 5
+  (+2 -3), net -1, t -0.45. t0d (t0c + BABY_RAT_TRAPS) is dropped; its screen was stopped at 48 cells (t -0.20).
+- Cat damage, s9s's 126 field games (catagg.py). We average 1773 a game by bite and 992 by trap (11.8 cat traps
+  laid, 10.0 fired). The field averages 956 and 695. The losses on points are where a field bot lays many cat traps:
+  rose (spsquared laid 73 to our 6; cat damage 0 to 8080), rift (81 to 26), superioristhmus (80 to 50).
+- The engine's cat rules:
+  - A cat trap costs 10, deals 100, counts as cat damage for the team that laid it, and only cats set it off.
+  - At most 10 are live per team. None can be laid after the backstab, except by the backstabbed side for 100 rounds.
+  - Cats walk their waypoint loop by BFS, so each lap covers the same tiles. At each waypoint they hunt rats for 8
+    turns.
+  - When the last cat dies, the game ends on points (TheHeist r303-416; fullofsecrets r130).
+- New switches, all off by default:
+  - CAT_LAY: during cooperation babies mark cat footprints (CatLane, one row at a time). A tile under a cat on two
+    passes 20+ rounds apart is lane, and a baby next to it lays a cat trap there, with 400+ global cheese. t0k = @s9s +
+    CAT_LAY; diag cy1 on 8 cooperation maps.
+  - ATK_CARRY: an attacker takes no pile that would lift it above 25. t0l = @s9s + ATK_CARRY 25.
+- fm3 (t0i so far): the second king forms on a mine (0-1 tiles off) at r85-299. t0i is 3 of 6 vs s9s
+  (superioristhmus 2-0, Meow 1-1, rift 0-2). fm1 (t0h, FORM_RING): 9 of 12 vs s9s on the no-site maps, mostly on
+  round-2000 points with two kings to one.
+- Up to 5 kings are allowed before r1200, and 2 after. 98 of s9s's 126 field games ended with every king destroyed.
+  abcdezyxwv on superioristhmus (3380) formed four extra kings at r304-539, all on mines. t0m = @s9s + FORM_MINE +
+  FORM_RING + FORM_MAX 4.
+- t0h goes to the replica next (#106, set 4 from match 3401) on fm1's showing. Its screen ra_t0h started at the same
+  time: ra_t0c was stopped, since its candidate is decided. If ra_t0h reaches the reject line, the block is pulled.
