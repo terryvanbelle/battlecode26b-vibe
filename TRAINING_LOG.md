@@ -1961,3 +1961,28 @@
   there. From r151 our gatherers worked only (8,21), (8,27) and (2,22). The map's mines are symmetric under all
   three candidate symmetries, so the mask stays 7 all game and MINE_MIRROR (which waits for one symmetry) never acts.
   In self-play both sides pick about 90% of their half, so the gap opens when an opponent disturbs us.
+
+## 2026-10-29 20:03 PDT: unseen home mines; round-robin mines (s9b); s9a passes block 1
+- s9a (no baby rat traps): v3 set-1 block (2781-2782, 2786-2787, 2793-2794, 2805-2810, 2812-2813) against s7d's
+  reference: 42 cells, 32 alike, D 10 (+6 -4), net +2, t +0.63. On to set 2.
+- dr2/dr3 against s8w on dr0's cells: s8y (AMMO_AWAY) 14/24, s8z (+ RETREAT_HP 0) 14/24, s9a 14/24; s7d 13/24.
+- Probe pb2 (@s7d with the king's mine list ml= and each rat's mine mt= in the indicators):
+  - ue2, uneasy_alliance against araid as A: our king listed 5 of our 6 home mines by r47 ((8,2) only at r1731),
+    yet 29 of 62 rats took (8,27) and 3 took (2,7). scratchpad picksim.py reproduces 60 of 62 picks: MINE_BALANCE's
+    id hash mod m, over a list sorted from each rat's birth tile, piles rats on one mine once the king has walked
+    from (11,15) to (7,22). Own-half share to r600: 0.59 to araid's 0.90.
+  - hv1, self-play on seven of our worst field maps, own-half share to r500 for side A / B: seepastyourgreed
+    0.04 / 0.04, rose 0.24 / 0.17, where_are_you 0.28 / 0.26, attack_on_cat 0.34 / 0.33, fullofsecrets
+    0.38 / 0.49, heart 0.86 / 0.89. The losses come without an opponent: most of the unworked home mines were
+    never seen by any of our rats by r500 (mineknow.py): where_are_you 5 of 8, attack_on_cat 4 of 6, rose 3 of 4
+    ((24,8) is 8 tiles from our start), seepastyourgreed 5 of 8, fullofsecrets 2 of 6.
+  - seepastyourgreed: the king starts in a strip (y <= 4) under a wall row whose only gap is 50 tiles west. About
+    15 rats chase piles seen through the wall at (39,6)-(49,6). Each new pile or mine target restarts the A*,
+    which treats unseen tiles as open, so the rats keep probing the unseen east end of the wall and never take
+    the detour.
+- New switch MINE_RR (off; s9b = @s7d @kfix + HOME_START + MINE_RR): the king's start squeak carries the newborn's
+  place in its role's spawn order, and the rat takes home mine n % m, sorted from our first king's start. The
+  king predicts the role with Baby.roleFor, the rule born() applies. ue3 (vs araid on uneasy_alliance and
+  popthecork, both sides) and screen ra_s9b are running.
+- Next: exploration that finds the unseen home mines (rose, where_are_you, attack_on_cat), and a cheese chase that
+  doesn't restart its search on every new pile.
