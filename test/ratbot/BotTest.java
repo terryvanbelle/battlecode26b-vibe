@@ -2246,6 +2246,8 @@ public class BotTest {
         check(!King.endKing(ek, 1, 8, ec, ek - Cfg.FORM_TTL) && King.endKing(ek, 1, 8, ec, ek - Cfg.FORM_TTL - 1),
               "end king: a site that timed out waits only FORM_TTL");
         if (Cfg.END_KING > 0) check(!King.endKing(Cfg.END_KING - 1, 1, 8, ec, -1000), "end king: not before END_KING");
+        check(King.crowdBetter(3, 10, 2, 50) && King.crowdBetter(2, 50, 2, 10) && !King.crowdBetter(2, 10, 2, 50) && !King.crowdBetter(1, 99, 2, 10),
+              "end king crowd site: more babies first, then farther from the enemy");
         // TrapRows (RISK_ROWS) keeps the same marks one row at a time: risky/mask/clear agree with the flat array
         TrapRisk.mark = null; TrapRisk.init(); TrapRows.rows = null; TrapRows.init();
         rnd = new java.util.Random(11);

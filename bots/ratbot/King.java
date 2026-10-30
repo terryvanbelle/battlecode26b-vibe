@@ -752,7 +752,7 @@ public final class King {
         int babies = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
         if (Cfg.END_KING > 0 && endKing(G.round, Comms.numKings, babies, G.rc.getGlobalCheese(), formStart)) {
             int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
-            formSite = ringSite(G.me, G.mirror(start, s));
+            formSite = Cfg.END_KING_CROWD ? crowdSite(G.me, G.mirror(start, s)) : ringSite(G.me, G.mirror(start, s));
             if (formSite == null) formSite = pickFormSite(G.me);
             if (formSite == null) return;
             formStart = G.round;
@@ -881,6 +881,25 @@ public final class King {
         }
         return best;
     }
+
+    /** Cfg.END_KING_CROWD: the clear 3x3 off our king's body with the most of our babies within Chebyshev 2 of its
+     *  centre (ties: farther from the enemy start), or null. */
+    static MapLocation crowdSite(MapLocation c, MapLocation ek) throws GameActionException {
+        RobotInfo[] mine = G.rc.senseNearbyRobots(-1, G.us);
+        int sx = 2 * c.x >= G.W - 1 ? 1 : -1, sy = 2 * c.y >= G.H - 1 ? 1 : -1;
+        MapLocation best = null;
+        int bn = -1, bd = -1;
+        for (int[] o : RING) {
+            MapLocation s = c.translate(o[0] * sx, o[1] * sy);
+            int n = 0;
+            for (RobotInfo r : mine) if (r.type == UnitType.BABY_RAT && G.cheb(r.location, s) <= 2) n++;
+            int d = s.distanceSquaredTo(ek);
+            if (crowdBetter(n, d, bn, bd) && clearNow(s)) { bn = n; bd = d; best = s; }
+        }
+        return best;
+    }
+
+    static boolean crowdBetter(int n, int d, int bn, int bd) { return n > bn || n == bn && d > bd; }
 
     /** The 3x3 around s is on the map, in view, passable, and holds no cat or king. */
     static boolean clearNow(MapLocation s) throws GameActionException {

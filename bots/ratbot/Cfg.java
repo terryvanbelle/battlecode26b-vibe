@@ -136,6 +136,10 @@ public final class Cfg {
      *  so a second king at 1-1 moves 8-16 points to us; s9s's set-4 limit games (9 of 42) all ended at 1-1 or less
      *  for us, and averystrangespace (3287) was lost 24-25 with no cat damage either side. */
     public static final int END_KING = 0, END_KING_CHEESE = 400;
+    /** The endgame site is the clear 3x3 off the king's body with the most of our babies near it, not the one
+     *  farthest from the enemy: on ZeroDay (ek1) u0d's site lay behind the king at the map edge and 20 babies stalled
+     *  around its body from r1850 to the end. */
+    public static final boolean END_KING_CROWD = false;
     /** Gatherers at their mine turn in place instead of wandering. */
     public static final boolean GATHER_STILL = false;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines
