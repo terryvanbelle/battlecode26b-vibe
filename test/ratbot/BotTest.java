@@ -57,7 +57,7 @@ public class BotTest {
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
         Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE;
         Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST; King.faceSpawn = Cfg.SYM_FACE;
-        Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false;
+        Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false; King.laneN = 0; King.lane0 = 0;
         Nav.swapHold = Cfg.SWAP_HOLD; Nav.swapFrom = null; Nav.swaps = 0; Baby.nearestEnemy = null;
     }
 
@@ -587,6 +587,21 @@ public class BotTest {
         check(King.laneOk(me, Direction.NORTH), "lane: laneOk is a no-op with Cfg.CAT_LANE off");
         check(King.offLane(me, new RobotInfo[0]) && King.laneCount(me) == 0 && me.y == 5, "lane: steps off, south");
         check(!King.offLane(me, new RobotInfo[0]), "lane: off lane, no step");
+        // the unrolled count matches a plain 3x3 count everywhere, edges included
+        Random rnd = new Random(7);
+        for (int k = 0; k < 40; k++) King.markLane(new MapLocation(rnd.nextInt(W), rnd.nextInt(H)));
+        boolean same = true;
+        for (int x = 0; x < W; x++)
+            for (int y = 0; y < H; y++) {
+                int n = 0;
+                for (int dx = -1; dx <= 1; dx++)
+                    for (int dy = -1; dy <= 1; dy++) {
+                        int xx = x + dx, yy = y + dy;
+                        if (xx >= 0 && yy >= 0 && xx < W && yy < H && (Sym.mem[xx + W * yy] & Sym.CAT) != 0) n++;
+                    }
+                if (n != King.laneCount(new MapLocation(x, y))) same = false;
+            }
+        check(same, "lane: unrolled count = plain count on every tile");
     }
 
     static void testAmmo() {

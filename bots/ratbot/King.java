@@ -426,36 +426,60 @@ public final class King {
         G.rc.removeDirt(d); digs++; Sym.mem[G.idx(d)] &= ~Sym.DIRT; mineWhy = 'D';
     }
 
+    /** Lane tiles marked so far, and the lane under the king's 3x3 where move() found it (Cfg.CAT_LANE). */
+    static int laneN, lane0;
+
     /** Mark a cat's 2x2 (bottom-left b) as lane (Cfg.CAT_LANE). */
     static void markLane(MapLocation b) {
         int[] mem = Sym.mem;
         for (int dx = 0; dx <= 1; dx++)
             for (int dy = 0; dy <= 1; dy++) {
                 int x = b.x + dx, y = b.y + dy;
-                if (x >= 0 && y >= 0 && x < G.W && y < G.H) mem[x + G.W * y] |= Sym.CAT;
+                if (x < 0 || y < 0 || x >= G.W || y >= G.H) continue;
+                int i = x + G.W * y;
+                if ((mem[i] & Sym.CAT) == 0) { mem[i] |= Sym.CAT; laneN++; }
             }
     }
 
-    /** Lane tiles under a king's 3x3 centred at k. */
+    /** Lane tiles under a king's 3x3 centred at k (unrolled: a stuck king asks every turn). */
     static int laneCount(MapLocation k) {
+        if (laneN == 0) return 0;
         int[] mem = Sym.mem;
-        int n = 0;
-        for (int x = Math.max(0, k.x - 1); x <= Math.min(G.W - 1, k.x + 1); x++)
-            for (int y = Math.max(0, k.y - 1); y <= Math.min(G.H - 1, k.y + 1); y++)
-                if ((mem[x + G.W * y] & Sym.CAT) != 0) n++;
+        int w = G.W, x = k.x, y = k.y;
+        if (x < 1 || y < 1 || x + 1 >= w || y + 1 >= G.H) {
+            int n = 0;
+            for (int xx = Math.max(0, x - 1); xx <= Math.min(w - 1, x + 1); xx++)
+                for (int yy = Math.max(0, y - 1); yy <= Math.min(G.H - 1, y + 1); yy++)
+                    if ((mem[xx + w * yy] & Sym.CAT) != 0) n++;
+            return n;
+        }
+        int i = x - 1 + w * (y - 1), n = 0;
+        if ((mem[i] & Sym.CAT) != 0) n++;
+        if ((mem[i + 1] & Sym.CAT) != 0) n++;
+        if ((mem[i + 2] & Sym.CAT) != 0) n++;
+        i += w;
+        if ((mem[i] & Sym.CAT) != 0) n++;
+        if ((mem[i + 1] & Sym.CAT) != 0) n++;
+        if ((mem[i + 2] & Sym.CAT) != 0) n++;
+        i += w;
+        if ((mem[i] & Sym.CAT) != 0) n++;
+        if ((mem[i + 1] & Sym.CAT) != 0) n++;
+        if ((mem[i + 2] & Sym.CAT) != 0) n++;
         return n;
     }
 
-    /** A king step in d adds no lane to its 3x3, or leaves less of it than now (Cfg.CAT_LANE; always true off). */
+    /** A king step in d from move()'s tile adds no lane to its 3x3, or leaves less than lane0 (Cfg.CAT_LANE; always
+     *  true off or with no lane known). */
     static boolean laneOk(MapLocation c, Direction d) {
-        if (!Cfg.CAT_LANE) return true;
+        if (!Cfg.CAT_LANE || laneN == 0) return true;
         int n = laneCount(c.add(d));
-        return n == 0 || n < laneCount(c);
+        return n == 0 || n < lane0;
     }
 
     /** On lane: the step leaving the least lane under the 3x3 (ties: farther from the nearest seen cat, then hand). */
     static boolean offLane(MapLocation c, RobotInfo[] cats) throws GameActionException {
         int n0 = laneCount(c);
+        lane0 = n0;
         if (n0 == 0) return false;
         RobotController rc = G.rc;
         int best = n0 * 1000, bi = -1;
@@ -463,15 +487,18 @@ public final class King {
             Direction d = G.DIRS[i];
             if (!rc.canMove(d) || !unplugged(c, d)) continue;
             MapLocation nc = c.add(d);
-            int s = laneCount(nc) * 1000 + (G.hand(c, d) > 0 ? 1 : 0);
+            int nl = laneCount(nc);
+            if (nl >= n0) continue;
+            int s = nl * 1000 + (G.hand(c, d) > 0 ? 1 : 0);
             int cd = 1000;
             for (RobotInfo cat : cats) cd = Math.min(cd, Baby.catDist4(cat.location, nc));
             s -= Math.min(cd, 998) / 2 * 2;
-            if (laneCount(nc) < n0 && s < best) { best = s; bi = i; }
+            if (s < best) { best = s; bi = i; }
         }
         if (bi < 0) return false;
         rc.move(G.DIRS[bi]);
         G.me = rc.getLocation();
+        lane0 = laneCount(G.me);
         return true;
     }
 
