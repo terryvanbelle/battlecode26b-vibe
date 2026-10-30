@@ -2651,3 +2651,21 @@
 - ex1 (s9s vs araid on Excavation, indicators): the mines sit inside a solid dirt block. Our explorers find them at
   ~r40 and the first pickup is at r55. Attack moves take 37% of rat-turns to r70. AlexT101 dug to the centre mine by
   r25 on the replica.
+
+## 2026-10-30 08:21 PDT: t0i rejected; t0p on the replica; rush size and deliver-at diags
+
+- t0i (FORM_MINE, replica #109) set-4 block 1 (3522-3525, 3528-3529, 3546-3551, 3562-3563) vs the s9s reference
+  3284-3297: 42 cells, 33 alike, D 9 (+3 -6), net -3, t -1.00. Rejected (block 1 rejects at t <= 0). It lost
+  outercloud fullofsecrets B and seepastyourgreed B, CS50Crab grove B and knifefight A, spsquared evileye B and
+  AlexT101 where_are_you B; it gained spsquared Meow on both sides and AlexT101 where_are_you A. abcdezyxwv is still
+  0 of 6. Its screen was a weak pass (t -0.36) and fm3 had it 10 of 16 over s9s on mine-rich maps: a second king on
+  a mine doesn't carry over to the field.
+- t0p (MINE_ANY + MINE_TIES: gatherers spread over every known mine, either half and the axis) goes up as #110, with
+  its set-4 block from match 3572. It has the strongest screen so far, ra_t0p at 66 of 80 cells: D 28, +13.7 pts,
+  t +3.29, net +6. The araid screen predicts badly (t0o screened +2.02 and failed), so the replica decides.
+- Other screens part-way: ra_t0v (FLOW_ALLOC) 30 cells t +1.41, net +3; ra_t0j (FORM_MAX 3) 40 cells t -0.11.
+  Diag al1 (t0v vs s9s, 8 maps, both sides) is 5 of 10 so far: the allocation fix isn't weaker.
+- Rush size (never tuned): rz1, t0t RUSH_TO 12 (8 rushers) vs s9s, won 10 of 16 (Excavation, fullofsecrets and
+  evileye 2-0, superioristhmus 0-2). Screen ra_t0t is queued. rz2, t0u RUSH_TO 20 (16 rushers), won 9 of 16 and is
+  parked.
+- DELIVER_AT 50 (t0s): dl1 7 of 16 vs s9s, delivered 11072 to 11232. Dropped.
