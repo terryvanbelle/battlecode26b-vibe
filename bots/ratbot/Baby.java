@@ -231,7 +231,7 @@ public final class Baby {
         Comms.readKings();
         home = Comms.nearestKing(G.me);
         if (home == null) home = G.me;
-        if (Cfg.HOME_START || Cfg.MINE_RR) origin = heardStart(rc.readSqueaks(-1));
+        if (Cfg.HOME_START || Cfg.MINE_RR || Cfg.FORM_MINE) origin = heardStart(rc.readSqueaks(-1));
         int px = 2 * home.x - G.cx2, py = 2 * home.y - G.cy2;
         fu = px >= 0 ? 1 : -1;
         fv = py >= 0 ? 1 : -1;
@@ -1574,7 +1574,9 @@ public final class Baby {
     /** Join a king formation: walk into the site's 3x3 and hold; the rat on the centre promotes once 7 stand there. */
     static boolean formKing() throws GameActionException {
         MapLocation site = formSite();
-        if (site == null || G.me.distanceSquaredTo(site) > Cfg.FORM_PULL_R2) return false;
+        if (site == null) return false;
+        int sd = G.me.distanceSquaredTo(site);
+        if (sd > Cfg.FORM_PULL_R2 && !(Cfg.FORM_MINE && nearestEnemy == null && minePull(sd, role, slot))) return false;
         if (Cfg.FORM_JOIN > 0 && G.cheb(G.me, site) > 1 && nearerAllies(site) >= Cfg.FORM_JOIN) return false;
         RobotController rc = G.rc;
         if (G.me.equals(site)) {
@@ -1592,6 +1594,12 @@ public final class Baby {
         }
         Nav.goTo(site);
         return true;
+    }
+
+    /** Cfg.FORM_MINE: a baby beyond FORM_PULL_R2 (d2 from the site) still joins within FORM_MINE_PULL_R2 when its
+     *  slot is drawn; attackers never. */
+    static boolean minePull(int d2, int role, int slot) {
+        return d2 <= Cfg.FORM_MINE_PULL_R2 && role != ATTACK && (slot >>> 3) % Cfg.FORM_MINE_SHARE == 0;
     }
 
     /** Allied babies in view strictly nearer the site than we are (no id tie-break: mirrored rats decide alike). */
@@ -1631,7 +1639,7 @@ public final class Baby {
     static int rrSlot = -1;
 
     /** Home for the half test and mirrors: our first king's start with Cfg.HOME_START once heard, else home. */
-    static MapLocation ref() { return Cfg.HOME_START && origin != null ? origin : home; }
+    static MapLocation ref() { return (Cfg.HOME_START || Cfg.FORM_MINE) && origin != null ? origin : home; }
 
     static int firstSym() {
         return (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;

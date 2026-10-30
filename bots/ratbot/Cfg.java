@@ -111,6 +111,19 @@ public final class Cfg {
     /** A baby outside the site's 3x3 joins only while it sees fewer than FORM_JOIN allied babies nearer the site;
      *  the rest keep working (0 = every baby within FORM_PULL_R2 joins). */
     public static final int FORM_JOIN = 0;
+    /** Formation v3: the site is a home-half mine itself, though the king has not seen it. It is the listed mine
+     *  nearest the king, more than 4 from it, that no king holds (none within Chebyshev 4), that has not failed as a
+     *  site, and with FORM_MINE_SAFE * dist2 to our start at most its dist2 to the enemy start (4 = pickFormSite's
+     *  "clearly ours"); known dirt in its 3x3 ranks it after the clean ones. No mine's 3x3 holds a wall or leaves the
+     *  map (415 mines on 53 maps; 59 hold dirt). The field forms its extra kings on mines across its half and ours
+     *  (abcdezyxwv on superioristhmus: four, r330-563, 0-1 from a mine; spsquared three), ours form 4-10 from any
+     *  mine beside the first king, as the old site needs tiles the king has seen. To r400 in s9s's field games our
+     *  mines ranked 4th+ from the king hold 1-2 of our babies and lose 49-59% of their cheese unpicked. Babies within
+     *  FORM_MINE_PULL_R2 of a mine site join (beyond FORM_PULL_R2) when (slot >>> 3) % FORM_MINE_SHARE is 0, attackers
+     *  never. A formed king squeaks its old home king's tile with each spawn, and its babies use that for the half
+     *  test and the mirrored enemy start. */
+    public static final boolean FORM_MINE = false;
+    public static final int FORM_MINE_SAFE = 2, FORM_MINE_PULL_R2 = 400, FORM_MINE_SHARE = 2;
     /** Gatherers at their mine turn in place instead of wandering. */
     public static final boolean GATHER_STILL = false;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines

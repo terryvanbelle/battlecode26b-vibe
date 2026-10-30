@@ -573,6 +573,37 @@ public class BotTest {
         check(start.equals(Baby.heardStart(new Message[]{other, st})), "start: read from the king's squeak");
     }
 
+    /** Cfg.FORM_MINE's site pick on a 30x30 map, first king at (3,3), the enemy start (26,26) under rotation. */
+    static void testFormMine() {
+        reset(); W = 30; H = 30; install();
+        check(King.siteKey(false, 50, false) < King.siteKey(true, 34, true), "form mine: a clean site before a nearer dirty one");
+        check(King.siteKey(false, 34, false) < King.siteKey(false, 50, true), "form mine: then the nearer");
+        check(King.siteKey(false, 34, true) < King.siteKey(false, 34, false), "form mine: then the tie bit");
+        check(Baby.minePull(400, Baby.GATHER, 0) && Baby.minePull(100, Baby.FIGHT, 8 * 4), "form mine: drawn babies within 400 join");
+        check(!Baby.minePull(401, Baby.GATHER, 0) && !Baby.minePull(100, Baby.ATTACK, 0) && !Baby.minePull(100, Baby.GATHER, 8),
+              "form mine: not beyond 400, never attackers, not undrawn slots");
+        MapLocation start = new MapLocation(3, 3), ek = new MapLocation(26, 26);
+        King.start = start;
+        King.nBans = 0;
+        Comms.numKings = 0;
+        // (3,6) is within 4 of us; (6,8) has dirt beside it; (10,4) is clean; (14,14) and (20,3) are too near the enemy
+        MapLocation[] ms = {new MapLocation(3, 6), new MapLocation(6, 8), new MapLocation(10, 4), new MapLocation(14, 14), new MapLocation(20, 3)};
+        for (int i = 0; i < ms.length; i++) Comms.mines[i] = ms[i];
+        Comms.numMines = ms.length;
+        Sym.mem[7 + W * 9] |= Sym.DIRT;
+        check(new MapLocation(10, 4).equals(King.mineSite(start, ek)), "form mine: the clean mine (10,4) over the nearer dirty (6,8)");
+        King.ban(new MapLocation(10, 4));
+        King.ban(new MapLocation(10, 4));
+        check(King.nBans == 1 && King.banned(new MapLocation(10, 4)), "form mine: a failed site is banned once");
+        check(new MapLocation(6, 8).equals(King.mineSite(start, ek)), "form mine: then the dirty one");
+        Comms.kings[0] = new MapLocation(6, 11);
+        Comms.numKings = 1;
+        check(King.mineSite(start, ek) == null, "form mine: none when a king holds the last one");
+        Comms.numKings = 0;
+        Comms.numMines = 0;
+        King.nBans = 0;
+    }
+
     static void testCatLane() throws GameActionException {
         reset(); W = 30; H = 30; install();
         type = UnitType.RAT_KING; me = new MapLocation(5, 6); G.startTurn();
@@ -2146,6 +2177,7 @@ public class BotTest {
         testKingBiter();
         testRescue();
         testHomeStart();
+        testFormMine();
         testCatLane();
         testRusher();
         testAmmo();

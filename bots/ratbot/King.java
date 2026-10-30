@@ -49,8 +49,11 @@ public final class King {
         // a fresh rat (100 HP, bites every turn) is worth far more than one king bite: spawn first
         int sp = spawned;
         spawn(cats, enemies);
-        if ((Cfg.HOME_START || Cfg.MINE_RR) && spawned > sp && cats.length == 0) {
-            MapLocation o = Baby.origin != null ? Baby.origin : start;
+        // a king formed from a baby (Cfg.FORM_MINE) passes on its old home king's tile: the half test and the
+        // mirrored enemy start of its babies stay those of our first king, not of this mine
+        boolean formed = Cfg.FORM_MINE && Baby.home != null;
+        if ((Cfg.HOME_START || Cfg.MINE_RR || formed) && spawned > sp && cats.length == 0) {
+            MapLocation o = Baby.origin != null ? Baby.origin : formed ? Baby.home : start;
             rc.squeak(Comms.squeak(Comms.SQ_START, o.x, o.y, Cfg.MINE_RR ? rrNext() : 0));
         }
         Debug.mark(46);
@@ -705,6 +708,7 @@ public final class King {
         if (formSite != null) {
             boolean formed = Cfg.FORM_GAP > 0 && Comms.numKings > formKings;
             if (formed || G.round - formStart > Cfg.FORM_TTL) {
+                if (Cfg.FORM_MINE && Comms.numKings <= formKings) ban(formSite);
                 formSite = null;
                 Comms.write(Comms.FORM_T, 0);
                 if (formed) formStart = G.round + Cfg.FORM_GAP - Cfg.FORM_TTL - Cfg.FORM_RETRY;
@@ -741,6 +745,10 @@ public final class King {
     static MapLocation pickFormSite(MapLocation from) throws GameActionException {
         int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
         MapLocation ek = G.mirror(start, s);
+        if (Cfg.FORM_MINE) {
+            MapLocation m = mineSite(from, ek);
+            if (m != null) return m;
+        }
         MapLocation best = null;
         int bd = Integer.MAX_VALUE;
         for (int i = 0; i < Comms.numMines; i++) {
@@ -757,6 +765,47 @@ public final class King {
         Direction back = ek.directionTo(from);
         MapLocation b = from.translate(4 * back.dx, 4 * back.dy);
         return clear3(b) ? b : null;
+    }
+
+    /** Cfg.FORM_MINE: the listed mine nearest {@code from}, more than 4 from it, safe enough (FORM_MINE_SAFE), held by no
+     *  king and never failed as a site; mines with known dirt in their 3x3 come after the clean ones; ties by
+     *  G.pickBit. */
+    static MapLocation mineSite(MapLocation from, MapLocation ek) {
+        MapLocation best = null;
+        long bk = Long.MAX_VALUE;
+        for (int i = 0; i < Comms.numMines; i++) {
+            MapLocation m = Comms.mines[i];
+            if (m.x < 1 || m.y < 1 || m.x > G.W - 2 || m.y > G.H - 2) continue;
+            if (G.cheb(m, from) <= 4 || Cfg.FORM_MINE_SAFE * m.distanceSquaredTo(start) > m.distanceSquaredTo(ek)) continue;
+            if (nearKing(m) || banned(m)) continue;
+            long k = siteKey(dirt3(m), from.distanceSquaredTo(m), G.pickBit(from, m));
+            if (k < bk) { bk = k; best = m; }
+        }
+        return best;
+    }
+
+    /** mineSite's rank: clean before dirty, then nearer, then the tie bit. */
+    static long siteKey(boolean dirty, int d2, boolean bit) {
+        return ((dirty ? 1L : 0L) << 40) + ((long) d2 << 1) + (bit ? 0 : 1);
+    }
+
+    /** Some tile of the 3x3 around c is known to be dirt. */
+    static boolean dirt3(MapLocation c) {
+        for (int dx = -1; dx <= 1; dx++)
+            for (int dy = -1; dy <= 1; dy++)
+                if ((Sym.mem[(c.x + dx) + G.W * (c.y + dy)] & Sym.DIRT) != 0) return true;
+        return false;
+    }
+
+    /** Sites where a formation timed out without a king (Cfg.FORM_MINE); not named again. */
+    static final MapLocation[] siteBans = new MapLocation[8];
+    static int nBans;
+
+    static void ban(MapLocation s) { if (s != null && nBans < siteBans.length && !banned(s)) siteBans[nBans++] = s; }
+
+    static boolean banned(MapLocation s) {
+        for (int i = 0; i < nBans; i++) if (siteBans[i].equals(s)) return true;
+        return false;
     }
 
     /** Site centres 3 tiles out from the king (its body and the site's 3x3 then leave a one-tile lane between them),
