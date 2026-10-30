@@ -2474,12 +2474,81 @@ public class BotTest {
         return es.length;
     }
 
+    /** The steps that do not land on one of the enemies (rc.canMove's mask never has them). */
+    static int gmSteps(int[][] es) {
+        int m = 255;
+        for (int[] e : es) for (int d = 0; d < 8; d++) if (GrabMicro.DX[d] == e[0] && GrabMicro.DY[d] == e[1]) m &= ~(1 << d);
+        return m;
+    }
+
     /** All window tiles within Chebyshev 2 free except ours and the listed offsets. */
     static long gmFree(int... blocked) {
         long f = GrabMicro.INNER & ~GrabMicro.CBIT;
         for (int i = 0; i < blocked.length; i += 2) f &= ~GrabMicro.bit(blocked[i], blocked[i + 1]);
         return f;
     }
+
+    /** The first GrabMicro.evaluate (bitboard loops), kept as the reference the table version must match. */
+    static final long[] r0 = new long[8], r1 = new long[8], eb = new long[8], rt = new long[8];
+    static final boolean[] gr = new boolean[8];
+    static int rS, rD, rF, rG, rB, rCur;
+    static final int[] rDir = new int[9];
+
+    static int gmRef(int myHp, int cur, boolean turnOk, int moveMask, boolean actOk, int n, long free,
+                        int px, int py, int chir) {
+        for (int i = 0; i < n; i++) {
+            long e = GrabMicro.bit(GrabMicro.ex[i], GrabMicro.ey[i]), nb = GrabMicro.shift(GrabMicro.K3, GrabMicro.ex[i], GrabMicro.ey[i]);
+            eb[i] = e;
+            r0[i] = nb & (free | e) & GrabMicro.INNER;
+            r1[i] = r0[i] | (nb & GrabMicro.CBIT);
+        }
+        rS = Integer.MIN_VALUE; rD = 8; rF = cur; rG = -1; rB = -1; rCur = 0;
+        int rKey = 0, rFKey = 0;
+        for (int d = 8; d >= 0; d--) {
+            rDir[d] = Integer.MIN_VALUE;
+            if (d < 8 && (moveMask & (1 << d)) == 0) continue;
+            int tx = d < 8 ? GrabMicro.DX[d] : 0, ty = d < 8 ? GrabMicro.DY[d] : 0;
+            long at = GrabMicro.shift(GrabMicro.ADJ, tx, ty);
+            for (int i = 0; i < n; i++) {
+                rt[i] = (d == 8 ? r0[i] : r1[i]) & at;
+                gr[i] = actOk && (eb[i] & at) != 0 && (GrabMicro.ehp[i] < myHp || !GrabMicro.sees(GrabMicro.ex[i], GrabMicro.ey[i], GrabMicro.edir[i], tx, ty));
+            }
+            int tKey = d == 8 ? Integer.MAX_VALUE : GrabMicro.key(px, py, chir, tx, ty);
+            for (int f = turnOk ? 0 : cur, f1 = turnOk ? 7 : cur; f <= f1; f++) {
+                long v = GrabMicro.shift(GrabMicro.vis(f), tx, ty);
+                int g = -1, gv = 0, gk = 0, bi = -1, bv = 0, bh = 0, bk = 0;
+                for (int i = 0; i < n; i++) {
+                    if ((eb[i] & v) == 0) continue;
+                    // equal choices fall to the mirror-invariant key of the victim's tile
+                    if (gr[i]) {
+                        int x = GrabMicro.GRAB + GrabMicro.ehp[i] / 10, k = GrabMicro.key(px, py, chir, GrabMicro.ex[i], GrabMicro.ey[i]);
+                        if (x > gv || x == gv && k > gk) { gv = x; g = i; gk = k; }
+                    } else if (actOk) {
+                        int h = GrabMicro.ehp[i], k = GrabMicro.key(px, py, chir, GrabMicro.ex[i], GrabMicro.ey[i]);
+                        int x = h <= 10 ? GrabMicro.KILL : h >= myHp && h - 10 < myHp ? GrabMicro.FLIP : GrabMicro.BITE;
+                        if (x > bv || x == bv && (h < bh || h == bh && k > bk)) { bv = x; bi = i; bh = h; bk = k; }
+                    }
+                }
+                if (g >= 0) { bi = -1; bv = 0; }
+                int th = 0;
+                for (int i = 0; i < n; i++) {
+                    if (i == g || !GrabMicro.ecan[i] || rt[i] == 0) continue;
+                    int h = GrabMicro.ehp[i] - (i == bi ? 10 : 0);
+                    if (h <= 0) continue;
+                    if (h > myHp || (rt[i] & ~v) != 0) th++;
+                }
+                int s = gv + bv - GrabMicro.THREAT * th - (d < 8 && f != d && cur != d ? 1 : 0);
+                if (d == 8 && f == cur) rCur = s;
+                if (s > rDir[d]) rDir[d] = s;
+                int fKey = f == cur ? Integer.MAX_VALUE : GrabMicro.key(px, py, chir, GrabMicro.DX[f], GrabMicro.DY[f]);
+                if (s > rS || s == rS && (tKey > rKey || tKey == rKey && fKey > rFKey)) {
+                    rS = s; rD = d; rF = f; rG = g; rB = bi; rKey = tKey; rFKey = fKey;
+                }
+            }
+        }
+        return rS;
+    }
+
 
     static void testGrabMicro() {
         // facing sets and the cone
@@ -2555,6 +2624,7 @@ public class BotTest {
             long fr = GrabMicro.INNER & ~GrabMicro.CBIT;
             for (int k = 0; k < 4; k++) fr &= ~GrabMicro.bit(rnd.nextInt(5) - 2, rnd.nextInt(5) - 2);
             for (int[] e : es) if (Math.abs(e[0]) <= 2 && Math.abs(e[1]) <= 2) fr &= ~GrabMicro.bit(e[0], e[1]);
+            mm &= gmSteps(es);
             int qx = rnd.nextInt(41) - 20, qy = rnd.nextInt(41) - 20, ch = rnd.nextBoolean() ? 1 : -1;
             if (qx == 0 && qy == 0) qx = 3;
             GrabMicro.evaluate(hp, cur, tOk, mm, aOk, gmSet(es), fr, qx, qy, ch);
@@ -2575,6 +2645,57 @@ public class BotTest {
             }
         }
         check(bad == 0, "grab micro: mirrored twins pick mirrored options (bad=" + bad + " of " + cases + ")");
+
+        // the lookup tables match their definitions
+        int tb = 0;
+        for (int r = 0; r < 256; r++) {
+            int m = 0;
+            for (int f = 0; f < 8; f++) if ((r & ~GrabMicro.arc(f) & 255) == 0) m |= 1 << f;
+            if (GrabMicro.SAFE.charAt(r) != m) tb++;
+        }
+        for (int dx = -4; dx <= 4; dx++) for (int dy = -4; dy <= 4; dy++) {
+            int m = 0;
+            for (int k = 0; k < 8; k++) if (Math.max(Math.abs(GrabMicro.DX[k] - dx), Math.abs(GrabMicro.DY[k] - dy)) <= 1) m |= 1 << k;
+            if (GrabMicro.NEAR.charAt((dx + 4) * 9 + dy + 4) != m) tb++;
+        }
+        for (int v = 0; v < 512; v++) {
+            int m = 0;
+            for (int k = 0; k < 8; k++) if ((v >> ((GrabMicro.DX[k] + 1) + 3 * (GrabMicro.DY[k] + 1)) & 1) != 0) m |= 1 << k;
+            if (GrabMicro.RING9.charAt(v) != m) tb++;
+        }
+        for (int k = 0; k < 8; k++) if (GrabMicro.DIRK.charAt((GrabMicro.DX[k] + 1) * 3 + GrabMicro.DY[k] + 1) != k) tb++;
+        if (GrabMicro.DIRK.charAt(4) != 8) tb++;
+        long blk = GrabMicro.bit(-1, 0) | GrabMicro.bit(1, 2) | GrabMicro.bit(0, 1);
+        if (GrabMicro.block(blk, 0, 1) != (1 << 0 | 1 << 8 | 1 << 4)) tb++;
+        check(tb == 0, "grab micro: SAFE, NEAR, RING9, DIRK and block() match their definitions (bad=" + tb + ")");
+
+        // the table version scores exactly as the bitboard reference
+        int diff = 0;
+        for (int c = 0; c < 4000; c++) {
+            int ne = 1 + rnd.nextInt(GrabMicro.MAXE);
+            int[][] es = new int[ne][];
+            for (int i = 0; i < ne; i++) {
+                int x, y;
+                do { x = rnd.nextInt(7) - 3; y = rnd.nextInt(7) - 3; } while (x == 0 && y == 0);
+                es[i] = new int[] {x, y, 10 * (1 + rnd.nextInt(10)), rnd.nextInt(9) - 1};
+            }
+            int hp = 10 * (1 + rnd.nextInt(10)), cur = rnd.nextInt(8), mm = rnd.nextInt(256);
+            boolean tOk = rnd.nextBoolean(), aOk = rnd.nextInt(4) != 0;
+            long fr = GrabMicro.INNER & ~GrabMicro.CBIT;
+            for (int k = 0; k < 5; k++) fr &= ~GrabMicro.bit(rnd.nextInt(5) - 2, rnd.nextInt(5) - 2);
+            for (int[] e : es) if (Math.abs(e[0]) <= 2 && Math.abs(e[1]) <= 2) fr &= ~GrabMicro.bit(e[0], e[1]);
+            mm &= gmSteps(es);
+            int qx = rnd.nextInt(41) - 20, qy = rnd.nextInt(41) - 20, ch = rnd.nextBoolean() ? 1 : -1;
+            int nn = gmSet(es);
+            for (int i = 0; i < nn; i++) GrabMicro.ecan[i] = rnd.nextInt(5) != 0;
+            gmRef(hp, cur, tOk, mm, aOk, nn, fr, qx, qy, ch);
+            GrabMicro.evaluate(hp, cur, tOk, mm, aOk, nn, fr, qx, qy, ch);
+            boolean same = rS == GrabMicro.bestS && rD == GrabMicro.bestD && rF == GrabMicro.bestF && rG == GrabMicro.grabI
+                    && rB == GrabMicro.biteI && rCur == GrabMicro.curS;
+            for (int d = 0; d < 9; d++) same &= rDir[d] == GrabMicro.dirBest[d];
+            if (!same) diff++;
+        }
+        check(diff == 0, "grab micro: the table version matches the bitboard reference (diff=" + diff + " of 4000)");
     }
 
     public static void main(String[] args) throws Exception {

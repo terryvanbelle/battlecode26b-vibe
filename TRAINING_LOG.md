@@ -2982,3 +2982,31 @@
   mirrored and rotated twins (all pick the mirrored option). bccmp: only new members with the switch off.
   u1g = u0m + GRAB_MICRO: diag gm1 vs agrab, agaim, abrk on tiny, constrictinglattice, starvation, Excavation,
   knifefight and Meow, both sides, control gmc (u0m).
+
+## 2026-10-30 16:47 PDT: GRAB_MICRO cost; THROW_CHECK
+
+- gm1 (u1g, the first GrabMicro): 58 turns over 17500 in one tiny game. Its bitboard loops ran 9 tiles x 8 facings x
+  every enemy x 3 passes. u1h scores with tables instead: per end tile, each enemy that can reach a tile next to it
+  gets an 8-bit mask of the facings that leave it a threat (SAFE[ring], NEAR, RING9, DIRK string literals: ~1
+  bytecode a lookup, no static initializer). BotTest keeps the old bitboard scorer as a reference and checks 4000
+  random cases against it, plus the tables against their definitions. u1i: the micro only runs with an enemy baby
+  within Chebyshev 2 (no grab is possible otherwise and standing is safe) and GRAB_BC 10000.
+- Diag gh1 (u1h) vs gmc (u0m), 36 cells (agrab, agaim, abrk x tiny, constrictinglattice, starvation, Excavation,
+  knifefight, Meow, both sides): 23 wins to 22, but 652 overruns to 4. Note: pairdiag.py keys cells by map and side
+  only, so it folded the three opponents into one; oppdiag.py (scratch, also ~/diag26b/) scores per opponent.
+- Probe pb2 (u1i with Clock checkpoints in the indicator string, set again right after the micro so overrun turns
+  keep it) vs agrab on tiny. Evaluated turns cost a median 4388-4735 bytecodes, but evaluate itself only ~1700:
+  the rest was setup. The robot scan kept a sorted list by shifting 8 arrays, and the passable-tile mask called
+  G.onMap and bit() for each of 25 tiles (~60 bytecodes a tile).
+- u1j: enemies are collected unsorted (the nearest 6 by Chebyshev and key are selected only when there are more;
+  enemy order doesn't change the scores), the mask is read row by row from Sym.mem, each adjacent enemy updates only
+  the 3 facings that see it, and an end tile with nothing to grab or bite takes its facing straight from bit-sliced
+  threat counts. Probe: evaluated turns a median 3703 (p90 5248, max 6678), acting turns a median 4749 (max 7104),
+  no overruns. Diag gj1, same cells.
+- Own-hit throws over 27 field games: our throws hit 0-17 of our robots a game, up to 370 damage (keepout 3992: 12
+  rats), and 0-4 times our own king (3934 constrictinglattice: 7 rats + 3 king hits, 334 damage). New switch
+  THROW_CHECK (Baby.throwChecked), off by default. Our kings out of sight (from Comms) block flights, a hit on our
+  king scores 3x a rat's, the flight tiles are checked for our robots before the throw, and a carrier with only bad
+  flights holds until THROW_LATE 8 rounds into the 10-round carry. bccmp: only new members with both switches off.
+  u1k = u0m + THROW_CHECK: diag tk1, same cells.
+

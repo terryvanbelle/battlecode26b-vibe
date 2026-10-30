@@ -598,6 +598,7 @@ public final class Baby {
     }
 
     static boolean tryThrow(RobotInfo[] robots) throws GameActionException {
+        if (Cfg.THROW_CHECK) return throwChecked(robots);
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return false;
         MapLocation me = rc.getLocation();
@@ -636,6 +637,89 @@ public final class Baby {
         // no point-blank hit (42) yet: keep holding (the carried rat is out of the fight) while the carry lasts
         if (bs / 2 < Cfg.THROW_MIN && G.round - carryRound < Cfg.THROW_HOLD) return false;
         if (rc.getDirection() != bestD) { if (!rc.canTurn(bestD)) return false; rc.turn(bestD); G.facing = bestD; }
+        if (!rc.canThrowRat()) return false;
+        rc.throwRat();
+        throwsDone++;
+        return true;
+    }
+
+    static RobotInfo ownKing;
+    public static int throwAborts;
+
+    /** Cfg.THROW_CHECK: tryThrow, with our unseen kings (the king channel) on the flights, a hit on our king scored
+     *  three times a rat's, no throw whose best flight hits one of ours until THROW_LATE rounds into the carry, and
+     *  the flight re-checked once the turn brings it into view. Field games (3934-3937, 3986-3992) threw into our own
+     *  robots 0-17 times a game, up to 370 damage and 4 hits on our own king. */
+    static boolean throwChecked(RobotInfo[] robots) throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady()) return false;
+        MapLocation me = rc.getLocation();
+        if (robots == null) robots = rc.senseNearbyRobots(-1, null);
+        int stamp = gridFill(me, robots);
+        // our kings we cannot see stand where the king channel last put them
+        for (int q = 0; q < Comms.numKings; q++) {
+            MapLocation k = Comms.kings[q];
+            int ox = k.x - me.x, oy = k.y - me.y;
+            if (ox < -9 || ox > 9 || oy < -9 || oy > 9) continue;
+            if (ownKing == null) ownKing = new RobotInfo(0, G.us, UnitType.RAT_KING, 600, k, Direction.NORTH, 0, 0, null);
+            for (int ex = -1; ex <= 1; ex++) for (int ey = -1; ey <= 1; ey++) {
+                int px = ox + ex, py = oy + ey;
+                if (px < -8 || px > 8 || py < -8 || py > 8 || gridAt[(px + 8) + 17 * (py + 8)] == stamp) continue;
+                gridPut(px, py, ownKing, stamp);
+            }
+        }
+        Direction bestD = null;
+        int bs = Integer.MIN_VALUE;
+        int[] mem = Sym.mem;
+        int w = G.W, h = G.H, blk = Sym.WALL | Sym.DIRT;
+        for (int i = 0; i < 8; i++) {
+            Direction d = G.DIRS[i];
+            int ddx = d.dx, ddy = d.dy;
+            int x = me.x + ddx, y = me.y + ddy;
+            if (x < 0 || y < 0 || x >= w || y >= h || (mem[x + w * y] & blk) != 0 || gridAt[(ddx + 8) + 17 * (ddy + 8)] == stamp) continue;
+            int s2 = 10;
+            for (int k = 2; k <= 8; k++) {
+                x += ddx; y += ddy;
+                int dmg = FLIGHT_DMG[k];
+                if (x < 0 || y < 0 || x >= w || y >= h) { s2 = 10; break; }
+                if ((mem[x + w * y] & blk) != 0) { s2 = dmg; break; }
+                int gi = (k * ddx + 8) + 17 * (k * ddy + 8);
+                if (gridAt[gi] == stamp) {
+                    RobotInfo r = grid[gi];
+                    // beyond tile 2 the hit lands next round: a baby has usually moved by then (kings are slow)
+                    boolean far = k > 2 && r.type == UnitType.BABY_RAT;
+                    if (r.team == G.them) s2 = far ? dmg * 2 * Cfg.THROW_FAR_PCT / 100 : dmg * (r.type == UnitType.RAT_KING ? 3 : 2);
+                    else if (r.team == G.us) s2 = r.type == UnitType.RAT_KING ? -3 * dmg : -dmg;
+                    else s2 = -50; // a cat eats the rat: no damage, it sleeps
+                    break;
+                }
+            }
+            s2 = s2 * 2 + (G.hand(me, d) > 0 ? 1 : 0);
+            if (s2 > bs) { bs = s2; bestD = d; }
+        }
+        if (bestD == null) return false;
+        // no point-blank hit (42) yet: keep holding (the carried rat is out of the fight) while the carry lasts
+        if (bs / 2 < Cfg.THROW_MIN && G.round - carryRound < Cfg.THROW_HOLD) return false;
+        // every flight hits one of ours: hold while the carry lasts (at its end the victim wriggles free)
+        boolean late = G.round - carryRound >= Cfg.THROW_LATE;
+        if (bs < 0 && !late) return false;
+        if (rc.getDirection() != bestD) {
+            if (!rc.canTurn(bestD)) return false;
+            rc.turn(bestD);
+            G.facing = bestD;
+            // the flight is in view now: one of ours on it, unseen before the turn, stops the throw
+            if (!late) {
+                MapLocation l = me.add(bestD);
+                for (int k = 2; k <= 8; k++) {
+                    l = l.add(bestD);
+                    if (!rc.onTheMap(l) || !rc.canSenseLocation(l) || (mem[l.x + w * l.y] & blk) != 0) break;
+                    RobotInfo r = rc.senseRobotAtLocation(l);
+                    if (r == null) continue;
+                    if (r.team == G.us) { throwAborts++; return false; }
+                    break;
+                }
+            }
+        }
         if (!rc.canThrowRat()) return false;
         rc.throwRat();
         throwsDone++;

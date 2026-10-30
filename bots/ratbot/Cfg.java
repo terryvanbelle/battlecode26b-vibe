@@ -615,5 +615,10 @@ public final class Cfg {
      *  next to it when healthier), and takes the best when it beats standing still by GRAB_MARGIN; else steps worse
      *  than standing by GRAB_MARGIN are avoided. Needs GRAB_BC bytecodes left. */
     public static final boolean GRAB_MICRO = false;
-    public static final int GRAB_THREAT = 25, GRAB_BITE = 20, GRAB_MARGIN = 10, GRAB_BC = 9000;
+    public static final int GRAB_THREAT = 25, GRAB_BITE = 20, GRAB_MARGIN = 10, GRAB_BC = 10000;
+    /** Throws (Baby.throwChecked): our unseen kings block flights, a hit on our king scores three times a rat's, and a
+     *  carrier whose best flight hits one of ours (or turns to find one on it) holds until THROW_LATE rounds into the
+     *  carry (it lasts 10; at its end the victim wriggles free or swaps onto the carrier). */
+    public static final boolean THROW_CHECK = false;
+    public static final int THROW_LATE = 8;
 }
