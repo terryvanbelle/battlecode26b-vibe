@@ -127,8 +127,19 @@ public final class G {
      *  for a rotated twin, opposite for a reflected one), or 1. */
     public static int chir = 1;
 
-    /** Set the chirality from our home king's position (Cfg.SYM_HAND). */
-    public static void frame(MapLocation home) { if (Cfg.SYM_HAND) chir = chirOf(home); }
+    /** Set the chirality from our home king's position (Cfg.SYM_HAND, Cfg.SYM_TIE). */
+    public static void frame(MapLocation home) { if (Cfg.SYM_HAND || Cfg.SYM_TIE) chir = chirOf(home); }
+
+    /** Cfg.SYM_TIE: a ranks before b among tiles of equal score seen from {@code from}. The cross product of from's
+     *  centre offset with the offset to the tile (signed by chir), then the dot product, order tiles the same way for a
+     *  rotated or a reflected twin (from off the centre); one pick bit leaves two tiles on the same side to the loop. */
+    public static boolean tieFirst(MapLocation from, MapLocation a, MapLocation b) {
+        int px = 2 * from.x - cx2, py = 2 * from.y - cy2;
+        int ax = a.x - from.x, ay = a.y - from.y, bx = b.x - from.x, by = b.y - from.y;
+        int ca = (px * ay - py * ax) * chir, cb = (px * by - py * bx) * chir;
+        if (ca != cb) return ca > cb;
+        return px * ax + py * ay > px * bx + py * by;
+    }
 
     static int chirOf(MapLocation home) {
         int px = 2 * home.x - cx2, py = 2 * home.y - cy2;

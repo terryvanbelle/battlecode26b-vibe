@@ -317,7 +317,7 @@ public final class King {
                     if (cat != null) s += 4 * Baby.catDist4(cat, l);
                 }
                 s = s * 4 + (G.pickBit(c, l) ? 1 : 0);
-                if (s > bs) { bs = s; best = l; }
+                if (s > bs || Cfg.SYM_TIE && s == bs && G.tieFirst(c, l, best)) { bs = s; best = l; }
             }
         if (best != null) {
             // a newborn takes its king's facing: face the spawn tile, so it looks outward along a line its twin mirrors
@@ -364,7 +364,7 @@ public final class King {
                 if (!rc.canPlaceRatTrap(l)) continue;
                 // the trap fires when the enemy enters its 3x3: covering the tile next to the foe's line in
                 int s2 = (mid ? G.centreD2x4(l) : l.distanceSquaredTo(foe)) * 2 + (G.pickBit(c, l) ? 1 : 0);
-                if (s2 < bs) { bs = s2; best = l; }
+                if (s2 < bs || Cfg.SYM_TIE && s2 == bs && G.tieFirst(c, l, best)) { bs = s2; best = l; }
             }
         if (best != null) { rc.placeRatTrap(best); traps++; }
     }
@@ -384,7 +384,7 @@ public final class King {
                 MapLocation l = c.translate(dx, dy);
                 if (!rc.canRemoveDirt(l)) continue;
                 int s = l.distanceSquaredTo(goal) * 2 + (G.pickBit(c, l) ? 1 : 0);
-                if (s < bs) { bs = s; best = l; }
+                if (s < bs || Cfg.SYM_TIE && s == bs && G.tieFirst(c, l, best)) { bs = s; best = l; }
             }
         if (best != null) { rc.removeDirt(best); digs++; }
     }
@@ -786,7 +786,7 @@ public final class King {
             if (G.cheb(m, from) <= 4 || Cfg.FORM_MINE_SAFE * m.distanceSquaredTo(start) > m.distanceSquaredTo(ek)) continue;
             if (nearKing(m) || banned(m)) continue;
             long k = siteKey(dirt3(m), from.distanceSquaredTo(m), G.pickBit(from, m));
-            if (k < bk) { bk = k; best = m; }
+            if (k < bk || Cfg.SYM_TIE && k == bk && G.tieFirst(from, m, best)) { bk = k; best = m; }
         }
         return best;
     }

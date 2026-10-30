@@ -448,6 +448,11 @@ public final class Cfg {
     /** The king turns to face each spawn tile before it builds: a newborn takes its king's facing, and the maps'
      *  starting king facings are not mirrored (knifefight), so the first rats looked along unmirrored lines. */
     public static final boolean SYM_FACE = false;
+    /** Exact ties in tile picks (spawn, traps, dig, rescue, guard, mine site) go by G.tieFirst, an order every twin keeps,
+     *  not the loop order. superioristhmus, t0q self-play: the king's two best spawn tiles, a corner and an edge, scored
+     *  the same and had the same pick bit, so the dx/dy loop took the corner on one side and the edge on the other
+     *  (r27, the first move that differed). */
+    public static final boolean SYM_TIE = false;
     /** A rat held SWAP_HOLD turns behind an ally baby on its next step carries the ally, steps into its tile and sets
      *  it down behind once it can act (a carried rat leaves the grid), so two rats pass in a 1-wide corridor (0 = off).
      *  rose: s6m's outbound and inbound gatherers met head-on at r160 in the 1-wide stem out of the king's walled

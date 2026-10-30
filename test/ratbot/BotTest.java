@@ -1208,6 +1208,35 @@ public class BotTest {
         Flow.quotaMax = Cfg.FLOW_QUOTA; Flow.quotaRound = -1;
     }
 
+    static void testTieFirst() {
+        reset(); W = 60; H = 60; install();
+        // superioristhmus (rotational): the king at (49,56) had a corner (47,54) and an edge (47,55) of equal score
+        int[][] fr = {{1, 1}, {-1, -1}, {-1, 1}, {1, -1}};  // identity, rotation, x and y reflections
+        boolean first = false;
+        for (int k = 0; k < fr.length; k++) {
+            int sx = fr[k][0], sy = fr[k][1];
+            MapLocation c = tw(49, 56, sx, sy), a = tw(47, 54, sx, sy), b = tw(47, 55, sx, sy);
+            G.chir = G.chirOf(c);
+            boolean f = G.tieFirst(c, a, b);
+            if (k == 0) first = f;
+            check(f == first && G.tieFirst(c, b, a) == !f, "tie first: twin " + k + " ranks the two tiles the same way");
+        }
+        // a total order on the spawn ring: of two distinct tiles exactly one ranks first
+        MapLocation c = new MapLocation(49, 56);
+        G.chir = G.chirOf(c);
+        boolean total = true;
+        for (int i = 0; i < 25; i++)
+            for (int j = 0; j < 25; j++) {
+                if (i == j) continue;
+                MapLocation a = c.translate(i % 5 - 2, i / 5 - 2), b = c.translate(j % 5 - 2, j / 5 - 2);
+                if (G.tieFirst(c, a, b) == G.tieFirst(c, b, a)) total = false;
+            }
+        check(total, "tie first: a strict total order on the 5x5 around the king");
+        G.chir = 1;
+    }
+
+    static MapLocation tw(int x, int y, int sx, int sy) { return new MapLocation(sx > 0 ? x : W - 1 - x, sy > 0 ? y : H - 1 - y); }
+
     static void testExploreUnseen() throws GameActionException {
         reset(); W = 20; H = 20; install();
         // everything seen except an 8x8 block (16%): 12 samples land in it ~88% of the time
@@ -2282,7 +2311,7 @@ public class BotTest {
         testNavDigsDirt();
         testNavUShape();
         testNavFlowSealedRoom();
-        testFlowField(); testFlowMirror(); testFlowQuota();
+        testFlowField(); testFlowMirror(); testFlowQuota(); testTieFirst();
         testFlowJam();
         testCheeseBan();
         testNavSameTarget();

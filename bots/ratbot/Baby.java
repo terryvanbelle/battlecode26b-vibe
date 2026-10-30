@@ -780,7 +780,7 @@ public final class Baby {
             int a = CatLane.age(l.x, l.y, G.round);
             if (a < Cfg.CAT_LAY_AGE || !rc.canPlaceCatTrap(l)) continue;
             int s = laneKey(a, l, G.pickBit(me, l));
-            if (s < bs) { bs = s; best = l; }
+            if (s < bs || Cfg.SYM_TIE && s == bs && G.tieFirst(me, l, best)) { bs = s; best = l; }
         }
         if (best != null) { rc.placeCatTrap(best); trapsPlaced++; }
     }
@@ -1176,7 +1176,7 @@ public final class Baby {
                 if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { noKing |= s; continue; }
             }
             int d = G.me.distanceSquaredTo(c) * 2 + (G.pickBit(G.me, c) ? 1 : 0);
-            if (d < bd) { bd = d; best = c; }
+            if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(G.me, c, best)) { bd = d; best = c; }
         }
         if (best == null && noKing != 0) { noKing = 0; return null; }
         return best;
@@ -1288,7 +1288,7 @@ public final class Baby {
             int d = G.me.distanceSquaredTo(r.location);
             if (d > Cfg.RESCUE_D2) continue;
             int s = (d * 128 + 100 - Math.min(100, r.carryingRobot.health)) * 2 + (G.pickBit(G.me, r.location) ? 0 : 1);
-            if (s < bd) { bd = s; best = r; }
+            if (s < bd || Cfg.SYM_TIE && s == bd && G.tieFirst(G.me, r.location, best.location)) { bd = s; best = r; }
         }
         return best;
     }
@@ -1349,7 +1349,7 @@ public final class Baby {
             MapLocation t = c.add(G.DIRS[i]);
             if (sees(rescueT, t) || !G.rc.onTheMap(t) || G.rc.canSenseLocation(t) && !G.rc.sensePassability(t)) continue;
             int d = (G.me.distanceSquaredTo(t) * 2) + (G.pickBit(G.me, t) ? 0 : 1);
-            if (d < bd) { bd = d; best = t; }
+            if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(G.me, t, best)) { bd = d; best = t; }
         }
         if (best == null) return false;
         Nav.goTo(best);
@@ -1432,7 +1432,7 @@ public final class Baby {
         for (RobotInfo r : robots) {
             if (r.team != G.them || r.type != UnitType.BABY_RAT || G.cheb(r.location, k) > 2) continue;
             int key = (G.me.distanceSquaredTo(r.location) * 128 + r.health) * 2 + (G.pickBit(G.me, r.location) ? 0 : 1);
-            if (key < bk) { bk = key; best = r; }
+            if (key < bk || Cfg.SYM_TIE && key == bk && G.tieFirst(G.me, r.location, best.location)) { bk = key; best = r; }
         }
         if (best != null) guardKing = k;
         return best;
@@ -1528,7 +1528,7 @@ public final class Baby {
                 if (!G.onMap(t.x, t.y) || inLane(c, t)) continue;
                 if ((Sym.mem[G.idx(t)] & (Sym.WALL | Sym.DIRT)) != 0) continue;
                 int d = me.distanceSquaredTo(t) * 2 + (G.pickBit(me, t) ? 1 : 0);
-                if (d < bd) { bd = d; best = t; }
+                if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(me, t, best)) { bd = d; best = t; }
             }
         if (best == null) return false;
         Nav.goTo(best);
