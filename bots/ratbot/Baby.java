@@ -57,6 +57,7 @@ public final class Baby {
         int bestCat = Integer.MAX_VALUE;
         for (RobotInfo r : robots) {
             if (r.team == Team.NEUTRAL) {
+                if (Cfg.CAT_LAY && G.coop) CatLane.see(r.location, G.round);
                 int d = catDist4(r.location, G.me);
                 if (d < bestCat) { bestCat = d; cat = r; }
             } else if (r.team == G.them) {
@@ -162,6 +163,7 @@ public final class Baby {
             for (RobotInfo r : near) if (r.type == UnitType.RAT_KING) biteEnemies(new RobotInfo[]{r});
         }
         if (cat != null) tryBiteCat(cat);
+        if (Cfg.CAT_LAY && G.coop) layLane();
         Debug.mark(8);
         tryDeliver();
         guardTurn();
@@ -761,6 +763,30 @@ public final class Baby {
     }
 
     /** Place a cat trap on a visible adjacent tile in front of an approaching cat. */
+    /** Cfg.CAT_LAY: a cat trap on an adjacent cat-lane tile the cat left CAT_LAY_AGE+ rounds ago, the most recently
+     *  walked first (laneKey). */
+    static void layLane() throws GameActionException {
+        RobotController rc = G.rc;
+        if (!rc.isActionReady() || rc.getNumberCatTraps() >= 10 || rc.getAllCheese() < Cfg.CAT_LAY_FLOOR) return;
+        MapLocation me = rc.getLocation(), best = null;
+        int bs = Integer.MAX_VALUE;
+        for (Direction d : G.DIRS) {
+            MapLocation l = me.add(d);
+            if (!CatLane.lane(l.x, l.y)) continue;
+            int a = CatLane.age(l.x, l.y, G.round);
+            if (a < Cfg.CAT_LAY_AGE || !rc.canPlaceCatTrap(l)) continue;
+            int s = laneKey(a, l, G.pickBit(me, l));
+            if (s < bs) { bs = s; best = l; }
+        }
+        if (best != null) { rc.placeCatTrap(best); trapsPlaced++; }
+    }
+
+    /** layLane's rank: age, then dist2 from the map centre (doubled coords; both mirror-invariant), then the pick bit. */
+    static int laneKey(int age, MapLocation l, boolean bit) {
+        int px = 2 * l.x - G.cx2, py = 2 * l.y - G.cy2;
+        return ((Math.min(age, 4000) << 15) + Math.min(px * px + py * py, 32767)) * 2 + (bit ? 0 : 1);
+    }
+
     static void tryCatTrap(RobotInfo c) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return;

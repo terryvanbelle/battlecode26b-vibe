@@ -574,6 +574,37 @@ public class BotTest {
     }
 
     /** Cfg.FORM_MINE's site pick on a 30x30 map, first king at (3,3), the enemy start (26,26) under rotation. */
+    static void testCatLay() {
+        reset(); W = 30; H = 30; install();
+        int g = Cfg.CAT_LAY_GAP;
+        check((CatLane.mark(0, 100, g) & CatLane.LANE) == 0, "cat lane: one pass is not lane");
+        check((CatLane.mark(CatLane.mark(0, 100, g), 101, g) & CatLane.LANE) == 0, "cat lane: a cat standing still is one pass");
+        check((CatLane.mark(CatLane.mark(0, 100, g), 100 + g, g) & CatLane.LANE) != 0, "cat lane: a second pass gap rounds on is lane");
+        int v = CatLane.mark(CatLane.mark(CatLane.mark(0, 100, g), 100 + g, g), 300, g);
+        check((v & CatLane.LANE) != 0 && (v & CatLane.ROUND) == 301, "cat lane: lane stays and the round moves on");
+        CatLane.rows = null;
+        MapLocation bl = new MapLocation(10, 12);
+        CatLane.see(bl, 50);
+        check(!CatLane.lane(10, 12) && CatLane.age(11, 13, 55) == 5 && CatLane.age(12, 12, 55) >= 1 << 20, "cat lane: the 2x2 body is marked");
+        CatLane.see(bl, 50 + g);
+        check(CatLane.lane(10, 12) && CatLane.lane(11, 12) && CatLane.lane(10, 13) && CatLane.lane(11, 13) && !CatLane.lane(12, 12),
+              "cat lane: the body's four tiles turn lane on the second pass");
+        int used = 0;
+        for (int[] row : CatLane.rows) if (row != null) used++;
+        check(used == 2, "cat lane: only the two body rows are allocated (" + used + ")");
+        CatLane.see(new MapLocation(-1, H - 1), 10);
+        check(CatLane.age(0, H - 1, 10) == 0 && !CatLane.lane(-1, H - 1), "cat lane: off-map parts are skipped");
+        MapLocation a = new MapLocation(14, 14), b = new MapLocation(20, 20);
+        check(Baby.laneKey(3, b, false) < Baby.laneKey(4, a, true), "cat lane key: the more recent pass first");
+        check(Baby.laneKey(5, a, false) < Baby.laneKey(5, b, true), "cat lane key: then nearer the centre");
+        check(Baby.laneKey(5, a, true) < Baby.laneKey(5, a, false), "cat lane key: then the pick bit");
+        // the key is the same for a tile and its mirror twin under each symmetry (bits equal)
+        MapLocation r = new MapLocation(W - 1 - b.x, H - 1 - b.y), h = new MapLocation(W - 1 - b.x, b.y), u = new MapLocation(b.x, H - 1 - b.y);
+        check(Baby.laneKey(7, b, true) == Baby.laneKey(7, r, true) && Baby.laneKey(7, b, true) == Baby.laneKey(7, h, true)
+              && Baby.laneKey(7, b, true) == Baby.laneKey(7, u, true), "cat lane key: mirror twins rank alike");
+        CatLane.rows = null;
+    }
+
     static void testFormMine() {
         reset(); W = 30; H = 30; install();
         check(King.siteKey(false, 50, false) < King.siteKey(true, 34, true), "form mine: a clean site before a nearer dirty one");
@@ -2178,6 +2209,7 @@ public class BotTest {
         testRescue();
         testHomeStart();
         testFormMine();
+        testCatLay();
         testCatLane();
         testRusher();
         testAmmo();

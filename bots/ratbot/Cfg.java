@@ -286,6 +286,14 @@ public final class Cfg {
     /** One in FIGHT_EVERY later babies is a cat fighter. */
     public static final int FIGHT_EVERY = 2;
     public static final boolean CAT_TRAPS = true;
+    /** During cooperation, a baby next to a cat-lane tile (CatLane: under a cat on two passes CAT_LAY_GAP or more
+     *  rounds apart; cats walk a fixed waypoint loop by BFS) whose cat left it CAT_LAY_AGE or more rounds ago lays a
+     *  cat trap there, with CAT_LAY_FLOOR global cheese. A cat trap costs 10, deals 100 (counted as our cat damage, half
+     *  the cooperation points) and only cats set it off; new ones are barred once the war starts. s9s's 126 field games:
+     *  rose vs spsquared, cat damage 0 to 8080 (they laid 73 cat traps to our 6) and lost on points at r2000; rift 26 to
+     *  81 and superioristhmus 50 to 80 laid, both lost on points. */
+    public static final boolean CAT_LAY = false;
+    public static final int CAT_LAY_GAP = 20, CAT_LAY_AGE = 3, CAT_LAY_FLOOR = 400;
     /** Rush: babies with spawn index in [RUSH_FROM, RUSH_TO) attack the enemy king from birth. */
     public static final boolean RUSH = false;
     public static final int RUSH_FROM = 4, RUSH_TO = 16;
