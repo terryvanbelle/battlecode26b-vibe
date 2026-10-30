@@ -122,8 +122,12 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - Next after u0e: u0h (@s9s + HOME_ALL_SYM: a mine is on our half only when every live symmetry agrees; on Meow
     s9s sent 1 in 5 gatherers to the enemy mine (14,18) while rotation was live), if diag hs1 looks sound. Also a
     basics repair (map symmetry: no action on an unrefuted symmetry).
-  - In diags: u0d (END_KING 1850, ek1), u0g (END_KING + END_KING_CROWD, ek2), u0h (hs1). Done: u0a (kc1 8 of 16),
-    u0b (st1 8 of 16, dropped), u0c (BitFlow, bf1 5 of 16, parked).
+  - u0d (END_KING 1850): ek1 11 of 16 vs s9s; it won every game it ended with 2 kings to 1. A candidate after u0e.
+    u0i = u0d + END_KING_MINE (the endgame site is a home mine first: on ZeroDay u0d's ring site jammed), diag ei1.
+  - u0j = @s9s + BABY_RAT_TRAPS + TRAP_ADJ (traps next to the nearest enemy rat, adjacent ones included: the field's
+    reactive-trap pattern), diag tj1.
+  - In diags: u0g (END_KING + END_KING_CROWD, ek2), u0h (hs1), u0i (ei1), u0j (tj1). Done: u0a (kc1 8 of 16),
+    u0b (st1 8 of 16, dropped), u0c (BitFlow, bf1 5 of 16, parked), u0e (bh1 0 overruns in 8).
   - Rejected: t0p (MINE_ANY + MINE_TIES) on set 4, net -2, t -1.00.
   - Rejected: t0i (FORM_MINE) on set 4, net -3, t -1.00; t0o (MINE_TIES) on set 4, net -1, t -1.00; t0g (RUSH_LIFE 150) on set 4, net -4, t -2.00; t0h (FORM_RING) on set 4, net -1, t -0.45 (evileye: two kings starved); t0c (KING_TRAPS) on set 4,
     net -1, t -0.45; s9z (BREAKOUT_TTL 150) on set 4, net 0; t0b (RISK_FRESH 2)
