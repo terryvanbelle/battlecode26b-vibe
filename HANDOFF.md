@@ -110,8 +110,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   sends the queue under the hourly limit). Score: `contest.py paired REF CAND`.
 - Candidates on the s9s base (screens use `gauntlet.py selfplay RUN/results.jsonl --base araid --control
   build/vmruns/runs/ra_s9s/results.jsonl`):
-  - On the replica: t0o = @s9s + MINE_TIES as #108, set-4 block 1 from match 3491 (mt2 11 of 16 on the tie maps).
-  - Rejected: t0g (RUSH_LIFE 150) on set 4, net -4, t -2.00; t0h (FORM_RING) on set 4, net -1, t -0.45 (evileye: two kings starved); t0c (KING_TRAPS) on set 4,
+  - On the replica: t0i = @s9s + FORM_MINE as #109, set-4 block 1 from match 3522 (fm3 10 of 16 vs s9s).
+  - Rejected: t0o (MINE_TIES) on set 4, net -1, t -1.00; t0g (RUSH_LIFE 150) on set 4, net -4, t -2.00; t0h (FORM_RING) on set 4, net -1, t -0.45 (evileye: two kings starved); t0c (KING_TRAPS) on set 4,
     net -1, t -0.45; s9z (BREAKOUT_TTL 150) on set 4, net 0; t0b (RISK_FRESH 2)
     at its screen, t -1.73. Dropped: t0d (t0c + BABY_RAT_TRAPS).
   - Screens (runs/screenq.txt; ra_t0i, ra_t0o, ra_t0p running), then ra_t0j, ra_t0r, ra_t0n, ra_t0l, ra_t0m:
@@ -121,7 +121,6 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     - t0k = @s9s + CAT_LAY (cat traps on the cats' lanes in cooperation; cy1 10 of 16 vs s9s, trap damage 1424 to
       1169). t0n = t0k + CAT_RING (cy2 11 of 16).
     - t0l = @s9s + ATK_CARRY 25 (attackers stay light).
-    - t0o = @s9s + MINE_TIES (axis mines count as ours; diag mt2 on the 4 tie maps).
     - t0p = @s9s + MINE_ANY + MINE_TIES (gatherers over every known mine, either half; ma1 9 of 16).
     - t0q = @s9s + SYM_FLOW + SYM_CENTRE + SYM_HAND + SYM_FACE (side symmetry; s9s diverges at r2 on Stash; run sym1).
     - t0r = t0q + SYM_TIE + FLOW_QUOTA 18 (t0q still split at r27 superioristhmus on a tied spawn tile and r38 Stash

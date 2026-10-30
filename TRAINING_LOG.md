@@ -2609,3 +2609,21 @@
   to 30-cheese's 1.3 but brings two-thirds more. Diag dl1 is on ma1's 8 maps.
 - Screens so far vs ra_s9s: ra_t0i 54 cells t +0.43; ra_t0o 32 cells t +1.74; ra_t0p 14 cells t +1.66. t0o's set-4
   block is 6 of 14 done, all won as s9s did.
+
+## 2026-10-30 07:27 PDT: t0o rejected; t0i on the replica; the mirror splits left are contact
+
+- t0o (MINE_TIES) on set 4 against s9s's reference (3284-3297): 3491-3494, 3496-3497, 3509-3516. 42 cells, 41 alike,
+  D 1 (+0 -1), net -1, t -1.00: rejected at block 1. Away from axis mines it plays as s9s, and on the axis maps it
+  changed nothing: Excavation vs AlexT101 still lost both, closeup vs AdamTan12 still won both. The lost cell is CS50Crab
+  groveisbeingdesecrated B.
+- t0i (FORM_MINE: extra kings on home mines) goes to the replica as #109, set 4 from match 3522. Its fm3 diag beat s9s
+  2-0 on superioristhmus, and Meow, superioristhmus and cheesebottles are set 4's abcdezyxwv maps (s9s lost all six).
+  Screen ra_t0i: 54 cells, t +0.43.
+- sym1 done. Every first split left in t0q's self-play is contact, or comes after it, in the engine's turn order:
+  - Meow r18: the twin attackers meet at the centre line, and A's rat, moving first, sees B's rat where it stood last
+    round.
+  - DefaultMedium r41 and knifefight r4: fights.
+  - cheesebottles (t0r, sym2) r307: cat 3 scratched its rat and its twin, cat 4, did not. The engine's cat takes the
+    last rat in its sense order as its target and turns to the first squeak it hears; neither is mirrored.
+  The splits that came from our bot (superioristhmus r27 spawn tie, Stash r38 flow depth) are what t0r fixes. Stash on
+  pb2 (the flow probe): cut turns popped p5 16, p10 18, p50 22, so FLOW_QUOTA 18 binds on ~90% of them there too.
