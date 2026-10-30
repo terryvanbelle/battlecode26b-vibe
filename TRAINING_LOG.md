@@ -2555,3 +2555,22 @@
 - t0g (@s9s + RUSH_LIFE 150) goes to the replica as #107 for set 4, block 1, from match 3450. Its screen is at 30
   cells, t +1.51. Its target on set 4 is uneruesansfin vs AlexT101 and averystrangespace vs bc26vibe_bot, where
   s9s's rushers walk for hundreds of rounds without reaching the enemy king.
+
+## 2026-10-30 06:34 PDT: t0o 11 of 16 on the tie maps; s9s is not side-symmetric; t0q
+- mt2 (t0o = @s9s + MINE_TIES vs s9s, the 4 tie maps, both sides, seeds 0-1): t0o won 11 of 16 and delivered 3463 a
+  game to 2602. closeup 4/4, starvation 3/4, Excavation 2/4, EscapeTheNight 2/4 (coin flips). ra_t0o and ra_t0p moved
+  to the front of the screen queue.
+- Partial diags against s9s:
+  - fm4 (t0m: FORM_MINE + FORM_RING + FORM_MAX 4) 8 of 14. It forms 2-4 kings but delivers 13.3k to 16.6k a game; it lost
+    keepout B 3207 to 21933 and cheesebottles A/B.
+  - cy2 (t0n: CAT_LAY + CAT_RING) 8 of 13, trap cat damage 1342 to 972.
+  - ma1 (t0p: MINE_ANY + MINE_TIES) 8 of 14.
+- In ma1, Stash and cheesebottles were decided by the side, not the build. t0p played exactly as s9s there; side B
+  delivered 9565 to 560 on Stash, and side A 10886 to 5698 on cheesebottles. mirror_check on the Stash pair: both teams
+  diverge at r2, on the first newborn's explore target (10,18 against its twin's 12,16). With no mine known, Baby.explore
+  ranks its samples by Chebyshev distance to ((W-1)/2, (H-1)/2). On a 30x30 map that point is (14,14), half a tile
+  off the true centre, so mirrored samples rank differently. SYM_CENTRE fixes it, but s9s carries only SYM_SLOT of the
+  five symmetry switches. SYM_FLOW, SYM_CENTRE, SYM_HAND and SYM_FACE were only ever tried inside bundles (s8c, s9k),
+  and both were rejected.
+  - t0q = @s9s + SYM_FLOW + SYM_CENTRE + SYM_HAND + SYM_FACE (the owner's rule: every move symmetric when the sides
+    switch). Mirror run sym1: t0q and s9s each against themselves on 8 maps, each game checked with mirror_check.
