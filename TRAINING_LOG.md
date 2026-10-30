@@ -2895,3 +2895,16 @@
 - u0q (u0m + BABY_RAT_TRAPS + TRAP_ADJ + TRAP_SPAWN_FIRST) is submitted (#115), block 1 on set 3 against the draw
   above. Self-play can't judge it: s9s lays no traps, and our screen opponents barely do. The field's evidence: s9a
   (traps off alone on s7d) lost net -3 on the replica; s9s dropped traps only as part of agrab's bundle.
+
+## 2026-10-30 14:37 PDT: u0q rejected on set 3; u0z (economy bundle) submitted
+- u0q's block 1 (3867-3872, 3886-3889, 3904-3905, 3911-3912) against u0m's set-3 reference: 42 cells, 36 alike, D 6
+  (+1 -5), net -4, t -1.63, so it is rejected. Losses: outercloud on dirtfulcat A and B (39 traps laid in r0-49, ~780
+  cheese, while the opening economy was still running; the bank fell 592 -> 257 by r99 and the king starved at
+  r493), spsquared on rose A and B (rose A: our cat damage 1139 against u0m's 4171; u0m won by killing the king at
+  r1905, u0q lost 41-58 on points at r2000), AlexT101 on tiny B. Gain: tiny A.
+- Laying traps doesn't pay against this field. The field's traps still cost us ~100 babies a game against the
+  heavy trappers, so the open problem is not stepping into them.
+- u0y (u0q + RAT_TRAP_MIN_CHEESE 500) answers only dirtfulcat. It waits on its diags (ty1/tyq/tym against arush).
+- Submitted u0z (#116) = u0m + RICH2_BABIES 80/3000 (u0v: rb1 vs rbc +2 -0 at 7 cells) + END_KING 1850 and
+  FORM_NET100 200 (u0t: ng1 vs ngc +5 -3) + KING_FORAGE (u0s: fg1 vs fgc +3 -1). Block 1 is on set 3, matches after
+  3912.

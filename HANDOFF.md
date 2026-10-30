@@ -112,13 +112,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- On the replica now: **u0q** (#115, submitted 13:37) = u0m + BABY_RAT_TRAPS + TRAP_ADJ + TRAP_SPAWN_FIRST, block 1
-  on set 3 (matches from 3867; score `contest.py paired 3819-3822,3836-3837,3849-3856 <ids>`). Why: every field bot
-  but bc26vibe lays rat traps, 30-310 a game, ~95% of them fire on us (set 2: 3801 constrictinglattice 305 fires,
-  126 of our deaths; AlexT101 sittingducks 224), mostly as our rat closes from d2 4-20 or steps off an adjacent
-  enemy; we lay none (s9s dropped them in agrab's bundle; s9a, traps off alone on s7d, lost net -3 on the replica).
-  RISK_ADAPT (u0u) cut u0q's fires on us by 4% only (ad1 377 vs adc 391, 7 games), and TrapRisk's mark array is never
-  allocated on 60x60 maps (needs 18.8k bytecodes left).
+- On the replica now: **u0z** (#116, submitted 14:37) = u0m + RICH2_BABIES 80/RICH2_BANK 3000 + END_KING 1850 +
+  FORM_NET100 200 + KING_FORAGE, block 1 on set 3 (matches after 3912; score `contest.py paired
+  3819-3822,3836-3837,3849-3856 <ids>`).
+- u0q (#115, u0m + BABY_RAT_TRAPS + TRAP_ADJ + TRAP_SPAWN_FIRST) was rejected on set 3, t -1.63 (D 6, +1 -5): 39 traps
+  in r0-49 on dirtfulcat starved its king, and on rose it lost on points where u0m killed the king. Every field bot but
+  bc26vibe lays rat traps, 30-310 a game, ~95% fire on us (set 2: 3801 constrictinglattice 305 fires, 126 of our
+  deaths), mostly as our rat closes from d2 4-20 or steps off an adjacent enemy. Laying our own does not pay; the open
+  problem is not walking into theirs. RISK_ADAPT (u0u) cut fires by 4% only (ad1 377 vs adc 391, 7 games), and
+  TrapRisk's mark array is never allocated on 60x60 maps (needs 18.8k bytecodes left).
 - Mine coverage: we work 1-2 of 3-8 home mines on the big walled maps; the field finds their twins 5-10x sooner
   (wallsofparadis 3800: rings first seen r392-503, field r54-135). u0w = u0m + SEEK_IDLE 40, u0x = u0w + IDLE_SHIFT;
   diags iw1/ix1 vs control iwc (8 maps, both sides, vs s9s), screen ra_u0w queued.
