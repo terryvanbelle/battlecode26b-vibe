@@ -2574,3 +2574,17 @@
   and both were rejected.
   - t0q = @s9s + SYM_FLOW + SYM_CENTRE + SYM_HAND + SYM_FACE (the owner's rule: every move symmetric when the sides
     switch). Mirror run sym1: t0q and s9s each against themselves on 8 maps, each game checked with mirror_check.
+
+## 2026-10-30 06:47 PDT: t0g rejected; t0o on the replica
+- t0g (RUSH_LIFE 150) on set 4 against s9s's reference (3284-3297): 3450-3455, 3457-3460, 3463-3464, 3476-3477. 42 cells,
+  38 alike, D 4 (+0 -4), net -4, t -2.00: rejected at block 1. Its target cells, uneruesansfin vs AlexT101 and
+  averystrangespace vs bc26vibe_bot, stayed lost. It lost outercloud seepastyourgreed A/B, AlexT101 where_are_you B and
+  AdamTan12 attack_on_cat A. seepastyourgreed is a noisy cell: s9s lost it on both sides in 3270-3271 and won both in
+  its reference.
+- Screens vs ra_s9s: ra_t0e done, 80 cells, -3.1 pts, t -0.75, net -3, a weak pass. ra_t0g 75 cells, t +1.87.
+  ra_t0i 28 cells, t +0.37.
+- Finished diags against s9s: fm4 t0m 9 of 16 (delivers 11.9k to 14.8k); cy2 t0n 11 of 16 (trap cat damage 1459 to
+  1181); ma1 t0p 9 of 16.
+- t0o (MINE_TIES; mt2 11 of 16 on the tie maps) goes to the replica as #108 for set 4, block 1, from match 3491. Away
+  from axis mines it plays as s9s does, so most cells should repeat the reference. The test rests on Excavation vs
+  AlexT101 (s9s lost both) and closeup vs AdamTan12 (s9s won both).
