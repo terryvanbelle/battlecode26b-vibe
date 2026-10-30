@@ -35,7 +35,9 @@ check(refused(lambda: snapvar.apply('a = 1;', ['b = 1=>b = 2'])), 'no match refu
 import re
 dev = open(os.path.join(REPO, 'bots', 'ratbot', 'Cfg.java')).read()
 check(snapvar.PRESETS['s7d'][:-2] == snapvar.PRESETS['s6m'], 's7d extends s6m')
-for name in ('s6m', 's7d'):
+check(snapvar.PRESETS['s8w'][:len(snapvar.PRESETS['s7d'])] == snapvar.PRESETS['s7d'], 's8w extends s7d')
+check(snapvar.PRESETS['s8w'][-1:] == snapvar.PRESETS['kfix'], 's8w ends with kfix')
+for name in ('s6m', 's7d', 's8w'):
     path = os.path.join(REPO, 'bots', name, 'Cfg.java')
     if not os.path.exists(path):
         continue

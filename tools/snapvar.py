@@ -4,7 +4,8 @@
   snapvar.py NAME [@PRESET ...] ['old=>new' ...]
 
 Each 'old=>new' must match exactly once in bots/ratbot/Cfg.java (after the presets before it). @PRESET expands to a
-named list of replacements: @s4d is the switch set of s4d, @s6m s6m's, @s7d the incumbent's (accepted 2026-10-29), so a
+named list of replacements: @s4d is the switch set of s4d, @s6m s6m's, @s7d the incumbent's (accepted 2026-10-29),
+@s8w the rush line's and @kfix the king's first-turn margin, so a
 candidate is `snapvar.py s7l @s7d 'X = 0=>X = 1'`. tools/snapshot.sh does the copy, rename and compile check.
 """
 import os, subprocess, sys
@@ -17,6 +18,11 @@ PRESETS = {
 }
 PRESETS['s6m'] = PRESETS['s4d'] + ['HOME_PICK = 0=>HOME_PICK = 1']
 PRESETS['s7d'] = PRESETS['s6m'] + ['FLOW_REV = false=>FLOW_REV = true', 'FLOW_FAST = false=>FLOW_FAST = true']
+# the king's first-turn margin: the dev code since s7d overruns 20000 on 60x60 maps with 5000
+PRESETS['kfix'] = ['KING_SENSE_RESERVE = 5000=>KING_SENSE_RESERVE = 7000']
+# the rush line (s8u/s8v/s8w): we open the war, rush spawns until r150
+PRESETS['s8w'] = PRESETS['s7d'] + ['RUSH = false=>RUSH = true', 'RUSH_BREAK = false=>RUSH_BREAK = true',
+                                   'BREAK_ROUND = 0=>BREAK_ROUND = 36', 'RUSH_UNTIL = 0=>RUSH_UNTIL = 150'] + PRESETS['kfix']
 
 
 def expand(args):
