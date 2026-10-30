@@ -171,6 +171,10 @@ public final class Cfg {
      *  42% of them fatal (21% two or three at once); 62% within 2 rounds of the lay, 80% on combat moves (a/f/w/T/k)
      *  with the mask dropped. RISK_IN_FIGHT (150-round marks) froze our fighters (s8h screen -8.1 pts). */
     public static final int RISK_FRESH = 0;
+    /** TrapRisk's marks kept one map row at a time, each row allocated on its first mark (TrapRows). The flat W*H
+     *  array waits for a turn with 3*W*H + BC_OPTIONAL bytecodes left: 18800 on a 60x60 map, above a baby's 17500,
+     *  so on 9 of the 45 field maps no rat ever had marks (15.2-15.5k on 50x50 and 60x40). */
+    public static final boolean RISK_ROWS = false;
     /** Guard facing: with an enemy rat within this squared distance, steps strafe so we keep facing it, and a
      *  turn ends facing it (rats are grabbed from behind). 0 = off. */
     public static final int GUARD_DIST2 = 13;

@@ -25,8 +25,11 @@ public final class TrapRisk {
     /** Called once per turn with the robots we see. */
     public static void observe(RobotInfo[] robots) {
         // allocating one int per tile costs ~2.5 bytecodes each: wait for a turn with room (a newborn's first has none)
-        if (mark == null && Flow.left() < 3 * G.W * G.H + Cfg.BC_OPTIONAL) return;
-        init();
+        if (Cfg.RISK_ROWS) TrapRows.init();
+        else {
+            if (mark == null && Flow.left() < 3 * G.W * G.H + Cfg.BC_OPTIONAL) return;
+            init();
+        }
         nHeard = 0;
         MapLocation me = G.rc.getLocation();
         if (last == null || !last.equals(me)) { last = me; arrived = G.round; }
@@ -41,6 +44,7 @@ public final class TrapRisk {
         if (Cfg.TRAP_SHARE) heard(G.rc.readSqueaks(G.round - 1));
         if (Cfg.TRAP_SHARE) heard(G.rc.readSqueaks(G.round));
         // clear marks we have proven safe: anything within 1 of our tile marked before we arrived
+        if (Cfg.RISK_ROWS) { TrapRows.clear(me, arrived); return; }
         for (int dx = -1; dx <= 1; dx++)
             for (int dy = -1; dy <= 1; dy++) {
                 int x = me.x + dx, y = me.y + dy;
@@ -68,11 +72,13 @@ public final class TrapRisk {
     }
 
     static void put(MapLocation l) {
+        if (Cfg.RISK_ROWS) { TrapRows.put(l); return; }
         if (G.onMap(l.x, l.y)) mark[l.x + G.W * l.y] = G.round + 1;
     }
 
     /** True when entering l could fire a trap we suspect. */
     public static boolean risky(MapLocation l) {
+        if (Cfg.RISK_ROWS) return TrapRows.risky(l);
         if (mark == null) return false;
         for (int dx = -1; dx <= 1; dx++)
             for (int dy = -1; dy <= 1; dy++) {
@@ -89,6 +95,7 @@ public final class TrapRisk {
 
     /** mask() from the marks made within the last ttl rounds only. */
     public static int mask(MapLocation me, int ttl) {
+        if (Cfg.RISK_ROWS) return TrapRows.mask(me, ttl);
         if (mark == null) return 0;
         // one pass over the 5x5 around us: a live mark at offset (dx, dy) taints every neighbour within Chebyshev 1
         int m = 0, w = G.W, x0 = me.x, y0 = me.y, r = G.round - ttl;

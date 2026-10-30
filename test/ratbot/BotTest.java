@@ -1985,6 +1985,40 @@ public class BotTest {
         check(TrapRisk.mask(at) == full, "traprisk: a 3-round-old mark is still in the full mask");
         check(TrapRisk.mask(at, 2) == 0, "traprisk: a 3-round-old mark is out of the 2-round mask");
         check(TrapRisk.mask(at, 3) == full, "traprisk: and in the 3-round mask");
+        // TrapRows (RISK_ROWS) keeps the same marks one row at a time: risky/mask/clear agree with the flat array
+        TrapRisk.mark = null; TrapRisk.init(); TrapRows.rows = null; TrapRows.init();
+        rnd = new java.util.Random(11);
+        G.round = 300;
+        for (int i = 0; i < 80; i++) {
+            if (i == 40) G.round = 305;
+            MapLocation l = new MapLocation(rnd.nextInt(W + 2) - 1, rnd.nextInt(H + 2) - 1);
+            TrapRisk.put(l); TrapRows.put(l);
+        }
+        int rowsUsed = 0;
+        for (int[] row : TrapRows.rows) if (row != null) rowsUsed++;
+        check(rowsUsed > 0 && rowsUsed < H, "traprows: only marked rows are allocated (" + rowsUsed + " of " + H + ")");
+        G.round = 307;
+        MapLocation stood = new MapLocation(W / 2, H / 2);
+        TrapRisk.put(stood.add(Direction.EAST)); TrapRows.put(stood.add(Direction.EAST));
+        G.round = 308;
+        TrapRows.clear(stood, 308);
+        for (int dx = -1; dx <= 1; dx++)
+            for (int dy = -1; dy <= 1; dy++) {
+                int x = stood.x + dx, y = stood.y + dy;
+                if (TrapRisk.mark[x + W * y] - 1 < 308) TrapRisk.mark[x + W * y] = 0;
+            }
+        bad = 0;
+        for (int x = 0; x < W; x++)
+            for (int y = 0; y < H; y++) {
+                MapLocation l = new MapLocation(x, y);
+                if (TrapRisk.risky(l) != TrapRows.risky(l)) bad++;
+                if (TrapRisk.mask(l, TrapRisk.TTL) != TrapRows.mask(l, TrapRisk.TTL)) bad++;
+                if (TrapRisk.mask(l, 4) != TrapRows.mask(l, 4)) bad++;
+            }
+        check(bad == 0, "traprows: risky and mask match the flat array everywhere (bad=" + bad + ")");
+        check(!TrapRows.risky(stood.add(Direction.EAST).add(Direction.EAST)) || TrapRisk.risky(stood.add(Direction.EAST).add(Direction.EAST)),
+                "traprows: a cleared mark is gone in both");
+        TrapRisk.mark = null; TrapRows.rows = null;
     }
 
     static void testMineTraps() {
