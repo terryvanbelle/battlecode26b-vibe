@@ -5,6 +5,10 @@ public final class Cfg {
     public static final int MAX_BABIES = 18, MAX_BABIES_WAR = 18;
     /** With RICH_BANK global cheese or more the baby cap rises to RICH_BABIES (0 = off): a surplus buys bodies. */
     public static final int RICH_BABIES = 0, RICH_BANK = 1000;
+    /** A second tier: with RICH2_BANK or more the cap rises to RICH2_BABIES (0 = off). u0m's set-2 superioristhmus
+     *  games (3796/3797 vs outercloud) ended with 22-31k cheese banked and 40 rats (the RICH_BABIES cap) from r500 on,
+     *  while they ran 53-66; abcdezyxwv runs 50-127 with ~2k banked. Babies eat nothing: only the spawn price. */
+    public static final int RICH2_BABIES = 0, RICH2_BANK = 3000;
     /** Cheese kept when spawning under attack. */
     public static final int WAR_FLOOR = 300;
     /** Hard floor under every spawn (king upkeep). */
