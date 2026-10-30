@@ -8,13 +8,16 @@ import java.util.*;
 /** Map census: one TSV row per .map26 file (or an ASCII board with --ascii NAME). The dig columns come from team A's
  *  king (0-1 search, walls blocked, a dirt tile costs one dig): freeTiles = tiles reached without digging, minesFree =
  *  mines among them, digNear = fewest digs to any mine, digHome = fewest digs to a mine nearer king A than king B.
+ *  featDiff = per wrong symmetry (R rotational, H horizontal: y flipped, V vertical: x flipped) the tiles whose wall,
+ *  dirt or mine differs from their twin's, the only sightings that can rule it out (R0 = never); gapAlt = the wrong symmetries whose twin of
+ *  king A lies within Chebyshev 2 of it (the kings' 3x3 bodies would overlap: ruled out at round 1).
  *  Usage: java -cp engine.jar:classes bc26tools.MapCensus MAPDIR [--ascii NAME] */
 public class MapCensus {
     public static void main(String[] args) throws Exception {
         File dir = new File(args[0]);
         String ascii = args.length > 2 && args[1].equals("--ascii") ? args[2] : null;
         if (ascii == null)
-            System.out.println("map\tw\th\tsym\tkingA\tkingB\tkingDist2\tcats\twallPct\tdirtPct\tmines\tcheese0\tseed\twaypoints\tfreeTiles\tminesFree\tdigNear\tdigHome");
+            System.out.println("map\tw\th\tsym\tkingA\tkingB\tkingDist2\tcats\twallPct\tdirtPct\tmines\tcheese0\tseed\twaypoints\tfreeTiles\tminesFree\tdigNear\tdigHome\tfeatDiff\tgapAlt");
         File[] files = dir.listFiles((d, n) -> n.endsWith(".map26"));
         Arrays.sort(files);
         for (File f : files) {
@@ -57,11 +60,32 @@ public class MapCensus {
                 MapLocation l = new MapLocation(i % w, i / w);
                 if (kb != null && l.distanceSquaredTo(ka) < l.distanceSquaredTo(kb) && (digHome < 0 || dg[i] < digHome)) digHome = dg[i];
             }
-            System.out.printf("%s\t%d\t%d\t%s\t%s\t%s\t%d\t%d\t%.1f\t%.1f\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d%n", name, w, h, m.getSymmetry(),
+            String featDiff = "", gapAlt = "";
+            for (char c : "RHV".toCharArray()) {
+                if (c == "RHV".charAt(m.getSymmetry().ordinal())) continue;
+                int diff = 0;
+                for (int i = 0; i < w * h; i++) {
+                    int j = twin(c, i % w, i / w, w, h);
+                    if (wall[i] != wall[j] || dirt[i] != dirt[j] || mine[i] != mine[j]) diff++;
+                }
+                featDiff += (featDiff.isEmpty() ? "" : " ") + c + diff;
+                if (ka != null) {
+                    int j = twin(c, ka.x, ka.y, w, h);
+                    if (Math.max(Math.abs(j % w - ka.x), Math.abs(j / w - ka.y)) <= 2) gapAlt += c;
+                }
+            }
+            System.out.printf("%s\t%d\t%d\t%s\t%s\t%s\t%d\t%d\t%.1f\t%.1f\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%s%n", name, w, h, m.getSymmetry(),
                     ka == null ? "-" : ka.x + "," + ka.y, kb == null ? "-" : kb.x + "," + kb.y,
                     ka == null || kb == null ? -1 : ka.distanceSquaredTo(kb), cats,
-                    100.0 * walls / (w * h), 100.0 * dirts / (w * h), mines, ch, m.getSeed(), wp, free, minesFree, digNear, digHome);
+                    100.0 * walls / (w * h), 100.0 * dirts / (w * h), mines, ch, m.getSeed(), wp, free, minesFree, digNear, digHome,
+                    featDiff, gapAlt.isEmpty() ? "-" : gapAlt);
         }
+    }
+
+    /** Index of the twin of (x, y) under symmetry c (MapSymmetry order R, H, V: H keeps x, V keeps y). */
+    static int twin(char c, int x, int y, int w, int h) {
+        int tx = c == 'H' ? x : w - 1 - x, ty = c == 'V' ? y : h - 1 - y;
+        return ty * w + tx;
     }
 
     /** Fewest dirt tiles dug to reach each tile from the 3x3 king at k (-1 = walled off or no king). */

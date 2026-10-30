@@ -28,7 +28,7 @@ for l in lines[1:]:
     rows[f[0]] = dict(zip(head, f))
 nmaps = len([n for n in os.listdir(os.path.join(REPO, 'maps')) if n.endswith('.map26')])
 check(len(rows) == nmaps, f'{len(rows)} rows for {nmaps} maps')
-for c in ('freeTiles', 'minesFree', 'digNear', 'digHome'):
+for c in ('freeTiles', 'minesFree', 'digNear', 'digHome', 'featDiff', 'gapAlt'):
     check(c in head, f'column {c}')
 
 
@@ -44,5 +44,11 @@ check(col('closeup', 'freeTiles') == 9, 'closeup: the king 3x3 alone')
 for m, r in rows.items():
     check(int(r['minesFree']) <= int(r['mines']), f'{m}: minesFree <= mines')
     check((int(r['minesFree']) > 0) == (int(r['digNear']) == 0), f'{m}: minesFree > 0 iff digNear 0')
+# symmetry columns: uneasy_alliance (vertical, kings (11,15) and (18,15)) differs from its rotational and horizontal
+# twins on 4 tiles only, and its horizontal twin of king A, (11,14), would overlap A's body
+check(rows.get('uneasy_alliance', {}).get('featDiff') == 'R4 H4', 'uneasy_alliance: 4 tiles tell the symmetries apart')
+check(rows.get('uneasy_alliance', {}).get('gapAlt') == 'H', 'uneasy_alliance: the horizontal twin overlaps king A')
+check(rows.get('DefaultSmall', {}).get('gapAlt') == '-' and rows.get('DefaultSmall', {}).get('featDiff', '').startswith('H'),
+      'DefaultSmall (rotational): no gap elimination, wrong twins listed H and V')
 print(f'mapcensus: {checks - fails}/{checks} passed')
 sys.exit(1 if fails else 0)

@@ -1817,3 +1817,29 @@
   split was never tuned on a modern base: half of the babies after the 6th are cat fighters. New (both @s7d):
   s8r = FIGHT_EVERY 3, s8s = GATHER_FIRST 10. Screens ra_s8r and ra_s8s are queued on the VM. s8o's replica
   block 1 is running (from 2588).
+
+## 2026-10-29 17:23 PDT: our gatherers lose home mines to a moving reference point; HOME_START (s8t)
+- What our babies do over s7d's 126 field games (alloc.py, sampled every 5 rounds while both first kings live):
+  at r100-300 the opponents have 5-7 babies holding cheese to our 2-4.7, against every opponent. Ours stand
+  empty-handed within 4 of a mine instead: 7-11 to their 2-6.
+- By mine side to r300 (econ_report --team, per game). Against AlexT101 we spend 2672 rat-rounds near our own mines
+  and pick 1091 there; 826 lies unpicked and they take 486. They spend 1707 near theirs and pick 1646. Against
+  abcdezyxwv: 1798 for 708, 386 left, 386 taken. So per rat-round near a mine they pick 2.3x what we do; we crowd
+  the mines near the king. popthecork (2072): about 14 rats at the king's mine, and 3 of our 5 home mines never
+  seen; they are inside a walled enclosure whose neck is plugged with dirt (s7z's breakout is aimed at that).
+- uneasy_alliance (ua1, s7d vs araid): the king lists 6 mines from r50, but gatherers target only the three by the
+  king. The symmetry mask stays 7 all game. homeHalf mirrors the king's tile at the baby's birth, and the king
+  walked from its start (11,15) to (8,21). From there the rotational half puts (8,8), (8,2) on the enemy half, so
+  they get 106 and 1 rat-rounds to r300; araid takes 700 on our half.
+- New switches (off by default): HOME_START (the king squeaks its start in a turn it spawns with no cat in sight,
+  since cats turn toward squeaks; newborns take it as the reference for homeHalf, mine trap sites and raid/rush
+  targets) and SYM_KING_GAP (round 1 rules out any symmetry whose twin of our start overlaps our 3x3).
+  s8t = @s7d + both. ua3 vs araid: 3/4, the same as s7d, winning both uneasy_alliance games (s7d lost side A).
+  uneasy_alliance A to r300: mask 5, (8,8) gets 422 rat-rounds (106), own-half pickups 2660 (2420), araid
+  takes 180 on our half (700). Screen ra_s8t is queued.
+- MapCensus gained featDiff (tiles whose wall, dirt or mine differs from their twin, per wrong symmetry) and
+  gapAlt (the wrong symmetries the king gap rules out). The fewest distinguishing tiles: uneasy_alliance 4,
+  averyfineline 4, Stash 12, UncomfortablyClose 16, externalsustenance 28, Excavation 32, evileye 32. The gap
+  rule rules out one wrong symmetry on 8 maps (uneasy_alliance, UncomfortablyClose, thunderdome, houseofcards,
+  streetsofnewyork: H; Stash, FreeTheCheese, corridorofdoomanddespair: V). With the mask unresolved the bot
+  defaults to rotational, which is right on rotational maps.
