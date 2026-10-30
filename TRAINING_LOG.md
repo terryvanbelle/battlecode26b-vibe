@@ -2091,3 +2091,23 @@
 - s9k is submission #98, with its set-1 block from 2920. hb2's head-to-heads (s9k, s9l, s9i, s9b vs s7d) and its
   screen are still running. The replica is the bottleneck, so it goes ahead of them on hb1's component results
   (s9d 13/20, s9e 12/20) and mc2's symmetric self-play.
+
+## 2026-10-29 22:01 PDT: rose is a corridor jam; s9m (rich baby cap); hb2 early
+- rose, s9k self-play (mc2): each king sits in a pocket whose only exit is a 1-wide corridor (x=9 then x=8, rows
+  0-9 for A) out to mine (2,7). Each side worked only that mine; the three central home mines ((24,8), (24,16),
+  (24,24), 5 digs each) were never worked. Both kings starved (A at r1005 with 1682 cheese still in its rats'
+  paws). Each side spawned 20 rats in 1395 rounds.
+  - stuck_report: 36% of baby turns lost. Outbound ('M') and delivering ('d') rats met head-on at (9,1)-(9,5)
+    and held 200-580 rounds at a time.
+  - This is the jam the corridor swap was built for, so s9l (s9k + SWAP_HOLD 2 + SWAP_YIELD + SWAP_NO_ALONG) is
+    the rose candidate. A second king outside the pocket would serve better, but formation's income test
+    (FORM_NET100 -100) fails when nothing gets delivered.
+- Nofreecheese 2881 (s9b vs CS50Crab): war from r38. Their 83 rat traps hit our rats 79 times (30 kills, 3484
+  damage); traps are invisible to the other team (MapInfo) and fire on the 3x3 around them.
+- s9m = s9k + RICH_BABIES 30 + FLOOR_PER_KING: the baby cap rises from 18 to 30 while the bank holds 1000+.
+  - The 18 cap binds once harvest works: s9k delivered 20-22k on seepastyourgreed.
+  - abcdezyxwv fields 42 rats at r500 to our 16.
+  - s5r's flat 30/40 caps starved both kings; this cap only rises while the bank holds 1000+.
+  - Screen ra_s9m is queued.
+- hb2 partial: s9b 10/20, delivered 3314 to 3538 (neutral, as on the replica). s9k 6/8, delivered 6373 to 3790
+  (seepastyourgreed 20875 to 11900 as A, 9620 to 650 as B). Screen ra_s9g: +0.3 pts, net 0, pass.
