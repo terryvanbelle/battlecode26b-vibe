@@ -612,22 +612,31 @@ public final class Baby {
         if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= trapCap()) return false;
         if (rc.getAllCheese() < Econ.floor(Cfg.RAT_TRAP_MIN_CHEESE) || King.trapStarvesSpawn(rc)) return false;
         int d0 = G.me.distanceSquaredTo(nearestEnemy.location);
-        if (d0 <= 2 || d0 > Cfg.BABY_TRAP_DIST2) return false;
-        MapLocation me = rc.getLocation();
-        Direction f = rc.getDirection();
-        Direction[] fr = G.fan(me, f);
-        MapLocation best = null;
-        int bs = Integer.MAX_VALUE;
-        for (Direction d : fr) {
-            MapLocation l = me.add(d);
-            if (!rc.canPlaceRatTrap(l)) continue;
-            int s2 = l.distanceSquaredTo(nearestEnemy.location);
-            if (s2 < bs) { bs = s2; best = l; }
-        }
-        if (best == null || bs >= d0) return false;
+        if (Cfg.TRAP_ADJ ? d0 > Cfg.BABY_TRAP_DIST2 : d0 <= 2 || d0 > Cfg.BABY_TRAP_DIST2) return false;
+        MapLocation best = trapTile(rc.getLocation(), rc.getDirection(), nearestEnemy.location, d0, Cfg.TRAP_ADJ);
+        if (best == null) return false;
         rc.placeRatTrap(best);
         ratTraps++;
         return true;
+    }
+
+    /** The front tile for a rat trap against an enemy at e (d0 = our dist2 to it): the one nearest e if nearer than we
+     *  are, or with adj (Cfg.TRAP_ADJ) one within e's 3x3, nearest first (ties by pick bit, SYM_TIE); null if none. */
+    static MapLocation trapTile(MapLocation me, Direction f, MapLocation e, int d0, boolean adj) throws GameActionException {
+        RobotController rc = G.rc;
+        MapLocation best = null;
+        int bs = Integer.MAX_VALUE;
+        for (Direction d : G.fan(me, f)) {
+            MapLocation l = me.add(d);
+            if (!rc.canPlaceRatTrap(l)) continue;
+            int s2 = l.distanceSquaredTo(e);
+            if (adj) {
+                if (s2 > 2) continue;
+                s2 = s2 * 2 + (G.pickBit(me, l) ? 0 : 1);
+                if (s2 < bs || Cfg.SYM_TIE && s2 == bs && G.tieFirst(me, l, best)) { bs = s2; best = l; }
+            } else if (s2 < bs) { bs = s2; best = l; }
+        }
+        return adj || bs < d0 ? best : null;
     }
 
     /** The live rat traps past which no combat trap is laid (TRAP_CAP, plus MINE_TRAP_CAP with trapped mines). */

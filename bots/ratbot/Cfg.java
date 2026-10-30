@@ -31,6 +31,10 @@ public final class Cfg {
      *  into our king). */
     public static final boolean BITE_CARRIER = false;
     public static final int BABY_TRAP_DIST2 = 13;
+    /** Baby rat traps go on a front tile next to the nearest enemy rat (Chebyshev 1, inside the trap's 3x3, so its next
+     *  step there fires it), adjacent enemies included. abcdezyxwv (3292 Meow): 36 of 50 traps laid next to one of our
+     *  rats, 39 fired within a round, 98% hit; our rule skipped adjacent enemies and laid toward farther ones. */
+    public static final boolean TRAP_ADJ = false;
     /** Cheese (global, or raw+global for babies) below which no rat trap is placed. */
     public static final int RAT_TRAP_MIN_CHEESE = 200;
     /** Most live rat traps we keep (engine max 25): new ones are bought only as old ones fire. */
@@ -140,6 +144,12 @@ public final class Cfg {
      *  farthest from the enemy: on ZeroDay (ek1) u0d's site lay behind the king at the map edge and 20 babies stalled
      *  around its body from r1850 to the end. */
     public static final boolean END_KING_CROWD = false;
+    /** END_KING_CROWD names its site only with this many bytecodes left (the king waits a turn otherwise). */
+    public static final int END_KING_LEFT = 9000;
+    /** END_KING names the formation's usual site first (the nearest clearly-ours mine more than 4 from the king, clear
+     *  and kingless), the ring beside the king only without one. ZeroDay (ek1, u0d side B): the ring site (34,2) lay
+     *  between the king's body and the map edge; 25 babies queued for it from r1850 (stall up to 48) and none formed. */
+    public static final boolean END_KING_MINE = false;
     /** Gatherers at their mine turn in place instead of wandering. */
     public static final boolean GATHER_STILL = false;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines

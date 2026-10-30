@@ -158,6 +158,7 @@ public class BotTest {
                     case "canBecomeRatKing": return canPromote && actCd < 10;
                     case "becomeRatKing": promoted = true; type = UnitType.RAT_KING; return null;
                     case "setIndicatorString": return null;
+                    case "canPlaceRatTrap": { MapLocation t = (MapLocation) a[0]; return actCd < 10 && me.isAdjacentTo(t) && passable(t) && !robots.containsKey(t); }
                     default: throw new UnsupportedOperationException("fakeRc: " + m.getName());
                 }
             });
@@ -1758,6 +1759,23 @@ public class BotTest {
         Comms.numMines = 0;
     }
 
+    static void testTrapTile() throws GameActionException {
+        reset(); W = 30; H = 30; install();
+        MapLocation e = new MapLocation(5, 7);
+        // facing N from (5,5): front tiles (4,6), (5,6), (6,6); the enemy two ahead
+        check(new MapLocation(5, 6).equals(Baby.trapTile(me, facing, e, 4, false)), "trap: the front tile nearest the enemy");
+        check(new MapLocation(5, 6).equals(Baby.trapTile(me, facing, e, 4, true)), "trap adj: the front tile inside the enemy's 3x3, nearest");
+        // an adjacent enemy at (6,6): the old rule needs a tile nearer it than we are; adj takes (5,6) (dist2 1)
+        e = new MapLocation(6, 6);
+        robots.put(e, new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, e, Direction.SOUTH, 0, 0, null));
+        check(new MapLocation(5, 6).equals(Baby.trapTile(me, facing, e, 2, true)), "trap adj: next to an adjacent enemy, not on it");
+        MapLocation ally = new MapLocation(5, 6);
+        robots.put(ally, new RobotInfo(2, Team.A, UnitType.BABY_RAT, 100, ally, Direction.NORTH, 0, 0, null));
+        check(Baby.trapTile(me, facing, e, 2, true) == null, "trap adj: (4,6) lies outside the enemy's 3x3");
+        robots.clear();
+        check(Baby.trapTile(me, facing, new MapLocation(5, 9), 16, true) == null, "trap adj: no front tile within 1 of a far enemy");
+    }
+
     static void testReportPriority() {
         reset(); install();
         G.coop = false;
@@ -2455,6 +2473,7 @@ public class BotTest {
         testRaid();
         testFormation();
         testReportPriority();
+        testTrapTile();
         testKingMine();
         testHandMirror(); testCentreMirror();
         testSymElimination();

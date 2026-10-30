@@ -751,8 +751,12 @@ public final class King {
         }
         int babies = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
         if (Cfg.END_KING > 0 && endKing(G.round, Comms.numKings, babies, G.rc.getGlobalCheese(), formStart)) {
+            // the crowd count and the site checks cost several thousand: wait a turn rather than overrun (u0g, ZeroDay r1974)
+            if (Cfg.END_KING_CROWD && Clock.getBytecodesLeft() < Cfg.END_KING_LEFT) return;
             int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
-            formSite = Cfg.END_KING_CROWD ? crowdSite(G.me, G.mirror(start, s)) : ringSite(G.me, G.mirror(start, s));
+            // END_KING_MINE: a home mine first (its 5x5 is wall-free and its gatherers already wait there)
+            formSite = Cfg.END_KING_MINE ? pickFormSite(G.me) : null;
+            if (formSite == null) formSite = Cfg.END_KING_CROWD ? crowdSite(G.me, G.mirror(start, s)) : ringSite(G.me, G.mirror(start, s));
             if (formSite == null) formSite = pickFormSite(G.me);
             if (formSite == null) return;
             formStart = G.round;
@@ -885,14 +889,25 @@ public final class King {
     /** Cfg.END_KING_CROWD: the clear 3x3 off our king's body with the most of our babies within Chebyshev 2 of its
      *  centre (ties: farther from the enemy start), or null. */
     static MapLocation crowdSite(MapLocation c, MapLocation ek) throws GameActionException {
+        // our babies' offsets from the king, only those that can stand within 2 of a ring site (Chebyshev 5)
         RobotInfo[] mine = G.rc.senseNearbyRobots(-1, G.us);
+        int[] rx = new int[mine.length], ry = new int[mine.length];
+        int m = 0;
+        for (RobotInfo r : mine) {
+            int dx = r.location.x - c.x, dy = r.location.y - c.y;
+            if (r.type != UnitType.BABY_RAT || dx < -5 || dx > 5 || dy < -5 || dy > 5) continue;
+            rx[m] = dx; ry[m++] = dy;
+        }
         int sx = 2 * c.x >= G.W - 1 ? 1 : -1, sy = 2 * c.y >= G.H - 1 ? 1 : -1;
         MapLocation best = null;
         int bn = -1, bd = -1;
         for (int[] o : RING) {
-            MapLocation s = c.translate(o[0] * sx, o[1] * sy);
-            int n = 0;
-            for (RobotInfo r : mine) if (r.type == UnitType.BABY_RAT && G.cheb(r.location, s) <= 2) n++;
+            int ox = o[0] * sx, oy = o[1] * sy, n = 0;
+            for (int i = m; --i >= 0; ) {
+                int ax = rx[i] - ox, ay = ry[i] - oy;
+                if (ax >= -2 && ax <= 2 && ay >= -2 && ay <= 2) n++;
+            }
+            MapLocation s = c.translate(ox, oy);
             int d = s.distanceSquaredTo(ek);
             if (crowdBetter(n, d, bn, bd) && clearNow(s)) { bn = n; bd = d; best = s; }
         }
