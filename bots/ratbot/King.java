@@ -46,7 +46,12 @@ public final class King {
         Econ.received(rc.getGlobalCheese() - before);
         Debug.mark(45);
         // a fresh rat (100 HP, bites every turn) is worth far more than one king bite: spawn first
+        int sp = spawned;
         spawn(cats, enemies);
+        if (Cfg.HOME_START && spawned > sp && cats.length == 0) {
+            MapLocation o = Baby.origin != null ? Baby.origin : start;
+            rc.squeak(Comms.squeak(Comms.SQ_START, o.x, o.y, 0));
+        }
         Debug.mark(46);
         if (!G.coop) bite(enemies);
         if (Cfg.PRESS_SHARED && !G.coop) noteEKing(enemies);
@@ -92,10 +97,18 @@ public final class King {
 
     /** Round 1: our start and the enemy start are mirror images; a candidate that maps us onto ourselves is impossible. */
     static void initialSymmetry() {
-        int x = G.me.x, y = G.me.y;
-        if (G.mirX(x, Sym.HOR) == x && G.mirY(y, Sym.HOR) == y) Sym.eliminate(Sym.HOR);
-        if (G.mirX(x, Sym.VER) == x && G.mirY(y, Sym.VER) == y) Sym.eliminate(Sym.VER);
-        if (G.mirX(x, Sym.ROT) == x && G.mirY(y, Sym.ROT) == y) Sym.eliminate(Sym.ROT);
+        int bad = gapMask(G.me, Cfg.SYM_KING_GAP ? 2 : 0);
+        if ((bad & Sym.HOR) != 0) Sym.eliminate(Sym.HOR);
+        if ((bad & Sym.VER) != 0) Sym.eliminate(Sym.VER);
+        if ((bad & Sym.ROT) != 0) Sym.eliminate(Sym.ROT);
+    }
+
+    /** The symmetries that mirror a king start c within Chebyshev g of itself (g 2: the two kings' bodies overlap). */
+    static int gapMask(MapLocation c, int g) {
+        int bad = 0;
+        for (int s = 1; s <= 4; s <<= 1)
+            if (Math.abs(G.mirX(c.x, s) - c.x) <= g && Math.abs(G.mirY(c.y, s) - c.y) <= g) bad |= s;
+        return bad;
     }
 
     static MapLocation nearCheese;   // nearest cheese pile within the roam leash, this turn

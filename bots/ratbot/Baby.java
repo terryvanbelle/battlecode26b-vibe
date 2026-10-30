@@ -8,6 +8,7 @@ public final class Baby {
     public static int role = -1;
     static int birthRound;
     static MapLocation home;          // spawning king's location at birth
+    static MapLocation origin;        // our first king's start, squeaked by the spawning king (Cfg.HOME_START)
     static int fu = 1, fv = 1;        // side frame (signs of our king's offset from centre)
 
     static MapLocation cheeseTarget;  // last seen cheese tile
@@ -215,6 +216,7 @@ public final class Baby {
         Comms.readKings();
         home = Comms.nearestKing(G.me);
         if (home == null) home = G.me;
+        if (Cfg.HOME_START) origin = heardStart(rc.readSqueaks(-1));
         int px = 2 * home.x - G.cx2, py = 2 * home.y - G.cy2;
         fu = px >= 0 ? 1 : -1;
         fv = py >= 0 ? 1 : -1;
@@ -621,7 +623,7 @@ public final class Baby {
         RobotController rc = G.rc;
         if (G.coop || !rc.isActionReady() || rc.getNumberRatTraps() >= Cfg.MINE_TRAP_CAP) return false;
         if (rc.getAllCheese() < Econ.floor(Cfg.MINE_TRAP_CHEESE) || King.trapStarvesSpawn(rc)) return false;
-        MapLocation ek = G.mirror(home, firstSym()), me = rc.getLocation();
+        MapLocation ek = G.mirror(ref(), firstSym()), me = rc.getLocation();
         for (Direction d : G.fan(me, rc.getDirection())) {
             MapLocation l = me.add(d);
             if (mineSiteRank(m, l, ek) < sites && rc.canPlaceRatTrap(l)) {
@@ -1108,7 +1110,7 @@ public final class Baby {
         int bd = Integer.MAX_VALUE;
         for (int s = 1; s <= 4; s <<= 1) {
             if ((Sym.mask & s) == 0 || (noKing & s) != 0) continue;
-            MapLocation c = G.mirror(home, s);
+            MapLocation c = G.mirror(ref(), s);
             if (G.me.distanceSquaredTo(c) <= 13 && rc.canSenseLocation(c)) {
                 RobotInfo r = rc.senseRobotAtLocation(c);
                 if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { noKing |= s; continue; }
@@ -1558,11 +1560,25 @@ public final class Baby {
     static boolean raider;           // a fighter that leaves our half to contest theirs
 
     /** l is closer to our king than to its mirror under the first live symmetry. */
-    static boolean homeHalf(MapLocation l) {
-        MapLocation ek = G.mirror(home, firstSym());
-        int a = l.distanceSquaredTo(home), b = l.distanceSquaredTo(ek);
+    static boolean homeHalf(MapLocation l) { return nearer(l, ref(), firstSym()); }
+
+    /** Whether l is nearer h than h's twin under symmetry s (ties count with Cfg.MINE_TIES). */
+    static boolean nearer(MapLocation l, MapLocation h, int s) {
+        int a = l.distanceSquaredTo(h), b = l.distanceSquaredTo(G.mirror(h, s));
         return a < b || Cfg.MINE_TIES && a == b;
     }
+
+    /** The king start squeaked to us (Comms.SQ_START), or null. */
+    static MapLocation heardStart(Message[] ms) {
+        for (Message m : ms) {
+            int c = m.getBytes();
+            if (Comms.sqType(c) == Comms.SQ_START) return new MapLocation(Comms.sqX(c), Comms.sqY(c));
+        }
+        return null;
+    }
+
+    /** Home for the half test and mirrors: our first king's start with Cfg.HOME_START once heard, else home. */
+    static MapLocation ref() { return Cfg.HOME_START && origin != null ? origin : home; }
 
     static int firstSym() {
         return (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
@@ -1591,7 +1607,7 @@ public final class Baby {
     /** A mine on the enemy half: known mines and the mirrors of our own, under the first live symmetry. */
     static MapLocation pickRaid() {
         int s = firstSym();
-        MapLocation ek = G.mirror(home, s);
+        MapLocation ek = G.mirror(ref(), s);
         MapLocation best = null;
         int bd = Integer.MAX_VALUE;
         for (int i = 0; i < Comms.numMines; i++) {

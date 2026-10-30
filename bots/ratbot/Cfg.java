@@ -397,6 +397,15 @@ public final class Cfg {
      *  raiders see enemy-half mines whose twins on our half nobody found: DefaultLarge vs abcdezyxwv left 1140 cheese
      *  on two such mines). */
     public static final boolean MINE_MIRROR = false;
+    /** Babies take our first king's start, squeaked by the king in a turn it spawns with no cat in sight (cats turn
+     *  to squeaks), as home for the half test and the mirrored enemy start (homeHalf, mine trap sites, raid and rush
+     *  targets), not the king's tile at their birth. ua1 (uneasy_alliance vs araid): the king walked from its start
+     *  (11,15) to (8,21) and with the symmetry unresolved all game the rotational half from (8,21) put 3 of our 6 home
+     *  mines on the enemy half; no gatherer went there (field 2072: AlexT101 picked 1140 a game on our half). */
+    public static final boolean HOME_START = false;
+    /** The first king also rules out a symmetry that mirrors its start within Chebyshev 2 of itself (the two kings'
+     *  3x3 bodies would overlap), not only onto itself: uneasy_alliance's kings start 7 apart on one row. */
+    public static final boolean SYM_KING_GAP = false;
     public static final int DIG_MIN_CHEESE = 60;
     /** Live babies kept unconditionally (while CORE_FLOOR cheese remain) before the income test applies. */
     public static final int CORE_BABIES = 18, CORE_FLOOR = 300;

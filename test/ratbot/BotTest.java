@@ -553,6 +553,26 @@ public class BotTest {
         Comms.numKings = 0;
     }
 
+    /** Cfg.HOME_START / SYM_KING_GAP on uneasy_alliance's layout (30x30, kings start (11,15) and (18,15)). */
+    static void testHomeStart() throws GameActionException {
+        reset(); W = 30; H = 30; install();
+        MapLocation start = new MapLocation(11, 15), king = new MapLocation(8, 21);
+        check(King.gapMask(start, 0) == 0, "gap: no symmetry maps the start onto itself");
+        check(King.gapMask(start, 2) == Sym.HOR, "gap: only the horizontal twin (11,14) overlaps our 3x3");
+        check(King.gapMask(new MapLocation(14, 14), 1) == (Sym.ROT | Sym.HOR | Sym.VER), "gap: every twin of a centre start is within 1");
+        // the rotational half from the king's tile (8,21) loses the home mines (8,8), (8,2); from the start it keeps them
+        MapLocation[] far = {new MapLocation(8, 8), new MapLocation(8, 2), new MapLocation(2, 7)};
+        for (MapLocation m : far)
+            check(Baby.nearer(m, start, Sym.ROT) && Baby.nearer(m, start, Sym.VER), "half: " + m + " on our half from the start");
+        check(!Baby.nearer(far[0], king, Sym.ROT) && !Baby.nearer(far[1], king, Sym.ROT), "half: (8,8), (8,2) off it from the king's tile");
+        check(!Baby.nearer(new MapLocation(21, 8), start, Sym.ROT) && !Baby.nearer(new MapLocation(21, 21), start, Sym.VER),
+              "half: their mines stay theirs");
+        Message other = new Message(Comms.squeak(Comms.SQ_MINE, 3, 4, 0), 7, 1, start);
+        Message st = new Message(Comms.squeak(Comms.SQ_START, 11, 15, 0), 7, 1, start);
+        check(Baby.heardStart(new Message[]{other}) == null, "start: no start squeak");
+        check(start.equals(Baby.heardStart(new Message[]{other, st})), "start: read from the king's squeak");
+    }
+
     static void testRescue() throws GameActionException {
         reset(); install();
         G.round = 200; G.coop = false; Nav.avoid = 0;
@@ -2009,6 +2029,7 @@ public class BotTest {
         testFrontier();
         testKingBiter();
         testRescue();
+        testHomeStart();
         testRingArcs();
         testHomeRank();
         testScoutUntil();
