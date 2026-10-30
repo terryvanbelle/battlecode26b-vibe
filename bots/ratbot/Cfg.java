@@ -362,6 +362,11 @@ public final class Cfg {
      *  on seepastyourgreed; own-half shares 0.04-0.38. */
     public static final boolean SCOUT_FRONTIER = false;
     public static final int SCOUT_MINES = 0, SCOUT_MINES_UNTIL = 600;
+    /** SCOUT_MINES scouting also stops once the team's known home mines have not grown for SCOUT_DRY rounds (counted
+     *  from SCOUT_UNTIL; 0 = off). hb1, s9c (SCOUT_MINES 4) vs s7d: knifefight, cheesebottles and Stash hold 3 home
+     *  mines each, so a quarter of s9c's gatherers scouted to r600 there; it delivered 935-1045 to 1679-1810 on
+     *  knifefight and 3910 to 8404 on cheesebottles B. */
+    public static final int SCOUT_DRY = 0;
     /** Scouts keep going until round W*H/SCOUT_AREA when that is later than SCOUT_UNTIL (0 = off): on where_are_you
      *  (60x60) the king knew 3 of our half's 8 mines until r850, and five mines 25-50 tiles out dropped 5900 cheese
      *  by r300 that nobody picked. */

@@ -1726,18 +1726,28 @@ public final class Baby {
     }
 
     static boolean scout;
+    /** The most home mines this rat has known, and the round that count last grew (Cfg.SCOUT_DRY). */
+    static int scoutMines = -1, scoutFound;
 
-    /** The round scouting ends: SCOUT_UNTIL, or W*H/area on a map big enough to make that later (area 0: off). */
     /** A gatherer scout still scouting: until scoutUntil, or with Cfg.SCOUT_MINES while we know too few home mines. */
     static boolean scouting() {
         if (!scout || role != GATHER) return false;
-        if (G.round < scoutUntil(Cfg.SCOUT_AREA)) return true;
-        return moreScouting(Cfg.SCOUT_MINES, G.round) && homeMineCount() < Cfg.SCOUT_MINES;
+        int until = scoutUntil(Cfg.SCOUT_AREA);
+        if (G.round < until) return true;
+        if (!moreScouting(Cfg.SCOUT_MINES, G.round)) return false;
+        int h = homeMineCount();
+        if (scoutMines < 0) { scoutMines = h; scoutFound = until; }
+        else if (h > scoutMines) { scoutMines = h; scoutFound = G.round; }
+        return h < Cfg.SCOUT_MINES && !scoutDry(Cfg.SCOUT_DRY, G.round, scoutFound);
     }
 
     /** Cfg.SCOUT_MINES is on and round r is before SCOUT_MINES_UNTIL. */
     static boolean moreScouting(int mines, int r) { return mines > 0 && r < Cfg.SCOUT_MINES_UNTIL; }
 
+    /** No new home mine for dry rounds since round found (dry 0: never dry). */
+    static boolean scoutDry(int dry, int r, int found) { return dry > 0 && r - found >= dry; }
+
+    /** The round scouting ends: SCOUT_UNTIL, or W*H/area on a map big enough to make that later (area 0: off). */
     static int scoutUntil(int area) { return area > 0 ? Math.max(Cfg.SCOUT_UNTIL, G.W * G.H / area) : Cfg.SCOUT_UNTIL; }
 
     /** exploreHome's sample rank (lower wins) for a sample at Chebyshev distance d: Cfg.HOME_PICK 2 prefers far. */

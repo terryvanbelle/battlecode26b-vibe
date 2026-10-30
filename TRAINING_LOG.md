@@ -2013,3 +2013,17 @@
     theirs hit our king (290 of its 600 HP; bites did the rest).
 - dr1 is complete: s7h, s8a and s8o 16/24 and s7u 14/24 against s8w (s7d 13/24); all four were already rejected
   on the replica. ra_s8z was stopped at 28/80 to free the VM (s8y carries the same AMMO_AWAY switch).
+
+## 2026-10-29 20:40 PDT: hb1 first half: s9c neutral; SCOUT_DRY (s9g, s9h)
+- hb1, s9c (SCOUT_FRONTIER + SCOUT_MINES 4) vs s7d, 20 games on 10 maps x 2 sides: 10/20 wins, delivered 3729 to
+  3504 a game. It won rose A (4530 to 2295), seepastyourgreed A (6500 to 560) and B, EscapeTheNight B (7563 to 0)
+  and attack_on_cat A/B. It lost both knifefight games (935-1045 to 1679-1810), cheesebottles B (3910 to 8404)
+  and Stash A.
+- Those three maps have 6 mines, 3 per half. SCOUT_MINES 4 never stops there, so a quarter of the gatherers
+  scouted to r600 while their mates worked three mines.
+- New switch SCOUT_DRY (off): after SCOUT_UNTIL, SCOUT_MINES scouting also stops once the team's known home mines
+  have not grown for SCOUT_DRY rounds (clock from SCOUT_UNTIL, so it ends near r150 when nothing new turns up).
+  - s9g = s9c + SCOUT_DRY 100.
+  - s9h = s9f + SCOUT_DRY 100 (round-robin mines + frontier scouting).
+  - hb2 (not yet started) now runs s9h, s9b and s9g against s7d; s9f was dropped unrun. Screens ra_s9h and ra_s9g
+    replace ra_s9f/ra_s9c in the queue.

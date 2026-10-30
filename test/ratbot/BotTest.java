@@ -596,6 +596,9 @@ public class BotTest {
         check(!Baby.moreScouting(0, 100), "scouting: SCOUT_MINES 0 adds no scouting");
         check(Baby.moreScouting(4, Cfg.SCOUT_MINES_UNTIL - 1) && !Baby.moreScouting(4, Cfg.SCOUT_MINES_UNTIL), "scouting: SCOUT_MINES runs until SCOUT_MINES_UNTIL");
         check(!Cfg.SCOUT_FRONTIER && Cfg.SCOUT_MINES == 0, "scouting: frontier scouting off by default");
+        check(!Baby.scoutDry(0, 1999, 150), "scouting: SCOUT_DRY 0 never dries");
+        check(!Baby.scoutDry(100, 249, 150) && Baby.scoutDry(100, 250, 150), "scouting: dry SCOUT_DRY rounds after the last find");
+        check(Cfg.SCOUT_DRY == 0, "scouting: SCOUT_DRY off by default");
     }
 
     static void testRusher() {
