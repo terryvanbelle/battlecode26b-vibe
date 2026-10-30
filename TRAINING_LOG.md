@@ -2588,3 +2588,24 @@
 - t0o (MINE_TIES; mt2 11 of 16 on the tie maps) goes to the replica as #108 for set 4, block 1, from match 3491. Away
   from axis mines it plays as s9s does, so most cells should repeat the reference. The test rests on Excavation vs
   AlexT101 (s9s lost both) and closeup vs AdamTan12 (s9s won both).
+
+## 2026-10-30 07:07 PDT: two more mirror breaks, tied spawn tiles and flow search depth; t0r, t0s
+
+- sym1 (t0q and s9s self-play, mirror_check on each game's own two sides). knifefight: t0q splits at r4, when two
+  rats meet on the centre line and the one that moves first bites. Our bot can't remove that; turn order decides it.
+  superioristhmus: t0q splits at r27, the same round as s9s. The king's two best spawn tiles were a ring corner
+  (47,54) and an edge (47,55). They scored the same (the corner's -200 matched its centre gain) and had the same pick
+  bit, so the dx/dy loop order chose, and that order isn't mirrored. Stash: the r38 split is flow. Twin rats' searches
+  ended a turn apart because the search runs while bytecodes last.
+- New off-by-default switches (unit tests 418/418):
+  - SYM_TIE: an exact tie in a tile pick (spawn, rat and cat traps, ring dig, rescue, guard, enemy-king guess, mine
+    site) goes to G.tieFirst. That is a cross product of the picker's centre offset with the tile's offset, signed by
+    the side chirality, then the dot product. It is a strict total order that a rotated or reflected twin keeps.
+  - FLOW_QUOTA: a rat runs at most N search steps a round. Probe pb2 (t0q with Debug.PROBE) on superioristhmus: 1018
+    turns popped, 542 of them cut by bytecodes, popping p5 4, p10 20, p50 25, p90 28. A quota of 18 binds before the
+    bytecode cut on ~90% of cut turns, and costs ~30% of search speed.
+- t0r = t0q + SYM_TIE + FLOW_QUOTA 18. Self-mirror run sym2 is on t0q's 8 maps, and its screen is queued second.
+- t0s = @s9s + DELIVER_AT 50 (economy). Each carried unit slows moves by 1%, so a 50-cheese trip home costs 1.5 walks
+  to 30-cheese's 1.3 but brings two-thirds more. Diag dl1 is on ma1's 8 maps.
+- Screens so far vs ra_s9s: ra_t0i 54 cells t +0.43; ra_t0o 32 cells t +1.74; ra_t0p 14 cells t +1.66. t0o's set-4
+  block is 6 of 14 done, all won as s9s did.
