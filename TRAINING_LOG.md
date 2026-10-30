@@ -2292,3 +2292,26 @@
     DefaultLarge B, spsquared thunderdome B. Lost: abcdezyxwv ultimatestarvation B, spsquared jail B.
 - Block 1 can't accept under the new rule; t > 0 continues. Block 2 (set 3) is queued from 3256. Accepting needs a
   pooled t >= 2 over sets 2 and 3.
+
+## 2026-10-30 01:47 PDT: CAT_LANE overrun fixed; EscapeTheNight picks nothing
+- CAT_LANE's first build overran: cl1 (s9t vs s7d) gave s9t's king 244 overruns on sunandmoon as B (max 20008).
+  - The indicator string showed it stuck at (16,9), with its home mine at (19,9) covered by lane. Every turn it
+    re-ran offLane, closer, digTile and step, and each counted lane twice over its 3x3 with loops (move() 11136
+    bytecode).
+  - Fix (d7f1b25): an unrolled 3x3 count, skipped while no lane is known, with the current tile's count cached per
+    turn. BotTest checks it against a plain count on every tile after 40 random marks.
+  - s9t/s9u are superseded by s9x (@s7d @kfix + CAT_LANE) and s9y (@s9s + CAT_LANE).
+  - cl2 (cl1's cells with s9x/s9y): 0 overruns on sunandmoon on both sides (king max 19333). Screens ra_s9x and
+    ra_s9y are queued.
+- s9s's set 3, EscapeTheNight vs outercloudstudio (3256 A, 3257 B): we picked 0 cheese all game on both sides, and
+  the king starved at r1007 with no enemy near. s7d's references (2233/2234) starved the same way (r1002, r1529).
+  - The king's room is walled in except through dirt: 5 dirt tiles west, then the 9-row dirt band (y25-33) to our
+    two own-side mines (4,37) and (10,45). Their 4580 cheese was never touched.
+  - Mine cheese spawns at x18-19, just across the room's east wall, in our rats' view. 75% of baby turns (s7d) chase
+    those piles into the wall ('C'). Each give-up is followed by a re-pick on the next sense, so nobody explores or
+    digs out: 1 tile dug all game.
+  - outercloud digs through and picked 4160 (1000 at its own-side mine, 3160 at the centre column's).
+  - BREAKOUT_TTL (s7z/s9e) was built for this. hb1: s9e won EscapeTheNight B 13230 to 0 but lost A. It has reached
+    the field only inside the s9i/s9k bundles, which were rejected on set 1 (no EscapeTheNight there).
+  - New candidate s9z = @s9s + BREAKOUT_TTL 150. bk1 (VM): s9z vs s9s on brk1's 9 dig maps both sides, and both vs
+    araid on EscapeTheNight.
