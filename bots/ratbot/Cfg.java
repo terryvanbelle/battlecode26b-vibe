@@ -354,6 +354,14 @@ public final class Cfg {
     /** Scouts: one in SCOUT_EVERY gatherers explores our half (never-seen tiles) until round SCOUT_UNTIL, then
      *  gathers (0 = off). */
     public static final int SCOUT_EVERY = 4, SCOUT_UNTIL = 150;
+    /** Scouts explore by Flow's frontier search (the never-seen tile nearest by path cost, digging dirt on the way)
+     *  before exploreHome's random never-seen home tile, and chase only piles in line of sight (CHEESE_LOS); with
+     *  SCOUT_MINES > 0 they go on scouting until SCOUT_MINES_UNTIL while the team knows fewer than SCOUT_MINES home
+     *  mines. hv1 (pb2 self-play, r1-500): no rat of ours ever saw 5 of 8 home mines on where_are_you, 4 of 6 on
+     *  attack_on_cat, 3 of 4 on rose (all three behind 5 dirt tiles; (24,8) is 8 tiles from our start) and 5 of 8
+     *  on seepastyourgreed; own-half shares 0.04-0.38. */
+    public static final boolean SCOUT_FRONTIER = false;
+    public static final int SCOUT_MINES = 0, SCOUT_MINES_UNTIL = 600;
     /** Scouts keep going until round W*H/SCOUT_AREA when that is later than SCOUT_UNTIL (0 = off): on where_are_you
      *  (60x60) the king knew 3 of our half's 8 mines until r850, and five mines 25-50 tiles out dropped 5900 cheese
      *  by r300 that nobody picked. */

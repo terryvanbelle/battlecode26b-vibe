@@ -592,6 +592,12 @@ public class BotTest {
         check(!Cfg.MINE_RR, "roleFor: MINE_RR off by default");
     }
 
+    static void testScoutMore() {
+        check(!Baby.moreScouting(0, 100), "scouting: SCOUT_MINES 0 adds no scouting");
+        check(Baby.moreScouting(4, Cfg.SCOUT_MINES_UNTIL - 1) && !Baby.moreScouting(4, Cfg.SCOUT_MINES_UNTIL), "scouting: SCOUT_MINES runs until SCOUT_MINES_UNTIL");
+        check(!Cfg.SCOUT_FRONTIER && Cfg.SCOUT_MINES == 0, "scouting: frontier scouting off by default");
+    }
+
     static void testRusher() {
         // RUSH is off in the development Cfg: no baby attacks from birth, whatever its index or round
         for (int idx = 0; idx < 20; idx += 4) check(!Baby.rusher(idx, 10) && !Baby.rusher(idx, 500), "rusher: off with RUSH off");
@@ -2058,6 +2064,7 @@ public class BotTest {
         testRusher();
         testAmmo();
         testRoleFor();
+        testScoutMore();
         testRingArcs();
         testHomeRank();
         testScoutUntil();

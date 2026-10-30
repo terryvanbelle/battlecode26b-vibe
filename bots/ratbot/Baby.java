@@ -295,7 +295,7 @@ public final class Baby {
         MapInfo[] infos = G.rc.senseNearbyMapInfos();
         MapLocation bestCheese = null;
         int bd = Integer.MAX_VALUE, np = 0;
-        boolean los = Cfg.CHEESE_LOS || breakingOut();
+        boolean los = Cfg.CHEESE_LOS || breakingOut() || Cfg.SCOUT_FRONTIER && scouting();
         for (MapInfo mi : infos) {
             MapLocation l = mi.getMapLocation();
             boolean mine = mi.hasCheeseMine();
@@ -973,11 +973,12 @@ public final class Baby {
             if (ct != null) { Nav.goTo(ct); return; }
             if (Cfg.RAID && raider && rc.getHealth() >= Cfg.RAID_HP && raid()) { why = 'z'; return; }
         }
-        if (scout && role == GATHER && G.round < scoutUntil(Cfg.SCOUT_AREA)) {
+        if (scouting()) {
             // a scout with news the king lacks carries it home (squeaks reach the king from dist2 16 only)
             MapLocation k = Comms.nearestKing(G.me);
             if (k != null && unreported() >= 0) { Nav.goTo(k); why = 's'; return; }
             why = 'S';
+            if (Cfg.SCOUT_FRONTIER && exploreFrontier()) return;
             if (!exploreHome()) explore();
             return;
         }
@@ -1727,6 +1728,16 @@ public final class Baby {
     static boolean scout;
 
     /** The round scouting ends: SCOUT_UNTIL, or W*H/area on a map big enough to make that later (area 0: off). */
+    /** A gatherer scout still scouting: until scoutUntil, or with Cfg.SCOUT_MINES while we know too few home mines. */
+    static boolean scouting() {
+        if (!scout || role != GATHER) return false;
+        if (G.round < scoutUntil(Cfg.SCOUT_AREA)) return true;
+        return moreScouting(Cfg.SCOUT_MINES, G.round) && homeMineCount() < Cfg.SCOUT_MINES;
+    }
+
+    /** Cfg.SCOUT_MINES is on and round r is before SCOUT_MINES_UNTIL. */
+    static boolean moreScouting(int mines, int r) { return mines > 0 && r < Cfg.SCOUT_MINES_UNTIL; }
+
     static int scoutUntil(int area) { return area > 0 ? Math.max(Cfg.SCOUT_UNTIL, G.W * G.H / area) : Cfg.SCOUT_UNTIL; }
 
     /** exploreHome's sample rank (lower wins) for a sample at Chebyshev distance d: Cfg.HOME_PICK 2 prefers far. */
