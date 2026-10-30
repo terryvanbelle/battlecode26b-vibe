@@ -2431,3 +2431,41 @@
 - s9z's screen (ra_s9z vs ra_s9s): +1.3 pts, t +0.41, net +3 (+7 -4), a pass. Its set-4 block is part done: 3314-3326
   so far: outercloud 3-0 and 2-1, bc26vibe 2-1 twice, CS50Crab 2-1 and 3-0, AlexT101 0-3 and 2-1, abcdezyxwv 0-3,
   spsquared 2-1.
+
+## 2026-10-30 04:30 PDT: s9z rejected; our second kings never sit on a mine; FORM_MINE
+- s9z (BREAKOUT_TTL 150) on set 4 against s9s's reference (3284-3297): 3314-3323, 3325-3326, 3342-3343. 42 cells, 38
+  alike, D 4 (+2 -2), net 0, t 0.00: rejected at block 1. progress/ refreshed.
+- Partial screens. ra_t0b (RISK_FRESH 2) at 34 of 80 cells: -12.4 pts, t -1.50, net -6, on the reject line.
+  ra_t0c (KING_TRAPS) at 19 cells: +13.4 pts, t +1.23, net +2. ra_t0d at 19 cells: +2.9 pts, t +0.38.
+  t0c went to the replica as #105 for set 4, block 1.
+- Why we form so few second kings (new scratch tool formk.py over s9s's 126 field games). We formed in 28 games and won
+  12. In 38 more the gates (babies, bank, round) held but no site was ever named: we won 18. The field formed in 17
+  of our games and we won 1.
+  - superioristhmus (4 games, all lost; the field formed 4-5 kings): the gates held from r80 and no baby ever got a
+    'K' (formation) move. Our king at (11,6) is walled in. A site must be a home mine whose 3x3 the king itself has
+    seen (it sees about 5 tiles), or a clear spot 4 tiles behind it, which is wall here.
+  - t0h = @s9s + FORM_RING: the old switch that names a clear 3x3 next to the king when nothing else works. It was
+    only ever tried in the formation v2 bundle (s5x, on s4d). Diag fm1 (8 no-site maps, both sides) and screen
+    ra_t0h.
+- Where cheese is lost, to r400 (minecov.py, latency.py, minerank.py over the same 126 games):
+  - Our pickups come 1-2 rounds after the spawn, so where we stand we are fast.
+  - Our gatherers crowd one or two mines near the king: 10 babies in one 9x9 spawn square on Meow, cheesebottles
+    and superioristhmus. abcdezyxwv keeps 1-5 on nearly every mine, theirs and ours.
+  - Our mines by distance from the king. Rank 1: 56% picked by us, 12% by them, 32% left (the king's own pickups
+    are not counted). Ranks 2-3: 44-49% us, 31-38% left. Rank 4+: 14-41% us, 49-59% left, with 1-2 of our babies
+    in the square.
+  - On their half we pick 2-14%.
+  - Only 48% of our baby turns to r400 are gatherers'; 30% are fighters and 13-25% attackers. Even our gatherers
+    pick 0.25-0.43 cheese a turn; the top field bots pick 0.48-0.62 across all their babies.
+- The field forms its extra kings on mines. abcdezyxwv on superioristhmus formed four (r330-563), each 0-1 tiles from
+  a mine and spread across both halves; spsquared formed three; AdamTan12 and AlexT101 also formed on mines. Ours form
+  4-10 tiles from any mine, beside the first king.
+- FORM_MINE (off by default; t0i = @s9s + FORM_MINE, t0j = t0i + FORM_MAX 3):
+  - The site is a home mine itself, the nearest one not held by a king and more than 4 tiles from ours, with
+    2*dist2 to our start at most its dist2 to theirs. The king need not have seen it: no mine's 3x3 on our 53 maps
+    holds a wall or leaves the map, and 59 of 415 hold dirt (those rank last).
+  - A site that times out is banned.
+  - Babies within dist2 400 join when their slot is drawn (1 in 2), never attackers and not with an enemy in view.
+  - A formed king squeaks its old home king's tile, so its babies keep our first king's half and mirrored enemy
+    start. Without that, its attackers would go to the mirror of the far mine.
+  - BotTest 397/397. Diag fm2 (t0i vs s9s on 8 mine-rich maps, both sides); screens ra_t0i and ra_t0j queued.
