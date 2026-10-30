@@ -2038,3 +2038,26 @@
 - s9b (HOME_START + MINE_RR) is submission #97, with its set-1 block from 2877. The evidence: ue3's own-half share
   0.80 to s7d's 0.59 on uneasy_alliance, a map AlexT101 takes from us. ra_s9b and hb2 (s9h, s9b, s9g vs s7d) are
   still to come.
+
+## 2026-10-29 21:16 PDT: s7d is not side-symmetric (mc1); s9d leads hb1; s9i, s9j, s9k
+- hb1, s9d (s9c + BREAKOUT_TTL 150) vs s7d: 13/20 wins, delivered 4374 to 3067 a game (+43%). It loses where
+  SCOUT_MINES never stops (knifefight, cheesebottles) and on fullofsecrets. New, for hb2 (now s9j, s9i, s9b vs
+  s7d):
+  - s9i = s9d + SCOUT_DRY 100.
+  - s9j = s9i + HOME_START + MINE_RR, the harvest bundle.
+- hb1 also showed s7d's results depend on its side. EscapeTheNight: as A it delivered 0 in both games (3 tiles
+  dug), as B 4444-6389. seepastyourgreed: 13310-13464 as A, 560-800 as B.
+- mc1 (kept replays): s7d self-play on EscapeTheNight, A picked 0 and dug 3 while B picked 605 (14408 delivered)
+  and dug 104. mirror_check: the sides split at r4 on the first newborn. A's spawns at (15,20), B's at the mirror
+  of (15,19); A's is a scout ('S'), B's an explorer ('E'). The spawn tile comes from the unmirrored centre and
+  king facing (SYM_CENTRE, SYM_FACE) and the role from an id hash (SYM_SLOT).
+- The five symmetry switches have been off since s7d. They only met the field inside the s8c bundle (with SWAP and
+  CARRY_AIM, rejected at net -2). The owner's brief asks for side-symmetric play, so s9k = s9j + SYM_SLOT,
+  SYM_FLOW, SYM_CENTRE, SYM_HAND and SYM_FACE. Its mirror self-play mc2 runs on EscapeTheNight, seepastyourgreed,
+  knifefight, rose and DefaultMedium.
+- s9b's set-1 block, 8 of 14 matches in: 24 cells, D 6 (+2 -4), net -2, t -0.82. Lost CS50Crab Nofreecheese A/B
+  and dirtfulcat A.
+  - Nofreecheese 2881 (us A): our king starved at r1609 with no enemy ever near it. CS50Crab picked 5060 on our
+    half (own-half share: us 0.52, them 0.92) and spawned 100 rats.
+  - In s7d's reference game (2070) CS50Crab spawned 42 and got 43% of its own half. Our rat-rounds at our three
+    mines were 1341/1230/544 against s7d's 2919/2168/488.
