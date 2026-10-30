@@ -2331,3 +2331,25 @@
 - bk1 (VM) so far: s9z (@s9s + BREAKOUT_TTL 150) beat s9s on EscapeTheNight both sides by king kill, delivering
   7969 to 225 as A (122 tiles dug to 9) and 12065 to 150 as B. The breakout works from both sides on the s9s base.
   Screen ra_s9z is queued.
+
+## 2026-10-30 02:27 PDT: enemy traps are a top HP sink; RISK_FRESH
+- Screens: ra_s9v (@s9s + AMMO_AWAY) +4.4 pts, t +0.73, net +5: pass. ra_s9t/ra_s9u (the overrun build) passed at
+  t +0.17 and +1.04.
+- Enemy rat traps, from s9s's 126 field games (scratch traps.py: every enemy RAT_TRAP our robots fire):
+  - The field lays 44.2 traps a game; our rats fire 37.8 of them (AlexT101 80.5 a game, CS50Crab 69.5, AdamTan12
+    54.1, spsquared 34.3). A trap does 50 damage and a 30-cooldown stun.
+  - 42% of our triggers kill the rat. 21% are two or three traps fired by one step (overlapping 3x3 zones: 100+
+    damage on a full-HP rat).
+  - 62% fire within 2 rounds of the lay: the layer drops the trap on one of its three front tiles (the only tiles
+    it can build on) as our rat closes in. 64% are on our half.
+  - About 80% are on combat moves (attack 19%, face-enemy 18%, war 17%, aim-carry 11%, flank 8%), where TrapRisk's
+    mask is dropped (an enemy within dist2 20, or hunting). 12% are on gathering moves.
+  - A trapped rat is left at 50 HP or less, so any full-HP enemy can grab it (the 70% of grabs on our rats that were
+    on rats with less HP than the grabber), and throw it into our king.
+  - s7d, which lays traps, fired 44.9 a game and hit the field with 28.9 of its 33.6 (86%). s9s lays none.
+- RISK_FRESH (new, off by default): where the mask is dropped, still avoid tiles next to the front tiles of enemies
+  seen in the last RISK_FRESH rounds. aimCarry's direct steps keep to the mask too. RISK_IN_FIGHT (the 150-round
+  marks) froze our fighters on the screen (s8h -8.1 pts); this keeps only the marks where reactive traps land.
+  - BotTest: mask(me, ttl) keeps and drops marks by age.
+  - t0b = @s9s + RISK_FRESH 2. rf1 (VM): t0b and s9s vs atrap2 (our trap layer at incumbent strength) on 8 trap-heavy
+    field maps, both sides.
