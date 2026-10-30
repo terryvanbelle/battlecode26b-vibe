@@ -2627,3 +2627,27 @@
     last rat in its sense order as its target and turns to the first squeak it hears; neither is mirrored.
   The splits that came from our bot (superioristhmus r27 spawn tie, Stash r38 flow depth) are what t0r fixes. Stash on
   pb2 (the flow probe): cut turns popped p5 16, p10 18, p50 22, so FLOW_QUOTA 18 binds on ~90% of them there too.
+
+## 2026-10-30 07:43 PDT: many rats never start a flow search; FLOW_ALLOC; t0v, t0w
+
+- sym2 (t0r self-play) first splits: Stash r73 (t0q r38), superioristhmus r33 (r27), cheesebottles r307 (r74, a cat
+  scratch), where_are_you r27 (a cat scratch), Meow r18 and DefaultMedium r41 (contact), knifefight r4. No overruns
+  past one turn a side, no exceptions.
+- EscapeTheNight r26 led to a bug, not a mirror issue. The twin attackers each had a flow search requested from r20.
+  Team 2's twin spent 12810 bytecodes a turn and had a 20-tile path at r24. Team 1's spent exactly 6410 a turn, popped
+  no node, and stood still. Flow.work0 allocates the search arrays only in a turn with 2*W*H + 1700 and then
+  NB*RING + 1024 = 9216 bytecodes left past FLOW_RESERVE 2500, because an allocation costs its length. A rat whose turn
+  runs past ~5800 bytecodes before Flow.work can never start its first search, and the mean rat turn is ~7300.
+- The pb2 probe counts it (rats whose cumulative pops stay 0 while a search is building):
+  - superioristhmus: 48 of the 87 rats that ever asked for a search never popped a node. 9.6% of all rat-turns waited
+    on a requested search. Median wait from request to first pop 72 turns, p90 1021.
+  - Stash: 8 of 86 never; 25.9% of rat-turns waiting; median 16.
+  Those rats fall back on greedy and bug steps: flow was never doing what the stall fixes assumed.
+- FLOW_ALLOC (off by default) allocates g, par, each of the 8 bucket rows and the path one piece at a time. Each piece
+  needs only its own length past the reserve, so a busy rat has them within a few turns. BotTest 420/420.
+- t0v = @s9s + FLOW_ALLOC (the fix alone); t0w = t0r + FLOW_ALLOC. Probe pb3 (t0v with Debug.PROBE) runs as pba1 on
+  superioristhmus and Stash to confirm the waits are gone. Diag al1 is t0v vs s9s on the 8 rz maps, and ra_t0v
+  heads the screen queue.
+- ex1 (s9s vs araid on Excavation, indicators): the mines sit inside a solid dirt block. Our explorers find them at
+  ~r40 and the first pickup is at r55. Attack moves take 37% of rat-turns to r70. AlexT101 dug to the centre mine by
+  r25 on the replica.
