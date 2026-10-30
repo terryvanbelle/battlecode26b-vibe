@@ -1986,3 +1986,30 @@
   popthecork, both sides) and screen ra_s9b are running.
 - Next: exploration that finds the unseen home mines (rose, where_are_you, attack_on_cat), and a cheese chase that
   doesn't restart its search on every new pile.
+
+## 2026-10-29 20:14 PDT: dig-aware scouting (s9c-s9e); how abcdezyxwv out-harvests us
+- Unseen home mines are mostly behind dirt. Scratchpad pathdist.py gives the true path cost from our start to each
+  home mine. hv1 maps: rose's three central home mines need 5 digs each, where_are_you's five unseen need 1-9,
+  attack_on_cat's two far ones 20. On seepastyourgreed no dig is needed, but the path out of the start strip is
+  89-109 steps to mines 6-12 tiles away.
+- New switches (off): SCOUT_FRONTIER makes scouts explore by Flow's frontier search (the never-seen tile nearest
+  by path cost, digging on the way) and chase only piles in line of sight. SCOUT_MINES n keeps scouts scouting
+  until SCOUT_MINES_UNTIL (600) while the team knows fewer than n home mines.
+  - s9c = @s7d @kfix + SCOUT_FRONTIER + SCOUT_MINES 4.
+  - s9d = s9c + BREAKOUT_TTL 150.
+  - s9e = @s7d @kfix + BREAKOUT_TTL 150 (s7z rebased).
+  - hb1 runs each against s7d on seepastyourgreed, rose, where_are_you, attack_on_cat, fullofsecrets, Stash,
+    EscapeTheNight, popthecork, cheesebottles and knifefight, both sides; tallies use delivered cheese.
+- s9b in ue3 (vs araid on uneasy_alliance, as A): rats per home mine 17/12/11/11/10/8 over all six. s7d had 29 on
+  one mine and none on (8,2). Own-half share 0.80 (s7d 0.59).
+- Field (s7d's reference games):
+  - pipes vs abcdezyxwv (2123 g2), every home mine behind 3+ dirt tiles: they worked all five of theirs by r61
+    plus two of ours from r100 and r153; our 2nd-4th mines first got picked at r55, r150 and r329, and the 5th
+    never. Picks to r600: 9139 against our 3583; spawn spend 5600 to 2530.
+  - Stash (2241 g2): they picked 1720 of our half's 2320 and we picked 540, outnumbering us at our own mines
+    (628-937 rat-rounds each to our 136-451).
+  - knifefight (2074 g2, lost r67): a brawl from r1. Our traps killed 23 of their rats (62 traps), but they
+    grabbed 59 to our 43 and threw 43 to our 23. Their throws hit a robot 38 times in 43, ours 13 in 23, and 7 of
+    theirs hit our king (290 of its 600 HP; bites did the rest).
+- dr1 is complete: s7h, s8a and s8o 16/24 and s7u 14/24 against s8w (s7d 13/24); all four were already rejected
+  on the replica. ra_s8z was stopped at 28/80 to free the VM (s8y carries the same AMMO_AWAY switch).
