@@ -441,6 +441,13 @@ public final class King {
         if (enemies.length > 0 || cats.length > 0) { mineWhy = enemies.length > 0 ? 'e' : 'c'; return; }
         if (Cfg.KING_PLUG && unplug(c)) { mineWhy = 'u'; return; }
         if (homeMine == null) homeMine = pickHomeMine(start);
+        // KING_FORAGE: a king bound to starve before round 2000, with no mine of its own, walks to the nearest home
+        // mine no other king of ours holds, at any distance
+        if (Cfg.KING_FORAGE && (homeMine == null || held(homeMine)) && forageDue(G.round, forageRound, Econ.surplus())) {
+            forageRound = G.round;
+            MapLocation f = forageMine(c);
+            if (f != null) homeMine = f;
+        }
         // a pile the king can reach is cheese no rat has to carry: walk until it is under our 3x3
         if (nearCheese != null && G.cheb(c, nearCheese) > 1 && step(c, nearCheese)) { mineWhy = 'p'; pickUp(); return; }
         if (homeMine == null) { mineWhy = 'n'; return; }
@@ -951,6 +958,35 @@ public final class King {
 
     static MapLocation homeMine;
     static char mineWhy = '-';
+
+    static int forageRound;          // 0 at start: FORAGE_FROM >= FORAGE_EVERY, so the first check is due
+
+    /** Cfg.KING_FORAGE: time to look for a mine (from FORAGE_FROM, every FORAGE_EVERY rounds, projected bank < 0). */
+    static boolean forageDue(int round, int last, int surplus) {
+        return round >= Cfg.FORAGE_FROM && round - last >= Cfg.FORAGE_EVERY && surplus < 0;
+    }
+
+    /** Another live king of ours is within Chebyshev 2 of m. */
+    static boolean held(MapLocation m) {
+        for (int k = 0; k < Comms.numKings; k++)
+            if (G.cheb(Comms.kings[k], m) <= 2 && !Comms.kings[k].equals(G.me)) return true;
+        return false;
+    }
+
+    /** Cfg.KING_FORAGE: the listed mine nearest {@code from} on our half (by our start) that no other king holds. */
+    static MapLocation forageMine(MapLocation from) {
+        int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
+        MapLocation ek = G.mirror(start, s);
+        MapLocation best = null;
+        int bd = Integer.MAX_VALUE;
+        for (int i = 0; i < Comms.numMines; i++) {
+            MapLocation m = Comms.mines[i];
+            if (m.distanceSquaredTo(start) > m.distanceSquaredTo(ek) || held(m)) continue;
+            int d = from.distanceSquaredTo(m);
+            if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(from, m, best)) { bd = d; best = m; }
+        }
+        return best;
+    }
 
     /** The known mine nearest our start, within KING_MINE_R2 and on our half: the king sits on it. */
     static MapLocation pickHomeMine(MapLocation from) {

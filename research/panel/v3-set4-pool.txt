@@ -1,0 +1,13 @@
+# v3 set 4 (v3-set4.json): blocks of s9s-reign candidates, each one perturbed draw of s9s's play there. With the
+# replica deterministic, a candidate's differing cells are mostly its own change's chaos, and one reference draw
+# (s9s's own 3284-3297) carries its luck; nine candidates scored -4..0 against it (mean net -1.9). contest.py pool
+# scores a candidate against the cell rates of the control plus every block listed here (its own excluded).
+3314-3323,3325-3326,3342-3343  # s9z
+3355-3360,3378-3385  # t0c
+3401-3406,3418-3423,3436-3437  # t0h
+3450-3455,3457-3460,3463-3464,3476-3477  # t0g
+3491-3494,3496-3497,3509-3516  # t0o
+3522-3525,3528-3529,3546-3551,3562-3563  # t0i
+3572-3577,3581-3586,3603-3604  # t0p
+3742-3755  # u0e
+3756-3767,3785-3786  # u0m

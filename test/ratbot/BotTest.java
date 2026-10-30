@@ -2271,6 +2271,10 @@ public class BotTest {
         if (Cfg.END_KING > 0) check(!King.endKing(Cfg.END_KING - 1, 1, 8, ec, -1000), "end king: not before END_KING");
         check(King.crowdBetter(3, 10, 2, 50) && King.crowdBetter(2, 50, 2, 10) && !King.crowdBetter(2, 10, 2, 50) && !King.crowdBetter(1, 99, 2, 10),
               "end king crowd site: more babies first, then farther from the enemy");
+        int ff = Cfg.FORAGE_FROM, fe = Cfg.FORAGE_EVERY;
+        check(King.forageDue(ff, -1000, -1) && !King.forageDue(ff - 1, -1000, -1) && !King.forageDue(ff, -1000, 0),
+              "king forage: from FORAGE_FROM, only while the projected bank is negative");
+        check(!King.forageDue(ff + fe - 1, ff, -1) && King.forageDue(ff + fe, ff, -1), "king forage: every FORAGE_EVERY rounds");
         // TrapRows (RISK_ROWS) keeps the same marks one row at a time: risky/mask/clear agree with the flat array
         TrapRisk.mark = null; TrapRisk.init(); TrapRows.rows = null; TrapRows.init();
         rnd = new java.util.Random(11);

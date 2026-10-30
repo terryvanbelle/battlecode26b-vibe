@@ -71,6 +71,14 @@ public final class Cfg {
      *  there to r2000 with all 20 babies shut in behind it (75% of our baby turns went to mine trips that never got out). */
     public static final boolean KING_PLUG = false;
     public static final int KING_MINE_R2 = 400;
+    /** A king bound to starve before round 2000 (Econ.surplus() < 0), with no mine of its own (none within KING_MINE_R2,
+     *  or another king's), walks to the nearest home-half mine no other king holds, at any distance; checked from
+     *  FORAGE_FROM every FORAGE_EVERY rounds. 27 of 78 king deaths in 50 replica matches (3284-3297, 3728-3763) were
+     *  starvation, 16 (10 games) with no enemy damage: where_are_you (3763 B: the second king formed at (56,56) beside the first,
+     *  no mine within reach; 25k cheese lay on the map at r1000, 4 of 8 home mines never visited; both kings starved
+     *  r1125), Hike, uneruesansfin (the king's start has no home mine within dist2 400). */
+    public static final boolean KING_FORAGE = false;
+    public static final int FORAGE_FROM = 200, FORAGE_EVERY = 50;
     /** Dirt on the king's walk to its mine: the king digs the step's leading edge (5 cheese a tile). */
     public static final boolean KING_DIG = true;
     /** King steps out of a near cat's path (King.dodge) instead of only straight away from it. */
