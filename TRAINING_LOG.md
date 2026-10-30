@@ -2669,3 +2669,34 @@
   evileye 2-0, superioristhmus 0-2). Screen ra_t0t is queued. rz2, t0u RUSH_TO 20 (16 rushers), won 9 of 16 and is
   parked.
 - DELIVER_AT 50 (t0s): dl1 7 of 16 vs s9s, delivered 11072 to 11232. Dropped.
+
+## 2026-10-30 08:40 PDT: the set-4 reference ran lucky; the cells every build loses; the averystrangespace pocket
+
+- Every set-4 block so far (s9s's reference and the s9z, t0c, t0h, t0g, t0o, t0i, t0p candidates), cell by cell
+  (scratch cells4.py): the reference won 25 of 42 cells, the candidates 23.3 on average. Its edge is luck on a few
+  coin-flip cells: CS50Crab grove B (reference 1, candidates 0.29), outercloud fullofsecrets B and seepastyourgreed B
+  (0.57 each); against it, spsquared Meow A (0 vs 0.67). Block 1 rejects at t <= 0, so a candidate as strong as s9s
+  is rejected more often than not. Next replica slot: a second s9s sample (twin t0f) on set 4, so the reference cells
+  average two games (contest.py paired already averages several reference games per cell).
+- 14 cells are lost by every build: abcdezyxwv 6 of 6, AlexT101 Excavation and uneruesansfin 4, bc26vibe_bot
+  averystrangespace 2, CS50Crab grove A, AdamTan12 averyfineline A. A build only gains by turning some of these.
+- First pickups at our home mines in the reference block (scratch firsts.py) show where we never reach mines:
+  - averystrangespace: 1 of 3 home mines in 2000 rounds (bc26vibe_bot reaches its other two at r266-1228).
+  - where_are_you: 4 of 8 (AlexT101 has all 8 by r552).
+  - uneruesansfin: our home mines first at r562-846 (AlexT101 r266-278), and it takes 8.5k there to our 0.1-0.3k.
+  - cheesebottles: [24, 200, never] to abcdezyxwv's [34, 52, 156].
+- averystrangespace: our king's corner is a pocket sealed by walls, and the only exit is a diagonal channel of
+  ~12 dirt tiles. as1 (t0v vs s9s, both sides): neither side ever leaves; mine 10,7 gives 4520 and the other two
+  home mines are never seen. A scout's reverse flow search toward a random unseen tile took 24 turns on 60x60, and
+  the scout's target changed before most searches finished; scouting ends at r150.
+  - t0x = @s9s + SCOUT_FRONTIER (scouts take the nearest unseen tile by path cost, dirt included).
+  - t0y = t0x + FLOW_ALLOC.
+  - Diag fr1 runs both against s9s on averystrangespace, cheesebottles and where_are_you, both sides.
+- cb1 (t0v vs s9s, cheesebottles): the corner mine 2,2 is first picked at r232 (s9s r303-308). The team knew
+  1 mine at r66, 2 at r180, 3 at r311. Our attackers' flow searches toward the enemy king never finished in s9s.
+- al1 done: t0v 6 of 16 vs s9s (closeup 0-2, delivering 10.0-10.7k to 15.6-16.2k; evileye 0-2; Meow 2-0). It is not
+  the next submission. Its screen is at t +1.65 after 43 cells.
+- t0p's block so far: net -2 after 36 cells (lost grove B and seepastyourgreed B, the reference's lucky cells),
+  and abcdezyxwv 0 of 6 again. Spreading over every mine doesn't move that matchup. In 3548 (t0i) abcdezyxwv out-picked us
+  20.9k to 6.1k on cheesebottles. On Meow it won a throw war we opened at r17 (kills per death 0.76; we were down to
+  7 rats by r160 and broke by r200).
