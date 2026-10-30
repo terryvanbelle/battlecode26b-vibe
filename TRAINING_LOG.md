@@ -2246,3 +2246,39 @@
     queued now as block 1 and set 3 follows as block 2.
   - Earlier rejections stand. A candidate rejected on set 1 alone reopens only on fresh blocks (sets 2 and 3).
 - TRAINING_ALGORITHM.md section 4: one block never accepts, and the new "accepting block is a biased reference" rule.
+
+## 2026-10-30 00:44 PDT: s9s's record block; where the field takes our cheese; CAT_LANE
+- s9s on set 1 (record only, 3067-3070, 3077-3078, 3087-3094) against s7d's accepting block: 42 cells, D 10 (gained 7,
+  lost 3), net +4, t 1.26, 24/42 wins to s7d's 20. Per opponent: CS50Crab, bc26vibe and outercloud 5/6, AlexT101 and
+  spsquared 3/6, AdamTan12 2/6, abcdezyxwv 1/6. Its set-2 block (from 3101) is block 1.
+- Screens: ra_s9s t +0.97, net +8, and ra_s9r t +0.33, net +6 (both pass). ag4 vs s7d: agaim 9/20 and agcap 8/20.
+  So the 40/40 caps and CARRY_AIM don't carry agrab's 14/20; its rush and early war do.
+- Pickups on the other team's half up to r300 (s7d's 126 reference games, steal.py):
+  - The field takes 329 a game from our half (AlexT101 590, AdamTan12 505, abcdezyxwv 498). 279 of it is mine
+    spawns. We take 80 from theirs.
+  - In 70% of their pickups none of our rats is within dist2 20 of the pile. Our nearest rat is at dist2 195 on
+    average, and the pile waited 27 rounds.
+- Per home mine (steal2.py), of the 280 a game they take from our mines:
+  - 110 comes from the 50 of our 460 home mines that only they worked by r300 (theirs: 12 of 460).
+  - 48 comes from 27 mines they reached first.
+  - 122 comes from mines we worked first.
+  - Our first pickup at the 3rd-nearest home mine is at r156 on average, theirs at r105.
+- The never-worked mines are mostly out of reach rather than unassigned (steal3.py lists them):
+  - Only 4 of the 54 in s7d's set-1 games were ever within dist2 20 of one of our rats.
+  - They sit behind dirt (dirtpassageway's nearest mine behind 4 dirt rows, heart's two outer mines behind the
+    dirt column) or at the end of wall mazes (cheesebottles).
+  - s9i's frontier scouting didn't change this on the field (59 such mines in its set-1 games, s9s 59).
+- Cat kills: s9s's 16 first-king deaths on set 1 lost 21% of their HP to cat scratches (s7d's references: 9%).
+  - On bed (3091; s7d's 2086/2087 the same) our king digs out of its sealed start pocket and walks to (2,11), on cat
+    3's lane from (0,0) to (1,11) to (9,11). The cat scratches whatever blocks its path, and the king was dead by
+    r245. The spsquared king stayed in its pocket.
+  - In 3092 (us B) the roles reversed: our king stayed home and theirs walked down and died.
+  - 16 of s7d's 126 reference games and 6 of s9s's 42 had a king take 100+ scratch damage.
+- New switch CAT_LANE (off by default):
+  - The king marks every cat 2x2 it sees, or hears squeaked by a baby, as lane in Sym.mem (a new CAT bit, kept
+    through re-sensing).
+  - Its mine walk, cheese steps and digs never add lane to its 3x3, and when it stands on lane it steps off.
+  - Unit test testCatLane. Candidates s9t (@s7d @kfix + CAT_LANE) and s9u (@s9s + CAT_LANE). The @s9s snapvar
+    preset reproduces bots/s9s (test_snapvar).
+  - cl1 (VM): s9t vs s7d and s9u vs s9s on bed, cheesebottles, DefaultLarge, popthecork, sunandmoon,
+    attack_on_cat, tornadoes and cheesefarm, both sides. Screens ra_s9t and ra_s9u are queued.
