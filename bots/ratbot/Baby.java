@@ -368,7 +368,7 @@ public final class Baby {
 
     /** Re-sense after moving (new cone) only to refresh cheese; terrain is caught next turn. */
     static void sense2() throws GameActionException {
-        if (Clock.getBytecodesLeft() < 4000) return;
+        if (Clock.getBytecodesLeft() < Cfg.SENSE2_LEFT) return;
         sense();
     }
 

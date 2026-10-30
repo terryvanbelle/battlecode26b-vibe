@@ -130,6 +130,12 @@ public final class Cfg {
      *  mirrored enemy start. */
     public static final boolean FORM_MINE = false;
     public static final int FORM_MINE_SAFE = 2, FORM_MINE_PULL_R2 = 400, FORM_MINE_SHARE = 2;
+    /** An endgame king: from round END_KING a lone king names a site for a second (a clear 3x3 off its body, else
+     *  pickFormSite's) whenever 7 babies and END_KING_CHEESE global cheese are there, with no income test and no
+     *  retry wait past FORM_TTL (0 = off). Kings alive at the end weigh 0.5 of the points at war, 0.3 in cooperation,
+     *  so a second king at 1-1 moves 8-16 points to us; s9s's set-4 limit games (9 of 42) all ended at 1-1 or less
+     *  for us, and averystrangespace (3287) was lost 24-25 with no cat damage either side. */
+    public static final int END_KING = 0, END_KING_CHEESE = 400;
     /** Gatherers at their mine turn in place instead of wandering. */
     public static final boolean GATHER_STILL = false;
     public static final boolean RAID = true;   // idle fighters go to enemy-half mines
@@ -534,4 +540,9 @@ public final class Cfg {
     public static final int BC_OPTIONAL = 8000;
     /** Below this many bytecodes left after sensing, end the turn rather than overrun. */
     public static final int BC_BAIL = 3500;
+    /** The re-sense after moving (Baby.sense2) needs this many bytecodes left. IND_LEFT: the indicator string is
+     *  built only with this many left (0 = always). Both are for a newborn's first turn on a big map: s9s overran
+     *  by 3-11 there on superioristhmus (rz1, al1; field 3292, 3293), once at 17424 used before the indicator, once
+     *  in the re-sense or flow work, and the next turn went to finishing it. Replica replays drop indicators. */
+    public static final int SENSE2_LEFT = 4000, IND_LEFT = 0;
 }

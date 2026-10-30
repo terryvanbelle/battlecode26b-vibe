@@ -2239,6 +2239,13 @@ public class BotTest {
         check(King.betterCat(100, 50, 200, 10), "king cat bite: less health first");
         check(!King.betterCat(200, 10, 100, 50), "king cat bite: more health loses even if nearer");
         check(King.betterCat(100, 10, 100, 50) && !King.betterCat(100, 50, 100, 50), "king cat bite: equal health, nearer");
+        int ek = Math.max(Cfg.END_KING, Cfg.FORM_TTL + 1), ec = Cfg.END_KING_CHEESE;
+        check(King.endKing(ek, 1, 8, ec, -1000), "end king: a lone king with 8 babies and the cheese names a site");
+        check(!King.endKing(ek, 2, 8, ec, -1000) && !King.endKing(ek, 1, 4, ec, -1000) && !King.endKing(ek, 1, 8, ec - 1, -1000),
+              "end king: not at two kings, under 7 babies or short of cheese");
+        check(!King.endKing(ek, 1, 8, ec, ek - Cfg.FORM_TTL) && King.endKing(ek, 1, 8, ec, ek - Cfg.FORM_TTL - 1),
+              "end king: a site that timed out waits only FORM_TTL");
+        if (Cfg.END_KING > 0) check(!King.endKing(Cfg.END_KING - 1, 1, 8, ec, -1000), "end king: not before END_KING");
         // TrapRows (RISK_ROWS) keeps the same marks one row at a time: risky/mask/clear agree with the flat array
         TrapRisk.mark = null; TrapRisk.init(); TrapRows.rows = null; TrapRows.init();
         rnd = new java.util.Random(11);

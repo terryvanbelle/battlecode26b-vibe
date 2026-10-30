@@ -41,7 +41,7 @@ public strictfp class RobotPlayer {
                 if (bc > limit * 9 / 10) nearMiss++;
             }
             int b1 = Debug.PROBE ? Clock.getBytecodeNum() : 0;
-            Debug.indicator();
+            if (Cfg.IND_LEFT == 0 || Clock.getBytecodesLeft() >= Cfg.IND_LEFT) Debug.indicator();
             if (Debug.PROBE) Debug.indBc = Clock.getBytecodeNum() - b1;
             if (Debug.TAG && rc.getRoundNum() == startRound && Clock.getBytecodesLeft() >= Debug.TAG_MIN_LEFT) Debug.tag();
             Clock.yield();

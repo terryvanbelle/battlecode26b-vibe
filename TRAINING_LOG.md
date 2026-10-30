@@ -2719,3 +2719,31 @@
 - Stuck travel turns in the reference block (scratch stuck2.py: our rat within 2 tiles of the same spot 30 rounds
   later while its code is a travel code): 46% overall. averystrangespace 72-87% (attackers in the pocket),
   attack_on_cat 61-65% and ZeroDay 52-54% (gatherers queued outside a mine's 5x5, carriers queued at the king).
+
+## 2026-10-30 09:45 PDT: replica games are deterministic; BitFlow (u0c); u0a/u0b diags; endgame king (u0d); first-turn overruns (u0e)
+
+- The t0f block (s9s's twin, #111) so far: 24 cells, all alike to s9s's reference 3284-3297. The games themselves
+  repeat exactly (same winners and rounds) against outercloud, bc26vibe_bot and AlexT101; only CS50Crab varies
+  (3718/3719 differ in rounds; it must draw on randomness of its own). So a second sample of the same code adds
+  nothing against deterministic opponents. A candidate's "noise" on the replica is the chaos its own change
+  sets off, not seed luck, and pooling a twin's block doesn't shrink it. More maps per opponent would.
+- Points at round 2000 (engine setWinnerIfMorePoints): at war, 0.3 cat damage share + 0.5 king share + 0.2 cheese
+  transferred share; in cooperation, 0.5 / 0.3 / 0.2. Pickups don't count; kings alive at the end do. In s9s's
+  set-4 block 9 of 42 games went to the limit, and we ended 7 of them with one king. averystrangespace 3287 was
+  lost 24-25 with no cat damage on either side; a second king would have won it 29-20. The others were lost by
+  45+ or won anyway.
+  - u0d = @s9s + END_KING 1850: from r1850 a lone king names a site (a clear 3x3 beside it) whenever it has 7
+    babies and 400 cheese. No income test; it retries after FORM_TTL. Diag ek1 (vs s9s, 8 limit-prone maps,
+    both sides) is running.
+- First-turn overruns: s9s's only field overruns (3292/3293 superioristhmus, one each) and the local ones are a
+  newborn's first turn on a big map. One reached 17424 used before the indicator string; another crossed in the
+  re-sense after moving or the flow work (OVS=999). The next turn goes to finishing the old one.
+  - u0e = @s9s + SENSE2_LEFT 6000 (4000) + IND_LEFT 1000: the re-sense and the indicator need that much left.
+    Diag bh1 (superioristhmus, seeds 0-3, both sides) is running.
+- BitFlow (u0c, committed cae2c1b): a reverse distance field over row bitboards. Dirt tiles settle DIG_COST-1
+  waves late, so a rat walks through dirt when that is the shorter way out of a pocket. Diag bf1 has 2 of 16 so
+  far (grove 1-1).
+- kc1 done: u0a (KING_CAT_BITE) 8 of 16 vs s9s. grove 2-0: our side-A king no longer dies to the r190 scratch.
+  evileye 0-2; the rest 1-1. st1 (u0b, RUSH_STICK) 4 of 8 so far.
+- My mistake: re-adding ra_t0r to screenq.txt while it ran started duplicate workers twice. I killed both
+  duplicates and the original kept going. Rule: never put a running run back in screenq.txt.

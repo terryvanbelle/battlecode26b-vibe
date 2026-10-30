@@ -750,6 +750,18 @@ public final class King {
             return;
         }
         int babies = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
+        if (Cfg.END_KING > 0 && endKing(G.round, Comms.numKings, babies, G.rc.getGlobalCheese(), formStart)) {
+            int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
+            formSite = ringSite(G.me, G.mirror(start, s));
+            if (formSite == null) formSite = pickFormSite(G.me);
+            if (formSite == null) return;
+            formStart = G.round;
+            formKings = Comms.numKings;
+            Comms.write(Comms.FORM_X, formSite.x + 1);
+            Comms.write(Comms.FORM_Y, formSite.y + 1);
+            Comms.write(Comms.FORM_T, Comms.stamp());
+            return;
+        }
         int last = Cfg.FORM_LATE && Comms.numKings < 2 ? 1940 : 1150;
         if (G.round < Cfg.FORM_FROM || G.round > last || G.round - formStart < Cfg.FORM_TTL + Cfg.FORM_RETRY
                 || babies < Cfg.FORM_BABIES || G.rc.getGlobalCheese() < Cfg.FORM_CHEESE) return;
@@ -771,6 +783,12 @@ public final class King {
 
     /** Kings we form up to: FORM_MAX, or FORM_MAX_WAR once cooperation is over (kings weigh 0.5 of points then, 0.3 before). */
     static int formCap(boolean coop) { return coop ? Cfg.FORM_MAX : Math.max(Cfg.FORM_MAX, Cfg.FORM_MAX_WAR); }
+
+    /** Cfg.END_KING: a lone king's endgame site is due (babies from the rat cost, last site's start formStart). */
+    static boolean endKing(int round, int kings, int babies, int cheese, int formStart) {
+        return round >= Cfg.END_KING && kings < 2 && babies >= 7 && cheese >= Cfg.END_KING_CHEESE
+            && round - formStart > Cfg.FORM_TTL;
+    }
 
     /** The income test for one more king (Cfg.FORM_NET100). */
     static boolean formIncome() {
