@@ -110,11 +110,11 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   sends the queue under the hourly limit). Score: `contest.py paired REF CAND`.
 - Candidates on the s9s base (screens use `gauntlet.py selfplay RUN/results.jsonl --base araid --control
   build/vmruns/runs/ra_s9s/results.jsonl`):
-  - On the replica: t0h = @s9s + FORM_RING as #106, set-4 block 1 from match 3401 (fm1: 11 of 16 vs s9s on
-    no-site maps); at 24 cells net -1.
-  - Rejected: t0c (KING_TRAPS) on set 4, net -1, t -0.45; s9z (BREAKOUT_TTL 150) on set 4, net 0; t0b (RISK_FRESH 2)
+  - On the replica: t0g = @s9s + RUSH_LIFE 150 as #107, set-4 block 1 from match 3450 (screen 30 cells t +1.51).
+  - Rejected: t0h (FORM_RING) on set 4, net -1, t -0.45 (evileye: two kings starved); t0c (KING_TRAPS) on set 4,
+    net -1, t -0.45; s9z (BREAKOUT_TTL 150) on set 4, net 0; t0b (RISK_FRESH 2)
     at its screen, t -1.73. Dropped: t0d (t0c + BABY_RAT_TRAPS).
-  - Screens (runs/screenq.txt; ra_t0e, ra_t0g, ra_t0h running), then ra_t0i, t0j, t0n, t0l, t0m, t0o, t0p:
+  - Screens (runs/screenq.txt; ra_t0e, ra_t0g, ra_t0i running), then ra_t0j, t0n, t0l, t0m, t0o, t0p:
     - t0e = @s9s + RISK_ROWS (45 cells, t -1.14).
     - t0g = @s9s + RUSH_LIFE 150 (attackers that never meet the enemy king turn gatherer; 30 cells, t +1.51).
     - t0i = @s9s + FORM_MINE (extra kings on home mines, no income test for mine sites; fm3 10 of 16 vs s9s).
