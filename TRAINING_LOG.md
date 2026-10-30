@@ -1915,3 +1915,32 @@
 - s8x = @s7d @kfix + GATHER_FIRST 10 + FIGHT_EVERY 3 + TRAP_CAP 25, a bundle of the three weak screen passes
   (s8s +2.7 net +4, s8r -2.3 net +5, s8e +2.0 net +3). It is submission #95, set-1 block from 2754; screen ra_s8x is
   queued.
+
+## 2026-10-29 19:18 PDT: thrown rats; AMMO_AWAY; we harvest half our own side
+- dr0 (s7d vs s8w, 12 close-king maps x 2 sides): s7d 13/24, 9 losses by king kill. On tiny (rsu1) s8u killed s7d's
+  king mostly by grabbing OUR rats near it and throwing them point-blank (11 hits x about 42). The field's kills look
+  the same: the thrown rats were mostly war/face rats at Chebyshev 2-3 from our king, many at <= 40 HP. The engine
+  lets a rat grab any enemy that can't see it, or one with less health. RETREAT_HP 40 walks low-HP rats to the king,
+  which is where they become ammunition.
+- New switch AMMO_AWAY (off; tag code 'A'): at war a baby with <= AMMO_HP 50 health, within Chebyshev 3 of our
+  king, whose nearest enemy rat is within dist2 8 and healthier, steps away from the king instead (Nav.flee, so
+  mirror twins step alike). s8y = @s7d @kfix + AMMO_AWAY, s8z = s8y + RETREAT_HP 0. dr2 runs both against s8w on
+  dr0's cells.
+- dr1 so far: s8o (rescue) 16/24 against s8w (7 king kills) against s7d's 13/24. It was already rejected on the
+  replica (net -1), so local defence wins against s8w don't carry over yet.
+- s8x's block, 30 of 42 cells in: net -4, t -1.63. It lost both heart games to outercloud. On heart it spent
+  1400-1570 on traps and spawned 23-32 rats by r300 (s7d: 780-800 and 42-45). The king starved. TRAP_CAP 25 trades
+  rats for traps, and the field punishes that.
+- Trap spend is not what separates us from the top two; picking is. Over s7d's 31 parsed set-1 games, r1-300:
+  abcdezyxwv picks 1448 more than we do and spawns 61 rats to our 42 (traps: us 1127, them 153). AlexT101 picks 1681
+  more and spawns 64 to our 47.
+  - uneasy_alliance (2073 g2, us B): each half's mines spawned 4220 by r300. AlexT101 picked 95% of its half
+    plus 1380 of ours; we picked 51% of ours. Three of our six mines were barely visited: (21,8), 7 tiles from our
+    king, they picked from r20; (21,2) from r49; (27,7) mostly lay unpicked.
+  - The paired spawns (40/38/39/27/31/36 per twin) show the map is a horizontal flip (x -> 29-x).
+  - s8t's games on the same map: as A we worked five of six home mines (own side 2760). As B, (21,2) and (21,8)
+    still went to them.
+  - alloc (2072-2073): in r51-100 against AlexT101 we have as many rats as they do (17.9 vs 16.1). 6.5 of ours
+    stand near mines and 1.1 carry cheese; 2.5 of theirs stand near mines and 4.5 carry.
+  - ue1 (s7d self-play and s7d vs araid on uneasy_alliance and popthecork, kept replays) checks how much of our
+    own half we harvest when the opponent can't explain it.
