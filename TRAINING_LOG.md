@@ -2027,3 +2027,14 @@
   - s9h = s9f + SCOUT_DRY 100 (round-robin mines + frontier scouting).
   - hb2 (not yet started) now runs s9h, s9b and s9g against s7d; s9f was dropped unrun. Screens ra_s9h and ra_s9g
     replace ra_s9f/ra_s9c in the queue.
+
+## 2026-10-29 21:00 PDT: s9a rejected after set 2; s9b (round-robin mines) to the replica
+- s9a (no baby rat traps), v3 set-2 block (2823-2824, 2831-2832, 2848-2849, 2852-2855, 2860-2861, 2869-2870)
+  against s7d's reference: 42 cells, 35 alike, D 7 (+2 -5), net -3, t -1.13. Sets 1+2: 84 cells, D 17 (+8 -9),
+  net -1, t -0.24, below block 2's bar (t <= 1 rejects). Rejected.
+  - Set 2 lost outercloud cheesefarm A and superioristhmus A, CS50Crab tornadoes A, AdamTan12 attack_on_cat A and
+    spsquared jail B. It gained spsquared thunderdome A/B.
+- Screens: ra_s9a +5.1 pts, t +1.18, net +6 (+16 -10); ra_s8y (AMMO_AWAY) +4.8 pts, t +1.34, net +2. Both pass.
+- s9b (HOME_START + MINE_RR) is submission #97, with its set-1 block from 2877. The evidence: ue3's own-half share
+  0.80 to s7d's 0.59 on uneasy_alliance, a map AlexT101 takes from us. ra_s9b and hb2 (s9h, s9b, s9g vs s7d) are
+  still to come.
