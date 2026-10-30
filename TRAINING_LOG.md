@@ -1853,3 +1853,28 @@
 - s8t (HOME_START + SYM_KING_GAP) is submission #93, set-1 block from 2726. It goes ahead of its screen because
   it is a reference-point fix with a measured mechanism (ua3), and a replica block is faster than a VM screen.
   Next in line: s8e (TRAP_CAP 25, screen +2.0, net +3).
+
+## 2026-10-29 17:40 PDT: popthecork's bottle; spending on small maps; s8u (we open the war)
+- ua2 (s7z, BREAKOUT_TTL, vs araid on popthecork): A won at r927 (s7d also won A, at r930), B lost on points
+  (s7d won B on points). The breakout does not get us into the bottle. popthecork's middle is one walled bottle
+  holding 8 of the 10 mines, 4 per side, and its only way in is a dirt-plugged neck at the top centre. As A our rats
+  never went below y 11 and never entered it (one neck tile dug). The king's shared list held 1 mine (the outside
+  one at our start) for 900 rounds, and 7700 rat-rounds sat there. A rat came within vision radius of (7,9) at r35,
+  but no report reached the king. As B we dug the neck late and reached (17,17) only at r1863. araid dug in and
+  took 4380 at its outside mine plus 6200 inside.
+- uneasy_alliance (2073 g2, s7d as B vs AlexT101, lost at r894): they picked 18722 to our 7397 and spawned 197
+  rats to our 100. 5920 of their pickups came from three of our six home mines, (21,2), (21,8) and (27,7), which we
+  never worked (0-52 rat-rounds against their 826-2515). This is the case HOME_START addresses (s8t, on the
+  replica now).
+- knifefight (2074 g1, vs abcdezyxwv, our king dead at r67): their bite at r3 opened the war. We placed 62 rat
+  traps for 1240 cheese, and 60 of them fired. They died 37 to our 25, and their king fell to 346 by r40. But we
+  had spent 1240 on traps against 1120 on 32 spawns, and they spent 1500 on 48 spawns and nothing on traps. Our
+  bank was 185 at r50 against their 1008. From r50 to r66 they brought 12 rats to our king, our 12 defenders fell
+  to 6, and it took 31 bites and 7 throw hits (310 + 290 HP).
+- Local king indicators over cached dumps: the mask is still unresolved at r100 on fullofsecrets (7, 1 mine listed),
+  jail (3 or 7), popthecork (5, 1-2 mines), uneasy_alliance (7), ultimatestarvation (7) and houseofcards (5). Field
+  replays strip indicator strings, so field games can't be checked this way.
+- New big swing: s8u = @s7d + RUSH + RUSH_BREAK + BREAK_ROUND 36. Spawn indices 4-15 head for the enemy king from
+  birth and bite or grab during cooperation, and every baby fights from r36. The top three open the war in 95% of
+  games and take 38 of 48 cells from s7d, and we have never opened it ourselves. Screen ra_s8u and diag rsu1 (s8u vs
+  s7d, 6 maps x 2 sides) are on the VM.
