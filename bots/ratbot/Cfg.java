@@ -364,6 +364,11 @@ public final class Cfg {
     public static final int FLOW_REV_TURNS = 25;
     /** FLOW_REV's search with the neighbour loop unrolled (621 bytecodes a node measured for the loop). */
     public static final boolean FLOW_FAST = false;
+    /** Flow search steps a rat may run per round (0: as many as its bytecodes allow). Mirrored rats have a few bytecodes
+     *  more or less left (Stash, t0q self-play: twin rats a turn apart from r38), so a search cut by bytecodes alone
+     *  finishes a turn earlier on one side and the twins walk different paths. A quota under the bytecode cut makes both
+     *  finish on the same turn. */
+    public static final int FLOW_QUOTA = 0;
     /** Our kings' 3x3 bodies count as walls for flow paths and bug walks (not when the target is at a king).
      *  EscapeTheNight: A* routed babies through the king that stood between them and the room's exit; they waited behind
      *  it, dropped the path and searched again, 500+ rounds. */

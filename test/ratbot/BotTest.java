@@ -1197,6 +1197,17 @@ public class BotTest {
         Flow.ox = Flow.DX; Flow.oy = Flow.DY;
     }
 
+    static void testFlowQuota() {
+        reset(); install();
+        Flow.quotaMax = 3; Flow.quotaRound = -1;
+        G.round = 7;
+        boolean a = Flow.step() && Flow.step() && Flow.step();
+        check(a && !Flow.step() && !Flow.step(), "flow quota: a round allows quotaMax search steps");
+        G.round = 8;
+        check(Flow.step(), "flow quota: the next round starts a fresh quota");
+        Flow.quotaMax = Cfg.FLOW_QUOTA; Flow.quotaRound = -1;
+    }
+
     static void testExploreUnseen() throws GameActionException {
         reset(); W = 20; H = 20; install();
         // everything seen except an 8x8 block (16%): 12 samples land in it ~88% of the time
@@ -2271,7 +2282,7 @@ public class BotTest {
         testNavDigsDirt();
         testNavUShape();
         testNavFlowSealedRoom();
-        testFlowField(); testFlowMirror();
+        testFlowField(); testFlowMirror(); testFlowQuota();
         testFlowJam();
         testCheeseBan();
         testNavSameTarget();

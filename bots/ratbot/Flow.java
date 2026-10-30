@@ -77,6 +77,17 @@ public final class Flow {
 
     static int left() { return unlimited ? Integer.MAX_VALUE : Clock.getBytecodesLeft(); }
 
+    /** Cfg.FLOW_QUOTA: search loop steps left in round quotaRound (quotaMax a round; tests set it). */
+    static int quota, quotaRound = -1, quotaMax = Cfg.FLOW_QUOTA;
+
+    /** Spends one of this round's Cfg.FLOW_QUOTA search steps; false once they are gone. The bytecodes left differ
+     *  by a few between mirrored rats (min-scans over the engine's sense order update their best a different number
+     *  of times), so a search cut by bytecodes alone ends a turn earlier on one side. */
+    static boolean step() {
+        if (quotaRound != G.round) { quotaRound = G.round; quota = quotaMax; }
+        return quota-- > 0;
+    }
+
     /** True when a complete, fresh path toward t exists. */
     public static boolean ready(MapLocation t) {
         return builtRound >= 0 && tgt != null && G.cheb(tgt, t) <= 1 && G.round - builtRound <= Cfg.FLOW_TTL;
@@ -199,7 +210,7 @@ public final class Flow {
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
         int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = tx, Y = ty, blk = block;
         while (pending > 0) {
-            if (left() < reserve) return;
+            if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) return;
             int b = curF & BMASK, u;
             if (head[b] == tail[b]) { curF++; continue; }
             if (lifo) u = bucket[b][--tail[b] & RMASK];
@@ -244,7 +255,7 @@ public final class Flow {
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
         int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, blk = block, s = sIdx;
         while (pending > 0) {
-            if (left() < reserve) return;
+            if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) return;
             int b = curF & BMASK, u;
             if (head[b] == tail[b]) { curF++; continue; }
             u = bucket[b][head[b] & RMASK]; head[b]++;
@@ -287,7 +298,7 @@ public final class Flow {
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
         int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = sx0, Y = sy0, blk = block, mx = G.me.x, my = G.me.y;
         while (pending > 0) {
-            if (left() < reserve) return;
+            if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) return;
             int b = curF & BMASK, u;
             if (head[b] == tail[b]) { curF++; continue; }
             if (lifo) u = bucket[b][--tail[b] & RMASK];
@@ -341,7 +352,7 @@ public final class Flow {
         int mx0 = G.me.x - 1, mx1 = G.me.x + 1, my0 = G.me.y - 1, my1 = G.me.y + 1;
         boolean st = lifo;
         while (pend > 0) {
-            if (left() < reserve) { pending = pend; curF = cf; return; }
+            if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) { pending = pend; curF = cf; return; }
             int b = cf & BMASK, u;
             if (hd[b] == tl[b]) { cf++; continue; }
             if (st) u = bk[b][--tl[b] & RMASK];
