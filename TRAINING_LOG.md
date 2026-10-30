@@ -2081,3 +2081,13 @@
 - s9l = s9k + SWAP_HOLD 2 + SWAP_YIELD + SWAP_NO_ALONG (s7x's corridor swap, 7/8 vs araid on corridor maps).
   rose is still a starvation map for s9k (830 a side). hb2 now runs s9k, s9l, s9i and s9b vs s7d (80 games).
 - Screen ra_s9b: +0.2 pts, t +0.05, net 0 (+14 -14): pass.
+
+## 2026-10-29 21:41 PDT: s9b rejected; s9k (symmetric harvest bundle) to the replica
+- s9b (HOME_START + MINE_RR), v3 set-1 block (2877-2884, 2896-2897, 2906-2909) against s7d's reference: 42 cells,
+  34 alike, D 8 (+4 -4), net 0, t 0.00. Rejected (block 1 rejects at t <= 0).
+  - Lost CS50Crab Nofreecheese A/B and dirtfulcat A, and AlexT101 popthecork B.
+  - Gained CS50Crab dirtfulcat B, abcdezyxwv sunandmoon B, outercloud seepastyourgreed B and spsquared bed B.
+  - Spreading rats evenly over the known home mines does not move the field by itself.
+- s9k is submission #98, with its set-1 block from 2920. hb2's head-to-heads (s9k, s9l, s9i, s9b vs s7d) and its
+  screen are still running. The replica is the bottleneck, so it goes ahead of them on hb1's component results
+  (s9d 13/20, s9e 12/20) and mc2's symmetric self-play.
