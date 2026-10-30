@@ -117,7 +117,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - Queued screens (runs/screenq.txt, ra_t0e and ra_t0g running): t0e = @s9s + RISK_ROWS; t0g = @s9s + RUSH_LIFE 150
     (attackers that never meet the enemy king turn gatherer: 25.4% of our cooperation turns are attack moves);
     t0h = @s9s + FORM_RING (fm1: 9 of 12 vs s9s on no-site maps); t0i = @s9s + FORM_MINE (extra kings on home
-    mines; mine sites skip the income test; fm3 so far 4 of 6, second king on a mine at r85-299); t0j = t0i +
+    mines; mine sites skip the income test; fm3 so far 3 of 6 (superioristhmus 2-0, Meow 1-1, rift 0-2), second king on a mine at r85-299); t0j = t0i +
     FORM_MAX 3; t0k = @s9s + CAT_LAY (cat traps on the cats' lanes during cooperation; diag cy1); t0l = @s9s +
     ATK_CARRY 25 (attackers stay light); t0m = @s9s + FORM_MINE + FORM_RING + FORM_MAX 4.
   - t0f = twin of s9s from current code, for re-anchoring sets 2/3/1.
