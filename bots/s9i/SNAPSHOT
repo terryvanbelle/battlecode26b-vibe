@@ -1,0 +1,5 @@
+name=s9i
+source=bots/ratbot
+source_sha=440b17e06f3b
+commit=4aac928
+created=2026-10-29 21:05 PDT
