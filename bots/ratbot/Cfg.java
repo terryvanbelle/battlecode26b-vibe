@@ -278,6 +278,11 @@ public final class Cfg {
      *  replacement born with 4-15 babies alive is an attacker all game (rsu1: s8u lost both DefaultSmall games to s7d
      *  in a long war, 7 rats to 13-15 at r150). */
     public static final int RUSH_UNTIL = 0;
+    /** An attacker older than RUSH_LIFE rounds that has not seen the enemy king in the last RUSH_LIFE rounds turns
+     *  gatherer (0 = off). s9s's field games: on maps where the rush cannot reach the enemy king its attackers walk
+     *  all game (uneruesansfin vs AlexT101: 60% of our baby turns to r400 were attack moves, 60 cheese picked in 400
+     *  rounds, war opened by them at r472; where_are_you 41%, rose 44-52%). */
+    public static final int RUSH_LIFE = 0;
     /** Rush attackers bite and grab enemy rats during cooperation too (the first bite ends it for everyone). */
     public static final boolean RUSH_BREAK = false;
     /** From this round on (0 = never) every baby bites and grabs enemy rats during cooperation too: the field rushers

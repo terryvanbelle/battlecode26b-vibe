@@ -7,6 +7,8 @@ public final class Baby {
     public static final int GATHER = 0, FIGHT = 1, ATTACK = 2;
     public static int role = -1;
     static int birthRound;
+    /** Cfg.RUSH_LIFE: the round this attacker last saw the enemy king, and the attackers demoted to gatherers. */
+    static int ekSeen = -10000, demoted;
     static MapLocation home;          // spawning king's location at birth
     static MapLocation origin;        // our first king's start, squeaked by the spawning king (Cfg.HOME_START)
     static int fu = 1, fv = 1;        // side frame (signs of our king's offset from centre)
@@ -76,6 +78,11 @@ public final class Baby {
 
         Debug.mark(3);
         eKing = enemyKing;
+        if (Cfg.RUSH_LIFE > 0 && role == ATTACK) {
+            if (enemyKing != null) ekSeen = G.round;
+            // a rush that has not found the enemy king in RUSH_LIFE rounds has failed for this rat: it gathers
+            else if (rushFailed(G.round, birthRound, ekSeen, Cfg.RUSH_LIFE)) { role = GATHER; demoted++; }
+        }
         if (enemyKing != null && Cfg.KING_PRESS) { lastEKing = enemyKing.location; lastEKingRound = G.round; ekHops = 0; }
         nearestEnemy = null;
         hunting = false;
@@ -205,6 +212,11 @@ public final class Baby {
         if (t == null) { if (glanceDue(G.round, threatRound, Cfg.GLANCE_MEM)) glance(); return; }
         Direction to = G.me.directionTo(t);
         if (to != Direction.CENTER && rc.getDirection() != to && rc.canTurn(to)) { rc.turn(to); G.facing = to; }
+    }
+
+    /** Cfg.RUSH_LIFE: an attacker born at birth that last saw the enemy king at seen has rushed for life rounds in vain. */
+    static boolean rushFailed(int round, int birth, int seen, int life) {
+        return round - birth > life && round - seen > life;
     }
 
     static void born() {

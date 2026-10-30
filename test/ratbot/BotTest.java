@@ -1985,6 +1985,11 @@ public class BotTest {
         check(TrapRisk.mask(at) == full, "traprisk: a 3-round-old mark is still in the full mask");
         check(TrapRisk.mask(at, 2) == 0, "traprisk: a 3-round-old mark is out of the 2-round mask");
         check(TrapRisk.mask(at, 3) == full, "traprisk: and in the 3-round mask");
+        // RUSH_LIFE: an attacker turns gatherer only when both its age and its time since it saw the enemy king pass
+        check(!Baby.rushFailed(160, 20, -10000, 150), "rush life: 140 rounds old is still rushing");
+        check(Baby.rushFailed(171, 20, -10000, 150), "rush life: 151 rounds old, never saw the king: failed");
+        check(!Baby.rushFailed(300, 20, 200, 150), "rush life: saw the enemy king 100 rounds ago: still rushing");
+        check(Baby.rushFailed(351, 20, 200, 150), "rush life: 151 rounds since it saw the king: failed");
         // TrapRows (RISK_ROWS) keeps the same marks one row at a time: risky/mask/clear agree with the flat array
         TrapRisk.mark = null; TrapRisk.init(); TrapRows.rows = null; TrapRows.init();
         rnd = new java.util.Random(11);
