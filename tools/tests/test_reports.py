@@ -323,6 +323,10 @@ try:
         check(o['A']['picked'] == 22 and o['A']['drops'] == 7 and o['B']['picked'] == 25 and o['B']['pickups'] == 1
               and o['ledger'] is None and (m1['ratsA'], m2['ratsA']) == (1, 0),
               f'econ v2: kingPickup not counted twice; own records only {o["A"]} {o["B"]}')
+        txt = ER.render(o)
+        check(ER.own_share(o, 'A') == (0.375, []) and ER.own_share(o, 'B') == (0.0, [[16, 5]])
+              and '  A own-half share 0.38\n' in txt and '  B own-half share 0.00 never worked: 16,5' in txt,
+              f'econ: own-half share and never-worked own mines {ER.own_share(o, "A")} {ER.own_share(o, "B")}')
         # the same game as an old dump: no kinds, no amounts (a mine row gives the tile total, a drop its amount, a
         # partial pickup the remainder right after it); the remainder is that pickup's, not a new pile
         write(t, 'g0.actions.tsv', 'round id team type action a b c', [

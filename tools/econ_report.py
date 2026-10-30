@@ -291,6 +291,14 @@ def ledger(d, game, hi=None, window=0):
     return out
 
 
+def own_share(o, n):
+    """Team n's share of what the mines on its own half spawned, and those of its own-half mines it never picked from."""
+    own = [m for m in o['mines'] if m['side'] == n]
+    spawned = sum(m['spawned'] for m in own)
+    idle = [m['mine'] for m in own if m['got' + n] == 0]
+    return (sum(m['got' + n] for m in own) / spawned if spawned else None), idle
+
+
 def render(o):
     res = f", winner {o['winner']} {o['winType']}" if o.get('winner') else ''
     lines = [f"game {o.get('game', 0)} {o['map']}: {o['teams']['A']} (A) vs {o['teams']['B']} (B), {o['rounds']} rounds{res}",
@@ -305,6 +313,9 @@ def render(o):
         lines.append(f"{n} {o['teams'][n]}: picked {t['picked']} in {t['pickups']} pickups (own side {t['own']}, "
                      f"enemy side {t['enemy']}, middle {t['mid']}, drops {t['drops']}); lost on own side "
                      f"{t['lostOwnSide']}")
+        share, idle = own_share(o, n)
+        if share is not None:
+            lines.append(f"  {n} own-half share {share:.2f}" + (' never worked: ' + ' '.join(f'{x},{y}' for x, y in idle) if idle else ''))
     if o.get('ledger'):
         lines.append('ledger (bank + carried): ' + ' '.join(LEDGER))
         for w in o['ledger']:
