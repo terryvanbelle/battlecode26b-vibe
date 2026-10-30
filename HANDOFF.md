@@ -112,9 +112,10 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- On the replica now: **u0z** (#116, submitted 14:37) = u0m + RICH2_BABIES 80/RICH2_BANK 3000 + END_KING 1850 +
-  FORM_NET100 200 + KING_FORAGE, block 1 on set 3 (matches after 3912; score `contest.py paired
-  3819-3822,3836-3837,3849-3856 <ids>`).
+- On the replica now: **u1a** (#117, submitted 15:02) = u0z + SEEK_IDLE 40 + IDLE_SHIFT (u0m + RICH2_BABIES 80/3000 +
+  END_KING 1850 + FORM_NET100 200 + KING_FORAGE + the mine-coverage pair), block 1 on set 3 (matches after 3945;
+  score `contest.py paired 3819-3822,3836-3837,3849-3856 <ids>`). u0z (#116, the economy bundle alone) tied u0m:
+  40 of 42 cells alike, +1 -1, t 0.00, rejected. Next: u1c = u1a + WOUNDED_HP 50 if wd1 (u1b vs u0q) is good.
 - u0q (#115, u0m + BABY_RAT_TRAPS + TRAP_ADJ + TRAP_SPAWN_FIRST) was rejected on set 3, t -1.63 (D 6, +1 -5): 39 traps
   in r0-49 on dirtfulcat starved its king, and on rose it lost on points where u0m killed the king. Every field bot but
   bc26vibe lays rat traps, 30-310 a game, ~95% fire on us (set 2: 3801 constrictinglattice 305 fires, 126 of our

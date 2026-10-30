@@ -2908,3 +2908,35 @@
 - Submitted u0z (#116) = u0m + RICH2_BABIES 80/3000 (u0v: rb1 vs rbc +2 -0 at 7 cells) + END_KING 1850 and
   FORM_NET100 200 (u0t: ng1 vs ngc +5 -3) + KING_FORAGE (u0s: fg1 vs fgc +3 -1). Block 1 is on set 3, matches after
   3912.
+
+## 2026-10-30 14:57 PDT: who the field's traps kill, and WOUNDED_HP
+- Set 2 plus u0q's set-3 block (24 replica matches, ~70 games): 2689 enemy rat-trap fires on our babies, ~38 a game,
+  and ~1540 trap deaths, ~22 a game. Of the 854 fires on a rat at <= 50 health, 806 killed it. Of the 1794 on a
+  healthier rat, 721 of the victims died to a later trap within 20 rounds; 240 victim-rounds had two or more traps
+  fire at once.
+- Where (traphp.py, trapctx.py): AlexT101 663 fires in our half to 158 in theirs, CS50Crab 402/147, abcdezyxwv
+  170/2, spsquared 260/139, AdamTan12 198/162, outercloud 2/79. The field invades and lays traps as it comes. Our
+  gatherers and defenders walk into them, and so do our carriers stepping to throw ('T' in local games). A replica tag of
+  '-' at a fire is a rat that died that turn: its bytecode count is 0.
+- RISK_ADAPT (u0u) is done: ad1 vs adc 9 wins to 11 at 20 cells, and u0q's traps fired on it 1250 times against 1129 on u0m.
+  The fresh-marks mask doesn't keep rats off reactive traps.
+- New switch WOUNDED_HP, off by default. Once enemy traps are known (the burn signal, now Cfg.BURN, shared with
+  RISK_ADAPT), a baby at war with <= WOUNDED_HP health never steps within Chebyshev 2 of a visible enemy baby (the
+  reach of a trap laid beside it); it still bites one that comes adjacent. u1b = u0m + WOUNDED_HP 50, diag wd1 vs
+  u0q on adc's 20 cells. u1c = u1a + WOUNDED_HP 50.
+- Built u1a = u0z + SEEK_IDLE 40 + IDLE_SHIFT. ix1 (u0x) vs iwc (u0m) stands at 8 wins to 4 at 11 cells, delivered
+  +14%. u0z's set-3 block stands at 30 cells, 29 alike, net -1 so far (lost dirtfulcat A vs outercloud).
+
+## 2026-10-30 15:03 PDT: u0z ties u0m on set 3; u1a submitted
+- u0z's block 1 (3926-3931, 3934-3939, 3943-3944) vs u0m's set-3 reference: 42 cells, 40 alike, D 2 (+1 -1), net 0,
+  t 0.00, so it is rejected (block 1 rejects at t <= 0). Gained spsquared rift A, lost outercloud dirtfulcat A (u0m
+  won it at r665 by kings; u0z lost at r1757). Against this panel the economy bundle (RICH2 cap, END_KING, FORM_NET100,
+  KING_FORAGE) moves almost nothing.
+- Over set 2, set 3 and the u0q/u0z blocks (156 games): 73 wins and 60 losses by king kills, 14-5 at the round limit,
+  2-2 by cats. 54 of the 60 king losses come from three teams. AlexT101 kills by r184-452 (21 of 24 games lost),
+  abcdezyxwv by r227-407 (22 of 24), AdamTan12 by r609-1283 (11 of 18). Our king takes 400-600 damage from bites and thrown rats
+  (kingdmg.py, 3934/3936): throwHit 84-410 and bite 118-400 a game, from 4-13 different biters.
+- Engine limits that shape kings: at most 5 kings, and after round 1200 a team with 2 or more can't form
+  another. At war the points are 0.5 king share, 0.3 cat-damage share and 0.2 cheese-transferred share.
+- Submitted u1a (#117) = u0z + SEEK_IDLE 40 + IDLE_SHIFT. Diags: ix1 (u0x) vs iwc 11 wins to 8 at 16 cells,
+  delivered +11%; iw1 (u0w) 9 to 7 at 15, +18%. Block 1 is on set 3, matches after 3945.
