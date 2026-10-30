@@ -165,6 +165,12 @@ public final class Cfg {
     /** Gatherers keep the trap-risk mask while engaged (RISK_IN_FIGHT false then drops it for fighters only): the
      *  trap layers' front tiles are where our gatherers stepped in 50% of the enemy trap hits. */
     public static final boolean RISK_GATHER = false;
+    /** Where the trap-risk mask is dropped (engaged, or hunting), still avoid the marks of the last RISK_FRESH rounds
+     *  (0 = off): the front tiles of the enemies in view now or just before, where a reactive trap lands; aimCarry's
+     *  steps keep to the mask too. s9s's 126 field games: the field laid 44 traps a game and our rats fired 37.8,
+     *  42% of them fatal (21% two or three at once); 62% within 2 rounds of the lay, 80% on combat moves (a/f/w/T/k)
+     *  with the mask dropped. RISK_IN_FIGHT (150-round marks) froze our fighters (s8h screen -8.1 pts). */
+    public static final int RISK_FRESH = 0;
     /** Guard facing: with an enemy rat within this squared distance, steps strafe so we keep facing it, and a
      *  turn ends facing it (rats are grabbed from behind). 0 = off. */
     public static final int GUARD_DIST2 = 13;

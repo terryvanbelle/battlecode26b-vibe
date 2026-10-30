@@ -1973,6 +1973,18 @@ public class BotTest {
                 if (m != TrapRisk.mask(l)) bad++;
             }
         check(bad == 0, "traprisk: mask matches risky() everywhere (bad=" + bad + ")");
+        // mask(me, ttl) keeps only the marks of the last ttl rounds (RISK_FRESH)
+        TrapRisk.mark = null; TrapRisk.last = null;
+        G.round = 200;
+        MapLocation at = new MapLocation(5, 5);
+        TrapRisk.observe(new RobotInfo[]{new RobotInfo(61, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 8), Direction.SOUTH, 0, 0, null)});
+        int full = TrapRisk.mask(at);
+        check(full != 0 && (full & (1 << Direction.NORTH.ordinal())) != 0, "traprisk: an enemy front two rows up taints our north step");
+        check(TrapRisk.mask(at, 2) == full, "traprisk: a fresh mark is in the short-ttl mask");
+        G.round = 203;
+        check(TrapRisk.mask(at) == full, "traprisk: a 3-round-old mark is still in the full mask");
+        check(TrapRisk.mask(at, 2) == 0, "traprisk: a 3-round-old mark is out of the 2-round mask");
+        check(TrapRisk.mask(at, 3) == full, "traprisk: and in the 3-round mask");
     }
 
     static void testMineTraps() {

@@ -108,8 +108,11 @@ public final class Baby {
         if (!G.coop && Cfg.GUARD_DIST2 > 0 && nearestEnemy != null && rc.getCarrying() == null
                 && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
         boolean engaged = nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= 20;
-        if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8 && !(hunting && Cfg.HUNT_IGNORES_RISK) && (Cfg.RISK_IN_FIGHT || !engaged || Cfg.RISK_GATHER && role == GATHER))
-            Nav.avoid |= TrapRisk.mask(G.me);
+        if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8) {
+            if (!(hunting && Cfg.HUNT_IGNORES_RISK) && (Cfg.RISK_IN_FIGHT || !engaged || Cfg.RISK_GATHER && role == GATHER))
+                Nav.avoid |= TrapRisk.mask(G.me);
+            else if (Cfg.RISK_FRESH > 0) Nav.avoid |= TrapRisk.mask(G.me, Cfg.RISK_FRESH);
+        }
         Debug.mark(31);
         // 0. a carried enemy is thrown as soon as we can act
         if (rc.getCarrying() != null) { if (rc.getCarrying().team == G.us) dropAlly(); else tryThrow(robots); }
@@ -496,6 +499,7 @@ public final class Baby {
             boolean stay = mx == 0 && my == 0;
             if (!stay && !canMove) continue;
             Direction m = D3[j];
+            if (!stay && Cfg.RISK_FRESH > 0 && (Nav.avoid & (1 << m.ordinal())) != 0) continue;
             boolean checked = stay;
             for (int i = 0; i < n; i++) {
                 int vx = tx[i] - mx, vy = ty[i] - my;

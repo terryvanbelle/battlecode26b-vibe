@@ -85,10 +85,13 @@ public final class TrapRisk {
     }
 
     /** Avoid-mask bits for the risky neighbours of me (0 when every neighbour is risky). */
-    public static int mask(MapLocation me) {
+    public static int mask(MapLocation me) { return mask(me, TTL); }
+
+    /** mask() from the marks made within the last ttl rounds only. */
+    public static int mask(MapLocation me, int ttl) {
         if (mark == null) return 0;
         // one pass over the 5x5 around us: a live mark at offset (dx, dy) taints every neighbour within Chebyshev 1
-        int m = 0, w = G.W, x0 = me.x, y0 = me.y, r = G.round - TTL;
+        int m = 0, w = G.W, x0 = me.x, y0 = me.y, r = G.round - ttl;
         for (int dy = -2; dy <= 2; dy++) {
             int y = y0 + dy;
             if (y < 0 || y >= G.H) continue;
