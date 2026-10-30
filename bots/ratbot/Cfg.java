@@ -236,6 +236,14 @@ public final class Cfg {
     public static final int RISK_ADAPT = 0;
     /** Rounds between a burned rat's SQ_BURN squeaks while the shared bit is unset. */
     public static final int BURN_EVERY = 3;
+    /** Wounded hold (0 = off): once enemy rat traps are known (the burn signal RISK_ADAPT uses), a baby at war with
+     *  health <= WOUNDED_HP, which one 50-damage rat trap kills, never steps within Chebyshev 2 of a visible enemy
+     *  baby (the 3x3 of a trap it lays beside itself reaches that far); an adjacent one it still bites. Set 2 and
+     *  u0q's set-3 block (24 replica matches): 2689 enemy trap fires on our babies; 854 hit a rat at <= 50 health and
+     *  806 of those died; of the 1794 that hit a healthier rat, 721 victims died to a later trap within 20 rounds. */
+    public static final int WOUNDED_HP = 0;
+    /** The burn signal (a trap fired on our own turn, SQ_BURN, Comms.SYM_BURN) runs for RISK_ADAPT or WOUNDED_HP. */
+    public static final boolean BURN = RISK_ADAPT > 0 || WOUNDED_HP > 0;
     /** TrapRisk's marks kept one map row at a time, each row allocated on its first mark (TrapRows). The flat W*H
      *  array waits for a turn with 3*W*H + BC_OPTIONAL bytecodes left: 18800 on a 60x60 map, above a baby's 17500,
      *  so on 9 of the 45 field maps no rat ever had marks (15.2-15.5k on 50x50 and 60x40). */

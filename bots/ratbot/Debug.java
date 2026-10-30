@@ -54,7 +54,8 @@ public final class Debug {
         sb.append(" sym=").append(Sym.mask);
         if (Sym.contradictions > 0) sb.append(" SYMX=").append(Sym.contradictions);
         if (!G.king && Baby.lowBc > 0) sb.append(" lb=").append(Baby.lowBc);
-        if (Cfg.RISK_ADAPT > 0) sb.append(" burn=").append(G.king ? (King.burnHeard ? 1 : 0) : Baby.burnRound).append(Baby.adaptRisk ? "*" : "");
+        if (Cfg.BURN) sb.append(" burn=").append(G.king ? (King.burnHeard ? 1 : 0) : Baby.burnRound).append(Baby.adaptRisk ? "*" : "");
+        if (Cfg.WOUNDED_HP > 0 && !G.king && Baby.wounded > 0) sb.append(" wd=").append(Baby.wounded);
         if (!G.king && Baby.defends > 0) sb.append(" df=").append(Baby.defends);
         if (!G.king && Baby.rescues > 0) sb.append(" rs=").append(Baby.rescues);
         if (!G.king && Baby.presses > 0) sb.append(" pk=").append(Baby.presses);

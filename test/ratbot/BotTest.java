@@ -2435,6 +2435,30 @@ public class BotTest {
         G.chir = 1; W = 30; H = 20; reset(); install();
     }
 
+    static void testWoundMask() {
+        Team us0 = G.us, them0 = G.them;
+        G.us = Team.A; G.them = Team.B;
+        MapLocation me = new MapLocation(10, 10);
+        RobotInfo e3 = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, new MapLocation(13, 10), Direction.WEST, 0, 0, null);
+        RobotInfo e1 = new RobotInfo(8, Team.B, UnitType.BABY_RAT, 50, new MapLocation(11, 11), Direction.WEST, 0, 0, null);
+        RobotInfo far = new RobotInfo(7, Team.B, UnitType.BABY_RAT, 100, new MapLocation(14, 10), Direction.WEST, 0, 0, null);
+        RobotInfo ally = new RobotInfo(6, Team.A, UnitType.BABY_RAT, 100, new MapLocation(11, 10), Direction.WEST, 0, 0, null);
+        RobotInfo king = new RobotInfo(5, Team.B, UnitType.RAT_KING, 600, new MapLocation(12, 10), Direction.WEST, 0, 0, null);
+        // an enemy 3 east: the east-side steps (NE, E, SE) end at Chebyshev 2 of it, the rest stay at 3 or 4
+        int ne = 1 << 1, ea = 1 << 2, se = 1 << 3;
+        check(Baby.woundMask(me, new RobotInfo[]{e3}) == (ne | ea | se), "woundMask: an enemy 3 east bars NE, E and SE");
+        check(Baby.woundMask(me, new RobotInfo[]{far, ally, king}) == 0, "woundMask: enemies 4 off, allies and kings bar nothing");
+        check(Baby.woundMask(me, new RobotInfo[]{e1}) == 255, "woundMask: an adjacent enemy bars every step (the rat holds and bites)");
+        int m = Baby.woundMask(me, new RobotInfo[]{e3, far});
+        boolean mirror = true;
+        // mirror-invariance: the mask of the 180-degree mirror case is the rotated mask
+        RobotInfo e3m = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, new MapLocation(7, 10), Direction.EAST, 0, 0, null);
+        int mm = Baby.woundMask(me, new RobotInfo[]{e3m});
+        for (int i = 0; i < 8; i++) mirror &= ((m >> i) & 1) == ((mm >> ((i + 4) & 7)) & 1);
+        check(mirror, "woundMask: the 180-degree mirror of the case gives the opposite steps");
+        G.us = us0; G.them = them0;
+    }
+
     static void testHomeRank() {
         check(Baby.homeRank(0, 3) < Baby.homeRank(0, 9) && Baby.homeRank(1, 3) < Baby.homeRank(1, 9), "home pick 0/1: nearer ranks first");
         check(Baby.homeRank(2, 9) < Baby.homeRank(2, 3), "home pick 2: farther ranks first");
@@ -2465,6 +2489,7 @@ public class BotTest {
         testScoutMore();
         testRingArcs();
         testHomeRank();
+        testWoundMask();
         testScoutUntil();
         testMineTraps();
         testTrapRisk();

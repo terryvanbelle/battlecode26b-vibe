@@ -124,6 +124,10 @@ public final class Baby {
             else if (Cfg.RISK_ADAPT > 0 && (adaptRisk = trapsKnown(burnRound, Comms.read(Comms.SYM))))
                 Nav.avoid |= TrapRisk.mask(G.me, Cfg.RISK_ADAPT);
         }
+        if (Cfg.WOUNDED_HP > 0 && !G.coop && rc.getHealth() <= Cfg.WOUNDED_HP && trapsKnown(burnRound, Comms.read(Comms.SYM))) {
+            Nav.avoid |= woundMask(G.me, robots);
+            wounded++;
+        }
         Debug.mark(31);
         // 0. a carried enemy is thrown as soon as we can act
         if (rc.getCarrying() != null) { if (rc.getCarrying().team == G.us) dropAlly(); else tryThrow(robots); }
@@ -192,6 +196,24 @@ public final class Baby {
 
     /** Cfg.RISK_ADAPT: enemy rat traps are known to be in play (our own burn or a heard one, or the kings' shared bit). */
     static boolean trapsKnown(int burn, int sym) { return burn > 0 || (sym & Comms.SYM_BURN) != 0; }
+
+    /** Cfg.WOUNDED_HP: turns held to the wound mask. */
+    static int wounded;
+
+    /** Cfg.WOUNDED_HP: Nav.avoid bits of the steps from me that end within Chebyshev 2 of a visible enemy baby. */
+    static int woundMask(MapLocation me, RobotInfo[] robots) {
+        int m = 0;
+        for (RobotInfo r : robots) {
+            if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
+            int ex = r.location.x - me.x, ey = r.location.y - me.y;
+            if (ex > 3 || ex < -3 || ey > 3 || ey < -3) continue;
+            for (int i = 0; i < 8; i++) {
+                int dx = ex - G.DIRS[i].dx, dy = ey - G.DIRS[i].dy;
+                if (dx <= 2 && dx >= -2 && dy <= 2 && dy >= -2) m |= 1 << i;
+            }
+        }
+        return m;
+    }
 
     /** Whether this rat bites and grabs enemy rats now: after cooperation, or a RUSH_BREAK attacker at any time. */
     static boolean hostile() { return !G.coop || Cfg.RUSH_BREAK && role == ATTACK || Cfg.BREAK_ROUND > 0 && G.round >= Cfg.BREAK_ROUND; }
@@ -874,7 +896,7 @@ public final class Baby {
         MapLocation k = Comms.numKings == 0 ? null : Comms.nearestKing(G.me);
         boolean near = k != null && (Cfg.SYM_HEAR_TILE ? kingInEarshot(G.me) : G.me.distanceSquaredTo(k) <= 16);
         // RISK_ADAPT: news of an enemy trap goes rat to rat and to the kings until the shared bit is set
-        if (Cfg.RISK_ADAPT > 0 && burnRound > 0 && G.round - burnSqueaked >= Cfg.BURN_EVERY
+        if (Cfg.BURN && burnRound > 0 && G.round - burnSqueaked >= Cfg.BURN_EVERY
                 && (Comms.read(Comms.SYM) & Comms.SYM_BURN) == 0) {
             G.rc.squeak(Comms.squeak(Comms.SQ_BURN, G.me.x, G.me.y, 0));
             burnSqueaked = G.round;
@@ -907,7 +929,7 @@ public final class Baby {
         }
         // a squeak reaches robots with any tile within dist2 16 of us: the king's centre within 16 is always heard
         if (near) {
-            int sharedSym = Cfg.RISK_ADAPT > 0 ? Comms.read(Comms.SYM) & 7 : Comms.read(Comms.SYM);
+            int sharedSym = Cfg.BURN ? Comms.read(Comms.SYM) & 7 : Comms.read(Comms.SYM);
             if (sharedSym != 0 && (Sym.mask & sharedSym) != sharedSym) {
                 G.rc.squeak(Comms.squeak(Comms.SQ_SYM, 0, 0, Sym.mask));
                 return;
@@ -958,7 +980,7 @@ public final class Baby {
      *  when an ally can hear it, no enemy is in view at war, and no cat can hear it. */
     static boolean symGossip(boolean on, boolean near) {
         if (!on || near || G.round - symSqueaked < Cfg.SYM_GOSSIP_EVERY) return false;
-        int shared = Cfg.RISK_ADAPT > 0 ? Comms.read(Comms.SYM) & 7 : Comms.read(Comms.SYM);
+        int shared = Cfg.BURN ? Comms.read(Comms.SYM) & 7 : Comms.read(Comms.SYM);
         if (shared == 0 || (Sym.mask & shared) == shared) return false;
         if (!G.coop && nearestEnemy != null || cat != null && catInEarshot(cat.location, G.me)) return false;
         boolean ally = false;

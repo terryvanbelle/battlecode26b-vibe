@@ -161,7 +161,7 @@ public final class King {
                     if (Cfg.CAT_LANE) markLane(new MapLocation(Comms.sqX(m), Comms.sqY(m)));
                     break;
                 default:
-                    if (Cfg.RISK_ADAPT > 0 && Comms.sqType(m) == Comms.SQ_BURN) burnHeard = true;
+                    if (Cfg.BURN && Comms.sqType(m) == Comms.SQ_BURN) burnHeard = true;
                     break;
             }
         }
@@ -189,7 +189,7 @@ public final class King {
         int mask = s == 0 ? Sym.mask : (s & Sym.mask);
         if (mask == 0) mask = Sym.mask;
         Sym.mask = mask;
-        if (Cfg.RISK_ADAPT > 0 && (burnHeard || (s & Comms.SYM_BURN) != 0)) mask |= Comms.SYM_BURN;
+        if (Cfg.BURN && (burnHeard || (s & Comms.SYM_BURN) != 0)) mask |= Comms.SYM_BURN;
         Comms.write(Comms.SYM, mask);
     }
 
