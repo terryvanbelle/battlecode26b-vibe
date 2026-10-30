@@ -110,7 +110,16 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   sends the queue under the hourly limit). Score: `contest.py paired REF CAND`.
 - Candidates on the s9s base (screens use `gauntlet.py selfplay RUN/results.jsonl --base araid --control
   build/vmruns/runs/ra_s9s/results.jsonl`):
-  - On the replica: t0p = @s9s + MINE_ANY + MINE_TIES as #110, set-4 block 1 from match 3572 (screen ra_t0p t +3.29 at 66 cells).
+  - Replica games are deterministic against most of the panel: t0f (s9s's twin, #111) replayed set 4
+    (3610-3613, 3718-3727) 42 of 42 cells alike, 38 of 42 games identical in rounds. A candidate's differing cells
+    are its own change's chaos plus its real effect, never seed luck; a twin on the same set adds nothing.
+  - Next to submit: u0e (@s9s + SENSE2_LEFT 6000 + IND_LEFT 1000) as a basics repair (TRAINING_ALGORITHM §1.11:
+    zero overruns on first turns on the largest map), which accepts at t >= 0 after block 2, if diag bh1 shows the
+    first-turn overruns gone. Its block 2 is set 2, re-anchored first by t0f there.
+  - In diags: u0c (BitFlow navigation, bf1: on averystrangespace it digs out and picks 11.7-13.8k to s9s's 5.0-7.3k,
+    but delivers no more: carriers hold 1-4.8k raw from r1500 and never reach the king, and side B starved two kings),
+    u0d (END_KING 1850, ek1), u0a (KING_CAT_BITE; kc1 8 of 16, grove 2-0), u0b (RUSH_STICK; st1 6 of 13).
+  - Rejected: t0p (MINE_ANY + MINE_TIES) on set 4, net -2, t -1.00.
   - Rejected: t0i (FORM_MINE) on set 4, net -3, t -1.00; t0o (MINE_TIES) on set 4, net -1, t -1.00; t0g (RUSH_LIFE 150) on set 4, net -4, t -2.00; t0h (FORM_RING) on set 4, net -1, t -0.45 (evileye: two kings starved); t0c (KING_TRAPS) on set 4,
     net -1, t -0.45; s9z (BREAKOUT_TTL 150) on set 4, net 0; t0b (RISK_FRESH 2)
     at its screen, t -1.73. Dropped: t0d (t0c + BABY_RAT_TRAPS).

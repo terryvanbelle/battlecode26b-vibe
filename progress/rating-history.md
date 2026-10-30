@@ -1,6 +1,6 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-10-30 08:58 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-10-30 09:53 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
 
@@ -11,7 +11,7 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 - M3 2026-10-28 08:28 PDT: method: cell score = win/loss when kings decide (points bug fixed); local screen moves to the band
 - M4 2026-10-28 08:50 PDT: method: benchmark games only on the replica; local games are self-play
 
-78 rated matches; latest rating 1,528 (2026-10-30 08:43 PDT).
+83 rated matches; latest rating 1,550 (2026-10-30 09:00 PDT).
 
 | Submission | Build | Uploaded (PDT) | Accepted | Rating at upload | Rated matches since |
 |---:|---|---|---|---:|---:|
@@ -65,5 +65,5 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 | #107 | t0g | 2026-10-30 06:03 | yes | 1,522 | 0 |
 | #108 | t0o | 2026-10-30 06:45 | yes | 1,522 | 1 |
 | #109 | t0i | 2026-10-30 07:26 | yes | 1,517 | 0 |
-| #110 | t0p | 2026-10-30 08:20 | yes | 1,517 | 1 |
-| #111 | t0f | 2026-10-30 08:56 | yes | 1,528 | 0 |
+| #110 | t0p | 2026-10-30 08:20 | yes | 1,517 | 2 |
+| #111 | t0f | 2026-10-30 08:56 | yes | 1,530 | 4 |
