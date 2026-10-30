@@ -2282,3 +2282,13 @@
     preset reproduces bots/s9s (test_snapvar).
   - cl1 (VM): s9t vs s7d and s9u vs s9s on bed, cheesebottles, DefaultLarge, popthecork, sunandmoon,
     attack_on_cat, tornadoes and cheesefarm, both sides. Screens ra_s9t and ra_s9u are queued.
+
+## 2026-10-30 01:23 PDT: s9s block 1 (set 2): net +4
+- s9s on set 2 (3101-3102, 3107-3108, 3126-3127, 3144-3147, 3252-3255) against s7d's set-2 control block (2115-2128):
+  42 cells, 34 alike, D 8 (gained 6, lost 2), net +4, t 1.41; 27/42 wins to s7d's 23.
+  - It wins every AdamTan12 game (6/6, s7d 4/6), and outercloud and bc26vibe 6/6.
+  - AlexT101 0/6 and abcdezyxwv 1/6, all by king kill.
+  - Gained: AdamTan12 dirtpassageway A/B, CS50Crab wallsofparadis A, abcdezyxwv ultimatestarvation A, bc26vibe
+    DefaultLarge B, spsquared thunderdome B. Lost: abcdezyxwv ultimatestarvation B, spsquared jail B.
+- Block 1 can't accept under the new rule; t > 0 continues. Block 2 (set 3) is queued from 3256. Accepting needs a
+  pooled t >= 2 over sets 2 and 3.
