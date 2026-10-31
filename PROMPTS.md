@@ -82,3 +82,7 @@ Ah, I see what you meant now, and yes, I did misunderstand.  I now understand th
 ## 16. 2026-10-28 19:26 PDT
 
 Please update progress/ after every acceptance of a new candidate
+
+## 17. 2026-10-31 06:13 PDT
+
+I'd like you to report our recent win rate against each of our panel opponents
