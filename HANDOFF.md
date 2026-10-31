@@ -124,16 +124,16 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Now: u2y (u2g + GUARD_CARRY_R 5: babies near our king grab enemy carriers of ours before they throw) on the
-  replica (#132, set-2 block 1 from 4898 vs u2g's 4737-4750; waiter build/wait_u2y1.sh). It passed diag gc1 (25 of
-  32 to u2g's 22; throw hits on our king 125 to 146). Next: GUARD_CARRY_HP (grab weaker carriers from any side) on
-  top of u2y. u2w rejected (#131, net -1, same 15 king kills); u2v rejected (#130); u2x (SWEEP) dropped.
-  Early king kills are the main loss to the strong teams: thrown rats (ours, grabbed at Chebyshev 2-4 of our king,
-  held 2-4 rounds by throwers at 3-4) do 292-500 of the ~600 damage; ~4 in 5 grabbed victims had less HP than the
-  grabber, so facing can't stop it. agrab/arush reproduce it locally (gk2: 6-18 hits a game on evileye,
-  averyfineline, tiny, DefaultSmall). Scratch tools in ~/diag26b: deaths2.py, race.py/minerace.py/minewhy.py
-  (pile race), rushpay.py, ammo.py/ammoall.sh, thrower.py, grabwhy.py/grabwhyall.sh, saves.py/savesall.sh,
-  kdef.py/kdef2.py. Replay dir column is FlatHelpers order (0 CENTER, 1 W, 2 SW, 3 S, 4 SE, 5 E, 6 NE, 7 N, 8 NW).
+- Now: panel v4 calibration sweep on the replica: u2g (#133) vs 11 field bots rated 1551-1609, both seatings, maps
+  drawn into research/panel/calib2.json (22 matches from 3931; the drain loop sends the rest as the hourly limit
+  allows; waiter build/wait_sweep.sh). Then pick 6-8 that u2g beats 25-75% (tools/panel_pick.py u2g) into
+  research/panel/v4-set1.json beside spsquared and AdamTan12 (kept on their v3 maps); their sweep matches are u2g's
+  v4 set-1 reference. Add the "panel v4" milestone. Rule (owner #19/#20): diagnose losses against in-band opponents
+  and flippable cells only; abcd and AlexT101_usqualsbot (3/24 each, 42 of u2g's 68 lost games) are idea sources,
+  not targets. u2w, u2y (#132, net -1), u3b (rb3 11 of 20 to 14) rejected; u3a, u2z parked; all were aimed at them.
+  Scratch tools in ~/diag26b: deaths2.py, race.py/minerace.py/minewhy.py (pile race), rushpay.py, ammo.py/ammoall.sh,
+  thrower.py, grabwhy.py/grabwhyall.sh, saves.py/savesall.sh, carriers.py, kdef.py/kdef2.py. Replay dir column is
+  FlatHelpers order (0 CENTER, 1 W, 2 SW, 3 S, 4 SE, 5 E, 6 NE, 7 N, 8 NW).
   Parked: u2t (SEEK_FRONTIER, mixed), u0p (RUSH_STICK). The side-symmetry bundle (u2s's switches) stays off in ratbot.
 - KING_PATH evidence: kpa (u1x vs u0m) 22-10 and king pickups 21980 to 3440 in self-play, but no field gain;
   against AdamTan12 the king died before reaching the mines (wallsofparadis still lost both sides).

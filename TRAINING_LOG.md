@@ -3619,3 +3619,12 @@
 - Rule added to TRAINING_ALGORITHM §3.2: diagnose losses a candidate can flip (in-band opponents, cells that differ
   by side or build); a whole-panel loss tally is the strongest bots' tally. Panel v4 drops both; the next loss
   analysis uses the sweep's in-band opponents and AdamTan12/spsquared.
+
+## 2026-10-31 06:35 PDT: u2y rejected; u3b rejected locally; u2g back on the replica for the v4 sweep
+- u2y rejected (#132): set-2 block 1 4898-4903, 4926-4931, 4960-4961 vs u2g's 4737-4750, 42 cells, 37 alike, D 5
+  (gained AdamTan12 dirtpassageway B, spsquared evileye B; lost abcd ultimatestarvation A/B, CS50Crab
+  wallsofparadis B), net -1, t -0.45. GUARD_CARRY_R stays in ratbot, off; u2z and u3a (its variants) are closed.
+- u3b rejected locally: diag rb3 vs u0q 11 of 20 to u2g's 14 (D 9, +3 -6: lost attack_on_cat A/B, dirtpassageway
+  A/B, sittingducks B, where_are_you A). RUSH_BURN demotes rushers that would have won on the trap-free maps.
+- u2g resubmitted (#133). Calibration sweep queued: requests 3931-3934 sent, 18 queued for the drain loop; maps are
+  drawn into research/panel/calib2.json as each opponent is sent. Waiter build/wait_sweep.sh (22 matches after 4961).
