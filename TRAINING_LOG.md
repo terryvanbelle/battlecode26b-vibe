@@ -4332,3 +4332,11 @@
 - u3y = u3w + STALL_CAT 20, pre-registered (attempts.csv). u3w's 16 peace games vs s7d end when the last cat
   dies, and cat damage weighs 0.5 there. In the 5 losses we did 2224-4060 cat damage to their 3940-5776, while our
   rushers waited at their king. yc1 (vs s7d) and yc2 (screen cells) are running.
+- 15:45: u3x (CHIRAL_SYM) screen cx2 (kvs's 44 scored cells vs araid/abrk, control u2g ctl_ab1): 35 of 44 to
+  32, D 9 (+6 -3), net +3, t +1.00. That passes.
+  - Every changed cell is on seat B, the chirality-1 seat on these maps. The seat-A cells play exactly as u2g's,
+    so the switch acts only where the engine leaks.
+  - Gained: bed B and canyoudig B vs abrk; DefaultSmall B, bed B, canyoudig B and learn_your_lesson B vs araid.
+    Lost: DefaultSmall B vs abrk; arrows B and starvation B vs araid.
+  - Replica order: u3v block 2 (running), then u3w, then u3x, then u3d block 2. If u3v is accepted, each of them is
+    rebuilt on u3v first.
