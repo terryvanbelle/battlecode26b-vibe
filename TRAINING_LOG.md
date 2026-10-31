@@ -3921,3 +3921,7 @@
   Delivered is lower (120.7k to 148.0k) because three r2000 points games became earlier king kills. The falsifier
   (3 or more wins fewer) doesn't fire. Small maps were the risk for spending on traps against a rush; it went the
   other way. u3d stays next in the replica queue after u3c.
+- 10:47: u2g's v4 set-3 reference is in (#135, 5323-5338): 16 of 48 games. spsquared 5 of 6, Xzibit 4, run_away10 3,
+  AdamTan12_Finals 2, YokoOno 1, thewaxmango 1, Icarus 0 (averyfineline, averystrangespace, mincemeat), nzjt 0
+  (whatsthecatdoin, FreeTheCheese, cheesebottles). The set-3 draws are hard ones for us; per-cell pairing absorbs
+  that. u3c resubmitted (#136) and its block 3 queued (requests 4203-4206 sent, 12 queued for the drain).
