@@ -1,0 +1,6 @@
+name=u2z
+source=bots/ratbot
+source_sha=7926dfabf0a5
+commit=dbe1810
+created=2026-10-31 05:07 PDT
+change=u2g recipe + GUARD_CARRY_R 0 -> 3

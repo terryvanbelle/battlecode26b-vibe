@@ -1,0 +1,6 @@
+name=u2y
+source=bots/ratbot
+source_sha=f46bc01d4a1c
+commit=dbe1810
+created=2026-10-31 05:07 PDT
+change=u2g recipe + GUARD_CARRY_R 0 -> 5
