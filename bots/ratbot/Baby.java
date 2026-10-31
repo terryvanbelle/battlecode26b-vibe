@@ -1321,6 +1321,7 @@ public final class Baby {
 
     static MapLocation rushTarget() throws GameActionException {
         if (Cfg.RUSH_STICK) return rushStick();
+        if (Cfg.RUSH_BAN > 0) return rushBan(Cfg.RUSH_BAN);
         RobotController rc = G.rc;
         MapLocation best = null;
         int bd = Integer.MAX_VALUE;
@@ -1336,6 +1337,39 @@ public final class Baby {
         }
         if (best == null && noKing != 0) { noKing = 0; return null; }
         return best;
+    }
+
+    /** Cfg.RUSH_BAN: the round a flow search toward each symmetry's enemy-king spot last failed (index: symmetry bit
+     *  1, 2, 4 as 0, 1, 2), allocated on first use. */
+    static int[] rushFail;
+
+    /** rushTarget with Cfg.RUSH_BAN: the nearest live mirror spot, passing over spots whose search failed within
+     *  ttl (Cfg.RUSH_BAN) rounds while another is live. */
+    static MapLocation rushBan(int ttl) throws GameActionException {
+        RobotController rc = G.rc;
+        int[] rf = rushFail;
+        if (rf == null) { rf = rushFail = new int[3]; rf[0] = rf[1] = rf[2] = -100000; }
+        MapLocation ft = Flow.failTgt, best = null;
+        boolean fresh = ft != null && G.round - Flow.failRound <= 1;
+        int bd = Integer.MAX_VALUE;
+        for (int s = 1, i = 0; s <= 4; s <<= 1, i++) {
+            if ((Sym.mask & s) == 0 || (noKing & s) != 0) continue;
+            MapLocation c = G.mirror(ref(), s);
+            if (G.me.distanceSquaredTo(c) <= 13 && rc.canSenseLocation(c)) {
+                RobotInfo r = rc.senseRobotAtLocation(c);
+                if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { noKing |= s; continue; }
+            }
+            if (fresh && G.cheb(ft, c) <= 1) rf[i] = Flow.failRound;
+            int d = banKey(G.round - rf[i] < ttl, G.me.distanceSquaredTo(c), G.pickBit(G.me, c));
+            if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(G.me, c, best)) { bd = d; best = c; }
+        }
+        if (best == null && noKing != 0) { noKing = 0; return null; }
+        return best;
+    }
+
+    /** rushBan's order: spots not banned first, then by squared distance, then the mirror-invariant bit. */
+    static int banKey(boolean banned, int d2, boolean bit) {
+        return (banned ? 1 << 20 : 0) + d2 * 2 + (bit ? 1 : 0);
     }
 
     /** Cfg.RUSH_STICK: the symmetry whose enemy-king spot this attacker walks to (0 = none yet). */

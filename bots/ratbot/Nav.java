@@ -126,6 +126,8 @@ public final class Nav {
             }
             // hold while a search toward t runs: it starts from here, so moving would strand the path
             // (a reverse search grows from the target and takes the path from wherever we are: walk on)
+            // a detour around a newly seen wall on the path (Cfg.FLOW_SPLICE) is short: hold for it
+            if (Cfg.FLOW_SPLICE > 0 && Flow.splicing && Flow.searching(t)) { if (progress) stall = Math.min(stall, s0); return false; }
             if (Flow.searching(t) && !Flow.rev) { if (progress) stall = Math.min(stall, s0); return false; }
         }
         if (!Cfg.FLOW && !Cfg.DIG_FIRST && digToward(t)) return false;

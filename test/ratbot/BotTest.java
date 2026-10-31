@@ -886,6 +886,89 @@ public class BotTest {
         check(same, "flow w: a mirrored rat finds the mirrored path");
     }
 
+    /** FLOW_SPLICE: a ready path cut by a newly seen wall is mended by a detour to the first clear tile past it, the
+     *  rest of the old path kept; a detour with no way starts the full search. */
+    static void testFlowSplice() throws GameActionException {
+        reset(); W = 30; H = 30; install();
+        Flow.rev = true; Flow.fast = true; Flow.lifo = false;
+        MapLocation a = new MapLocation(5, 10), t = new MapLocation(5, 25);
+        me = a; G.startTurn();
+        Flow.request(t); Flow.work(0);   // nothing known: straight up
+        int[] old = java.util.Arrays.copyOf(Flow.path, Flow.plen);
+        int cut = -1;
+        for (int i = 0; i < old.length; i++) if (old[i] / W == 15) cut = i;
+        for (int x = 0; x <= 12; x++) { walls.add(new MapLocation(x, 15)); Sym.record(x, 15, true, false, false); }
+        int e2 = Flow.ends[2];
+        boolean ok = Flow.ready(t) && cut > 0 && Flow.splice(cut, 1) && Flow.splicing && Flow.building;
+        check(ok && Flow.tgt.equals(t) && Flow.searching(t) && Flow.ends[2] == e2 + 1, "flow splice: a detour search starts, aimed at the errand's target (" + ok + ")");
+        Flow.workSplice(0);
+        if (Flow.splicing && Flow.builtRound >= 0) Flow.join();
+        String bad = Flow.ready(t) ? pathCheck(me, t) : "not ready";
+        boolean tail = Flow.plen > old.length;
+        for (int i = 1; tail && i < old.length - cut - 1; i++) tail = Flow.path[Flow.plen - i] == old[old.length - i];
+        check(bad == null && !Flow.splicing && tail && Flow.tIdx == G.idx(t), "flow splice: the detour joins the old path's rest (" + bad + ", "
+              + Flow.plen + " tiles to " + old.length + ")");
+        // a cut path whose clear tile past the wall is walled in: the detour fails and the full search starts
+        reset(); W = 30; H = 30; install();
+        Flow.rev = true; Flow.fast = true;
+        me = a; G.startTurn();
+        Flow.request(t); Flow.work(0);
+        old = java.util.Arrays.copyOf(Flow.path, Flow.plen);
+        cut = -1;
+        for (int i = 0; i < old.length; i++) if (old[i] / W == 15) cut = i;
+        MapLocation c = new MapLocation(old[cut + 1] % W, old[cut + 1] / W);
+        for (int dx = -1; dx <= 1; dx++) for (int dy = -1; dy <= 1; dy++)
+            if (dx != 0 || dy != 0) { MapLocation w = new MapLocation(c.x + dx, c.y + dy); walls.add(w); Sym.record(w.x, w.y, true, false, false); }
+        int f0 = Flow.fails;
+        ok = Flow.splice(cut, 1);
+        Flow.workSplice(0);
+        check(ok && !Flow.splicing && Flow.tgt.equals(t) && Flow.tIdx == G.idx(t) && (Flow.building || Flow.ready(t)) && Flow.failTgt == null && Flow.fails == f0 + 1,
+              "flow splice: a detour with no way starts the full search, with no failure kept for the target");
+        // the cut at the path's end tile is searched afresh
+        reset(); W = 30; H = 30; install();
+        Flow.rev = true; Flow.fast = true;
+        me = new MapLocation(5, 13); G.startTurn();
+        MapLocation t2 = new MapLocation(5, 16);
+        Flow.request(t2); Flow.work(0);
+        walls.add(new MapLocation(5, 15)); Sym.record(5, 15, true, false, false);
+        check(Flow.ready(t2) && !Flow.splice(Flow.plen - 2, 1) && !Flow.splicing, "flow splice: no detour when the clear tile is the end");
+    }
+
+    /** RUSH_BAN: an attacker passes over a mirror spot whose flow search just failed while another spot is live. */
+    static void testRushBan() throws GameActionException {
+        check(Baby.banKey(false, 7200, true) < Baby.banKey(true, 0, false), "rush ban: a banned spot comes after any other");
+        check(Baby.banKey(false, 10, false) < Baby.banKey(false, 10, true) && Baby.banKey(false, 10, true) < Baby.banKey(false, 11, false),
+              "rush ban: then by distance, then the mirror-invariant bit");
+        reset(); W = 60; H = 60; install();
+        Sym.mask = Sym.ROT | Sym.HOR | Sym.VER;
+        MapLocation h0 = Baby.home, o0 = Baby.origin;
+        int nk = Baby.noKing;
+        Baby.home = Baby.origin = new MapLocation(3, 3); Baby.noKing = 0; Baby.rushFail = null;
+        round = 100; me = new MapLocation(9, 20); G.startTurn();
+        // from (9, 20) the spots by distance: (3, 56), (56, 3), (56, 56)
+        MapLocation near = new MapLocation(3, 56), mid = new MapLocation(56, 3), far = new MapLocation(56, 56);
+        MapLocation p0 = Baby.rushBan(150);
+        Flow.failTgt = near; Flow.failRound = 100;
+        MapLocation p1 = Baby.rushBan(150);
+        Flow.failTgt = mid; Flow.failRound = 120; round = 121; G.startTurn();
+        MapLocation p2 = Baby.rushBan(150);
+        Flow.failTgt = far; Flow.failRound = 130; round = 130; G.startTurn();
+        MapLocation p3 = Baby.rushBan(150);
+        check(near.equals(p0), "rush ban: the nearest spot first (" + p0 + ")");
+        check(mid.equals(p1), "rush ban: a just-failed spot is passed over for the next nearest (" + p1 + ")");
+        check(far.equals(p2), "rush ban: then the last one (" + p2 + ")");
+        check(near.equals(p3), "rush ban: all failed: the nearest again (" + p3 + ")");
+        Baby.rushFail = null; Flow.failTgt = near; Flow.failRound = 300; round = 300; G.startTurn();
+        MapLocation q0 = Baby.rushBan(150);
+        round = 449; G.startTurn();
+        MapLocation q1 = Baby.rushBan(150);
+        round = 450; G.startTurn();
+        MapLocation q2 = Baby.rushBan(150);
+        check(mid.equals(q0) && mid.equals(q1) && near.equals(q2), "rush ban: a ban lasts its ttl (" + q0 + " " + q1 + " " + q2 + ")");
+        check(near.equals(Baby.rushBan(0)) || Baby.rushFail == null, "rush ban: ttl 0 bans nothing");
+        Baby.home = h0; Baby.origin = o0; Baby.noKing = nk; Baby.rushFail = null; Flow.failTgt = null; round = 1;
+    }
+
     /** The reverse search (FLOW_REV) finds a path as short as the forward one, from wherever the rat stands when it
      *  completes; with LIFO buckets as well; a walled-in rat fails it. */
     static void testFlowRev() throws GameActionException {
@@ -2950,6 +3033,8 @@ public class BotTest {
         testFlowRev();
         testFlowFast();
         testFlowW();
+        testFlowSplice();
+        testRushBan();
         testTrapRiskNear();
         testCarryAim();
         testPickBit();

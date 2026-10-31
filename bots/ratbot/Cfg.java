@@ -426,6 +426,11 @@ public final class Cfg {
      *  groveisbeingdesecrated (gr1): the rushers stood at the band's wall midway between (7,2) and (52,2) and flipped
      *  targets 14-21 times by r190; every flip restarted their flow search, which never finished. */
     public static final boolean RUSH_STICK = false;
+    /** An attacker passes over a mirror spot whose flow search failed (timed out or found no way) within RUSH_BAN rounds
+     *  while another spot is live (0 = off). pk1 averystrangespace (u0m as A, king (3,3)): symmetry still unknown at
+     *  r330; the rushers alternated between the flip spots (5,56) and (54,3), and every search toward (5,56) from the
+     *  tubes around (9,20) ran 61 turns and failed (201 searches of 60+ turns in the game). */
+    public static final int RUSH_BAN = 0;
     /** Rush spawns stop at this round (0 = never): the spawn index is the live-baby count, so without it every
      *  replacement born with 4-15 babies alive is an attacker all game (rsu1: s8u lost both DefaultSmall games to s7d
      *  in a long war, 7 rats to 13-15 at r150). */
@@ -495,6 +500,13 @@ public final class Cfg {
      *  through the corner exit. Offline on Stash's terrain, 5 exit targets: 419-606 pops at weight 1, 325-457 at 2,
      *  path costs the same. */
     public static final int FLOW_W = 1;
+    /** A ready flow path cut by a newly seen wall is mended, not searched afresh (0 = off): a reverse search from the
+     *  path tile FLOW_SPLICE - 1 past the first clear one beyond the wall back to the rat (who holds still), with the
+     *  rest of the old path joined on; a detour not found within FLOW_SPLICE_TURNS turns starts the full search. pk1
+     *  Stash (u0m as B): rushers in the king's pocket saw only part of the wall row; a path through an unseen wall tile
+     *  was cut a few steps on and the next search toward (15,26) took 32-37 turns, three times by r168 (the rat wandered
+     *  the pocket meanwhile; field 4529: 1156 rusher-turns in the pocket r50-150). */
+    public static final int FLOW_SPLICE = 0, FLOW_SPLICE_TURNS = 6;
     /** Flow search steps a rat may run per round (0: as many as its bytecodes allow). Mirrored rats have a few bytecodes
      *  more or less left (Stash, t0q self-play: twin rats a turn apart from r38), so a search cut by bytecodes alone
      *  finishes a turn earlier on one side and the twins walk different paths. A quota under the bytecode cut makes both

@@ -72,6 +72,13 @@ public final class Flow {
     public static final int[] ends = new int[6];
     static int startRound, failRound;
     static MapLocation failTgt;
+    /** Cfg.FLOW_SPLICE: a detour search is running toward stail[0], a tile of the cut path (tgt stays the errand's
+     *  target); the rest of that path (slen tiles from stail[0]) is joined on when it completes. sFail* hold the failure
+     *  record from before the detour, put back if the detour fails. */
+    static boolean splicing;
+    static int[] stail;
+    static int slen, sFailRound;
+    static MapLocation sFailTgt;
     /** Tests run outside the engine, where Clock reports 0 bytecodes left. */
     public static boolean unlimited;
 
@@ -95,6 +102,7 @@ public final class Flow {
 
     /** True while a search toward t is running. */
     public static boolean searching(MapLocation t) {
+        if (Cfg.FLOW_SPLICE > 0 && splicing && building && G.round - startRound > Cfg.FLOW_SPLICE_TURNS) { building = false; spliceFail(); }
         if (building && G.round - startRound > (rev ? Cfg.FLOW_REV_TURNS : Cfg.FLOW_MAX_TURNS)) {
             // too slow (little spare bytecode, or a huge open search): give up so the rat moves again
             building = false;
@@ -134,6 +142,7 @@ public final class Flow {
     }
 
     static void start(MapLocation t, boolean front) {
+        if (Cfg.FLOW_SPLICE > 0) splicing = false;
         if (building) ends[5]++;
         else if (tgt != null && builtRound >= 0 && G.round - builtRound <= Cfg.FLOW_TTL) ends[4]++;
         frontier = front;
@@ -177,6 +186,7 @@ public final class Flow {
     /** Continue the search while more than reserve bytecodes are left. */
     public static void work(int reserve) {
         if (!building) return;
+        if (Cfg.FLOW_SPLICE > 0 && splicing) { workSplice(reserve); return; }
         if (Debug.PROBE) {
             int b0 = Clock.getBytecodeNum();
             work0(reserve);
@@ -612,6 +622,61 @@ public final class Flow {
         builtRound = G.round;
         done++;
         lastTurns = G.round - startRound;
+        if (Cfg.FLOW_SPLICE > 0 && splicing) join();
+    }
+
+    /** Cfg.FLOW_SPLICE: the next path tile (index nxi) is a newly seen wall. Start a detour search toward the path tile
+     *  k - 1 past the first clear one after it (k = Cfg.FLOW_SPLICE), keeping the rest of the path; false (search afresh) when that
+     *  tile would be the path's end, with FLOW_CACHE, or short of bytecodes. */
+    static boolean splice(int nxi, int k) {
+        if (cache || tgt == null) return false;
+        int[] p = path, mem = Sym.mem;
+        int blk = block, j = nxi + 1, n = plen;
+        while (j < n && (mem[p[j]] & blk) != 0) j++;
+        j += k - 1;
+        if (j >= n - 1 || left() < 4 * (n - j) + 400) return false;
+        int[] s = new int[n - j];
+        for (int i = j; i < n; i++) s[i - j] = p[i];
+        MapLocation T = tgt;
+        MapLocation ft = failTgt;
+        int fr = failRound;
+        ends[2]++;
+        builtRound = -1;
+        start(new MapLocation(s[0] % G.W, s[0] / G.W), false);
+        tgt = T;
+        stail = s; slen = n - j; splicing = true;
+        sFailTgt = ft; sFailRound = fr;
+        return true;
+    }
+
+    /** Cfg.FLOW_SPLICE: the detour (now path[0..plen)) ends at stail[0]; join the rest of the old path on and aim at
+     *  the errand's target again. */
+    static void join() {
+        splicing = false;
+        if (tgt == null) return;
+        int[] p = path, s = stail;
+        int len = plen, n = slen;
+        if (len + n - 1 > p.length) n = p.length - len + 1;
+        for (int i = 1; i < n; i++) p[len++] = s[i];
+        plen = len;
+        lastLen = len;
+        tIdx = G.idx(tgt); tx = tgt.x; ty = tgt.y;
+        stail = null;
+    }
+
+    /** Cfg.FLOW_SPLICE: run the detour search; when it finds no way, search for the whole path instead. */
+    static void workSplice(int reserve) {
+        work0(reserve);
+        if (splicing && !building && builtRound < 0) spliceFail();
+    }
+
+    /** Cfg.FLOW_SPLICE: the detour failed (no way over what we know, or too slow): forget it (put the failure record
+     *  back) and start the full search toward the errand's target. */
+    static void spliceFail() {
+        splicing = false;
+        stail = null;
+        failTgt = sFailTgt; failRound = sFailRound;
+        if (tgt != null) start(tgt, false);
     }
 
     /** Keep a completed path in the cache (the slot holding the same target, else the oldest). */
@@ -751,6 +816,7 @@ public final class Flow {
         if (nxi >= plen) { ends[0]++; drop(); return false; }
         int nx = path[nxi];
         MapLocation n = new MapLocation(nx % G.W, nx / G.W);
+        if (Cfg.FLOW_SPLICE > 0 && (Sym.mem[nx] & block) != 0 && splice(nxi, Cfg.FLOW_SPLICE)) return false;
         if ((Sym.mem[nx] & block) != 0) { ends[2]++; if (cache) uncache(); drop(); return false; } // newly seen wall (or a king moved) on the path
         RobotController rc = G.rc;
         Direction d = G.me.directionTo(n);
