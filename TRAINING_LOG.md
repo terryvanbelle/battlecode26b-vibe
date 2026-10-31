@@ -3567,3 +3567,8 @@
 - GUARD_CARRY_HP (new, off; needs GUARD_CARRY_R): a carrier with less health than ours can be grabbed from any
   side (HEALTH_GRAB_THRESHOLD 0), so Baby.rescueWeak goes for the nearest tile beside it (blind ones first) or walks
   toward it, instead of rescue()'s blind tiles only. A guarded early return in rescue(); BotTest 579/579.
+- Pre-registration, u3a = u2y + GUARD_CARRY_HP (snapvar @s9s). Mechanism: guards that are healthier than the
+  carrier no longer need its blind side, so more carriers are reached inside their 2-4 round hold. Counter: carriers
+  of ours grabbed within Chebyshev 6 of our king (saves.py) and throw hits on our king (ammo.py). Doses: off (u2y,
+  gc1's games), on. Instrument: diag gc2 (gc1's 32 u2y cells), then the replica after u2y's verdict. Falsifier: no
+  more saves near the king than u2y's 457, or fewer wins than u2y's 25 of 32.

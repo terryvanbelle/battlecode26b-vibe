@@ -1,0 +1,6 @@
+name=u3a
+source=bots/ratbot
+source_sha=64c27624e585
+commit=6fdeca8
+created=2026-10-31 05:45 PDT
+change=u2y + GUARD_CARRY_HP false -> true
