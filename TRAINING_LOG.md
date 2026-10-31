@@ -3736,3 +3736,6 @@
     rats on one mine stayed at 12-13: with only 2-3 home mines known, the crowd moved to the next known mine.
   - Coverage of home mines 2-4 rose 3-6 points. Picked by r400 rose from 2684 to 2869 a game.
   - Mine discovery, not the pick, still bounds the spread.
+- 08:53 PDT u3c block 1 (v4 set 1; 5108-5111, 5151-5152, 5168-5173, 5176-5179) vs u2g: 48 cells, 43 alike, D 5
+  (+3 -2), net +1, t +0.45. That passes block 1 (rejects at t ≤ 0). Block 2 (v4 set 2) queued from 5195
+  (waiter build/wait_u3c2.sh); reference 4737-4750, 5071-5078, 5080-5081, 5100-5101. u3e waits behind it.
