@@ -1,0 +1,6 @@
+name=u3r
+source=bots/ratbot
+source_sha=1baf3b9d496c
+commit=0694b05
+created=2026-10-31 11:27 PDT
+change=u2g + STALL_CAT 50 (dose arm of u3q's 100): during cooperation an attacker that stayed within Chebyshev 3 of one tile for 50 rounds hunts cats
