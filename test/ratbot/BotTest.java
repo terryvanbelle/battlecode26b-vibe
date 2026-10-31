@@ -247,6 +247,24 @@ public class BotTest {
         Baby.role = saved;
     }
 
+    static void testStallCentre() {
+        // even width: the two centre tiles split by side; odd width: the one centre tile; mirror images map to mirror images
+        int[][] dims = {{60, 60}, {59, 41}, {20, 30}};
+        for (int[] d : dims) {
+            int cx2 = d[0] - 1, cy2 = d[1] - 1;
+            for (int x = 0; x < d[0]; x += 3)
+                for (int y = 0; y < d[1]; y += 4) {
+                    MapLocation h = new MapLocation(x, y), c = Baby.centreTile(h, cx2, cy2);
+                    MapLocation rot = Baby.centreTile(new MapLocation(cx2 - x, cy2 - y), cx2, cy2);
+                    MapLocation fx = Baby.centreTile(new MapLocation(cx2 - x, y), cx2, cy2);
+                    MapLocation fy = Baby.centreTile(new MapLocation(x, cy2 - y), cx2, cy2);
+                    check(rot.x == cx2 - c.x && rot.y == cy2 - c.y && fx.x == cx2 - c.x && fx.y == c.y && fy.x == c.x && fy.y == cy2 - c.y,
+                          "stall centre: mirror-invariant at " + h + " on " + d[0] + "x" + d[1]);
+                    check(Math.abs(2 * c.x - cx2) <= 1 && Math.abs(2 * c.y - cy2) <= 1, "stall centre: a centre tile at " + h);
+                }
+        }
+    }
+
     static void testBabyCapArea() {
         int rich = Math.max(Cfg.MAX_BABIES, Cfg.RICH_BABIES), small = Cfg.RICH_MIN_AREA > 0 ? Cfg.MAX_BABIES : rich;
         reset(); W = 20; H = 20; install();
@@ -3296,6 +3314,7 @@ public class BotTest {
         testKingHeld();
         testBabyCapArea();
         testAtkHome();
+        testStallCentre();
         testSqueakCodec();
         testFresh();
         testCatGeometry();

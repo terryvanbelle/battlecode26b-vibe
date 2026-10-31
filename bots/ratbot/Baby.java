@@ -9,6 +9,10 @@ public final class Baby {
     static int birthRound;
     /** Cfg.RUSH_LIFE: the round this attacker last saw the enemy king, and the attackers demoted to gatherers. */
     static int ekSeen = -10000, demoted;
+    /** Cfg.STALL_CAT: the tile this attacker has stayed near since stallSince, and whether it hunts cats now. */
+    static MapLocation stallAt;
+    static int stallSince, catHunters;
+    static boolean catHunt;
     static MapLocation home;          // spawning king's location at birth
     /** Cfg.TRIP_HALF: the round this rat's walk out began (birth or last delivery; 0: none under way), a timed walk not
      *  squeaked yet (tripT steps to mine tripKey = x * 64 + y; 0: none), and Comms.tripSig at the last mine pick. */
@@ -270,6 +274,28 @@ public final class Baby {
     }
 
     /** Cfg.RUSH_LIFE: an attacker born at birth that last saw the enemy king at seen has rushed for life rounds in vain. */
+    /** Cfg.STALL_CAT: once this attacker has stayed within Chebyshev 3 of one tile for STALL_CAT rounds it hunts cats:
+     *  it walks to a cat in view, else the cat last known, else the centre (centreTile). False while it has not. */
+    static boolean stallCat() throws GameActionException {
+        if (!catHunt) {
+            if (stallAt == null || G.cheb(G.me, stallAt) > 3) { stallAt = G.me; stallSince = G.round; return false; }
+            if (G.round - stallSince < Cfg.STALL_CAT) return false;
+            catHunt = true;
+            catHunters++;
+        }
+        if (cat != null && approachCat(cat)) return true;
+        MapLocation ct = knownCat();
+        if (ct == null) ct = centreTile(home, G.cx2, G.cy2);
+        Nav.goTo(ct);
+        return true;
+    }
+
+    /** The map's centre tile on the side of each centre line that holds h (doubled centre cx2, cy2): mirror images of h
+     *  get mirror-image tiles under every symmetry. */
+    static MapLocation centreTile(MapLocation h, int cx2, int cy2) {
+        return new MapLocation((cx2 + (2 * h.x < cx2 ? 0 : 1)) / 2, (cy2 + (2 * h.y < cy2 ? 0 : 1)) / 2);
+    }
+
     static boolean rushFailed(int round, int birth, int seen, int life) {
         return round - birth > life && round - seen > life;
     }
@@ -1143,6 +1169,7 @@ public final class Baby {
         Debug.mark(14);
         if (!G.coop && Cfg.FACE_ENEMY && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) { why = 'f'; return; }
         if (Cfg.ATK_DELIVER > 0 && atkHome(raw) && deliver()) return;
+        if (Cfg.STALL_CAT > 0 && role == ATTACK && G.coop && stallCat()) { why = 'g'; return; }
         if (role == ATTACK && attack()) { why = 'a'; return; }
         Debug.mark(15);
         if (!G.coop && war()) { why = 'w'; return; }

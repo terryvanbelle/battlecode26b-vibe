@@ -3937,3 +3937,18 @@
   - Pooled over u2g's 102 in-band games (grabvwhy.py), our grabbed babies' last move code: faceEnemy 23%, carry aim
     (T: holding an enemy, lining up a throw) 17-18%, attack 14-15%, war 9-10%. About 13 grabs a lost game hit our
     carriers while they aim (CARRY_AIM). u3o in ab1 (CARRY_AIM off) prices that exposure locally.
+- 11:00: Stalled attackers are a class (stuckatk.py, u2g's 144 field games): 39% of attack-move rat-turns stand
+  within Chebyshev 3 of the rat's tile 50 rounds before, 1380-1630 a game in losses and wins alike. The worst cases
+  are long cooperation games on big maze maps (averystrangespace, rose, rift, TheHeist, clockwisdom). On
+  averystrangespace vs Icarus (4 field cells across sets 2 and 3, all lost on points) we never reach the cats: cat
+  damage 0 to 87-289, with kings 2 to 1 and delivery even. One Icarus rat bit cat 3 23 times (r127-149, 230
+  damage). Our 12 rushers stood in the dead end at (7-8, 22-26) from r500 to r1500.
+- 11:00: New switch STALL_CAT (off): during cooperation, an attacker that has stayed within Chebyshev 3 of one tile
+  for STALL_CAT rounds hunts cats for the rest of cooperation. It goes to a cat in view, else the cat last known,
+  else the mirror-invariant centre tile. The turn's usual steps bite the cat and lay cat traps. Unit test: the
+  centre tile maps to mirror images under all three symmetries on 60x60, 59x41 and 20x30.
+  - Pre-registered for the snapshot u3q (STALL_CAT 100, zero arm u2g): mechanism = idle cooperation attackers
+    convert to cat damage; counters = our cat damage and the attackers' 'g' turns in cooperation games; local
+    check vs u2g on 8 stall maps (averystrangespace, rose, rift, TheHeist, clockwisdom, cheesebottles,
+    where_are_you, uneruesansfin), both sides, against the u2g mirror on the same cells. Falsifier: our cat damage
+    on averystrangespace stays 0, or the mirror's points games don't move.

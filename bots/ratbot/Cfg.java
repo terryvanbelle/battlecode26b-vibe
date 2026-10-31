@@ -454,6 +454,15 @@ public final class Cfg {
      *  r330; the rushers alternated between the flip spots (5,56) and (54,3), and every search toward (5,56) from the
      *  tubes around (9,20) ran 61 turns and failed (201 searches of 60+ turns in the game). */
     public static final int RUSH_BAN = 0;
+    /** Stalled attackers hunt cats (0 = off): during cooperation an attacker that has stayed within Chebyshev 3 of one
+     *  tile for STALL_CAT rounds walks, for the rest of cooperation, to a cat in view (approachCat), else the cat last
+     *  known, else the centre tile on its own side of each centre line; the turn's usual steps bite the cat and lay its
+     *  cat trap. Cooperation points weigh cat damage 0.5. u2g's 144 field games: 39% of attack-move turns were stalled
+     *  (within 3 tiles of the rat's tile 50 rounds before), 1380-1630 a game. averystrangespace vs AdamTan12_Icarus
+     *  (5080/5081, 5335/5336): cooperation to r2000, kings 2 to 1, delivered even (4505 vs 4575), cat damage 0 to
+     *  87-289, lost on points on both sides; one Icarus rat bit a cat 23 times (r127-149), while our 12 rushers stood
+     *  in the dead end at (7-8, 22-26) from r500 to r1500. */
+    public static final int STALL_CAT = 0;
     /** Rush spawns stop at this round (0 = never): the spawn index is the live-baby count, so without it every
      *  replacement born with 4-15 babies alive is an attacker all game (rsu1: s8u lost both DefaultSmall games to s7d
      *  in a long war, 7 rats to 13-15 at r150). */
