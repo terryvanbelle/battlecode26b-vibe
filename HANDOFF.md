@@ -124,10 +124,10 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Now: u2w (u2g + GUARD_KING_R 5) on the replica (#131, set-2 block 1 from 4850 vs u2g's 4737-4750; waiter
-  build/wait_u2w1.sh). Next candidate: u2y (u2g + GUARD_CARRY_R 5: babies near our king grab enemy carriers of
-  ours before they throw), passed diag gc1 (25 of 32 to u2g's 22; throw hits on our king 125 to 146). Submit it
-  when u2w's block ends (unless u2w goes on to block 2). u2v rejected (#130, net -5); u2x (SWEEP) dropped.
+- Now: u2y (u2g + GUARD_CARRY_R 5: babies near our king grab enemy carriers of ours before they throw) on the
+  replica (#132, set-2 block 1 from 4898 vs u2g's 4737-4750; waiter build/wait_u2y1.sh). It passed diag gc1 (25 of
+  32 to u2g's 22; throw hits on our king 125 to 146). Next: GUARD_CARRY_HP (grab weaker carriers from any side) on
+  top of u2y. u2w rejected (#131, net -1, same 15 king kills); u2v rejected (#130); u2x (SWEEP) dropped.
   Early king kills are the main loss to the strong teams: thrown rats (ours, grabbed at Chebyshev 2-4 of our king,
   held 2-4 rounds by throwers at 3-4) do 292-500 of the ~600 damage; ~4 in 5 grabbed victims had less HP than the
   grabber, so facing can't stop it. agrab/arush reproduce it locally (gk2: 6-18 hits a game on evileye,

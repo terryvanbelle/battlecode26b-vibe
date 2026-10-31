@@ -3557,3 +3557,13 @@
   meet). It passes the delivery check: u2y is the next replica candidate, after u2w's block. u2z (dose 3) parked.
   Next refinement if u2y helps: rescue() steps only to blind tiles, but a carrier with less HP than ours can be
   grabbed from any adjacent tile.
+
+## 2026-10-31 05:39 PDT: u2w rejected; u2y on the replica; GUARD_CARRY_HP
+- u2w rejected on the replica (#131): set-2 block 1 4850-4855, 4883-4890 vs u2g's 4737-4750, 42 cells, 39 alike,
+  D 3 (gained spsquared evileye B; lost CS50Crab wallsofparadis A, outercloud cheesefarm B), net -1, t -0.58. 26 of
+  42 (AlexT101 0/6, abcd 2/6, as u2g). King kills against us 15, as u2g's 15, with evileye at r168/r247 and
+  averyfineline at r101/r111: the falsifier holds. Biting the king's biters does not stop throws.
+- u2y submitted (#132), set-2 block 1 from 4898 vs 4737-4750 (6 sent, 8 queued; waiter build/wait_u2y1.sh).
+- GUARD_CARRY_HP (new, off; needs GUARD_CARRY_R): a carrier with less health than ours can be grabbed from any
+  side (HEALTH_GRAB_THRESHOLD 0), so Baby.rescueWeak goes for the nearest tile beside it (blind ones first) or walks
+  toward it, instead of rescue()'s blind tiles only. A guarded early return in rescue(); BotTest 579/579.
