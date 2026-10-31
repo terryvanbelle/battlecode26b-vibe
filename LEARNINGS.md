@@ -31,3 +31,17 @@
     there (s4f vs s4e: 80 of 80 identical), so "neutral on screen" meant untested for s3m, s3r, s3s, KING_PRESS and
     s4f. War changes need an instrument that goes to war: the rush archetypes (`rx` runs against arush/abrk: 67 of 80
     games had a backstab) and the replica.
+13. **The rush size is a two-sided optimum.** 12 rushers (spawn index 4-15): 8 (u0o) lost its replica block net -7,
+    t -2.33, and 16 (u1o) lost net -3, t -1.13, both against the 12-rusher incumbent. Both had looked neutral or
+    positive in the local screen (t0t +0.92; t0u 9 of 16).
+14. **A cap's bank threshold has an optimum; cheese saved early stays banked.** The rich tier (cap 40 while the bank
+    holds RICH_BANK): 500 lost on the replica, 1000 is the incumbent (u2g), 1500 (u3h, rh1) saved +139 by r150 but had
+    16.2 babies at r300 to 18.3 and 854 banked at r500 to 591.
+15. **Against the in-band field, enemy rat traps are the whole rat-death gap on big maps.** u2g's in-band games
+    (2026-10-31), big-map losses r0-500: we lose 39.4 rats a game to their 32.0, and 7.9 of those die to their traps
+    (we lay none). Bites, throws and the cat come out even. In small-map losses the gap is in the opening (r0-100: 21.3
+    to 17.0) and in the bank: we field 5.6 more babies at r50 and run 532 cheese behind at r100, so by r300 they can
+    still replace losses (15.9 babies to our 7.4).
+16. **Diagnose losses a candidate can flip.** Opponents who beat us 90%+ dominate any loss tally and absorbed weeks of
+    candidates without a single flip. Losses against opponents in the 25-75% band are the ones a one-switch candidate
+    turns (u3c's block 2: +6 -1, every gain against in-band opponents).
