@@ -658,6 +658,13 @@ public final class Cfg {
     /** With SEEK_IDLE: each idle spell also moves the gatherer to the next mine of its pick list (MINE_BALANCE slot + a
      *  shift), so known mines the crowd ignores get worked (pipes 3804: 29,15 seen at r62, we took 702, they 3135). */
     public static final boolean IDLE_SHIFT = false;
+    /** Seekers (SEEK_CROWD, SEEK_IDLE) take the never-seen tile nearest by path cost (Flow's frontier search, digging
+     *  dirt on the way) before exploreHome's random one. Local wallsofparadis (sl1, u2g vs abrk): as A the king listed
+     *  only (30,3) for 2000 rounds; the seekers' random never-seen targets were out on the edge bands, so nobody
+     *  crossed the ring dirt to the inner mines (as B the seekers drew luckier targets and all 8 were listed by r800).
+     *  Replica vs AdamTan12 (4545/4546, 4735/4736): one mine worked on wallsofparadis and jail either side while they
+     *  worked all 8 and 4; we starved (1170 transferred to 7325 by r692). */
+    public static final boolean SEEK_FRONTIER = false;
     /** Once one symmetry is left the king lists the twin on our half of every listed mine (mines come in mirror pairs;
      *  raiders see enemy-half mines whose twins on our half nobody found: DefaultLarge vs abcdezyxwv left 1140 cheese
      *  on two such mines). */

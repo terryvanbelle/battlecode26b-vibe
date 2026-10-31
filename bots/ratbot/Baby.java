@@ -2163,7 +2163,8 @@ public final class Baby {
             MapLocation k = Comms.nearestKing(G.me);
             if (k != null && unreported() >= 0) { Nav.goTo(k); return true; }
             mineTarget = null;
-        } else if (exploreHome()) return true;
+        } else if (Cfg.SEEK_FRONTIER && exploreFrontier()) return true;
+        else if (exploreHome()) return true;
         seekUntil = 0;
         return false;
     }
