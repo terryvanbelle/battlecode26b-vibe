@@ -3851,7 +3851,7 @@
   - Falsifier: bank at r150 not higher, or babies at r300 lower.
 - Local diag rh1 on the VM: u3h on sm1's 32 small-map cells (araid, abrk) plus ma2's 16 (araid); control is u2g's
   cells in sm1 and ma2 (deterministic). The screen rejects only at t <= -1.5.
-- 10:05 Grabs both ways (grabsum.py on the 102 in-band games): even. In losses they grab ours 77.9 a game and we grab
+- 09:56: Grabs both ways (grabsum.py on the 102 in-band games): even. In losses they grab ours 77.9 a game and we grab
   theirs 79.9; in wins 39.6 and 51.3. 72% of grabs use the health rule (victim hp < grabber hp, threshold 0), 26%
   the blind side. 18% of grabs of our rats follow a trap hit on the victim in the 5 rounds before (theirs 0%). About
   65% of grabbed rats die within 15 rounds, half of them by throws. The one-sided exchange is the traps themselves
