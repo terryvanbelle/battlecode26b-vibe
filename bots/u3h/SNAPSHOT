@@ -1,0 +1,6 @@
+name=u3h
+source=bots/ratbot
+source_sha=eefd77feb624
+commit=e5eccd0
+created=2026-10-31 09:51 PDT
+change=RICH_BANK 1000 -> 1500 (u2g recipe)

@@ -3833,3 +3833,21 @@
   5t4rv4t10n_1337, externalsustenance).
 - u2g resubmitted (#135) for its set-3 reference: requests 4179-4182 sent (matches 5323+), 12 queued for the drain.
   Waiter build/wait_s3ref.sh. Then u3c is resubmitted for block 3 against it.
+
+## 2026-10-31 09:52 PDT: the rich cap's bank threshold, the other way; u3h (RICH_BANK 1500)
+- u2g's baby cap is 18, rising to 40 while the bank holds RICH_BANK 1000. In in-band losses we out-spawn the
+  opponent early and are then out-banked:
+  - Small maps: babies at r50 23.1 vs 17.5, bank 1173 vs 1531; bank at r150 386 vs 1069; babies at r300 7.4 vs 15.9.
+  - Big maps: bank at r100 1106 in losses vs 1229 in wins (their 1378 / 1465).
+- Dose evidence: u2v (RICH_BANK 500) was rejected on the replica, net -5. In its 4807 safelycontained game we had 36
+  babies at r100 to their 19, fell to 3 by r600, and delivered 3615 vs 10889. 1500 has never been tried. u3f (no rich
+  cap on small maps) lost the local screen (16/32 vs 21/32 against araid/abrk), so mass pays against the raider
+  archetypes; the field's in-band bots trap massed babies (8.9-13.8 trap kills a lost game, ours 0).
+- Pre-registration, u3h = u2g + RICH_BANK 1500 (one constant).
+  - Mechanism: the opening stops spawning past 18 once the bank falls under 1500 (about r30-40) instead of under 1000
+    (r50-70), so the r150 bank is higher and fewer replacements are bought at 60-110 each.
+  - Counters: babies at r50/r100, bank at r150, spawn spend to r150, babies at r300, delivered.
+  - Doses: 500 (u2v, rejected), 1000 (u2g), 1500.
+  - Falsifier: bank at r150 not higher, or babies at r300 lower.
+- Local diag rh1 on the VM: u3h on sm1's 32 small-map cells (araid, abrk) plus ma2's 16 (araid); control is u2g's
+  cells in sm1 and ma2 (deterministic). The screen rejects only at t <= -1.5.
