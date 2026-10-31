@@ -112,14 +112,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Replica: u1v (#123) = u0m + AMMO_AWAY is on its set-3 block 1 from 4369 (its screen then rejected it, t -1.55;
-  the block runs for field data). Score set-3 blocks with `contest.py paired 3819-3822,3836-3837,3849-3856 IDS` AND
-  `contest.py pool 3819-3822,3836-3837,3849-3856 research/panel/v3-set3-pool.txt IDS`: u0m's own set-3 draw is ~3
-  wins lucky (eight candidates since won 18-23 of 42 against the pool, expectation ~21.7). Rejected on set 3:
-  u1r (#122, BUG_DIG, t -1.89, pool z -0.91), u1o (#121, RUSH_TO 20), u0y, u1p, u0o. Weak locally: u1t, u1u, u1w.
-- Next candidate: u1x = u0m + KING_PATH (new class KPath: the king walks a 3x3-body path to the home mine nearest by
-  path). Diag kpa (u1x vs u0m, 16 maps both sides) and screen ra_u1x are running. Field (TRAINING_LOG 2026-10-30
-  21:15): the economy gap is 2-20x in deliveries; our king stops short of its mine on rift and wallsofparadis.
+- Replica: u1y (#124) = u0m + KING_PATH (new class KPath: the king walks a 3x3-body path to the home mine nearest by
+  path, with bytecode guards) is on its set-3 block 1 from 4409. Score set-3 blocks with `contest.py paired
+  3819-3822,3836-3837,3849-3856 IDS` AND `contest.py pool 3819-3822,3836-3837,3849-3856
+  research/panel/v3-set3-pool.txt IDS`: u0m's own set-3 draw is ~3 wins lucky (nine candidates since won 18-23 of 42
+  against the pool, expectation ~21.7). Rejected on set 3: u1v (#123, AMMO_AWAY, t -1.00, pool z +0.70, screen
+  t -1.55), u1r (#122, BUG_DIG), u1o (#121, RUSH_TO 20), u0y, u1p, u0o. Weak locally: u1t, u1u, u1w.
+- KING_PATH evidence: diag kpa (u1x, the unguarded build, vs u0m): kings picked up 11200 to 560 in 15 games, 9 wins
+  to 6; kpb (u1y): no overruns. Krotus is lost both sides: the path goes in from the centre side and the king dies at
+  the front. u1z = u1y + KP_FRONT 50 (no path centre nearer the bisector than half the start's distance) runs as diag
+  kpc on kpa's cells; it is the follow-up if u1y's block looks good or loses at the front.
+- Mine coverage (keepout, u1r 4344/4345): our rats never came within sight of 4 of our 6 home mines (one 10 from
+  our king), our first pickup came at r100, and AdamTan12 worked all 12 mines. explore() with no mine known heads for
+  the map centre (EXPLORE_CENTER_FROM 0), but keepout's mines sit on the edges. scratch minesee.py/minepick.py on
+  the VM (~/diag26b/) show it per mine.
 - Stash pocket (TRAINING_LOG 2026-10-30 19:28): the bug walk treated dirt as wall, so rats waited 20-26 turns each
   for a reverse flow search; BUG_DIG digs through in the sweep (exit open r22 locally). The 1-wide corridor still
   jams afterwards; the corridor swap fixes that locally but loses elsewhere. ~/diag26b/mobility.py REPLAY... compares
