@@ -3898,3 +3898,9 @@
   - u3j (trap floor 200): 7 of 16. It lays 19% more traps (466 to 391) with even kills (411 to 416).
   - Both are parked behind u3d's field test. u3i is the follow-up if u3d's field games show our rats stepping into
     reactive traps; u3j only if u3d lays few traps there.
+- 10:31: sd1 (VM): u3d on sm1's 32 small-map cells (DefaultSmall, Stash, arrows, bed, canyoudig, cheesefarm, evileye,
+  tiny; vs araid and abrk, both sides). The control is u2g's 21 of 32 on the same cells; local games are
+  deterministic. This is a risk check before u3d goes to the field: small maps are where we win 5 of 22 in-band
+  games, and the rush proxies punish spending on traps instead of bodies. Pre-registered falsifier: u3d 3 or more
+  wins below u2g, which means its traps cost bodies against a rush on small maps. Counters: traps laid and fired,
+  deaths by enemy.
