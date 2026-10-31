@@ -124,12 +124,12 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Now: u2v rejected (#130, set-2 block 1 4801-4814 vs u2g's 4737-4750: net -5, t -1.51); u2w (GUARD_KING_R 5)
-  parked (gk2 19 of 32 to u2g's 22: DefaultSmall). SWEEP's cell pick now scans incrementally (u2u's cv1 overran 157
-  times, so that verdict is void); u2x = u2g + SWEEP 5 on diag cv2 (u2x and u2g vs abrk, the 8 cv1 maps x 2 sides,
-  VM runs/cv2). Score with scratch ~/diag26b/rbsum.py RUN and the coverage tools (coverage.py, cvsum.sh); submit u2x
-  if it holds wins with 0 overruns and better coverage. Scratch deaths2.py REPLAY... gives baby deaths by cause,
-  trap fires and grabs per side; kdef.py/kdef2.py REPLAY GAME R0 R1 show our rats around our king per round.
+- Now: u2w (u2g + GUARD_KING_R 5) on the replica (#131, set-2 block 1 from 4850 vs u2g's 4737-4750; waiter
+  build/wait_u2w1.sh). u2v rejected (#130, net -5); u2x (SWEEP, bounded) dropped (cv2 11 of 16 to u2g's 15).
+  Early king kills are the main loss to the strong teams: thrown rats (ours, grabbed at Chebyshev 2-4 of our king,
+  held 2-4 rounds by throwers at 3-4) do 292-500 of the ~600 damage. Scratch tools in ~/diag26b: deaths2.py,
+  race.py/minerace.py/minewhy.py (pile race per mine), rushpay.py, ammo.py/thrower.py (throws into our king),
+  kdef.py/kdef2.py (our rats around our king).
   Parked: u2t (SEEK_FRONTIER, mixed), u0p (RUSH_STICK). The side-symmetry bundle (u2s's switches) stays off in ratbot.
 - KING_PATH evidence: kpa (u1x vs u0m) 22-10 and king pickups 21980 to 3440 in self-play, but no field gain;
   against AdamTan12 the king died before reaching the mines (wallsofparadis still lost both sides).

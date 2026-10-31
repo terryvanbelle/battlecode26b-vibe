@@ -3497,3 +3497,29 @@
 - VM disk at 97% (606 MB free): deleted 116 build/dumpcache dumps that no ~/diag26b dump list references and that
   were older than an hour (rb2/gk2/cv1/field analysis dumps, regenerable from kept replays; list in
   ~/diag26b/dcache_deleted.txt); 1.9 GB free.
+- cv2 (u2x vs u2g, vs abrk, 8 maps x 2 sides, 0 overruns either): u2x 11 of 16 to u2g's 15, delivered 226k to 257k;
+  lost attack_on_cat B, dirtpassageway A, pipes A, sunandmoon A where u2g won. SWEEP, even bounded, is a loss: u2x
+  dropped. The exploration record stands.
+- Field pile race (race.py/minerace.py): on safelycontained (4807) 170 of our half's 351 spawns before r400 went to
+  AlexT101 with a median wait of 98 rounds; on pipes (4809) abcd took 102 of 215 after 159 rounds. Three of our
+  half's mines (pipes (30,30), (47,30); safelycontained (2,48), (18,46), (27,47)) got 0-6 of our rat-turns.
+  Locally vs abrk u2g works all five pipes home mines (first visits r168 and r306). In the field the enemy holds
+  that ground (abcd: 1264 rat-turns at (30,30), 1512 at (29,15)), so the economy gap follows the war on our half.
+- Rush payoff vs the top two (rushpay.py, u2v's 12 games): 12-27 rushers a game, 12-24 dead by r300 in 11 of 12;
+  enemy-king damage by r300 0-60 of 600. The rush wins early king kills against the weaker teams (rush size is
+  tuned both ways on the replica), so it is kept.
+- How our king dies early (kingdmg.py, ammo.py, thrower.py; evileye x2, averyfineline x2, ultimatestarvation B):
+  throw hits 292-500 of the ~600, bites 80-260 (evileye A also 100 from two traps on the king's walk). Every
+  thrown rat was ours (8-12 a game, mostly 20+ rounds old). Throwers stood at Chebyshev 2-5 from the king's centre
+  (mostly 3-4), held the rat 2-4 rounds, and grabbed it at Chebyshev 2-4. The set-1 block shows the same early
+  kills from AlexT101, abcd, spsquared (bed) and AdamTan12 (DefaultSmall): it is the main loss mode against the
+  strong teams.
+- King defense on the replica: KING_BLOCK s4t (-5), RESCUE s8o (-1), AMMO_AWAY u1v (-2), MOAT u2b (-2).
+  GUARD_KING_R never ran there (s8d local reject, s9w neutral screen, u2w gk2 19 to 22 vs agrab/arush, which
+  don't reproduce the field's king assault).
+- Pre-registration, u2w = u2g + GUARD_KING_R 5 (copy of u2g, one constant). Mechanism: babies within Chebyshev 5
+  of our king take as target the visible enemy babies within 2 of its centre (its biters) and skip the standoff
+  against them (4757 evileye: 16-19 of ours near the king against 7-11, our 9 bites to their 27, 48 standoff and 25
+  face-hold rat-turns idle). Counter: king hp lost to bites, and our idle rat-turns near the king (kdef2.py).
+  Doses: 0 (u2g, zero arm), 5. Instrument: replica set-2 block 1 vs u2g's 4737-4750; block 1 rejects at t <= 0.
+  Falsifier: starved kings or lost economy games (gk2's DefaultSmall), or no fewer king kills by r300.
