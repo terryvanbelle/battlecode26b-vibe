@@ -4006,3 +4006,7 @@
   dirtpassageway, Hike; collegejunior Nofreecheese, t_minus_five_minutes, cheesebottles; Icarus averystrangespace,
   mincemeat, tiny; nzjt sunandmoon, DefaultLarge, RUN. u3c resubmitted (#138) for block 4 (requests from 4286; 12
   queued for the drain; waiter build/wait_u3cb4.sh, matches 5415+).
+- 12:16: head-to-head screen hh1 armed on the VM; it starts when ab1 ends, to keep the replica's load down (VM load
+  12 on 8 cores). The queued candidates u3d, u3g, u3e and u3q each play u2g on 8 set-4 maps both sides, and u3d, u3g,
+  u3e also on the 8 stall maps. Control: the u2g mirror (hcc, plus hhc for the set-4 maps). It ranks the replica
+  queue after u3c by local margin against the incumbent itself, a second view beside the archetype screens.
