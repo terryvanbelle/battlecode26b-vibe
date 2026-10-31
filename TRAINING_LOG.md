@@ -3330,7 +3330,7 @@
 - VM disk was at 527 MB free. Deleted 60 more replay dumps older than 12 h that no dump list references (all
   regenerable): 1.2 GB free.
 
-## 2026-10-31 01:24 PDT: u0m's set-1 reference; u2g block 3 queued; sp1/sp2; u2o; one mine on wallsofparadis
+## 2026-10-31 01:22 PDT: u0m's set-1 reference; u2g block 3 queued; sp1/sp2; u2o; one mine on wallsofparadis
 - u0m's set-1 reference (#127): 4588-4591, 4601-4602, 4611-4614, 4719-4722, 23 of 42. Lost AlexT101 5 of 6,
   abcdezyxwv 5 of 6, spsquared bed A/B and superioristhmus A/B, AdamTan12 DefaultSmall A and jail A/B, CS50Crab
   streetsofnewyork A. u2g resubmitted (#128); its set-1 block 3 is queued from 4723.
