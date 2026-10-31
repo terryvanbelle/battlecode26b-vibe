@@ -3298,3 +3298,34 @@
   - u2j's splits come at first contact (team A moves first within a round, so twins see different boards) or when a
     cat hits one twin. u0m's early splits are the king's facing at r0-r1.
   - Diag sy1 (u2j and u0m vs abrk, both sides, on the side-sensitive cells' maps) is running.
+
+## 2026-10-31 00:35 PDT: u2g to block 3; rushers stuck on Stash and averystrangespace; FLOW_SPLICE, RUSH_BAN, u2m
+- u2g (#126) set-4 block 2 (4553-4558, 4569-4574, 4576-4577): paired vs u0m 41 of 42 alike, net +1 (gained bc26vibe
+  averystrangespace B), t +1.00; pool 23 of 42 vs 23.2 (z -0.09; lost outercloud tornadoes B, won in the pool 9 of 10).
+  - Pooled over two blocks: 84 cells, D 2, +2 -0, t +1.41. Between the block-2 lines (reject <= 1, accept >= 2), so
+    block 3 on set 1. Set 1 has no u0m reference yet: u0m resubmitted (#127) and queued there first.
+  - Screen ra_u2g vs araid (control ra_u0m): 80 cells, D 15, +1.4 pts, t +3.65, net +1 (+1 -0).
+- Flow-search totals (new VM scratch flowsum.sh: dump + flowend.py per game) over pk1's 8 u0m games vs abrk:
+  - Rat-turns with a search building: averystrangespace 32-33%, cheesebottles 30-47%, Stash 17-19%, keepout 2%.
+  - Searches that gave up: averystrangespace 151 and 199, others 0-9.
+  - Path ends: held by a robot 130-1321, drifted 120-436, replaced by a new target 99-655, newly seen wall 3-120.
+    "Reached the end" is 0 everywhere: goTo stops calling follow() within Chebyshev 1 of the target, so arrivals
+    count as "replaced" when the next errand starts. The counter can't tell arrivals from switches.
+- Stash (field 4529 and local pk1, identical early): our 12 rushers (why 'a') walk about the king's pocket for
+  100+ rounds.
+  - Rat 10999 locally: a path was ready by r42 but cut a few steps on by a wall tile it hadn't seen. Rats see only
+    part of the y=7 wall row (90-degree cone), so A* runs through the unseen tiles.
+  - Each new search toward (15,26) took 32-37 turns (r48-78, r85-120, r130-168), each again cut by a wall.
+  - FLOW_SPLICE (off): on such a cut, a reverse search runs from the path tile FLOW_SPLICE - 1 past the first clear
+    one beyond the wall back to the rat, which holds still. The rest of the old path is joined on. A detour not
+    found within FLOW_SPLICE_TURNS (6) starts the full search.
+- averystrangespace (u0m as A, king (3,3)): the symmetry was still unknown at r330. The rushers alternated between
+  the flip spots (5,56) and (54,3). Every search toward (5,56) from the dirt tubes near (9,20) ran 61 turns and
+  failed: 201 searches of 60+ turns in the game, 3 per rusher by r330.
+  - RUSH_BAN (off): an attacker passes over a spot whose search failed within RUSH_BAN rounds while another is live.
+- Snapshots on u0m: u2k (FLOW_SPLICE 2), u2l (RUSH_BAN 150), u2m (FLOW_CACHE, never tested alone since s6v, before
+  FLOW_REV). Diags sp1/sp2 replay pk1's 8 cells vs abrk.
+- u2i (RUSH_UNTIL 100) vs u0q, adc's 20 cells: 11 wins to u0m's 11. Neutral.
+- u2j sy1 vs abrk: 8 of 12 to u0m's 6. Gained tiny B, keepout B and averystrangespace B; lost keepout A.
+- VM disk was at 527 MB free. Deleted 60 more replay dumps older than 12 h that no dump list references (all
+  regenerable): 1.2 GB free.

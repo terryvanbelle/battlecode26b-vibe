@@ -113,18 +113,23 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
 - Replica: u2g (#126) = u0m + END_KING 1850 + FORM_RICH_BANK 3000 (a third and fourth king before r1150 while the
-  bank holds 3000; a second king late in the game) passed set-3 block 1 (4516-4521, 4526-4529, 4537-4538, 4545-4546:
-  26 of 42, paired 41 alike, net +1 (spsquared rift A), t +1.00; pool z +2.12). Block 2 = set 4 queued from 4547
-  (requests 3617+; the drain loop sends the rest); waiter build/wait_u2g2.sh (ids > 4546, task bg60lcx9g). Score set 4 with
-  `contest.py paired 3756-3767,3785-3786 IDS` AND `contest.py pool 3284-3297 research/panel/v3-set4-pool.txt IDS`;
-  accept at pooled t >= 2 from block 2, reject at t <= 1. Set-3 scoring: `contest.py paired 3819-3822,3836-3837,3849-3856 IDS`
-  AND `contest.py pool 3819-3822,3836-3837,3849-3856 research/panel/v3-set3-pool.txt IDS` (u0m's own set-3 draw is
-  ~3 wins lucky). Hard cells: AlexT101 constrictinglattice/starvation and abcdezyxwv Stash/constrictinglattice are 0 of
-  24 pool games each, Excavation 1. Rejected on set 3: u2b (#125, MOAT), u1y (#124), u1v (#123, AMMO_AWAY), u1r (#122,
+  bank holds 3000; a second king late in the game). Block 1 = set 3 (4516-4521, 4526-4529, 4537-4538, 4545-4546):
+  net +1 (spsquared rift A), pool z +2.12. Block 2 = set 4 (4553-4558, 4569-4574, 4576-4577): net +1 (bc26vibe
+  averystrangespace B), pool 23 of 42 vs 23.2 (z -0.09). Pooled 84 cells, D 2, +2 -0, t +1.41: block 3 on set 1,
+  which first needs u0m's reference block there: u0m resubmitted as #127, set 1 queued from 4578 (requests 3644+),
+  waiter build/wait_r1.sh (ids > 4577, task ba35yw8kh). Then resubmit bots/u2g and queue set 1 (v3-set1.json);
+  score it with `contest.py paired REFIDS IDS` (REFIDS = #127's 14 matches); block 3 rejects at pooled t <= 1.5,
+  accepts at t >= 2 (needs D >= 4), else block 4 (final, rejects below 2). Screen ra_u2g: +1.4 pts, t +3.65, net +1.
+  Set-4 scoring: `contest.py paired 3756-3767,3785-3786 IDS` AND `contest.py pool 3284-3297
+  research/panel/v3-set4-pool.txt IDS`. Set-3 scoring: `contest.py paired 3819-3822,3836-3837,3849-3856 IDS` AND
+  `contest.py pool 3819-3822,3836-3837,3849-3856 research/panel/v3-set3-pool.txt IDS` (u0m's own set-3 draw is ~3 wins
+  lucky). Hard cells: AlexT101 constrictinglattice/starvation and abcdezyxwv Stash/constrictinglattice are 0 of 24
+  pool games each, Excavation 1. Rejected on set 3: u2b (#125, MOAT), u1y (#124), u1v (#123, AMMO_AWAY), u1r (#122,
   BUG_DIG), u1o (#121, RUSH_TO 20), u0y, u1p, u0o. Weak locally: u1t, u1u, u1w; parked: u1z (KP_FRONT).
-- Next candidates: u2j (side-symmetry bundle; mirror self-play holds until first contact; diag sy1 vs abrk on the
-  side-sensitive maps running), u2i (RUSH_UNTIL 100; diag ru1 and screen ra_u2i running), u0p (RUSH_STICK; pk1 8/8
-  vs u0m 6/8 on pocket maps). FLOW_W (weighted reverse search, off) is in ratbot with no snapshot yet.
+- Next candidates: u2j (side-symmetry bundle; sy1 vs abrk 8 of 12 to u0m 6), u0p (RUSH_STICK; pk1 8/8 vs u0m 6/8),
+  and the navigation repairs on diag (sp1: u2k FLOW_SPLICE 2, u2l RUSH_BAN 150; sp2: u2m FLOW_CACHE; pk1's 8 cells
+  vs abrk, control pk1's u0m cells; scratch flowsum.sh/flowend.py/ftlong.py on the VM give flow-search totals per
+  game). u2i (RUSH_UNTIL 100) neutral vs u0q (11 to 11). FLOW_W (weighted reverse search) is off, no snapshot.
 - KING_PATH evidence: kpa (u1x vs u0m) 22-10 and king pickups 21980 to 3440 in self-play, but no field gain;
   against AdamTan12 the king died before reaching the mines (wallsofparadis still lost both sides).
 - King kills (r1v vs AlexT101/abcdezyxwv): 73 of 81 throw hits on our king were our own rats thrown in at point blank
