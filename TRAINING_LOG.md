@@ -3885,3 +3885,10 @@
   the bank at r500 is 854 vs 591. The pre-registered falsifier (babies at r300 lower) fires: the cheese saved early
   stays banked instead of buying bodies later. The rich cap's threshold now has three doses: 500 (rejected on the
   replica), 1000 (u2g), 1500 (falsified locally).
+- 10:22: Rat deaths by window in the in-band field games (deathwin.py; per game, ours / theirs). In big losses
+  (41 games), r0-500 we lose 39.4 rats to their 32.0. Traps account for 7.9 of that gap (2.0, 2.4, 1.1, 2.4 a
+  window); bites, throws and the cat are even. Their traps: 9.2, 7.3, 4.0, 8.5 a window, ours 0. In small losses
+  (17 games), r0-100 we lose 21.3 to their 17.0 (traps 2.8, bites 2.8 vs 1.0, the cat 7.1 vs 5.2; we out-throw them
+  8.2 vs 10.6). In big wins the gap is smaller (traps 1.1, 0.3, 0.4, 0.4). After r500, losses or wins, they lose
+  10.7-14.8 rats a game to the cat and we lose 2.5-5.8. Before r500 the rats we lose to traps are the whole
+  big-map gap. That is the asymmetry u3d's own traps answer.
