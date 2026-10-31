@@ -4366,3 +4366,9 @@
     screen reject (t <= -1.5) would withdraw it.
   - u3d's block 2 waits for a rebase onto u3v too.
 - progress/ refreshed for the acceptance (owner rule).
+- 16:24: rebuilt on u3v. The u3v recipe is @s9s + R1-R5 + KING_FLOW + KING_PLUG; a same-code sibling (pb2)
+  matches u3v in every switch, and each new build differs from pb2 only in its own lines.
+  - u3z = u3v + PEACE. It is submission 142, with block 1 on v4 set 1 queued (scored vs u3v's set-1 games,
+    5639-5642, 5659-5666, 5671-5674). Waiter build/wait_u3zb1.sh (matches 5748+).
+  - u4a = u3v + CHIRAL_SYM is next on the replica. u4b = u3v + u3d's trap set comes after it.
+  - Screens on kvs's cells, control kvs (u3v): pz1 (u3z), pz2 (u4a) and pz3 (u4b) are running.
