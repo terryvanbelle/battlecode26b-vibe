@@ -112,16 +112,17 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Replica: u1y (#124) = u0m + KING_PATH (new class KPath: the king walks a 3x3-body path to the home mine nearest by
-  path, with bytecode guards) is on its set-3 block 1 from 4409. Score set-3 blocks with `contest.py paired
-  3819-3822,3836-3837,3849-3856 IDS` AND `contest.py pool 3819-3822,3836-3837,3849-3856
-  research/panel/v3-set3-pool.txt IDS`: u0m's own set-3 draw is ~3 wins lucky (nine candidates since won 18-23 of 42
-  against the pool, expectation ~21.7). Rejected on set 3: u1v (#123, AMMO_AWAY, t -1.00, pool z +0.70, screen
-  t -1.55), u1r (#122, BUG_DIG), u1o (#121, RUSH_TO 20), u0y, u1p, u0o. Weak locally: u1t, u1u, u1w.
-- KING_PATH evidence: diag kpa (u1x, the unguarded build, vs u0m): kings picked up 11200 to 560 in 15 games, 9 wins
-  to 6; kpb (u1y): no overruns. Krotus is lost both sides: the path goes in from the centre side and the king dies at
-  the front. u1z = u1y + KP_FRONT 50 (no path centre nearer the bisector than half the start's distance) runs as diag
-  kpc on kpa's cells; it is the follow-up if u1y's block looks good or loses at the front.
+- Replica: u1y (#124, u0m + KING_PATH) was rejected at set-3 block 1 (4420-4425, 4439-4446: net -2, t -1.00, pool
+  z +0.64), so u0m is still the incumbent. Next candidate: u2b = u0m + MOAT (TRAINING_LOG 2026-10-30 22:13), after
+  diag mo2 (u2b on gmc's 36 war cells; control gmc = u0m) and screen ra_u2b. Score set-3 blocks with `contest.py
+  paired 3819-3822,3836-3837,3849-3856 IDS` AND `contest.py pool 3819-3822,3836-3837,3849-3856
+  research/panel/v3-set3-pool.txt IDS`: u0m's own set-3 draw is ~3 wins lucky (ten candidates since won 18-23 of 42
+  against the pool, expectation ~21.7). Rejected on set 3: u1y (#124), u1v (#123, AMMO_AWAY), u1r (#122, BUG_DIG),
+  u1o (#121, RUSH_TO 20), u0y, u1p, u0o. Weak locally: u1t, u1u, u1w; parked: u1z (KP_FRONT, kpc 19-13 to kpa's 22-10).
+- KING_PATH evidence: kpa (u1x vs u0m) 22-10 and king pickups 21980 to 3440 in self-play, but no field gain;
+  against AdamTan12 the king died before reaching the mines (wallsofparadis still lost both sides).
+- King kills (r1v vs AlexT101/abcdezyxwv): 73 of 81 throw hits on our king were our own rats thrown in at point blank
+  (42-46 each); scratch kthrow.py and siege.py on the VM (~/diag26b/) give per-game hits and siege timelines.
 - Mine coverage (keepout, u1r 4344/4345): our rats never came within sight of 4 of our 6 home mines (one 10 from
   our king), our first pickup came at r100, and AdamTan12 worked all 12 mines. explore() with no mine known heads for
   the map centre (EXPLORE_CENTER_FROM 0), but keepout's mines sit on the edges. scratch minesee.py/minepick.py on

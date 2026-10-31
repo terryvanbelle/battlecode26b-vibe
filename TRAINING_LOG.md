@@ -3207,3 +3207,35 @@
   about every 9 rounds. A thrown rat that lands takes 10, then any enemy trap zone it lands in fires (50).
   becomeRatKing kills every robot in the 3x3, enemies too, and the king's HP is the sum of our robots' HP there
   (cap 600).
+
+## 2026-10-30 22:13 PDT: u1y rejected; the moat (u2b)
+
+- u1y (u0m + KING_PATH, bytecode-guarded) on the replica, set-3 block 1 (4420-4425, 4439-4446): 23 of 42.
+  - Paired vs u0m: 38 of 42 alike, net -2, t -1.00 (gained spsquared TheHeist B; lost AdamTan12 where_are_you A,
+    outercloud dirtfulcat B, spsquared rose B). Pool z +0.64. Rejected (same rule as u1v).
+  - AdamTan12 wallsofparadis is still lost on both sides. Self-play said KING_PATH more than tripled our deliveries
+    there; against AdamTan12 the king never got there alive.
+  - Self-play notes: kpa 22-10 vs u0m; kpc (u1z, KP_FRONT 50) 19-13, so the front limit is parked. krotus is a
+    starvation map (both banks near 0 by r280), not a front-line death. Screen ra_u1x: -1.7 pts, t -0.42, net -6.
+- What kills our king against AlexT101 and abcdezyxwv (r1v, 12 games, 11 king kills at r49-714):
+  - Throws into our king: 84-480 damage a game, 42-46 per hit (point blank: thrower 1-2 tiles off). 73 of the 81
+    hits were their rats throwing OUR rats into the king. Bites: 30-316 a game.
+  - An enemy rat first reached Chebyshev 3 of our king at r7-145 (backstab r9-62). Our dirt stock then: 3-17 on
+    constrictinglattice, starvation, Stash and tiny, 73-138 on Excavation. 11-16 of the 16 ring tiles are open.
+  - The grab war has been fought with micro many times (BITE_GUARD, RESCUE, GLANCE_MEM, AMMO_AWAY, GRAB_MICRO,
+    THROW_CHECK, FACE_HOLD): all neutral or worse on the replica.
+- Big swing: MOAT (Moat.java, off by default).
+  - Engine: a bite needs dist2 2 to a king tile; a thrown rat stops at the first impassable tile, and dirt is
+    impassable; placing dirt costs no cheese, one stock dirt and 25 action cooldown. A king can place dirt anywhere
+    in its ring (dist2 8). Transfers reach dist2 9 of any king tile, so every ring-3 tile can still deliver.
+  - At war, a king that sees an enemy rat fills its Chebyshev-2 ring, one tile per action, nearest the enemy
+    first. Babies beside the ring help while the king's war alert (Comms.ALERT) is under 60 rounds old.
+  - One spawn port stays open: the ring tile farthest from the map centre that is not a wall (mirror-invariant).
+    A baby fills only tiles ranked below the best ring tile it knows is open, so it never fills the king's port,
+    even before it has seen the whole ring.
+  - The king holds still while the moat is up (until 60 rounds pass without a sighting; it still dodges cats). No
+    baby digs the alerting king's ring at war (guards in Nav, Flow and BitFlow).
+  - bccmp vs s9s: new members and the new class only. BotTest 523/523 (testMoat), full suite exit 0.
+- Snapshots: u2a (on u1y, dropped with its base) and u2b = u0m + MOAT. Diag mo2 (u2b on gmc's 36 war cells: agrab,
+  agaim, abrk on tiny, constrictinglattice, starvation, Excavation, Meow, knifefight; control = gmc's u0m games)
+  and screen ra_u2b are running.
