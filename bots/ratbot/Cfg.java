@@ -673,6 +673,9 @@ public final class Cfg {
      *  AdamTan12, and plateaued after r100; home mines 14-23 from our king were never seen (pipes (30,30) and (47,30),
      *  dirtpassageway (7,12), attack_on_cat 4 of 6) while they took them from r83-464. */
     public static final int SWEEP = 0, SWEEP_UNTIL = 400;
+    /** Cfg.SWEEP: a cell pick scans while this many bytecodes are left, and goes on next turn below it (u2u's
+     *  one-turn scan overran 157 times in 8 cv1 games: ~140 cells with a half test each). */
+    public static final int SWEEP_LEFT = 8000;
     /** Once one symmetry is left the king lists the twin on our half of every listed mine (mines come in mirror pairs;
      *  raiders see enemy-half mines whose twins on our half nobody found: DefaultLarge vs abcdezyxwv left 1140 cheese
      *  on two such mines). */

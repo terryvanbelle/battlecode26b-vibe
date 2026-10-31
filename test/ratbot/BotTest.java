@@ -2868,7 +2868,7 @@ public class BotTest {
             Baby.home = side == 0 ? new MapLocation(27, 10) : new MapLocation(2, 10);
             Baby.fu = side == 0 ? 1 : -1; Baby.fv = 1;
             G.me = side == 0 ? new MapLocation(26, 10) : new MapLocation(3, 10);
-            Baby.sweepCell = 0; Baby.sweepBan = null; Baby.sweepDone = false; Baby.exploreTarget = null; Nav.stall = 0;
+            Baby.sweepCell = 0; Baby.sweepScan = 0; Baby.sweepBan = null; Baby.sweepDone = false; Baby.exploreTarget = null; Nav.stall = 0;
             check(Baby.sweep(5, 20000), "sweep: a target while our half is unseen");
             got[side] = Baby.exploreTarget;
         }
@@ -2885,7 +2885,15 @@ public class BotTest {
         for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.mem[x + W * y] |= Sym.SEEN;
         Baby.sweepCell = 0;
         check(!Baby.sweep(5, 20000) && Baby.sweepDone, "sweep: done once our half is seen");
-        Baby.sweepCell = 0; Baby.sweepBan = null; Baby.sweepDone = false; Baby.exploreTarget = null; reset();
+        // a scan of 7 cells a call goes on over several calls and lands on the one-call scan's cell
+        reset(); W = 30; H = 20; install(); Sym.mask = Sym.VER; Baby.slot = 0;
+        Baby.home = new MapLocation(27, 10); Baby.fu = 1; Baby.fv = 1; G.me = new MapLocation(26, 10);
+        Baby.sweepCell = 0; Baby.sweepScan = 0; Baby.sweepBan = null; Baby.sweepDone = false; Baby.exploreTarget = null;
+        int calls = 0;
+        while (Baby.sweepCell == 0 && calls < 40) { Baby.sweep(5, 7); calls++; }
+        check(calls == 4 && Baby.sweepScan == 0 && new MapLocation(22, 7).equals(Baby.exploreTarget),
+            "sweep: a 24-cell scan at 7 a call picks on call 4, the same cell: " + calls + " " + Baby.exploreTarget);
+        Baby.sweepCell = 0; Baby.sweepScan = 0; Baby.sweepBan = null; Baby.sweepDone = false; Baby.exploreTarget = null; reset();
     }
 
     static void testHomeRank() {

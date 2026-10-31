@@ -1182,7 +1182,7 @@ public final class Baby {
             // a scout with news the king lacks carries it home (squeaks reach the king from dist2 16 only)
             MapLocation k = Comms.nearestKing(G.me);
             if (k != null && unreported() >= 0) {
-                if (Cfg.SWEEP > 0) sweepCell = 0; // the cell's time budget restarts after the walk home
+                if (Cfg.SWEEP > 0) sweepCell = sweepScan = 0; // the cell's time budget restarts after the walk home
                 Nav.goTo(k); why = 's'; return;
             }
             why = 'S';
@@ -2106,7 +2106,7 @@ public final class Baby {
     /** Scout movement: the never-seen tile of our half that Cfg.HOME_PICK takes from EXPLORE_TRIES samples; false
      *  (no move) when no sample is one. */
     static boolean exploreHome() throws GameActionException {
-        if (Cfg.SWEEP > 0) return sweep(Cfg.SWEEP, Clock.getBytecodesLeft());
+        if (Cfg.SWEEP > 0) return sweep(Cfg.SWEEP, 0);
         if (exploreTarget == null || G.cheb(G.me, exploreTarget) <= 2 || Nav.stall > 20 || Sym.known(G.idx(exploreTarget.x, exploreTarget.y))) {
             int x = -1, y = -1, bd = Integer.MAX_VALUE;
             for (int k = 0; k < Cfg.EXPLORE_TRIES; k++) {
@@ -2125,40 +2125,52 @@ public final class Baby {
     }
 
     /** Cfg.SWEEP: the cell being swept plus 1 (0 none), the round it is banned if still unseen, banned cells (lazy),
-     *  and whether no cell of our half is left. */
-    static int sweepCell, sweepBy;
+     *  and whether no cell of our half is left. A pick scans the cells over as many turns as the bytecodes need
+     *  (sweepScan: the next cell plus 1, 0 = no scan under way; best score and cell so far; the scan's origin). */
+    static int sweepCell, sweepBy, sweepScan, sweepBest, sweepBi, sweepOx, sweepOy;
     static boolean[] sweepBan;
     static boolean sweepDone;
 
     /** Cfg.SWEEP scout movement: toward the centre of the unseen, unbanned cell (c x c, in the side frame) of our half
-     *  that minimises the walk there plus its distance on to the lane anchor; false (sweepDone) once there is none. */
-    static boolean sweep(int c, int left) throws GameActionException {
-        int w = G.W, h = G.H, gw = (w + c - 1) / c, gh = (h + c - 1) / c;
-        if (sweepBan == null || sweepBan.length != gw * gh) sweepBan = new boolean[gw * gh];
+     *  that minimises the walk there plus its distance on to the lane anchor; false (sweepDone) once there is none.
+     *  cap > 0 (tests): scan at most cap cells a call; 0: scan while Cfg.SWEEP_LEFT bytecodes are left. */
+    static boolean sweep(int c, int cap) throws GameActionException {
+        int w = G.W, h = G.H, gw = (w + c - 1) / c, gh = (h + c - 1) / c, n = gw * gh;
+        if (sweepBan == null || sweepBan.length != n) sweepBan = new boolean[n];
         if (sweepCell > 0 && (exploreTarget == null || Sym.known(G.idx(exploreTarget.x, exploreTarget.y)))) sweepCell = 0;
         else if (sweepCell > 0 && (Nav.stall > 20 || G.round > sweepBy)) { sweepBan[sweepCell - 1] = true; sweepCell = 0; }
         if (sweepCell == 0) {
-            if (left < 5000) return true; // pick next turn (left: bytecodes left)
-            int mx = fu > 0 ? G.me.x : w - 1 - G.me.x, my = fv > 0 ? G.me.y : h - 1 - G.me.y;
+            if (sweepScan == 0) {
+                sweepScan = 1; sweepBest = Integer.MAX_VALUE; sweepBi = -1;
+                sweepOx = fu > 0 ? G.me.x : w - 1 - G.me.x; sweepOy = fv > 0 ? G.me.y : h - 1 - G.me.y;
+            }
             int lane = sweepLane(slot);
             int ax = sweepAnchor(lane, w, true), ay = sweepAnchor(lane, h, false);
-            int best = Integer.MAX_VALUE, bi = -1, bx = 0, by = 0;
-            for (int j = 0; j < gh; j++) {
-                int fy = Math.min(h - 1, j * c + c / 2);
-                for (int i = 0; i < gw; i++) {
-                    int fx = Math.min(w - 1, i * c + c / 2);
-                    int s = sweepScore(fx, fy, mx, my, ax, ay);
-                    if (s >= best) continue;
-                    int k = i + gw * j;
-                    if (sweepBan[k]) continue;
-                    int x = fu > 0 ? fx : w - 1 - fx, y = fv > 0 ? fy : h - 1 - fy;
-                    if (Sym.known(G.idx(x, y)) || !homeHalf(new MapLocation(x, y))) continue;
-                    best = s; bi = k; bx = x; by = y;
-                }
+            // the half test hoisted out of the loop when it is the plain nearer-our-start one
+            boolean plain = !Cfg.PATH_ORACLE && Cfg.TRIP_HALF == 0 && !Cfg.HOME_ALL_SYM;
+            MapLocation rf = ref(), tw = G.mirror(rf, firstSym());
+            int k = sweepScan - 1, end = cap > 0 ? Math.min(n, k + cap) : n;
+            for (; k < end; k++) {
+                if (cap == 0 && Clock.getBytecodesLeft() < Cfg.SWEEP_LEFT) break;
+                int j = k / gw, i = k - j * gw;
+                int fx = Math.min(w - 1, i * c + c / 2), fy = Math.min(h - 1, j * c + c / 2);
+                int sc = sweepScore(fx, fy, sweepOx, sweepOy, ax, ay);
+                if (sc >= sweepBest || sweepBan[k]) continue;
+                int x = fu > 0 ? fx : w - 1 - fx, y = fv > 0 ? fy : h - 1 - fy;
+                if (Sym.known(G.idx(x, y))) continue;
+                if (plain) {
+                    int da = (x - rf.x) * (x - rf.x) + (y - rf.y) * (y - rf.y), db = (x - tw.x) * (x - tw.x) + (y - tw.y) * (y - tw.y);
+                    if (!(da < db || Cfg.MINE_TIES && da == db)) continue;
+                } else if (!homeHalf(new MapLocation(x, y))) continue;
+                sweepBest = sc; sweepBi = k;
             }
-            if (bi < 0) { sweepDone = true; return false; }
-            sweepCell = bi + 1;
-            exploreTarget = new MapLocation(bx, by);
+            if (k < n) { sweepScan = k + 1; return true; } // the scan goes on next turn
+            sweepScan = 0;
+            if (sweepBi < 0) { sweepDone = true; return false; }
+            int j = sweepBi / gw, i = sweepBi - j * gw;
+            int fx = Math.min(w - 1, i * c + c / 2), fy = Math.min(h - 1, j * c + c / 2);
+            sweepCell = sweepBi + 1;
+            exploreTarget = new MapLocation(fu > 0 ? fx : w - 1 - fx, fv > 0 ? fy : h - 1 - fy);
             sweepBy = G.round + 2 * G.cheb(G.me, exploreTarget) + 20;
         }
         Nav.goTo(exploreTarget);
