@@ -2498,7 +2498,7 @@ public class BotTest {
         KPath.ox = KPath.DX; KPath.oy = KPath.DY; KPath.lastScan = -1;
         check(KPath.alloc(0), "king path: arrays allocated");
         for (int y = 0; y < 15; y++) Sym.record(10, y, true, false, false);
-        for (int x = 0; x < W; x += 13) for (int y = 0; y < H; y += 13) KPath.scan(new MapLocation(x, y));
+        for (int x = 0; x < W; x += 13) for (int y = 0; y < H; y += 13) KPath.scan(new MapLocation(x, y), 0);
         check(!KPath.open(9, 5) && !KPath.open(11, 14) && KPath.open(10, 16) && !KPath.open(0, 5),
               "king path: centres touching the wall or the edge are blocked");
         MapLocation k = new MapLocation(4, 5), a = new MapLocation(14, 5), b = new MapLocation(4, 17);
@@ -2521,12 +2521,22 @@ public class BotTest {
         Direction[] d0 = KPath.downhill(k);
         MapLocation nxt = k.add(d0[0]);
         Sym.record(nxt.x, nxt.y + 1, true, false, false);
-        KPath.lastScan = -1; KPath.scan(k);
+        KPath.lastScan = -1; KPath.scan(k, 0);
         Direction[] d1 = KPath.downhill(k);
         check(d1 == null || !k.add(d1[0]).equals(nxt), "king path: a newly seen wall blocks the old next step");
         // a mine on the enemy's half, or farther than KP_MAX, seeds nothing
         check(!KPath.start(k, new MapLocation[]{ new MapLocation(24, 14) }, 1, home, new MapLocation(25, 14)),
               "king path: no seat on the enemy's half");
+        // short of bytecodes: a scan stops before a row and leaves lastScan unset; seeding gives up without a search
+        KPath.fakeLeft = 100; KPath.lastScan = -1;
+        check(!KPath.scan(k, 2500) && KPath.lastScan == -1, "king path: a scan short of bytecodes stops and scans again");
+        check(!KPath.start(k, ms, 2, home, away) && !KPath.building && KPath.minesAt == -1,
+              "king path: seeding short of bytecodes searches nothing and is due again");
+        KPath.fakeLeft = Integer.MAX_VALUE;
+        // the turn that allocates the last array does nothing else
+        KPath.poolN = null; KPath.lastScan = -1;
+        KPath.tick();
+        check(KPath.poolN != null && KPath.lastScan == -1, "king path: the allocating turn neither scans nor searches");
         reset(); W = 60; H = 20; install();
         KPath.kb = null; KPath.g = null; KPath.poolV = null; KPath.poolN = null; KPath.lastScan = -1;
         KPath.alloc(0);

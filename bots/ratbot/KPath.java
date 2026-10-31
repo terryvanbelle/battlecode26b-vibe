@@ -30,8 +30,10 @@ public final class KPath {
     static int lastScan = -1;
     public static int searches, fails, steps, digs;
     public static boolean unlimited;
+    /** With unlimited (tests): the bytecodes left that left() reports. */
+    public static int fakeLeft = Integer.MAX_VALUE;
 
-    static int left() { return unlimited ? Integer.MAX_VALUE : Clock.getBytecodesLeft(); }
+    static int left() { return unlimited ? fakeLeft : Clock.getBytecodesLeft(); }
 
     /** Side frame from our start: the signs of its offset from the map centre. */
     static void frame(MapLocation home) {
@@ -51,20 +53,24 @@ public final class KPath {
         return true;
     }
 
-    /** Block the centres around every wall remembered within Chebyshev 6 of c (the king's view and a margin). */
-    static void scan(MapLocation c) {
+    /** Block the centres around every wall remembered within Chebyshev 6 of c (the king's view and a margin); false
+     *  when fewer than reserve bytecodes were left before a row (the marks so far stand; the next turn scans again). */
+    static boolean scan(MapLocation c, int reserve) {
         int W = G.W, H = G.H, at = c.x + W * c.y;
-        if (at == lastScan) return;
-        lastScan = at;
+        if (at == lastScan) return true;
         int[] mem = Sym.mem;
         boolean[] b = kb;
         int x0 = Math.max(0, c.x - 6), x1 = Math.min(W - 1, c.x + 6), y0 = Math.max(0, c.y - 6), y1 = Math.min(H - 1, c.y + 6);
-        for (int y = y0; y <= y1; y++)
+        for (int y = y0; y <= y1; y++) {
+            if (left() < reserve) return false;
             for (int x = x0, i = x0 + W * y; x <= x1; x++, i++) {
                 if ((mem[i] & Sym.WALL) == 0) continue;
                 for (int yy = Math.max(0, y - 1); yy <= Math.min(H - 1, y + 1); yy++)
                     for (int xx = Math.max(0, x - 1); xx <= Math.min(W - 1, x + 1); xx++) b[xx + W * yy] = true;
             }
+        }
+        lastScan = at;
+        return true;
     }
 
     /** A centre whose 3x3 lies on the map and touches no seen wall. */
@@ -95,7 +101,8 @@ public final class KPath {
     }
 
     /** Start a search toward the king at c from the seats of mines[0..n) on our half (home vs away) that no other
-     *  king holds; false when no seat is near enough to seed. */
+     *  king holds; false when no seat is near enough to seed, or when fewer than Cfg.KP_RESERVE bytecodes were left
+     *  before a mine (then nothing is searched and the next turn starts again). */
     static boolean start(MapLocation c, MapLocation[] mines, int n, MapLocation home, MapLocation away) {
         int W = G.W, max = Cfg.KP_MAX;
         gen++;
@@ -108,6 +115,7 @@ public final class KPath {
         ready = false; seated = false;
         int[] gg = g;
         for (int i = 0; i < n; i++) {
+            if (left() < Cfg.KP_RESERVE) { building = false; pending = 0; minesAt = -1; return false; }
             MapLocation m = mines[i];
             if (G.cheb(m, c) > max + 2 || !homeHalf(m, home, away) || held(m, c)) continue;
             for (int k = 0; k < 9; k++) {
@@ -191,12 +199,14 @@ public final class KPath {
         return r;
     }
 
-    /** End of the king's turn: allocate, remember walls around it, (re)start the search when due, and work on it. */
+    /** End of the king's turn: allocate, remember walls around it, (re)start the search when due, and work on it.
+     *  A turn that allocates does nothing else (the charge for an array lands at once; EscapeTheNight r4 ran over
+     *  when the scan and the seeding followed the last allocation), and a scan cut short waits for the next turn. */
     static void tick() {
-        if (!alloc(Cfg.KP_RESERVE)) return;
+        if (poolN == null) { alloc(Cfg.KP_RESERVE); return; }
         MapLocation c = G.rc.getLocation();
         if (ox == DX && King.start != null) frame(King.start);
-        scan(c);
+        if (!scan(c, Cfg.KP_RESERVE)) return;
         if (seated && King.homeMine != null && G.cheb(c, King.homeMine) > Cfg.KING_ROAM + 2) seated = false;
         if (!seated && !building && due(c)) {
             MapLocation home = King.start != null ? King.start : c;
