@@ -1,0 +1,6 @@
+name=u3j
+source=bots/ratbot
+source_sha=6d63ea24edd9
+commit=b014029
+created=2026-10-31 10:09 PDT
+change=u3d with RAT_TRAP_MIN_CHEESE 200 (not 500)

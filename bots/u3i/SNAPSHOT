@@ -1,0 +1,6 @@
+name=u3i
+source=bots/ratbot
+source_sha=3fa1984d816e
+commit=b014029
+created=2026-10-31 10:09 PDT
+change=u3d + FACE_HOLD (u1m pairing on u2g)

@@ -3874,3 +3874,9 @@
   1392 vs 1316. Big trap games: Stash A (87 laid, kills 53 vs 12, delivered 6930 vs 3061), wallsofparadis B (48
   laid, 13753 vs 4830). The trapper wins the exchange against a bot that lays none, which is the field's asymmetry
   against u2g, reversed. This supports u3d as the next replica candidate after u3c.
+- 10:10: Two probe arms on u3d, built so the field test of u3d has its follow-ups sized, with tw2 on the VM (each vs
+  u3d on ma2's 8 maps, both sides; the mirror baseline is 8 of 16):
+  - u3i = u3d + FACE_HOLD (u1m's pairing; u1m on u0y vs u0q cut fires on us 808 -> 699 and deaths by enemy 620 ->
+    514, and raised delivered 187k -> 220k, at 10 wins to 11).
+  - u3j = u3d with RAT_TRAP_MIN_CHEESE 200 (from 500): the trap floor's dose arm, since our bank in in-band losses
+    is 386-788 at r150.
