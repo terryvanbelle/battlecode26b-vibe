@@ -80,6 +80,17 @@ public final class Cfg {
      *  there to r2000 with all 20 babies shut in behind it (75% of our baby turns went to mine trips that never got out). */
     public static final boolean KING_PLUG = false;
     public static final int KING_MINE_R2 = 400;
+    /** King path (KPath): the king walks to the home mine nearest by a path for its 3x3 body (seen walls block,
+     *  unseen tiles and dirt are open), searched from every seat at once with spare bytecode (KP_RESERVE kept) and
+     *  searched again when a mine is listed or a seen wall cuts the way; it holds still while a search runs. Paths
+     *  longer than KP_MAX king steps are not taken; a search running KP_TURNS rounds gives up, and a failed one is
+     *  retried after KP_RETRY rounds or a new mine; with no path, King.homeMine's greedy walk goes on as before.
+     *  King.homeMine was the first listed mine within dist2 400, walked to greedily: our king stopped under a wall
+     *  row on rift (4342, 13 from (6,12) while (12,26) lay 8 away) and stayed 26 from any mine on wallsofparadis
+     *  (4344-4345: deliveries 1490 to AdamTan12's 7281); on 74 maps a 3x3 path reaches a home mine the greedy walk
+     *  misses on 11 (TheHeist, EscapeTheNight, RUN, clouds, knifefight, krotus, ...) and 4 more have none within 400. */
+    public static final boolean KING_PATH = false;
+    public static final int KP_MAX = 32, KP_RESERVE = 2500, KP_TURNS = 40, KP_RETRY = 30;
     /** A king bound to starve before round 2000 (Econ.surplus() < 0), with no mine of its own (none within KING_MINE_R2,
      *  or another king's), walks to the nearest home-half mine no other king holds, at any distance; checked from
      *  FORAGE_FROM every FORAGE_EVERY rounds. 27 of 78 king deaths in 50 replica matches (3284-3297, 3728-3763) were

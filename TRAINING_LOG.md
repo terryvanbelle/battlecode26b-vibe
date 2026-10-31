@@ -3137,3 +3137,47 @@
   - u1w: u0m + RUSH_BURN 6 (new switch). Once enemy traps are known, a rusher more than Chebyshev 6 from the enemy
     start turns gatherer.
   - Screens ra_u1t/u1u/u1v vs araid and diag rsb2 (u1w vs u0q) are running.
+
+## 2026-10-30 21:15 PDT: u1r rejected; u0m's set-3 draw was lucky; the economy gap and the king's walk (KING_PATH, u1x)
+
+- u1r (BUG_DIG) rejected on the replica (#122): set-3 block vs u0m's 3819-3822,3836-3837,3849-3856: 42 cells, D 7
+  (+1 -6), net -5, t -1.89.
+- u0m's own set-3 draw was lucky. New research/panel/v3-set3-pool.txt pools the eight set-3 candidate blocks since
+  u0m. Scored against the pool, each wins 18-23 of 42 (expectation ~21.7): u0q 21, u1a 20, u0o 18, u0y 21, u1p 23,
+  u1o 22, u1r 20. u0z wins 25, but it played 40 of 42 games exactly like u0m. So u0m's draw sits ~3 wins above its
+  pooled rate, and all eight lost the same cells (outercloud dirtfulcat, spsquared rose and rift B, AdamTan12
+  where_are_you). Score set-3 blocks with `contest.py pool 3819-3822,3836-3837,3849-3856
+  research/panel/v3-set3-pool.txt CAND` as well as `paired`.
+- Screens: u1t (mine traps at a 40 floor) net -7, t -1.30; u1u net -7, t -0.40; u1v (AMMO_AWAY) net -5, t -1.55,
+  which the screen rejects. u1v was already on the replica (#123, set 3 from 4369) before its screen finished. The
+  block runs on for field data. u1w (RUSH_BURN 6) went 8 wins to 11 vs u0q locally. None of the four is promising.
+- The 24 games of u1r's block, cheese ledger and time use (new scratch tools ledg.py, timeuse.py, trips.py):
+  - We lay 0 rat traps. The top four lay 37-156 a game.
+  - Deliveries in our losses: theirs 2-20x ours (keepout 9705 to 2419, wallsofparadis 7281 to 1490, Stash 4410
+    to 200).
+  - Our bank runs dry by r300-400 in most losses. Three of the 12 losses to AlexT101/abcdezyxwv ended with the king
+    starving.
+  - keepout (AdamTan12): they picked 5660 of the cheese spawned on our half, we picked 1820.
+  - wallsofparadis: our ~20 gatherers spend 35-44% of turns walking to a mine and 26-47% delivering. Our king sat
+    at (3,2), 26 from the nearest mine. AdamTan12's king walked to the middle of the map, 4-5 from its mines.
+  - rift (spsquared): their first king walked onto mine (47,3), and later kings formed on (48,24) and (45,15).
+    Their kings picked up 2680-3320 cheese directly, ours 60-100.
+  - Why our king stops short: King.pickHomeMine takes the first listed mine within dist2 400. On rift that was
+    (6,12), 13 away, not (12,26), 8 away. The king walks there greedily and stopped under a wall row at (6,19) for
+    2000 rounds.
+- Map census of king paths (scratch KingPath.java, 3x3 BFS, walls blocking), over 74 maps:
+  - On 11 maps a path reaches a home mine but the greedy walk gets stuck or picks one it can't reach: TheHeist,
+    EscapeTheNight, RUN, clouds, knifefight, krotus, dirtpassageway, houseofcards, ratsareants, diamond, heart.
+  - On 4 more maps no home mine lies within dist2 400: wallsofparadis 26 steps, whatsthecatdoin 22,
+    ultimatestarvation 15, Nofreecheese 29.
+- New switch KING_PATH (new class KPath), a basics fix to the king's movement:
+  - A reverse search over the king's 3x3 body runs from every seat at once: a centre within Chebyshev 1 of a home
+    mine that no other king holds. Seen walls block, unseen tiles and dirt count as open.
+  - The search uses spare bytecode at the end of the king's turn (2500 kept in reserve). The king then steps
+    downhill to the mine nearest by path.
+  - It searches again when a new mine is listed or a newly seen wall blocks the way, and holds still while a
+    search runs.
+  - It never takes a path over 32 steps. With no path, the old greedy walk runs as before.
+  - bccmp: the default build is unchanged (new members and the new class only). BotTest 508/508 (testKingPath).
+  - Snapshot u1x = u0m + KING_PATH. Diag kpa (u1x vs u0m head-to-head, those 16 maps both sides) and screen ra_u1x
+    are running on the VM.

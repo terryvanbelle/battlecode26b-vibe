@@ -1,0 +1,12 @@
+# v3 set 3 (v3-set3.json): blocks of u0m-reign candidates, each one perturbed draw of u0m's play there. Eight
+# candidates in a row (u0q .. u1r) scored -7..0 against u0m's own draw 3819-3822,3836-3837,3849-3856 (mean net
+# -3.9), losing the same cells (outercloud dirtfulcat, spsquared rose and rift B, AdamTan12 where_are_you): that
+# draw carries its luck. Score set-3 blocks with contest.py pool CTRL research/panel/v3-set3-pool.txt CAND too.
+3867-3872,3886-3889,3904-3905,3911-3912  # u0q
+3926-3931,3934-3939,3943-3944  # u0z
+3951-3952,3956-3957,3972-3973,3986-3993  # u1a
+4164-4177  # u0o
+4178-4191  # u0y
+4192-4203,4248-4249  # u1p
+4261-4274  # u1o
+4285-4288,4319-4320,4338-4345  # u1r

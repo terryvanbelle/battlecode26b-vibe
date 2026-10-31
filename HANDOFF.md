@@ -112,11 +112,14 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Replica: u1o (#121) = u0m + RUSH_TO 20 is on its set-3 block 1, 4261-4274; score it with `contest.py paired
-  3819-3822,3836-3837,3849-3856 4261-4274`. Next: u1r (u0m + BUG_DIG, a basics repair for pocket starts; screen
-  t -0.02 pass), then u1k (THROW_CHECK, neutral). Rejected on set 3 today: u0y (#119, t -1.63), u1p (#120,
-  MINE_TRAPS 8, t -1.00), u0o (#118, t -2.33). Rejected locally: FACE_HOLD (u1l, u1m parked, u1n), u1s (corridor
-  swap, screen t -1.16). u1q (u0y + TRAP_OPEN_TO 150) is parked: the trap line didn't gain vs the top three.
+- Replica: u1v (#123) = u0m + AMMO_AWAY is on its set-3 block 1 from 4369 (its screen then rejected it, t -1.55;
+  the block runs for field data). Score set-3 blocks with `contest.py paired 3819-3822,3836-3837,3849-3856 IDS` AND
+  `contest.py pool 3819-3822,3836-3837,3849-3856 research/panel/v3-set3-pool.txt IDS`: u0m's own set-3 draw is ~3
+  wins lucky (eight candidates since won 18-23 of 42 against the pool, expectation ~21.7). Rejected on set 3:
+  u1r (#122, BUG_DIG, t -1.89, pool z -0.91), u1o (#121, RUSH_TO 20), u0y, u1p, u0o. Weak locally: u1t, u1u, u1w.
+- Next candidate: u1x = u0m + KING_PATH (new class KPath: the king walks a 3x3-body path to the home mine nearest by
+  path). Diag kpa (u1x vs u0m, 16 maps both sides) and screen ra_u1x are running. Field (TRAINING_LOG 2026-10-30
+  21:15): the economy gap is 2-20x in deliveries; our king stops short of its mine on rift and wallsofparadis.
 - Stash pocket (TRAINING_LOG 2026-10-30 19:28): the bug walk treated dirt as wall, so rats waited 20-26 turns each
   for a reverse flow search; BUG_DIG digs through in the sweep (exit open r22 locally). The 1-wide corridor still
   jams afterwards; the corridor swap fixes that locally but loses elsewhere. ~/diag26b/mobility.py REPLAY... compares

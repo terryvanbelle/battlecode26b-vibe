@@ -76,6 +76,7 @@ public final class King {
         publish();
         Comms.write(Comms.BUDGET, Math.max(0, Math.min(1023, Econ.surplus() / 4)));
         Econ.endTurn();
+        if (Cfg.KING_PATH) KPath.tick();
     }
 
     static int mirroredN = -1, mirroredMask;
@@ -447,6 +448,7 @@ public final class King {
         if (Cfg.FORM_STILL && formSite != null) { mineWhy = 'f'; return; }
         if (enemies.length > 0 || cats.length > 0) { mineWhy = enemies.length > 0 ? 'e' : 'c'; return; }
         if (Cfg.KING_PLUG && unplug(c)) { mineWhy = 'u'; return; }
+        if (Cfg.KING_PATH && KPath.follow(c)) return;
         if (homeMine == null) homeMine = pickHomeMine(start);
         // KING_FORAGE: a king bound to starve before round 2000, with no mine of its own, walks to the nearest home
         // mine no other king of ours holds, at any distance

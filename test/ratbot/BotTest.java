@@ -2488,6 +2488,53 @@ public class BotTest {
         check(!Baby.openTrapBlocked(10, 300, 0, 1500), "open trap: off");
     }
 
+    /** KPath on a 30x20 map with a wall at x 10 for y 0..14: mine A (14,5) is nearer the king (4,5) by Chebyshev
+     *  and dist2 but 23 king steps away round the wall's top; mine B (4,17) is 12 away and 11 steps: the search
+     *  takes B and walks there; a wall seen across the way stops the downhill step and a new search is due. */
+    static void testKingPath() {
+        reset(); W = 30; H = 20; install();
+        int c0 = Comms.numKings; Comms.numKings = 0;
+        KPath.kb = null; KPath.g = null; KPath.poolV = null; KPath.poolN = null; KPath.unlimited = true;
+        KPath.ox = KPath.DX; KPath.oy = KPath.DY; KPath.lastScan = -1;
+        check(KPath.alloc(0), "king path: arrays allocated");
+        for (int y = 0; y < 15; y++) Sym.record(10, y, true, false, false);
+        for (int x = 0; x < W; x += 13) for (int y = 0; y < H; y += 13) KPath.scan(new MapLocation(x, y));
+        check(!KPath.open(9, 5) && !KPath.open(11, 14) && KPath.open(10, 16) && !KPath.open(0, 5),
+              "king path: centres touching the wall or the edge are blocked");
+        MapLocation k = new MapLocation(4, 5), a = new MapLocation(14, 5), b = new MapLocation(4, 17);
+        MapLocation[] ms = { a, b };
+        MapLocation home = k, away = new MapLocation(25, 14);
+        check(KPath.start(k, ms, 2, home, away), "king path: seeds from both mines");
+        KPath.work(0);
+        check(KPath.ready && KPath.cost(k) == 11, "king path: the search reaches the king, 11 steps to mine B (" + KPath.cost(k) + ")");
+        MapLocation c = k;
+        int n = 0;
+        while (KPath.cost(c) > 0 && n < 40) { Direction[] ds = KPath.downhill(c); if (ds == null) break; c = c.add(ds[0]); n++; }
+        check(KPath.cost(c) == 0 && G.cheb(c, b) <= 1 && n == 11, "king path: downhill walks to B's seat in 11 steps (" + c + ", " + n + ")");
+        // without B the path to A goes round the wall top
+        check(KPath.start(k, new MapLocation[]{ a }, 1, home, away), "king path: seeds from A alone");
+        KPath.work(0);
+        int ca = KPath.cost(k);
+        // (4,5) to (8,15) 10, over the top (9,16) (10,16) (11,16) (12,15) 4, down to the seat (13,6) 9
+        check(KPath.ready && ca == 23, "king path: A is 23 steps round the wall's top (" + ca + ")");
+        // a wall seen across the way after the search: the downhill steps avoid it
+        Direction[] d0 = KPath.downhill(k);
+        MapLocation nxt = k.add(d0[0]);
+        Sym.record(nxt.x, nxt.y + 1, true, false, false);
+        KPath.lastScan = -1; KPath.scan(k);
+        Direction[] d1 = KPath.downhill(k);
+        check(d1 == null || !k.add(d1[0]).equals(nxt), "king path: a newly seen wall blocks the old next step");
+        // a mine on the enemy's half, or farther than KP_MAX, seeds nothing
+        check(!KPath.start(k, new MapLocation[]{ new MapLocation(24, 14) }, 1, home, new MapLocation(25, 14)),
+              "king path: no seat on the enemy's half");
+        reset(); W = 60; H = 20; install();
+        KPath.kb = null; KPath.g = null; KPath.poolV = null; KPath.poolN = null; KPath.lastScan = -1;
+        KPath.alloc(0);
+        check(!KPath.start(new MapLocation(2, 5), new MapLocation[]{ new MapLocation(2 + Cfg.KP_MAX + 4, 5) }, 1,
+                           new MapLocation(2, 5), new MapLocation(57, 5)), "king path: a mine beyond KP_MAX seeds nothing");
+        Comms.numKings = c0;
+    }
+
     static void testRushStands() {
         reset(); W = 20; H = 20; install();
         int m0 = Sym.mask;
@@ -2794,6 +2841,7 @@ public class BotTest {
         testOpenTrap();
         testBugDig();
         testRushStands();
+        testKingPath();
         testScoutUntil();
         testMineTraps();
         testTrapRisk();
