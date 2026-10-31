@@ -3908,10 +3908,16 @@
   u2g that were never ablated, each turned off alone on u2g's recipe: u3k RAID, u3l STANDOFF, u3m FLANK, u3n POUNCE,
   u3o CARRY_AIM, u3p TRAP_RISK. Each plays u2g's 48 deterministic cells: ma2 (8 maps vs araid) and sm1 (8 small maps
   vs araid and abrk), both sides. u2g wins 35 of them. Pre-registered: 3 or more wins fewer and the switch earns its
-  keep; no loss of wins makes it a removal candidate for the replica, behind the queue. The rush proxies lay few
-  traps, so a switch that pays only against trappers (TRAP_RISK, STANDOFF) can look free here. Such a result counts
-  as "not priced", not "free".
+  keep; no loss of wins makes it a removal candidate for the replica, behind the queue. The archetypes lay rat traps
+  (araid and abrk laid 1247 against u2g on sm1's 32 cells, 39 a game), so the trap switches are priced here too.
 - 10:35: VM disk: 346 MB free when ab1 started with replays kept (288 games, about 220 MB). I stopped it, deleted the
   replay files of 30 finished local runs from 10-30 17:00 to 10-31 02:00 PDT (gj1 ... sp3; results.jsonl and
   cells.tsv kept; local games are deterministic, so they regenerate), freeing about 1 GB (1.3 GB free), and
   restarted ab1 without replays.
+- 10:42: sd1 (u3d on sm1's 32 small-map cells vs araid and abrk, both sides): 26 of 32 to u2g's 21. D 9 (+7 -2), net
+  +5, t +1.67. Gains: bed A/B, canyoudig B and tiny B vs abrk, arrows B vs abrk, DefaultSmall B and canyoudig B vs
+  araid. Losses: DefaultSmall B vs abrk, cheesefarm A vs araid (r913; u2g won on points at r2000). u3d laid 527 rat
+  traps and 485 hit (92%); kills 1162 to u2g's 1030 (+13%), deaths by enemy 1325 to 1174, spawned 2640 to 2593.
+  Delivered is lower (120.7k to 148.0k) because three r2000 points games became earlier king kills. The falsifier
+  (3 or more wins fewer) doesn't fire. Small maps were the risk for spending on traps against a rush; it went the
+  other way. u3d stays next in the replica queue after u3c.
