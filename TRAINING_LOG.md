@@ -3181,3 +3181,29 @@
   - bccmp: the default build is unchanged (new members and the new class only). BotTest 508/508 (testKingPath).
   - Snapshot u1x = u0m + KING_PATH. Diag kpa (u1x vs u0m head-to-head, those 16 maps both sides) and screen ra_u1x
     are running on the VM.
+
+## 2026-10-30 21:34 PDT: KING_PATH's first numbers and its overruns; u1y
+
+- Diag kpa (u1x vs u0m head-to-head), first 15 of 32 games: 9 wins to 6.
+  - Kings picked up 11200 cheese to 560. wallsofparadis: delivered 22291 to 6498 (A) and 17096 to 10699 (B).
+    rift A: our king picked up 2560 to 100.
+  - u1x overran in 8 of 15 games (krotus B 24 times, EscapeTheNight A 6). The bytecode charge for an array lands
+    at once ("WithoutInterrupt" in the instrumenter), and KPath.tick() went on to scan the walls and seed the
+    search on the same turn with no guard. EscapeTheNight B ran over at r4, the turn of its last allocation.
+- u1x's EscapeTheNight B loss (r615, king starved) is not the path:
+  - Neither king found a home mine within reach (all mines but four sit on the axis), so both stayed home.
+  - Both armies went to war. By r300 u1x's carriers held 1395 cheese and stood next to the enemy king attacking
+    (move codes f and a), while u1x's bank ran down to 0. u0m's carriers held 1060 and delivered 830.
+  - Field check (u1r's 24 games): our bank goes under 60 only at the end of lost wars, with no cheese left in our
+    rats' paws. The exception is where_are_you (3470 held, a win). So HUNGRY (deliver when broke), tried as s3k,
+    would not change the field losses.
+- KPath fix: a turn that allocates does nothing else; the wall scan stops before a row with fewer than KP_RESERVE
+  bytecodes left and scans again next turn; seeding gives up the same way and is due again. BotTest 511/511 (3 new
+  checks), full suite exit 0, bccmp unchanged outside KPath.
+- Snapshot u1y = u0m + KING_PATH with the fix. kpb (u1y on u1x's overrun cells vs u0m) is running. u1y is the next
+  replica candidate after u1v's block.
+- Engine facts for later: mine pairs spawn together (20 each, mirrored spots in the 9x9 square). The chance per
+  check is 1 - 0.99^(rounds since the last spawn), and both mines of a pair check every round, so a pair spawns
+  about every 9 rounds. A thrown rat that lands takes 10, then any enemy trap zone it lands in fires (50).
+  becomeRatKing kills every robot in the 3x3, enemies too, and the king's HP is the sum of our robots' HP there
+  (cap 600).
