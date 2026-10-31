@@ -3981,3 +3981,12 @@
   knifefight; closeup, averyfineline, attack_on_cat); the six newcomers are drawn at send.
 - u2g resubmitted (#137) for its set-4 reference. The hourly limit held all 16 requests, so they wait in the queue
   for the drain (waiter build/wait_s4ref.sh, matches 5368+). Then u3c is resubmitted for block 4.
+- 11:27: hc1/hcc done. u3q (STALL_CAT 100) won 12 of 16 against u2g on the 8 stall maps; the u2g mirror (hcc) gives
+  8. Against the mirror's per-side results: D 6 (+5 -1), net +4, t +1.63.
+  - Gained averystrangespace B, clockwisdom A, rift A, rose A, where_are_you B. Lost rose B.
+  - Delivery: on averystrangespace our cat damage went from 0 (mirror 0/0) to 1110 and 6437 against u2g's 0, both
+    sides won on points. rift: 8097 / 10600 to u2g's 6410 / 4288 (mirror 4572 / 5677). clockwisdom A turned a king
+    loss into a win.
+  - Falsifier (cat damage on averystrangespace stays 0, points games unmoved) did not fire. u3q joins the replica
+    queue after u3c's block 4, ahead of u3d: its local margin is the larger, and it targets the in-band points
+    losses (Icarus averystrangespace).
