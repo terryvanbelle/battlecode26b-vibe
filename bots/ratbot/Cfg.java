@@ -105,6 +105,10 @@ public final class Cfg {
      *  our stock (11-16 open ring tiles). */
     public static final boolean MOAT = false;
     public static final int MOAT_D2 = 25, MOAT_IDLE = 60, MOAT_PORT = 1;
+    /** MOAT: while the alert is fresh and the team holds fewer than MOAT_DIG dirt (0 = off), a baby within Chebyshev
+     *  MOAT_DIG_R of the king with nothing to fill digs a dirt tile next to it off the ring (5 cheese; not under
+     *  MOAT_DIG_CHEESE). mo2's first tiny game: 13 ring tiles placed, but the stock sat at 0-4 and the ring never closed. */
+    public static final int MOAT_DIG = 0, MOAT_DIG_R = 5, MOAT_DIG_CHEESE = 100;
     /** A king bound to starve before round 2000 (Econ.surplus() < 0), with no mine of its own (none within KING_MINE_R2,
      *  or another king's), walks to the nearest home-half mine no other king holds, at any distance; checked from
      *  FORAGE_FROM every FORAGE_EVERY rounds. 27 of 78 king deaths in 50 replica matches (3284-3297, 3728-3763) were

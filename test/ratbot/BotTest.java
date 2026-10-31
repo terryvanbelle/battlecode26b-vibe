@@ -128,6 +128,7 @@ public class BotTest {
                                 && !walls.contains(l) && !dirt.contains(l) && !robots.containsKey(l);
                     }
                     case "placeDirt": dirt.add((MapLocation) a[0]); dirtStock--; actCd += 25; return null;
+                    case "getDirt": return dirtStock;
                     case "senseNearbyMapInfos": {
                         List<MapInfo> out = new ArrayList<>();
                         int vr = type == UnitType.RAT_KING ? 25 : 20;
@@ -2551,6 +2552,16 @@ public class BotTest {
         G.coop = true; shared[Comms.ALERT + 2] = Comms.stamp();
         check(!Moat.keep(new MapLocation(3, 3)), "moat: nothing kept in cooperation");
         G.coop = false;
+        // MOAT_DIG: a baby with nothing to fill digs the dirt next to it, never a ring tile
+        shared[Comms.ALERT + 2] = Comms.stamp(); dirt.clear(); dirtStock = 0; actCd = 0; global = 1000;
+        me = new MapLocation(5, 9); facing = Direction.SOUTH; G.startTurn(); G.coop = false; G.round = 200;
+        dirt.add(new MapLocation(5, 8)); dirt.add(new MapLocation(5, 10)); dirt.add(new MapLocation(6, 8));
+        check(Moat.dig(new MapLocation(5, 5)) && !dirt.contains(new MapLocation(5, 8)) && dirt.contains(new MapLocation(6, 8)) && Moat.dug == 1,
+              "moat dig: digs the seen dirt next to it nearest the king");
+        actCd = 0; dirt.clear(); dirt.add(new MapLocation(5, 7)); me = new MapLocation(5, 8); G.startTurn(); G.coop = false; G.round = 200;
+        check(!Moat.dig(new MapLocation(5, 5)) && dirt.contains(new MapLocation(5, 7)), "moat dig: never digs the king's ring");
+        actCd = 0; global = 50; dirt.add(new MapLocation(5, 9)); me = new MapLocation(5, 10); G.startTurn(); G.coop = false; G.round = 200;
+        check(!Moat.dig(new MapLocation(5, 5)), "moat dig: not under MOAT_DIG_CHEESE");
     }
 
     static void testKingPath() {

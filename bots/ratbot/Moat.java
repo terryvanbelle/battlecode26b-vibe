@@ -13,7 +13,7 @@ import battlecode.common.*;
 public final class Moat {
     /** King: the last round it saw an enemy rat within MOAT_D2 at war. */
     static int seen = -1000;
-    public static int placed;
+    public static int placed, dug;
 
     static boolean up() { return G.round - seen <= Cfg.MOAT_IDLE; }
 
@@ -96,7 +96,27 @@ public final class Moat {
         MapLocation k = alertKing();
         if (k == null) return;
         int c = G.cheb(G.rc.getLocation(), k);
-        if (c == 2 || c == 3) fill(k, 2, near);
+        if ((c == 2 || c == 3) && fill(k, 2, near)) return;
+        if (Cfg.MOAT_DIG > 0 && c <= Cfg.MOAT_DIG_R && G.rc.getDirt() < Cfg.MOAT_DIG) dig(k);
+    }
+
+    /** Cfg.MOAT_DIG: with the team's dirt short, dig a dirt tile next to us off king k's ring (5 cheese) for it. */
+    static boolean dig(MapLocation k) throws GameActionException {
+        RobotController rc = G.rc;
+        if (rc.getAllCheese() < Cfg.MOAT_DIG_CHEESE) return false;
+        MapLocation me = rc.getLocation(), best = null;
+        int bs = Integer.MAX_VALUE;
+        for (Direction d : G.DIRS) {
+            MapLocation l = me.add(d);
+            if (G.cheb(l, k) <= 2 || !rc.canRemoveDirt(l)) continue;
+            int s = 2 * l.distanceSquaredTo(k) + (G.pickBit(me, l) ? 1 : 0);
+            if (s < bs) { bs = s; best = l; }
+        }
+        if (best == null) return false;
+        rc.removeDirt(best);
+        Sym.mem[G.idx(best)] &= ~Sym.DIRT;
+        dug++;
+        return true;
     }
 
     /** At war: n is on the alerting king's ring, so a baby leaves its dirt. */
