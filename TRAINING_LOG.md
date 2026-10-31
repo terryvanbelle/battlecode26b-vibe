@@ -3038,3 +3038,34 @@
   net -7, t -2.33. Rejected. It lost dirtfulcat A/B, where_are_you A/B, rose A/B, rift B and tiny B.
 - Next: u0y (#119) = u0q + RAT_TRAP_MIN_CHEESE 500. That is the reactive trap line with a 500 bank floor, which
   stops the dirtfulcat spend (ty1 vs arush: 14 wins to 12). Set-3 block 1 from 4178. u1k follows.
+
+## 2026-10-30 18:05 PDT: FACE_HOLD and the zone variant fail; how the field kills us; u1p, u1q
+
+- FACE_HOLD (new switch, off): once enemy traps are known, faceEnemy no longer steps from Chebyshev 2 into contact
+  with an enemy baby that sees us and is not weaker. It holds, facing it. Diags vs u0q on adc's 20 cells (control adc =
+  u0m, 11 wins; fyc = u0y, 11 wins):
+  - u1l (u0m + FACE_HOLD): 8 wins. Fires on us 973 to 919, deaths 626 to 654, kills 404 to 425. Weak: holding gives
+    the trapper time to lay more traps around the rat.
+  - u1m (u0y + FACE_HOLD): 10 wins to u0y's 11. Fires on us 699 to 808, deaths 514 to 620, xfer 220k to 187k.
+    Parked: fewer losses and more income, but no more wins.
+  - u1n (u0m + WOUNDED_HP 100, every rat out of Chebyshev 2 of enemy babies): 6 wins, kills 266 to 425. Rejected.
+- How the field kills us (u0m's set-3 replays):
+  - After an AlexT101 trap fires on one of our rats, 82% of victims die within 15 rounds. At <= 50 HP the next trap
+    kills (86 of 97). Rats that survive the first fire die mostly to a throw (68) or a second fire (57) within 30
+    rounds. Their next moves are fight codes (a, w, T, k, f).
+  - The losses to AlexT101 and abcdezyxwv come after r100. At r100 we have more rats (16-20 to 9-16). By r250 we
+    have 5-8 to their 9-16, our bank is 0-160 to their 500-1200, and they kill our king r200-450 with bites and
+    thrown rats.
+  - The war is on our half. constrictinglattice vs AlexT101 (3849): 53 of our deaths on our half against 12 of theirs
+    on their own. They picked 930 cheese on our half, we 200 on theirs. 72 of our 112 deaths were at the two front
+    mines, mostly the home one at (7,32).
+- u0y's outercloud losses (4178, Excavation A and dirtfulcat A; u0m won both): 31 traps by r100 on Excavation and
+  40 on dirtfulcat (26 dirtfulcat hits by r50). They took the bank from 1810 to 515 and 1660 to 280. The king then
+  spawned 0-6 per 25 rounds, and we had 1-10 rats at r250. The 500 floor doesn't bind while the opening bank is high.
+- New off-by-default switch TRAP_OPEN_TO / TRAP_OPEN_FLOOR: before round TRAP_OPEN_TO a baby trap needs
+  TRAP_OPEN_FLOOR banked (bodies first). Bytecode check vs s9s: only new members. BotTest 490/490, full suite exit 0.
+- New snapshots:
+  - u1o = u0m + RUSH_TO 20. AdamTan12 delivered 19-20k on where_are_you in u0o's games.
+  - u1p = u0m + MINE_TRAPS 8. Gatherers trap the eight 3x3 trigger blocks of their mine's spawn square, to defend
+    the half the war is fought on. Diag mt1 vs u0q running.
+  - u1q = u0y + TRAP_OPEN_TO 150 (floor 1500), the fix for u0y's opening spend if u0y gains vs the top three.

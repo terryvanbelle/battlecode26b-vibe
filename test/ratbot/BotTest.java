@@ -2459,6 +2459,13 @@ public class BotTest {
         G.us = us0; G.them = them0;
     }
 
+    static void testOpenTrap() {
+        check(Baby.openTrapBlocked(50, 1400, 150, 1500), "open trap: opening, bank under the floor");
+        check(!Baby.openTrapBlocked(50, 1500, 150, 1500), "open trap: opening, bank at the floor");
+        check(!Baby.openTrapBlocked(150, 300, 150, 1500), "open trap: after the opening");
+        check(!Baby.openTrapBlocked(10, 300, 0, 1500), "open trap: off");
+    }
+
     static void testFaceHold() {
         reset(); install();
         Team us0 = G.us, them0 = G.them;
@@ -2750,6 +2757,7 @@ public class BotTest {
         testHomeRank();
         testWoundMask();
         testFaceHold();
+        testOpenTrap();
         testScoutUntil();
         testMineTraps();
         testTrapRisk();

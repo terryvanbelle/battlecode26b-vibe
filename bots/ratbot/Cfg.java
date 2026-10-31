@@ -41,6 +41,11 @@ public final class Cfg {
     public static final boolean TRAP_ADJ = false;
     /** Cheese (global, or raw+global for babies) below which no rat trap is placed. */
     public static final int RAT_TRAP_MIN_CHEESE = 200;
+    /** Opening trap floor (off at 0): before round TRAP_OPEN_TO no baby rat trap is laid with less than
+     *  TRAP_OPEN_FLOOR banked, so the opening bank buys bodies first (u0y vs outercloud, 4178: 31 traps by r100 on
+     *  Excavation and 40 on dirtfulcat took the bank from 1810 to 515 and 1660 to 280; spawning then stalled and both
+     *  games were lost, where u0m won them). */
+    public static final int TRAP_OPEN_TO = 0, TRAP_OPEN_FLOOR = 1500;
     /** Most live rat traps we keep (engine max 25): new ones are bought only as old ones fire. */
     public static final int TRAP_CAP = 10;
     /** Trapped mines: a gatherer at its mine lays rat traps on the mine's MINE_TRAPS trap sites nearest the enemy

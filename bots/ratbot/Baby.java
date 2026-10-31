@@ -731,6 +731,7 @@ public final class Baby {
         RobotController rc = G.rc;
         if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= trapCap()) return false;
         if (rc.getAllCheese() < Econ.floor(Cfg.RAT_TRAP_MIN_CHEESE) || King.trapStarvesSpawn(rc)) return false;
+        if (Cfg.TRAP_OPEN_TO > 0 && openTrapBlocked(rc.getRoundNum(), rc.getAllCheese(), Cfg.TRAP_OPEN_TO, Econ.floor(Cfg.TRAP_OPEN_FLOOR))) return false;
         int d0 = G.me.distanceSquaredTo(nearestEnemy.location);
         if (Cfg.TRAP_ADJ ? d0 > Cfg.BABY_TRAP_DIST2 : d0 <= 2 || d0 > Cfg.BABY_TRAP_DIST2) return false;
         MapLocation best = trapTile(rc.getLocation(), rc.getDirection(), nearestEnemy.location, d0, Cfg.TRAP_ADJ);
@@ -739,6 +740,9 @@ public final class Baby {
         ratTraps++;
         return true;
     }
+
+    /** Cfg.TRAP_OPEN_TO: before round `to` a rat trap needs `floor` banked (bodies first in the opening). */
+    static boolean openTrapBlocked(int round, int bank, int to, int floor) { return round < to && bank < floor; }
 
     /** The front tile for a rat trap against an enemy at e (d0 = our dist2 to it): the one nearest e if nearer than we
      *  are, or with adj (Cfg.TRAP_ADJ) one within e's 3x3, nearest first (ties by pick bit, SYM_TIE); null if none. */
