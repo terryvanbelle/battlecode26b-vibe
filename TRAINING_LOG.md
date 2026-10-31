@@ -3868,3 +3868,9 @@
 - 09:59: u3c's field delivery (dirtpassageway vs AdamTan12_Finals, game 1, u2g 4749/4750 vs u3c 5203/5204):
   delivered by r150 390 -> 600 (A) and 420 -> 545 (B); the enemy's 585 -> 385 and 420 -> 240. As B the enemy's bank
   was 0 by r200. Spreading over every known mine, ties included, takes the contested mines' cheese from them.
+- 10:08: Mechanism check tw1 (VM): u3d vs u2g head-to-head on ma2's 8 maps, both sides (16 games). u3d wins 9 of 16
+  (Stash and wallsofparadis both sides; arrows lost both sides; the other four split by side). Over the 16 games u3d
+  laid 445 rat traps and 396 hit (89%); rat kills 436 vs u2g's 342 (+27%); delivered 120k vs 102k (+17%); spawned
+  1392 vs 1316. Big trap games: Stash A (87 laid, kills 53 vs 12, delivered 6930 vs 3061), wallsofparadis B (48
+  laid, 13753 vs 4830). The trapper wins the exchange against a bot that lays none, which is the field's asymmetry
+  against u2g, reversed. This supports u3d as the next replica candidate after u3c.
