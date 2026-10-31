@@ -124,14 +124,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Now: u2s (#129, u2g + the side-symmetry bundle, a basics repair) plays set-2 block 1 from 4751 (waiter
-  build/wait_u2s1.sh; score `contest.py paired 4737-4750 IDS`); ws1 vs abrk 6 of 6, self-play mirrors to r108.
-  Next: u2u = u2s + SWEEP 5 (cell sweep scouting, new switch) on diag cv1 (u2u and u2s as A vs abrk, 8 maps; waiter
-  build/wait_cv1.sh); compare with scratch coverage.py (VM ~/diag26b/coverage.py REPLAY GAME RMAX TEAMPREFIX: map
-  share and mines seen, raw and with mirror twins) and minelag.py (per mine: first seen and first picked, each side).
-  Exploration is the economy gap: u2g's set-2 games saw 38-58% of the map with twins by r200 against 91-99% for the
-  top three, and home mines 14-23 from our king went unseen all game. If u2s is rejected, rebase SWEEP on u2g.
-  Parked: u2t (SEEK_FRONTIER, mixed), u0p (RUSH_STICK). Closed this round: u2k, u2l, u2n, u2o, u2p, u2q, u2r, u2j.
+- Now: u2s rejected (#129, set-2 block 1 4751-4764: net -1, t -0.38, 26 of 42 as u2g); u2u (SWEEP) dropped (cv1: no
+  coverage gain). Two one-constant copies of u2g on local diags: u2v = RICH_BANK 500 (diag rb2: u2g/u2v/pb2 at
+  1000/500/300 vs abrk on 8 economy maps x 2 sides; waiter build/wait_rb2.sh) and u2w = GUARD_KING_R 5 (diag gk2: u2w
+  and u2g vs agrab and arush on 8 king-kill maps x 2 sides; build/wait_gk2.sh). Score with scratch ~/diag26b/rbsum.py
+  RUN (per game: win, delivered, min bank after r300, babies r400/800/1200, the u2v counter). Submit u2v first
+  (economy: from r400 the field bank held 500-990 with 19-22 babies under the 18 cap, while AlexT101 ran 31-47 and
+  took the mid mines), then u2w (4757 evileye: our rats near the king held standoffs while its biters worked).
+  Scratch kdef.py/kdef2.py REPLAY GAME R0 R1 show our rats around our king per round (why code, moved, acted).
+  Parked: u2t (SEEK_FRONTIER, mixed), u0p (RUSH_STICK). The side-symmetry bundle (u2s's switches) stays off in ratbot.
 - KING_PATH evidence: kpa (u1x vs u0m) 22-10 and king pickups 21980 to 3440 in self-play, but no field gain;
   against AdamTan12 the king died before reaching the mines (wallsofparadis still lost both sides).
 - King kills (r1v vs AlexT101/abcdezyxwv): 73 of 81 throw hits on our king were our own rats thrown in at point blank

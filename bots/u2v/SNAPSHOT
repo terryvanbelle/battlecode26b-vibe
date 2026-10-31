@@ -1,0 +1,6 @@
+name=u2v
+source=bots/u2g
+source_sha=eda50ae78b80
+commit=b412f84
+created=2026-10-31 03:39 PDT
+change=RICH_BANK 1000 -> 500

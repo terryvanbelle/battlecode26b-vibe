@@ -1,0 +1,6 @@
+name=u2w
+source=bots/u2g
+source_sha=eda50ae78b80
+commit=b412f84
+created=2026-10-31 03:40 PDT
+change=GUARD_KING_R 0 -> 5

@@ -3435,3 +3435,38 @@
   queue unrun.
 - VM disk (98% full): deleted 143 old (>12 h), unreferenced, regenerable replay dumps from build/dumpcache (83, then
   60) and the scored th1/th2/po1 kept replays (~98 MB); ~500 MB free.
+
+## 2026-10-31 03:40 PDT: u2s rejected; exploration is not the lever we can pull; king guards stand still; the 1000 reserve (u2v)
+- u2s rejected on the replica (#129): set-2 block 1 4751-4764 vs u2g's 4737-4750, 42 cells, 35 alike, D 7 (gained
+  AdamTan12 attack_on_cat B + dirtpassageway B, outercloud Hike A; lost abcd ultimatestarvation A/B, CS50Crab
+  wallsofparadis B, spsquared jail A), net -1, t -0.38; 26 of 42 as u2g. AlexT101 and abcd 0 of 12 (u2g 2 of 12).
+  The side-symmetry switches stay in ratbot, off; ra_u2s stopped at 68 of 80 (moot).
+- Coverage (coverage.py on u2g's set-2 games): by r200 we had seen 38-58% of the map with mirror twins, against
+  91-99% for abcd, AlexT101 and AdamTan12, and plateaued after r100; home mines 14-23 from our king went unseen (pipes
+  (30,30)/(47,30), where they took 4600). SWEEP (new, off: scouts and seekers take our half's cells nearest
+  a lane anchor, by slot) in u2u = u2s + SWEEP 5; diag cv1 (u2u and u2s as A vs abrk, 8 maps): 7 of 8 to 6 of 8,
+  seen share at r200 44-86% vs 49-84% (safelycontained +14, keepout -4, dirtpassageway -10 where u2u won at r316).
+  No gain: dropped. With the exploration record (s4d, s6l/s6o, s7v/s7w, s7z, s9c-s9i, t0x/t0y, u0w/u1a, u2t, u2u)
+  every scout variant has been neutral or worse.
+- Where the field cheese goes (minelag.py, 4757 safelycontained vs AlexT101, our king died r795): the four mid
+  mines gave them ~4000 and us 215 (two never seen by us); our half's six gave us 4815 and them 2085; their half's
+  five gave them 5440 and us 40. They ran 31-47 babies and 2-5 kings from r400; we fell 29 -> 19 -> 10 -> 7.
+  From r400 our bank held 976 with 19 babies: under RICH_BANK 1000 the cap is 18, so nothing spawned until the bank
+  crossed 1000 again (one 60-cheese rat per ~7 rounds at our 8.4/round) while ~650 cheese sat idle after a fight
+  that cost us 10 rats. sittingducks (4757 g2) the same: bank 507-967 with 19-22 babies from r200 to r1140.
+- King guards stand still (kdef.py/kdef2.py, 4757 evileye, our king 574 -> 182 in r98-122): 16-19 of ours within
+  Chebyshev 4 of it against 7-11 of theirs; their rats bit it 27 times, ours bit 9 times. Of our rats near the king
+  without an action, war standoffs ('w', not moving) 48 rat-turns and face-holds ('f', not moving) 25; most had an
+  enemy within dist2 20 that was not one of the king's biters. Adjacent-but-idle cases were carried enemies (same
+  tile as their carrier). GUARD_KING_R (s8d rejected on a local diag, s9w neutral screen) is this fix and never
+  met the field rushers; it is the next candidate after u2v.
+- Pre-registration, u2v = u2g + RICH_BANK 500 (copy of u2g, one constant). Mechanism: the cap rises to 40 at bank
+  500 instead of 1000, so the reserve between 500 and 1000 buys rats (a one-time ~500-cheese push, again after
+  each fight). Displaces: the 1000 guard s9s added against s9r's starvations (seepastyourgreed, cheesebottles).
+  Counter: rounds with bank in [500, 1000) and 18+ babies, and spawns there (field: hundreds of rounds in the
+  sittingducks/safelycontained/pipes games). Dose series locally (rb2, vs abrk, 8 maps x 2 sides): 1000 (u2g, the
+  zero arm), 500 (u2v), 300 (pb2, probe). Deciding instrument: the replica set-2 block vs u2g's 4737-4750; block 1
+  rejects at t <= 0. Falsifier: a starvation loss or more king kills against us (bank spent).
+- VM disk hit 100% (cv1's dumps failed with ENOSPC): deleted our diag_stuck1-15 kept replays and dumps (~770 MB)
+  and the kept replays of 86 finished local runs dated 10-28..10-30 (1652 MB; results.jsonl kept, list in
+  ~/diag26b/oldrp_deleted.txt); 2.3 GB free.
