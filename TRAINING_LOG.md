@@ -4372,3 +4372,9 @@
     5639-5642, 5659-5666, 5671-5674). Waiter build/wait_u3zb1.sh (matches 5748+).
   - u4a = u3v + CHIRAL_SYM is next on the replica. u4b = u3v + u3d's trap set comes after it.
   - Screens on kvs's cells, control kvs (u3v): pz1 (u3z), pz2 (u4a) and pz3 (u4b) are running.
+- 16:56: rebased screens (kvs's 44 scored cells vs araid/abrk, control kvs = u3v).
+  - u3z (PEACE): 32 of 44 to 30, D 12 (+7 -5), net +2, t +0.58. That passes. It broke the truce in 0 of 48 games.
+  - u4a (CHIRAL_SYM): 33 of 44 to 30, D 9 (+6 -3), net +3, t +1.00. That passes. 8 of the 9 changed cells are on
+    seat B. The seat-A change (cheesefarm A vs araid) comes from the birth-turn sense call's bytecode: the work
+    Flow and the optional stages do depends on the bytecode left, so seat A's play shifts a little too.
+  - u4b's screen (pz3) is still running.
