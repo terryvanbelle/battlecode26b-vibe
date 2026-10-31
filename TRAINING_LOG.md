@@ -3767,3 +3767,34 @@
   - The tiny rush wins came 24-30 rounds later. bed and canyoudig played out identically.
   - The early bodies pay locally against the rush and raid archetypes, so the small-map gap is not the RICH
     tier alone.
+
+## 2026-10-31 09:26 PDT: attackers hoard cheese and never deliver; u3g (ATK_DELIVER 50)
+
+- Trap war (VM trapwhere.py, trapgeo.py, catsum.py on u2g's 102 in-band games):
+  - In big-map losses, rats killed by the enemy: ours 46, theirs 31. Traps make most of the gap: 13.8 of our
+    rats a game die to their traps, and none of theirs to ours (u2g lays none).
+  - In losses they lay 42.5 rat traps a game and 39.3 fire on our babies, 65% on our half (home mines 42%).
+  - 89% sit next to the layer, 84% toward our nearest baby, laid when that baby is at Chebyshev 2 (59%) or 1
+    (17%). Lay to fire: median 1 round.
+  - FACE_HOLD and WOUNDED_HP (holding off) were weak in u1l-u1n. u3d (our own reactive traps) goes to the replica
+    after u3c.
+- Starving with cheese in hand (brokecarry.py, hoard.py):
+  - 4988 clockwisdom vs collegejunior: four attack-role rats held 200-1420 cheese each (2500 in all) at Chebyshev
+    33-54 from our king while it starved from 600 HP to death (r800-860).
+  - Over the in-band games, attack-move rats held 830 cheese at a time in wins and 319 in losses (sampled every
+    50 rounds from r100), peaking at 1188 / 666 a game. Our babies died holding 1362 / 851 a game. In losses,
+    975 of the enemy's pickups were drops.
+  - Attackers never reach the delivery step (the attack branch comes first). Each unit of cheese slows a rat by
+    1% (CHEESE_COOLDOWN_PENALTY), so by 500+ a hoarder barely moves.
+  - t0l/u2n (ATK_CARRY 25: no pickups above 25) were neutral to positive on screen (t +1.83 / +0.34) and never
+    reached the replica.
+- u3g = u2g + ATK_DELIVER 50 (new switch, off in ratbot). An attacker carrying 50+ raw cheese delivers to the
+  nearest king before attacking again.
+  - Mechanism: the cheese attackers pick up reaches the bank while they are still fast (≤ 1.5x), instead of
+    dropping to the enemy when they die or sitting unspent while the king starves.
+  - Counters: cheese held by attackers (hoard.py), cheese on our babies at death, enemy pickups from drops,
+    delivered, broke rounds, kills and enemy king damage.
+  - Doses: 0 (u2g) vs 50.
+  - Falsifier: delivered not up, or attacker-held cheese not down, or kills and enemy king damage down by more
+    than 10%.
+- Local diag hd1 on the VM: u3g on ma2's 16 cells vs araid (control: u2g's ma2 cells).

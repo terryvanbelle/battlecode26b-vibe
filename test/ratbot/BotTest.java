@@ -237,6 +237,16 @@ public class BotTest {
         Comms.numKings = 0;
     }
 
+    static void testAtkHome() {
+        int saved = Baby.role;
+        Baby.role = Baby.ATTACK;
+        int t = Math.max(1, Cfg.ATK_DELIVER);
+        check(Baby.atkHome(t) == (Cfg.ATK_DELIVER > 0) && !Baby.atkHome(t - 1), "atk home: an attacker heads home at the threshold, off at 0");
+        Baby.role = Baby.GATHER;
+        check(!Baby.atkHome(t + 100), "atk home: only attackers");
+        Baby.role = saved;
+    }
+
     static void testBabyCapArea() {
         int rich = Math.max(Cfg.MAX_BABIES, Cfg.RICH_BABIES), small = Cfg.RICH_MIN_AREA > 0 ? Cfg.MAX_BABIES : rich;
         reset(); W = 20; H = 20; install();
@@ -3285,6 +3295,7 @@ public class BotTest {
         testSymRelay();
         testKingHeld();
         testBabyCapArea();
+        testAtkHome();
         testSqueakCodec();
         testFresh();
         testCatGeometry();

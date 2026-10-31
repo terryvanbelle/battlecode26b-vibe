@@ -418,6 +418,12 @@ public final class Cfg {
      *  after-move pickUp but never deliver. s9s's 126 field games from r400: attack-move turns carried 43-82 cheese
      *  on average and 10-33% of them 100+, and those moved on 31-39% of turns (1% slower per unit carried). */
     public static final int ATK_CARRY = 0;
+    /** An attacker carrying ATK_DELIVER or more raw cheese takes it to the nearest king before attacking again (0 =
+     *  off). u2g's in-band field games: attack-move rats held 830 cheese at a time in wins and 319 in losses (every
+     *  50 rounds from r100), peaking at 1188 / 666 a game; our babies died holding 1362 / 851 a game (dropped for
+     *  the enemy: 975 a lost game of their pickups were drops). 4988 clockwisdom: four attackers held 2500 at
+     *  Chebyshev 33-54 from our king while it starved to death (r800-860). Heavy rats crawl (1% slower a unit). */
+    public static final int ATK_DELIVER = 0;
     /** Babies spawned before any fighter is assigned. */
     public static final int GATHER_FIRST = 6;
     /** One in FIGHT_EVERY later babies is a cat fighter. */

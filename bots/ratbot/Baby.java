@@ -1142,6 +1142,7 @@ public final class Baby {
         if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) { why = 'm'; return; }
         Debug.mark(14);
         if (!G.coop && Cfg.FACE_ENEMY && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) { why = 'f'; return; }
+        if (Cfg.ATK_DELIVER > 0 && atkHome(raw) && deliver()) return;
         if (role == ATTACK && attack()) { why = 'a'; return; }
         Debug.mark(15);
         if (!G.coop && war()) { why = 'w'; return; }
@@ -1871,6 +1872,11 @@ public final class Baby {
         if (rr) return cand[rrSlot % m];
         if (Cfg.MINE_BALANCE) return Cfg.IDLE_SHIFT ? cand[(slot % m + mineShift) % m] : cand[slot % m];
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
+    }
+
+    /** Cfg.ATK_DELIVER: an attacker carrying raw cheese at the threshold or more heads home with it. */
+    static boolean atkHome(int raw) {
+        return Cfg.ATK_DELIVER > 0 && role == ATTACK && raw >= Cfg.ATK_DELIVER;
     }
 
     /** Cfg.KMINE_SKIP: one of our kings stands within Chebyshev 4 of mine m. */

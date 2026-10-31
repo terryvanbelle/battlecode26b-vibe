@@ -1,0 +1,6 @@
+name=u3g
+source=bots/ratbot
+source_sha=fe48afa897f7
+commit=92945a4
+created=2026-10-31 09:25 PDT
+change=u2g + ATK_DELIVER 50: an attacker carrying 50+ raw cheese takes it to the nearest king before attacking again
