@@ -1,0 +1,6 @@
+name=u4a
+source=bots/ratbot
+source_sha=23e49f7a0b89
+commit=cb45bab
+created=2026-10-31 16:23 PDT
+change=u3v + CHIRAL_SYM true (u3x rebased on the accepted u3v): the chirality-1 seat reads the map symmetry from the engine sense order at birth
