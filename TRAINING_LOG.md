@@ -4137,3 +4137,21 @@
     - Dose: on or off.
     - Falsifier: kf1 (those 4 maps, both sides, plus u2g mirrors) shows no fall in king-near stuck rounds.
     - If rose still jams (the king plugs at (13,1), so no flow path exists), the pair u3t+u3u is next.
+- 13:46: kf1 done (u3u = u2g + KING_FLOW vs u2g on rose, EscapeTheNight, rift and fullofsecrets, both sides,
+  plus u2g mirrors). Mirror winners: B on all four maps.
+  - u3u gained EscapeTheNight A and fullofsecrets A, lost EscapeTheNight B: net +1 of 8 cells.
+  - The counter (listed stuck rounds within 3 of our king, stuckside.py) is mixed. u3u vs the two u2g games on
+    the same side:
+    - Down on rift A (599 vs 1779/2394), rose A (528 vs 2845/4007) and EscapeTheNight B (906 vs 1040/1311).
+    - Up on rift B (3548 vs 692/711).
+    - Mixed on EscapeTheNight A (1014 vs 145/3953) and rose B (2311 vs 1446/3029).
+  - Rift B shows the cause KING_FLOW cannot reach. From r941 to r2000 four rats sit at (53-54, 12-13), boxed in
+    by the wall row y=14, the wall at x=52 and three of our kings' bodies ((53,10), (56,12), (57,9)). Those kings
+    stand in state 'z' (no step closer, no dirt to dig), walking greedily toward home mines (46,15) and (53,17)
+    across the wall row. The rats target (53,17).
+  - So the stuck-near-king class has one root: a king's greedy walk toward a mine its 3x3 cannot reach ends at a
+    wall or corridor mouth, and parks its body where it shuts our babies in. Rose (one king, the corridor mouth)
+    and rift (three kings, a corner) are both instances. KING_FLOW only fixes the A* half (EscapeTheNight).
+  - Basics battery (§1.11): the movement row (no unit stalled N turns) fails, with rats stalled 600-1200 rounds,
+    so candidates from it go first. u3u is a basics repair. It joins the replica queue ahead of the strategy
+    candidates once hh1 has ranked them, and accepts at t >= 0 after block 2.
