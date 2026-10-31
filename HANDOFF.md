@@ -116,9 +116,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   bank holds 3000; a second king late in the game). Block 1 = set 3 (4516-4521, 4526-4529, 4537-4538, 4545-4546):
   net +1 (spsquared rift A), pool z +2.12. Block 2 = set 4 (4553-4558, 4569-4574, 4576-4577): net +1 (bc26vibe
   averystrangespace B), pool 23 of 42 vs 23.2 (z -0.09). Pooled 84 cells, D 2, +2 -0, t +1.41: block 3 on set 1,
-  which first needs u0m's reference block there: u0m resubmitted as #127, set 1 queued from 4578 (requests 3644+),
-  waiter build/wait_r1.sh (ids > 4577, task ba35yw8kh). Then resubmit bots/u2g and queue set 1 (v3-set1.json);
-  score it with `contest.py paired REFIDS IDS` (REFIDS = #127's 14 matches); block 3 rejects at pooled t <= 1.5,
+  against u0m's set-1 reference #127 = 4588-4591, 4601-4602, 4611-4614, 4719-4722 (23 of 42). u2g resubmitted as
+  #128, set 1 queued from 4723 (requests 3685+), waiter build/wait_u2g3.sh (ids > 4722, task bk3wyd66p). Score it
+  with `contest.py paired 4588-4591,4601-4602,4611-4614,4719-4722 IDS`; block 3 rejects at pooled t <= 1.5,
   accepts at t >= 2 (needs D >= 4), else block 4 (final, rejects below 2). Screen ra_u2g: +1.4 pts, t +3.65, net +1.
   Set-4 scoring: `contest.py paired 3756-3767,3785-3786 IDS` AND `contest.py pool 3284-3297
   research/panel/v3-set4-pool.txt IDS`. Set-3 scoring: `contest.py paired 3819-3822,3836-3837,3849-3856 IDS` AND

@@ -3329,3 +3329,32 @@
 - u2j sy1 vs abrk: 8 of 12 to u0m's 6. Gained tiny B, keepout B and averystrangespace B; lost keepout A.
 - VM disk was at 527 MB free. Deleted 60 more replay dumps older than 12 h that no dump list references (all
   regenerable): 1.2 GB free.
+
+## 2026-10-31 01:24 PDT: u0m's set-1 reference; u2g block 3 queued; sp1/sp2; u2o; one mine on wallsofparadis
+- u0m's set-1 reference (#127): 4588-4591, 4601-4602, 4611-4614, 4719-4722, 23 of 42. Lost AlexT101 5 of 6,
+  abcdezyxwv 5 of 6, spsquared bed A/B and superioristhmus A/B, AdamTan12 DefaultSmall A and jail A/B, CS50Crab
+  streetsofnewyork A. u2g resubmitted (#128); its set-1 block 3 is queued from 4723.
+- Diags vs abrk on pk1's 8 cells (u0m 6 of 8):
+  - u2k (FLOW_SPLICE): 7 of 8. Gained averystrangespace B; Stash king kills r589/r1085 (u0m r826/r1047).
+  - u2l (RUSH_BAN): 7 of 8. Gained averystrangespace B; Stash king kills r476/r536. keepout games identical to u0m's.
+  - u2m (FLOW_CACHE): 6 of 8, the same cells as u0m. Parked; its screen dropped from the queue.
+- u2i (RUSH_UNTIL 100) screen vs u0m: 80 cells, D 11, +1.2 pts, t +0.43, net +2. Neutral; parked.
+- u2o = u0m + FLOW_SPLICE 2 + RUSH_BAN 150 (the two mechanisms touch different code: path mending and the rush spot
+  choice). Diag sp3 (pk1's cells) and screen ra_u2o queued.
+- wallsofparadis vs AdamTan12 (3855/3856, 0 of 2; scratch minework.py, traj.py on the VM): 60x60, eight mines, the
+  map is nested walled rings with one-tile dirt gates.
+  - Our king listed one mine, (30,3), all game (local u0m vs abrk game: `ml=N3` from r100 to r1990). Up to 16 rats
+    stood within 4 of it (33k rat-turns locally for 4560 cheese). A mine yields ~2.25 a round however many rats
+    wait (each round both twins roll 1 - 0.99^k, k rounds since the pair's last spawn, so ~9 rounds a spawn of 20),
+    and the king eats 2: one mine is break-even.
+  - AdamTan12 worked all eight: ~1400-1700 from each ring mine. Their king walked to its edge mine, and a second
+    king sat in the inner ring by r400. With equal babies (~20) they delivered 6.9k by r650 to our 1.2k; our king
+    starved at r691/r905 with 90-200 combat damage.
+  - Our scouts (1 in 4 gatherers to r150) walk the open outer strip and never dig a gate. The open corner mine
+    (55,5) lies on our side's boundary (equidistant), so homeHalf() keeps everyone off it.
+- keepout vs AdamTan12 (50x50, 12 mines, both lost r840/r937): on our half they picked 7500 to our 4468 (B side),
+  ~1-2 rats a mine on every mine; we stacked 3-4 on 3-4. From r500 our population fell below 16, and each
+  replacement spawned with 4-15 alive is a rusher ('a' 36-59% of our rat-turns from r500).
+- Big maps (area >= 2500: where_are_you, wallsofparadis, uneruesansfin, superioristhmus, keepout) hold 10 of u0m's
+  37 set-3/set-4 losses. The causes differ: one known mine (wallsofparadis), out-harvested on our own half
+  (keepout), rushers dying full (uneruesansfin; u2n targets it), population (superioristhmus).
