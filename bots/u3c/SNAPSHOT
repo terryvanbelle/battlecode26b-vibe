@@ -1,0 +1,6 @@
+name=u3c
+source=bots/ratbot
+source_sha=be171b54ce0b
+commit=0f0ecba
+created=2026-10-31 06:44 PDT
+change=u2g + MINE_ANY + MINE_TIES (t0p rebased on the incumbent): gatherers spread over every known mine, either half and the axis

@@ -3642,3 +3642,26 @@
     at r14-52 (they backstab). keepout A: they worked all 12 mines, we 5; the axis pair (21,47)/(28,47) gave them
     3520 and we never went near it. wallsofparadis A: we worked 1 of 8.
 - Sweep under way fast: by 06:39 matches 4969-4974 are in (YokoOno, VarunVejalla, Xzibit: u2g 2 of 6 each).
+
+## 2026-10-31 06:48 PDT: in-band losses are an economy deficit; u3c (MINE_ANY + MINE_TIES on u2g)
+- Over u2g's in-band games so far (AdamTan12 4545/4546/4735/4736 and the sweep's 4969-4974: YokoOno, VarunVejalla,
+  Xzibit; scratch deathsum.py, kingcount.py, minetime.py, econshare.py), lost games (19): the kill trade is even
+  (our rat deaths 65 a game, theirs 60), our king loses 379 hp to bites and 233 to starvation, and they transfer
+  4971 to our 1811. Neither side forms extra kings before r400; we field more babies early (22 to 17 at r100).
+- To r300 (15 lost games past r300): they pick 46 cheese per 100 baby turns to our 24, and 113 per 100 turns spent
+  within Chebyshev 4 of a mine to our 44, though our rats spend more turns there (54% to 41%; why codes M 23%,
+  W 15%: walking to and waiting at the assigned mine). Off-mine pickups are small (36 vs 86 a game). In our wins
+  their rate falls to 40 and ours stays 24.
+- Engine: a mine drops 20 cheese at a random tile of its 9x9 square (and its twin at the mirrored tile) with a
+  hazard rising each round since the last drop (1 - 0.99^k: about every 12 rounds), however many rats wait, and
+  the cheese stays until picked. So rats parked at a mine add nothing past the first, and every unvisited mine is
+  a growing reservoir: keepout's axis pair gave AdamTan12 3520 and us 0; in our losses they also took 2345 a game
+  on our half against 211 in our wins.
+- Pre-registration, u3c = u2g + MINE_ANY + MINE_TIES (t0p's pair on the incumbent). Mechanism: MINE_BALANCE's
+  slots cover every known mine (either half and the axis), so gatherers stop crowding our nearest home mines.
+  t0p screened +10.8 pts (t +3.09, net +6) and delivered more vs abcd's maps, but its replica block (set 4) had
+  only 4 discordant cells, on the old panel where 5 of 7 opponents were out of band. Counter: cheese picked per
+  100 baby turns, delivered, picks on axis/away mines. Doses: 0 (u2g), on. Delivery check: diag ma2 (u3c and u2g
+  vs araid on keepout, wallsofparadis, jail, Stash, learn_your_lesson, starvation, DefaultMedium, arrows, both
+  sides). Then the replica on panel v4 set 1. Falsifier: no rise in picks per 100 turns, or rats lost on
+  enemy-half trips (deaths away from home up with delivered flat).
