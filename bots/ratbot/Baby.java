@@ -1181,7 +1181,10 @@ public final class Baby {
         if (scouting()) {
             // a scout with news the king lacks carries it home (squeaks reach the king from dist2 16 only)
             MapLocation k = Comms.nearestKing(G.me);
-            if (k != null && unreported() >= 0) { Nav.goTo(k); why = 's'; return; }
+            if (k != null && unreported() >= 0) {
+                if (Cfg.SWEEP > 0) sweepCell = 0; // the cell's time budget restarts after the walk home
+                Nav.goTo(k); why = 's'; return;
+            }
             why = 'S';
             if (Cfg.SCOUT_FRONTIER && exploreFrontier()) return;
             if (!exploreHome()) explore();
