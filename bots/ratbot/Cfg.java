@@ -564,6 +564,10 @@ public final class Cfg {
     /** A mine as near the enemy start as ours (on a HOR/VER axis: 7 of EscapeTheNight's 11) counts as ours for the
      *  gatherers' pick and the king's home mine, instead of as theirs. */
     public static final boolean MINE_TIES = false;
+    /** Experiment only (map-specific, never a candidate): the half test takes PathOracle's offline verdict (8-way path
+     *  from each start, dirt +4) for the mines where it disagrees with the Euclidean one on uneruesansfin,
+     *  wallsofparadis and cheesebottles, to bound what a path-based half test could gain there. */
+    public static final boolean PATH_ORACLE = false;
     /** Scouts: one in SCOUT_EVERY gatherers explores our half (never-seen tiles) until round SCOUT_UNTIL, then
      *  gathers (0 = off). */
     public static final int SCOUT_EVERY = 4, SCOUT_UNTIL = 150;

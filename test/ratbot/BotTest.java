@@ -854,6 +854,19 @@ public class BotTest {
     /** FLOW_W: the weighted reverse search leaves a Stash-like pocket (a wall row with dirt at both ends, unseen
      *  ground beyond) by a path as short as the plain search's while touching fewer tiles, and a mirrored rat in the
      *  mirrored frame finds the mirrored path. */
+    static void testPathOracle() {
+        reset(); W = 60; H = 60; install();
+        MapLocation a = new MapLocation(4, 54), b = new MapLocation(55, 5);
+        check(PathOracle.verdict(new MapLocation(32, 49), a) == -1 && PathOracle.verdict(new MapLocation(27, 10), a) == 1
+              && PathOracle.verdict(new MapLocation(32, 49), b) == 1 && PathOracle.verdict(new MapLocation(27, 10), b) == -1,
+              "path oracle: uneruesansfin's path verdicts flip with the side");
+        check(PathOracle.verdict(new MapLocation(30, 3), new MapLocation(3, 2)) == 0, "path oracle: no verdict for an unlisted mine");
+        reset(); W = 59; H = 20; install();
+        check(PathOracle.verdict(new MapLocation(19, 2), new MapLocation(2, 11)) == -1
+              && PathOracle.verdict(new MapLocation(19, 2), new MapLocation(56, 8)) == 1, "path oracle: cheesebottles");
+        reset();
+    }
+
     static void testFlowW() throws GameActionException {
         int[] n = new int[3], L = new int[3];
         int[][] got = new int[3][];
@@ -3033,6 +3046,7 @@ public class BotTest {
         testFlowRev();
         testFlowFast();
         testFlowW();
+        testPathOracle();
         testFlowSplice();
         testRushBan();
         testTrapRiskNear();

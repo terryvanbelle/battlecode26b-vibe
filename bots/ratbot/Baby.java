@@ -1877,7 +1877,10 @@ public final class Baby {
     static boolean raider;           // a fighter that leaves our half to contest theirs
 
     /** l is closer to our king than to its mirror under the first live symmetry. */
-    static boolean homeHalf(MapLocation l) { return Cfg.HOME_ALL_SYM ? nearerAll(l, ref(), Sym.mask) : nearer(l, ref(), firstSym()); }
+    static boolean homeHalf(MapLocation l) {
+        if (Cfg.PATH_ORACLE) { int v = PathOracle.verdict(l, ref()); if (v != 0) return v > 0; }
+        return Cfg.HOME_ALL_SYM ? nearerAll(l, ref(), Sym.mask) : nearer(l, ref(), firstSym());
+    }
 
     /** Cfg.HOME_ALL_SYM: l is nearer h than h's twin under every symmetry in mask (the first live one if none is). */
     static boolean nearerAll(MapLocation l, MapLocation h, int mask) {
