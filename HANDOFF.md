@@ -97,35 +97,33 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (see TRAINING_LOG.md for the history)
-- Incumbent on the replica: **u0m** (#114), accepted 2026-10-30 12:49 PDT over s9s as a basics repair (accept at
-  pooled t >= 0 after block 2): set 4 (3756-3767, 3785-3786) net -3 vs s9s 3284-3297, set 2 (3796-3809) net +7 vs
-  u0f 3728-3741 (25 of 42 to 18); pooled 84 cells, D 18, +11 -7, net +4, t +0.94. u0m = `snapvar.py @s9s` +
-  'SENSE2_LEFT = 4000, IND_LEFT = 0=>SENSE2_LEFT = 6000, IND_LEFT = 1000' 'FLOW_ALLOC = false=>FLOW_ALLOC = true'
-  'FLOW_REV_TURNS = 25=>FLOW_REV_TURNS = 60'. Previous: s9s (#101/#103), accepted 2026-10-30 02:44 PDT over s7d.
-- u0m's reign: set 2 carries its accepting luck (+7) and needs a salted twin before anyone is scored there. Set 3
-  reference: u0m's block 3819-3822, 3836-3837, 3849-3856, 25 of 42 (outercloud, bc26vibe, CS50Crab 6 of 6 each;
-  AlexT101 1, abcdezyxwv 0, spsquared 4, AdamTan12 2). Candidates' block 1 = set 3 (reference that draw),
-  block 2 = set 4 (reference 3756-3767, 3785-3786, an unlucky draw, so also score with `contest.py pool`), then set 1
-  after a u0m reference block there, set 2 last after a twin.
+- Incumbent on the replica: **u2g** (#126/#128), accepted 2026-10-31 02:09 PDT over u0m: u0m + END_KING 1850 +
+  FORM_RICH_BANK 3000 (FORM_RICH_MAX 4: a third and fourth king before r1150 while the bank holds 3000; a second
+  king late). Blocks: set 3 (4516-4521, 4526-4529, 4537-4538, 4545-4546) +1, set 4 (4553-4558, 4569-4574,
+  4576-4577) +1, set 1 (4723-4736) +2 (CS50Crab streetsofnewyork A, spsquared superioristhmus A) vs u0m's
+  reference #127; pooled 126 cells, D 4, +4 -0, t +2.02. u2g = U0M recipe + 'END_KING = 0, END_KING_CHEESE =
+  400=>END_KING = 1850, END_KING_CHEESE = 400' 'FORM_RICH_BANK = 0, FORM_RICH_MAX = 4=>FORM_RICH_BANK = 3000,
+  FORM_RICH_MAX = 4'. Previous: u0m (#114), accepted 2026-10-30 12:49 PDT over s9s (basics repair).
+- u2g's reign: 122 of its 126 cells matched u0m's games, so its accepting luck sits in the 4 gained cells. Order:
+  block 1 = set 2 against u2g's own set-2 reference (queued from 4737, requests 3699+, waiter build/wait_u2g4.sh,
+  ids > 4736), block 2 = set 3 (reference u2g 4516-4521,4526-4529,4537-4538,4545-4546, and `contest.py pool`
+  with v3-set3-pool.txt), block 3 = set 4 (reference u2g 4553-4558,4569-4574,4576-4577, and the set-4 pool), set 1
+  last after a salted twin of u2g (HAND_FLIP) re-anchors it. Local candidates are rebased on u2g; screens use
+  control build/vmruns/runs/ra_u2g/results.jsonl.
+- u0m's reign (history): set 3 reference 3819-3822, 3836-3837, 3849-3856 (25 of 42); set 4 3756-3767,
+  3785-3786; set 1 #127 4588-4591, 4601-4602, 4611-4614, 4719-4722 (23 of 42).
+- Scoring in u2g's reign: set 2 `contest.py paired <u2g set-2 ids> IDS`; set 3 `contest.py paired
+  4516-4521,4526-4529,4537-4538,4545-4546 IDS` AND `contest.py pool 3819-3822,3836-3837,3849-3856
+  research/panel/v3-set3-pool.txt IDS`; set 4 `contest.py paired 4553-4558,4569-4574,4576-4577 IDS` AND
+  `contest.py pool 3284-3297 research/panel/v3-set4-pool.txt IDS`. Blocks 1-3 reject at pooled t <= 0, 1, 1.5;
+  from block 2, t >= 2 accepts (D >= 4); block 4 final. Hard cells: AlexT101 constrictinglattice/starvation and
+  abcdezyxwv Stash/constrictinglattice are 0 of 24 pool games each, Excavation 1. Rejected under u0m: u2b (#125,
+  MOAT), u1y (#124), u1v (#123, AMMO_AWAY), u1r (#122, BUG_DIG), u1o (#121, RUSH_TO 20), u0y, u1p, u0o, u0q.
 - Per opponent over the last blocks: abcdezyxwv 1 of 18, AlexT101 1 of 18; outercloud 15, CS50Crab 13, bc26vibe 12,
   spsquared 11, AdamTan12 10. Against abcdezyxwv the rat war is lost: 3764 superioristhmus our rats took 10.3k damage
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Replica: u2g (#126) = u0m + END_KING 1850 + FORM_RICH_BANK 3000 (a third and fourth king before r1150 while the
-  bank holds 3000; a second king late in the game). Block 1 = set 3 (4516-4521, 4526-4529, 4537-4538, 4545-4546):
-  net +1 (spsquared rift A), pool z +2.12. Block 2 = set 4 (4553-4558, 4569-4574, 4576-4577): net +1 (bc26vibe
-  averystrangespace B), pool 23 of 42 vs 23.2 (z -0.09). Pooled 84 cells, D 2, +2 -0, t +1.41: block 3 on set 1,
-  against u0m's set-1 reference #127 = 4588-4591, 4601-4602, 4611-4614, 4719-4722 (23 of 42). u2g resubmitted as
-  #128, set 1 queued from 4723 (requests 3685+), waiter build/wait_u2g3.sh (ids > 4722, task bk3wyd66p). Score it
-  with `contest.py paired 4588-4591,4601-4602,4611-4614,4719-4722 IDS`; block 3 rejects at pooled t <= 1.5,
-  accepts at t >= 2 (needs D >= 4), else block 4 (final, rejects below 2). Screen ra_u2g: +1.4 pts, t +3.65, net +1.
-  Set-4 scoring: `contest.py paired 3756-3767,3785-3786 IDS` AND `contest.py pool 3284-3297
-  research/panel/v3-set4-pool.txt IDS`. Set-3 scoring: `contest.py paired 3819-3822,3836-3837,3849-3856 IDS` AND
-  `contest.py pool 3819-3822,3836-3837,3849-3856 research/panel/v3-set3-pool.txt IDS` (u0m's own set-3 draw is ~3 wins
-  lucky). Hard cells: AlexT101 constrictinglattice/starvation and abcdezyxwv Stash/constrictinglattice are 0 of 24
-  pool games each, Excavation 1. Rejected on set 3: u2b (#125, MOAT), u1y (#124), u1v (#123, AMMO_AWAY), u1r (#122,
-  BUG_DIG), u1o (#121, RUSH_TO 20), u0y, u1p, u0o. Weak locally: u1t, u1u, u1w; parked: u1z (KP_FRONT).
 - Next candidates: u2j (side-symmetry bundle; sy1 vs abrk 8 of 12 to u0m 6), u0p (RUSH_STICK; pk1 8/8 vs u0m 6/8),
   and the navigation repairs on diag (sp1: u2k FLOW_SPLICE 2, u2l RUSH_BAN 150; sp2: u2m FLOW_CACHE; pk1's 8 cells
   vs abrk, control pk1's u0m cells; scratch flowsum.sh/flowend.py/ftlong.py on the VM give flow-search totals per

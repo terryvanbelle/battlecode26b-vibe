@@ -3358,3 +3358,37 @@
 - Big maps (area >= 2500: where_are_you, wallsofparadis, uneruesansfin, superioristhmus, keepout) hold 10 of u0m's
   37 set-3/set-4 losses. The causes differ: one known mine (wallsofparadis), out-harvested on our own half
   (keepout), rushers dying full (uneruesansfin; u2n targets it), population (superioristhmus).
+## 2026-10-31 02:10 PDT: u2g accepted; path vs Euclid mine halves; the oracle; TRIP_HALF (u2q, u2r)
+- u2g (#126/#128, rich kings) set-1 block 3 (4723-4736) vs u0m's reference #127: 42 cells, 40 alike, D 2 (+2 -0:
+  CS50Crab streetsofnewyork A, spsquared superioristhmus A), t +1.41. Pooled over its three blocks: 126 cells, D 4,
+  +4 -0, t +2.02: ACCEPTED (t >= 2 with D >= 4) at 02:09 PDT, the new incumbent.
+  - Its reign: 122 of its 126 cells match u0m's games, so the accepting luck is the 4 gained cells. Block 1 = set 2
+    against u2g's own reference (queued from 4737), then set 3 and set 4 (u2g's blocks as reference, plus the pools),
+    set 1 last after a HAND_FLIP twin of u2g. Candidates are rebased on u2g.
+- Path census (scratch pathdist.py/pathcensus.sh on the VM: 8-way path from exact mirrored starts, dirt +4, over the 23
+  panel maps in the dump lists). Path and the Euclidean half test disagree on three maps, all solid losses:
+  - uneruesansfin, all 4 mines. From A (4,54), (32,49) is 809 vs 2465 in d2 but 137 vs 92 steps, and (53,53) is the
+    reverse, 49 vs 188.
+  - wallsofparadis, 4 of 8: (55,5) 52 vs 72 steps, (38,22) 50 vs 55, and their twins.
+  - cheesebottles, 2 of 6: (19,2) 46 vs 42 steps.
+  - Elsewhere only exact path ties (uneasy_alliance, rose). With dirt free, where_are_you joins.
+- u2p (EXPERIMENT, PathOracle: hard-coded path verdicts for those 10 mines). u2p beat u0m as A on uneruesansfin, but
+  against abrk it moved 4038 cheese to u0m's 5237.
+  - Scratch mtgt.py (rat-turns by indicator target mt=) explains it. u2p's king listed only (53,53) until r1600, so
+    every rat worked one mine. u0m worked (53,53) and then (32,49).
+  - A mine drops ~2.25 cheese a round however many rats wait there, so the mines worked, not the steps walked, set
+    the income. Handing (32,49) to the enemy pays only if its twin (27,10) is listed and worked.
+- TRIP_HALF (new, off by default): the real version.
+  - Gatherers time clean walks (birth or delivery to arrival, every turn a walk-to-mine move) and squeak them to a
+    king in earshot.
+  - The king keeps each listed mine's fastest walk (steps / 4) in the spare bits of its shared slot.
+  - The half test calls a mine ours when its walk beats its twin's by TRIP_HALF steps, theirs when it trails. An
+    untimed twin counts its Chebyshev distance from our start.
+  - u2r adds King.mirrorAll: once the symmetry is known, the king lists every twin on either half.
+  - Default bytecode unchanged: only new members, plus ldc -> ldc_w in six King methods where the constant pool passed
+    255 entries (same instructions).
+  - Diags th1 (u2q, walks only) and th2 (u2r, with twins), vs u0m and abrk on the three maps, both sides.
+  - Risk on uneruesansfin: with twins listed, (6,6) (Euclid ours by a hair, 188 steps) takes rats before any walk is
+    timed.
+- Also: u2o (FLOW_SPLICE + RUSH_BAN) diag sp3 6 of 8 like u0m (traded averystrangespace A for B); ra_u0p screen
+  neutral (80 cells, t +0.08, net -2), u0p parked.
