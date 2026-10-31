@@ -3584,3 +3584,15 @@
   near our king 460 to 587, throw hits on our king 119 to 125. Saves per enemy grab near the king 0.80 (u2y 0.78,
   u2g 0.70); throw hits per enemy grab 0.26 (u2y 0.21, u2g 0.26). The pre-registered falsifier (no more saves
   than 457) is met and the wins rest on 3 discordant cells: u3a parked, not promoted on its win count.
+- Why our rush does nothing against the top two (deaths.py, rushpay.py, ammo.py from their side; u2w's 4883-4886):
+  we landed 0 throw hits on their king in 10 of 12 games (4 and 13 in the two ultimatestarvation wins). On evileye
+  (4883, lost r247) AlexT101 laid 53 traps by r100; 24 of our rats died to traps by r200 and 30 to throwLand
+  (grabbed weak or stunned, then thrown); all 28 rushers were dead by r300 with 0 damage to their king. On
+  averyfineline 14 of 16 rushers were dead by r100, also with 0 damage.
+- Pre-registration, u3b = u2g + RUSH_BURN 6 (u1w's switch on the incumbent; u1w was weak locally vs u0q, 8 to 11,
+  and never ran on the replica). Mechanism: once an enemy trap fires on us, rushers more than Chebyshev 6 from the
+  enemy start turn gatherers instead of walking into the trap line, and stop feeding the enemy grab-and-throw.
+  Counter: rushers demoted, our rats killed by enemy traps and throwLand, delivered cheese. Doses: 0 (u2g), 6.
+  Instrument: diag rb3 (u3b and u2g vs u0q on rsb2's 10 maps, both sides) as the delivery check; then the replica
+  set-2 block 1 vs 4737-4750 when the slot is free. Falsifier: no fewer of our rats killed by traps and throws, or
+  wins lost where u2g's rush kills kings early (spsquared, CS50Crab, bc26vibe).

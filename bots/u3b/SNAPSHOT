@@ -1,0 +1,6 @@
+name=u3b
+source=bots/ratbot
+source_sha=1212aea7e21b
+commit=92acf46
+created=2026-10-31 06:04 PDT
+change=u2g recipe + RUSH_BURN 0 -> 6
