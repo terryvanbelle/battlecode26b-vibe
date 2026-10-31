@@ -4069,3 +4069,32 @@
   head-to-head screen, will rank them).
 - The set-4 reference replays (5387-5414) had not been fetched before the first paired read, which refused to score
   (contest.py: "NO REFERENCE"). They are fetched now.
+
+## 2026-10-31 13:22 PDT: audit lens 4 (what replays show): the king plugs rose's pocket; u3t (KING_PLUG)
+- Lens 3 (shared state and stale data): the Comms layout is consistent and the stamps wrap correctly. One minor
+  finding: MINE_SLOTS 16 caps the team mine list, which truncates it on 6 of 74 maps (TheHeist 18,
+  cheeseguardians 18, clockwisdom 20, externalsustenance 24, groveisbeingdesecrated 18, superioristhmus 20).
+  Each gatherer's own myMines list covers the overflow (pickMine merges both), so no fix for now.
+- Lens 4: stuck_report on u2g's set-4 field games. Stuck rats used 2.0% of baby turns overall, but on rose vs
+  YokoOno (as A) they used 29.1%: rats at (13-15,2-4) walking to a mine ('M') for ~600 rounds, touching our king.
+  averystrangespace (785-1205 rounds on 'M', far from the king) and cheesebottles (5.9%) also rose.
+- The u2g vs u2g mirror on rose (hcc) reproduces it: 12.3% of 91738 baby turns lost, the same tiles on both sides.
+  - The stuck rats target mine (2,7) (indicator nt=2,7). The king, also bound for (2,7) (hm=2,7), started at
+    (16,1) and walked (16,2) r52, (15,3) r58, (14,3) r62, (14,2) r75, (13,1) r84. It stays at (13,1) to r2000 (km=z:
+    no step closer, no dirt to dig), because its 3x3 cannot pass the 1-wide corridor at x=9.
+  - At (13,1) its body fills x 12-14, y 0-2. That is the only way out of the start pocket (x 13-20, y 0-5).
+  - All 20 babies spawned in r1-99 were born in the pocket. Over the game, 42% of side A's 39932 rat-turns were
+    spent in the box x 15-20, y 0-5. Spawns after r84 still pick the pocket side (it is nearest the centre): 11 of
+    15 in r300-499.
+- This is the same geometry as s6r's KING_PLUG note (field 1796 vs spsquared). s6r was never screened: its base
+  (S4D) was superseded. Its rose diagnostic against araid lost both sides, with the unplugged pocket's rats jamming
+  the 1-wide corridor head-on.
+- MapCensus gains a pocket column: open spawn-ring tiles of king A's start 3x3 that reach under half of freeTiles
+  with that 3x3 walled. No map has one at the start, so on rose the plug comes from the king's walk alone.
+- u3t = u2g + KING_PLUG (existing switch; snapvar with the u2g recipe; diff vs u3s is the two switches only).
+  Pre-registration:
+  - Mechanism: the king stops short of a ring-splitting tile, so the pocket's rats can reach the mines.
+  - Counter: rose's pocket rat-turns and stuck share.
+  - Dose: on or off (the zero arm is u2g).
+  - Falsifier: rose pl1 (u3t vs u2g, both sides) shows no fall in pocket rat-turns, or the corridor jam that s6r
+    saw returns.

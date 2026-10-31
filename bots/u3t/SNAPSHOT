@@ -1,0 +1,6 @@
+name=u3t
+source=bots/ratbot
+source_sha=b6ed688e32a4
+commit=f03d691
+created=2026-10-31 13:22 PDT
+change=u2g + KING_PLUG: the king never steps to where its 3x3 splits the ring around it into 2+ open arcs (unless it stands as badly) and steps out of one; rose (hcc mirror): the king walked to (13,1) by r84, plugging the pocket exit, 20 babies shut in behind it, 42% of rat-turns in the pocket

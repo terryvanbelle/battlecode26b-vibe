@@ -10,14 +10,17 @@ import java.util.*;
  *  mines among them, digNear = fewest digs to any mine, digHome = fewest digs to a mine nearer king A than king B.
  *  featDiff = per wrong symmetry (R rotational, H horizontal: y flipped, V vertical: x flipped) the tiles whose wall,
  *  dirt or mine differs from their twin's, the only sightings that can rule it out (R0 = never); gapAlt = the wrong symmetries whose twin of
- *  king A lies within Chebyshev 2 of it (the kings' 3x3 bodies would overlap: ruled out at round 1).
+ *  king A lies within Chebyshev 2 of it (the kings' 3x3 bodies would overlap: ruled out at round 1). pocket = the open
+ *  tiles of the ring around king A's start 3x3 (its spawn tiles) from which, with that 3x3 as wall (dirt open), under half
+ *  of freeTiles can be reached, as k/n:S (k pocket tiles of n open, S the largest pocket's size; a trailing * when the
+ *  open ring tile nearest the map centre is one of them), or - with none.
  *  Usage: java -cp engine.jar:classes bc26tools.MapCensus MAPDIR [--ascii NAME] */
 public class MapCensus {
     public static void main(String[] args) throws Exception {
         File dir = new File(args[0]);
         String ascii = args.length > 2 && args[1].equals("--ascii") ? args[2] : null;
         if (ascii == null)
-            System.out.println("map\tw\th\tsym\tkingA\tkingB\tkingDist2\tcats\twallPct\tdirtPct\tmines\tcheese0\tseed\twaypoints\tfreeTiles\tminesFree\tdigNear\tdigHome\tfeatDiff\tgapAlt");
+            System.out.println("map\tw\th\tsym\tkingA\tkingB\tkingDist2\tcats\twallPct\tdirtPct\tmines\tcheese0\tseed\twaypoints\tfreeTiles\tminesFree\tdigNear\tdigHome\tfeatDiff\tgapAlt\tpocket");
         File[] files = dir.listFiles((d, n) -> n.endsWith(".map26"));
         Arrays.sort(files);
         for (File f : files) {
@@ -74,12 +77,58 @@ public class MapCensus {
                     if (Math.max(Math.abs(j % w - ka.x), Math.abs(j / w - ka.y)) <= 2) gapAlt += c;
                 }
             }
-            System.out.printf("%s\t%d\t%d\t%s\t%s\t%s\t%d\t%d\t%.1f\t%.1f\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%s%n", name, w, h, m.getSymmetry(),
+            System.out.printf("%s\t%d\t%d\t%s\t%s\t%s\t%d\t%d\t%.1f\t%.1f\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%s\t%s\t%s%n", name, w, h, m.getSymmetry(),
                     ka == null ? "-" : ka.x + "," + ka.y, kb == null ? "-" : kb.x + "," + kb.y,
                     ka == null || kb == null ? -1 : ka.distanceSquaredTo(kb), cats,
                     100.0 * walls / (w * h), 100.0 * dirts / (w * h), mines, ch, m.getSeed(), wp, free, minesFree, digNear, digHome,
-                    featDiff, gapAlt.isEmpty() ? "-" : gapAlt);
+                    featDiff, gapAlt.isEmpty() ? "-" : gapAlt, pocket(w, h, wall, dirt, ka, free));
         }
+    }
+
+    static final int[] RX = {-2, -1, 0, 1, 2, 2, 2, 2, 2, 1, 0, -1, -2, -2, -2, -2},
+                       RY = {-2, -2, -2, -2, -2, -1, 0, 1, 2, 2, 2, 2, 2, 1, 0, -1};
+
+    /** The pocket column: ring tiles of the 3x3 at k whose region (k's 3x3 walled, dirt open) holds under free / 2 tiles. */
+    static String pocket(int w, int h, boolean[] wall, boolean[] dirt, MapLocation k, int free) {
+        if (k == null) return "-";
+        boolean[] blk = wall.clone();
+        for (int dx = -1; dx <= 1; dx++) for (int dy = -1; dy <= 1; dy++) {
+            int x = k.x + dx, y = k.y + dy;
+            if (x >= 0 && y >= 0 && x < w && y < h) blk[y * w + x] = true;
+        }
+        int open = 0, pk = 0, big = 0, bestD = Integer.MAX_VALUE;
+        boolean nearIn = false;
+        for (int r = 0; r < 16; r++) {
+            int x = k.x + RX[r], y = k.y + RY[r];
+            if (x < 0 || y < 0 || x >= w || y >= h || blk[y * w + x] || dirt[y * w + x]) continue;
+            open++;
+            int n = region(w, h, blk, y * w + x);
+            boolean in = 2 * n < free;
+            if (in) { pk++; big = Math.max(big, n); }
+            int d = (2 * x + 1 - w) * (2 * x + 1 - w) + (2 * y + 1 - h) * (2 * y + 1 - h);
+            if (d < bestD) { bestD = d; nearIn = in; }
+        }
+        return pk == 0 ? "-" : pk + "/" + open + ":" + big + (nearIn ? "*" : "");
+    }
+
+    /** Tiles 8-connected to tile s through tiles not in blk. */
+    static int region(int w, int h, boolean[] blk, int s) {
+        boolean[] seen = new boolean[w * h];
+        ArrayDeque<Integer> q = new ArrayDeque<>();
+        seen[s] = true; q.add(s);
+        int n = 0;
+        while (!q.isEmpty()) {
+            int i = q.poll(), x = i % w, y = i / w;
+            n++;
+            for (int dx = -1; dx <= 1; dx++) for (int dy = -1; dy <= 1; dy++) {
+                int nx = x + dx, ny = y + dy;
+                if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
+                int j = ny * w + nx;
+                if (blk[j] || seen[j]) continue;
+                seen[j] = true; q.add(j);
+            }
+        }
+        return n;
     }
 
     /** Index of the twin of (x, y) under symmetry c (MapSymmetry order R, H, V: H keeps x, V keeps y). */
