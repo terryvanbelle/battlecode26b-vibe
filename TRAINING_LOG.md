@@ -4010,3 +4010,31 @@
   12 on 8 cores). The queued candidates u3d, u3g, u3e and u3q each play u2g on 8 set-4 maps both sides, and u3d, u3g,
   u3e also on the 8 stall maps. Control: the u2g mirror (hcc, plus hhc for the set-4 maps). It ranks the replica
   queue after u3c by local margin against the incumbent itself, a second view beside the archetype screens.
+
+## 2026-10-31 12:33 PDT: ablation screen ab1 priced; u3s (RISK_MIN_AREA 901)
+- ab1 done: each ablation on u2g's 48 cells vs araid/abrk (ma2 + sm1; 44 distinct cells, u2g wins 32).
+  - u3k (RAID off): 32, identical games (transfer equal to the unit). RAID never fires locally, so the screen
+    cannot price it.
+  - u3l (STANDOFF off): 31 (+4 -5), transfer -9%. Inconclusive.
+  - u3m (FLANK off): 28 (+5 -9). Earns its keep.
+  - u3n (POUNCE off): 32 (+6 -6), transfer -6%. No loss: a removal candidate (bytecode only).
+  - u3o (CARRY_AIM off): 24 (+5 -13). Earns its keep.
+  - u3p (TRAP_RISK off): 35 (+10 -7). By map area: on maps of 900 tiles or fewer +9 -5 (bed 4, canyoudig 2,
+    DefaultSmall, arrows 2 vs evileye, tiny, cheesefarm, starvation (875 tiles) A and B); on bigger maps +1 -2
+    (learn_your_lesson B vs DefaultMedium A and B).
+  - Each ablation moves 9-18 cells of 44 with the transfer within 10%, so the local cells are chaotic. A margin
+    of 3-4 is about one standard deviation there.
+- u3s = u2g + RISK_MIN_AREA 901 (new switch, off in ratbot). TRAP_RISK's mask and its observations apply only on
+  maps of 901+ tiles. 900 is the in-band small-map line, fixed before the ablation (5 of 22 won there).
+  - Mechanism: on small maps the mask (tiles within 1 of the front tiles of every enemy baby seen in the last 150
+    rounds) covers much of the board, so our rats detour or stall where the trap risk it prices is lower than the
+    tempo it costs.
+  - Counters: small-map results; our rats' trap deaths and the enemy's deaths on small maps.
+  - Doses: 0 (u2g) vs 901.
+  - Falsifier: the rma screen loses small-map cells on balance, or our small-map trap deaths rise by more than the
+    enemy deaths we gain.
+- Local screen rma on the VM: u3s on ab1's 48 cells (control: u2g's ma2 + sm1).
+- Process slip: snapvar edits bots/ratbot/Cfg.java in place while it snapshots, and I ran it during a full
+  unit-test run. The run compiled the altered Cfg and failed 11 config-dependent tests (rush, roles, throws).
+  Cfg was restored afterwards; the quick BotTest had already passed (1737/1737), and the repeated full run
+  passed (exit 0). Never run snapvar while the unit tests or a progress refresh are running.

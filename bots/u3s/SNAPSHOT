@@ -1,0 +1,6 @@
+name=u3s
+source=bots/ratbot
+source_sha=59fdec024f8f
+commit=cf3d8bc
+created=2026-10-31 12:32 PDT
+change=u2g + RISK_MIN_AREA 901: the trap-risk mask (TRAP_RISK) only on maps of 901+ tiles; ab1's u3p (no TRAP_RISK) gained 9 and lost 5 on maps <= 900 tiles

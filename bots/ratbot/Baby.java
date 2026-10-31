@@ -80,7 +80,7 @@ public final class Baby {
         Nav.avoid = cat != null ? laneMask(cat) : 0;
         if (Cfg.SWAP_YIELD && Nav.swapHold > 0 && rc.getCarrying() == null) Nav.avoid |= carrierMask(robots);
         // a newborn's first turn pays for array allocation and a full first sense: skip optional work when short
-        if (!G.coop && Cfg.TRAP_RISK && Flow.left() > Cfg.BC_OPTIONAL) {
+        if (!G.coop && Cfg.TRAP_RISK && (Cfg.RISK_MIN_AREA == 0 || G.W * G.H >= Cfg.RISK_MIN_AREA) && Flow.left() > Cfg.BC_OPTIONAL) {
             TrapRisk.observe(robots);
         }
 
@@ -130,7 +130,7 @@ public final class Baby {
                 && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
         boolean engaged = nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= 20;
         if (Cfg.RISK_ADAPT > 0) adaptRisk = false;
-        if (!G.coop && Cfg.TRAP_RISK && Nav.stall < 8) {
+        if (!G.coop && Cfg.TRAP_RISK && (Cfg.RISK_MIN_AREA == 0 || G.W * G.H >= Cfg.RISK_MIN_AREA) && Nav.stall < 8) {
             if (!(hunting && Cfg.HUNT_IGNORES_RISK) && (Cfg.RISK_IN_FIGHT || !engaged || Cfg.RISK_GATHER && role == GATHER))
                 Nav.avoid |= TrapRisk.mask(G.me);
             else if (Cfg.RISK_FRESH > 0) Nav.avoid |= TrapRisk.mask(G.me, Cfg.RISK_FRESH);

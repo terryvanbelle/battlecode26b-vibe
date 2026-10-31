@@ -269,6 +269,11 @@ public final class Cfg {
     public static final int FORT_TRAPS = 10;
     /** Avoid tiles where an enemy rat could have laid a trap (TrapRisk). */
     public static final boolean TRAP_RISK = true;
+    /** TRAP_RISK only on maps of RISK_MIN_AREA tiles or more (0 = every map). ab1 (u2g without TRAP_RISK, u3p, vs
+     *  araid and abrk, both sides): on maps of 900 tiles or fewer 9 cells gained (bed 4, canyoudig 2, DefaultSmall,
+     *  arrows 2) and 5 lost (evileye, tiny, cheesefarm, starvation (875 tiles) 2); on bigger maps 1 gained
+     *  (learn_your_lesson) and 2 lost (DefaultMedium). In-band field small maps (<= 900): 5 of 22 won. */
+    public static final int RISK_MIN_AREA = 0;
     /** Squeak enemy positions/facings so nearby allies share TrapRisk marks. */
     public static final boolean TRAP_SHARE = true;
     /** While chasing a ratnappable enemy, ignore suspected trap tiles. */
