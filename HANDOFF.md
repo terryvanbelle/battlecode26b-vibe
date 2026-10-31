@@ -112,13 +112,16 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Replica: u1y (#124, u0m + KING_PATH) was rejected at set-3 block 1 (4420-4425, 4439-4446: net -2, t -1.00, pool
-  z +0.64), so u0m is still the incumbent. Next candidate: u2b = u0m + MOAT (TRAINING_LOG 2026-10-30 22:13), after
-  diag mo2 (u2b on gmc's 36 war cells; control gmc = u0m) and screen ra_u2b. Score set-3 blocks with `contest.py
-  paired 3819-3822,3836-3837,3849-3856 IDS` AND `contest.py pool 3819-3822,3836-3837,3849-3856
-  research/panel/v3-set3-pool.txt IDS`: u0m's own set-3 draw is ~3 wins lucky (ten candidates since won 18-23 of 42
-  against the pool, expectation ~21.7). Rejected on set 3: u1y (#124), u1v (#123, AMMO_AWAY), u1r (#122, BUG_DIG),
-  u1o (#121, RUSH_TO 20), u0y, u1p, u0o. Weak locally: u1t, u1u, u1w; parked: u1z (KP_FRONT, kpc 19-13 to kpa's 22-10).
+- Replica: u2b (#125, u0m + MOAT) was rejected at set-3 block 1 (4461-4464, 4478-4479, 4493-4498, 4506-4507: net -2,
+  t -0.82, pool z +0.59), so u0m is still the incumbent. Now on the replica: u2g (#126) = u0m + END_KING 1850 +
+  FORM_RICH_BANK 3000 (a third and fourth king before r1150 while the bank holds 3000; a second king late in the game);
+  waiter build/wait_u2g.sh (ids > 4507). Score set-3 blocks with `contest.py paired 3819-3822,3836-3837,3849-3856 IDS`
+  AND `contest.py pool 3819-3822,3836-3837,3849-3856 research/panel/v3-set3-pool.txt IDS`: u0m's own set-3 draw is
+  ~3 wins lucky (eleven candidates since won 18-23 of 42 against the pool, expectation ~21.9). Hard cells: AlexT101
+  constrictinglattice/starvation and abcdezyxwv Stash/constrictinglattice are 0 of 22 pool games each, Excavation 1.
+  Rejected on set 3: u2b (#125), u1y (#124), u1v (#123, AMMO_AWAY), u1r (#122, BUG_DIG), u1o (#121, RUSH_TO 20), u0y,
+  u1p, u0o. Weak locally: u1t, u1u, u1w; parked: u1z (KP_FRONT). Local diags running: pk1 (u0p/u2d/u2e: RUSH_STICK,
+  DIG_COST 2/1 on pocket maps vs abrk) and lf1 (u2h = u0m + FLOW_LIFO).
 - KING_PATH evidence: kpa (u1x vs u0m) 22-10 and king pickups 21980 to 3440 in self-play, but no field gain;
   against AdamTan12 the king died before reaching the mines (wallsofparadis still lost both sides).
 - King kills (r1v vs AlexT101/abcdezyxwv): 73 of 81 throw hits on our king were our own rats thrown in at point blank

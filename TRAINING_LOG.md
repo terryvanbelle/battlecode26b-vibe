@@ -3239,3 +3239,31 @@
 - Snapshots: u2a (on u1y, dropped with its base) and u2b = u0m + MOAT. Diag mo2 (u2b on gmc's 36 war cells: agrab,
   agaim, abrk on tiny, constrictinglattice, starvation, Excavation, Meow, knifefight; control = gmc's u0m games)
   and screen ra_u2b are running.
+
+## 2026-10-30 23:14 PDT: u2b rejected; u2g (rich kings) on the replica; why AlexT101 wins
+- u2b (u0m + MOAT) on the replica, set-3 block 1 (4461-4464, 4478-4479, 4493-4498, 4506-4507): 23 of 42.
+  - Paired vs u0m: 36 of 42 alike, net -2, t -0.82 (gained AlexT101 tiny A, spsquared rift A; lost AdamTan12
+    where_are_you A, AlexT101 tiny B, spsquared rose A/B). Pool z +0.59. Rejected.
+  - Against abcdezyxwv (0-6, as u0m) the moat moved the king damage from throws to bites, and the king starved
+    (bank 0 by r250-500; Stash transfers 0-200 to their 3.5-5.2k).
+- The hard cells: over the 22 pool games (u0m and ten candidates, both sides), AlexT101 constrictinglattice and
+  starvation and abcdezyxwv Stash and constrictinglattice were never won; Excavation once. Tweaks do not reach them.
+- AlexT101 (4493/4494, scratch trapsites.py, trapchain.py, kd.py, minepick.py on the VM):
+  - Our kings die of starvation at r285-384, after only 200-260 combat damage. The bank goes 1230 (r40) -> 300
+    (r120-200) -> 0, while theirs holds ~600 all game.
+  - They lay 46-91 rat traps a game. Every one fires on us, ~75% within 3 rounds of the lay, mostly on fight moves
+    (attack, war, face, flank, carry aim). 191 of 322 fires killed outright: traps sit in pairs, and one step fires
+    both (the 3x3 trigger zones overlap), so 100 damage on a 100-health rat.
+  - Where: their side of the midline in r0-50 (0.35-0.47 of the way from their start to ours; first lays at r12 on
+    constrictinglattice), then our half (0.55-0.9) in r50-150. Our 12 rushers walk into it, and later rush
+    replacements keep doing so (u0m has RUSH_UNTIL 0: 23% of our baby turns in r150-300 were still attack moves).
+  - Economy: on constrictinglattice they picked 3790 in seven mines (three of them ours: 480 + 520 + 70); we picked
+    1275 in three. In r80-280 they delivered 1580 to our 530 (2.65 a round, barely above the king's 2).
+- u2g on the replica (#126): u0m + END_KING 1850 + FORM_RICH_BANK 3000 + FORM_RICH_MAX 4 (King.rich(): before r1150,
+  while the bank holds 3000, the first king names a site past the formation cap, with no income test and a ring site
+  when pickFormSite finds none). Targets: rift vs spsquared (we bank 6-13k on one or two kings and lose on points
+  2 kings to 3), rose and where_are_you (one king each at r1850).
+  - rk2 vs rk1 (abrk, rift/rose both sides): rift kings at the end 4-1 and 3-1 (u0m 2-1 and 1-2); the four games keep
+    their winners. On rose both A sides starve (abrk at r790, u0m/u2g at r1630): a side effect worth a look.
+- Snapshots this hour: u2h = u0m + FLOW_LIFO (equal-f ties expand deepest first; FIFO fans out over the whole
+  optimal-cost diamond on open ground, ~800 tiles on a 40-tile errand). Diag lf1 = pk1's u0m cells.
