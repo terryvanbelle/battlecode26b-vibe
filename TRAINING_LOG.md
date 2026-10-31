@@ -3688,3 +3688,14 @@
 - Milestone "panel: v4" added (progress/milestones.csv, 07:46). Set 2: spsquared/AdamTan12 on v3 set-2 maps, the
   newcomers drawn (u2g's references 5071+ running; waiter build/wait_s2ref.sh). Sets 3-4 are drawn when needed.
 - Next: once u2g's set-2 references are in, submit u3c (MINE_ANY + MINE_TIES) for v4 set-1 block 1.
+- Pre-registration, u3d = u2g + reactive baby rat traps (u1q's set: BABY_RAT_TRAPS, TRAP_ADJ, TRAP_SPAWN_FIRST,
+  RAT_TRAP_MIN_CHEESE 500, TRAP_OPEN_TO 150; u2g lays none). Mechanism: babies at war lay a trap on a front tile
+  next to the nearest enemy rat (its next step fires it: 50 damage, 30 movement cooldown, then grabbable), only
+  after spawning, with 500 banked, and with 1500 banked before r150. In-band losses: 17.5 of our rats a game die
+  to their traps. u0q/u0y were rejected (net -4) mainly on outercloud's opening (31-40 traps by r100 emptied the
+  bank), an opponent now off the panel; u1q's opening floor answers that (oq1 vs arush 14 of 16 as u0y). Counter:
+  our traps laid and fired, enemy rats killed, bank at r150, delivered. Doses: 0 (u2g), on. Delivery check: diag
+  ud1 (vs araid, ma2's 16 cells; control u2g's ma2 cells, deterministic). Falsifier: bank collapse in the opening
+  or fewer spawns by r200, or kills not up.
+- VM run name tq1 was already taken (10-30, s9s/u0q vs ...): its results.jsonl is intact but its cells.tsv was
+  overwritten empty by mistake; u3d's diag runs as ud1.

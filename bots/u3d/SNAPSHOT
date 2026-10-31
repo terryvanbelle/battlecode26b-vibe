@@ -1,0 +1,6 @@
+name=u3d
+source=bots/ratbot
+source_sha=1cd391f9e06e
+commit=a0bc6cf
+created=2026-10-31 07:49 PDT
+change=u2g + reactive baby rat traps (u1q's set: BABY_RAT_TRAPS, TRAP_ADJ, TRAP_SPAWN_FIRST, RAT_TRAP_MIN_CHEESE 500, TRAP_OPEN_TO 150)
