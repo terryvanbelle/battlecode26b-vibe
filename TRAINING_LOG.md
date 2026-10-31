@@ -4155,3 +4155,12 @@
   - Basics battery (§1.11): the movement row (no unit stalled N turns) fails, with rats stalled 600-1200 rounds,
     so candidates from it go first. u3u is a basics repair. It joins the replica queue ahead of the strategy
     candidates once hh1 has ranked them, and accepts at t >= 0 after block 2.
+- 13:50: hh1 scored (h2h.py: each candidate vs u2g on the 8 set-4 maps, plus the 8 stall maps for u3d/u3e/u3g,
+  both sides, against the u2g mirrors hhc and hcc).
+  - u3d: 17 of 32, D 11 (+6 -5), net +1, t +0.30.
+  - u3e: 16 of 32, D 4 (+2 -2), net 0.
+  - u3g: 15 of 32, D 5 (+2 -3), net -1.
+  - u3q: 6 of 16 on the set-4 maps, D 2 (+0 -2), net -2 (its stall-map hc1 was +4).
+  - Self-play head-to-head is weak evidence; none is near the -1.5 screen reject.
+  - Replica queue after u3q, failing battery row first: u3u (movement repair), then u3s (screen t +1.07), u3d,
+    u3e, u3g.
