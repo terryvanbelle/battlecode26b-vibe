@@ -112,14 +112,16 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Replica idle since u1a's block (3951-3993). u1a (#117) = u0z + SEEK_IDLE 40 + IDLE_SHIFT: rejected on set 3, t -2.24
-  (D 5, +0 -5: where_are_you A/B, rose A/B, dirtfulcat B); u0z (#116, the economy bundle alone) tied u0m (t 0.00).
-  u1b/u1e (WOUNDED_HP, + AMMO_AWAY) weak vs u0q (8 to 11); u1f (SYM_KING_GAP) neutral 15 to 15 on the gapAlt maps.
-  GRAB_MICRO: u1g overran (58 turns in one tiny game), u1h won 23 to u0m's 22 in diag gh1 but overran 652 times to 4.
-  u1j has the cheaper micro (diag gj1, same 36 cells vs agrab/agaim/abrk on war maps, control gmc); u1k = u0m +
-  THROW_CHECK (diag tk1, same cells). Score: `python3 -I ~/diag26b/oppdiag.py gj1 gmc u1j u0m` from runs/ on the VM
-  (per opponent, with overruns; pairdiag.py keys cells by map and side only, so it folds the 3 opponents together).
-  If u1j's overruns are near gmc's and it isn't behind, submit it as block 1 on set 3.
+- Replica: u0o (#118, RUSH_TO 12) was rejected on set 3 (4164-4177, net -7, t -2.33). u0y (#119) = u0q + RAT_TRAP_MIN_CHEESE 500
+  (reactive baby traps behind a 500 bank floor) is on its set-3 block 1 from 4178; score it with `contest.py paired
+  3819-3822,3836-3837,3849-3856 <ids>`. u1k (u0m + THROW_CHECK: tk1 23 to 22, neutral) is next. GRAB_MICRO is weak at
+  both costs (u1h 652 overruns; u1j 19 to 22). u1a (#117) = u0z + SEEK_IDLE 40 + IDLE_SHIFT was rejected on set 3
+  (t -2.24). u0z (#116, the economy bundle alone) tied u0m (t 0.00). u1b/u1e (WOUNDED_HP, + AMMO_AWAY) were weak vs
+  u0q (8 to 11). u1f (SYM_KING_GAP) was neutral, 15 to 15 on the gapAlt maps.
+- Trap war (TRAINING_LOG 2026-10-30 17:24): the top three's traps fire on us ~92% of the time, on our own fight moves.
+  u0q's reactive traps lifted K/D vs AlexT101 from 0.76 to 0.98 and vs abcdezyxwv from 0.93 to 1.08 in the field.
+  Scripts on the VM: ~/diag26b/kdsum.py LABEL DUMPDIR... (deaths by cause, both sides), trapsrc.py, trapind.py
+  (local games: the victim's mv= code at each fire).
 - u0q (#115, u0m + BABY_RAT_TRAPS + TRAP_ADJ + TRAP_SPAWN_FIRST) was rejected on set 3, t -1.63 (D 6, +1 -5): 39 traps
   in r0-49 on dirtfulcat starved its king, and on rose it lost on points where u0m killed the king. Every field bot but
   bc26vibe lays rat traps, 30-310 a game, ~95% fire on us (set 2: 3801 constrictinglattice 305 fires, 126 of our

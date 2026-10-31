@@ -3010,3 +3010,31 @@
   flights holds until THROW_LATE 8 rounds into the 10-round carry. bccmp: only new members with both switches off.
   u1k = u0m + THROW_CHECK: diag tk1, same cells.
 
+
+## 2026-10-30 17:24 PDT: u0o rejected; u1j and u1k diags; trap war in the field; u0y to the replica
+
+- gj1 (u1j, the cheaper GrabMicro) vs gmc (u0m), 36 cells: 19 wins to 22 (abrk 9-10, agaim 4-6, agrab 6-6),
+  overruns 15 to 4. GRAB_MICRO is not a local gain at either cost: weak, not submitted.
+- tk1 (u1k = u0m + THROW_CHECK), same cells: 23 wins to 22 (abrk 11-10, agaim 6-6, agrab 6-6; +3 -2), overruns 3
+  to 4. Neutral; a replica candidate.
+- King defence check (field replays): once carried enemies are left out (their turns rows hold stale positions,
+  carrier != 0), our king bites or spawns on nearly every turn it has a target. Not a problem.
+- Field economy, u0m's set-3 losses: the strong bots pick much of our half's cheese (keepout vs AdamTan12 6860 to our
+  3930 there; Stash vs abcdezyxwv 1960-2480 to our 260-300). When they took a pile on our half, our nearest rat was
+  usually 9+ tiles away. On keepout the king knew 5 home mines by r138 locally (kmine1 vs agrab) but in the field
+  worked 2 under war pressure; on wallsofparadis it knew only one until r324. Kings sat at the 18-baby cap r100-350
+  while the bank fell 1620 to 374, paying for replacements.
+- Deaths by cause (dumps of u0m's and u0q's set-3 blocks, 6 games per opponent):
+  - AlexT101: we lose 312 rats (throwLand 143, trap 110) to their 236.
+  - abcdezyxwv: 327 (throwLand 186, throwHit 59) to 304.
+  - AdamTan12: 269 (trap 148) to 741 (cats kill most of theirs).
+  - Their traps fire on us ~92% of the time, almost all on our own moves (being thrown onto one is rare). The
+    victims' smuggled codes are fight moves (a attack, f face, w war, k flank, T carry aim), or 0, which is a rat
+    that died on the trap.
+  - u0q, with reactive baby traps, killed 76, 80 and 63 of theirs with traps. That cut our deaths to 262, 257 and
+    253, so K/D vs AlexT101 rose from 0.76 to 0.98 and vs abcdezyxwv from 0.93 to 1.08. It still lost those games,
+    and it lost outercloud dirtfulcat A/B to its r0-49 trap spending.
+- u0o (u0m + RUSH_TO 12, #118), set-3 block 1 4164-4177: 18 of 42 to u0m's 25. Paired: 33 alike, D 9 (+1 -8),
+  net -7, t -2.33. Rejected. It lost dirtfulcat A/B, where_are_you A/B, rose A/B, rift B and tiny B.
+- Next: u0y (#119) = u0q + RAT_TRAP_MIN_CHEESE 500. That is the reactive trap line with a 500 bank floor, which
+  stops the dirtfulcat spend (ty1 vs arush: 14 wins to 12). Set-3 block 1 from 4178. u1k follows.
