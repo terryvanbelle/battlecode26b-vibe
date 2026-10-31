@@ -4340,3 +4340,10 @@
     Lost: DefaultSmall B vs abrk; arrows B and starvation B vs araid.
   - Replica order: u3v block 2 (running), then u3w, then u3x, then u3d block 2. If u3v is accepted, each of them is
     rebuilt on u3v first.
+- 15:58: u3y (u3w + STALL_CAT 20) is parked; its falsifier hit.
+  - yc1 (vs s7d, pw2's 16 peace cells, control u3w): 10 of 16 to 11, losing Stash A. Our share of cat damage went
+    from 52.6% to 53.6% (71.7k to 62.1k, against 71.2k to 64.1k), not a real rise.
+  - yc2 (screen cells, control u3w pw1): 35 of 44 to 36, losing evileye B vs abrk. Net -2 against its base.
+  - The peace losses are close games at even cat damage. canyoudig ends at r73-85 with xfer 10-20 to 80-120, so
+    the idle rushers are not what loses them. What remains in peace is transfer and kings (s7d's king points run
+    1.3-2x ours: it forms kings that we don't).
