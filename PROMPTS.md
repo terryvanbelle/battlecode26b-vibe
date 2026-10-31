@@ -86,3 +86,7 @@ Please update progress/ after every acceptance of a new candidate
 ## 17. 2026-10-31 06:13 PDT
 
 I'd like you to report our recent win rate against each of our panel opponents
+
+## 18. 2026-10-31 06:16 PDT
+
+It seems to me that some bots on our panel are too easy, and some are too hard.  I'd like you to recalibrate the panel

@@ -3596,3 +3596,16 @@
   Instrument: diag rb3 (u3b and u2g vs u0q on rsb2's 10 maps, both sides) as the delivery check; then the replica
   set-2 block 1 vs 4737-4750 when the slot is free. Falsifier: no fewer of our rats killed by traps and throws, or
   wins lost where u2g's rush kills kings early (spsquared, CS50Crab, bc26vibe).
+
+## 2026-10-31 06:22 PDT: panel v4 recalibration (owner request #18)
+- u2g's record on panel v3 (sets 1-4, games): outercloud 22/24, bc26vibe 23/24, CS50Crab 22/24 (too easy, >=90%);
+  AlexT101_usqualsbot 3/24, abcd 3/24 (too hard, <=13%); spsquared 18/24 (75%), AdamTan12_Finals 11/24 (46%).
+  Five of seven opponents sit outside the 25-75% band, so the panel measured little: most cells never change.
+- Panel v4 keeps spsquared_TSPAARK_QUALS and AdamTan12_Finals on their v3 maps (u2g's references carry over) and
+  drops the other five. Calibration sweep: u2g vs 11 field bots rated 1551-1609 (HugoIngelsson_YokoOno,
+  VarunVejalla_final4_run_away10, HugoIngelsson_Xzibit, daannte_v47_Skadoosh, thewaxmango_collegejunior,
+  bman12345678_goonv23, AlexT101_finalsbot, AdamTan12_Icarus, nzjt_TheComplexMerlin, daannte_v52_ThisGuy,
+  thewaxmango_PhD), one match per seating on 3 random maps recorded in `research/panel/calib2.json` (22 matches,
+  66 games). Bots u2g beats 25-75% join v4 (6-8 in all, at most one per author where possible); their sweep matches
+  are u2g's v4 set-1 reference. v4 sets 2-4 are drawn after, with reference blocks for the new teams.
+- The sweep starts when u2y's set-2 block 1 finishes (2 AdamTan12 matches wait for the hourly window).
