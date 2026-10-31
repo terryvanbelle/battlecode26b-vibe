@@ -2459,6 +2459,30 @@ public class BotTest {
         G.us = us0; G.them = them0;
     }
 
+    static void testFaceHold() {
+        reset(); install();
+        Team us0 = G.us, them0 = G.them;
+        G.us = Team.A; G.them = Team.B;
+        G.me = me = new MapLocation(10, 10); health = 100;
+        int b0 = Baby.burnRound;
+        // an enemy 2 north facing south (it sees us) at our health
+        RobotInfo e = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, new MapLocation(10, 12), Direction.SOUTH, 0, 0, null);
+        Baby.nearestEnemy = e; Baby.hunting = false; Baby.burnRound = 0; shared[Comms.SYM] = 7;
+        check(!Baby.faceHold(), "face hold: not before enemy traps are known");
+        Baby.burnRound = 5;
+        check(Baby.faceHold(), "face hold: a watching, not weaker enemy 2 off holds us once traps are known");
+        Baby.burnRound = 0; shared[Comms.SYM] = 7 | Comms.SYM_BURN;
+        check(Baby.faceHold(), "face hold: the kings' shared burn bit is enough");
+        Baby.hunting = true;
+        check(!Baby.faceHold(), "face hold: a hunter still closes on its prey");
+        Baby.hunting = false;
+        Baby.nearestEnemy = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 90, e.location, Direction.SOUTH, 0, 0, null);
+        check(!Baby.faceHold(), "face hold: a weaker enemy is engaged");
+        Baby.nearestEnemy = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, e.location, Direction.NORTH, 0, 0, null);
+        check(!Baby.faceHold(), "face hold: an enemy facing away is engaged");
+        Baby.burnRound = b0; G.us = us0; G.them = them0; reset();
+    }
+
     static void testHomeRank() {
         check(Baby.homeRank(0, 3) < Baby.homeRank(0, 9) && Baby.homeRank(1, 3) < Baby.homeRank(1, 9), "home pick 0/1: nearer ranks first");
         check(Baby.homeRank(2, 9) < Baby.homeRank(2, 3), "home pick 2: farther ranks first");
@@ -2725,6 +2749,7 @@ public class BotTest {
         testRingArcs();
         testHomeRank();
         testWoundMask();
+        testFaceHold();
         testScoutUntil();
         testMineTraps();
         testTrapRisk();

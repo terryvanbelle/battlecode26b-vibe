@@ -1370,10 +1370,21 @@ public final class Baby {
             return true;
         }
         if (d > 2 && rc.canMove(to) && (Nav.avoid & (1 << to.ordinal())) == 0) {
+            if (Cfg.FACE_HOLD && faceHold()) { faceHolds++; return true; }
             rc.move(to);
             G.me = rc.getLocation();
         }
         return true;
+    }
+
+    public static int faceHolds;
+
+    /** Cfg.FACE_HOLD: hold at Chebyshev 2 instead of stepping into contact with nearestEnemy (see Cfg). */
+    static boolean faceHold() {
+        if (hunting || nearestEnemy.health < G.rc.getHealth() || !sees(nearestEnemy, G.me)) return false;
+        if (!trapsKnown(burnRound, Comms.read(Comms.SYM))) return false;
+        MapLocation th = threatenedKing();
+        return th == null || nearestEnemy.location.distanceSquaredTo(th) > Cfg.KING_THREAT_D2;
     }
 
     /** War movement: close on a visible enemy king or nearby enemy rat, or answer a king's alert. */

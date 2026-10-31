@@ -242,8 +242,15 @@ public final class Cfg {
      *  u0q's set-3 block (24 replica matches): 2689 enemy trap fires on our babies; 854 hit a rat at <= 50 health and
      *  806 of those died; of the 1794 that hit a healthier rat, 721 victims died to a later trap within 20 rounds. */
     public static final int WOUNDED_HP = 0;
-    /** The burn signal (a trap fired on our own turn, SQ_BURN, Comms.SYM_BURN) runs for RISK_ADAPT or WOUNDED_HP. */
-    public static final boolean BURN = RISK_ADAPT > 0 || WOUNDED_HP > 0;
+    /** Face hold (off): once enemy rat traps are known (the burn signal), faceEnemy no longer steps from Chebyshev 2
+     *  into contact with an enemy baby that sees us and is not weaker (unless hunting, or it is at our threatened
+     *  king): it holds, facing it, and lets it come. In u0m's set-3 field games 54-70% of the enemy traps that fired
+     *  on us were laid 0-1 rounds before, mostly on a tile next to both rats, and the commonest victim move code was
+     *  this step (mv=f). A rat standing still never sets a trap off. */
+    public static final boolean FACE_HOLD = false;
+    /** The burn signal (a trap fired on our own turn, SQ_BURN, Comms.SYM_BURN) runs for RISK_ADAPT, WOUNDED_HP or
+     *  FACE_HOLD. */
+    public static final boolean BURN = RISK_ADAPT > 0 || WOUNDED_HP > 0 || FACE_HOLD;
     /** TrapRisk's marks kept one map row at a time, each row allocated on its first mark (TrapRows). The flat W*H
      *  array waits for a turn with 3*W*H + BC_OPTIONAL bytecodes left: 18800 on a 60x60 map, above a baby's 17500,
      *  so on 9 of the 45 field maps no rat ever had marks (15.2-15.5k on 50x50 and 60x40). */
