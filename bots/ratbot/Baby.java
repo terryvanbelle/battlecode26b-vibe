@@ -178,6 +178,7 @@ public final class Baby {
         Debug.mark(8);
         tryDeliver();
         guardTurn();
+        if (Cfg.MOAT && !G.coop) Moat.baby(nearestEnemy != null ? nearestEnemy.location : null);
         Debug.mark(9);
         sense2();
     }

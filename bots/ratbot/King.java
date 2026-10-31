@@ -69,9 +69,10 @@ public final class King {
             Comms.write(Comms.ALERT + 2, Comms.stamp());
         }
         if (Cfg.KING_TRAPS && !G.coop) ratTrap(enemies);
+        if (Cfg.MOAT && !G.coop) Moat.king(enemies);
         if (Cfg.FORM_KING) formation();
         Debug.mark(47);
-        move(cats, enemies);
+        if (!(Cfg.MOAT && Moat.up() && cats.length == 0)) move(cats, enemies);
         Debug.mark(48);
         publish();
         Comms.write(Comms.BUDGET, Math.max(0, Math.min(1023, Econ.surplus() / 4)));

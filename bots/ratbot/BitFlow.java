@@ -293,7 +293,7 @@ public final class BitFlow {
         if ((mem[ni] & Sym.DIRT) != 0) {
             if (G.globalCheese + G.rawCheese < 5 || !rc.isActionReady()) return true;
             if (rc.getDirection() != best && rc.canTurn(best)) { rc.turn(best); G.facing = best; }
-            if (rc.canRemoveDirt(n)) {
+            if (!(Cfg.MOAT && Moat.keep(n)) && rc.canRemoveDirt(n)) {
                 rc.removeDirt(n);
                 Nav.digs++;
                 mem[ni] &= ~Sym.DIRT;

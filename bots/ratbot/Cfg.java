@@ -96,6 +96,15 @@ public final class Cfg {
      *  edge side): u1x's king went in from the centre side, 5-7 from the axis, and was bitten to death there in both
      *  games (A r283, B r392); u0m's greedy king stuck at the edge and lived. */
     public static final int KP_FRONT = 0;
+    /** Moat (Moat.java): at war a king that sees an enemy rat within dist2 MOAT_D2 fills its Chebyshev-2 ring with
+     *  dirt (one tile per action, helped by babies beside the ring while its alert is under MOAT_IDLE rounds old),
+     *  keeping MOAT_PORT spawn tiles open, and holds still until MOAT_IDLE rounds pass without a sighting; no baby
+     *  digs that ring at war. Bites reach dist2 2 and a thrown rat stops at dirt. r1v vs AlexT101/abcdezyxwv (12
+     *  games, 11 king kills at r49-714): throws into our king did 84-480 a game (42-46 each, point blank, our own rats
+     *  thrown in 9 of 10), bites 30-316; an enemy rat reached Chebyshev 3 of our king at r7-145 with 3-138 dirt in
+     *  our stock (11-16 open ring tiles). */
+    public static final boolean MOAT = false;
+    public static final int MOAT_D2 = 25, MOAT_IDLE = 60, MOAT_PORT = 1;
     /** A king bound to starve before round 2000 (Econ.surplus() < 0), with no mine of its own (none within KING_MINE_R2,
      *  or another king's), walks to the nearest home-half mine no other king holds, at any distance; checked from
      *  FORAGE_FROM every FORAGE_EVERY rounds. 27 of 78 king deaths in 50 replica matches (3284-3297, 3728-3763) were

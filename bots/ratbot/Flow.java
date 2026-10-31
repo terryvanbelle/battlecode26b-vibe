@@ -634,6 +634,7 @@ public final class Flow {
         if ((Sym.mem[nx] & block) != 0) { ends[2]++; if (cache) uncache(); drop(); return false; } // newly seen wall (or a king moved) on the path
         RobotController rc = G.rc;
         Direction d = G.me.directionTo(n);
+        if (Cfg.MOAT && (Sym.mem[nx] & Sym.DIRT) != 0 && Moat.keep(n)) { drop(); return false; }
         if ((Sym.mem[nx] & Sym.DIRT) != 0) {
             if (G.globalCheese + G.rawCheese < 5 || !rc.isActionReady()) return true; // wait for the dig
             if (rc.getDirection() != d && rc.canTurn(d)) { rc.turn(d); G.facing = d; }

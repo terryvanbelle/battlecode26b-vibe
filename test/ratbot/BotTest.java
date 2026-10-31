@@ -27,7 +27,7 @@ public class BotTest {
     static int ratCost = 10;
     static List<MapLocation> built = new ArrayList<>();
     static List<Integer> squeaks = new ArrayList<>();
-    static int digsDone;
+    static int digsDone, dirtStock;
     static List<MapLocation> bitten = new ArrayList<>();
     static Direction thrown;
     static RobotInfo carrying;
@@ -51,7 +51,7 @@ public class BotTest {
         canPromote = promoted = false;
         walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null; carrying = null;
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
-        moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; ratCost = 10; built.clear();
+        moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; dirtStock = 0; ratCost = 10; built.clear();
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0; Sym.listDone = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
@@ -122,6 +122,12 @@ public class BotTest {
                         return actCd < 10 && sensable(l) && me.distanceSquaredTo(l) <= 2 && dirt.contains(l) && global + raw >= 5;
                     }
                     case "removeDirt": dirt.remove((MapLocation) a[0]); actCd += 25; global -= 5; digsDone++; return null;
+                    case "canPlaceDirt": {
+                        MapLocation l = (MapLocation) a[0];
+                        return actCd < 10 && sensable(l) && me.distanceSquaredTo(l) <= (type == UnitType.RAT_KING ? 8 : 2) && dirtStock > 0
+                                && !walls.contains(l) && !dirt.contains(l) && !robots.containsKey(l);
+                    }
+                    case "placeDirt": dirt.add((MapLocation) a[0]); dirtStock--; actCd += 25; return null;
                     case "senseNearbyMapInfos": {
                         List<MapInfo> out = new ArrayList<>();
                         int vr = type == UnitType.RAT_KING ? 25 : 20;
@@ -2491,6 +2497,62 @@ public class BotTest {
     /** KPath on a 30x20 map with a wall at x 10 for y 0..14: mine A (14,5) is nearer the king (4,5) by Chebyshev
      *  and dist2 but 23 king steps away round the wall's top; mine B (4,17) is 12 away and 11 steps: the search
      *  takes B and walks there; a wall seen across the way stops the downhill step and a new search is due. */
+    static void testMoat() throws GameActionException {
+        // king at (5,5) on 20x20: the ring tile farthest from the centre (9.5,9.5) is (3,3), the port
+        reset(); W = 20; H = 20; install();
+        type = UnitType.RAT_KING; G.coop = false; G.round = 200; Moat.seen = -1000; dirtStock = 30;
+        for (MapInfo mi : G.rc.senseNearbyMapInfos()) Sym.record(mi.getMapLocation().x, mi.getMapLocation().y, mi.isWall(), mi.isDirt(), false);
+        RobotInfo e = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, new MapLocation(10, 5), Direction.WEST, 0, 0, null);
+        robots.put(e.location, e);
+        RobotInfo[] en = { e };
+        Moat.king(en);
+        check(Moat.up() && dirt.contains(new MapLocation(7, 5)) && dirtStock == 29 && actCd == 25,
+              "moat: a king seeing an enemy rat at war fills the ring tile nearest it first");
+        for (int t = 0; t < 60; t++) { actCd = Math.max(0, actCd - 10); G.round++; Moat.king(en); }
+        int ring = 0;
+        for (int dx = -2; dx <= 2; dx++) for (int dy = -2; dy <= 2; dy++)
+            if (Math.max(Math.abs(dx), Math.abs(dy)) == 2 && dirt.contains(new MapLocation(5 + dx, 5 + dy))) ring++;
+        check(ring == 15 && !dirt.contains(new MapLocation(3, 3)), "moat: the king fills 15 of 16 ring tiles and keeps the port (3,3)");
+        G.round = 300; Moat.seen = 300 - Cfg.MOAT_IDLE;
+        check(Moat.up(), "moat: up MOAT_IDLE rounds after the last sighting");
+        G.round++;
+        check(!Moat.up(), "moat: down after MOAT_IDLE rounds without a sighting");
+
+        // a wall on the best tile moves the port to the next one, (3,4) or (4,3)
+        reset(); W = 20; H = 20; walls.add(new MapLocation(3, 3)); install();
+        type = UnitType.RAT_KING; G.coop = false; G.round = 200; Moat.seen = -1000; dirtStock = 30;
+        for (MapInfo mi : G.rc.senseNearbyMapInfos()) Sym.record(mi.getMapLocation().x, mi.getMapLocation().y, mi.isWall(), mi.isDirt(), false);
+        robots.put(e.location, e);
+        for (int t = 0; t < 60; t++) { actCd = Math.max(0, actCd - 10); G.round++; Moat.king(en); }
+        boolean a34 = dirt.contains(new MapLocation(3, 4)), a43 = dirt.contains(new MapLocation(4, 3));
+        check(dirt.size() == 14 && a34 != a43, "moat: with the best tile a wall, the next one stays open");
+
+        // babies: our king at (5,5) alerted; a baby at (4,2) beside ring tiles (3,3) (4,3) (5,3)
+        reset(); W = 20; H = 20; install();
+        dirtStock = 30; me = new MapLocation(4, 2); facing = Direction.NORTH; G.startTurn(); G.coop = false; G.round = 200;
+        shared[Comms.KING0] = 6; shared[Comms.KING0 + 1] = 6; shared[Comms.KING0 + 2] = Comms.stamp();
+        shared[Comms.ALERT] = 6 | (1 << 6); shared[Comms.ALERT + 1] = 6; shared[Comms.ALERT + 2] = Comms.stamp();
+        Comms.readKings();
+        Sym.record(4, 3, false, false, false); Sym.record(5, 3, false, false, false);
+        Moat.baby(null);
+        check(dirt.size() == 1 && dirt.contains(new MapLocation(5, 3)),
+              "moat: a baby that has not seen (3,3) treats its best known open tile (4,3) as the port");
+        Sym.record(3, 3, false, false, false); actCd = 0;
+        Moat.baby(null);
+        check(dirt.size() == 2 && dirt.contains(new MapLocation(4, 3)) && !dirt.contains(new MapLocation(3, 3)),
+              "moat: once it has seen (3,3) the baby fills (4,3) and never the port");
+        check(Moat.keep(new MapLocation(3, 3)) && Moat.keep(new MapLocation(7, 7)) && !Moat.keep(new MapLocation(4, 2)),
+              "moat: babies keep the dirt of the alerting king's ring, not beyond");
+        actCd = 0; me = new MapLocation(4, 1); G.startTurn(); G.coop = false; G.round = 200; dirt.clear();
+        Moat.baby(null);
+        check(dirt.isEmpty(), "moat: a baby four from the king places nothing");
+        shared[Comms.ALERT + 2] = (Comms.stamp() - Cfg.MOAT_IDLE - 1 + 1024) & 1023;
+        check(!Moat.keep(new MapLocation(3, 3)), "moat: a stale alert keeps nothing");
+        G.coop = true; shared[Comms.ALERT + 2] = Comms.stamp();
+        check(!Moat.keep(new MapLocation(3, 3)), "moat: nothing kept in cooperation");
+        G.coop = false;
+    }
+
     static void testKingPath() {
         reset(); W = 30; H = 20; install();
         int c0 = Comms.numKings; Comms.numKings = 0;
@@ -2858,6 +2920,7 @@ public class BotTest {
         testBugDig();
         testRushStands();
         testKingPath();
+        testMoat();
         testScoutUntil();
         testMineTraps();
         testTrapRisk();

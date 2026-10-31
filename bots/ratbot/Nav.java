@@ -272,7 +272,7 @@ public final class Nav {
                 if (isDirt(n)) {
                     if (!rc.isActionReady()) return true;
                     if (rc.getDirection() != d && rc.canTurn(d)) rc.turn(d);
-                    if (!rc.canRemoveDirt(n)) return false;
+                    if (Cfg.MOAT && Moat.keep(n) || !rc.canRemoveDirt(n)) return false;
                     rc.removeDirt(n);
                     digs++;
                     Sym.mem[G.idx(n)] &= ~Sym.DIRT;
@@ -307,7 +307,7 @@ public final class Nav {
         if (free(l) && G.me.add(l).distanceSquaredTo(t) < d0) return false;
         if (free(r) && G.me.add(r).distanceSquaredTo(t) < d0) return false;
         if (rc.getDirection() != toT && rc.canTurn(toT)) rc.turn(toT);
-        if (rc.canRemoveDirt(n)) {
+        if (!(Cfg.MOAT && Moat.keep(n)) && rc.canRemoveDirt(n)) {
             rc.removeDirt(n);
             digs++;
             Sym.mem[G.idx(n)] &= ~Sym.DIRT;
@@ -325,7 +325,7 @@ public final class Nav {
         MapLocation n = G.me.add(toT);
         RobotController rc = G.rc;
         if (rc.getDirection() != toT && rc.canTurn(toT)) rc.turn(toT);
-        if (rc.canRemoveDirt(n)) {
+        if (!(Cfg.MOAT && Moat.keep(n)) && rc.canRemoveDirt(n)) {
             rc.removeDirt(n);
             digs++;
             Sym.mem[G.idx(n)] &= ~Sym.DIRT;
