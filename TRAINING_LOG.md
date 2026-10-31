@@ -4347,3 +4347,22 @@
   - The peace losses are close games at even cat damage. canyoudig ends at r73-85 with xfer 10-20 to 80-120, so
     the idle rushers are not what loses them. What remains in peace is transfer and kings (s7d's king points run
     1.3-2x ours: it forms kings that we don't).
+
+## 2026-10-31 16:20 PDT: u3v accepted (movement repair); candidates rebased on it
+- u3v block 2 on v4 set 2 (5691-5692, 5704-5705, 5717-5720, 5740-5747) vs u2g's set-2 reference: 48 cells, 40
+  alike, D 8 (+5 -3), net +2, t +0.71.
+  - Gained: AdamTan12_Finals attack_on_cat B, AdamTan12_Icarus TheHeist A, YokoOno Hike A, spsquared evileye B,
+    collegejunior RUN A.
+  - Lost: YokoOno Hike B, nzjt fullofsecrets A, collegejunior learn_your_lesson A.
+- Pooled over blocks 1-2: 94 cells, 75 alike, D 19 (+11 -8), net +3, t +0.69. A basics repair accepts at pooled
+  t >= 0 after block 2, so **u3v is accepted** (replica #141). It is u2g + KING_FLOW + KING_PLUG: the king stays
+  off corridor mouths, and flow paths treat our kings' bodies as walls.
+  - That ends the run of 9 straight rejects.
+  - Its own blocks are the new reference for sets 1 (5639-5642, 5659-5666, 5671-5674) and 2 (5691-5692,
+    5704-5705, 5717-5720, 5740-5747).
+- Rebase: u3w (PEACE) and u3x (CHIRAL_SYM) are rebuilt on u3v as u3z and u4a. Each is one switch on top of u3v,
+  with the same pre-registrations. Each gets a fresh screen on kvs's cells, where kvs is u3v itself (the control).
+  - u3z goes to the replica at once, for block 1 on set 1 vs u3v's set-1 games, with its screen run alongside. A
+    screen reject (t <= -1.5) would withdraw it.
+  - u3d's block 2 waits for a rebase onto u3v too.
+- progress/ refreshed for the acceptance (owner rule).
