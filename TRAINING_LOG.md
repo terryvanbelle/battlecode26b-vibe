@@ -4210,3 +4210,25 @@
   gave them 2220 and us 0 (no rat of ours went within 4). u2g counts tied mines as theirs (MINE_TIES off).
   - That is u3c's mechanism (MINE_ANY + MINE_TIES): the nearest miss of the plateau (176 cells, D 18 (+12 -6),
     net +6, t 1.41 at the final block).
+- 14:27: raidctx.py (inband2, r50-1000): the enemy's uncontested picks at our home mines are quick, small hits.
+  - Losses: 1456 a game (wins 400), 26 visits a game (wins 7). 38% of visits leave within 5 rounds. 55% of the
+    picks come with a teammate within 4 of the picker.
+  - Our nearest baby is more than 12 tiles away for 51% of that cheese, and none of ours is within 8 for 71%.
+  - By mine rank from our first king: 2nd 29%, 3rd 17%, 4th 14%, 5th+ 32% (wins: 70% at the 5th+).
+  - So these raids follow from a thin army (losses are at 1-8 babies by r300), not from a defence that is there and
+    fails to react. A raid-response switch would have few rats to send.
+- VM disk was down to 106 MB free. I deleted the replays of 20 finished local runs (rb2, rb3, gk2, gc1, gc2, sl1,
+  cv1, cv2, tw1, tw2, rh1, sf1, ws1, hc1, hcc, hd1, ks1, sd1, ra_u2o, hq4; ~900 MB). Their results.jsonl files stay,
+  and the games are deterministic, so they can be regenerated. Now 1005 MB free.
+- 14:29: u3c's delivery on the field (pickctx.py, its sets 1-2 blocks, 32 matches, vs u2g's 52 reference matches
+  on the same sets).
+  - In wins u3c picks more everywhere: home 4569 a game vs 3842, axis 906 vs 626, away 748 vs 545.
+  - In losses it picks about as u2g (home 2794 vs 2975, away 484 vs 313), and the enemy still takes 1612 a game at
+    our home mines (u2g 1519). So its gain came from widening wins, not from turning losses.
+- Roles (roles.py: tag bit 5 = fighter, any 'a' move = attacker): in in-band losses gatherers die 20.8 of 24.1 born
+  a game (wins 12.4 of 24.2). Live at r300: 9.0 gatherers, 6.3 fighters, 3.1 attackers (wins 9.8 / 8.2 / 5.5).
+  Attackers are not the bulk of the army after r100, so trimming the rush is not the lever (u0o RUSH_TO 12 lost net -7).
+- Deaths (outnum.py over u2g's 90 field losses): ours 41.5 a game, theirs 28.8. Traps make 11.3 of our deaths and
+  none of theirs, so traps are most of the 12.7 gap. The rest is bites (6.5 vs 3.9); throw deaths are even (18.2+4.8 vs 19.2+5.6).
+  Only 25% of our trap deaths come while outnumbered. Their reactive traps hit us when we press at even numbers or
+  better. u3d, now on the replica, lays our own.
