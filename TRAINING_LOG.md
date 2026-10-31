@@ -3859,3 +3859,9 @@
   the hit (trapwhere): carried or thrown 30%, faceEnemy 17%, attack 12%, war 11%, carry aim 10%, flank 8%.
 - Watch for u3d: in losses our bank is 386-788 at r150, so its 500 trap floor may block most laying where it matters.
   If its field delivery is thin, the next dose is a lower floor (the opening stays guarded by TRAP_OPEN_TO 150).
+- 09:58: Field trap census (trapcensus.py, in-band games; rat traps laid per game still running in the window):
+  - Theirs in losses: r0-100 10.0, r100-200 7.2, r200-300 4.4, r300-500 9.2, r500-800 12.6, r800+ 11.7.
+  - Theirs in wins: 7.6, 2.4, 1.8, 2.6, 3.0, 18.7. Their bank when laying: 1300-1500 early, 600-1000 r100-500.
+  - Ours: 0 everywhere (u2g lays none).
+  - u3d's opening floor (1500 before r150) sits above our early bank (1173-1464 at r50), so u3d lays almost nothing
+    before r150, where the field lays 10. Read u3d's field delivery with that in mind.
