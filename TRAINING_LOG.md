@@ -3675,3 +3675,16 @@
   goonv23 0 (too hard); AlexT101_finalsbot, Icarus, Merlin, ThisGuy, PhD pending. While u2g is active, its v4 set-2
   reference for the four in-band newcomers is queued behind the sweep (`research/panel/v4-set2.json`: spsquared and
   AdamTan12 on their v3 set-2 maps, newcomers drawn at send), so a candidate's block 2 needs no u2g resubmission.
+
+## 2026-10-31 07:46 PDT: panel v4 set
+- Sweep result (u2g games won of 6; 4969-5013, 5049-5050, 5069-5070): nzjt_TheComplexMerlin 4, AdamTan12_Icarus 3,
+  HugoIngelsson_YokoOno 2, VarunVejalla_final4_run_away10 2, HugoIngelsson_Xzibit 2, thewaxmango_collegejunior 2 (in
+  band); thewaxmango_PhD 1, daannte_v47_Skadoosh 0, bman12345678_goonv23 0, AlexT101_finalsbot 0, daannte_v52_ThisGuy
+  0 (too hard). Ratings again misplace them: all 11 sit within 60 points of us.
+- Panel v4 = spsquared_TSPAARK_QUALS and AdamTan12_Finals (kept, v3 maps) + the six in-band newcomers on their sweep
+  maps (`research/panel/v4-set1.json`). Two authors appear twice (Hugo, AdamTan12); kept, since all eight are in
+  band and every opponent adds cells. u2g on v4 set 1: 21 of 48 games (44%); per opponent 2-4 of 6. Its reference:
+  4723-4736 (spsquared, AdamTan12) + 4969-4974, 4988-4989, 5010-5013. A block is 16 matches, 48 cells.
+- Milestone "panel: v4" added (progress/milestones.csv, 07:46). Set 2: spsquared/AdamTan12 on v3 set-2 maps, the
+  newcomers drawn (u2g's references 5071+ running; waiter build/wait_s2ref.sh). Sets 3-4 are drawn when needed.
+- Next: once u2g's set-2 references are in, submit u3c (MINE_ANY + MINE_TIES) for v4 set-1 block 1.

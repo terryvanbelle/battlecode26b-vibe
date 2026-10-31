@@ -3,3 +3,4 @@ date,label
 2026-10-28 08:13,method: TRAINING_ALGORITHM v2 (paired local screen; replica panel accepts)
 2026-10-28 08:28,method: cell score = win/loss when kings decide (points bug fixed); local screen moves to the band
 2026-10-28 08:50,method: benchmark games only on the replica; local games are self-play
+2026-10-31 07:46,panel: v4 (8 opponents u2g beats 25-75%)

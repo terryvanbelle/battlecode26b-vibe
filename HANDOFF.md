@@ -124,15 +124,18 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Now: panel v4 calibration sweep on the replica: u2g (#133) vs 11 field bots rated 1551-1609, both seatings, maps
-  drawn into research/panel/calib2.json (22 matches from 3931; the drain loop sends the rest as the hourly limit
-  allows; waiter build/wait_sweep.sh). Then pick 6-8 that u2g beats 25-75% (tools/panel_pick.py u2g) into
-  research/panel/v4-set1.json beside spsquared and AdamTan12 (kept on their v3 maps); their sweep matches are u2g's
-  v4 set-1 reference. Add the "panel v4" milestone. Rule (owner #19/#20): diagnose losses against in-band opponents
-  and flippable cells only; abcd and AlexT101_usqualsbot (3/24 each, 42 of u2g's 68 lost games) are idea sources,
-  not targets. u2w, u2y (#132, net -1), u3b (rb3 11 of 20 to 14) rejected; u3a, u2z parked; all were aimed at them.
-  Scratch tools in ~/diag26b: deaths2.py, race.py/minerace.py/minewhy.py (pile race), rushpay.py, ammo.py/ammoall.sh,
-  thrower.py, grabwhy.py/grabwhyall.sh, saves.py/savesall.sh, carriers.py, kdef.py/kdef2.py. Replay dir column is
+- Now: panel v4 is set (07:46): spsquared, AdamTan12_Finals (v3 maps) + YokoOno, VarunVejalla, Xzibit,
+  collegejunior, AdamTan12_Icarus, nzjt_TheComplexMerlin (sweep maps), research/panel/v4-set1.json; u2g 21 of 48 on
+  set 1, reference 4723-4736 + 4969-4974, 4988-4989, 5010-5013. u2g's set-2 references (v4-set2.json) are running
+  from 5071 (waiter build/wait_s2ref.sh); then submit u3c (u2g + MINE_ANY + MINE_TIES; diag ma2 12 of 16 to 14,
+  picks per turn up) and queue its set-1 block: all eight opponents @+ and @- with --panel v4-set1.json.
+  Rule (owner #19/#20): diagnose losses against in-band opponents and flippable cells only. In-band losses are an
+  economy deficit (they pick 46 per 100 baby turns to our 24; transfer 4971 to 1811 a lost game) plus reactive
+  traps (17.5 trap deaths a lost game; we lay none when the bank is low). Next idea after u3c: u1q's opening trap
+  floor (reactive traps, TRAP_OPEN_TO 150) on u2g.
+  Scratch tools in ~/diag26b: econshare.py, minetime.py, kingcount.py, deathsum.py, dumpids.py, dumprun.py (new);
+  deaths2.py, race.py/minerace.py/minewhy.py, rushpay.py, ammo.py, thrower.py, grabwhy.py, saves.py, carriers.py,
+  kdef.py/kdef2.py. Lists: inband.txt (sweep + AdamTan12 dumps), ma2_u3c.txt/ma2_u2g.txt. Replay dir column is
   FlatHelpers order (0 CENTER, 1 W, 2 SW, 3 S, 4 SE, 5 E, 6 NE, 7 N, 8 NW).
   Parked: u2t (SEEK_FRONTIER, mixed), u0p (RUSH_STICK). The side-symmetry bundle (u2s's switches) stays off in ratbot.
 - KING_PATH evidence: kpa (u1x vs u0m) 22-10 and king pickups 21980 to 3440 in self-play, but no field gain;
