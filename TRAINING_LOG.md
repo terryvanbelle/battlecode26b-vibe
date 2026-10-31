@@ -3643,7 +3643,7 @@
     3520 and we never went near it. wallsofparadis A: we worked 1 of 8.
 - Sweep under way fast: by 06:39 matches 4969-4974 are in (YokoOno, VarunVejalla, Xzibit: u2g 2 of 6 each).
 
-## 2026-10-31 06:48 PDT: in-band losses are an economy deficit; u3c (MINE_ANY + MINE_TIES on u2g)
+## 2026-10-31 06:45 PDT: in-band losses are an economy deficit; u3c (MINE_ANY + MINE_TIES on u2g)
 - Over u2g's in-band games so far (AdamTan12 4545/4546/4735/4736 and the sweep's 4969-4974: YokoOno, VarunVejalla,
   Xzibit; scratch deathsum.py, kingcount.py, minetime.py, econshare.py), lost games (19): the kill trade is even
   (our rat deaths 65 a game, theirs 60), our king loses 379 hp to bites and 233 to starvation, and they transfer
