@@ -4052,3 +4052,20 @@
     starvation A/B.
   - The bigger maps replay u2g's games (DefaultMedium's two u3p losses are gone).
   - It passes the screen (rejects only at t <= -1.5) and joins the replica queue after u3c.
+
+## 2026-10-31 13:06 PDT: u3c rejected at block 4 (near-miss); plateau trigger; u3q on the replica
+- u3c block 4 (v4 set 4; 5428-5431, 5451-5452, 5464-5465, 5473-5476, 5479-5482) vs u2g's set-4 reference
+  (5387-5388, 5395-5396, 5402-5405, 5407-5414): 48 cells, 43 alike, D 5 (+3 -2), net +1, t 0.45.
+  - Gained AdamTan12_Finals closeup B, run_away10 arrows A, spsquared evileye B. Lost AdamTan12_Finals
+    averyfineline B, nzjt RUN A.
+- Pooled over the four blocks: 176 distinct cells, 158 alike, D 18 (+12 -6), net +6, t 1.41. Block 4 is final and
+  rejects below 2: u3c is rejected. With t > 0 it is a near-miss (§2), eligible for a pairing at plateau step 5.
+  Closure: refuted at t 1.41 (above the |t| < 1 resolution line). Reopening condition: a pairing with another
+  near-miss of an independent mechanism, or a block design powered for 1-2 cells in 20.
+- That is 8 straight rejects (u2s, u2v, u2w, u2y, u3b, u3f, u3h, u3c): the plateau trigger. Step 2 (ablation and
+  capability sweep) is done (ab1; 09:47). Step 1, the correctness audit, starts now, one lens at a time.
+- u3q (STALL_CAT 100) submitted (#139) for block 1 on v4 set 1 against u2g's references. Requests from 4352; 12
+  queued for the drain; waiter build/wait_u3qb1.sh (matches 5483+). Queue after it: u3s, u3d, u3g, u3e (hh1, the
+  head-to-head screen, will rank them).
+- The set-4 reference replays (5387-5414) had not been fetched before the first paired read, which refused to score
+  (contest.py: "NO REFERENCE"). They are fetched now.
