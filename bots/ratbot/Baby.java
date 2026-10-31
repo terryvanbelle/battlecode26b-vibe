@@ -114,6 +114,10 @@ public final class Baby {
                 if (b != null) { nearestEnemy = b; hunting = true; guards++; }
             }
             rescueT = Cfg.RESCUE && rc.getCarrying() == null ? rescueTarget(robots) : null;
+            if (Cfg.GUARD_CARRY_R > 0) {
+                guardCarry = rescueT == null && rc.getCarrying() == null && (rescueT = kingCarrier(robots, Cfg.GUARD_CARRY_R, Cfg.GUARD_CARRY_REACH)) != null;
+                if (guardCarry) carryGuards++;
+            }
         }
         Debug.mark(30);
         if (Flow.left() < Cfg.BC_BAIL) { lowBc++; return; }
@@ -482,7 +486,7 @@ public final class Baby {
             if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
             if (G.me.distanceSquaredTo(r.location) > 2) continue;
             if (!rc.canCarryRat(r.location)) continue;
-            int s = r.health + (Cfg.RESCUE && holdsOurs(r) ? 1000 : 0);
+            int s = r.health + ((Cfg.RESCUE || Cfg.GUARD_CARRY_R > 0) && holdsOurs(r) ? 1000 : 0);
             if (s > bs) { bs = s; best = r; }
         }
         if (best == null) return false;
@@ -1536,6 +1540,26 @@ public final class Baby {
         return best;
     }
 
+    /** Cfg.GUARD_CARRY_R: rescueT came from kingCarrier this turn (rescue then walks toward a blind tile). */
+    static boolean guardCarry;
+    public static int carryGuards;
+
+    /** Cfg.GUARD_CARRY_R: within Chebyshev reach of our nearest king, the enemy baby nearest us holding one of ours
+     *  within Chebyshev rad of the king's centre (ties as rescueTarget), or null; none in cooperation. */
+    static RobotInfo kingCarrier(RobotInfo[] robots, int rad, int reach) {
+        if (G.coop) return null;
+        MapLocation k = Comms.nearestKing(G.me);
+        if (k == null || G.cheb(G.me, k) > reach) return null;
+        RobotInfo best = null;
+        int bd = Integer.MAX_VALUE;
+        for (RobotInfo r : robots) {
+            if (r.team != G.them || r.type != UnitType.BABY_RAT || !holdsOurs(r) || G.cheb(r.location, k) > rad) continue;
+            int s = (G.me.distanceSquaredTo(r.location) * 128 + 100 - Math.min(100, r.carryingRobot.health)) * 2 + (G.pickBit(G.me, r.location) ? 0 : 1);
+            if (s < bd || Cfg.SYM_TIE && s == bd && G.tieFirst(G.me, r.location, best.location)) { bd = s; best = r; }
+        }
+        return best;
+    }
+
     /** Get behind rescueT: on a tile next to it that it cannot see, turn to it (the post-move carry grabs it); else
      *  step to such a tile (turning to it first, as flank does). False when neither is possible. */
     static boolean rescue() throws GameActionException {
@@ -1559,7 +1583,8 @@ public final class Baby {
             int sc = (d == rc.getDirection() ? 0 : 1) * 2 + (G.hand(G.me, d) > 0 ? 1 : 0);
             if (sc < bs) { bs = sc; bestD = d; }
         }
-        if (bestD == null) return Cfg.RESCUE_BLOCK && blockMuzzle(c) || Cfg.RESCUE_WALK && walkBehind(c);
+        if (bestD == null) return Cfg.RESCUE_BLOCK && blockMuzzle(c) || Cfg.RESCUE_WALK && walkBehind(c)
+                || Cfg.GUARD_CARRY_R > 0 && guardCarry && walkBehind(c);
         MapLocation g = Nav.guard;
         Nav.guard = c;
         boolean moved = Nav.step(bestD);

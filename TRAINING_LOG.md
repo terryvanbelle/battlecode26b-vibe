@@ -3523,3 +3523,22 @@
   face-hold rat-turns idle). Counter: king hp lost to bites, and our idle rat-turns near the king (kdef2.py).
   Doses: 0 (u2g, zero arm), 5. Instrument: replica set-2 block 1 vs u2g's 4737-4750; block 1 rejects at t <= 0.
   Falsifier: starved kings or lost economy games (gk2's DefaultSmall), or no fewer king kills by r300.
+
+## 2026-10-31 05:06 PDT: carrier guard (GUARD_CARRY_R); the local grab proxies do throw ours into our king
+
+- Correction to the entry above: agrab and arush DO reproduce the field's throw assault. ammo.py over gk2's 32 u2g
+  games: throw hits on our king, nearly all with our own rats, 13-18 on evileye (vs agrab), 11-13 on averyfineline
+  (agrab), 6-8 on tiny (agrab), 10-11 on DefaultSmall (arush), 2-9 on tiny (arush), 4-8 on ultimatestarvation
+  (arush), 0-1 on safelycontained/starvation. That gives a local delivery check for a throw counter.
+- New switch GUARD_CARRY_R (Cfg, 0 = off, with GUARD_CARRY_REACH 8): at war a baby within Chebyshev 8 of our king
+  takes as rescueT the visible enemy baby nearest it holding one of ours within Chebyshev R of the king's centre,
+  and rescue() steps to a tile next to it that it cannot see (walking toward one when none is a step away), then
+  grabs it (a grabbed carrier drops ours; tryCarry ranks carriers of ours first). Code: Baby.kingCarrier, guarded
+  statements only; bccmp vs s9s shows new members only; BotTest 575/575 (6 new checks).
+- Pre-registration, u2y = u2g + GUARD_CARRY_R 5 (snapvar @s9s, u2g recipe + the switch). Mechanism: the carriers
+  that throw ours into our king stand at Chebyshev 2-5 of its centre and hold the rat 2-4 rounds; a grab from
+  behind in that window stops the throw. Counter: throw hits on our king (ammo.py) and our rats grabbed near the
+  king, per game. Doses: 0 (u2g, gk2's games), 3 (u2z), 5 (u2y). Instrument: local delivery check on the VM, the
+  32 gk2 cells (agrab and arush, 8 maps x 2 sides) per arm; then the replica set-2 block 1 vs 4737-4750 after
+  u2w's block (block 1 rejects at t <= 0). Falsifier: throw hits on our king not lower than u2g's on evileye,
+  averyfineline, tiny and DefaultSmall, or fewer wins/lower delivery from rats pulled off gathering.

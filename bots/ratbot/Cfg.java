@@ -246,6 +246,14 @@ public final class Cfg {
      *  bites with 16-19 of our rats near it against 8-14 of theirs; ours held standoffs with their own nearest
      *  enemies and ended 288 of 624 turns with the action unused. */
     public static final int GUARD_KING_R = 0;
+    /** Carrier guard: at war a baby within Chebyshev GUARD_CARRY_REACH of our king goes first (as RESCUE does) for
+     *  the visible enemy baby nearest it holding one of ours within Chebyshev GUARD_CARRY_R of the king's centre:
+     *  it steps to a tile next to the carrier that the carrier cannot see, walking toward one when none is a step
+     *  away, and grabs it (a grabbed carrier drops ours). u2v's field games (4807-4810): our king's early deaths
+     *  took 292-500 of its ~600 HP from our own rats thrown into it, 8-12 a game, grabbed at Chebyshev 2-4 of its
+     *  centre and thrown 2-4 rounds later by carriers at Chebyshev 2-5 (mostly 3-4); GUARD_KING_R covers only
+     *  Chebyshev 2 and no carriers. 0 = off. */
+    public static final int GUARD_CARRY_R = 0, GUARD_CARRY_REACH = 8;
     /** Fortress radius (Chebyshev, from the king) fighters hold at war; 0 = off. */
     public static final int FORT_R = 0;
     /** King rat traps laid in advance at war (no enemy in sight), kept to this many. */

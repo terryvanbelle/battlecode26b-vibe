@@ -561,6 +561,33 @@ public class BotTest {
         Comms.numKings = 0;
     }
 
+    /** Carrier guard: our king's centre at (8, 5), we at (5, 5). Enemy carriers of ours within Chebyshev R of the
+     *  centre are targets, the nearest us first; carriers of their own, plain rats and carriers beyond R are not;
+     *  none when we are beyond the reach of the king, none in cooperation. */
+    static void testKingCarrier() {
+        reset(); install();
+        G.round = 200; G.coop = false;
+        me = new MapLocation(5, 5); G.me = me;
+        Comms.kings[0] = new MapLocation(8, 5); Comms.numKings = 1;
+        RobotInfo ours = new RobotInfo(40, Team.A, UnitType.BABY_RAT, 50, new MapLocation(5, 2), Direction.NORTH, 0, 0, null);
+        RobotInfo held = new RobotInfo(41, Team.B, UnitType.BABY_RAT, 50, new MapLocation(6, 6), Direction.NORTH, 0, 0, null);
+        RobotInfo cA = new RobotInfo(50, Team.B, UnitType.BABY_RAT, 90, new MapLocation(5, 2), Direction.NORTH, 0, 0, ours);
+        RobotInfo cB = new RobotInfo(51, Team.B, UnitType.BABY_RAT, 90, new MapLocation(11, 7), Direction.NORTH, 0, 0, ours);
+        RobotInfo own = new RobotInfo(52, Team.B, UnitType.BABY_RAT, 90, new MapLocation(6, 6), Direction.NORTH, 0, 0, held);
+        RobotInfo plain = new RobotInfo(53, Team.B, UnitType.BABY_RAT, 30, new MapLocation(6, 5), Direction.NORTH, 0, 0, null);
+        RobotInfo cFar = new RobotInfo(54, Team.B, UnitType.BABY_RAT, 90, new MapLocation(2, 5), Direction.NORTH, 0, 0, ours);
+        check(Baby.kingCarrier(new RobotInfo[]{plain, own, cFar, cB, cA}, 4, 8) == cA,
+              "carrier guard: the nearest enemy carrier of ours within R of our king, not a plain rat or their own carrier");
+        check(Baby.kingCarrier(new RobotInfo[]{plain, own, cFar, cB}, 4, 8) == cB, "carrier guard: a farther carrier in R");
+        check(Baby.kingCarrier(new RobotInfo[]{plain, own, cFar}, 4, 8) == null, "carrier guard: none beyond R of the king");
+        check(Baby.kingCarrier(new RobotInfo[]{cA}, 4, 2) == null, "carrier guard: none when we are beyond reach of the king");
+        G.coop = true;
+        check(Baby.kingCarrier(new RobotInfo[]{cA}, 4, 8) == null, "carrier guard: none in cooperation");
+        G.coop = false;
+        check(Cfg.GUARD_CARRY_R == 0, "carrier guard: off by default");
+        Comms.numKings = 0;
+    }
+
     /** Cfg.HOME_START / SYM_KING_GAP on uneasy_alliance's layout (30x30, kings start (11,15) and (18,15)). */
     static void testHomeStart() throws GameActionException {
         reset(); W = 30; H = 30; install();
@@ -3154,6 +3181,7 @@ public class BotTest {
         testMineExplore();
         testFrontier();
         testKingBiter();
+        testKingCarrier();
         testRescue();
         testHomeStart();
         testFormMine();

@@ -59,6 +59,7 @@ public final class Debug {
         if (Cfg.WOUNDED_HP > 0 && !G.king && Baby.wounded > 0) sb.append(" wd=").append(Baby.wounded);
         if (!G.king && Baby.defends > 0) sb.append(" df=").append(Baby.defends);
         if (!G.king && Baby.rescues > 0) sb.append(" rs=").append(Baby.rescues);
+        if (Cfg.GUARD_CARRY_R > 0 && !G.king && Baby.carryGuards > 0) sb.append(" cg=").append(Baby.carryGuards);
         if (!G.king && Baby.presses > 0) sb.append(" pk=").append(Baby.presses);
         if (!G.king && Baby.guards > 0) sb.append(" gd=").append(Baby.guards);
         if (RobotPlayer.overruns > 0) sb.append(" OVR=").append(RobotPlayer.overruns).append(" OVS=").append(ovStage);
