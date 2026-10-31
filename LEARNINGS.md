@@ -42,6 +42,6 @@
     (we lay none). Bites, throws and the cat come out even. In small-map losses the gap is in the opening (r0-100: 21.3
     to 17.0) and in the bank: we field 5.6 more babies at r50 and run 532 cheese behind at r100, so by r300 they can
     still replace losses (15.9 babies to our 7.4).
-16. **Diagnose losses a candidate can flip.** Opponents who beat us 90%+ dominate any loss tally and absorbed weeks of
-    candidates without a single flip. Losses against opponents in the 25-75% band are the ones a one-switch candidate
-    turns (u3c's block 2: +6 -1, every gain against in-band opponents).
+16. **Diagnose losses a candidate can flip.** Opponents who beat us 90%+ dominate any loss tally and drew much of the
+    diagnosis time (abcdezyxwv_bestsofar). Losses against opponents in the 25-75% band are the ones a one-switch
+    candidate turns (u3c's block 2: +6 -1, every gain against an in-band opponent).
