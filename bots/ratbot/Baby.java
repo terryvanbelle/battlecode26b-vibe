@@ -1565,6 +1565,7 @@ public final class Baby {
     static boolean rescue() throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return false;
+        if (Cfg.GUARD_CARRY_HP && guardCarry && rescueT.health < rc.getHealth()) return rescueWeak();
         MapLocation c = rescueT.location;
         if (G.cheb(G.me, c) == 1 && !sees(rescueT, G.me)) {
             Direction f = G.me.directionTo(c);
@@ -1585,6 +1586,37 @@ public final class Baby {
         }
         if (bestD == null) return Cfg.RESCUE_BLOCK && blockMuzzle(c) || Cfg.RESCUE_WALK && walkBehind(c)
                 || Cfg.GUARD_CARRY_R > 0 && guardCarry && walkBehind(c);
+        MapLocation g = Nav.guard;
+        Nav.guard = c;
+        boolean moved = Nav.step(bestD);
+        Nav.guard = g;
+        if (moved) rescues++;
+        return moved;
+    }
+
+    /** Cfg.GUARD_CARRY_HP: rescueT has less health than ours, so any tile next to it will do for the grab: beside it,
+     *  turn to it; else step next to it (tiles it cannot see first); else walk toward it. */
+    static boolean rescueWeak() throws GameActionException {
+        RobotController rc = G.rc;
+        MapLocation c = rescueT.location;
+        if (G.cheb(G.me, c) == 1) {
+            Direction f = G.me.directionTo(c);
+            if (rc.getDirection() != f && rc.canTurn(f)) { rc.turn(f); G.facing = f; }
+            rescues++;
+            return true;
+        }
+        if (!rc.isMovementReady()) return false;
+        Direction bestD = null;
+        int bs = Integer.MAX_VALUE;
+        for (int i = 0; i < 8; i++) {
+            Direction d = G.DIRS[i];
+            MapLocation t = G.me.add(d);
+            if (G.cheb(t, c) != 1) continue;
+            if ((Nav.avoid & (1 << i)) != 0 || !rc.canMove(d)) continue;
+            int sc = ((sees(rescueT, t) ? 1 : 0) * 2 + (d == rc.getDirection() ? 0 : 1)) * 2 + (G.hand(G.me, d) > 0 ? 1 : 0);
+            if (sc < bs) { bs = sc; bestD = d; }
+        }
+        if (bestD == null) { Nav.goTo(c); rescues++; return true; }
         MapLocation g = Nav.guard;
         Nav.guard = c;
         boolean moved = Nav.step(bestD);

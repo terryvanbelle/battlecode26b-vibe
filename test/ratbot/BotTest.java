@@ -783,6 +783,24 @@ public class BotTest {
         int before = me.distanceSquaredTo(carrier.location);
         check(Baby.walkBehind(carrier.location) && me.distanceSquaredTo(carrier.location) < before && !me.equals(new MapLocation(7, 6)),
               "rescue walk: closer, around its front (" + me + ")");
+        // GUARD_CARRY_HP: a weaker carrier is grabbed from any side; from (7, 7), where every tile beside it is in
+        // its view, step beside it, facing it, then grab it (it is in front of us and has less health)
+        reset(); install();
+        G.round = 200; G.coop = false; Nav.avoid = 0; health = 100;
+        me = new MapLocation(7, 7); facing = Direction.SOUTH; G.me = me;
+        robots.put(carrier.location, carrier);
+        Baby.rescueT = carrier;
+        check(Baby.rescueWeak() && G.cheb(me, carrier.location) == 1 && me.directionTo(carrier.location) == facing,
+              "rescue weak: steps beside a weaker carrier in its view, facing it (" + me + " " + facing + ")");
+        check(Baby.tryCarry(robots.values().toArray(new RobotInfo[0])) && carrying == carrier, "rescue weak: then grabs it");
+        reset(); install();
+        G.round = 200; G.coop = false; Nav.avoid = 0;
+        me = new MapLocation(7, 6); facing = Direction.WEST; G.me = me;
+        robots.put(carrier.location, carrier);
+        Baby.rescueT = carrier;
+        check(Baby.rescueWeak() && me.equals(new MapLocation(7, 6)) && facing == Direction.SOUTH,
+              "rescue weak: beside it already (in its front), turns to it (" + me + " " + facing + ")");
+        check(!Cfg.GUARD_CARRY_HP, "rescue weak: off by default");
         Baby.rescueT = null;
     }
 

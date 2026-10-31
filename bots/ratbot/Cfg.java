@@ -254,6 +254,10 @@ public final class Cfg {
      *  centre and thrown 2-4 rounds later by carriers at Chebyshev 2-5 (mostly 3-4); GUARD_KING_R covers only
      *  Chebyshev 2 and no carriers. 0 = off. */
     public static final int GUARD_CARRY_R = 0, GUARD_CARRY_REACH = 8;
+    /** With GUARD_CARRY_R: a carrier with less health than ours may be grabbed from any tile next to it (the engine's
+     *  third grab rule, HEALTH_GRAB_THRESHOLD 0), so the guard goes for the nearest such tile, blind ones first,
+     *  instead of only the tiles behind it. */
+    public static final boolean GUARD_CARRY_HP = false;
     /** Fortress radius (Chebyshev, from the king) fighters hold at war; 0 = off. */
     public static final int FORT_R = 0;
     /** King rat traps laid in advance at war (no enemy in sight), kept to this many. */
