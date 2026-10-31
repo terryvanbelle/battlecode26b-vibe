@@ -2260,7 +2260,7 @@ public class BotTest {
         boolean gatherCoop = Baby.hostile();
         Baby.role = Baby.ATTACK;
         boolean attackCoop = Baby.hostile();
-        check(war && !gatherCoop && attackCoop == Cfg.RUSH_BREAK, "hostile: after cooperation all; during it only RUSH_BREAK attackers");
+        check(war && !gatherCoop && attackCoop == (Cfg.RUSH_BREAK && !Cfg.PEACE), "hostile: after cooperation all; during it only RUSH_BREAK attackers, none under PEACE");
         Baby.role = r0; G.coop = c0;
     }
 

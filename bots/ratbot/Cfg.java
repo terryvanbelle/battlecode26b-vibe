@@ -482,6 +482,12 @@ public final class Cfg {
     /** From this round on (0 = never) every baby bites and grabs enemy rats during cooperation too: the field rushers
      *  open the war at r36-40 (abrk, whose attackers must first walk over, at r66). */
     public static final int BREAK_ROUND = 0;
+    /** We never end cooperation: while it lasts no baby bites or grabs an enemy rat or king (RUSH_BREAK, BREAK_ROUND
+     *  and the attackers' bite on the enemy king wait for the war). Only a bite, an enemy grab or a fired rat trap
+     *  ends it, and the backstabber loses cat traps for 100 rounds while the victim keeps them. u2g's in-band games:
+     *  big-map losses open the war at median r31-33, wins at r66-68; we opened 14 of 41 big-map losses and 5 of 17
+     *  small; our attackers die 6.2 a game by r100 in losses (3.2 in wins). */
+    public static final boolean PEACE = false;
     /** Gatherers spread over every known mine, not only those on our half: the field rushers pick 600-700 cheese a game
      *  on our half in rounds 100-400 (abrk 156). */
     public static final boolean MINE_ANY = false;

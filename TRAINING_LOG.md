@@ -4232,3 +4232,14 @@
   none of theirs, so traps are most of the 12.7 gap. The rest is bites (6.5 vs 3.9); throw deaths are even (18.2+4.8 vs 19.2+5.6).
   Only 25% of our trap deaths come while outnumbered. Their reactive traps hit us when we press at even numbers or
   better. u3d, now on the replica, lays our own.
+- 14:33: when is the game decided (leadpred.py, inband2)? The side ahead on rat kills by r50 wins 70%; in losses we
+  are 2 kills down by r50 and 3 by r100. A baby-count lead predicts nothing (we lead it by 5-8 in wins and losses
+  alike through r300). The bank always trails (-180 to -720).
+  - Early deaths (earlydeath.py, r1-100, in-band losses): ours 11.0 a game, theirs 8.1. Of ours, 6.2 are attackers
+    (wins: 3.2), 4.6 die within 8 of our king and 2.8 on their half. Theirs die mostly near our king (3.8).
+- u3d's partial block 1 (12 of 16 matches, 36 cells): D 2 (+1 -1), net 0. Field delivery (deathwin.py on those
+  12 matches):
+  - It lays 8.9 traps a game by r100 in big-map losses and 10.6 on small maps (u2g 0). Our traps kill 2.6 and 3.4
+    enemy rats there (u2g 0), about what theirs kill of ours (1.8 and 2.8).
+  - r0-100 deaths in big-map losses are 9.6 ours to 10.1 theirs (u2g's in-band: 11.1 to 8.2).
+  - So the trap gap closes, but no result has turned yet.

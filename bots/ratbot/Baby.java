@@ -155,7 +155,7 @@ public final class Baby {
         if (!G.coop && Cfg.BABY_RAT_TRAPS && !saving) tryRatTrap();
         Debug.mark(5);
         if (hostile && !saving) biteEnemies(robots);
-        else if (role == ATTACK && enemyKing != null) biteEnemies(new RobotInfo[]{enemyKing});
+        else if (!(Cfg.PEACE && G.coop) && role == ATTACK && enemyKing != null) biteEnemies(new RobotInfo[]{enemyKing});
         if (cat != null) tryBiteCat(cat);
         // 2. cat trap ahead of an approaching cat
         if (cat != null && Cfg.CAT_TRAPS) tryCatTrap(cat);
@@ -182,7 +182,7 @@ public final class Baby {
         Debug.mark(22);
         if (Cfg.GRAB_MICRO && GrabMicro.round == G.round) { }
         else if (hostile) biteEnemies(rc.senseNearbyRobots(2, G.them));
-        else if (role == ATTACK) {
+        else if (!(Cfg.PEACE && G.coop) && role == ATTACK) {
             RobotInfo[] near = rc.senseNearbyRobots(8, G.them);
             for (RobotInfo r : near) if (r.type == UnitType.RAT_KING) biteEnemies(new RobotInfo[]{r});
         }
@@ -240,7 +240,10 @@ public final class Baby {
     }
 
     /** Whether this rat bites and grabs enemy rats now: after cooperation, or a RUSH_BREAK attacker at any time. */
-    static boolean hostile() { return !G.coop || Cfg.RUSH_BREAK && role == ATTACK || Cfg.BREAK_ROUND > 0 && G.round >= Cfg.BREAK_ROUND; }
+    static boolean hostile() {
+        if (Cfg.PEACE && G.coop) return false;
+        return !G.coop || Cfg.RUSH_BREAK && role == ATTACK || Cfg.BREAK_ROUND > 0 && G.round >= Cfg.BREAK_ROUND;
+    }
 
     /** End the turn facing the nearest enemy rat close enough to grab us next round. */
     static void guardTurn() throws GameActionException {
