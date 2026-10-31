@@ -3880,3 +3880,8 @@
     514, and raised delivered 187k -> 220k, at 10 wins to 11).
   - u3j = u3d with RAT_TRAP_MIN_CHEESE 200 (from 500): the trap floor's dose arm, since our bank in in-band losses
     is 386-788 at r150.
+- 10:15: u3h (RICH_BANK 1500) rejected at the local delivery check. rh1: 31 of 44 cells to u2g's 32 (D 7: +3 -4,
+  net -1). Pooled over all games, the bank at r150 is 695 vs 556 (+139), but babies at r300 are 16.2 vs 18.3 and
+  the bank at r500 is 854 vs 591. The pre-registered falsifier (babies at r300 lower) fires: the cheese saved early
+  stays banked instead of buying bodies later. The rich cap's threshold now has three doses: 500 (rejected on the
+  replica), 1000 (u2g), 1500 (falsified locally).
