@@ -3865,3 +3865,6 @@
   - Ours: 0 everywhere (u2g lays none).
   - u3d's opening floor (1500 before r150) sits above our early bank (1173-1464 at r50), so u3d lays almost nothing
     before r150, where the field lays 10. Read u3d's field delivery with that in mind.
+- 09:59: u3c's field delivery (dirtpassageway vs AdamTan12_Finals, game 1, u2g 4749/4750 vs u3c 5203/5204):
+  delivered by r150 390 -> 600 (A) and 420 -> 545 (B); the enemy's 585 -> 385 and 420 -> 240. As B the enemy's bank
+  was 0 by r200. Spreading over every known mine, ties included, takes the contested mines' cheese from them.
