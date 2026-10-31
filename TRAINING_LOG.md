@@ -3730,7 +3730,7 @@
   - Falsifier: picked by r400 not up, or the king's mine loses more than the other home mines gain, or king
     bite/throw damage up.
 - Delivery check: ks1 on the VM (u3e's 16 cells vs araid; u2g's control cells in ma2). Then the replica, after u3c.
-- 09:05 PDT ks1 (u3e vs araid, 16 cells): 12-4 against u2g's 14-2 in ma2. DefaultMedium and starvation flipped to
+- 08:47 PDT ks1 (u3e vs araid, 16 cells): 12-4 against u2g's 14-2 in ma2. DefaultMedium and starvation flipped to
   losses (t -1.46, just above the local reject at -1.5), so u3e goes to the replica after u3c.
   - Delivery was partial. Rats on the king's mine fell from 10.7-11.0 to 7.3-8.7 (r200-700, wins), but the most
     rats on one mine stayed at 12-13: with only 2-3 home mines known, the crowd moved to the next known mine.
