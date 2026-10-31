@@ -237,6 +237,16 @@ public class BotTest {
         Comms.numKings = 0;
     }
 
+    static void testBabyCapArea() {
+        int rich = Math.max(Cfg.MAX_BABIES, Cfg.RICH_BABIES), small = Cfg.RICH_MIN_AREA > 0 ? Cfg.MAX_BABIES : rich;
+        reset(); W = 20; H = 20; install();
+        check(King.babyCap(false, Cfg.RICH_BANK) == small && King.babyCap(false, Cfg.RICH_BANK - 1) == Cfg.MAX_BABIES,
+              "baby cap: a 20x20 map keeps the base cap unless RICH_MIN_AREA is off");
+        reset(); W = 60; H = 60; install();
+        check(King.babyCap(false, Cfg.RICH_BANK) == rich && King.babyCap(true, 0) == Cfg.MAX_BABIES_WAR,
+              "baby cap: a 60x60 map takes the RICH tier at RICH_BANK");
+    }
+
     static void testSymRelay() {
         reset(); W = 20; H = 20; install();
         Comms.numKings = 1; Comms.kings[0] = new MapLocation(9, 6);
@@ -3274,6 +3284,7 @@ public class BotTest {
         testSymMineList();
         testSymRelay();
         testKingHeld();
+        testBabyCapArea();
         testSqueakCodec();
         testFresh();
         testCatGeometry();

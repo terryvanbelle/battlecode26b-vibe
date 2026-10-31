@@ -1,0 +1,6 @@
+name=u3f
+source=bots/ratbot
+source_sha=dcfc4d4006bc
+commit=e57cdd5
+created=2026-10-31 09:00 PDT
+change=u2g + RICH_MIN_AREA 901: the RICH baby tier (40 while the bank holds 1000) only on maps of 901+ tiles

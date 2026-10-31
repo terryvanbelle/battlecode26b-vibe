@@ -5,6 +5,11 @@ public final class Cfg {
     public static final int MAX_BABIES = 18, MAX_BABIES_WAR = 18;
     /** With RICH_BANK global cheese or more the baby cap rises to RICH_BABIES (0 = off): a surplus buys bodies. */
     public static final int RICH_BABIES = 0, RICH_BANK = 1000;
+    /** The RICH tiers need a map of RICH_MIN_AREA tiles or more (0 = off). u2g's in-band small-map field games (W*H
+     *  <= 900, 22 games, 5 won; 23 of 40 won on 901-2500): at r50 we field 23 babies to their 17.5 (the 40 cap while
+     *  the bank holds 1000), by r150 the bank is 386 to their 1069 and we have picked 799 to their 1153; at r300 7.4
+     *  babies to their 15.9, and the king starves (294 HP a lost game). */
+    public static final int RICH_MIN_AREA = 0;
     /** A second tier: with RICH2_BANK or more the cap rises to RICH2_BABIES (0 = off). u0m's set-2 superioristhmus
      *  games (3796/3797 vs outercloud) ended with 22-31k cheese banked and 40 rats (the RICH_BABIES cap) from r500 on,
      *  while they ran 53-66; abcdezyxwv runs 50-127 with ~2k banked. Babies eat nothing: only the spawn price. */

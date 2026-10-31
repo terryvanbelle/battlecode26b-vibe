@@ -3739,3 +3739,26 @@
 - 08:53 PDT u3c block 1 (v4 set 1; 5108-5111, 5151-5152, 5168-5173, 5176-5179) vs u2g: 48 cells, 43 alike, D 5
   (+3 -2), net +1, t +0.45. That passes block 1 (rejects at t ≤ 0). Block 2 (v4 set 2) queued from 5195
   (waiter build/wait_u3c2.sh); reference 4737-4750, 5071-5078, 5080-5081, 5100-5101. u3e waits behind it.
+
+## 2026-10-31 09:00 PDT: small maps: the opening overspends; u3f (RICH_MIN_AREA 901)
+
+- In-band (u2g, 102 games) by map area: ≤ 900 tiles 5 W / 17 L; 901-1600 8 / 12; 1601-2500 23 / 17; > 2500 8 / 12
+  (VM mapres.py). The small-map losses end at r436 (median), nearly all by king death; starvation is 294 HP of it.
+- Opening (opening.py, small-map losses vs theirs):
+  - babies 23.1 / 17.5 at r50, 16.4 / 15.6 at r150, 7.4 / 15.9 at r300
+  - bank 1173 / 1531 at r50, 386 / 1069 at r150
+- Births (deathwin.py): we spawn 30.5 in r0-49 to their 22.8. Over r0-300 they spawn more (58.8 to 56.1), from
+  income kept up.
+- Ledger to r150 on small maps (econagg.py with MAPS=..., 16 losses): spawn spend 2028 / 1435 (pricier spawns at
+  high counts: 10 + 10 per 4 alive), picked 799 / 1153.
+- Deaths over the game are even (61 / 63). The opening rush rarely lands on small maps: the enemy king lost 23 HP
+  by r120 in losses, with at most 1.5 of ours within 4 of it (rushhit.py). The tiny rush wins vs AdamTan12 had 7-9.
+- u3f = u2g + RICH_MIN_AREA 901 (new switch, off in ratbot). The RICH tier (cap 40 while the bank holds 1000) only
+  applies on maps of 901+ tiles. The rushers (spawn index 4-15) are unaffected.
+  - Mechanism: small maps keep the 18 cap from the start, so about 5 fewer babies at 60-70 each by r50, cheaper
+    later spawns, and 300-600 more banked through r150 for replacements and upkeep.
+  - Counters: small-map bank at r50/r150, babies at r150/r300, picked by r150, king starve HP, small-map results.
+  - Doses: 0 (u2g) vs 901.
+  - Falsifier: small-map bank at r150 not up by 200, or babies at r300 down, or the tiny/DefaultSmall rush wins lost.
+- Local diag sm1 on the VM: u3f and u2g on 8 small maps (DefaultSmall, tiny, bed, evileye, canyoudig, arrows,
+  Stash, cheesefarm) vs araid and abrk, both sides.

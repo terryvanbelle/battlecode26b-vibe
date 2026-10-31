@@ -291,6 +291,7 @@ public final class King {
     /** Most babies we keep: the war or peace cap, raised to RICH_BABIES while the bank holds RICH_BANK. */
     static int babyCap(boolean war, int bank) {
         int cap = war ? Cfg.MAX_BABIES_WAR : Cfg.MAX_BABIES;
+        if (Cfg.RICH_MIN_AREA > 0 && G.W * G.H < Cfg.RICH_MIN_AREA) return cap;
         if (Cfg.RICH2_BABIES > 0 && bank >= Cfg.RICH2_BANK) return Math.max(Math.max(cap, Cfg.RICH_BABIES), Cfg.RICH2_BABIES);
         return Cfg.RICH_BABIES > cap && bank >= Cfg.RICH_BANK ? Cfg.RICH_BABIES : cap;
     }
