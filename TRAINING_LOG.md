@@ -3470,3 +3470,30 @@
 - VM disk hit 100% (cv1's dumps failed with ENOSPC): deleted our diag_stuck1-15 kept replays and dumps (~770 MB)
   and the kept replays of 86 finished local runs dated 10-28..10-30 (1652 MB; results.jsonl kept, list in
   ~/diag26b/oldrp_deleted.txt); 2.3 GB free.
+
+## 2026-10-31 04:41 PDT: u2v rejected; cv1 was void (SWEEP overran); what kills our rats against the top two
+- u2v (u2g + RICH_BANK 500) rejected on the replica (#130): set-2 block 1 4801-4814 vs u2g's 4737-4750, 42 cells,
+  31 alike, D 11 (+3 -8), net -5, t -1.51. Falsifier hit. 4807 safelycontained: 36 babies at r100 (AlexT101 19) fell
+  to 3 by r600 with the bank at 77, delivered 3615 to 10889. The extra rats didn't add delivery and soaked up losses.
+  Local dose series rb2 (vs abrk, 8 maps x 2 sides): u2g 16/16, u2v 16/16, pb2 (300) 15/16 (starved cheesebottles A).
+- u2w (u2g + GUARD_KING_R 5) parked: gk2 (vs agrab and arush, 8 king-kill maps x 2 sides) 19 of 32 to u2g's 22.
+  Loses DefaultSmall A both and B vs arush (u2g won all three; bank at 1-3), +1 evileye, -1 starvation (that map
+  is a coin flip: u2g also starved once there).
+- ra_u2s stopped at 67 of 80 after the replica verdict: 66 cells, -2.5 pts, t -0.47, net -4.
+- The cv1 verdict on u2u (SWEEP) is void: u2u overran 157 times in its 8 games (safelycontained 86, jail 29, keepout
+  25). The one-turn cell pick scanned ~140 cells with a half test each. sweep() now scans incrementally while more
+  than SWEEP_LEFT 8000 bytecodes are left and picks up next turn (BotTest 569/569, full suite exit 0, bccmp vs s9s:
+  only new members, plus sweep() changed but unreachable at SWEEP 0). u2x = u2g + SWEEP 5 (snapvar @s9s). Diag cv2:
+  u2x and u2g vs abrk on the cv1 maps, both sides; first 10 u2x games 0 overruns.
+- Deaths against the top two (deaths2.py, u2v's 12 games vs AlexT101 4807/4808 and abcd 4809/4810). We laid 0 rat
+  traps in all 12 (u2g carries s9s's KING_TRAPS and BABY_RAT_TRAPS off); they laid 1-307 a game. Our baby deaths:
+  throws (throwLand + throwHit) 20-68 a game, the biggest killer in every game; traps 44/56 on safelycontained,
+  49/117 on sittingducks, 24/21 on pipes (abcd) and 11/17 on evileye. They grab us more than we grab them in 11
+  of 12 (e.g. 121 to 96, 141 to 114, 143 to 88). Trap laying (t0c, t0d, u0j, u0q, u0y, u1q, u1u) and the grab war
+  (BITE_GUARD, RESCUE, GRAB_MICRO, CARRY_AIM, THROW_*, AMMO_AWAY) are both mined out: neutral or rejected.
+- 4807 safelycontained why codes: 1071 of our baby turns in r0-99 were attack moves ('a'), 112 in r100-199. The 12
+  rushers die early, as u1w found on constrictinglattice. Rush size is tuned both ways on the replica (u0o 8
+  rushers net -7, u1o 16 net -3), and RUSH_LIFE (t0g) and RUSH_UNTIL (u2i) were rejected or neutral.
+- VM disk at 97% (606 MB free): deleted 116 build/dumpcache dumps that no ~/diag26b dump list references and that
+  were older than an hour (rb2/gk2/cv1/field analysis dumps, regenerable from kept replays; list in
+  ~/diag26b/dcache_deleted.txt); 1.9 GB free.
