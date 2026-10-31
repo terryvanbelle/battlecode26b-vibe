@@ -891,6 +891,18 @@ public class BotTest {
         check(Baby.tripT == 0 && Baby.tripFrom == 0, "trip half: a slower walk is not kept");
         Baby.tripArrive(new MapLocation(27, 10), 120);
         check(Baby.tripT == 0, "trip half: an arrival with no walk under way times nothing");
+        // the king lists every twin once the symmetry is known, on either half
+        Sym.mask = Sym.ROT; King.tripMirN = 0;
+        Comms.numMines = 0; Arrays.fill(shared, 0);
+        Comms.addMine(32, 49); Comms.addMine(53, 53);
+        King.mirrorAll();
+        check(Comms.numMines == 4 && Comms.hasMine(27, 10) && Comms.hasMine(6, 6), "trip half: the king lists both twins");
+        King.mirrorAll();
+        check(Comms.numMines == 4, "trip half: twins of twins are listed already");
+        Sym.mask = Sym.ROT | Sym.VER; Comms.numMines = 0; Arrays.fill(shared, 0); King.tripMirN = 0;
+        Comms.addMine(32, 49);
+        King.mirrorAll();
+        check(Comms.numMines == 1, "trip half: no twins while two symmetries are live");
         Comms.numMines = 0; Baby.home = null;
         reset();
     }

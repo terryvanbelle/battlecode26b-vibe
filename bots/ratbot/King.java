@@ -35,6 +35,7 @@ public final class King {
         readSqueaks();
         if (Cfg.SYM_MINELIST) Sym.listCheck(Comms.mines, Comms.numMines, true);
         if (Cfg.MINE_MIRROR) mirrorMines();
+        if (Cfg.TRIP_HALF != 0) mirrorAll();
         publish();
         Debug.mark(44);
 
@@ -81,6 +82,22 @@ public final class King {
     }
 
     static int mirroredN = -1, mirroredMask;
+    /** Cfg.TRIP_HALF: the list length + 1 (0: never) and mask when mirrorAll last ran. */
+    static int tripMirN, tripMirMask;
+
+    /** Cfg.TRIP_HALF: with one symmetry left, list every listed mine's twin, on either half (the timed walks to both
+     *  decide whose it is: uneruesansfin's (27,10), the twin of (32,49), went unlisted until r1600 when (32,49) was
+     *  handed to the enemy). Runs when the list or the symmetry changed since the last run. */
+    static void mirrorAll() {
+        int s = Sym.mask;
+        if (Integer.bitCount(s) != 1 || Comms.numMines + 1 == tripMirN && s == tripMirMask) return;
+        for (int k = 0, n = Comms.numMines; k < n; k++) {
+            MapLocation t = G.mirror(Comms.mines[k], s);
+            Comms.addMine(t.x, t.y);
+        }
+        tripMirN = Comms.numMines + 1;
+        tripMirMask = s;
+    }
 
     /** Cfg.MINE_MIRROR: with one symmetry left, list each listed mine's twin when it lies on our half. Runs when the
      *  list or the symmetry changed since the last run. */
