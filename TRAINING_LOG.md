@@ -3703,3 +3703,6 @@
   learn_your_lesson B), delivered 134.9k to 136.4k. Its traps fire (21.5 laid, 17.9 fired a won game; u2g lays
   none) but enemy rats killed are not up (49.0 a won game to 50.6) and our deaths 58.6 to 55.9: the kills half of
   the falsifier holds. Weak; it stays behind u3c for the replica.
+- u2g's v4 set-2 references are in (5071-5078, 5080-5081, 5100-5101). u3c submitted (#134); its v4 set-1 block 1
+  (16 matches) queued from request 4071 (waiter build/wait_u3c1.sh; reference 4723-4736, 4969-4974, 4988-4989,
+  5010-5013).
