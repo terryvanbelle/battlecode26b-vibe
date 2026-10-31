@@ -4187,3 +4187,26 @@
   for block 1 on v4 set 1. It targets the largest measured asymmetry: in u2g's in-band games we lay no rat traps
   at all, while the opponents lay 9-32 per window and their traps kill 9-14 of our rats per lost game (none of
   theirs die to traps).
+
+## 2026-10-31 14:19 PDT: u3v passes its screen; how in-band losses lose the economy
+- kvs (u3v = u2g + KING_FLOW + KING_PLUG on rma's 48 cells vs araid/abrk), scored against u2g's control ctl_ab1:
+  30 of 44 cells to 32, D 16 (+7 -9), net -2, t -0.50. The screen rejects only at t <= -1.5, so u3v passes.
+  - Gained bed A/B vs abrk, and bed B, DefaultSmall A/B, arrows A and learn_your_lesson B vs araid.
+  - Lost DefaultSmall A, arrows A and evileye A vs abrk, and DefaultMedium A/B, arrows B, learn_your_lesson A,
+    starvation B and tiny B vs araid. Delivered 295.4k to 285.4k.
+  - u3v is a basics (movement) repair, so it accepts at t >= 0 after block 2. It goes to the replica next, after
+    u3d's block 1.
+- How in-band losses end (howend.py over inband2, 102 games): 50 of 58 losses are king kills, and in 24 of those
+  the last king starved (kingkill.py). Our bank at R-40 is 0-100 in most of them.
+- Cheese budget (budget.py, per game, ours/theirs):
+  - By r100 in big-map losses we spawn 33 babies for ~1490 against their 25 for ~930, on equal income (243/211).
+  - By r300 in small-map losses they have delivered 2018 to our 1164.
+- Who picks at which mine (pickctx.py, r50-1000, cheese a game near mines):
+  - Losses: they pick 1742 a game at our home mines (wins: 421). 75% of that is picked with none of our rats
+    within Chebyshev 4 of the mine; 35% by a lone enemy rat.
+  - Meanwhile 34% of our home picks (wins: 47%) come with 4+ of our rats at one mine and no enemy.
+  - At their own mines they pick 4560 a lost game, almost all with none of ours near; we pick 340 there.
+- 5100 cheesefarm vs nzjt (minework.py, r50-400): the two mines equidistant from both starts, (26,12) and (26,17),
+  gave them 2220 and us 0 (no rat of ours went within 4). u2g counts tied mines as theirs (MINE_TIES off).
+  - That is u3c's mechanism (MINE_ANY + MINE_TIES): the nearest miss of the plateau (176 cells, D 18 (+12 -6),
+    net +6, t 1.41 at the final block).
