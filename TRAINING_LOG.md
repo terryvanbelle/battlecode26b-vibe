@@ -3665,3 +3665,9 @@
   vs araid on keepout, wallsofparadis, jail, Stash, learn_your_lesson, starvation, DefaultMedium, arrows, both
   sides). Then the replica on panel v4 set 1. Falsifier: no rise in picks per 100 turns, or rats lost on
   enemy-half trips (deaths away from home up with delivered flat).
+- u3c's diag ma2 (vs araid, 8 maps both sides): 12 of 16 to u2g's 14 (D 4, +1 -3, net -2, t -1.0: no reject).
+  Mechanism delivered in part: to r300 in won games 35 picked per 100 baby turns to 30, near-mine share 45% to
+  53%, waiting at a mine (W) 10% to 15%; delivered +2.5% (139.9k to 136.4k) and araid's -14% (77k to 90k). The
+  three losses ended at r256-549 (king kills by the rusher). Next: the replica on panel v4 set 1.
+- VM disk at 285 MB free: deleted 186 unreferenced replay dumps older than 1 h (dcache.py DEL 1; ~2 GB, all
+  regenerable from kept replays). 2.3 GB free now.
