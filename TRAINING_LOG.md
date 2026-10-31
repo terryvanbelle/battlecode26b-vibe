@@ -4243,3 +4243,35 @@
     enemy rats there (u2g 0), about what theirs kill of ours (1.8 and 2.8).
   - r0-100 deaths in big-map losses are 9.6 ours to 10.1 theirs (u2g's in-band: 11.1 to 8.2).
   - So the trap gap closes, but no result has turned yet.
+
+## 2026-10-31 14:45 PDT: u3d passes block 1; u3v to the replica; u3w (PEACE) pre-registered
+- u3d (reactive baby rat traps) block 1 on v4 set 1 (5557-5560, 5563-5566, 5573-5576, 5598-5599, 5618-5619) vs
+  u2g's set-1 reference: 48 cells, 45 alike, D 3 (+2 -1), net +1, t +0.58. Block 1 rejects at t <= 0, so u3d goes
+  on to block 2.
+  - Gained AdamTan12_Icarus uneasy_alliance B and VarunVejalla DefaultMedium A. Lost spsquared superioristhmus A.
+- u3v (movement repair, screen pass) is submission 141 and goes first, for its block 1 on v4 set 1 (16 queued).
+  u3d's block 2 follows. Waiter build/wait_u3vb1.sh (matches 5620+).
+- The plateau trigger is active (9 straight rejects) and a structural attempt is overdue (§3). u3w is one: a
+  doctrine change, not a dose.
+  - Change: u2g + PEACE (new switch). We never end cooperation. While it lasts, no baby of ours bites or grabs an
+    enemy rat or king. RUSH_BREAK, BREAK_ROUND 30 and the attackers' king bites wait for the war. Only the opponent
+    can start it.
+  - Mechanism, from the engine: a bite on an enemy rat or king, a grab of an enemy, or a fired rat trap ends
+    cooperation (the trap's owner counts as the backstabber). The backstabber then loses cat traps for 100 rounds,
+    while the victim keeps them. Cooperation also scores differently: cat damage 0.5, kings 0.3, transfer 0.2,
+    and the game ends when the last cat dies.
+  - Census (whostab.py, u2g's in-band games, 102 of them): in big-map losses the opponent opened the war in 20
+    (median r33), we did in 14 (r31), and nobody in 7. In big-map wins it was 20 (r68), 10 (r66) and 9. On small
+    maps: losses 11 by them (r20) and 5 by us (r15); wins 1, 3 and 1. Games nobody opens were won 11 of 18. Our
+    r1-100 deaths in losses are 11.0 a game to their 8.1, and 6.2 of ours are attackers (3.2 in wins).
+  - Counters: who opens the war, and when; our r0-100 deaths against theirs; the kill lead at r50 and r100.
+  - Doses: the zero arm is u2g. A middle arm (RUSH_BREAK off, keeping BREAK_ROUND 30) is held back unless u3w
+    delivers but nets near zero.
+  - Falsifier: we still open the war in any field game (a delivery bug), or our r0-100 deaths in big-map losses
+    stay 2+ above theirs, or the war start in the cells u2g opened does not move later.
+  - Instruments: the local screen pw1 (kvs's 48 cells vs araid/abrk, control ctl_ab1) rejects only at
+    t <= -1.5. araid and abrk break the truce themselves at r22-36, so PEACE only changes the first ~30 rounds
+    there. The truce check pw2 (vs u2g and s7d, 8 maps x 2 sides) must show backstabBy never on u3w's side. The
+    replica block protocol decides, after u3v and u3d's block 2.
+- Build check: u3w differs from a same-code sibling (pb2, u2g's switch set) in the PEACE line only. BotTest
+  1737/1737 with PEACE on and off; the unit tests pass.
