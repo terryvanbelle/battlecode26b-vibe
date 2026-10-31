@@ -3069,3 +3069,31 @@
   - u1p = u0m + MINE_TRAPS 8. Gatherers trap the eight 3x3 trigger blocks of their mine's spawn square, to defend
     the half the war is fought on. Diag mt1 vs u0q running.
   - u1q = u0y + TRAP_OPEN_TO 150 (floor 1500), the fix for u0y's opening spend if u0y gains vs the top three.
+
+## 2026-10-30 19:28 PDT: u0y and u1p rejected; the Stash pocket (BUG_DIG); u1o on the replica
+
+- u0y (#119, reactive traps + 500 floor), set-3 block 1 (4178-4191): 42 cells, 36 alike, D 6 (+1 -5), net -4,
+  t -1.63. Rejected. It flipped no game vs abcdezyxwv or AdamTan12, and its opening traps lost outercloud
+  Excavation A and dirtfulcat A.
+- u1p (#120, MINE_TRAPS 8), set-3 block 1 (4192-4203, 4248-4249): D 4 (+1 -3), net -2, t -1.00. Rejected. The
+  mine traps hit well in the field (26 of 30 vs AlexT101, 21 of 26 vs abcdezyxwv over 6 games each) but were too few
+  to matter. The 400 bank floor and the front-tile rule keep the volume low.
+- u1q (u0y + TRAP_OPEN_TO 150): oq1 vs arush 14 to 14, traps 295 to 694, xfer +11%. Not submitted: the trap line it
+  fixes didn't gain vs the top three.
+- Mobility vs the field (mobility.py over the 91 replica replays on the VM: the round the 5th rat stands 10+ tiles
+  from its king, ours minus theirs). We are as fast or faster on nearly every map. The exceptions are Stash
+  (+44..+54 rounds), pipes (+7..+32) and jail (0..+19).
+- Stash: vs abcdezyxwv only one of our rats ever leaves the walled pocket. They have 12 out by r40, digging from r11,
+  and deliver 3.7-4.7k to our 0-140. Locally vs araid (u0m) the first rat is out at r53 and 11 by r100.
+  - Our 12 attackers aim at the VER mirror of our own king for 60 rounds. SYM_KING_GAP (u1f) rules that out; then
+    they aim at the real spots.
+  - The bug walk treats dirt as wall, so the pocket has no way out without digging. Each rat waits 20-26 turns for
+    its own reverse flow search (ft=15,3b0/21).
+  - New switch BUG_DIG (off): the bug walk's sweep digs the first dirt tile it meets before any free step.
+    u1r = u0m + BUG_DIG dug the exit open by r22 (u0m r64), first rat out r20, xfer 10.0k to 7.0k. The 1-wide
+    corridor then jams: 1/2/3 rats out at r40/60/100.
+  - Screen ra_u1r: t -0.02, net -4 (+7 -11), pass; dirt dug +24%.
+  - u1s = u1r + s7x's corridor swap: 3/7/11 out locally, but rejected at the screen (t -1.16, net -10, sign
+    p 0.02), as the swap was in s8c and s9l.
+- u1o (#121) = u0m + RUSH_TO 20 is on set-3 block 1, 4261-4274. u1r (basics repair; the basics rule accepts at
+  t >= 0 after block 2) is next, then u1k.

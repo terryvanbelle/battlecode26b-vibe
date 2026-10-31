@@ -112,15 +112,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Replica: u0y (#119, reactive traps + 500 floor) was rejected on set 3 (4178-4191, net -4, t -1.63): no game flipped
-  vs abcdezyxwv or AdamTan12, and 31-40 opening traps lost outercloud Excavation A and dirtfulcat A. u0o (#118,
-  RUSH_TO 12) was rejected (t -2.33). u1p (#120) = u0m + MINE_TRAPS 8 (gatherers trap their mine's spawn square; the
-  war is fought on our half) is on its set-3 block 1 from 4192; score it with `contest.py paired
-  3819-3822,3836-3837,3849-3856 <ids>`. Queue after it: u1k (THROW_CHECK, neutral), u1o (RUSH_TO 20), u1q (u0y +
-  TRAP_OPEN_TO 150: the opening floor; oq1 14 to 14 vs arush with 295 traps to 694). FACE_HOLD failed (u1l 8 to 11,
-  u1m parked, u1n rejected 6 to 11). GRAB_MICRO is weak at both costs. u1a/u0z (economy + mine coverage) did not pass.
-- Stash is a basics failure: vs abcdezyxwv (3851/3852) only one of our rats ever leaves the walled pocket (they have 12
-  out by r40 and dig from r11); we deliver 0-140 to their 3.7-4.7k. Local probe ~/diag26b/stash1 (u0m vs araid).
+- Replica: u1o (#121) = u0m + RUSH_TO 20 is on its set-3 block 1, 4261-4274; score it with `contest.py paired
+  3819-3822,3836-3837,3849-3856 4261-4274`. Next: u1r (u0m + BUG_DIG, a basics repair for pocket starts; screen
+  t -0.02 pass), then u1k (THROW_CHECK, neutral). Rejected on set 3 today: u0y (#119, t -1.63), u1p (#120,
+  MINE_TRAPS 8, t -1.00), u0o (#118, t -2.33). Rejected locally: FACE_HOLD (u1l, u1m parked, u1n), u1s (corridor
+  swap, screen t -1.16). u1q (u0y + TRAP_OPEN_TO 150) is parked: the trap line didn't gain vs the top three.
+- Stash pocket (TRAINING_LOG 2026-10-30 19:28): the bug walk treated dirt as wall, so rats waited 20-26 turns each
+  for a reverse flow search; BUG_DIG digs through in the sweep (exit open r22 locally). The 1-wide corridor still
+  jams afterwards; the corridor swap fixes that locally but loses elsewhere. ~/diag26b/mobility.py REPLAY... compares
+  how fast each side's rats leave home.
 - Trap war (TRAINING_LOG 2026-10-30 17:24): the top three's traps fire on us ~92% of the time, on our own fight moves.
   u0q's reactive traps lifted K/D vs AlexT101 from 0.76 to 0.98 and vs abcdezyxwv from 0.93 to 1.08 in the field.
   Scripts on the VM: ~/diag26b/kdsum.py LABEL DUMPDIR... (deaths by cause, both sides), trapsrc.py, trapind.py
