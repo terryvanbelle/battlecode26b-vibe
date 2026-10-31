@@ -4001,3 +4001,8 @@
     with the FIGHT_EVERY cat fighters) are close to u2g's (171 vs 160 in r100-199).
   - u3q's local total: D 8 (+5 -3), net +2. It stays in the replica queue after u3c; u3r is parked as the weaker
     dose (reopen if u3q passes block 1 and a dose sweep is wanted).
+- 12:15: u2g's v4 set-4 reference done (5387-5388, 5395-5396, 5402-5405, 5407-5414): 25 of 48. The newcomers'
+  draws: YokoOno rose, tornadoes, Meow; run_away10 groveisbeingdesecrated, sunandmoon, arrows; Xzibit clockwisdom,
+  dirtpassageway, Hike; collegejunior Nofreecheese, t_minus_five_minutes, cheesebottles; Icarus averystrangespace,
+  mincemeat, tiny; nzjt sunandmoon, DefaultLarge, RUN. u3c resubmitted (#138) for block 4 (requests from 4286; 12
+  queued for the drain; waiter build/wait_u3cb4.sh, matches 5415+).
