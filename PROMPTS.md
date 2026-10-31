@@ -98,3 +98,7 @@ I guess the only bot on the panel that really raised my eyebrows was abcdezyxwv_
 ## 20. 2026-10-31 06:32 PDT
 
 Let's add that as a point to the BEST_PRACTICES doc in battlecode-vibe.  Spend your diagnostic time on losses against opponents in the 25-75% band
+
+## 21. 2026-10-31 15:17 PDT
+
+If you can get an advantage by breaking symmetry, then do so

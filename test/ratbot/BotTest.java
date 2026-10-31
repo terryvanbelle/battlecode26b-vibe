@@ -2252,6 +2252,30 @@ public class BotTest {
         Baby.seen = new RobotInfo[0]; Baby.myMineCount = 0; Comms.numMines = 0; Baby.mineTarget = null;
     }
 
+    /** The engine's location order (GameWorld.getAllLocationsWithinRadiusSquared): x outer, y inner, x reversed for
+     *  chirality 1 on VERTICAL/ROTATIONAL maps and y reversed on HORIZONTAL/ROTATIONAL ones, clipped to x0..x1, y0..y1. */
+    static MapLocation[] engineOrder(int x0, int x1, int y0, int y1, boolean rx, boolean ry) {
+        MapLocation[] out = new MapLocation[(x1 - x0 + 1) * (y1 - y0 + 1)];
+        int n = 0;
+        for (int i = 0; i <= x1 - x0; i++)
+            for (int j = 0; j <= y1 - y0; j++) out[n++] = new MapLocation(rx ? x1 - i : x0 + i, ry ? y1 - j : y0 + j);
+        return out;
+    }
+
+    static void testChiral() {
+        check(Sym.chiral(engineOrder(9, 11, 9, 11, false, false)) == 0, "chiral: natural order (chirality 0) tells nothing");
+        check(Sym.chiral(engineOrder(9, 11, 9, 11, false, true)) == Sym.HOR, "chiral: y reversed is HORIZONTAL (y mirrored)");
+        check(Sym.chiral(engineOrder(9, 11, 9, 11, true, false)) == Sym.VER, "chiral: x reversed is VERTICAL (x mirrored)");
+        check(Sym.chiral(engineOrder(9, 11, 9, 11, true, true)) == Sym.ROT, "chiral: both reversed is ROTATIONAL");
+        check(Sym.chiral(engineOrder(0, 1, 5, 7, true, true)) == Sym.ROT && Sym.chiral(engineOrder(0, 1, 0, 1, false, true)) == Sym.HOR,
+              "chiral: clipped at the map edge still reads");
+        check(Sym.chiral(engineOrder(4, 4, 3, 6, false, true)) == 0 && Sym.chiral(engineOrder(2, 5, 7, 7, true, false)) == 0
+              && Sym.chiral(new MapLocation[]{new MapLocation(3, 3)}) == 0, "chiral: one column, one row or one tile tells nothing");
+        // a cone keeps a subsequence of the order: drop tiles and the reading stands
+        MapLocation[] f = engineOrder(9, 11, 9, 11, true, false);
+        check(Sym.chiral(new MapLocation[]{f[1], f[2], f[4], f[8]}) == Sym.VER, "chiral: a filtered subsequence reads the same");
+    }
+
     static void testHostile() {
         int r0 = Baby.role; boolean c0 = G.coop;
         G.coop = false; Baby.role = Baby.GATHER;
@@ -3309,6 +3333,7 @@ public class BotTest {
         testKingMine();
         testHandMirror(); testCentreMirror();
         testSymElimination();
+        testChiral();
         testSymMineList();
         testSymRelay();
         testKingHeld();

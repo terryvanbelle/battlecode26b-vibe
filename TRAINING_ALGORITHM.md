@@ -45,8 +45,10 @@ first use, and a strategy tried on a broken base measures the defect.
    a census row per team-game. Fixtures pin it to the engine; new counts are reconciled with independent ones.
 6. **Bot architecture**, layered (turn loop, globals, one constants file, communication schema, map memory, navigation,
    a handler per role), each behaviour behind a switch defaulting to the incumbent's, with greppable decision tags per
-   stage. **Moves stay symmetric when sides switch**: per-unit random streams seeded from side-invariant values; ties
-   broken relative to the unit's own surroundings, never by fixed direction order, sensor order, id or team. From the
+   stage. **Moves stay symmetric when sides switch, by default**: per-unit random streams seeded from side-invariant values; ties
+   broken relative to the unit's own surroundings, never by fixed direction order, sensor order, id or team, so mirror
+   self-play exposes asymmetry bugs. Break it on purpose, behind a switch, wherever a seat-dependent engine behaviour
+   (sense order, turn order, ids) gives one seat information or tempo: an edge on one seat is still an edge. From the
    first commit, a compute monitor counting overruns, near-limit turns and caught exceptions by stage.
 7. **Snapshot tool**: each build frozen under its own name before its first gated game and kept as an opponent with a
    one-line purpose; a check that the working bot, switches at default, repeats the incumbent's actions on fixed cells.

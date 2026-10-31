@@ -1,0 +1,6 @@
+name=u3x
+source=bots/ratbot
+source_sha=ee8de229af56
+commit=a1ba282
+created=2026-10-31 15:21 PDT
+change=@s9s + u2g switch set + CHIRAL_SYM true: a chirality-1 seat reads the map symmetry from the engine sense order at birth (seat-asymmetric on purpose, owner prompt 21)

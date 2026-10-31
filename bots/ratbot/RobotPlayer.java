@@ -13,6 +13,12 @@ public strictfp class RobotPlayer {
     public static void run(RobotController rc) {
         G.init(rc);
         Sym.init();
+        if (Cfg.CHIRAL_SYM) {
+            try {
+                int cs = Sym.chiral(rc.getAllLocationsWithinRadiusSquared(rc.getLocation(), 2));
+                if (cs != 0) Sym.merge(cs);
+            } catch (Exception e) { exceptions++; }
+        }
         while (true) {
             int startRound = rc.getRoundNum();
             Debug.begin(startRound);

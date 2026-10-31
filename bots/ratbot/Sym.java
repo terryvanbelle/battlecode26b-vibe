@@ -56,6 +56,19 @@ public final class Sym {
         mask = next;
     }
 
+    /** Cfg.CHIRAL_SYM: the symmetry the engine's sense order of ls shows (ROT, HOR or VER), or 0 for the natural
+     *  order (chirality 0) or too few tiles in ls to tell. The natural order is x ascending, then y ascending. */
+    public static int chiral(MapLocation[] ls) {
+        int xr = 0, yr = 0;
+        for (int i = 1; i < ls.length && (xr == 0 || yr == 0); i++) {
+            MapLocation a = ls[i - 1], b = ls[i];
+            if (a.x == b.x) { if (yr == 0) yr = b.y > a.y ? 1 : -1; }
+            else if (xr == 0) xr = b.x > a.x ? 1 : -1;
+        }
+        if (xr == 0 || yr == 0) return 0;
+        return xr < 0 ? (yr < 0 ? ROT : VER) : (yr < 0 ? HOR : 0);
+    }
+
     /** Apply a mask learned from a teammate. */
     public static void merge(int m) {
         int next = mask & m;

@@ -4278,3 +4278,39 @@
 - 14:48: VM disk was at 422 MB free (the replica's own storage is 6.7 GB and grows with the ladder). I deleted the
   39 replay dumps in build/dumpcache that no list in ~/diag26b references (587 MB; all can be rebuilt from kept
   replays). Now 1008 MB free. progress/ refreshed after u3d's block 1.
+
+## 2026-10-31 15:22 PDT: owner prompt 21 (break symmetry for an edge); u3w passes its screen; u3x built
+- Owner prompt 21: "If you can get an advantage by breaking symmetry, then do so." This answers finding A of audit
+  lens 2, the chirality leak, parked at 13:26 because of the side-symmetry rule. TRAINING_ALGORITHM §6 now keeps
+  side-symmetric play as the default (so mirror self-play still exposes bugs) and breaks it on purpose, behind a
+  switch, where a seat-dependent engine behaviour gives one seat information or tempo.
+- u3w (PEACE) local screen pw1 (kvs's 44 scored cells vs araid/abrk, control u2g ctl_ab1): 36 of 44 to 32, D 8
+  (+6 -2), net +4, t +1.41. That passes (the screen rejects only at t <= -1.5).
+  - Gained: bed A/B and canyoudig B vs abrk; bed B, canyoudig B and learn_your_lesson B vs araid. Lost:
+    DefaultSmall B vs abrk and tiny B vs araid.
+  - Truce check pw2: u3w broke the truce in 0 of 80 local games. araid (32), abrk (16) and u2g (16) broke it
+    themselves (median r26-36), and s7d never did.
+  - Head-to-head vs u2g: 12 of 16.
+  - vs s7d: 11 of 16, against u2g's 12 of 16 (control pw3, where u2g breaks the truce at r28 every game). Peace
+    games end when the last cat dies (r77-932) and are decided on points, so xfer falls (69.7k vs 149.6k). In a
+    peace game our 12 rushers wait at the enemy king doing nothing.
+  - Delivery is as designed. u3w goes to the replica right after u3v's block 1. It is ahead of u3d's block 2,
+    since it is the overdue structural attempt and has the stronger local signal.
+- u3x = u2g + CHIRAL_SYM (new switch), the chirality leak used on purpose.
+  - At birth every robot calls getAllLocationsWithinRadiusSquared(own tile, 2). The engine lists x ascending,
+    then y ascending, and for a chirality-1 robot it reverses y on HORIZONTAL maps, x on VERTICAL maps and both
+    on ROTATIONAL ones (GameWorld.java:767-781). Sym.chiral reads that order (any visible subsequence keeps it)
+    and merges the one symmetry it shows. A robot that sees the natural order learns nothing.
+  - Babies inherit the king's chirality, and exactly one king has chirality 1 on 40 of the 43 bundled maps. So
+    one seat knows the symmetry on round 1. On u2g's field game-sides the mask stays ambiguous ~40% of the time,
+    and the median round it becomes unique is 103.
+  - Every reader of the mask gains: the rushers' enemy-king target, the king's enemy-mine and raid picks, and the
+    gatherers' mine halves.
+  - Counters: the round the mask becomes unique, per seat; attacker turns to the first enemy-king sighting.
+  - Dose: on or off (zero arm u2g).
+  - Falsifier: on the chirality-1 seat the mask is not unique by round 2 in real games (a reading bug), or the
+    attackers' time to first sight the enemy king does not fall.
+  - BotTest 1744/1744, now with 7 Sym.chiral checks on engine-order arrays (natural, each symmetry, edge
+    clipping, one row or column, a filtered subsequence); the unit tests pass. u3x differs from a same-code
+    sibling in the CHIRAL_SYM line only. Engine check cx1 (u3x vs u2g on cheesefarm HOR, tiny VER and evileye ROT,
+    both seats, with tsv dumps) is running on the VM.

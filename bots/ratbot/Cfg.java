@@ -604,6 +604,12 @@ public final class Cfg {
      *  (twins not seen yet are marked and checked when first seen). The king also rules out s when a listed mine's
      *  s-twin would sit closer than the engine's minimum mine spacing (d2 25) to a listed mine. */
     public static final boolean SYM_MINELIST = false;
+    /** At birth every robot reads the map's symmetry from the engine's sense order: for a chirality-1 robot
+     *  getAllLocationsWithinRadiusSquared lists y reversed (HORIZONTAL), x reversed (VERTICAL) or both (ROTATIONAL);
+     *  babies inherit the king's chirality, and on 40 of the 43 bundled maps exactly one king has chirality 1. So one
+     *  seat knows the symmetry on round 1 and the other learns nothing (deliberately seat-asymmetric, owner prompt 21).
+     *  u2g: the mask stays ambiguous on ~40% of game-sides, median unique round 103. */
+    public static final boolean CHIRAL_SYM = false;
     /** A mine as near the enemy start as ours (on a HOR/VER axis: 7 of EscapeTheNight's 11) counts as ours for the
      *  gatherers' pick and the king's home mine, instead of as theirs. */
     public static final boolean MINE_TIES = false;
