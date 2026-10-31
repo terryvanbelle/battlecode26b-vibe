@@ -4098,3 +4098,28 @@
   - Dose: on or off (the zero arm is u2g).
   - Falsifier: rose pl1 (u3t vs u2g, both sides) shows no fall in pocket rat-turns, or the corridor jam that s6r
     saw returns.
+- 13:26: audit lens 2 (rules and API against the engine source) is back from a read-only reviewer. Six findings.
+  I re-read A, B and D in the engine myself and they hold. C, E and F I spot-checked at the cited bot lines.
+  - A. The engine leaks the map's symmetry on round 1, to one seat only. For a robot with chirality 1,
+    GameWorld.java:767-781 reverses the sense enumeration (senseNearbyMapInfos, senseNearbyRobots,
+    getAllLocationsWithinRadiusSquared): y for HORIZONTAL, x for VERTICAL, both for ROTATIONAL. Babies inherit
+    the king's chirality, and on 40 of the 43 bundled maps exactly one king has chirality 1.
+    - Not used. Only the chirality-1 seat would learn the symmetry early, so our play would differ by seat. The
+      owner's rule is that every move mirrors when the sides switch. Flagged for the owner.
+  - B. Throw flight depends on execution order. The bot's FLIGHT_DMG table (Baby.java:530-534) assumes the 8-tile
+    flight. The engine (InternalRobot.java:1141-1158, flight steps in processBeginningOfTurn, hasTraveledIDs
+    cleared at round end) flies a victim that runs after its thrower only 6 tiles: 42/30/26/22/18 at tiles 2-6,
+    then a ground landing for 10. The bot cannot tell which case it is in, so a king 7-8 tiles away scores 54-66
+    and gets thrown at for nothing about half the time. Every hit from tile 3 on is also overrated by 8.
+  - C. TrapRisk (TrapRisk.java:36-43) marks only enemy babies' front tiles. Enemy kings place rat traps on the 16
+    ring tiles around their 3x3 (RobotControllerImpl.java:339-345), as ours do.
+  - D. Bites overpay cheese. The engine adds ceil(sqrt(cheese)) damage (InternalRobot.java:609-612), so +k costs
+    (k-1)^2+1, not k^2: +3 costs 5 (not 9), the king's +10 costs 82 (not 100). Affects Baby.finishCheese and
+    King.biteCheese.
+  - E. The king never bites an adjacent enemy king. King.bite filters on canAttack(centre), but the enemy centre
+    is at dist2 >= 9 when the bodies touch, while its body tiles at dist2 4-8 are biteable. The babies already
+    clamp to a body tile; the king does not.
+  - F. SQ_CAT squeaks near our king (Baby.java:1092) reach cats. During ATTACK a cat turns toward the first
+    squeak it hears at each new waypoint.
+  - Ranked by expected effect: B, then C, then D/E/F. D, E and F are each below what a panel block can detect,
+    so they wait to ride with a pairing (§6 step 5) rather than take replica blocks alone.
