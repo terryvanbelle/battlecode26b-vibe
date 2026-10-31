@@ -3820,3 +3820,16 @@
   placement and removal never consult the enemy's traps. No engine leak reveals enemy traps.
 - Capability sweep: 27 of 85 RobotController methods are never called. None is a new lever: own-trap removal,
   cooldown getters, occupancy and sensing helpers, indicators, disintegrate, resign. Cheese bites are already used.
+
+## 2026-10-31 09:49 PDT: u3c passes block 2; v4 set 3 drawn; u2g's set-3 reference
+- u3c (MINE_ANY + MINE_TIES) block 2 (v4 set 2, 5195-5196, 5203-5204, 5311-5322) vs u2g's 4737-4750, 5071-5078,
+  5080-5081, 5100-5101: 48 cells, 41 alike, D 7 (+6 -1), net +5, t 1.89.
+  - Gained AdamTan12_Finals dirtpassageway A/B, Icarus TheHeist A, spsquared evileye B, thewaxmango RUN A and
+    learn_your_lesson B. Lost thewaxmango learn_your_lesson A.
+  - Pooled with block 1: 94 cells, 83 alike, D 11 (+8 -3), net +5, t 1.51. That is between block 2's reject bar
+    (1) and its accept bar (2), so u3c plays block 3.
+- v4 set 3 (`research/panel/v4-set3.json`): spsquared and AdamTan12_Finals on their v3 set-3 maps (rose, TheHeist,
+  rift; wallsofparadis, keepout, where_are_you); the six newcomers are drawn at send (YokoOno: Stash,
+  5t4rv4t10n_1337, externalsustenance).
+- u2g resubmitted (#135) for its set-3 reference: requests 4179-4182 sent (matches 5323+), 12 queued for the drain.
+  Waiter build/wait_s3ref.sh. Then u3c is resubmitted for block 3 against it.
