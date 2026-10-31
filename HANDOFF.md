@@ -125,11 +125,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
 - Now: u2w (u2g + GUARD_KING_R 5) on the replica (#131, set-2 block 1 from 4850 vs u2g's 4737-4750; waiter
-  build/wait_u2w1.sh). u2v rejected (#130, net -5); u2x (SWEEP, bounded) dropped (cv2 11 of 16 to u2g's 15).
+  build/wait_u2w1.sh). Next candidate: u2y (u2g + GUARD_CARRY_R 5: babies near our king grab enemy carriers of
+  ours before they throw), passed diag gc1 (25 of 32 to u2g's 22; throw hits on our king 125 to 146). Submit it
+  when u2w's block ends (unless u2w goes on to block 2). u2v rejected (#130, net -5); u2x (SWEEP) dropped.
   Early king kills are the main loss to the strong teams: thrown rats (ours, grabbed at Chebyshev 2-4 of our king,
-  held 2-4 rounds by throwers at 3-4) do 292-500 of the ~600 damage. Scratch tools in ~/diag26b: deaths2.py,
-  race.py/minerace.py/minewhy.py (pile race per mine), rushpay.py, ammo.py/thrower.py (throws into our king),
-  kdef.py/kdef2.py (our rats around our king).
+  held 2-4 rounds by throwers at 3-4) do 292-500 of the ~600 damage; ~4 in 5 grabbed victims had less HP than the
+  grabber, so facing can't stop it. agrab/arush reproduce it locally (gk2: 6-18 hits a game on evileye,
+  averyfineline, tiny, DefaultSmall). Scratch tools in ~/diag26b: deaths2.py, race.py/minerace.py/minewhy.py
+  (pile race), rushpay.py, ammo.py/ammoall.sh, thrower.py, grabwhy.py/grabwhyall.sh, saves.py/savesall.sh,
+  kdef.py/kdef2.py. Replay dir column is FlatHelpers order (0 CENTER, 1 W, 2 SW, 3 S, 4 SE, 5 E, 6 NE, 7 N, 8 NW).
   Parked: u2t (SEEK_FRONTIER, mixed), u0p (RUSH_STICK). The side-symmetry bundle (u2s's switches) stays off in ratbot.
 - KING_PATH evidence: kpa (u1x vs u0m) 22-10 and king pickups 21980 to 3440 in self-play, but no field gain;
   against AdamTan12 the king died before reaching the mines (wallsofparadis still lost both sides).

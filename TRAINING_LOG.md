@@ -3542,3 +3542,18 @@
   32 gk2 cells (agrab and arush, 8 maps x 2 sides) per arm; then the replica set-2 block 1 vs 4737-4750 after
   u2w's block (block 1 rejects at t <= 0). Falsifier: throw hits on our king not lower than u2g's on evileye,
   averyfineline, tiny and DefaultSmall, or fewer wins/lower delivery from rats pulled off gathering.
+- How the enemy grabs ours near our king (new scratch grabwhy.py; gk2's 32 u2g games vs agrab/arush, grabs within
+  Chebyshev 5 of our king's centre; 0-151 a game, evileye 83-151 vs agrab): about 4 in 5 victims had less HP than
+  the grabber (a grab needs that or a blind victim), split ~60/40 between facing the grabber and not; ~1 in 5 were
+  healthier but blind. Victims' last moves: f (facing an enemy), w (war), r (retreat), T, M. Most were thrown later.
+  So facing (glance/guardTurn) can stop at most a fifth: grabbing the carrier is the lever. Note: the replay's
+  dir column is FlatHelpers order (0 CENTER, 1 W, 2 SW, 3 S, 4 SE, 5 E, 6 NE, 7 N, 8 NW), not Direction.ordinal.
+- gc1 (u2y = GUARD_CARRY_R 5, u2z = 3; gk2's 32 cells vs agrab/arush; u2g control = gk2's games): wins u2y 25,
+  u2z 24, u2g 22 of 32; delivered 255k / 245k / 250k. u2y vs u2g: +6 (agrab tiny A+B and constrictinglattice B;
+  arush averyfineline A, starvation B, tiny B) -3 (agrab DefaultSmall B, starvation A; arush DefaultSmall B).
+  Delivery (new scratch saves.py; ammo.py): carriers of ours grabbed 831 vs 734, within Chebyshev 6 of our king
+  457 vs 398 (+15%); enemy grabs of ours near our king 587 vs 571; throw hits on our king 125 vs 146 (ours 107 vs
+  133). The mechanism fires but only trims the assault (u2g's tryCarry/POUNCE already grab most carriers they
+  meet). It passes the delivery check: u2y is the next replica candidate, after u2w's block. u2z (dose 3) parked.
+  Next refinement if u2y helps: rescue() steps only to blind tiles, but a carrier with less HP than ours can be
+  grabbed from any adjacent tile.
