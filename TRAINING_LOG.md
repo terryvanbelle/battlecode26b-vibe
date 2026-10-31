@@ -3925,3 +3925,15 @@
   AdamTan12_Finals 2, YokoOno 1, thewaxmango 1, Icarus 0 (averyfineline, averystrangespace, mincemeat), nzjt 0
   (whatsthecatdoin, FreeTheCheese, cheesebottles). The set-3 draws are hard ones for us; per-cell pairing absorbs
   that. u3c resubmitted (#136) and its block 3 queued (requests 4203-4206 sent, 12 queued for the drain).
+- 10:53: u2g's set-3 losses to the in-band pair Icarus and nzjt (0 of 12; endstate):
+  - Icarus: averyfineline (king kills r206/r252, war opened r15-16) and mincemeat (r316/r317). On averystrangespace
+    both sides went to r2000 in cooperation with 2 kings to their 1 and even delivery (4505 vs 4575), and both were
+    lost on points. Cooperation weighs cat damage 0.5, so their cat damage share was over 60%. That makes 2 cells a
+    cat-damage lever could flip.
+  - nzjt: on whatsthecatdoin (40x40, kings in boxed corner rooms, two centre mines) we delivered 30 by r300 to their
+    1414. Our babies walk to the centre mines (why M, 150-290 rat-turns per 25 rounds r50-175). At the centre
+    (16-18, 19-21) nzjt grabbed ours 91 times to our 31 and threw them (throwLand deaths 6, 9, 10 a 50-round
+    window). The king starved at r305.
+  - Pooled over u2g's 102 in-band games (grabvwhy.py), our grabbed babies' last move code: faceEnemy 23%, carry aim
+    (T: holding an enemy, lining up a throw) 17-18%, attack 14-15%, war 9-10%. About 13 grabs a lost game hit our
+    carriers while they aim (CARRY_AIM). u3o in ab1 (CARRY_AIM off) prices that exposure locally.
