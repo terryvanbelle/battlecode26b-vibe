@@ -3892,3 +3892,9 @@
   8.2 vs 10.6). In big wins the gap is smaller (traps 1.1, 0.3, 0.4, 0.4). After r500, losses or wins, they lose
   10.7-14.8 rats a game to the cat and we lose 2.5-5.8. Before r500 the rats we lose to traps are the whole
   big-map gap. That is the asymmetry u3d's own traps answer.
+- 10:30: tw2 (VM, each arm vs u3d on ma2's 8 maps, both sides; the mirror baseline is 8 of 16):
+  - u3i (u3d + FACE_HOLD): 7 of 16. The mechanism delivers: deaths by enemy 395 to u3d's 458 (-14%), kills 458 to
+    395, 93 fewer spawns, delivered +2.5%. It doesn't turn into wins in the mirror.
+  - u3j (trap floor 200): 7 of 16. It lays 19% more traps (466 to 391) with even kills (411 to 416).
+  - Both are parked behind u3d's field test. u3i is the follow-up if u3d's field games show our rats stepping into
+    reactive traps; u3j only if u3d lays few traps there.
