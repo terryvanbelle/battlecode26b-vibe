@@ -4123,3 +4123,17 @@
     squeak it hears at each new waypoint.
   - Ranked by expected effect: B, then C, then D/E/F. D, E and F are each below what a panel block can detect,
     so they wait to ride with a pairing (§6 step 5) rather than take replica blocks alone.
+- 13:31: pl1 (u3t vs u2g on rose, both sides). The same seats won as in the u2g mirror (B both times), so u3t
+  does not deliver alone and is parked.
+  - u3t's king stopped at (14,2)/(14,3) instead of (13,1), but the pocket rats still stood touching it: their A*
+    routes through the king's body. Stuck share 11.0% of baby turns vs 12.5% in the mirror; box rat-turns 38% vs
+    42%.
+  - Field census (stuck_report on u2g's 150 in-band and reference field games, stucksum.py): 3.5% of baby turns
+    are stuck. Of the listed stuck rounds, 73% (35199) are rats walking to a mine within 3 of our king: rose 21142,
+    EscapeTheNight 6696, rift 2079, fullofsecrets 1869. That class is Flow's A* routing through our own king.
+  - u3u = u2g + KING_FLOW (existing switch: our kings' bodies are walls for flow paths, target at a king
+    excepted). s5e tried it on an older base and lost at block 1 (net -4, t -1.07). Pre-registration:
+    - Counter: stuck rounds within 3 of our king on rose, EscapeTheNight, rift and fullofsecrets.
+    - Dose: on or off.
+    - Falsifier: kf1 (those 4 maps, both sides, plus u2g mirrors) shows no fall in king-near stuck rounds.
+    - If rose still jams (the king plugs at (13,1), so no flow path exists), the pair u3t+u3u is next.

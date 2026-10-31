@@ -1,0 +1,6 @@
+name=u3u
+source=bots/ratbot
+source_sha=5ea2ea2c96d4
+commit=c732e28
+created=2026-10-31 13:31 PDT
+change=u2g + KING_FLOW: our kings 3x3 bodies are walls for flow paths (target at a king excepted); 150 u2g field games: 73% of listed stuck rounds were gatherers bound for a mine touching our king (rose 21142, EscapeTheNight 6696, rift 2079, fullofsecrets 1869)
