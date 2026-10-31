@@ -1,0 +1,6 @@
+name=u3q
+source=bots/ratbot
+source_sha=e7cf64941cb5
+commit=527203e
+created=2026-10-31 11:02 PDT
+change=u2g + STALL_CAT 100: during cooperation an attacker that stayed within Chebyshev 3 of one tile for 100 rounds hunts cats (cat in view, last known, else the mirror-invariant centre)

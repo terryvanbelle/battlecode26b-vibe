@@ -3952,3 +3952,8 @@
     check vs u2g on 8 stall maps (averystrangespace, rose, rift, TheHeist, clockwisdom, cheesebottles,
     where_are_you, uneruesansfin), both sides, against the u2g mirror on the same cells. Falsifier: our cat damage
     on averystrangespace stays 0, or the mirror's points games don't move.
+- 11:05: u3q's local check runs as hc1 (16 cells, u3q vs u2g both sides) then hcc (the u2g mirror on the same 8
+  maps), with replays kept. A first launch reused the name st1, which an old u0b vs s9s run already held: the
+  guard only printed a warning. Those processes were killed by PID, st1's cells.tsv restored to its 16 lines, the
+  new replays removed, and the stray control dir stc deleted; st1's old results are untouched. VM launches now
+  test that the run name is free and stop if it is not.
