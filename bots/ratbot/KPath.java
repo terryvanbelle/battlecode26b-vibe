@@ -27,6 +27,9 @@ public final class KPath {
     /** The king's centre the current search aims at, and its index. */
     static int kx, ky, kIdx;
     static int startRound = -1000, failRound = -1000, builtRound = -1000, minesAt = -1;
+    /** Cfg.KP_FRONT: front(x, y) = fa * x + fb * y + fc is 2 * |home - away| times the signed distance from the
+     *  bisector (positive on our side); centres below fMin are off the path. */
+    static int fa, fb, fc, fMin = Integer.MIN_VALUE;
     static int lastScan = -1;
     public static int searches, fails, steps, digs;
     public static boolean unlimited;
@@ -73,9 +76,19 @@ public final class KPath {
         return true;
     }
 
-    /** A centre whose 3x3 lies on the map and touches no seen wall. */
+    /** A centre whose 3x3 lies on the map and touches no seen wall (nor, with Cfg.KP_FRONT, lies too near the front). */
     static boolean open(int x, int y) {
-        return x >= 1 && y >= 1 && x < G.W - 1 && y < G.H - 1 && !kb[x + G.W * y];
+        return x >= 1 && y >= 1 && x < G.W - 1 && y < G.H - 1 && !kb[x + G.W * y]
+            && (Cfg.KP_FRONT == 0 || fa * x + fb * y + fc >= fMin);
+    }
+
+    /** Cfg.KP_FRONT: the front line from our start home and the enemy's away: |v - away|^2 - |v - home|^2 is linear
+     *  in v, 2 * (home - away) . v + |away|^2 - |home|^2. */
+    static void front(MapLocation home, MapLocation away) {
+        fa = 2 * (home.x - away.x);
+        fb = 2 * (home.y - away.y);
+        fc = away.x * away.x + away.y * away.y - home.x * home.x - home.y * home.y;
+        fMin = (fa * home.x + fb * home.y + fc) * Cfg.KP_FRONT / 100;
     }
 
     /** m is on our half: nearer our start home than the enemy start away (King.pickHomeMine's test). */
@@ -113,6 +126,7 @@ public final class KPath {
         kx = c.x; ky = c.y; kIdx = c.x + W * c.y;
         startRound = G.round; minesAt = Comms.numMines; searches++;
         ready = false; seated = false;
+        if (Cfg.KP_FRONT != 0) front(home, away);
         int[] gg = g;
         for (int i = 0; i < n; i++) {
             if (left() < Cfg.KP_RESERVE) { building = false; pending = 0; minesAt = -1; return false; }
@@ -140,7 +154,7 @@ public final class KPath {
         if (!building) return;
         int[] gg = g, pv = poolV, pnx = poolN, hd = head, OX = ox, OY = oy;
         boolean[] b = kb;
-        int W = G.W, H = G.H, bs = base, X = kx, Y = ky, K = kIdx, mf = maxF;
+        int W = G.W, H = G.H, bs = base, X = kx, Y = ky, K = kIdx, mf = maxF, A = fa, B = fb, C = fc, F = fMin;
         while (pending > 0) {
             if (left() < reserve) return;
             if (curF > mf) break;
@@ -157,6 +171,7 @@ public final class KPath {
                 if (vx < 1 || vy < 1 || vx >= W - 1 || vy >= H - 1) continue;
                 int v = vx + W * vy;
                 if (b[v] && v != K) continue;
+                if (Cfg.KP_FRONT != 0 && A * vx + B * vy + C < F && v != K) continue;
                 int gv = gg[v];
                 if (gv >= bs && gv - bs <= ng) continue;
                 int f = ng + Math.max(Math.abs(vx - X), Math.abs(vy - Y));

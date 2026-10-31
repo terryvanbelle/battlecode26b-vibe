@@ -91,6 +91,11 @@ public final class Cfg {
      *  misses on 11 (TheHeist, EscapeTheNight, RUN, clouds, knifefight, krotus, ...) and 4 more have none within 400. */
     public static final boolean KING_PATH = false;
     public static final int KP_MAX = 32, KP_RESERVE = 2500, KP_TURNS = 40, KP_RETRY = 30;
+    /** KING_PATH: no centre on the path or seat nearer the bisector between our start and the enemy's than KP_FRONT
+     *  percent of the start's own distance from it (0 = off). kpa krotus (both mines in dirt pockets walled on the
+     *  edge side): u1x's king went in from the centre side, 5-7 from the axis, and was bitten to death there in both
+     *  games (A r283, B r392); u0m's greedy king stuck at the edge and lived. */
+    public static final int KP_FRONT = 0;
     /** A king bound to starve before round 2000 (Econ.surplus() < 0), with no mine of its own (none within KING_MINE_R2,
      *  or another king's), walks to the nearest home-half mine no other king holds, at any distance; checked from
      *  FORAGE_FROM every FORAGE_EVERY rounds. 27 of 78 king deaths in 50 replica matches (3284-3297, 3728-3763) were

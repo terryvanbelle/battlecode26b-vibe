@@ -2533,6 +2533,12 @@ public class BotTest {
         check(!KPath.start(k, ms, 2, home, away) && !KPath.building && KPath.minesAt == -1,
               "king path: seeding short of bytecodes searches nothing and is due again");
         KPath.fakeLeft = Integer.MAX_VALUE;
+        // KP_FRONT's line: 2 * |home - away| times the signed distance from the bisector, |home - away|^2 at home
+        KPath.front(new MapLocation(1, 1), new MapLocation(29, 1));
+        check(KPath.fa * 1 + KPath.fb * 1 + KPath.fc == 28 * 28 && KPath.fa * 15 + KPath.fb * 7 + KPath.fc == 0
+              && KPath.fa * 9 + KPath.fb * 20 + KPath.fc == 2 * 28 * 6 && KPath.fMin == 28 * 28 * Cfg.KP_FRONT / 100,
+              "king path: the front line is the bisector, scaled by twice the start gap");
+        KPath.fMin = Integer.MIN_VALUE;
         // the turn that allocates the last array does nothing else
         KPath.poolN = null; KPath.lastScan = -1;
         KPath.tick();
