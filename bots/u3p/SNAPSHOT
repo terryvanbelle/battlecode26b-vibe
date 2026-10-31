@@ -1,0 +1,6 @@
+name=u3p
+source=bots/ratbot
+source_sha=d4a40e92add2
+commit=fda4d69
+created=2026-10-31 10:33 PDT
+change=u2g without TRAP_RISK (ablation: no trap-risk mask on movement)

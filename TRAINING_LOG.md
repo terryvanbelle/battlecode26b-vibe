@@ -3904,3 +3904,14 @@
   games, and the rush proxies punish spending on traps instead of bodies. Pre-registered falsifier: u3d 3 or more
   wins below u2g, which means its traps cost bodies against a rush on small maps. Counters: traps laid and fired,
   deaths by enemy.
+- 10:36: Ablation screen ab1 (plateau step 2, "ablate everything carried"; VM, no replays kept). Six switches on in
+  u2g that were never ablated, each turned off alone on u2g's recipe: u3k RAID, u3l STANDOFF, u3m FLANK, u3n POUNCE,
+  u3o CARRY_AIM, u3p TRAP_RISK. Each plays u2g's 48 deterministic cells: ma2 (8 maps vs araid) and sm1 (8 small maps
+  vs araid and abrk), both sides. u2g wins 35 of them. Pre-registered: 3 or more wins fewer and the switch earns its
+  keep; no loss of wins makes it a removal candidate for the replica, behind the queue. The rush proxies lay few
+  traps, so a switch that pays only against trappers (TRAP_RISK, STANDOFF) can look free here. Such a result counts
+  as "not priced", not "free".
+- 10:35: VM disk: 346 MB free when ab1 started with replays kept (288 games, about 220 MB). I stopped it, deleted the
+  replay files of 30 finished local runs from 10-30 17:00 to 10-31 02:00 PDT (gj1 ... sp3; results.jsonl and
+  cells.tsv kept; local games are deterministic, so they regenerate), freeing about 1 GB (1.3 GB free), and
+  restarted ab1 without replays.

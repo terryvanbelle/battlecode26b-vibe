@@ -1,0 +1,6 @@
+name=u3k
+source=bots/ratbot
+source_sha=125892920025
+commit=fda4d69
+created=2026-10-31 10:33 PDT
+change=u2g without RAID (ablation: idle fighters no longer go to enemy-half mines)

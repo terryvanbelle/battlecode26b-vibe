@@ -1,0 +1,6 @@
+name=u3n
+source=bots/ratbot
+source_sha=451fb69c6c62
+commit=fda4d69
+created=2026-10-31 10:33 PDT
+change=u2g without POUNCE (ablation: fighters no longer target the nearest weaker enemy rat)
