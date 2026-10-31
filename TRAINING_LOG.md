@@ -4164,3 +4164,13 @@
   - Self-play head-to-head is weak evidence; none is near the -1.5 screen reject.
   - Replica queue after u3q, failing battery row first: u3u (movement repair), then u3s (screen t +1.07), u3d,
     u3e, u3g.
+- 14:00: kv1 (u3v = u2g + KING_FLOW + KING_PLUG vs u2g on rose, rift and EscapeTheNight, both sides). The pair
+  delivers on the counter where u3u alone did not.
+  - Listed stuck rounds within 3 of our king: 0 on rose and rift, both sides (u2g in the same games: 3158/5017
+    on rose, 3077/1419 on rift).
+  - Stuck share: rose A 4.6% (u2g 26.0%, mirror 12.5%), rose B 10.3%, rift A 0.4%, rift B 0.0%.
+  - EscapeTheNight replays u3u's games (KING_PLUG does not act there).
+  - Results vs the mirror: gained rose A and EscapeTheNight A, lost rift B (u2g won on points as A) and
+    EscapeTheNight B. Net 0 of 6.
+  - So u3v replaces u3u as the movement repair. kfs (u3u on rma's 48 cells vs araid/abrk) was stopped at 18 of 48
+    and the same cells restarted as kvs with u3v, scored against u2g's control results (ctl_ab1).
