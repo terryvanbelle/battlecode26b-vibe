@@ -253,9 +253,16 @@ public final class Cfg {
      *  on us were laid 0-1 rounds before, mostly on a tile next to both rats, and the commonest victim move code was
      *  this step (mv=f). A rat standing still never sets a trap off. */
     public static final boolean FACE_HOLD = false;
-    /** The burn signal (a trap fired on our own turn, SQ_BURN, Comms.SYM_BURN) runs for RISK_ADAPT, WOUNDED_HP or
-     *  FACE_HOLD. */
-    public static final boolean BURN = RISK_ADAPT > 0 || WOUNDED_HP > 0 || FACE_HOLD;
+    /** Rush stand-down (0 = off): once enemy rat traps are known (the burn signal), a rusher (ATTACK role) farther
+     *  than Chebyshev RUSH_BURN from the enemy start (our start mirrored by the first live symmetry) turns gatherer.
+     *  4198 constrictinglattice vs AlexT101 (kings 19 apart): their reactive traps on the contact line (y 26-31, laid
+     *  from r12, 45 fires on us by r60) killed all 12 rushers by r57 (traps, then grabs and throws), none nearer than
+     *  Chebyshev 4 to the enemy king; we lost 35 rats by r100 to their 14. Near the enemy start the rush goes on:
+     *  CS50Crab's first trap fires on us at r7-14 on thunderdome (kings 8 apart) and our rush kills its king by r24. */
+    public static final int RUSH_BURN = 0;
+    /** The burn signal (a trap fired on our own turn, SQ_BURN, Comms.SYM_BURN) runs for RISK_ADAPT, WOUNDED_HP,
+     *  FACE_HOLD or RUSH_BURN. */
+    public static final boolean BURN = RISK_ADAPT > 0 || WOUNDED_HP > 0 || FACE_HOLD || RUSH_BURN > 0;
     /** TrapRisk's marks kept one map row at a time, each row allocated on its first mark (TrapRows). The flat W*H
      *  array waits for a turn with 3*W*H + BC_OPTIONAL bytecodes left: 18800 on a 60x60 map, above a baby's 17500,
      *  so on 9 of the 45 field maps no rat ever had marks (15.2-15.5k on 50x50 and 60x40). */

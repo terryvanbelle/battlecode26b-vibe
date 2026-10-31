@@ -84,6 +84,8 @@ public final class Baby {
             // a rush that has not found the enemy king in RUSH_LIFE rounds has failed for this rat: it gathers
             else if (rushFailed(G.round, birthRound, ekSeen, Cfg.RUSH_LIFE)) { role = GATHER; demoted++; }
         }
+        if (Cfg.RUSH_BURN > 0 && role == ATTACK && trapsKnown(burnRound, Comms.read(Comms.SYM))
+                && rushStands(G.me, ref(), Cfg.RUSH_BURN)) { role = GATHER; demoted++; }
         if (enemyKing != null && Cfg.KING_PRESS) { lastEKing = enemyKing.location; lastEKingRound = G.round; ekHops = 0; }
         nearestEnemy = null;
         hunting = false;
@@ -198,6 +200,12 @@ public final class Baby {
 
     /** Cfg.RISK_ADAPT: enemy rat traps are known to be in play (our own burn or a heard one, or the kings' shared bit). */
     static boolean trapsKnown(int burn, int sym) { return burn > 0 || (sym & Comms.SYM_BURN) != 0; }
+
+    /** Cfg.RUSH_BURN: a rusher at me farther than Chebyshev r from the enemy start (our start home mirrored by the
+     *  first live symmetry) stands down once enemy traps are known. */
+    static boolean rushStands(MapLocation me, MapLocation home, int r) {
+        return home != null && G.cheb(me, G.mirror(home, firstSym())) > r;
+    }
 
     /** Cfg.WOUNDED_HP: turns held to the wound mask. */
     static int wounded;

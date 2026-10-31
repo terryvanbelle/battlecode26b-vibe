@@ -2488,6 +2488,18 @@ public class BotTest {
         check(!Baby.openTrapBlocked(10, 300, 0, 1500), "open trap: off");
     }
 
+    static void testRushStands() {
+        reset(); W = 20; H = 20; install();
+        int m0 = Sym.mask;
+        Sym.mask = Sym.VER; // mirror x on a 20-wide map: home (3,5) -> enemy start (16,5)
+        MapLocation home = new MapLocation(3, 5);
+        check(G.mirror(home, Baby.firstSym()).equals(new MapLocation(16, 5)), "rush stands: enemy start is the VER mirror");
+        check(Baby.rushStands(new MapLocation(9, 5), home, 6), "rush stands: 7 from the enemy start stands down at r 6");
+        check(!Baby.rushStands(new MapLocation(10, 8), home, 6), "rush stands: 6 from the enemy start keeps rushing");
+        check(!Baby.rushStands(new MapLocation(9, 5), null, 6), "rush stands: no home, no stand-down");
+        Sym.mask = m0;
+    }
+
     static void testFaceHold() {
         reset(); install();
         Team us0 = G.us, them0 = G.them;
@@ -2781,6 +2793,7 @@ public class BotTest {
         testFaceHold();
         testOpenTrap();
         testBugDig();
+        testRushStands();
         testScoutUntil();
         testMineTraps();
         testTrapRisk();

@@ -3097,3 +3097,43 @@
     p 0.02), as the swap was in s8c and s9l.
 - u1o (#121) = u0m + RUSH_TO 20 is on set-3 block 1, 4261-4274. u1r (basics repair; the basics rule accepts at
   t >= 0 after block 2) is next, then u1k.
+
+## 2026-10-30 20:01 PDT: How the top three win (traps, our own rats thrown into our king, a trap line against the rush); u1t-u1w
+
+- u1o (#121, RUSH_TO 20) was rejected on set 3: net -3, t -1.13. u1r (#122, BUG_DIG) is now on its set-3 block.
+- New VM scripts (copied to ~/diag26b/): gsum.py (per game: deaths, traps laid and fired, both sides), kingctx.py
+  (army positions while our king loses HP), reach.py (each side's rats near the other king), rushers.py (our first
+  24 rats: fate, closest approach to their king, move codes).
+- Traps: in u1p's 12 games vs AlexT101/abcdezyxwv their traps hit us 485 times and ours hit them 47. Both kill 83%
+  of the rats they hit within 15 rounds (trap, then grabbed and thrown).
+  - u0y (reactive traps) closed most of the gap over 18 games vs the top three: 735 hits on us to 486 on them.
+    Outside where_are_you it killed more rats than it lost (893 to 743), yet lost the same games.
+  - The engine's trap stun only sets the movement cooldown (stunTime 30). A trapped rat can still bite and turn.
+- We lose by king kill, not on rats. Rat deaths are near even (675 to 575 over u1p's 12 games), and neither side
+  forms a second king vs AlexT101/abcdezyxwv.
+  - Our king loses ~350 hp in 25 rounds (4184: 486 -> 142 in r175-200; 4186: 506 -> 146).
+  - The damage is 8-11 different biters plus our own rats, grabbed next to the king and thrown into it (38-42 per
+    hit, 3-14 hits a game).
+  - In 4184 one enemy (10260) threw our full-health rat 10490 into our king twice in 5 rounds. It was grabbed at
+    equal hp from outside its 90-degree cone.
+  - Their king is never touched. Our rats within 8 of their king: 0-2 at a time. Theirs within 8 of ours: 4-9.
+- Economy (4198 constrictinglattice vs AlexT101, per 100 rounds):
+  - They pick their own half 500 -> 1160 unopposed and take 130-500 of ours. We take 0-60 of theirs.
+  - Deliveries: theirs rise 378 -> 1170, ours fall 693 -> 160. Over the game they took 26% of the cheese spawned on
+    our half.
+- The rush feeds a trap line. AlexT101 lays reactive traps on the contact line (y 26-31) from r12: 45 fires on us by
+  r60, mostly one round after the lay. All 12 of our rushers were dead by r57, none nearer than 4 to their king. Of
+  our first 24 rats, 21 died by r59.
+  - First enemy trap fire on us in u0m's reference games: AlexT101 r10-26, CS50Crab r7-34, bc26vibe r17-76,
+    outercloud r33-183, abcdezyxwv r47-137, AdamTan12 r19-52 (none on where_are_you), spsquared none before r824.
+  - The rush wins thunderdome (kings 8 apart) vs CS50Crab by r24, and dirtfulcat, rose, rift and where_are_you
+    (u0o's 8 rushers lost those).
+- Candidates:
+  - u1t: u0m + MINE_TRAPS 8 at a 40-cheese floor, cap 20. u1p's 400 floor held mine traps to ~5 a game, but they hit
+    26 of 30 vs AlexT101.
+  - u1u: u1m + TRAP_OPEN_TO 150. u1m vs u0q: fires on us 699 to 808, deaths 514 to 620, income +18%; u0y's opening
+    trap drain is fixed.
+  - u1v: u0m + AMMO_AWAY. It passed two screens on older bases and has never been on the replica.
+  - u1w: u0m + RUSH_BURN 6 (new switch). Once enemy traps are known, a rusher more than Chebyshev 6 from the enemy
+    start turns gatherer.
+  - Screens ra_u1t/u1u/u1v vs araid and diag rsb2 (u1w vs u0q) are running.
