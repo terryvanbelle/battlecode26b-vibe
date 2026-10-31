@@ -1,0 +1,6 @@
+name=u3e
+source=bots/ratbot
+source_sha=13e92fc31a80
+commit=be154e3
+created=2026-10-31 08:34 PDT
+change=u2g + KMINE_SKIP 2: gatherers skip a home mine one of our kings holds (king within Chebyshev 4) while they know 2+ home mines

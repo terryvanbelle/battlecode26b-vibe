@@ -576,6 +576,12 @@ public final class Cfg {
     /** A mine as near the enemy start as ours (on a HOR/VER axis: 7 of EscapeTheNight's 11) counts as ours for the
      *  gatherers' pick and the king's home mine, instead of as theirs. */
     public static final boolean MINE_TIES = false;
+    /** Gatherers skip a home mine one of our kings holds (a king within Chebyshev 4: the king picks up there itself,
+     *  KING_ROAM, and cannot step onto babies) while they know KMINE_SKIP or more home mines (0 = off). u2g's in-band
+     *  field losses (sweep and v4 sets 1-2, r50-1000): the home mine nearest the king held 8.3 of our babies whenever
+     *  any was there, the 2nd-6th were covered 47/39/30/28/17% of rounds and lost 440-940 cheese each to the enemy;
+     *  locally (ma2 vs araid) 10.7 of 20 targeted gatherers sat on that mine with 2.7 home mines known. */
+    public static final int KMINE_SKIP = 0;
     /** Experiment only (map-specific, never a candidate): the half test takes PathOracle's offline verdict (8-way path
      *  from each start, dirt +4) for the mines where it disagrees with the Euclidean one on uneruesansfin,
      *  wallsofparadis and cheesebottles, to bound what a path-based half test could gain there. */

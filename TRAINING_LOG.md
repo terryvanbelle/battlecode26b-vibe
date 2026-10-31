@@ -3706,3 +3706,27 @@
 - u2g's v4 set-2 references are in (5071-5078, 5080-5081, 5100-5101). u3c submitted (#134); its v4 set-1 block 1
   (16 matches) queued from request 4071 (waiter build/wait_u3c1.sh; reference 4723-4736, 4969-4974, 4988-4989,
   5010-5013).
+
+## 2026-10-31 08:37 PDT: in-band losses: crowd on the king's mine, far home mines open; u3e (KMINE_SKIP 2)
+
+- Diagnosis (u2g's 32 in-band v4 matches, 102 games, 44 W / 58 L; VM scripts minerank.py, whyloc.py, econagg.py,
+  starve.py, endstate.py on inband2.txt):
+  - 50 of 58 losses end in king death. King HP lost per lost game: starvation 270, bites 202, throw hits 110.
+  - 33 of 58 losses go broke (bank < 20) vs 2 of 44 wins, on average 93 rounds before the end. 100 rounds before
+    that our bank sits at the floor (100-300) while theirs is 1000-2000.
+  - Ledger to r400 in long losses: we pick 2629 vs their 4086; they take 772 from our side. About 1600 cheese lies
+    unpicked on our side by r400.
+  - Mine coverage in losses (r50-1000): the home mine nearest our king holds 8.3 of our babies whenever any is
+    there (covered 69% of rounds). The 2nd-6th home mines are covered 47/39/30/28/17% of rounds and the enemy takes
+    440-940 cheese from each; the 3rd-6th are never visited in 25-50% of games.
+  - Locally (u2g vs araid, ma2): 10.7 of 20 targeted gatherers sit on that one mine with 2.7 home mines known.
+- u3e = u2g + KMINE_SKIP 2 (new switch, off in ratbot). While a gatherer knows 2+ home mines, mines with one of our
+  kings within Chebyshev 4 drop out of its pick (the king picks up there itself, KING_ROAM 4, and cannot step onto
+  babies). If every known home mine is king-held, it keeps them all.
+  - Mechanism: frees the king's crowd to cover the 2nd-mth home mines.
+  - Counters: rats on the king's mine vs other home mines (mtdist.py), coverage and first visit by home rank
+    (minerank.py), king pickups, cheese picked by r400 and r1000, king bite/throw damage.
+  - Doses: 0 (u2g) vs 2.
+  - Falsifier: picked by r400 not up, or the king's mine loses more than the other home mines gain, or king
+    bite/throw damage up.
+- Delivery check: ks1 on the VM (u3e's 16 cells vs araid; u2g's control cells in ma2). Then the replica, after u3c.

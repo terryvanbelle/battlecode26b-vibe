@@ -1200,6 +1200,8 @@ public final class Baby {
         if (role == GATHER || role == FIGHT && Cfg.FIGHT_MINE) {
             if (Cfg.MINE_BALANCE && mineTarget != null && (Cfg.HOME_ALL_SYM ? Comms.numMines != minesAtPick || Sym.mask != maskAtPick : Comms.numMines != minesAtPick)) mineTarget = null;
             if (Cfg.MINE_ANY_COOP && !G.coop && mineTarget != null && !homeHalf(mineTarget)) mineTarget = null;
+            if (Cfg.KMINE_SKIP > 0 && mineTarget != null && G.round % 10 == 0 && kingHeld(mineTarget)
+                    && homeMineCount() >= Cfg.KMINE_SKIP) mineTarget = null;
             if (Cfg.TRIP_HALF != 0 && mineTarget != null && Comms.tripSig != tripSigAtPick) mineTarget = null;
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
@@ -1857,12 +1859,24 @@ public final class Baby {
             for (; j > 0 && k < key[j - 1]; j--) { key[j] = key[j - 1]; cand[j] = cand[j - 1]; }
             key[j] = k; cand[j] = c;
         }
+        if (Cfg.KMINE_SKIP > 0 && ours >= Cfg.KMINE_SKIP) {
+            // a king works its own mine: drop king-held mines from the pick, keeping the order (all held: keep all)
+            int k = 0;
+            for (int i = 0; i < m; i++) if (!kingHeld(cand[i])) cand[k++] = cand[i];
+            if (k > 0) m = k;
+        }
         minesAtPick = Comms.numMines;
         if (Cfg.HOME_ALL_SYM) maskAtPick = Sym.mask;
         if (Cfg.TRIP_HALF != 0) tripSigAtPick = Comms.tripSig;
         if (rr) return cand[rrSlot % m];
         if (Cfg.MINE_BALANCE) return Cfg.IDLE_SHIFT ? cand[(slot % m + mineShift) % m] : cand[slot % m];
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
+    }
+
+    /** Cfg.KMINE_SKIP: one of our kings stands within Chebyshev 4 of mine m. */
+    static boolean kingHeld(MapLocation m) {
+        for (int k = 0; k < Comms.numKings; k++) if (G.cheb(Comms.kings[k], m) <= 4) return true;
+        return false;
     }
 
     /** Cfg.MINE_EXPLORE: the rat with hash `slot` explores while it knows m mines on our half (extra exploring slots). */

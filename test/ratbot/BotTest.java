@@ -226,6 +226,17 @@ public class BotTest {
         check(Sym.mask == Sym.HOR && Sym.listDone == 3 && Sym.contradictions == 0, "sym list: a unique mask skips the rest");
     }
 
+    static void testKingHeld() {
+        reset(); W = 20; H = 20; install();
+        Comms.numKings = 0;
+        check(!Baby.kingHeld(new MapLocation(5, 5)), "king held: no king, no mine held");
+        Comms.numKings = 2; Comms.kings[0] = new MapLocation(9, 6); Comms.kings[1] = new MapLocation(15, 15);
+        check(Baby.kingHeld(new MapLocation(5, 5)) && Baby.kingHeld(new MapLocation(13, 10)) && !Baby.kingHeld(new MapLocation(4, 5))
+              && !Baby.kingHeld(new MapLocation(9, 1)) && Baby.kingHeld(new MapLocation(19, 19)),
+              "king held: a mine within Chebyshev 4 of any listed king's centre");
+        Comms.numKings = 0;
+    }
+
     static void testSymRelay() {
         reset(); W = 20; H = 20; install();
         Comms.numKings = 1; Comms.kings[0] = new MapLocation(9, 6);
@@ -3262,6 +3273,7 @@ public class BotTest {
         testSymElimination();
         testSymMineList();
         testSymRelay();
+        testKingHeld();
         testSqueakCodec();
         testFresh();
         testCatGeometry();
