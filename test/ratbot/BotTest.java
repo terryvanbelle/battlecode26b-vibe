@@ -2297,6 +2297,15 @@ public class BotTest {
         check(!King.endKing(ek, 1, 8, ec, ek - Cfg.FORM_TTL) && King.endKing(ek, 1, 8, ec, ek - Cfg.FORM_TTL - 1),
               "end king: a site that timed out waits only FORM_TTL");
         if (Cfg.END_KING > 0) check(!King.endKing(Cfg.END_KING - 1, 1, 8, ec, -1000), "end king: not before END_KING");
+        // FORM_RICH_BANK: one more king while the bank holds the threshold, to r1150, below FORM_RICH_MAX kings
+        int rb = Math.max(Cfg.FORM_RICH_BANK, 1), rk = Comms.numKings, rr = G.round, rg = global;
+        G.round = 1000; global = rb; Comms.numKings = 2;
+        check(King.rich(), "rich king: the bank pays for a third king at r1000");
+        global = rb - 1; boolean poor = Cfg.FORM_RICH_BANK == 0 || !King.rich(); global = rb;
+        G.round = 1151; boolean late = !King.rich(); G.round = 1000;
+        Comms.numKings = Math.min(Cfg.FORM_RICH_MAX, Comms.KING_SLOTS); boolean capped = !King.rich();
+        check(poor && late && capped, "rich king: not under the bank, after r1150 or at FORM_RICH_MAX kings");
+        Comms.numKings = rk; G.round = rr; global = rg;
         check(King.crowdBetter(3, 10, 2, 50) && King.crowdBetter(2, 50, 2, 10) && !King.crowdBetter(2, 10, 2, 50) && !King.crowdBetter(1, 99, 2, 10),
               "end king crowd site: more babies first, then farther from the enemy");
         int ff = Cfg.FORAGE_FROM, fe = Cfg.FORAGE_EVERY;

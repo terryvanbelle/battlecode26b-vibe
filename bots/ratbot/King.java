@@ -753,7 +753,7 @@ public final class King {
      *  (Cfg.FORM_GAP) or it times out. */
     static void formation() throws GameActionException {
         if (slot != 0) return;
-        if (Comms.numKings >= Math.min(formCap(G.coop), Comms.KING_SLOTS)) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
+        if (Comms.numKings >= Math.min(formCap(G.coop), Comms.KING_SLOTS) && !(Cfg.FORM_RICH_BANK > 0 && rich())) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
         if (formSite != null) {
             boolean formed = Cfg.FORM_GAP > 0 && Comms.numKings > formKings;
             if (formed || G.round - formStart > Cfg.FORM_TTL) {
@@ -787,7 +787,14 @@ public final class King {
         int last = Cfg.FORM_LATE && Comms.numKings < 2 ? 1940 : 1150;
         if (G.round < Cfg.FORM_FROM || G.round > last || G.round - formStart < Cfg.FORM_TTL + Cfg.FORM_RETRY
                 || babies < Cfg.FORM_BABIES || G.rc.getGlobalCheese() < Cfg.FORM_CHEESE) return;
-        if (formIncome()) formSite = pickFormSite(G.me);
+        if (Cfg.FORM_RICH_BANK > 0 && rich()) {
+            formSite = pickFormSite(G.me);
+            if (formSite == null) {
+                int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
+                formSite = ringSite(G.me, G.mirror(start, s));
+            }
+        }
+        else if (formIncome()) formSite = pickFormSite(G.me);
         // Cfg.FORM_MINE: a king on a far mine is the cure for a low income (where_are_you: income 100-330 a hundred
         // rounds with all four home mines listed, 19-30 tiles out, and 2000 cheese lying at each by r1000), so a mine
         // site needs no income test
@@ -805,6 +812,12 @@ public final class King {
 
     /** Kings we form up to: FORM_MAX, or FORM_MAX_WAR once cooperation is over (kings weigh 0.5 of points then, 0.3 before). */
     static int formCap(boolean coop) { return coop ? Cfg.FORM_MAX : Math.max(Cfg.FORM_MAX, Cfg.FORM_MAX_WAR); }
+
+    /** Cfg.FORM_RICH_BANK: the bank pays for one more king before the cutoff (FORM_RICH_MAX kings at most). */
+    static boolean rich() {
+        return G.round <= 1150 && Comms.numKings < Math.min(Cfg.FORM_RICH_MAX, Comms.KING_SLOTS)
+            && G.rc.getGlobalCheese() >= Cfg.FORM_RICH_BANK;
+    }
 
     /** Cfg.END_KING: a lone king's endgame site is due (babies from the rat cost, last site's start formStart). */
     static boolean endKing(int round, int kings, int babies, int cheese, int formStart) {

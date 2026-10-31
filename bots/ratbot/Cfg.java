@@ -147,6 +147,12 @@ public final class Cfg {
     public static final int FORM_MAX = 2;
     /** At war: kings we form up to (0 = FORM_MAX). After a backstab living kings weigh 0.5 of round-2000 points. */
     public static final int FORM_MAX_WAR = 0;
+    /** Rich kings (0 = off): up to round 1150, while the bank holds FORM_RICH_BANK or more, the first king names sites
+     *  past the cap, up to FORM_RICH_MAX kings, with no income test and a ring site beside it when pickFormSite has
+     *  none. Kings alive at round 2000 weigh 0.5 of war points and only a second can form after round 1200. rift vs
+     *  spsquared (4342, 4343, 4443): at the 39-40 baby cap we banked 3.5k by r600 and 6-8k by r1050 on one or two kings
+     *  (13k at the end) while they held three, and lost each on points 2 kings to 3 with more cat damage and transfer. */
+    public static final int FORM_RICH_BANK = 0, FORM_RICH_MAX = 4;
     /** Form only while the trusted income (x100 per round) beats every king's upkeep, the new one's included, by
      *  FORM_NET100 (Integer.MIN_VALUE = no income test). */
     public static final int FORM_NET100 = Integer.MIN_VALUE;
