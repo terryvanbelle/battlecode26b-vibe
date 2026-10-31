@@ -3628,3 +3628,17 @@
   A/B, sittingducks B, where_are_you A). RUSH_BURN demotes rushers that would have won on the trap-free maps.
 - u2g resubmitted (#133). Calibration sweep queued: requests 3931-3934 sent, 18 queued for the drain loop; maps are
   drawn into research/panel/calib2.json as each opponent is sent. Waiter build/wait_sweep.sh (22 matches after 4961).
+- Diagnosis against an in-band opponent (AdamTan12_Finals, u2g 11/24), per the new rule. Results are deterministic
+  (the same builds repeat a game to the round), so the cells that can flip are those that differ between builds:
+  dirtpassageway B (u2g L, u2s/u2v/u2y W) and attack_on_cat B (u2s W); keepout, wallsofparadis and jail (both
+  sides) and dirtpassageway A are lost by every build since u2b.
+  - Traps (battle_report, 4750 dirtpassageway B): they laid 91 rat traps, 89 fired on us (mean life 4 rounds: laid
+    in front of our movers), killing 31 of our 64 dead; then grab and throw (51 throws). Engine: a rat trap costs 20,
+    deals 50, sets movement cooldown 30 and fires on any enemy within dist2 2; our side never senses it. Our
+    trap-avoidance switches (RISK_FRESH, RISK_ADAPT, WOUNDED_HP, FACE_HOLD, RISK_IN_FIGHT) were all weak vs u0q.
+  - Economy (new scratch econshare.py: cheese picked within Chebyshev 4 of each mine, by mine side and team; 4545,
+    4546, 4735, 4736): in our 7 lost games they picked 2345 a game on our home half, as much as we did there
+    (2442), plus 1357 on the axis mines and 5762 on theirs; in our 5 wins they took 211 from our half. The war opens
+    at r14-52 (they backstab). keepout A: they worked all 12 mines, we 5; the axis pair (21,47)/(28,47) gave them
+    3520 and we never went near it. wallsofparadis A: we worked 1 of 8.
+- Sweep under way fast: by 06:39 matches 4969-4974 are in (YokoOno, VarunVejalla, Xzibit: u2g 2 of 6 each).
