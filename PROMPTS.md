@@ -94,3 +94,7 @@ It seems to me that some bots on our panel are too easy, and some are too hard. 
 ## 19. 2026-10-31 06:29 PDT
 
 I guess the only bot on the panel that really raised my eyebrows was abcdezyxwv_bestsofar, which is far ahead of us on the replica, BT ratings, and as shown in matches.  And yet, I see a lot of work spent trying to beat it
+
+## 20. 2026-10-31 06:32 PDT
+
+Let's add that as a point to the BEST_PRACTICES doc in battlecode-vibe.  Spend your diagnostic time on losses against opponents in the 25-75% band
