@@ -3671,3 +3671,7 @@
   three losses ended at r256-549 (king kills by the rusher). Next: the replica on panel v4 set 1.
 - VM disk at 285 MB free: deleted 186 unreferenced replay dumps older than 1 h (dcache.py DEL 1; ~2 GB, all
   regenerable from kept replays). 2.3 GB free now.
+- Sweep so far (u2g games won of 6): YokoOno 2, VarunVejalla 2, Xzibit 2, collegejunior 2 (in band); daannte_v47 0,
+  goonv23 0 (too hard); AlexT101_finalsbot, Icarus, Merlin, ThisGuy, PhD pending. While u2g is active, its v4 set-2
+  reference for the four in-band newcomers is queued behind the sweep (`research/panel/v4-set2.json`: spsquared and
+  AdamTan12 on their v3 set-2 maps, newcomers drawn at send), so a candidate's block 2 needs no u2g resubmission.
