@@ -3572,3 +3572,15 @@
   of ours grabbed within Chebyshev 6 of our king (saves.py) and throw hits on our king (ammo.py). Doses: off (u2y,
   gc1's games), on. Instrument: diag gc2 (gc1's 32 u2y cells), then the replica after u2y's verdict. Falsifier: no
   more saves near the king than u2y's 457, or fewer wins than u2y's 25 of 32.
+- Field room for the carrier guard (new scratch carriers.py; u2w's 4883-4886 vs AlexT101/abcd, 12 games): enemy
+  carry episodes of ours with the carrier within Chebyshev 5 of our king: 19-55 a game; ended by our grab of the
+  carrier 4-21, thrown into our king 1-15, thrown into something else 3-20. In most episodes a free rat of ours
+  stood within Chebyshev 1 of the carrier (about half of those healthier than it), and nearly all the throws into
+  our king came from carriers with ours at Chebyshev 1-2: they were in reach but did not grab (the carrier saw
+  them and was not weaker, or they had other business). u2y's guard and u3a's any-side grab aim at exactly these.
+- gc2 (u3a = u2y + GUARD_CARRY_HP; gc1's 32 cells; u2y control): wins 28 to 25 (+3 -0: agrab DefaultSmall B,
+  averyfineline B, constrictinglattice A), delivered 248k to 255k, rounds 25.4k to 27.7k; king kills of us 3 (u2y
+  5, u2g 7), by us 21 (18, 16). Delivery: carriers of ours grabbed near our king 367 to 457, enemy grabs of ours
+  near our king 460 to 587, throw hits on our king 119 to 125. Saves per enemy grab near the king 0.80 (u2y 0.78,
+  u2g 0.70); throw hits per enemy grab 0.26 (u2y 0.21, u2g 0.26). The pre-registered falsifier (no more saves
+  than 457) is met and the wins rest on 3 discordant cells: u3a parked, not promoted on its win count.
