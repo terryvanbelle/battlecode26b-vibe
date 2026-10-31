@@ -3762,7 +3762,7 @@
   - Falsifier: small-map bank at r150 not up by 200, or babies at r300 down, or the tiny/DefaultSmall rush wins lost.
 - Local diag sm1 on the VM: u3f and u2g on 8 small maps (DefaultSmall, tiny, bed, evileye, canyoudig, arrows,
   Stash, cheesefarm) vs araid and abrk, both sides.
-- 09:31 PDT u3f rejected locally. sm1: 16 of 32 to u2g's 21, 5 cells lost and none gained (abrk DefaultSmall A,
+- 09:19 PDT u3f rejected locally. sm1: 16 of 32 to u2g's 21, 5 cells lost and none gained (abrk DefaultSmall A,
   cheesefarm B, evileye A; araid Stash B, cheesefarm A), t -2.4.
   - The tiny rush wins came 24-30 rounds later. bed and canyoudig played out identically.
   - The early bodies pay locally against the rush and raid archetypes, so the small-map gap is not the RICH
