@@ -3267,3 +3267,34 @@
     their winners. On rose both A sides starve (abrk at r790, u0m/u2g at r1630): a side effect worth a look.
 - Snapshots this hour: u2h = u0m + FLOW_LIFO (equal-f ties expand deepest first; FIFO fans out over the whole
   optimal-cost diamond on open ground, ~800 tiles on a 40-tile errand). Diag lf1 = pk1's u0m cells.
+
+## 2026-10-30 23:58 PDT: u2g passes set-3 block 1; FLOW_W; u2j mirrors until first contact
+- u2g (#126, rich kings) set-3 block 1 (4516-4521, 4526-4529, 4537-4538, 4545-4546): 26 of 42 (u0m 25).
+  - Paired vs u0m: 41 of 42 alike, D 1, net +1, t +1.00. The gain is spsquared rift A, a cell FORM_RICH targeted.
+    Pool 26 vs 22.0 expected, z +2.12. Over the t <= 0 reject line, so block 2 (set 4) is queued from 4547.
+  - Unchanged losses: abcdezyxwv 0 of 6, AlexT101 1 (tiny B), AdamTan12 keepout and wallsofparadis.
+- AlexT101 constrictinglattice (4526 g0, scratch kd.py/minepick.py/visits.py on the VM): we lost 34 rats in r0-100
+  (20 to traps, 12 thrown) to their 20. The bank went 2500 -> 310 by r75, mostly on replacements. From r175 we held
+  8 babies at the 300 floor. Below 8 the floor drops to 100, and by r450 we had 0 rats and a starving king.
+  - They delivered 2753 by r450, we delivered 1870. abcdezyxwv (4528 g2): 2975 to our 1537 by r350, with 16 babies
+    and a 1.2k bank against our 8 and 300.
+  - Mines: they work all four of theirs (~800 each vs abcdezyxwv) plus 140-470 from two of ours. Our far home mine
+    (18,54) got 40 and 3 rat-turns.
+  - Trap volume does not explain the loss on its own. CS50Crab kills as many of our rats with traps in r0-100
+    (18-21 on 5t4rv4t10n), yet we beat CS50Crab 6 of 6: our rush kills their king, while AlexT101's king holds.
+- FLOW_W (new switch, off): a weighted reverse search, f = g + w*h with f clamped up to the bucket being popped.
+  Each entry carries its push-time g, so the stale test survives the clamp.
+  - It targets the Stash pocket exit, where the first explorer searched r9-r26 without finishing.
+  - Offline replay of the search on Stash's terrain, unseen = open: 419-606 pops at w 1, 325-457 at w 2, same path
+    costs. BotTest wall-row pocket: 365 to 333 pops, the same 23-tile path, and the mirrored rat finds the mirrored
+    path.
+  - Forward search from the rat would pop 192-276 here, and bidirectional 200-300. Exiting a pocket favours searching
+    from the rat; delivering into one favours the reverse search. A modest gain: kept off, no candidate yet.
+  - bccmp vs s9s: new members only. BotTest 530/530, unit suite exit 0.
+- u2j (u0m + SYM_FLOW/CENTRE/HAND/FACE/TIE + FLOW_QUOTA 18) mirror self-play (sym3; u0m control sym4), round of the
+  first A/B divergence:
+  - Stash 73 vs 2, where_are_you 27 vs 2, cheesebottles 112 vs 38, knifefight 4 vs 1, superioristhmus 33 vs 28,
+    DefaultMedium 41 vs 41, Meow 18 vs 18. EscapeTheNight stays mirrored for its whole 1007 rounds (u0m splits at 23).
+  - u2j's splits come at first contact (team A moves first within a round, so twins see different boards) or when a
+    cat hits one twin. u0m's early splits are the king's facing at r0-r1.
+  - Diag sy1 (u2j and u0m vs abrk, both sides, on the side-sensitive cells' maps) is running.
