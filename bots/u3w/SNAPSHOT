@@ -1,0 +1,6 @@
+name=u3w
+source=bots/ratbot
+source_sha=e8a813c17789
+commit=9f68e04
+created=2026-10-31 14:42 PDT
+change=@s9s + u2g switch set + PEACE true: we never end cooperation (no baby bite or grab on an enemy rat or king while it lasts)
