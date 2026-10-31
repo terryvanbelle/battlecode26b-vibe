@@ -4314,3 +4314,11 @@
     clipping, one row or column, a filtered subsequence); the unit tests pass. u3x differs from a same-code
     sibling in the CHIRAL_SYM line only. Engine check cx1 (u3x vs u2g on cheesefarm HOR, tiny VER and evileye ROT,
     both seats, with tsv dumps) is running on the VM.
+- 15:24: u3v (movement repair) block 1 on v4 set 1 (5639-5642, 5659-5666, 5671-5674) vs u2g's set-1 reference:
+  48 cells, 36 alike, D 12 (+7 -5), net +2, t +0.58. Block 1 rejects at t <= 0, so it passes.
+  - Gained: AdamTan12_Icarus TheHeist A and uneasy_alliance A/B; VarunVejalla knifefight A and
+    t_minus_five_minutes B; spsquared bed A; collegejunior rose A (rose is the parked-king stuck map u3v targets).
+  - Lost: Xzibit attack_on_cat B, nzjt peaceinourtime A, spsquared fullofsecrets A, collegejunior clockwisdom B.
+  - A basics repair accepts at t >= 0 after block 2, so its block 2 (v4 set 2, vs u2g's set-2 reference) goes
+    next, ahead of u3w. If u3v is accepted it becomes the base, and u3w, u3x and u3d are rebuilt on it (u3v + one
+    switch) and re-screened before their replica blocks. Waiter build/wait_u3vb2.sh (matches 5675+).
