@@ -90,3 +90,7 @@ I'd like you to report our recent win rate against each of our panel opponents
 ## 18. 2026-10-31 06:16 PDT
 
 It seems to me that some bots on our panel are too easy, and some are too hard.  I'd like you to recalibrate the panel
+
+## 19. 2026-10-31 06:29 PDT
+
+I guess the only bot on the panel that really raised my eyebrows was abcdezyxwv_bestsofar, which is far ahead of us on the replica, BT ratings, and as shown in matches.  And yet, I see a lot of work spent trying to beat it

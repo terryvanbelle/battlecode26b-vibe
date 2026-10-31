@@ -130,6 +130,8 @@ is broken, with **big swings**, which escape a local optimum.
    us with bots we beat; act where we differ from the first and match the second (request field-vs-field games on the
    replica if need be). Per opponent and map, find the first round from which a lead in a metric predicts the winner; work on that
    window. A metric that tracks the result is usually its consequence: it earns a diagnostic, never an allocation.
+   Diagnose losses a candidate can flip: opponents in the band and cells that differ by side or build. A loss tally
+   over the whole panel is dominated by the bots that beat us almost always; they are a source of ideas, never the target.
    Rebuild an offence that beats us from its games (never its code), enter it on the replica, build the counter.
 3. **Capability gaps**: every engine action and rule we never use; every free action, idle cooldown or spare compute
    gets a job. Sweep on the cadence, not only when stuck: past sweeps always found something material.

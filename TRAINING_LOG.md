@@ -3609,3 +3609,13 @@
   66 games). Bots u2g beats 25-75% join v4 (6-8 in all, at most one per author where possible); their sweep matches
   are u2g's v4 set-1 reference. v4 sets 2-4 are drawn after, with reference blocks for the new teams.
 - The sweep starts when u2y's set-2 block 1 finishes (2 AdamTan12 matches wait for the hourly window).
+
+## 2026-10-31 06:31 PDT: misallocation: five candidates aimed at bots we beat ~12% (owner prompt #19)
+- 42 of u2g's 68 lost panel-v3 games were to abcdezyxwv_bestsofar (ladder 6th, 1637; 3/24) and AlexT101_usqualsbot
+  (1566, just above our 1559, but 3/24: the compressed ratings hide the gap). Every loss tally this morning (throws
+  into our king, carrier episodes, rushers dying to traps) was therefore their tally, and u2w, u2y, u2z, u3a and u3b
+  were all built against them. Their cells are losses for any build near ours, so such a fix cannot show on the panel
+  (u2y's interim block: lost abcd ultimatestarvation A and B, gained only spsquared evileye B).
+- Rule added to TRAINING_ALGORITHM §3.2: diagnose losses a candidate can flip (in-band opponents, cells that differ
+  by side or build); a whole-panel loss tally is the strongest bots' tally. Panel v4 drops both; the next loss
+  analysis uses the sweep's in-band opponents and AdamTan12/spsquared.
