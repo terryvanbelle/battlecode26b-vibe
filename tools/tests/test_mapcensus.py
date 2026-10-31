@@ -28,7 +28,7 @@ for l in lines[1:]:
     rows[f[0]] = dict(zip(head, f))
 nmaps = len([n for n in os.listdir(os.path.join(REPO, 'maps')) if n.endswith('.map26')])
 check(len(rows) == nmaps, f'{len(rows)} rows for {nmaps} maps')
-for c in ('freeTiles', 'minesFree', 'digNear', 'digHome', 'featDiff', 'gapAlt'):
+for c in ('freeTiles', 'minesFree', 'digNear', 'digHome', 'featDiff', 'gapAlt', 'pocket'):
     check(c in head, f'column {c}')
 
 
@@ -50,5 +50,10 @@ check(rows.get('uneasy_alliance', {}).get('featDiff') == 'R4 H4', 'uneasy_allian
 check(rows.get('uneasy_alliance', {}).get('gapAlt') == 'H', 'uneasy_alliance: the horizontal twin overlaps king A')
 check(rows.get('DefaultSmall', {}).get('gapAlt') == '-' and rows.get('DefaultSmall', {}).get('featDiff', '').startswith('H'),
       'DefaultSmall (rotational): no gap elimination, wrong twins listed H and V')
+# pocket: no start 3x3 cuts its own spawn ring into a small region (rose's plug comes from the king's walk to (13,1))
+import re
+for m, r in rows.items():
+    check(r.get('pocket') == '-' or re.fullmatch(r'\d+/\d+:\d+\*?', r.get('pocket', '')), f'{m}: pocket format {r.get("pocket")}')
+check(all(r.get('pocket') == '-' for r in rows.values()), 'no map starts its king beside a pocket')
 print(f'mapcensus: {checks - fails}/{checks} passed')
 sys.exit(1 if fails else 0)
