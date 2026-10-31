@@ -4174,3 +4174,16 @@
     EscapeTheNight B. Net 0 of 6.
   - So u3v replaces u3u as the movement repair. kfs (u3u on rma's 48 cells vs araid/abrk) was stopped at 18 of 48
     and the same cells restarted as kvs with u3v, scored against u2g's control results (ctl_ab1).
+
+## 2026-10-31 14:02 PDT: u3q rejected at block 1; u3d to the replica
+- u3q (STALL_CAT 100) block 1 on v4 set 1 (5494-5497, 5504-5507, 5521-5522, 5533-5534, 5546-5549) vs u2g's set-1
+  reference: 48 cells, 45 alike, D 3 (+1 -2), net -1, t -0.58. Block 1 rejects at t <= 0, so u3q is rejected.
+  - Gained spsquared superioristhmus B. Lost spsquared superioristhmus A and collegejunior clockwisdom B.
+  - The averystrangespace cat-hunt gain seen locally (hc1) has no cell on set 1. Reopening condition: a set
+    whose cooperation-to-r2000 maps (averystrangespace, rose) hold enough cells to see it.
+- That is 9 straight rejects. The plateau ladder goes on: the step-1 audit gave u3v (movement repair, local
+  screen kvs running).
+- The replica would sit idle until kvs finishes, so u3d (reactive baby rat traps; sd1 +5, hh1 +1) goes first,
+  for block 1 on v4 set 1. It targets the largest measured asymmetry: in u2g's in-band games we lay no rat traps
+  at all, while the opponents lay 9-32 per window and their traps kill 9-14 of our rats per lost game (none of
+  theirs die to traps).
