@@ -2080,6 +2080,7 @@ public final class Baby {
         if (!scout || role != GATHER) return false;
         int until = scoutUntil(Cfg.SCOUT_AREA);
         if (G.round < until) return true;
+        if (Cfg.SWEEP > 0 && G.round < Cfg.SWEEP_UNTIL && !sweepDone) return true;
         if (!moreScouting(Cfg.SCOUT_MINES, G.round)) return false;
         int h = homeMineCount();
         if (scoutMines < 0) { scoutMines = h; scoutFound = until; }
@@ -2102,6 +2103,7 @@ public final class Baby {
     /** Scout movement: the never-seen tile of our half that Cfg.HOME_PICK takes from EXPLORE_TRIES samples; false
      *  (no move) when no sample is one. */
     static boolean exploreHome() throws GameActionException {
+        if (Cfg.SWEEP > 0) return sweep(Cfg.SWEEP, Clock.getBytecodesLeft());
         if (exploreTarget == null || G.cheb(G.me, exploreTarget) <= 2 || Nav.stall > 20 || Sym.known(G.idx(exploreTarget.x, exploreTarget.y))) {
             int x = -1, y = -1, bd = Integer.MAX_VALUE;
             for (int k = 0; k < Cfg.EXPLORE_TRIES; k++) {
@@ -2117,6 +2119,64 @@ public final class Baby {
         }
         Nav.goTo(exploreTarget);
         return true;
+    }
+
+    /** Cfg.SWEEP: the cell being swept plus 1 (0 none), the round it is banned if still unseen, banned cells (lazy),
+     *  and whether no cell of our half is left. */
+    static int sweepCell, sweepBy;
+    static boolean[] sweepBan;
+    static boolean sweepDone;
+
+    /** Cfg.SWEEP scout movement: toward the centre of the unseen, unbanned cell (c x c, in the side frame) of our half
+     *  that minimises the walk there plus its distance on to the lane anchor; false (sweepDone) once there is none. */
+    static boolean sweep(int c, int left) throws GameActionException {
+        int w = G.W, h = G.H, gw = (w + c - 1) / c, gh = (h + c - 1) / c;
+        if (sweepBan == null || sweepBan.length != gw * gh) sweepBan = new boolean[gw * gh];
+        if (sweepCell > 0 && (exploreTarget == null || Sym.known(G.idx(exploreTarget.x, exploreTarget.y)))) sweepCell = 0;
+        else if (sweepCell > 0 && (Nav.stall > 20 || G.round > sweepBy)) { sweepBan[sweepCell - 1] = true; sweepCell = 0; }
+        if (sweepCell == 0) {
+            if (left < 5000) return true; // pick next turn (left: bytecodes left)
+            int mx = fu > 0 ? G.me.x : w - 1 - G.me.x, my = fv > 0 ? G.me.y : h - 1 - G.me.y;
+            int lane = sweepLane(slot);
+            int ax = sweepAnchor(lane, w, true), ay = sweepAnchor(lane, h, false);
+            int best = Integer.MAX_VALUE, bi = -1, bx = 0, by = 0;
+            for (int j = 0; j < gh; j++) {
+                int fy = Math.min(h - 1, j * c + c / 2);
+                for (int i = 0; i < gw; i++) {
+                    int fx = Math.min(w - 1, i * c + c / 2);
+                    int s = sweepScore(fx, fy, mx, my, ax, ay);
+                    if (s >= best) continue;
+                    int k = i + gw * j;
+                    if (sweepBan[k]) continue;
+                    int x = fu > 0 ? fx : w - 1 - fx, y = fv > 0 ? fy : h - 1 - fy;
+                    if (Sym.known(G.idx(x, y)) || !homeHalf(new MapLocation(x, y))) continue;
+                    best = s; bi = k; bx = x; by = y;
+                }
+            }
+            if (bi < 0) { sweepDone = true; return false; }
+            sweepCell = bi + 1;
+            exploreTarget = new MapLocation(bx, by);
+            sweepBy = G.round + 2 * G.cheb(G.me, exploreTarget) + 20;
+        }
+        Nav.goTo(exploreTarget);
+        return true;
+    }
+
+    /** Cfg.SWEEP: a scout's lane from its (mirror-invariant) slot: 0 the map centre, 1-4 the corners. */
+    static int sweepLane(int slot) { return (slot >>> 10) % 5; }
+
+    /** Cfg.SWEEP: lane's anchor coordinate along a side of length n, in the side frame (our king near (n-1, n-1)):
+     *  lane 0 the centre, 1 (n-1, 0), 2 (0, n-1), 3 (n-1, n-1), 4 (0, 0). */
+    static int sweepAnchor(int lane, int n, boolean x) {
+        if (lane == 0) return (n - 1) / 2;
+        return (x ? lane == 1 || lane == 3 : lane == 2 || lane == 3) ? n - 1 : 0;
+    }
+
+    /** Cfg.SWEEP: a cell centre's rank (lower first): Chebyshev from the rat plus on to the anchor, then nearer the
+     *  rat, all in the frame. */
+    static int sweepScore(int fx, int fy, int mx, int my, int ax, int ay) {
+        int d = Math.max(Math.abs(fx - mx), Math.abs(fy - my));
+        return (d + Math.max(Math.abs(fx - ax), Math.abs(fy - ay))) * 64 + d;
     }
 
     /** Mine seeking (Cfg.SEEK_CROWD) runs until round seekUntil and may start again from seekNext; seekMines is

@@ -124,10 +124,14 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
   ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
   rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Next candidates: u2j (side-symmetry bundle; sy1 vs abrk 8 of 12 to u0m 6), u0p (RUSH_STICK; pk1 8/8 vs u0m 6/8),
-  and the navigation repairs on diag (sp1: u2k FLOW_SPLICE 2, u2l RUSH_BAN 150; sp2: u2m FLOW_CACHE; pk1's 8 cells
-  vs abrk, control pk1's u0m cells; scratch flowsum.sh/flowend.py/ftlong.py on the VM give flow-search totals per
-  game). u2i (RUSH_UNTIL 100) neutral vs u0q (11 to 11). FLOW_W (weighted reverse search) is off, no snapshot.
+- Now: u2s (#129, u2g + the side-symmetry bundle, a basics repair) plays set-2 block 1 from 4751 (waiter
+  build/wait_u2s1.sh; score `contest.py paired 4737-4750 IDS`); ws1 vs abrk 6 of 6, self-play mirrors to r108.
+  Next: u2u = u2s + SWEEP 5 (cell sweep scouting, new switch) on diag cv1 (u2u and u2s as A vs abrk, 8 maps; waiter
+  build/wait_cv1.sh); compare with scratch coverage.py (VM ~/diag26b/coverage.py REPLAY GAME RMAX TEAMPREFIX: map
+  share and mines seen, raw and with mirror twins) and minelag.py (per mine: first seen and first picked, each side).
+  Exploration is the economy gap: u2g's set-2 games saw 38-58% of the map with twins by r200 against 91-99% for the
+  top three, and home mines 14-23 from our king went unseen all game. If u2s is rejected, rebase SWEEP on u2g.
+  Parked: u2t (SEEK_FRONTIER, mixed), u0p (RUSH_STICK). Closed this round: u2k, u2l, u2n, u2o, u2p, u2q, u2r, u2j.
 - KING_PATH evidence: kpa (u1x vs u0m) 22-10 and king pickups 21980 to 3440 in self-play, but no field gain;
   against AdamTan12 the king died before reaching the mines (wallsofparadis still lost both sides).
 - King kills (r1v vs AlexT101/abcdezyxwv): 73 of 81 throw hits on our king were our own rats thrown in at point blank

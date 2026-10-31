@@ -2853,6 +2853,41 @@ public class BotTest {
         Baby.burnRound = b0; G.us = us0; G.them = them0; reset();
     }
 
+    /** Cfg.SWEEP (constant 0, so sweep(c) is driven directly): cells of our half by walk plus anchor distance,
+     *  mirrored for the other side, banned on a stall, done when our half is seen. */
+    static void testSweep() throws GameActionException {
+        reset(); W = 30; H = 20; install();
+        Sym.mask = Sym.VER; Baby.slot = 0; G.us = Team.A;
+        check(Baby.sweepLane(0) == 0 && Baby.sweepLane(3 << 10) == 3, "sweep: lane from the slot");
+        check(Baby.sweepAnchor(0, 30, true) == 14 && Baby.sweepAnchor(1, 30, true) == 29 && Baby.sweepAnchor(1, 20, false) == 0
+            && Baby.sweepAnchor(2, 30, true) == 0 && Baby.sweepAnchor(3, 20, false) == 19, "sweep: lane anchors in the frame");
+        check(Baby.sweepScore(22, 7, 26, 10, 14, 9) < Baby.sweepScore(17, 7, 26, 10, 14, 9), "sweep: on the anchor line, nearer first");
+        MapLocation[] got = new MapLocation[2];
+        for (int side = 0; side < 2; side++) {
+            reset(); W = 30; H = 20; install(); Sym.mask = Sym.VER; Baby.slot = 0;
+            Baby.home = side == 0 ? new MapLocation(27, 10) : new MapLocation(2, 10);
+            Baby.fu = side == 0 ? 1 : -1; Baby.fv = 1;
+            G.me = side == 0 ? new MapLocation(26, 10) : new MapLocation(3, 10);
+            Baby.sweepCell = 0; Baby.sweepBan = null; Baby.sweepDone = false; Baby.exploreTarget = null; Nav.stall = 0;
+            check(Baby.sweep(5, 20000), "sweep: a target while our half is unseen");
+            got[side] = Baby.exploreTarget;
+        }
+        check(new MapLocation(22, 7).equals(got[0]), "sweep: the cell toward the centre anchor, nearest first: " + got[0]);
+        check(got[1] != null && got[1].equals(new MapLocation(29 - got[0].x, got[0].y)), "sweep: the other side takes the mirror cell: " + got[1]);
+        // B side again: its cell seen, the next; a stall bans it
+        Sym.mem[got[1].x + W * got[1].y] |= Sym.SEEN;
+        Baby.sweep(5, 20000);
+        MapLocation t2 = Baby.exploreTarget;
+        check(t2 != null && !t2.equals(got[1]), "sweep: a seen cell centre is left for the next: " + t2);
+        int c2 = Baby.sweepCell;
+        Nav.stall = 25; Baby.sweep(5, 20000); Nav.stall = 0;
+        check(Baby.sweepBan[c2 - 1] && !t2.equals(Baby.exploreTarget), "sweep: a stalled cell is banned");
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.mem[x + W * y] |= Sym.SEEN;
+        Baby.sweepCell = 0;
+        check(!Baby.sweep(5, 20000) && Baby.sweepDone, "sweep: done once our half is seen");
+        Baby.sweepCell = 0; Baby.sweepBan = null; Baby.sweepDone = false; Baby.exploreTarget = null; reset();
+    }
+
     static void testHomeRank() {
         check(Baby.homeRank(0, 3) < Baby.homeRank(0, 9) && Baby.homeRank(1, 3) < Baby.homeRank(1, 9), "home pick 0/1: nearer ranks first");
         check(Baby.homeRank(2, 9) < Baby.homeRank(2, 3), "home pick 2: farther ranks first");
@@ -3123,6 +3158,7 @@ public class BotTest {
         testScoutMore();
         testRingArcs();
         testHomeRank();
+        testSweep();
         testWoundMask();
         testFaceHold();
         testOpenTrap();

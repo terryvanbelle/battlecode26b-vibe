@@ -665,6 +665,14 @@ public final class Cfg {
      *  Replica vs AdamTan12 (4545/4546, 4735/4736): one mine worked on wallsofparadis and jail either side while they
      *  worked all 8 and 4; we starved (1170 transferred to 7325 by r692). */
     public static final boolean SEEK_FRONTIER = false;
+    /** Scouts and seekers sweep our half by cells (0 = off): the target is the centre of a SWEEP x SWEEP cell of our half
+     *  this rat has not seen, the one that minimises the walk there plus its distance on to the rat's lane anchor (the
+     *  map centre or a corner, by slot, in the side frame), so scouts fan out instead of drawing random tiles. A cell not
+     *  reached in time is banned. Scouts go on while cells are left, to SWEEP_UNTIL. u2g's set-2 games (coverage.py):
+     *  by r200 we had seen 38-58% of the map counting mirror twins against 91-99% for abcdezyxwv, AlexT101 and
+     *  AdamTan12, and plateaued after r100; home mines 14-23 from our king were never seen (pipes (30,30) and (47,30),
+     *  dirtpassageway (7,12), attack_on_cat 4 of 6) while they took them from r83-464. */
+    public static final int SWEEP = 0, SWEEP_UNTIL = 400;
     /** Once one symmetry is left the king lists the twin on our half of every listed mine (mines come in mirror pairs;
      *  raiders see enemy-half mines whose twins on our half nobody found: DefaultLarge vs abcdezyxwv left 1140 cheese
      *  on two such mines). */
