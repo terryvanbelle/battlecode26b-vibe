@@ -1,0 +1,6 @@
+name=u3y
+source=bots/ratbot
+source_sha=9da55277308f
+commit=e91a8ce
+created=2026-10-31 15:28 PDT
+change=u3w + STALL_CAT 20: under PEACE, an attacker parked within Chebyshev 3 of one tile for 20 rounds of cooperation hunts cats
