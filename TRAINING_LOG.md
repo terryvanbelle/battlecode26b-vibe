@@ -4038,3 +4038,11 @@
   unit-test run. The run compiled the altered Cfg and failed 11 config-dependent tests (rush, roles, throws).
   Cfg was restored afterwards; the quick BotTest had already passed (1737/1737), and the repeated full run
   passed (exit 0). Never run snapvar while the unit tests or a progress refresh are running.
+- 12:40: field evidence for u3s's mechanism (VM movert.py on u2g's 150 in-band and set-3 games). After cooperation
+  ends, the share of baby rat-turns on which the rat changed tile:
+  - Small maps (<= 900 tiles), losses (23 games): ours 64.0%, theirs 77.4%. With no enemy rat within Chebyshev 3:
+    ours 69.4%, theirs 82.1%.
+  - Big maps, losses (56): ours 76.5%, theirs 73.5%; with no enemy within 3, 80.5% vs 74.9%. Wins are alike.
+  - So only on small maps do our rats stand still more than theirs, and by 13 points even with no enemy near. This
+    fits a mask that marks most of a small board, though crowding jams could do it too. Counter for rma and the
+    field: the same moved share on small maps.
