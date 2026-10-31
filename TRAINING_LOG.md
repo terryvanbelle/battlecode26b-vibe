@@ -4322,3 +4322,13 @@
   - A basics repair accepts at t >= 0 after block 2, so its block 2 (v4 set 2, vs u2g's set-2 reference) goes
     next, ahead of u3w. If u3v is accepted it becomes the base, and u3w, u3x and u3d are rebuilt on it (u3v + one
     switch) and re-screened before their replica blocks. Waiter build/wait_u3vb2.sh (matches 5675+).
+- 15:30: engine check cx1 (u3x vs u2g, both seats, tsv dumps, 'sym=' in the king's indicator). The reading is
+  right on all three symmetry types. On cheesefarm (HORIZONTAL), tiny (VERTICAL) and evileye (ROTATIONAL), seat B
+  holds chirality 1. With u3x on seat B the king's round-1 mask was 2, 4 and 1 respectively, the true symmetry.
+  - u2g on seat B first had a unique mask at r82, r34 and r8.
+  - u3x on seat A learned nothing early (r40, r24, r7, the same as u2g on seat A), as expected.
+  - Results (6 games, too few to read): cheesefarm and tiny went by seat; on evileye u2g won both.
+  - The cx1 replays and dumps were deleted afterwards (98 MB; rows kept).
+- u3y = u3w + STALL_CAT 20, pre-registered (attempts.csv). u3w's 16 peace games vs s7d end when the last cat
+  dies, and cat damage weighs 0.5 there. In the 5 losses we did 2224-4060 cat damage to their 3940-5776, while our
+  rushers waited at their king. yc1 (vs s7d) and yc2 (screen cells) are running.
