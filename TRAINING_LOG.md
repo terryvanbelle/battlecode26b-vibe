@@ -3798,3 +3798,8 @@
   - Falsifier: delivered not up, or attacker-held cheese not down, or kills and enemy king damage down by more
     than 10%.
 - Local diag hd1 on the VM: u3g on ma2's 16 cells vs araid (control: u2g's ma2 cells).
+- 09:35: hd1 done. u3g 14 of 16, the same as u2g's 14 (D 2: +learn_your_lesson B, -starvation A, net 0).
+  Delivery: attacker-held cheese per sample in wins fell from 31 to 4 (peak 259 -> 80; 200+ in 6 games -> 1), and
+  cheese on babies at death from 1391 to 1165. Picked in wins about flat (11185 -> 11024). araid barely provokes
+  hoarding locally (31 a sample vs 830 in the field), so the screen is weak; it passes (t 0) and goes to the
+  replica after u3d.
