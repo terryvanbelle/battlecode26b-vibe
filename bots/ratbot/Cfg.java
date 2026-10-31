@@ -414,6 +414,11 @@ public final class Cfg {
     public static final boolean DIG = true;
     /** digToward before flow: one-tile dirt bands (cheesefarm's diagonal stripes) are dug through at once. */
     public static final boolean DIG_FIRST = true;
+    /** Bug walks dig (off): the wall-follow sweep digs the first dirt tile it meets before any free step instead of
+     *  walking around it. Stash: our pocket's exits are dirt at the ends of its wall row, behind dirt stripes; a bug
+     *  walk that treats dirt as wall never gets out, so every rat waits 20-26 turns for its own flow search (vs
+     *  abcdezyxwv one rat of ours left the pocket by r100, 12 of theirs by r40, digging from r11). */
+    public static final boolean BUG_DIG = false;
     /** Dig-aware flow-field navigation, requested after FLOW_STALL turns without progress. */
     public static final boolean FLOW = true;
     public static final int FLOW_STALL = 4, FLOW_TTL = 200, FLOW_RESERVE = 2500, FLOW_HOLD = 3, FLOW_REJOIN = 40, FLOW_MAX_TURNS = 12, FLOW_RETRY = 30;

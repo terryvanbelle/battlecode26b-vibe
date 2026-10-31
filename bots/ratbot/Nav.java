@@ -252,11 +252,39 @@ public final class Nav {
         }
         // Wall follow: start pointing back into the wall, then sweep away from it.
         Direction d = bugHand > 0 ? bugDir.rotateRight().rotateRight() : bugDir.rotateLeft().rotateLeft();
+        if (Cfg.BUG_DIG && bugDig(d)) return null;
         for (int i = 0; i < 8; i++) {
             if (free(d)) { bugDir = d; return d; }
             d = bugHand > 0 ? d.rotateLeft() : d.rotateRight();
         }
         return null;
+    }
+
+    /** Cfg.BUG_DIG: the bug walk's sweep from d; true when a dirt tile comes before any free step and we dig it now
+     *  (or hold for our action to dig it next turn). */
+    static boolean bugDig(Direction d) {
+        if (!Cfg.DIG || G.globalCheese + G.rawCheese < Cfg.DIG_MIN_CHEESE) return false;
+        RobotController rc = G.rc;
+        try {
+            for (int i = 0; i < 8; i++) {
+                if (free(d)) return false;
+                MapLocation n = G.me.add(d);
+                if (isDirt(n)) {
+                    if (!rc.isActionReady()) return true;
+                    if (rc.getDirection() != d && rc.canTurn(d)) rc.turn(d);
+                    if (!rc.canRemoveDirt(n)) return false;
+                    rc.removeDirt(n);
+                    digs++;
+                    Sym.mem[G.idx(n)] &= ~Sym.DIRT;
+                    if (Cfg.BFLOW) BitFlow.undirt(n.x, n.y);
+                    return true;
+                }
+                d = bugHand > 0 ? d.rotateLeft() : d.rotateRight();
+            }
+        } catch (GameActionException e) {
+            return false;
+        }
+        return false;
     }
 
     static boolean isDirt(MapLocation l) {

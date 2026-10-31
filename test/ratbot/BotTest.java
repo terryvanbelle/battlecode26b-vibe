@@ -2459,6 +2459,28 @@ public class BotTest {
         G.us = us0; G.them = them0;
     }
 
+    static void testBugDig() throws GameActionException {
+        // a wall row y = 8 below us, dirt at (6,9) east along it; hand > 0 sweeps counter-clockwise from S: S, SE, E
+        reset(); W = 12; H = 12; me = new MapLocation(5, 9); facing = Direction.EAST;
+        for (int x = 0; x < W; x++) walls.add(new MapLocation(x, 8));
+        MapLocation e = new MapLocation(6, 9);
+        dirt.add(e);
+        install();
+        for (MapInfo mi : G.rc.senseNearbyMapInfos()) Sym.record(mi.getMapLocation().x, mi.getMapLocation().y, mi.isWall(), mi.isDirt(), false);
+        Nav.bugHand = 1;
+        check(Nav.bugDig(Direction.SOUTH) && digsDone == 1 && !dirt.contains(e) && !Nav.isDirt(e),
+              "bug dig: the first dirt in the sweep (past the wall) is dug, and our map forgets it");
+        dirt.add(e); Sym.mem[G.idx(e)] |= Sym.DIRT;
+        check(Nav.bugDig(Direction.SOUTH) && digsDone == 1, "bug dig: dirt next in the sweep with our action spent: hold");
+        actCd = 0;
+        Nav.bugHand = -1;   // clockwise from S: S, SW (wall), W (free)
+        check(!Nav.bugDig(Direction.SOUTH) && digsDone == 1, "bug dig: a free step before any dirt is walked, not dug");
+        global = 40; G.startTurn();
+        Nav.bugHand = 1;
+        check(!Nav.bugDig(Direction.SOUTH) && digsDone == 1, "bug dig: not under DIG_MIN_CHEESE");
+        reset();
+    }
+
     static void testOpenTrap() {
         check(Baby.openTrapBlocked(50, 1400, 150, 1500), "open trap: opening, bank under the floor");
         check(!Baby.openTrapBlocked(50, 1500, 150, 1500), "open trap: opening, bank at the floor");
@@ -2758,6 +2780,7 @@ public class BotTest {
         testWoundMask();
         testFaceHold();
         testOpenTrap();
+        testBugDig();
         testScoutUntil();
         testMineTraps();
         testTrapRisk();
