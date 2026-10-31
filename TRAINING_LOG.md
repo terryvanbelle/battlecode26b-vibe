@@ -3699,3 +3699,7 @@
   or fewer spawns by r200, or kills not up.
 - VM run name tq1 was already taken (10-30, s9s/u0q vs ...): its results.jsonl is intact but its cells.tsv was
   overwritten empty by mistake; u3d's diag runs as ud1.
+- u3d's diag ud1 (vs araid, ma2's 16 cells; u2g control from ma2, deterministic): 15 of 16 to 14 (D 1, gained
+  learn_your_lesson B), delivered 134.9k to 136.4k. Its traps fire (21.5 laid, 17.9 fired a won game; u2g lays
+  none) but enemy rats killed are not up (49.0 a won game to 50.6) and our deaths 58.6 to 55.9: the kills half of
+  the falsifier holds. Weak; it stays behind u3c for the replica.
