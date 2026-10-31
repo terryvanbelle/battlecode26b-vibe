@@ -854,6 +854,47 @@ public class BotTest {
     /** FLOW_W: the weighted reverse search leaves a Stash-like pocket (a wall row with dirt at both ends, unseen
      *  ground beyond) by a path as short as the plain search's while touching fewer tiles, and a mirrored rat in the
      *  mirrored frame finds the mirrored path. */
+    static void testTripHalf() {
+        reset(); W = 60; H = 60; install();
+        type = UnitType.RAT_KING;   // kings write the shared array
+        Comms.numMines = 0;
+        Comms.addMine(32, 49);
+        Comms.addMine(27, 10);
+        Comms.readMinesTrip();
+        Comms.noteTrip(32, 49, 137);
+        Comms.readMinesTrip();
+        int sig = Comms.tripSig;
+        check(Comms.numMines == 2 && new MapLocation(32, 49).equals(Comms.mines[0]) && Comms.trip[0] == 35 && Comms.trip[1] == 0,
+              "trip half: a timed walk goes in its mine's slot (steps / 4, rounded up)");
+        Comms.noteTrip(32, 49, 200);
+        Comms.noteTrip(27, 10, 1000);
+        Comms.readMinesTrip();
+        check(Comms.trip[0] == 35 && Comms.trip[1] == 63 && new MapLocation(27, 10).equals(Comms.mines[1]) && Comms.tripSig != sig,
+              "trip half: a slower walk is ignored, a long one caps at 63, the coordinates survive");
+        Comms.noteTrip(27, 10, 92);
+        Comms.readMinesTrip();
+        check(Comms.trip[1] == 23, "trip half: a faster walk replaces the kept one");
+        check(Baby.tripSide(35, 23, 28, 44, 8) == -1 && Baby.tripSide(23, 35, 44, 28, 8) == 1, "trip half: timed walks decide");
+        check(Baby.tripSide(35, 0, 28, 44, 8) == -1 && Baby.tripSide(35, -1, 28, 44, 8) == 0,
+              "trip half: a long detour hands the half to an untimed listed twin, never to an unlisted one");
+        check(Baby.tripSide(8, 0, 28, 44, 8) == 1 && Baby.tripSide(10, 0, 28, 44, 8) == 0 && Baby.tripSide(0, 0, 28, 44, 8) == 0
+              && Baby.tripSide(-1, 5, 28, 44, 8) == 0, "trip half: within the margin, or with nothing timed, no verdict");
+        Sym.mask = Sym.ROT;
+        Baby.home = new MapLocation(4, 54); Baby.origin = null;
+        check(Baby.tripVerdict(new MapLocation(32, 49), 8) == -1 && Baby.tripVerdict(new MapLocation(27, 10), 8) == 1
+              && Baby.tripVerdict(new MapLocation(53, 53), 8) == 0, "trip half: uneruesansfin's verdicts by timed walks");
+        Baby.tripFrom = 10; Baby.tripT = 0;
+        Baby.tripArrive(new MapLocation(27, 10), 60);
+        check(Baby.tripT == 50 && Baby.tripKey == 27 * 64 + 10 && Baby.tripFrom == 0, "trip half: a faster walk is kept to squeak");
+        Baby.tripT = 0; Baby.tripFrom = 5;
+        Baby.tripArrive(new MapLocation(27, 10), 105);
+        check(Baby.tripT == 0 && Baby.tripFrom == 0, "trip half: a slower walk is not kept");
+        Baby.tripArrive(new MapLocation(27, 10), 120);
+        check(Baby.tripT == 0, "trip half: an arrival with no walk under way times nothing");
+        Comms.numMines = 0; Baby.home = null;
+        reset();
+    }
+
     static void testPathOracle() {
         reset(); W = 60; H = 60; install();
         MapLocation a = new MapLocation(4, 54), b = new MapLocation(55, 5);
@@ -3047,6 +3088,7 @@ public class BotTest {
         testFlowFast();
         testFlowW();
         testPathOracle();
+        testTripHalf();
         testFlowSplice();
         testRushBan();
         testTrapRiskNear();

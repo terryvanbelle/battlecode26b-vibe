@@ -164,6 +164,7 @@ public final class King {
                     break;
                 default:
                     if (Cfg.BURN && Comms.sqType(m) == Comms.SQ_BURN) burnHeard = true;
+                    if (Cfg.TRIP_HALF != 0 && Comms.sqType(m) == Comms.SQ_TRIP) Comms.noteTrip(Comms.sqX(m), Comms.sqY(m), Comms.sqExtra(m));
                     break;
             }
         }

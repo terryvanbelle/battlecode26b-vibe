@@ -10,6 +10,9 @@ public final class Baby {
     /** Cfg.RUSH_LIFE: the round this attacker last saw the enemy king, and the attackers demoted to gatherers. */
     static int ekSeen = -10000, demoted;
     static MapLocation home;          // spawning king's location at birth
+    /** Cfg.TRIP_HALF: the round this rat's walk out began (birth or last delivery; 0: none under way), a timed walk not
+     *  squeaked yet (tripT steps to mine tripKey = x * 64 + y; 0: none), and Comms.tripSig at the last mine pick. */
+    static int tripFrom, tripKey, tripT, tripSigAtPick;
     static MapLocation origin;        // our first king's start, squeaked by the spawning king (Cfg.HOME_START)
     static int fu = 1, fv = 1;        // side frame (signs of our king's offset from centre)
 
@@ -156,6 +159,8 @@ public final class Baby {
         Debug.mark(7);
         MapLocation before = rc.getLocation();
         if (rc.isMovementReady()) moveDecision();
+        // TRIP_HALF times only walks spent walking to the mine: any other errand on the way voids the timing
+        if (Cfg.TRIP_HALF != 0 && tripFrom > 0 && tripFrom < G.round && why != 'M') tripFrom = 0;
         boolean moved = !rc.getLocation().equals(before);
         if (rc.getType() == UnitType.RAT_KING) return;   // just promoted: the king code runs from next turn
         Debug.mark(20);
@@ -268,6 +273,7 @@ public final class Baby {
     static void born() {
         RobotController rc = G.rc;
         birthRound = G.round;
+        if (Cfg.TRIP_HALF != 0) tripFrom = G.round;
         int cost = rc.getCurrentRatCost();
         int idx = (cost - 10) / 10 * 4; // approximate spawn index from the cost step
         role = GATHER;
@@ -984,6 +990,7 @@ public final class Baby {
                         rc.transferCheese(t, raw);
                         delivered += raw;
                         G.rawCheese = 0;
+                        if (Cfg.TRIP_HALF != 0) tripFrom = G.round;
                         return;
                     }
                 }
@@ -1037,6 +1044,7 @@ public final class Baby {
                 int x = myMines[i] / 64, y = myMines[i] % 64;
                 if (!Comms.hasMine(x, y)) { G.rc.squeak(Comms.squeak(Comms.SQ_MINE, x, y, 0)); return; }
             }
+            if (Cfg.TRIP_HALF != 0 && tripT > 0) { G.rc.squeak(Comms.squeak(Comms.SQ_TRIP, tripKey / 64, tripKey % 64, Math.min(tripT, 0xFFFF))); tripT = 0; return; }
         }
         // at war: the enemy king first (seen, or news to relay once per sighting), then an enemy's front
         if (!G.coop && Cfg.KING_PRESS && lastEKing != null && G.round - lastEKingRound <= 2
@@ -1185,6 +1193,7 @@ public final class Baby {
         if (role == GATHER || role == FIGHT && Cfg.FIGHT_MINE) {
             if (Cfg.MINE_BALANCE && mineTarget != null && (Cfg.HOME_ALL_SYM ? Comms.numMines != minesAtPick || Sym.mask != maskAtPick : Comms.numMines != minesAtPick)) mineTarget = null;
             if (Cfg.MINE_ANY_COOP && !G.coop && mineTarget != null && !homeHalf(mineTarget)) mineTarget = null;
+            if (Cfg.TRIP_HALF != 0 && mineTarget != null && Comms.tripSig != tripSigAtPick) mineTarget = null;
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
                 if (Cfg.SEEK_IDLE > 0 && role == GATHER && idle(mineTarget)) {
@@ -1193,6 +1202,7 @@ public final class Baby {
                     if (mineTarget == null) mineTarget = pickMine();
                 }
                 if (atMine(mineTarget, Cfg.MINE_KING_R)) {
+                    if (Cfg.TRIP_HALF != 0) tripArrive(mineTarget, G.round);
                     if (role == GATHER && startSeek(mineTarget) && seek()) { why = 'x'; return; }
                     if (Cfg.GATHER_STILL) {
                         // hold still (moves set off traps laid at our mines) and sweep the cone around the spawn square
@@ -1789,6 +1799,7 @@ public final class Baby {
         }
         minesAtPick = Comms.numMines;
         if (Cfg.HOME_ALL_SYM) maskAtPick = Sym.mask;
+        if (Cfg.TRIP_HALF != 0) tripSigAtPick = Comms.tripSig;
         if (rr) return cand[rrSlot % m];
         if (Cfg.MINE_BALANCE) return Cfg.IDLE_SHIFT ? cand[(slot % m + mineShift) % m] : cand[slot % m];
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
@@ -1879,6 +1890,7 @@ public final class Baby {
     /** l is closer to our king than to its mirror under the first live symmetry. */
     static boolean homeHalf(MapLocation l) {
         if (Cfg.PATH_ORACLE) { int v = PathOracle.verdict(l, ref()); if (v != 0) return v > 0; }
+        if (Cfg.TRIP_HALF != 0) { int v = tripVerdict(l, Cfg.TRIP_HALF); if (v != 0) return v > 0; }
         return Cfg.HOME_ALL_SYM ? nearerAll(l, ref(), Sym.mask) : nearer(l, ref(), firstSym());
     }
 
@@ -1972,6 +1984,44 @@ public final class Baby {
         if (kingR <= 2 || d > kingR) return false;
         for (int k = 0; k < Comms.numKings; k++) if (G.cheb(Comms.kings[k], m) <= 2) return true;
         return false;
+    }
+
+    /** Cfg.TRIP_HALF: this rat reached mine m in round r; a walk under way is timed, and kept for a king when the mine
+     *  is listed and the walk beats the one kept for it. */
+    static void tripArrive(MapLocation m, int r) {
+        if (tripFrom <= 0) return;
+        int t = r - tripFrom;
+        tripFrom = 0;
+        for (int k = 0; k < Comms.numMines; k++) {
+            if (Comms.mines[k].x != m.x || Comms.mines[k].y != m.y) continue;
+            if (Comms.trip[k] == 0 || 4 * Comms.trip[k] > t) { tripKey = m.x * 64 + m.y; tripT = t; }
+            return;
+        }
+    }
+
+    /** Cfg.TRIP_HALF: +1 when listed mine l is ours by timed walks (margin steps), -1 theirs, 0 without a verdict. */
+    static int tripVerdict(MapLocation l, int margin) {
+        MapLocation t = G.mirror(l, firstSym());
+        if (t.x == l.x && t.y == l.y) return 0;
+        int a = -1, b = -1;
+        for (int k = 0; k < Comms.numMines; k++) {
+            MapLocation m = Comms.mines[k];
+            if (m.x == l.x && m.y == l.y) a = Comms.trip[k];
+            else if (m.x == t.x && m.y == t.y) b = Comms.trip[k];
+        }
+        MapLocation r = ref();
+        return tripSide(a, b, G.cheb(l, r), G.cheb(t, r), margin);
+    }
+
+    /** Walks a to a mine and b to its twin (steps / 4; 0 not timed, -1 not listed) and their Chebyshev distances ca,
+     *  cb from our start (the least walk): +1 ours when its walk beats the twin's by margin, -1 when it trails by
+     *  margin and the twin is listed (so rats can go and time it), else 0. Untimed walks count at their least. */
+    static int tripSide(int a, int b, int ca, int cb, int margin) {
+        if (a < 0 || a == 0 && b <= 0) return 0;
+        int wa = a > 0 ? 4 * a : ca, wb = b > 0 ? 4 * b : cb;
+        if (wa + margin <= wb) return 1;
+        if (b >= 0 && wb + margin <= wa) return -1;
+        return 0;
     }
 
     /** Cfg.BREAKOUT_TTL is on and this rat is breaking out. */

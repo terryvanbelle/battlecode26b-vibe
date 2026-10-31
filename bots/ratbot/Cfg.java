@@ -568,6 +568,14 @@ public final class Cfg {
      *  from each start, dirt +4) for the mines where it disagrees with the Euclidean one on uneruesansfin,
      *  wallsofparadis and cheesebottles, to bound what a path-based half test could gain there. */
     public static final boolean PATH_ORACLE = false;
+    /** Timed walks for the half test (0 = off; else the margin in steps): gatherers time each walk from their birth or
+     *  last delivery to their mine and squeak it to a king in earshot, which keeps each listed mine's fastest walk in
+     *  the spare bits of its shared slot (steps / 4). A listed mine whose walk beats its twin's by TRIP_HALF steps is
+     *  ours, one TRIP_HALF slower theirs (a twin not walked yet counts its Chebyshev distance from our start, its least
+     *  possible walk, so a long detour sends rats to time the twin). uneruesansfin from (4,54): (32,49) is 809 vs 2465
+     *  in d2 but 137 steps to its twin's 92, and AlexT101 camps it; wallsofparadis and cheesebottles split near-equal
+     *  pairs the other way. A census of 23 panel maps found no other disagreement but exact path ties. */
+    public static final int TRIP_HALF = 0;
     /** Scouts: one in SCOUT_EVERY gatherers explores our half (never-seen tiles) until round SCOUT_UNTIL, then
      *  gathers (0 = off). */
     public static final int SCOUT_EVERY = 4, SCOUT_UNTIL = 150;
