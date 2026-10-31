@@ -3392,3 +3392,46 @@
     timed.
 - Also: u2o (FLOW_SPLICE + RUSH_BAN) diag sp3 6 of 8 like u0m (traded averystrangespace A for B); ra_u0p screen
   neutral (80 cells, t +0.08, net -2), u0p parked.
+
+## 2026-10-31 02:47 PDT: u2g's set-2 reference; who beats us and how; one mine vs AdamTan12; SEEK_FRONTIER (u2t); u2s submitted
+- u2g's set-2 reference 4737-4750: 26 of 42 (bc26vibe 6/6, CS50Crab 6/6, outercloud 5/6, spsquared 5/6, abcdezyxwv
+  2/6, AdamTan12 2/6, AlexT101 0/6). u0f's re-anchor of set 2 was 18 of 42. u2s submitted (#129), set-2 block 1
+  queued (ids > 4750, waiter build/wait_u2s1.sh).
+- u2g's three accepting blocks by opponent: abcdezyxwv W1 L17, AlexT101 W3 L15, AdamTan12 W8 L10, spsquared W13 L5,
+  CS50Crab W16 L2, outercloud W17 L1, bc26vibe W17 L1. The two top opponents beat us by killing the king.
+  - King-kill losses: vs abcdezyxwv 44 (quartiles r261/323/415), vs AlexT101 39 (r194/302/391). Both sides hold one
+    king until ours dies; we rarely form a second in those games.
+  - Cats are 0-7% of our king's damage overall (one exception: sunandmoon as B, ~280 of 600 from the cats).
+- Side gaps in the field (our results by side): averyfineline A 2/14, B 12/14 (vs AdamTan12 A loses r109-199, B wins
+  r148-162); TheHeist A 14/14, B 4/14; sunandmoon vs abcdezyxwv A 3/3, B 0/3; groveisbeingdesecrated vs CS50Crab A
+  always lost at r190.
+  - TheHeist: each team kills its own cat (4000 each), kings 1 and 1, so transfers decide. As B we kill our cat by
+    r200 and trail 980 to 1735 when the game ends at r441. Cooperation endings on the last cat's death cost 20 field
+    games (TheHeist 10 lost, 18 won; groveisbeingdesecrated 7 lost).
+- Local side census (tools sidebias.py, ~15k VM games pooled): A's cat-damage share sits near 0.5 on most maps, but
+  A's win share is skewed on some (houseofcards 0.64, corridorofdoom 0.66, cheesebottles 0.69, groveisbeingdesecrated
+  0.34, whereisthecheese 0.37). Every local wallsofparadis game this session went to B (po1, th1, th2, wp1: 14 of
+  14, whichever bot was B).
+- Cat AI note (engine): in ATTACK, chirality 0 turns right and 1 turns left. Mirrored cat pairs carry 0 and 1, so on
+  flip maps they move as mirror images; on rotation maps the rotated twin of a turn keeps its handedness, so the
+  pair's moves are not rotated copies.
+- One mine vs AdamTan12 (4545/4546 wallsofparadis and keepout, 4735/4736 jail): we worked one mine and starved while
+  they worked them all. wallsofparadis as A transferred 1170 to 7325 by r692 (king starved at bank 1); keepout 4009
+  to 13000; jail only (8,36) as A and (8,3) as B, never (52,35)/(52,4). On jail the early scouts went into the walled
+  centre and died; nobody walked east along the open home band.
+  - Local sl1 (u2g vs abrk, wallsofparadis): as A the king listed only (30,3) all game (5265 delivered); as B all 8 by
+    r800 (14163). B's seekers drew more never-seen targets (x code 73-253 rat-turns per 100 rounds vs 4-88 as A).
+    exploreHome takes a uniform random never-seen home tile, and A's draws sat on the edge band (e.g. (3,19)), so
+    nobody crossed the ring dirt; (21,37) behind the "::" dirt diagonal stayed unseen.
+- SEEK_FRONTIER (new, off): seekers (SEEK_CROWD, SEEK_IDLE) take the never-seen tile nearest by path cost (Flow's
+  frontier search, digging dirt on the way) before exploreHome's random one. Only a new member in the default
+  bytecode. u2t = u2g + it; diag sf1 (vs abrk on wallsofparadis, jail, keepout, where_are_you, streetsofnewyork,
+  pipes, safelycontained, attack_on_cat, both sides; u2g controls from sl1, ws1 and sf1).
+- u2s = u2g + the side-symmetry bundle (FLOW_QUOTA 18, SYM_FLOW, SYM_CENTRE, SYM_HAND, SYM_FACE, SYM_TIE): u2j
+  rebased on the incumbent, a basics repair (accepts at t >= 0 after block 2). Diag ws1 checks its A side on
+  wallsofparadis/jail/keepout and its self-play mirror.
+- Closed: u2p (oracle) po1 9 of 12, u2q th1 7 of 12, u2r th2 7 of 12 (no gain; wallsofparadis is B's in all three);
+  screens ra_u2k (77 cells, t +0.62, net 0) and ra_u2n (80 cells, t +0.34, net 0) neutral; u2o taken off the screen
+  queue unrun.
+- VM disk (98% full): deleted 143 old (>12 h), unreferenced, regenerable replay dumps from build/dumpcache (83, then
+  60) and the scored th1/th2/po1 kept replays (~98 MB); ~500 MB free.

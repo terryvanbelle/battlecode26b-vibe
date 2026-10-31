@@ -105,14 +105,14 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   400=>END_KING = 1850, END_KING_CHEESE = 400' 'FORM_RICH_BANK = 0, FORM_RICH_MAX = 4=>FORM_RICH_BANK = 3000,
   FORM_RICH_MAX = 4'. Previous: u0m (#114), accepted 2026-10-30 12:49 PDT over s9s (basics repair).
 - u2g's reign: 122 of its 126 cells matched u0m's games, so its accepting luck sits in the 4 gained cells. Order:
-  block 1 = set 2 against u2g's own set-2 reference (queued from 4737, requests 3699+, waiter build/wait_u2g4.sh,
-  ids > 4736), block 2 = set 3 (reference u2g 4516-4521,4526-4529,4537-4538,4545-4546, and `contest.py pool`
+  block 1 = set 2 against u2g's own set-2 reference 4737-4750 (26 of 42: outercloud 5/6, bc26vibe 6/6, CS50Crab
+  6/6, AlexT101 0/6, abcdezyxwv 2/6, spsquared 5/6, AdamTan12 2/6), block 2 = set 3 (reference u2g 4516-4521,4526-4529,4537-4538,4545-4546, and `contest.py pool`
   with v3-set3-pool.txt), block 3 = set 4 (reference u2g 4553-4558,4569-4574,4576-4577, and the set-4 pool), set 1
   last after a salted twin of u2g (HAND_FLIP) re-anchors it. Local candidates are rebased on u2g; screens use
   control build/vmruns/runs/ra_u2g/results.jsonl.
 - u0m's reign (history): set 3 reference 3819-3822, 3836-3837, 3849-3856 (25 of 42); set 4 3756-3767,
   3785-3786; set 1 #127 4588-4591, 4601-4602, 4611-4614, 4719-4722 (23 of 42).
-- Scoring in u2g's reign: set 2 `contest.py paired <u2g set-2 ids> IDS`; set 3 `contest.py paired
+- Scoring in u2g's reign: set 2 `contest.py paired 4737-4750 IDS`; set 3 `contest.py paired
   4516-4521,4526-4529,4537-4538,4545-4546 IDS` AND `contest.py pool 3819-3822,3836-3837,3849-3856
   research/panel/v3-set3-pool.txt IDS`; set 4 `contest.py paired 4553-4558,4569-4574,4576-4577 IDS` AND
   `contest.py pool 3284-3297 research/panel/v3-set4-pool.txt IDS`. Blocks 1-3 reject at pooled t <= 0, 1, 1.5;
