@@ -3990,3 +3990,14 @@
   - Falsifier (cat damage on averystrangespace stays 0, points games unmoved) did not fire. u3q joins the replica
     queue after u3c's block 4, ahead of u3d: its local margin is the larger, and it targets the in-band points
     losses (Icarus averystrangespace).
+- 12:07: STALL_CAT dose arm and side-effect screen (VM hq3, hq2, hq4).
+  - hq3: u3r (STALL_CAT 50) vs u2g on the 8 stall maps, 10 of 16. Against the mirror (hcc): D 6 (+4 -2), net +2.
+    Gained averystrangespace B, rift A, rose A, where_are_you B; lost uneruesansfin B, where_are_you A. Cat damage
+    on averystrangespace 4545 / 1742 to 0. The 100-round dose (u3q, net +4) is the stronger arm.
+  - hq2: both doses vs araid on ma2's 8 maps, 12 of 16 each to u2g's 14. The two lost cells are the same for both
+    (jail B: u2g's king kill at r440 became a points loss at r2000; learn_your_lesson A).
+  - hq4 (those cells replayed): u3q's jail game has no cat-hunt turns at all, so that cell diverged from the extra
+    bytecode the stall bookkeeping costs (chaos), not from the hunt. learn_your_lesson's hunt turns ('g', shared
+    with the FIGHT_EVERY cat fighters) are close to u2g's (171 vs 160 in r100-199).
+  - u3q's local total: D 8 (+5 -3), net +2. It stays in the replica queue after u3c; u3r is parked as the weaker
+    dose (reopen if u3q passes block 1 and a dose sweep is wanted).
