@@ -3803,3 +3803,20 @@
   cheese on babies at death from 1391 to 1165. Picked in wins about flat (11185 -> 11024). araid barely provokes
   hoarding locally (31 a sample vs 830 in the field), so the screen is weak; it passes (t 0) and goes to the
   replica after u3d.
+
+## 2026-10-31 09:47 PDT: why in-band losses go broke; engine capability sweep (plateau step 2)
+- Owner rule §3.2: in-band losses only (u2g's 32 v4 in-band matches, 102 games).
+- Broke rounds (brokewhy.py: bank under 20 after r50): 33 of 58 losses go broke for 62 rounds on average, with 3.6 of
+  our babies alive (often 0-1) while the enemy picks 843 cheese. Only 2 of 44 wins are ever broke. By then the army is
+  already gone. Attack-role turns are 29% of our broke rat-turns; canyoudig 5075 had all 3-4 survivors attacking
+  with empty paws from r175 while the king starved at (2,18), 600 -> 44 HP by r300.
+- Second kings (formstat.py): formed before r200 in 8 games (2 W, 6 L). 5100 cheesefarm spent 578 rat-turns on
+  formation over r50-150 (8 rats a round in r100-149); delivered there 195 vs their 690. 14 of 17 small-map losses
+  never formed early, so formation is not the small-map story.
+- Rat deaths caused by the enemy (catsum): the gap is traps. Big-map losses 46 vs 31 (traps 13.8 vs 0); small-map
+  losses 41 vs 33 (traps 8.9 vs 0). Throws and cat deaths are even. u3d (reactive traps) is the field test of that.
+- Engine check: a rat trap fires only when an enemy enters a tile in its 3x3 (move, drop, throw landing; the newly
+  formed king's ring too). Damage 50, movement cooldown 30. Trap arrays are per team and MapInfo shows only our own;
+  placement and removal never consult the enemy's traps. No engine leak reveals enemy traps.
+- Capability sweep: 27 of 85 RobotController methods are never called. None is a new lever: own-trap removal,
+  cooldown getters, occupancy and sensing helpers, indicators, disintegrate, resign. Cheese bites are already used.
