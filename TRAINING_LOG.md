@@ -3969,3 +3969,15 @@
   - So a "retreat when outnumbered" rule would miss most of our losses. The leak is our crowds: enemy traps and
     throws land where several of ours stand together. That points at u3c (spread over mines), u3d (traps of our
     own) and the ab1 price of TRAP_RISK, not at a force-ratio rule.
+
+## 2026-10-31 11:19 PDT: u3c block 3 between the bars; block 4 (v4 set 4) next
+- u3c (MINE_ANY + MINE_TIES) block 3 (v4 set 3; 5347-5350, 5352-5359, 5362-5365) vs u2g's set-3 reference
+  5323-5338: 17 of 48 to u2g's 16. 48 cells, 45 alike, D 3 (+2 -1), net +1, t 0.58.
+  - Gained YokoOno 5t4rv4t10n_1337 B and collegejunior FreeTheCheese B. Lost AdamTan12_Finals where_are_you B.
+  - Icarus and nzjt stayed 0 of 6 each, as for u2g.
+- Pooled over blocks 1-3: 138 cells, 124 alike, D 14 (+10 -4), net +6, t 1.60. That is above block 3's reject bar
+  (1.5) and below the accept bar (2), so block 4 (final; rejects below 2) decides.
+- v4 set 4 (`research/panel/v4-set4.json`): spsquared and AdamTan12_Finals on their v3 set-4 maps (evileye, Meow,
+  knifefight; closeup, averyfineline, attack_on_cat); the six newcomers are drawn at send.
+- u2g resubmitted (#137) for its set-4 reference. The hourly limit held all 16 requests, so they wait in the queue
+  for the drain (waiter build/wait_s4ref.sh, matches 5368+). Then u3c is resubmitted for block 4.
