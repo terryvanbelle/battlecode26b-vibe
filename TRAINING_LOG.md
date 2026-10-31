@@ -4046,3 +4046,9 @@
   - So only on small maps do our rats stand still more than theirs, and by 13 points even with no enemy near. This
     fits a mask that marks most of a small board, though crowding jams could do it too. Counter for rma and the
     field: the same moved share on small maps.
+- 13:00: rma done. u3s (RISK_MIN_AREA 901) won 36 of 44 to u2g's 32: D 14 (+9 -5), net +4, t +1.07.
+  - Every changed cell is on a map of 900 tiles or fewer. Gained bed A/B against both archetypes, canyoudig B
+    against both, DefaultSmall A, arrows A (araid) and B (abrk). Lost evileye B, tiny A, arrows A (abrk),
+    starvation A/B.
+  - The bigger maps replay u2g's games (DefaultMedium's two u3p losses are gone).
+  - It passes the screen (rejects only at t <= -1.5) and joins the replica queue after u3c.
