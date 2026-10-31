@@ -324,6 +324,7 @@ public final class Flow {
     /** The reverse search: pops in f order (g from the target + Chebyshev to where the rat stood at the start) until a
      *  tile beside the rat's current tile comes up; the cost of a step is that of the tile entered (the popped one). */
     static void workRev(int reserve) {
+        if (Cfg.FLOW_W > 1 && fast) { workRevW(reserve); return; }
         if (fast) { workRevFast(reserve); return; }
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
         int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = sx0, Y = sy0, blk = block, mx = G.me.x, my = G.me.y;
@@ -455,6 +456,125 @@ public final class Flow {
                     int h1 = ab[vx + cx], h2 = ab[vy + cy];
                     f = ng + (h1 > h2 ? h1 : h2); fb = f & BMASK;
                     bk[fb][tl[fb]++ & RMASK] = v; pend++;
+                }
+            }
+        }
+        // the rat is unreachable from the target over what we know
+        pending = 0; curF = cf;
+        building = false;
+        fails++;
+        failTgt = tgt;
+        failRound = G.round;
+    }
+
+    /** Cfg.FLOW_W (wt > 0 overrides it; tests) and its scaled distance table ABW[d + AC] = w·|d| (built for weight wAt);
+     *  wGen is the search workRevW last seeded. */
+    static int wt, wAt, wGen;
+    static int[] ABW;
+
+    /** workRevFast on f = g + w·h (Cfg.FLOW_W), with f clamped up to the bucket being popped: a step changes f by
+     *  1 - w to DIG_COST + w, so the buckets still come up in order. A clamped f can't be recomputed from g, so each
+     *  entry carries the g it was pushed with (tile | g << 12; maps hold at most 3600 tiles) and is stale once a
+     *  cheaper g has been found for its tile. The first call of a search re-seeds the target at w·h. */
+    static void workRevW(int reserve) {
+        int w = wt > 0 ? wt : Cfg.FLOW_W;
+        if (ABW == null || wAt != w) {
+            if (left() < reserve + 1500) return;
+            int[] s = ABW = new int[2 * AC + 1], ab0 = AB;
+            for (int i = 0; i <= 2 * AC; i++) s[i] = w * ab0[i];
+            wAt = w;
+        }
+        if (wGen != gen) {
+            wGen = gen;
+            for (int b = 0; b < NB; b++) { head[b] = 0; tail[b] = 0; }
+            int h0 = ABW[tx - sx0 + AC], h1 = ABW[ty - sy0 + AC];
+            curF = h0 > h1 ? h0 : h1;
+            int b = curF & BMASK;
+            bucket[b][0] = tIdx;
+            tail[b] = 1;
+            pending = 1;
+        }
+        int[] gg = g, pp = par, mem = Sym.mem, ab = ABW, hd = head, tl = tail, OX = ox, OY = oy;
+        int[][] bk = bucket;
+        int W = G.W, W1 = W - 1, H1 = G.H - 1, bs = base, dig = Cfg.DIG_COST, blk = block, cf = curF, pend = pending;
+        int FU = OX[1], FV = OY[0], WV = FV * W, cx = AC - sx0, cy = AC - sy0;
+        int mx0 = G.me.x - 1, mx1 = G.me.x + 1, my0 = G.me.y - 1, my1 = G.me.y + 1;
+        boolean st = lifo;
+        while (pend > 0) {
+            if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) { pending = pend; curF = cf; return; }
+            int b = cf & BMASK, e;
+            if (hd[b] == tl[b]) { cf++; continue; }
+            if (st) e = bk[b][--tl[b] & RMASK];
+            else e = bk[b][hd[b]++ & RMASK];
+            pend--;
+            if (Debug.PROBE) pops++;
+            int u = e & 0xFFF, gu = gg[u] - bs;
+            if ((e >>> 12) != gu) continue; // stale entry
+            int ux = u % W, uy = u / W;
+            if (ux >= mx0 && ux <= mx1 && uy >= my0 && uy <= my1) {
+                if (left() < reserve + (cache ? 50 : 40) * (gu + 3)) {
+                    if (st) tl[b]++; else hd[b]--;
+                    pending = pend + 1; curF = cf;
+                    return;
+                }
+                pending = pend; curF = cf;
+                finishRev(u);
+                return;
+            }
+            int bx = ux + cx, by = uy + cy, a = ab[bx], c = ab[by];
+            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : 1), nb = bs + ng, ge = ng << 12, v, gv, f, fb;
+            if (ux > 0 && uy > 0 && ux < W1 && uy < H1) {
+                int xr = ab[bx + FU], xl = ab[bx - FU], yu = ab[by + FV], yd = ab[by - FV];
+                v = u + WV; // N
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 0; f = ng + (a > yu ? a : yu); if (f < cf) f = cf; fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v | ge; pend++;
+                }
+                v = u + WV + FU; // NE
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 1; f = ng + (xr > yu ? xr : yu); if (f < cf) f = cf; fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v | ge; pend++;
+                }
+                v = u + FU; // E
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 2; f = ng + (xr > c ? xr : c); if (f < cf) f = cf; fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v | ge; pend++;
+                }
+                v = u - WV + FU; // SE
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 3; f = ng + (xr > yd ? xr : yd); if (f < cf) f = cf; fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v | ge; pend++;
+                }
+                v = u - WV; // S
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 4; f = ng + (a > yd ? a : yd); if (f < cf) f = cf; fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v | ge; pend++;
+                }
+                v = u - WV - FU; // SW
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 5; f = ng + (xl > yd ? xl : yd); if (f < cf) f = cf; fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v | ge; pend++;
+                }
+                v = u - FU; // W
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 6; f = ng + (xl > c ? xl : c); if (f < cf) f = cf; fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v | ge; pend++;
+                }
+                v = u + WV - FU; // NW
+                if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
+                    gg[v] = nb; pp[v] = 7; f = ng + (xl > yu ? xl : yu); if (f < cf) f = cf; fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v | ge; pend++;
+                }
+            } else {
+                for (int k = 0; k < 8; k++) {
+                    int vx = ux + OX[k], vy = uy + OY[k];
+                    if (vx < 0 || vy < 0 || vx > W1 || vy > H1) continue;
+                    v = vx + vy * W;
+                    if ((mem[v] & blk) != 0 || (gv = gg[v]) >= bs && gv <= nb) continue;
+                    gg[v] = nb; pp[v] = k;
+                    int h1 = ab[vx + cx], h2 = ab[vy + cy];
+                    f = ng + (h1 > h2 ? h1 : h2); if (f < cf) f = cf; fb = f & BMASK;
+                    bk[fb][tl[fb]++ & RMASK] = v | ge; pend++;
                 }
             }
         }

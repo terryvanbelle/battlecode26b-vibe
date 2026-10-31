@@ -489,6 +489,12 @@ public final class Cfg {
     public static final int FLOW_REV_TURNS = 25;
     /** FLOW_REV's search with the neighbour loop unrolled (621 bytecodes a node measured for the loop). */
     public static final boolean FLOW_FAST = false;
+    /** Weighted reverse search (FLOW_FAST only; 1 = off, at most 7 - DIG_COST): f = g + FLOW_W * Chebyshev, so tiles
+     *  near the rat come up first. Stash (pk1, u0m as A): the first explorer searched toward (10,18) from r9 to r26 and
+     *  never finished; with unseen tiles open, A* pops every tile behind the pocket's wall row whose f is under the cost
+     *  through the corner exit. Offline on Stash's terrain, 5 exit targets: 419-606 pops at weight 1, 325-457 at 2,
+     *  path costs the same. */
+    public static final int FLOW_W = 1;
     /** Flow search steps a rat may run per round (0: as many as its bytecodes allow). Mirrored rats have a few bytecodes
      *  more or less left (Stash, t0q self-play: twin rats a turn apart from r38), so a search cut by bytecodes alone
      *  finishes a turn earlier on one side and the twins walk different paths. A quota under the bytecode cut makes both

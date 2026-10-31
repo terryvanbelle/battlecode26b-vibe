@@ -851,6 +851,41 @@ public class BotTest {
               + found + " found" + (diff == null ? "" : ", " + diff) + ")");
     }
 
+    /** FLOW_W: the weighted reverse search leaves a Stash-like pocket (a wall row with dirt at both ends, unseen
+     *  ground beyond) by a path as short as the plain search's while touching fewer tiles, and a mirrored rat in the
+     *  mirrored frame finds the mirrored path. */
+    static void testFlowW() throws GameActionException {
+        int[] n = new int[3], L = new int[3];
+        int[][] got = new int[3][];
+        String bad = null;
+        for (int v = 0; v < 3; v++) {
+            reset(); W = 30; H = 30; install();
+            for (int x = 0; x < 30; x++) {
+                if (x >= 2 && x <= 27) { walls.add(new MapLocation(x, 22)); Sym.record(x, 22, true, false, false); }
+                else { dirt.add(new MapLocation(x, 22)); Sym.record(x, 22, false, true, false); }
+            }
+            boolean mir = v == 2;
+            Flow.setFrame(mir ? -1 : 1, 1);
+            Flow.rev = true; Flow.fast = true; Flow.lifo = false;
+            MapLocation a = new MapLocation(mir ? 15 : 14, 25), t = new MapLocation(mir ? 19 : 10, 18);
+            me = a; G.startTurn();
+            Flow.request(t); Flow.work(0);   // allocates the arrays (the plain search: Cfg.FLOW_W is 1 here)
+            if (v > 0) { Flow.drop(); Flow.wt = 2; Flow.request(t); Flow.workRevW(0); Flow.wt = 0; }
+            int c = 0;
+            for (int i = 0; i < W * H; i++) if (Flow.g[i] >= Flow.base) c++;
+            n[v] = c; L[v] = Flow.plen;
+            String b = Flow.ready(t) ? pathCheck(me, t) : "not ready";
+            if (b != null && bad == null) bad = v + ": " + b;
+            got[v] = java.util.Arrays.copyOf(Flow.path, Flow.plen);
+        }
+        Flow.ox = Flow.DX; Flow.oy = Flow.DY;
+        boolean same = got[1].length == got[2].length;
+        for (int i = 0; same && i < got[1].length; i++) same = got[2][i] == W - 1 - got[1][i] % W + got[1][i] / W * W;
+        check(bad == null && L[1] <= L[0] && n[1] < n[0], "flow w: the weighted search leaves the pocket as short, touching fewer tiles ("
+              + bad + ", " + L[0] + " " + L[1] + " tiles, " + n[0] + " " + n[1] + " touched)");
+        check(same, "flow w: a mirrored rat finds the mirrored path");
+    }
+
     /** The reverse search (FLOW_REV) finds a path as short as the forward one, from wherever the rat stands when it
      *  completes; with LIFO buckets as well; a walled-in rat fails it. */
     static void testFlowRev() throws GameActionException {
@@ -2914,6 +2949,7 @@ public class BotTest {
         testFlowCache();
         testFlowRev();
         testFlowFast();
+        testFlowW();
         testTrapRiskNear();
         testCarryAim();
         testPickBit();
