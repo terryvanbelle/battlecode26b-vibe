@@ -4275,3 +4275,6 @@
     replica block protocol decides, after u3v and u3d's block 2.
 - Build check: u3w differs from a same-code sibling (pb2, u2g's switch set) in the PEACE line only. BotTest
   1737/1737 with PEACE on and off; the unit tests pass.
+- 14:48: VM disk was at 422 MB free (the replica's own storage is 6.7 GB and grows with the ladder). I deleted the
+  39 replay dumps in build/dumpcache that no list in ~/diag26b references (587 MB; all can be rebuilt from kept
+  replays). Now 1008 MB free. progress/ refreshed after u3d's block 1.
