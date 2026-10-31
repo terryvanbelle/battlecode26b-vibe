@@ -3957,3 +3957,15 @@
   guard only printed a warning. Those processes were killed by PID, st1's cells.tsv restored to its 16 lines, the
   new replays removed, and the stray control dir stc deleted; st1's old results are untouched. VM launches now
   test that the run name is free and stop if it is not.
+- 11:11: two diagnoses on u2g's 50 in-band and set-3 field matches (150 games; VM kingkill.py, outnum.py):
+  - Last-king deaths in losses (71 games): starvation 38, bites 16, throw hits 12, cat scratches 4, trap 1. Most
+    starvations come with 0-3 babies alive and the bank at 0-50 forty rounds before, after the army is gone. This
+    matches the 09:47 broke-round finding. Exceptions: rose vs collegejunior (r1630, 23 babies beside the king, bank
+    0) and clockwisdom (r860, 17 of 19 babies 10+ away, the hoarders u3g targets).
+  - Local numbers at our rats' deaths (allies vs killers within Chebyshev 4, two rounds before). In losses we lose
+    41.5 rats a game to the enemy and they lose 28.8. Only 42% of our deaths come while outnumbered; 63% of
+    theirs do. When our side has 2+ more rats nearby we still lose 12.1 a game (traps 5.1, throw hits 2.6, throw
+    landings 2.3, bites 2.1), while they lose 3.8 a game when they have the extra rats.
+  - So a "retreat when outnumbered" rule would miss most of our losses. The leak is our crowds: enemy traps and
+    throws land where several of ours stand together. That points at u3c (spread over mines), u3d (traps of our
+    own) and the ab1 price of TRAP_RISK, not at a force-ratio rule.
