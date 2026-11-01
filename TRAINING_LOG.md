@@ -5094,3 +5094,4 @@
     - (3) overruns ≤ 3;
     - (4) t ≤ -1.5 rejects.
   - Kill if (1), (2) or (3) fails.
+- 08:27: **u4n (FACE_REACH) rejected at replica block 1** (#158; 7121-7124, 7135-7138, 7248-7255) vs u4e's set-1 refs: 48 cells, 45 alike, D 3 (+1 Finals tiny A; -2 Icarus uneasy_alliance A/B), net -1, t -0.58. u4y and u4n both lost both uneasy_alliance seats that u4e's reference won, so that cell may be a lucky reference rather than two regressions. **u4z (CHIRAL_SYM, symmetry breaking) submitted** (#159), block 1 on set 1, 16 scrims queued (waiter build/wait_u4zb1.sh, matches above 7255).
