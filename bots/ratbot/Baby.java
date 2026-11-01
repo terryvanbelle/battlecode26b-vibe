@@ -29,6 +29,9 @@ public final class Baby {
      *  wallStrikes counts chases of walled-off cheese given up on a stall, the last in round lastStrike. */
     static int breakoutUntil = -1, wallStrikes, lastStrike = -1000;
     static MapLocation mineTarget;    // sticky assigned mine
+    static boolean coopAtPick;        // Cfg.FIGHT_POST: the mine was picked during cooperation
+    /** Cfg.FIGHT_POST (a field so tests can set it). */
+    static int postMargin = Cfg.FIGHT_POST;
     static MapLocation exploreTarget;
     static MapLocation catSeen;       // bottom-left of nearest cat sensed this turn
     static RobotInfo cat;
@@ -1250,6 +1253,7 @@ public final class Baby {
         if (role == GATHER || role == FIGHT && Cfg.FIGHT_MINE) {
             if (Cfg.MINE_BALANCE && mineTarget != null && (Cfg.HOME_ALL_SYM ? Comms.numMines != minesAtPick || Sym.mask != maskAtPick : Comms.numMines != minesAtPick)) mineTarget = null;
             if (Cfg.MINE_ANY_COOP && !G.coop && mineTarget != null && !homeHalf(mineTarget)) mineTarget = null;
+            if (postMargin > 0 && role == FIGHT && coopAtPick && !G.coop) mineTarget = null;
             if (Cfg.KMINE_SKIP > 0 && mineTarget != null && G.round % 10 == 0 && kingHeld(mineTarget)
                     && homeMineCount() >= Cfg.KMINE_SKIP) mineTarget = null;
             if (Cfg.TRIP_HALF != 0 && mineTarget != null && Comms.tripSig != tripSigAtPick) mineTarget = null;
@@ -1944,6 +1948,14 @@ public final class Baby {
             for (; j > 0 && k < key[j - 1]; j--) { key[j] = key[j - 1]; cand[j] = cand[j - 1]; }
             key[j] = k; cand[j] = c;
         }
+        if (postMargin > 0 && role == FIGHT && !G.coop && m == ours) {
+            // a fighter at war holds a contested home mine, where enemy thieves pick; none known: keep all
+            MapLocation r = ref(), e = G.mirror(r, firstSym());
+            int k = 0;
+            for (int i = 0; i < m; i++) if (G.cheb(cand[i], e) - G.cheb(cand[i], r) <= postMargin) cand[k++] = cand[i];
+            if (k > 0) m = k;
+        }
+        coopAtPick = G.coop;
         if (Cfg.KMINE_SKIP > 0 && ours >= Cfg.KMINE_SKIP) {
             // a king works its own mine: drop king-held mines from the pick, keeping the order (all held: keep all)
             int k = 0;

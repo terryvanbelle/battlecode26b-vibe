@@ -1,0 +1,6 @@
+name=u5c
+source=bots/ratbot
+source_sha=bdb3a12b6aae
+commit=fd8bd81
+created=2026-11-01 03:23 PST
+change=2026-11-01 03:24 PST: u4e + FIGHT_POST 8: at war a FIGHT rat takes its mine from the contested home-half mines (steps from the mirrored enemy start minus steps from home at most 8; none known: every home mine), re-picked once when cooperation ends

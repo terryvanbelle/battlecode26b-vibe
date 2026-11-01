@@ -80,6 +80,12 @@ public final class Cfg {
     public static final int THROW_BC = 7000;
     /** Idle non-raiding fighters hold one of our mines instead of exploring. */
     public static final boolean FIGHT_MINE = true;
+    /** At war a FIGHT rat takes its mine from the contested home-half mines, those whose Chebyshev steps from the
+     *  mirrored enemy start exceed those from home by at most FIGHT_POST (0 = off; none known: every home mine). In
+     *  u4e's 48 field losses the enemy stood at such mines 11304 mine-rounds (r150-799) with none of ours within 4 in
+     *  66% of them, and took 441 cheese a mine at margin 3-8 (wins: 3708 rounds, 46%, 63 a mine); fighters, who engage
+     *  enemies within d2 20 at war, spread over every home mine by slot like gatherers. */
+    public static final int FIGHT_POST = 0;
     /** Micro score bonus for a step onto cheese. */
     public static final int MICRO_CHEESE = 15;
     /** The king walks onto the nearest home-half mine within dist2 KING_MINE_R2 of its start. */

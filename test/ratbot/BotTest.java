@@ -2434,6 +2434,49 @@ public class BotTest {
         Baby.seekUntil = 0; Baby.seekNext = 0; Baby.idleTurns = 0; Baby.picked = 0; Baby.idlePicked = 0;
     }
 
+    static java.util.Set<MapLocation> picks() {
+        java.util.Set<MapLocation> got = new java.util.HashSet<>();
+        G.seed(4242);
+        for (int id = 10001; id < 10001 + 300; id++) {
+            Baby.slot = (id * 0x9E3779B1) >>> 8;
+            got.add(Baby.pickMine());
+        }
+        return got;
+    }
+
+    static void testFightPost() {
+        reset(); W = 30; H = 30; install();
+        Sym.mask = Sym.HOR; Baby.home = new MapLocation(1, 5); Baby.fu = -1; Baby.fv = -1;
+        Comms.numMines = 0; Baby.myMineCount = 0;
+        int[][] ms = {{6, 8}, {11, 2}, {14, 9}, {20, 2}, {6, 21}, {11, 27}, {14, 20}, {20, 27}, {26, 12}};
+        for (int[] m : ms) Comms.mines[Comms.numMines++] = new MapLocation(m[0], m[1]);
+        // steps from the mirrored start (1, 24) minus steps from home (1, 5): (6,8) 11, (11,2) 12, (14,9) 2, (20,2) 3, (26,12) 0
+        java.util.Set<MapLocation> contested = new java.util.HashSet<>(java.util.Arrays.asList(new MapLocation(14, 9),
+            new MapLocation(20, 2), new MapLocation(26, 12)));
+        int wasMargin = Baby.postMargin, wasRole = Baby.role;
+        boolean wasCoop = G.coop;
+        int all = Cfg.MINE_BALANCE ? 5 : Math.min(5, Cfg.MINE_SPREAD);   // home-half mines the pick spreads over
+        Baby.postMargin = 8; Baby.role = Baby.FIGHT; G.coop = false;
+        java.util.Set<MapLocation> got = picks();
+        check(got.equals(contested) && !Baby.coopAtPick, "fight post: a fighter at war picks only contested home mines " + got);
+        G.coop = true;
+        got = picks();
+        check(got.size() == all && Baby.coopAtPick, "fight post: in cooperation every home mine " + got);
+        Baby.role = Baby.GATHER; G.coop = false;
+        got = picks();
+        check(got.size() == all, "fight post: gatherers at war keep every home mine " + got);
+        Baby.role = Baby.FIGHT; Baby.postMargin = 0;
+        got = picks();
+        check(got.size() == all, "fight post: off at 0 " + got);
+        Baby.postMargin = 8; Comms.numMines = 0;
+        Comms.mines[Comms.numMines++] = new MapLocation(6, 8);
+        Comms.mines[Comms.numMines++] = new MapLocation(11, 2);
+        got = picks();
+        check(got.size() == 2, "fight post: no contested mine known -> every home mine " + got);
+        Baby.postMargin = wasMargin; Baby.role = wasRole; G.coop = wasCoop;
+        Comms.numMines = 0;
+    }
+
     static void testScout() throws GameActionException {
         reset(); W = 30; H = 30; install();
         Sym.mask = Sym.HOR; Baby.home = new MapLocation(1, 5); Baby.fu = -1; Baby.fv = -1;
@@ -3623,6 +3666,7 @@ public class BotTest {
         testMineTraps();
         testTrapRisk();
         testMineSpread();
+        testFightPost();
         testScout();
         testSeek();
         testHostile();
