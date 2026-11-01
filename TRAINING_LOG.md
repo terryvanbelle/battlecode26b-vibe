@@ -4754,3 +4754,18 @@
   - Gained spsquared bed B. Lost AdamTan12_Finals DefaultSmall B, Icarus TheHeist A and uneasy_alliance A, Merlin peaceinourtime B, collegejunior rose A.
   - Merlin's thunderdome went the same way in both seats again (lost).
 - 22:04: **u4l submitted** (replica #147: u4e + PEACE + MINE_ANY + MINE_TIES). Block 1 runs on v4 set 1 against u4e's set-1 games; 16 scrims are queued for the drain loop. progress/ refreshed after the scored block.
+
+## 2026-10-31 22:21 PDT: clockwisdom, where u4e delivers nothing
+
+- 22:21: **Why u4e starves on clockwisdom** (field 6060 A: picked 5440, delivered 0, king starved r910; 6061 B: picked 15960, delivered 920, starved r1285; 6100/6101 vs Varun delivered 0 and were won only by king kills).
+  - collegejunior delivers 93% of its pickups on this map. xferratio.py: on every other map our first delivery comes by r60-223; on clockwisdom it comes at r635 or never.
+  - The failure reproduces locally (cw1, u4e vs s7d): xfer 40 as A (lost r930), 340 as B (won r775 when s7d starved first).
+  - The map is a 59x59 rotational spiral of ring walls. homedist.py (BFS from our king at (56,9), walls blocked): the outer band runs from the king along the bottom, up the left side and across the top. The right-hand band beside the king (x 53-58, y 20-49) is 300+ steps away, and the inner rings are 110-260.
+  - Mines by path from the king: (2,25) 59 steps and (2,31) 65 along the outer band, then (38,47) 103 and (43,44) 108. (56,27), at Chebyshev 18, is 309 steps away.
+  - Our king knows no mine all game (km=n0, empty mine list). It reaches the 20-baby cap by r50, so it never spawns again.
+  - 12 of the 20 babies are RUSH attackers. They walk the spiral toward (2,49) or the wrong mirror (56,49), picking up cheese on the way. They hold 220-4400 each (5 carriers above 1000), and attackers never deliver (ATK_DELIVER 0).
+  - Gatherers with no mine ('E') roam the bottom corridor for 400 rounds. Their explore targets are inside walled rings, and every flow search fails (fe[5] reaches 17).
+  - The one real carrier, 11605, starts delivering at (9,15) on r100, 47 steps from home, and walks the wrong way round the spiral. By r425 it is 128 steps out, holding 1240 cheese. The greedy/bug walk east hits the ring wall and follows it upward; a flow search never completes.
+- 22:21: **The carry cap does not fix it** (cw2, against s7d's 300-1496). pb2 (CARRY_MAX 150) delivered 140 as A (lost r1005) and 300 as B (lost r985). pb3 (CARRY_MAX 150 + ATK_CARRY 25) delivered 0 as A (won r770, s7d starved first) and 420 as B (won r955). Every game ended in a starvation.
+- 22:21: **Next probe: TRAIL** (s5d's switch, withdrawn at s5c because EscapeTheNight's mine-bound babies jammed in the king's box). A carrier whose delivery stalls walks its own loop-free trail back from its spawn, which is a walked, wall-free path whatever the maze.
+  - cw3 runs pb2 (u4e + TRAIL) and pb3 (u4e + TRAIL + ATK_DELIVER 50) against s7d on clockwisdom, EscapeTheNight (the old jam), fullofsecrets and pipes (TRAIL's old gains, carrier stalls 1339 to 155 and 913 to 121), both seats, with u4e controls.
