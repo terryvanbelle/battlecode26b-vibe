@@ -5134,3 +5134,10 @@
     - Replica: the usual block protocol on set 1 against u4s's set-1 refs, after u5k.
 - 14:54: **u5k (CAT_REACH 30 + AIM_LEFT 3000 on u4s) rejected at replica block 1** (#164; 7740-7743, 7754-7757, 7783-7786, 7801-7804): 48 cells, 43 alike, D 5 (+2 −3), net −1, t −0.44. Its local screen xw2 had passed every bar against cb2 (38 wins of 48 to 35; D 8 (+5 −3) on 44 cells; 0 overruns to 1; picks 38.00). The repair is real locally but does not move field cells. Four straight block-1 rejects on u4s (u5i, u5j, u5k, plus the near-wash reference) say set 1 is mostly settled for small switches: about 43-46 of 48 cells repeat exactly.
   - **u5l (FORM_FROM 600) submitted** (#165), block 1 on set 1 (waiter build/wait_u5lb1.sh, matches above 7804). Its local screen md2 runs alongside on the VM instead of first, so the replica is not left idle. Its pre-registered bars are unchanged, and if md2 fails one I stop the block.
+- 15:45: **u5l (FORM_FROM 600) passes replica block 1** (#165; 7821-7824, 7839-7842, 7859-7862, 7885-7888 vs u4s's set-1 refs): 48 cells, 46 alike, D 2 (+2: Varun DefaultMedium A, an inspiring cell, and collegejunior clockwisdom B; −0), net +2, t +1.40.
+  - **Local screen md2 passes all three pre-registered bars** (48 kvs cells vs cb2):
+    - (1) No second king formed in any game that ended before r600 (cb2: 6 such games). Formations 19 to 22, rats merged 116 to 132.
+    - (2) 41 wins of 48 to 35 (bar 32).
+    - (3) 38.64 picks per 100 rat-turns (bar 36.5).
+    - On the 44 cells shared with pf2's layout: D 9 (+7 −2), t ≈ +1.64, xfer 288,549 to 274,006. The gains are against abrk and araid on DefaultSmall, arrows, DefaultMedium (both seats), bed and starvation B. The losses are araid cheesefarm B and starvation A. 1 overrun (cb2 also 1).
+  - Block 2 on v4 set 2 is queued (16 scrims, matches above 7888, waiter build/wait_u5lb2.sh; refs u4s's 7420-7423, 7440-7443, 7459-7462, 7488-7491).
