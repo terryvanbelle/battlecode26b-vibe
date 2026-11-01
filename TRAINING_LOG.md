@@ -4663,3 +4663,12 @@
   - Falsifier: the replica block bars, or a screen t <= -1.5. Also falsified if, in the field blocks, we open the war in any game, or pickups before the war are no higher than u3z's.
   - Its screen pm1 (kvs cells, control u3v) starts when qh1 frees the VM. bots/u4h was never committed; it goes in now with u4j.
   - Replica queue after u4e: u4g, u4c, u4f, u4a, u4b (the order set at 19:38), then u4j, u4h and u4i as their local checks pass.
+- 20:54: **u4h's screen qh1** (kvs cells, control kvs = u3v): 36 of 44 to 30, D 12 (+9 -3), net +6, t +1.73: pass. Xfer 295.4k to 299.5k.
+  - Gains: abrk canyoudig B, evileye A, tiny B; araid DefaultMedium A, arrows B, bed A, learn_your_lesson A, starvation B, tiny B.
+  - Losses: abrk bed B; araid bed B, keepout A.
+  - u4h joins the replica queue as a basics repair. Queue after u4e: u4g, u4c, u4h, then u4j (if pm1 passes), u4a, u4b, u4f and u4i (if fq1 passes). u4h moves ahead of u4a and u4b on the stronger screen (t +1.73 to their +1.00), and u4f goes last (its screen changed no cell).
+  - u4j's screen pm1 started when qh1 finished (jobs 2).
+- 20:54: Baseline for u4j's counter (prewar.py on u3z's 96 field games):
+  - Peace lasts 253 rounds a game (losses 146, wins 348). Nobody broke the truce in 10 games.
+  - Picked before the war, a game: us 2155, them 1465. In losses 802 to 962 (550 to 660 per 100 peace rounds); in wins 3349 to 1909.
+  - fullofsecrets 5764 (L): 568 peace rounds, we picked 5880 to their 1900. Yet at r481 our babies held 1965 while we had delivered 260, and the king starved. That is the pocket-delivery failure u4g (DELIVER_ANCHOR) is aimed at.
