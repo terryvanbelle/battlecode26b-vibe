@@ -5106,3 +5106,6 @@
     - (3) overruns ≤ 3;
     - (4) t ≤ -1.5 rejects.
   - Kill if (1), (2) or (3) fails. If it passes, it goes to the replica queue by screen evidence.
+- 09:14: **u4z (CHIRAL_SYM) rejected at replica block 1** (#159; 7256-7271) vs u4e's set-1 refs: 48 cells, 41 alike, D 7 (+3 -4), net -1, t -0.38. Four queued replica candidates have now failed block 1 in a row (u4y, u4n, u4z) or later (u5a). u4e's set-1 reference looks lucky on Icarus uneasy_alliance B (lost by u4y, u4n and u4z).
+- 09:14: **u4s's targeted design, as planned at 03:39** (STALL_CAT acts only where attackers stall, so a plain set block hardly tests it: u3q left 45 of 48 cells alike). Panel research/panel/stall-u4s.json: averystrangespace against all 8 panel opponents, plus two of the stall maps (rose, where_are_you, clockwisdom) each. The u4e control plays it first (#160, 16 scrims, waiter build/wait_u4est.sh, matches above 7271), then u4s.
+  - Judging, fixed now: pooled t over the 48 cells with the usual block-1 bars (reject at t ≤ 0). Separately, a mechanism check on the averystrangespace cells: our cat damage there must be > 0 in at least half of u4s's 16 games (u4e: 0 in all of set 2's).
