@@ -1280,8 +1280,15 @@ public final class Baby {
         }
         why = 'd';
         if (Cfg.TRAIL && homeLeg(k)) return true;
-        Nav.goTo(k);
+        Nav.goTo(Cfg.DELIVER_ANCHOR > 0 ? anchorFor(k, Cfg.DELIVER_ANCHOR) : k);
         return true;
+    }
+
+    static MapLocation anchor;
+    /** Cfg.DELIVER_ANCHOR: the delivery target for king k, re-set to k once k is more than r from it. */
+    static MapLocation anchorFor(MapLocation k, int r) {
+        if (anchor == null || G.cheb(anchor, k) > r) anchor = k;
+        return anchor;
     }
 
     static int homeBest, homeStall, homeRound = -10, homeHeld;

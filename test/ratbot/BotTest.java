@@ -2709,6 +2709,26 @@ public class BotTest {
     }
 
     /** Cfg.PLUG_FAST: ringArcsFast and arcsOf give ringArcs's answers, and the king's own count follows the round. */
+    static void testAnchorFor() {
+        // the anchor holds while the king stays within r of it, and moves to the king once it is farther
+        Baby.anchor = null;
+        MapLocation a = new MapLocation(10, 10);
+        check(Baby.anchorFor(a, 3).equals(a), "anchor: first call takes the king's tile");
+        check(Baby.anchorFor(new MapLocation(13, 7), 3).equals(a), "anchor: kept at Chebyshev 3");
+        check(Baby.anchorFor(new MapLocation(12, 11), 3).equals(a), "anchor: kept at Chebyshev 2");
+        MapLocation b = new MapLocation(14, 10);
+        check(Baby.anchorFor(b, 3).equals(b), "anchor: re-set at Chebyshev 4");
+        check(Baby.anchorFor(new MapLocation(15, 10), 0).equals(new MapLocation(15, 10)), "anchor: r 0 follows the king");
+        // with r <= 3 a rat standing on the anchor is in transfer reach of the king (off its body)
+        for (int dx = -3; dx <= 3; dx++)
+            for (int dy = -3; dy <= 3; dy++) {
+                MapLocation k = new MapLocation(20 + dx, 20 + dy), p = new MapLocation(20, 20);
+                if (Math.abs(dx) <= 1 && Math.abs(dy) <= 1) continue;
+                check(Baby.inTransferReach(p, k), "anchor: reach from the anchor at " + dx + "," + dy);
+            }
+        Baby.anchor = null;
+    }
+
     static void testRingArcsFast() {
         // arcsOf against ringArcs's loops on every 16-bit closed mask
         boolean ok = true;
@@ -3328,6 +3348,7 @@ public class BotTest {
         testScoutMore();
         testRingArcs();
         testRingArcsFast();
+        testAnchorFor();
         testHomeRank();
         testSweep();
         testWoundMask();

@@ -418,6 +418,12 @@ public final class Cfg {
      *  equal tile does). fullofsecrets: carriers with up to 490 cheese sat 76 rounds outside the wall of the king's
      *  pocket; each step of the roaming king was a new target, so the stall never reached FLOW_STALL. */
     public static final int NAV_SAME_R = 0;
+    /** A delivery heads for an anchor, the nearest king's tile when it was set, kept while that king stays within
+     *  Chebyshev DELIVER_ANCHOR of it (0 = off: the king's own tile). The target then holds still, so the stall
+     *  reaches FLOW_STALL and a flow path is searched and followed; with 3 or less a rat at the anchor is in transfer
+     *  reach. Unlike NAV_SAME_R the flow path's target stays put. fullofsecrets (u3v mm2, u3z field): carriers with
+     *  60-725 cheese stood 30-120 rounds at Chebyshev 4-7 outside the king pocket's wall, path 39 steps round. */
+    public static final int DELIVER_ANCHOR = 0;
     /** A gatherer counts as at its mine within Chebyshev MINE_KING_R of it when one of our kings sits within 2 of the
      *  mine (0 = off: always 2), and wanders only to tiles off the kings' bodies. FreeTheCheese: the king's 3x3 covered
      *  the mine, the free tiles within 2 were taken, and a gatherer pathed into the king for 60 rounds. */
