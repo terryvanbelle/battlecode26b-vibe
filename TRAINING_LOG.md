@@ -4784,3 +4784,9 @@
 - 22:34: **Delivery-stall census** (dstall.py on u3z's 96 field games; a 'd' round is stalled when the BFS path length to the king has not dropped in 20 rounds): 34878 of 200138 'd' rounds were stalled.
   - Far from the king (31+ steps): TheHeist 4812, fullofsecrets 3560, peaceinourtime 2288, averystrangespace 815, clockwisdom 739, Hike 389. This is TRAIL's class.
   - Near the king (4-10 steps): rose 12089, a queue. u4e won all 4 set-1 rose games, so it is not a flippable loss.
+- 22:52: **cw4: pb4 (u4e + TRAIL + TRAIL_GAP 12) won 6 of 8 against s7d; u4e won 5 of the same 8.**
+  - fullofsecrets 2 of 2, both at r2000 (u4e lost both). EscapeTheNight 2 of 2, at r692 and r1169: no king-box jam, which was s5d's reason for withdrawal. pipes 2 of 2. clockwisdom 0 of 2 (u4e 1 of 2).
+  - On clockwisdom the trail now works: gatherers' delivery spells end at the king (e.g. 43 steps to 4 in 100 rounds). The cheese, though, is on the attackers, who held 760-2700 each and never deliver. pb3's ATK_DELIVER 50 is what fixed that map in cw3.
+- 22:52: **u4o built** (= pb4: u4e + TRAIL + TRAIL_GAP 12; basics repair, pre-registered in attempts.csv). Its local screen is hw1 (kvs cells, control kvs = u3v).
+  - I first named the screen run tr1, which was taken by an Oct 29 s7d-vs-atrap run (6 results, KEEP file). I overwrote that run's cells.tsv, then rebuilt it from its results.jsonl (all 6 cells) and killed the queued start before it ran. Nothing else there changed.
+  - It goes to the replica after u4l, ahead of u4m: a basics repair comes first.
