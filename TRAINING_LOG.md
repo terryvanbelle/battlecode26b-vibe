@@ -4608,3 +4608,10 @@
   more because our live count is higher. From r200 we bring in 180-240 per 100 rounds with 13-19 babies to their
   360-450 with 11-12, and the king's 200 per 100 rounds empties the bank. Rush limits were all tried before (RUSH_UNTIL,
   RUSH_LIFE, RUSH_BURN, RUSH_BAN, RUSH_TO 12).
+- 20:17: u4g passes the screen sg1 (kvs cells vs araid/abrk, control u3v): 32 of 44 to 30, D 12 (+7 -5), net +2,
+  t +0.58. It joins the replica queue after u4e.
+- 20:17: Stash vs YokoOno (5769, lost as B): from r30 to r170 only 0-3 of our 20-30 rats are outside the pocket
+  (y >= 7). The why-codes are a 37%, M 14-35%, C 9-40%, w+f 9-32%. Of the w/f turns, 370 of 406 have the nearest
+  enemy across a known wall (greedy line). Attackers and mine-runners mill at y 4-6, right under the mines at y 11 that
+  YokoOno farms. Locally (u3v B vs araid) the same digs happen until a stripe tile, (5,6), is dug at r62; from r90 the
+  rats stream out (7, 11, 15, 19, 24 outside). In the field that tile waits until r133, and the rats leave from r170.
