@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 01 07:43 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 01 08:29 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -8,57 +8,57 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 01 07:43 
 
 | # | Team | Rating | Games W-L | Submission |
 |---:|---|---:|---|---|
-| 1 | uravt\_Version41 | 1791.3 | 370-296 | accepted |
+| 1 | uravt\_Version41 | 1793.5 | 371-298 | accepted |
 | 2 | IvanGeffner\_basic51 | 1782.4 | 467-250 | accepted |
-| 3 | uravt\_Version35 | 1756.0 | 349-317 | accepted |
-| 4 | awu7\_awubot\_us | 1692.8 | 339-303 | accepted |
-| 5 | abcdezyxwv\_bestsofar | 1691.1 | 773-334 | accepted |
-| 6 | nzjt\_TheComplexMerlin | 1680.0 | 456-333 | accepted |
-| 7 | quesswho\_bot16 | 1670.0 | 333-300 | accepted |
-| 8 | battlecode-archive\_testplayer | 1655.9 | 369-324 | accepted |
-| 9 | awu7\_awubot\_quals | 1653.4 | 307-263 | accepted |
-| 10 | nubbbbbb\_testplayer | 1649.3 | 293-253 | accepted |
-| 11 | thewaxmango\_PhD | 1630.9 | 324-279 | accepted |
-| 12 | quesswho\_quals | 1626.3 | 341-307 | accepted |
-| 13 | TeamSPAARK\_SPAARK | 1621.2 | 304-269 | accepted |
-| 14 | daannte\_v47\_Skadoosh | 1614.2 | 378-342 | accepted |
-| 15 | daannte\_v52\_ThisGuy | 1613.7 | 361-332 | accepted |
-| 16 | bman12345678\_goonv23 | 1590.3 | 328-281 | accepted |
-| 17 | AlexT101\_usqualsbot | 1577.9 | 743-388 | accepted |
-| 18 | HugoIngelsson\_Xzibit | 1573.8 | 434-370 | accepted |
-| 19 | AlexT101\_finalsbot | 1572.8 | 324-303 | accepted |
-| 20 | VarunVejalla\_final4\_run\_away10 | 1567.9 | 400-386 | accepted |
-| 21 | AdamTan12\_Icarus | 1567.6 | 450-417 | accepted |
-| 22 | thewaxmango\_collegejunior | 1554.3 | 452-379 | accepted |
-| 23 | AdamTan12\_Finals | 1554.1 | 702-507 | accepted |
-| 24 | HugoIngelsson\_YokoOno | 1552.9 | 439-365 | accepted |
-| 25 | **vibe26b** | 1541.1 | 2862-2853 | accepted |
-| 26 | spsquared\_TSPAARK\_QUALS | 1531.1 | 553-632 | accepted |
-| 27 | outercloudstudio\_v\_1\_18 | 1500.3 | 397-677 | accepted |
-| 28 | CS50Crab\_protoSaberV7 | 1500.1 | 316-317 | accepted |
-| 29 | amcsz\_fighterrats | 1492.9 | 292-302 | accepted |
-| 30 | CS50Crab\_rapierV1 | 1492.3 | 457-671 | accepted |
-| 31 | bc26vibe\_bot | 1471.0 | 422-739 | accepted |
-| 32 | PixelRifts\_mushakraj\_mk3 | 1468.7 | 332-352 | accepted |
-| 33 | XSercia\_genies | 1455.1 | 336-453 | accepted |
-| 34 | C0derTang\_v6 | 1436.9 | 296-385 | accepted |
-| 35 | ask8000\_bumchit67 | 1436.7 | 322-416 | accepted |
-| 36 | justinottesen\_alfredo | 1431.6 | 290-316 | accepted |
-| 37 | vincentwang60\_javabot | 1413.0 | 337-365 | accepted |
-| 38 | bc26-example-copy | 1410.9 | 300-330 | accepted |
-| 39 | bc26-example | 1407.0 | 277-314 | accepted |
-| 40 | Naton-Cai\_ratplayer | 1402.5 | 300-321 | accepted |
-| 41 | Camleaf\_mk1 | 1399.7 | 301-329 | accepted |
-| 42 | Gavdingo\_v1 | 1383.7 | 292-332 | accepted |
-| 43 | battlecode-archive\_result\_408 | 1365.3 | 290-325 | accepted |
-| 44 | j2399\_weighted\_micro\_v9 | 1349.8 | 289-287 | accepted |
-| 45 | GuzziFlipFlops\_Hermesv8 | 1336.3 | 333-375 | accepted |
-| 46 | quanticsoul4772\_ratbot | 1336.2 | 340-320 | accepted |
-| 47 | justinottesen\_carbonara | 1330.4 | 280-314 | accepted |
-| 48 | seru9\_TOTAL\_AGGRO | 1327.8 | 312-333 | accepted |
-| 49 | Victor-Ramirez-Garcia\_battleca | 1317.6 | 338-316 | accepted |
-| 50 | anicolao\_myplayer | 1102.7 | 189-408 | accepted |
-| 51 | j2399\_weighted\_path | 1083.1 | 161-322 | accepted |
-| 52 | Krak9n\_robot | 1036.1 | 95-343 | accepted |
+| 3 | uravt\_Version35 | 1749.8 | 350-319 | accepted |
+| 4 | abcdezyxwv\_bestsofar | 1710.8 | 781-338 | accepted |
+| 5 | awu7\_awubot\_us | 1698.9 | 344-307 | accepted |
+| 6 | nzjt\_TheComplexMerlin | 1662.2 | 460-341 | accepted |
+| 7 | awu7\_awubot\_quals | 1662.2 | 311-265 | accepted |
+| 8 | nubbbbbb\_testplayer | 1654.0 | 297-255 | accepted |
+| 9 | quesswho\_bot16 | 1652.3 | 335-307 | accepted |
+| 10 | battlecode-archive\_testplayer | 1650.7 | 374-331 | accepted |
+| 11 | thewaxmango\_PhD | 1634.3 | 326-280 | accepted |
+| 12 | TeamSPAARK\_SPAARK | 1621.5 | 307-272 | accepted |
+| 13 | daannte\_v52\_ThisGuy | 1613.7 | 361-332 | accepted |
+| 14 | quesswho\_quals | 1613.3 | 341-310 | accepted |
+| 15 | bman12345678\_goonv23 | 1611.1 | 332-283 | accepted |
+| 16 | daannte\_v47\_Skadoosh | 1610.8 | 379-344 | accepted |
+| 17 | AlexT101\_usqualsbot | 1585.2 | 749-391 | accepted |
+| 18 | AlexT101\_finalsbot | 1577.4 | 327-306 | accepted |
+| 19 | AdamTan12\_Finals | 1567.5 | 711-513 | accepted |
+| 20 | VarunVejalla\_final4\_run\_away10 | 1566.6 | 408-396 | accepted |
+| 21 | HugoIngelsson\_Xzibit | 1566.1 | 438-375 | accepted |
+| 22 | AdamTan12\_Icarus | 1563.4 | 452-421 | accepted |
+| 23 | thewaxmango\_collegejunior | 1562.5 | 460-380 | accepted |
+| 24 | **vibe26b** | 1550.0 | 2892-2883 | accepted |
+| 25 | HugoIngelsson\_YokoOno | 1545.3 | 445-371 | accepted |
+| 26 | spsquared\_TSPAARK\_QUALS | 1530.1 | 559-638 | accepted |
+| 27 | CS50Crab\_protoSaberV7 | 1500.7 | 319-320 | accepted |
+| 28 | outercloudstudio\_v\_1\_18 | 1495.9 | 400-680 | accepted |
+| 29 | CS50Crab\_rapierV1 | 1492.5 | 460-674 | accepted |
+| 30 | amcsz\_fighterrats | 1479.7 | 296-310 | accepted |
+| 31 | PixelRifts\_mushakraj\_mk3 | 1467.3 | 335-352 | accepted |
+| 32 | bc26vibe\_bot | 1464.4 | 423-741 | accepted |
+| 33 | XSercia\_genies | 1459.6 | 338-454 | accepted |
+| 34 | ask8000\_bumchit67 | 1452.1 | 328-416 | accepted |
+| 35 | C0derTang\_v6 | 1430.3 | 298-389 | accepted |
+| 36 | Naton-Cai\_ratplayer | 1422.3 | 307-326 | accepted |
+| 37 | vincentwang60\_javabot | 1415.9 | 339-366 | accepted |
+| 38 | justinottesen\_alfredo | 1415.4 | 291-321 | accepted |
+| 39 | bc26-example | 1411.4 | 279-315 | accepted |
+| 40 | bc26-example-copy | 1409.7 | 306-336 | accepted |
+| 41 | Gavdingo\_v1 | 1383.7 | 292-332 | accepted |
+| 42 | Camleaf\_mk1 | 1378.3 | 304-338 | accepted |
+| 43 | justinottesen\_carbonara | 1354.8 | 286-314 | accepted |
+| 44 | battlecode-archive\_result\_408 | 1352.5 | 290-328 | accepted |
+| 45 | j2399\_weighted\_micro\_v9 | 1349.8 | 289-287 | accepted |
+| 46 | GuzziFlipFlops\_Hermesv8 | 1343.9 | 335-376 | accepted |
+| 47 | quanticsoul4772\_ratbot | 1332.3 | 341-322 | accepted |
+| 48 | Victor-Ramirez-Garcia\_battleca | 1320.2 | 346-320 | accepted |
+| 49 | seru9\_TOTAL\_AGGRO | 1316.9 | 314-337 | accepted |
+| 50 | anicolao\_myplayer | 1105.2 | 193-413 | accepted |
+| 51 | j2399\_weighted\_path | 1082.3 | 164-325 | accepted |
+| 52 | Krak9n\_robot | 1027.4 | 96-348 | accepted |
 | 53 | StuxnetStudios\_skaven | 0.0 | 0-0 | none |
 | 54 | winkelmantanner\_genetic1 | 0.0 | 0-0 | none |
