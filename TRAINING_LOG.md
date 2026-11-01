@@ -4575,3 +4575,26 @@
   - How our victims got there, per lost game: own move 22.4 (16.5 of them with an enemy rat within Chebyshev 2 the round before), no own turn that round 10.6 (carried or dropped), thrown 2.6. Victim codes on own moves: faceEnemy 4.6, war 4.1, attack 3.9, carry-aim 2.9, flank 1.8, to-mine 1.6, chase 1.5.
   - Death causes per lost game, r<300 then later: ours throw-landing 11.8/10.9, trap 5.1/6.6; theirs throw-landing 11.8/9.7, trap 0/0. Against AdamTan12's losses our trap deaths are 13.2/12.4.
   - The defensive side was tried before: FACE_HOLD (u1l weak; u1m parked, fires on us 699 to 808 but wins 10 to 11), u1n's zone hold WOUNDED_HP 100 (rejected at diag, 6 wins to 11), u3i (parked). The offensive side is u4b (u3d's reactive trap set, which kills 2.6-3.4 rats a game), already queued.
+
+## 2026-10-31 19:59 PDT: u4g diag da1 mixed; held path tiles u4h
+
+- 19:45: da1 done (u3v vs u4g, each vs araid on six maps, both seats). u4g wins 10 of 12 to u3v's 9 (cheesebottles B
+  now won). fullofsecrets is still lost both ways (lost wars, backstab r445), but later, with xfer 160/600 up to
+  2777/1560. Delivery stalls ('d' rounds, all 12 games) 2435 to 1342.
+- 19:48: Falsifier taken literally: fullofsecrets 'd' 434 to 657 and all stuck rounds 12222 to 15650, so both clauses
+  hit. Read on: the targeted stand (carriers at king Chebyshev 4-7 behind the pocket wall) is gone. u4g's
+  fullofsecrets 'd' is one carrier with 1400-1820 cheese, 27-31 from the king, crawling under carry cooldown in a game
+  2.2x longer. The stuck rise is a cheesebottles B M jam (4579 rounds). Sent to the screen (sg1) as a mixed result; the
+  screen and the replica decide.
+- 19:52: The jam: three empty M rats at (12-14,15), a dead-end strip under two side-by-side kings (FORM_RICH). The
+  inner rat's only exit runs through the other two, and those two plan east through its tile. Each drops its path after
+  holding 3 turns behind a robot (indicator fe 2nd field +1 every 6 turns), searches again, gets the same path (searches
+  ignore robots), and repeats for 230-270 rounds. TheHeist's field M jam (22858 rounds) fits the same picture.
+- 19:56: Robot-hold drops are common: u3v averages about 235 a game in da1 (2832 of about 12500 searches).
+- 19:58: FLOW_HELD (new switch): after a robot-hold drop, the held tile is kept out of the next searches for N rounds
+  (one tile per rat, never beside the target), so the rat routes round or backs out of a dead end. This differs from
+  FLOW_JAM (sidestep and keep the path, s4s/s4u failed) and SWAP_HOLD (carry the ally past). BotTest testFlowHeld
+  passes (1796/1796), and the unit tests exit 0.
+- 19:59: u4h = u3v + FLOW_HELD 20. Diag dh1 started: u4h vs araid on da1's six maps (the da1 u3v games are the
+  control; local games are deterministic, as mm2 and da1 gave identical u3v numbers), plus TheHeist and rose for both
+  builds; jobs 1, BC_KEEP. u4e's replica block 1 is at 4 of 16.
