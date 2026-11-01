@@ -1,0 +1,6 @@
+name=u4d
+source=bots/ratbot
+source_sha=b993e7a76051
+commit=046e914
+created=2026-10-31 18:14 PDT
+change=HUNGRY 600 (u3v + HUNGRY: any carrier delivers while the bank is under 600; dose arm of u4c 300)
