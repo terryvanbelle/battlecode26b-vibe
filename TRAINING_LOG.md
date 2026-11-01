@@ -4615,3 +4615,13 @@
   enemy across a known wall (greedy line). Attackers and mine-runners mill at y 4-6, right under the mines at y 11 that
   YokoOno farms. Locally (u3v B vs araid) the same digs happen until a stripe tile, (5,6), is dug at r62; from r90 the
   rats stream out (7, 11, 15, 19, 24 outside). In the field that tile waits until r133, and the rats leave from r170.
+- 20:22: Walled-enemy census over u3z's 32 field matches (96 games; ~/diag26b/enemywall2.py). It counts our rat-turns
+  whose nearest enemy (dist2 3-20) is across a wall on the greedy line, with an 8-way BFS detour over 2*cheb+4 ("long").
+  Among w/f turns, long-walled ones are 8364 of 26858 in wins (31%) and 3903 of 33095 in losses (12%): EscapeTheNight
+  5918 W alone has 5523, RUN 5918 L 2244, Stash 5769 L 637. Facing walled-off enemies is common and not
+  loss-specific, so no ENEMY_LOS switch on this evidence.
+- 20:22: Carry-load census (same games; carryload.py). Engine: carrying a robot adds no cooldown ((int) 1.5 = 1), and a
+  carried rat's cheese doesn't slow its carrier. So ferrying a rat that holds C cheese over D tiles costs about 2D
+  rat-turns, against D(1 + C/100) walking. In wins we spend about 1620 baby-turns a game holding 300+ cheese, mostly
+  6-20 from our king (rich maps). In losses it's about 140 a game: their loads are light (1-29: 1580, 30-99: 1080 turns
+  a game). A ferry would speed rich wins, not flip losses. Logged as an idea, not built.
