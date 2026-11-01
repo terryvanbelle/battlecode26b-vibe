@@ -4378,3 +4378,5 @@
     seat B. The seat-A change (cheesefarm A vs araid) comes from the birth-turn sense call's bytecode: the work
     Flow and the optional stages do depends on the bytecode left, so seat A's play shifts a little too.
   - u4b's screen (pz3) is still running.
+- 17:07: u4b (u3v + u3d's trap set) screen pz3: 34 of 44 to 30, D 16 (+10 -6), net +4, t +1.00. That passes.
+  The replica queue is u3z (block 1 running, 12 of 16 matches in), then u4a, then u4b.
