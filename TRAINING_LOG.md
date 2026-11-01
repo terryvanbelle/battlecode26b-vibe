@@ -4467,3 +4467,23 @@
     u3z block 3 follows, then u4a and u4b. The set-3 reference serves their block 3s as well.
   - Three of the five gains are on averystrangespace, the map we had lost 0/20 to the in-band pair. PEACE (we
     never end cooperation) fits it: long truces there are decided on points.
+- 18:09: **u4c's screen hu1** (kvs cells vs araid/abrk, control kvs = u3v): 38 of 44 to 30, D 10 (+9 -1), net +8,
+  t +2.53. Gains: DefaultSmall A, arrows A and B, canyoudig B and evileye A vs abrk; DefaultMedium A and B, bed A
+  and learn_your_lesson A vs araid. Loss: DefaultSmall B vs araid.
+  - u4c is u3v plus one constant, HUNGRY 300. A game can only diverge once the branch fires (bank under 300 with
+    a carrier holding cheese), so the flips sit in the wars that drain the bank. That matches u3z's in-band
+    losses: in 18 of 20 king-kill losses (kingkill.py, block 1) our bank was under 300 at R-40. Our babies were few
+    (0-9), and the opponent's bank held 755-1355 at the same time (econtl: starvation, thunderdome).
+  - Its pre-registered design case (clockwisdom) stays falsified. I re-registered u4c for the replica with the
+    low-bank war mechanism, and recorded in attempts.csv that this was done AFTER seeing hu1. The screen is
+    therefore not independent evidence; the replica blocks are.
+  - Queue: u3v set-3 reference (#143, running), u3z block 3, then u4c (strongest screen: t 2.53 against 1.00 for
+    u4a and u4b), then u4a, then u4b.
+- averystrangespace (u3z block 2, per mine, permine3.py and minereach.py): 15-18 of our gatherers crowd the home
+  mine all game (3200-4950 rat-turns per 250 rounds within 6 of it, which yields about 4.5k for the game). Twelve
+  rushers stay in the dirt band south of the centre until r700. We reach the centre mine at r650 and never touch the
+  nearer corner mine, (53,4) as A or (6,55) as B: 0 picked in all 4 games. YokoOno reaches its centre mine at r213
+  and its corner at r263. Every mine except home needs digging (dig distance 170-342).
+  - The games went to r2000 on war points. Our END_KING second king gives kings 2 to 1 (33.3 points), so we won 3
+    of 4. The loss (5913) was on cat damage, 350 to 6930. With PEACE, the map is no longer a 0/20 hole, so it is
+    not the next target.
