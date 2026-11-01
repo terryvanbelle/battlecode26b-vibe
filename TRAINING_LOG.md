@@ -4639,3 +4639,12 @@
   the fewer-xfer clause of the falsifier is hit. The aimed-at jam (rose's corridor) is gone, so it goes to the screen
   qh1 as mixed. If it reaches the replica and a later fix is needed: skip the hold when the held tile has no free
   side neighbour (a pipe).
+- 20:38: The pipes stall under u4h (dh1, araid_vs_u4h pipes, r1081-1739): our carriers ($60-255) are held in the
+  2-wide pipe x 24-25 by two of our rats on code f. Those rats face enemies at x 27-28 through the pipe wall (x 26);
+  a FLOW_HELD hold on one column leaves the other blocked too. Field census (facereach.py, u3z's 96 games): 'f' turns
+  where the enemy at Chebyshev 2 has no open tile beside both of us (can't get adjacent in one move) are 9460 of 13612
+  in wins and 4090 of 9073 in losses. In the two local pipes games it's 4173 of 4296 and 5119 of 5166, about half
+  beside one of our travellers.
+- 20:38: u4i = u3v + FACE_REACH (new switch; Baby.reach1, a test in BotTest, 1798/1798; unit tests exit 0).
+  Pre-registered in attempts.csv. Diag fq1 (22 cells: u4i vs araid on EscapeTheNight, rose, fullofsecrets, RUN,
+  averystrangespace, evileye, Stash, pipes, both seats; u3v on the last three new maps) is running, replays kept.

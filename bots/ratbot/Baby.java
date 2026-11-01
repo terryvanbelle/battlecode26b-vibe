@@ -1468,6 +1468,7 @@ public final class Baby {
         MapLocation e = nearestEnemy.location;
         int d = G.me.distanceSquaredTo(e);
         if (d > 8) return false;
+        if (Cfg.FACE_REACH && d > 2 && !reach1(G.me, e)) { faceSkips++; return false; }
         Direction to = G.me.directionTo(e);
         if (!rc.canSenseLocation(e) || (d > 2 && rc.getDirection() != to)) {
             if (rc.getDirection() != to && rc.canTurn(to)) { rc.turn(to); G.facing = to; }
@@ -1481,7 +1482,22 @@ public final class Baby {
         return true;
     }
 
-    public static int faceHolds;
+    public static int faceHolds, faceSkips;
+
+    /** Cfg.FACE_REACH: some tile next to both a and e (on the map, not a known wall or dirt) is open, so e can get
+     *  next to a in one move. */
+    static boolean reach1(MapLocation a, MapLocation e) {
+        int[] mem = Sym.mem;
+        int W = G.W, H = G.H, x1 = Math.min(a.x, e.x) + 1, y0 = Math.max(a.y, e.y) - 1, y1 = Math.min(a.y, e.y) + 1;
+        for (int x = Math.max(a.x, e.x) - 1; x <= x1; x++) {
+            if (x < 0 || x >= W) continue;
+            for (int y = y0; y <= y1; y++) {
+                if (y < 0 || y >= H || x == a.x && y == a.y || x == e.x && y == e.y) continue;
+                if ((mem[x + y * W] & (Sym.WALL | Sym.DIRT)) == 0) return true;
+            }
+        }
+        return false;
+    }
 
     /** Cfg.FACE_HOLD: hold at Chebyshev 2 instead of stepping into contact with nearestEnemy (see Cfg). */
     static boolean faceHold() {

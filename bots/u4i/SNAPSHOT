@@ -1,0 +1,6 @@
+name=u4i
+source=bots/ratbot
+source_sha=92599bf43d77
+commit=58e7702
+created=2026-10-31 20:35 PDT
+change=FACE_REACH: faceEnemy passes over an enemy at Chebyshev 2 that no open tile beside both of us lets reach us in one move (u3v recipe otherwise)

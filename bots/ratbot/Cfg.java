@@ -68,6 +68,11 @@ public final class Cfg {
     public static final boolean TRAP_SPAWN_FIRST = false;
     /** Keep enemies within two tiles inside our cone (anti-ratnap) instead of moving. */
     public static final boolean FACE_ENEMY = true;
+    /** faceEnemy passes over an enemy at Chebyshev 2 when no tile beside both of us is open (known wall or dirt):
+     *  it cannot get next to us in one move, so facing it buys nothing. u3z's 96 field games: 9460 of 13612 'f'
+     *  turns in wins and 4090 of 9073 in losses faced such an enemy (RUN 5918 1337, rose 5905 678, fullofsecrets 5923
+     *  554); in dh1's pipes game two 'f' rats facing enemies through the pipe wall held carriers 100-150 rounds. */
+    public static final boolean FACE_REACH = false;
     /** Scored combat movement (Micro) for babies at war. */
     /** War role split: 0 everyone fights, 1 gatherers ignore non-adjacent enemies, 2 and never freeze to face. */
     public static final int WAR_GATHER = 2;

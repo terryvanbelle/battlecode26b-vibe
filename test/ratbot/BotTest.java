@@ -589,6 +589,33 @@ public class BotTest {
      *  the rat at (2,5) has not seen. Toward (12,5) the search goes east through the strip; with (3,5) held (an ally
      *  stuck there) it goes out west and round. A held tile beside the target is not kept out; it outlasts a re-sense
      *  and expires after FLOW_HELD rounds. Both search directions. */
+    /** FACE_REACH's test: an enemy at Chebyshev 2 reaches us in one move only through an open tile beside both of us
+     *  (unknown counts as open; walls and dirt block; off-map tiles don't count). */
+    static void testFaceReach() throws GameActionException {
+        reset(); W = 20; H = 12; install();
+        MapLocation a = new MapLocation(5, 5), e = new MapLocation(7, 5);
+        boolean open = Baby.reach1(a, e);
+        Sym.record(6, 4, true, false, false); Sym.record(6, 5, true, false, false);
+        boolean one = Baby.reach1(a, e);
+        Sym.record(6, 6, false, true, false);
+        boolean shut = !Baby.reach1(a, e) && !Baby.reach1(e, a);
+        Sym.record(6, 6, false, false, false);
+        boolean reopened = Baby.reach1(a, e);
+        check(open && one && shut && reopened, "face reach: a wall line with a dirt gap is shut, an open gap is not ("
+              + open + ", " + one + ", " + shut + ", " + reopened + ")");
+        Sym.record(6, 6, true, false, false);
+        boolean diag = !Baby.reach1(a, new MapLocation(7, 6)) && !Baby.reach1(a, new MapLocation(7, 7))
+                && Baby.reach1(a, new MapLocation(5, 7)) && Baby.reach1(a, new MapLocation(6, 7));
+        reset(); W = 20; H = 12; install();
+        MapLocation c = new MapLocation(0, 5), f = new MapLocation(0, 7);
+        Sym.record(0, 6, true, false, false);
+        boolean edge = Baby.reach1(c, f);
+        Sym.record(1, 6, true, false, false);
+        edge = edge && !Baby.reach1(c, f) && !Baby.reach1(f, c);
+        check(diag && edge, "face reach: diagonal offsets use their shared tiles; the map edge is not a way round ("
+              + diag + ", " + edge + ")");
+    }
+
     static void testFlowHeld() throws GameActionException {
         for (int rv = 0; rv < 2; rv++) {
             reset(); W = 20; H = 12; install();
@@ -3363,6 +3390,7 @@ public class BotTest {
         testFlowProgress();
         testFlowCache();
         testFlowHeld();
+        testFaceReach();
         testFlowRev();
         testFlowFast();
         testFlowW();
