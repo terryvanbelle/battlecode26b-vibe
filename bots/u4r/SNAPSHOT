@@ -4,3 +4,4 @@ source_sha=9ec3183a5fae
 commit=942c1a4
 created=2026-10-31 23:50 PDT
 change=u4e + SEALED 30: no chase of cheese in a sealed pocket (a flood fill from the pile over tiles not known to be walls runs out within 30 tiles without reaching us), the fill run at the end of the turn above SENSE2_LEFT + 500 bytecodes
+fix=2026-11-01 00:25 PDT: the seal arrays are allocated after the bytecode-reserve check (no effect on the kr1 tiny games, recheck kr2)

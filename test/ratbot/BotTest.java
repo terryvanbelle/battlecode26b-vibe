@@ -2138,6 +2138,9 @@ public class BotTest {
         Seal.fakeLeft = Seal.RESERVE - 1;
         Sym.mem[G.idx(13, 13)] &= ~Sym.SEAL;
         check(!Seal.sealed(new MapLocation(13, 13)) && Seal.fills == fills + 1, "seal: no fill starts short of bytecodes");
+        sealReset(); Seal.fakeLeft = Seal.RESERVE - 1;
+        check(!Seal.sealed(new MapLocation(13, 13)) && Seal.seen == null, "seal: no arrays are allocated short of bytecodes");
+        Seal.fakeLeft = -1;
         // SEAL_SEEN: only seen tiles carry the fill; the ring is seen, the room's inside not yet
         reset(); W = 20; H = 20; install();
         me = new MapLocation(15, 15); G.startTurn();

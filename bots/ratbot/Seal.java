@@ -88,7 +88,6 @@ final class Seal {
     static int fill(int s) {
         int[] mem = Sym.mem;
         int W = G.W, H = G.H;
-        if (seen == null) { seen = new int[W * H]; queue = new int[cap + 1]; openT = new int[CACHE]; openR = new int[CACHE]; }
         // one fill a turn once one has paused (a second would throw away its queue)
         if (pendRound == G.round) return -1;
         int h, t, st;
@@ -96,6 +95,8 @@ final class Seal {
         if (pend == s + 1) { h = pendH; t = pendT; st = stamp; leak = pendLeak; }
         else {
             if (left() < RESERVE) return -1;
+            // allocated after the check: the engine charges an array's length in one go, past the limit
+            if (seen == null) { seen = new int[W * H]; queue = new int[cap + 1]; openT = new int[CACHE]; openR = new int[CACHE]; }
             fills++;
             st = ++stamp;
             seen[s] = st; queue[0] = s;
