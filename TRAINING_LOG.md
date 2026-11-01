@@ -4458,3 +4458,12 @@
     0/12 (Xzibit), mincemeat 0/8 (Icarus).
   - Nearly always lost: DefaultMedium 1/16, arrows 1/16, learn_your_lesson 2/18.
   - u3z broke the averystrangespace run in block 2: 5912 A vs YokoOno, won at r2000 on points.
+- 18:01: **u3z block 2** (v4 set 2, 5908-5923) vs u3v's set-2 games: 48 cells, 41 alike, D 7 (+5 -2), net +3,
+  t 1.13. Gains: AdamTan12_Icarus averystrangespace A and B, YokoOno Hike B and averystrangespace A,
+  run_away10 ratsareants B. Losses: spsquared jail B, collegejunior RUN A.
+  - Pooled with block 1: 96 cells, D 15 (+10 -5), net +5, t 1.29. That is between the block-2 bars (reject at
+    t <= 1, accept at t >= 2), so u3z goes to block 3 on v4 set 3.
+  - u3v has no set-3 games yet, so I resubmitted it as the reference (#143) and queued its 16 set-3 scrims.
+    u3z block 3 follows, then u4a and u4b. The set-3 reference serves their block 3s as well.
+  - Three of the five gains are on averystrangespace, the map we had lost 0/20 to the in-band pair. PEACE (we
+    never end cooperation) fits it: long truces there are decided on points.
