@@ -1,0 +1,6 @@
+name=u4s
+source=bots/ratbot
+source_sha=83a2bd846378
+commit=af65f1e
+created=2026-10-31 23:48 PDT
+change=u4e + STALL_CAT 100 (u3q rebased on u4e): during cooperation an attacker that stayed within Chebyshev 3 of one tile for 100 rounds hunts cats (cat in view, last known, else the centre tile on its side)
