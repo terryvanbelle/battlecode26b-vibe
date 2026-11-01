@@ -4706,3 +4706,10 @@
   - References: u4e's own set-1 games (6021-6022, 6025-6026, 6039-6042, 6058-6061, 6077-6080) and set-2 games (the block above). These are its accepting sets, but it was crowned at net 0 with 92 of 94 cells the same as u3v's, so the winner's curse is negligible there. Set 3 needs a u4e reference before any candidate is scored on it.
   - Queued candidates were built on u3v without PLUG_FAST, so each is rebased on u4e under a new codename before it is submitted. PLUG_FAST changed no local screen cell (pf2 D 0), so their screens carry over.
   - First up: u4g's DELIVER_ANCHOR 3 on u4e, then u4j's PEACE + MINE_ANY + MINE_TIES on u4e.
+- 21:27: **u4k submitted** (replica #146, u4g's DELIVER_ANCHOR 3 rebased on u4e). Block 1 runs on v4 set 1, against u4e's set-1 games (6021-6022, 6025-6026, 6039-6042, 6058-6061, 6077-6080). The hourly limit holds all 16 scrims in the queue, so the drain loop sends them. **u4l** (u4j rebased on u4e) is built and goes next. Then u4c, u4h, u4a, u4b, u4i (if fq2 passes) and u4f, each rebased on u4e first.
+- 21:27: **hx1** (u4a and u4j vs araid on averystrangespace, both seats): all four games are wins, as before.
+  - u4a (CHIRAL_SYM): xfer 4480 (A) and 4520 (B), against u3v's 4480 and 4450. Cat damage 0, as before.
+  - u4j (PEACE + MINE_ANY): xfer 5905 (A, cat damage 3806) and 4465 (B).
+  - The mechanism works. In u4a's seat-B game every baby has sym=1 (rotation) from r1, and all 12 attackers aim at (3,3). u3v's attackers split between the wrong mirrors (3,56) and (56,3) under sym=7.
+  - The outcome does not change. All 12 attackers stay in our quadrant (x 36-59, y 33-59), with stall counters at 300-1100 by r400-1200: their reverse searches across the 60x60 dirt maze never finish inside FLOW_REV_TURNS 60.
+  - So the map's limit is search bytecodes, not symmetry. BitFlow is no cheaper on a full 60x60 front: a wave costs ~100 bytecodes for each row in range, and the field needs ~150+ waves here, ~1M bytecodes against A*'s ~0.9M. Only shared work (a king-computed route, posted as waypoints) would change the order of magnitude. Not built: the census puts failed searches on one map of the eight.

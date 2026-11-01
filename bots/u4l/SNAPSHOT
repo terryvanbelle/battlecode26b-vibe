@@ -1,0 +1,6 @@
+name=u4l
+source=bots/ratbot
+source_sha=dd2f56bf8eb0
+commit=e32c5f7
+created=2026-10-31 21:23 PDT
+change=u4e + PEACE + MINE_ANY + MINE_TIES (u4j rebased on the accepted u4e): we never end cooperation, and gatherers spread over every known mine, either half and the axis

@@ -1,0 +1,6 @@
+name=u4k
+source=bots/ratbot
+source_sha=12f3fff1184f
+commit=e32c5f7
+created=2026-10-31 21:23 PDT
+change=u4e + DELIVER_ANCHOR 3 (u4g rebased on the accepted u4e): a delivery targets the king tile it anchored on until the king is more than 3 from it
