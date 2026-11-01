@@ -4690,7 +4690,7 @@
   - Losses: araid arrows A, cheesefarm A, evileye B, starvation A, tiny A.
   - Xfer 295.4k to 262.5k (-11%; peace games end at the last cat). Truce broken by u4j in 0 of 48 (araid median r36, abrk r30).
   - **Queue re-ordered** after u4e: u4g (promised next; a basics repair), u4j, u4c, u4h, u4a, u4b, u4i (if fq2 passes), u4f. u4j moves up because both of its parts already have field evidence (pooled t 1.46 and 1.41 over 144 and 176 cells), which no other queued candidate has. u4f (screen D 0) goes last.
-- 21:25: Stall census (flowfail.py, u4i's 16 fq1 games): 11% of baby-turns are stalled 50+ turns (79.9k of 720.8k). Half of those come from a rat whose Flow search failed (37.1k).
+- 21:17: Stall census (flowfail.py, u4i's 16 fq1 games): 11% of baby-turns are stalled 50+ turns (79.9k of 720.8k). Half of those come from a rat whose Flow search failed (37.1k).
   - averystrangespace: 24-27%, nearly all attackers with failed searches (14.5k and 16.5k). RUN: 2.5-4.4%, attackers. Both point at a target nobody can reach.
   - EscapeTheNight: 21-22% stalled, nearly all 'M' (heading to a mine), but with searches that succeeded (~550 with a failure). rose: 10-12%, M and a.
   - So a "BitFlow when A* fails" fallback would mostly move pitted attackers. It would not fix EscapeTheNight's mine queue, nor the one-known-mine economy on averystrangespace. Not built for now. The census is the baseline if it comes back.
