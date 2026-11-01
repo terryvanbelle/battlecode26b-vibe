@@ -1,0 +1,6 @@
+name=u5l
+source=bots/ratbot
+source_sha=da034b8b1a46
+commit=82fe444
+created=2026-11-01 14:12 PST
+change=2026-11-01 14:11 PST: u4s + FORM_FROM 600 (no second king before round 600; s5y's switch, never alone on the replica)
