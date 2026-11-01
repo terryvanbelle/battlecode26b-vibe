@@ -4541,3 +4541,20 @@
   - **u4f** = u3v + MINE_MIRROR (s4e's switch, never on the replica alone): with one symmetry left the king lists the
     our-half twin of every listed mine. Diag mm2 (u4f and u3v vs araid on those five maps, both seats, replays
     kept) checks that the king lists the hidden twins earlier and that our picks there rise.
+- 19:12: **u4f's diag mm2** (u4f and u3v vs araid on clockwisdom, fullofsecrets, RUN, learn_your_lesson and rose,
+  both seats; mineknow.py on the kings' ml= lists). The mechanism fires. On RUN as B the king listed (22,11) at
+  r112 and (4,5) at r323, home mines no rat of ours ever saw, and gatherers went there (520 and 447 rat-rounds).
+  On fullofsecrets as A it listed (4,5) at r321 (362 rat-rounds). u3v never listed any of these.
+  - Six of ten pairs are the same game: araid's king falls early on clockwisdom, so locally there is little of
+    the mid-game theft seen in the field. RUN B transferred 11039 to 9803, fullofsecrets A 788 to 600 (still
+    lost), and RUN A was won by a king kill at r853 instead of on points. No outcome flipped. Screen mm3 is
+    running.
+  - jail (5766, our A side): the enemy reached our home mine (52,35), 26 tiles east of our king on open ground,
+    at r58. Our rats spent 7 turns east of x 40, all exploring in r0-99 (max x 47), and none after that. The seekers
+    and scouts never went back east. This is an exploration gap MINE_MIRROR cannot close: no rat saw the twin
+    either. It is next on the list.
+  - **VM disk:** I deleted the 4 mm2 dump-cache dirs (50 MB, regenerable from the kept replays) and 189 old dump
+    tables (*.tsv other than cells.tsv, 529 MB) inside runs/ dirs more than 48 h old. Those are our own local-game
+    dumps from the s- and early t-series (mc_s5k, mc_s5m, mc_s5p, mr1, rv1, pb1, ...); the list is in
+    ~/diag26b/runs_tsv_deleted.txt. Results files, cells and replays stay. VM free went from 316 MB to 905 MB.
+    /srv/bc26-galaxy (the replica's storage, not ours to prune) holds 7.0 GB.
