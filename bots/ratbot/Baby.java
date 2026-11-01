@@ -1292,13 +1292,15 @@ public final class Baby {
     }
 
     static int homeBest, homeStall, homeRound = -10, homeHeld;
+    /** Cfg.TRAIL_GAP (a field so tests can set it). */
+    static int trailGap = Cfg.TRAIL_GAP;
     static boolean homing;
 
     /** Cfg.TRAIL: after FLOW_STALL turns of delivery without getting closer to the nearest king (a roaming king does
      *  not reset the count, unlike Nav's stall), walk the trail back until it ends; while it is held by robots, wait
      *  FLOW_HOLD turns, then let Nav route around them. True when this took the turn. */
     static boolean homeLeg(MapLocation k) throws GameActionException {
-        if (homeRound != G.round - 1) { homing = false; homeBest = Integer.MAX_VALUE; homeStall = 0; homeHeld = 0; }
+        if (trailGap > 0 ? G.round - homeRound > trailGap : homeRound != G.round - 1) { homing = false; homeBest = Integer.MAX_VALUE; homeStall = 0; homeHeld = 0; }
         homeRound = G.round;
         int c = G.cheb(G.me, k);
         if (c < homeBest) { homeBest = c; homeStall = 0; } else homeStall++;

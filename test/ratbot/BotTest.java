@@ -23,6 +23,8 @@ public class BotTest {
     static Direction facing = Direction.NORTH;
     static int health = 100;
     static int round = 1, global = 1000, raw = 0, moveCd = 0, turnCd = 0, actCd = 0;
+    /** Extra move cooldown a step (carried cheese). */
+    static int moveExtra = 0;
     static UnitType type = UnitType.BABY_RAT;
     static int ratCost = 10;
     static List<MapLocation> built = new ArrayList<>();
@@ -51,7 +53,7 @@ public class BotTest {
         canPromote = promoted = false;
         walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null; carrying = null;
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
-        moveCd = turnCd = actCd = 0; type = UnitType.BABY_RAT; digsDone = 0; dirtStock = 0; ratCost = 10; built.clear();
+        moveCd = turnCd = actCd = moveExtra = 0; type = UnitType.BABY_RAT; digsDone = 0; dirtStock = 0; ratCost = 10; built.clear();
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0; Sym.listDone = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
@@ -114,7 +116,7 @@ public class BotTest {
                         Direction d = (Direction) a[0];
                         MapLocation t = me.add(d);
                         if (moveCd >= 10 || !passable(t) || robots.containsKey(t)) throw new GameActionException(GameActionExceptionType.CANT_MOVE_THERE, "x");
-                        moveCd += d == facing ? 10 : 18;
+                        moveCd += (d == facing ? 10 : 18) + moveExtra;
                         me = t; return null;
                     }
                     case "canRemoveDirt": {
@@ -1345,12 +1347,23 @@ public class BotTest {
         int with = homeRun(true), without = homeRun(false);
         check(with > 0 && with <= 40, "trail: a stalled carrier walks its trail back to a king behind a wall (" + with + " turns)");
         check(with > 0 && (without < 0 || with <= without), "trail: no slower than nav alone (" + with + " vs " + without + ")");
+        int gapped = homeRun(true, 6, 12), ungapped = homeRun(true, 6, 0), navOnly = homeRun(false, 6, 0);
+        check(gapped > 0 && (navOnly < 0 || gapped < navOnly), "trail gap: a slowed carrier skipping rounds walks its trail home ("
+            + gapped + " turns, nav alone " + navOnly + ")");
+        check(ungapped == navOnly, "trail gap: with TRAIL_GAP 0 the skipped rounds keep the trail from firing (" + ungapped + ")");
     }
 
     /** Turns until a carrier at (16,5) is in transfer reach of a king at (5,5) behind a wall at x=10 (y 0..16), having
      *  walked out round the wall's end; -1 if not within 150. With trail, Baby.homeLeg takes the turns it wants. */
-    static int homeRun(boolean trail) throws GameActionException {
+    static int homeRun(boolean trail) throws GameActionException { return homeRun(trail, 0, -1); }
+
+    /** homeRun with extra move cooldown a step (a carrier's cheese) and, for gap >= 0, the bot's gating: the move
+     *  decision only on movement-ready rounds, Baby.trailGap = gap. */
+    static int homeRun(boolean trail, int extra, int gap) throws GameActionException {
         reset(); W = 30; H = 20; install();
+        moveExtra = extra;
+        int keep = Baby.trailGap;
+        if (gap >= 0) Baby.trailGap = gap;
         for (int y = 0; y <= 16; y++) walls.add(p(10, y));
         MapLocation k = p(5, 5);
         for (int x = 4; x <= 6; x++)
@@ -1368,10 +1381,11 @@ public class BotTest {
             G.startTurn();
             for (MapInfo mi : G.rc.senseNearbyMapInfos()) Sym.record(mi.getMapLocation().x, mi.getMapLocation().y, mi.isWall(), mi.isDirt(), false);
             Trail.record();
-            if (Baby.inTransferReach(me, k)) return i;
-            if (!(trail && Baby.homeLeg(k))) Nav.goTo(k);
+            if (Baby.inTransferReach(me, k)) { Baby.trailGap = keep; return i; }
+            if (gap < 0 || moveCd < 10) { if (!(trail && Baby.homeLeg(k))) Nav.goTo(k); }
             Flow.work(0);
         }
+        Baby.trailGap = keep;
         return -1;
     }
 

@@ -437,6 +437,12 @@ public final class Cfg {
      *  rat's own trail of walked tiles from its spawn instead (Trail). Flow paths to a pocketed king were rarely of
      *  use: on fullofsecrets 131 of 490 searches failed, and no path was followed to its end in 3 games. */
     public static final boolean TRAIL = false;
+    /** TRAIL's stall count and homing carry over a gap of up to TRAIL_GAP rounds between delivery turns (0: only from
+     *  the round before). The move decision runs on movement-ready rounds only, and carried cheese slows moves 1% a
+     *  unit, so from 20 cheese on a carrier skips rounds; with 0 the count restarted at each skip and never reached
+     *  FLOW_STALL, so TRAIL never fired (pb4 on clockwisdom: carrier 11605 walked from 47 to 128 steps out, its count
+     *  0-1 every turn, with a 46-tile trail home). */
+    public static final int TRAIL_GAP = 0;
     /** A rat already carrying cheese takes no pile that would lift it above this (0 = no cap). */
     public static final int CARRY_MAX = 0;
     /** An attacker takes no pile that would lift it above this, empty-handed or not (0 = off). Attackers run the
