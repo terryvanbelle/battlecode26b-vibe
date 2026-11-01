@@ -4713,3 +4713,22 @@
   - The mechanism works. In u4a's seat-B game every baby has sym=1 (rotation) from r1, and all 12 attackers aim at (3,3). u3v's attackers split between the wrong mirrors (3,56) and (56,3) under sym=7.
   - The outcome does not change. All 12 attackers stay in our quadrant (x 36-59, y 33-59), with stall counters at 300-1100 by r400-1200: their reverse searches across the 60x60 dirt maze never finish inside FLOW_REV_TURNS 60.
   - So the map's limit is search bytecodes, not symmetry. BitFlow is no cheaper on a full 60x60 front: a wave costs ~100 bytecodes for each row in range, and the field needs ~150+ waves here, ~1M bytecodes against A*'s ~0.9M. Only shared work (a king-computed route, posted as waypoints) would change the order of magnitude. Not built: the census puts failed searches on one map of the eight.
+
+## 2026-10-31 21:42 PDT: u4e's field losses: starvation after the army falls, and enemy rat traps
+
+- 21:42: **How u4e loses** (its 32 set-1/2 field matches, 96 games, 46 won). Each replay was dumped to a temporary cache and deleted after use (scripts kk_batch.sh/fx_batch.sh on the VM; the dumps are not kept).
+  - Ends: 43 losses by king kill, 7 on points.
+  - Points losses: 4 of the 7 are on averystrangespace (YokoOno A/B, Icarus A/B), all in peace to r2000. Against Icarus (6131/6132) we had 2 kings to 1 and even deliveries (4480/4415, 4450/4650). We lost on cat damage alone, 0 to 420 and 0 to 87: in cooperation cat damage is half the score, and 100 damage would have won either game. u3z (PEACE) won 5921 there with cat damage 587 to 87. So u4l covers this class.
+  - kingkill.py on the 43 king-kill losses: our last king starved in 23, was bitten to death in 14, thrown into in 4, scratched in 2. Of the 23 starvations, 17 have 0-3 of our babies alive 30 rounds before: the army was killed first. Only 6 (fullofsecrets x2, Stash, clockwisdom x2, Hike) starve with 5-17 babies alive.
+  - So most losses are combat losses, whatever the final cause.
+- 21:42: **Combat census** (fightx.py, rounds 1-300, per game; W 46, L 50):
+  - Enemy rat traps: they lay 13.5 a game in our wins and 19.0 in our losses, and our rats fire 12.1 and 17.6 of them (about 92%). We lay 0 (BABY_RAT_TRAPS is off in u4e). Each trap does 50 damage and stuns 30 rounds.
+  - By opponent: AdamTan12_Finals lays 46.2 and we fire 44.8; VarunVejalla 31.7 / 27.0; spsquared 20.1 / 18.8; Icarus 11.9 / 11.2; Xzibit 10.3 / 8.6; YokoOno 8.0 / 6.5; TheComplexMerlin 2.9 / 2.9; collegejunior 0.
+  - Throws: we throw 23.6 (W) and 33.7 (L) times, they throw 15.7 and 32.6. Our throws hit a robot or wall early 5.7 and 14.4 times, theirs 14.4 and 19.0: their throws strike much more often.
+  - trapwhere.py (6 dumped matches, 11 losses): 49.0 traps fired on us a lost game. 22.4 fired the round they were laid and 9.7 a round later: reactive traps, laid on a front tile next to the placer as our rat steps in. 94% fired in our rat's own move; 4% on landing from a throw.
+  - The victims were mostly fighting: attack 5.6, war 5.9, face 5.4, carry-aim 4.0, flank 3.2 a game; gatherers' errands about 6.
+  - **Dodging has been tried five times** and lost each time: RISK_FRESH (t0b), RISK_IN_FIGHT (s8h), FACE_HOLD (u1l), WOUNDED_HP (u1b), RISK_ADAPT (u0u). A detour round fresh enemy fronts costs fights more than it saves, and holding at Chebyshev 2 gives the trapper time.
+  - So the lever is laying our own: u4b, u3d's reactive set (u3d on u2g passed replica block 1, +1, t +0.58).
+- **Queue re-ordered**: u4k (running), u4l, u4b, u4h, u4a, u4i (if fq2 passes), u4c, u4f.
+  - u4b moves up on this census.
+  - u4c moves down: its design case was falsified (hu2).
