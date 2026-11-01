@@ -1,0 +1,6 @@
+name=u4w
+source=bots/ratbot
+source_sha=639b2075dd61
+commit=3f465af
+created=2026-11-01 01:18 PST
+change=2026-11-01 01:18 PST: u4t + AIM_LEFT 3000 (aimCarry stops its search at 3000 bytecodes left and takes its best throw so far; u4t's Stash A overruns)

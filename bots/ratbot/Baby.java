@@ -35,6 +35,8 @@ public final class Baby {
     static int catSeenRound = -100;
     /** CAT_REACH: no cat branch before this round; reachTurns is Cfg.CAT_REACH (a field, so tests can set it). */
     static int catBanUntil = -1, reachTurns = Cfg.CAT_REACH;
+    /** AIM_LEFT: aimCarry's bytecode floor (a field, so tests can set it). */
+    static int aimLeft = Cfg.AIM_LEFT;
     static MapLocation lastCatTarget;
 
     // mines this rat has sensed (to report to kings)
@@ -612,6 +614,7 @@ public final class Baby {
         int best = Integer.MIN_VALUE;
         Direction bm = null, bt = null;
         for (int j = 0; j < 9; j++) {
+            if (aimLeft > 0 && Flow.left() <= aimLeft) break;
             int mx = j % 3 - 1, my = j / 3 - 1;
             boolean stay = mx == 0 && my == 0;
             if (!stay && !canMove) continue;

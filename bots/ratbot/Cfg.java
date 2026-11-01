@@ -389,6 +389,10 @@ public final class Cfg {
      *  AIM_MIN (84 a baby, 126 a king) and throws in the same turn when it can: our throws hit enemy robots 11 times to
      *  abcdezyxwv's 57 (r <= 400, 4 matches), because our carriers never lined a throw up. */
     public static final boolean CARRY_AIM = false;
+    /** The carry aim stops its search once AIM_LEFT or fewer bytecodes are left this turn and takes the best throw found
+     *  so far. Stash (local u4t vs araid, seed 0, A): a carrier's aimCarry spent 6623 of its last 7000 bytecodes, found no
+     *  throw, and the turn ran over in the pick-up stage that came after (r136 and r317, OVS 2021/2122). */
+    public static final int AIM_LEFT = 0;
     public static final int AIM_MIN = 84;
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */

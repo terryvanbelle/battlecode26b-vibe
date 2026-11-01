@@ -1808,6 +1808,15 @@ public class BotTest {
         Baby.seen = new RobotInfo[]{e};
         check(Baby.aimCarry() && me.equals(new MapLocation(5, 6)) && thrown == Direction.NORTH,
               "carry aim: step to the point-blank line and throw (" + me + " " + thrown + ")");
+        // AIM_LEFT: with the bytecodes at the floor the search stops before any step; no move, no throw
+        reset(); install();
+        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, false, false, false);
+        robots.put(e.location, e);
+        Baby.seen = new RobotInfo[]{e};
+        Baby.aimLeft = Integer.MAX_VALUE;
+        check(!Baby.aimCarry() && me.equals(new MapLocation(5, 5)) && thrown == null,
+              "carry aim: at the bytecode floor no search (" + me + " " + thrown + ")");
+        Baby.aimLeft = Cfg.AIM_LEFT;
         // action not ready: take the aim and keep the rat
         reset(); install();
         for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, false, false, false);
