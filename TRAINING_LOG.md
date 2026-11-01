@@ -4732,3 +4732,21 @@
 - **Queue re-ordered**: u4k (running), u4l, u4b, u4h, u4a, u4i (if fq2 passes), u4c, u4f.
   - u4b moves up on this census.
   - u4c moves down: its design case was falsified (hu2).
+
+## 2026-10-31 21:59 PDT: u4i passes its screen (u4n), Merlin's throws, and enemy traps can't be seen
+
+- 21:59: **fq2** (u4i = u3v + FACE_REACH, kvs cells, control kvs = u3v): 44 distinct cells, 30 wins to 33 (net +3), xfer 295.4k to 289.5k (-2%), 0 exceptions. Pass (the screen rejects only at t <= -1.5). **u4n** is u4i rebased on u4e (the u4e recipe + FACE_REACH; only newer off switches differ).
+- Queue: u4k (block 1 running), u4l, u4m, u4h, u4a, u4n, u4c, u4f.
+- 21:59: **TheComplexMerlin's throws.** Merlin is 4-8 against u4e, inside the 25-75% band.
+  - 3 of its 8 wins are king kills by throws: thunderdome in both seats (6079 r139, 6080 r120) and knifefight (6133 r90). The fourth throw kill in u4e's 96 games is AdamTan12_Finals on tiny (6025 r133).
+  - 6079 thunderdome: 13 throw hits on our king, r101-139, all 42 damage, all with our own rats as the ammunition. Example: Merlin's rat grabbed our rat 12359 two tiles from our king at r95, carried it 6 rounds and threw it at r101. Another Merlin rat grabbed the same rat at r104 and threw it again at r106, killing it.
+  - Engine: a throw hits for 10 + 4 x (2 x remaining + 1 on the first step), so 42 means a hit on the second tile. The thrower stands two tiles off the king's 3x3. The thrown rat takes the same 42.
+  - An enemy can grab our rat when our rat cannot see it, or when our rat has less health. Our king cannot run: its movement cooldown is 40 (a move every 4 rounds), and a carrier's is 15.
+  - This class has been attacked six ways: RESCUE (s8n/s8o/s8q), the carrier guard (u2y/u2z/u3a), AMMO_AWAY (s8y/s9v/u1v), GUARD_KING_R (s8d/s9w/u2w), BITE_CARRIER (s4i). All were rejected or parked, at |t| < 1 against the old panel.
+  - With 4 games of 96 at stake, a re-test cannot reach t 2 on its own. Not built now.
+- 21:59: **Can our rats see enemy traps being laid?** (trapcheese.py on u3z's 32 dumped field matches)
+  - The idea: a baby pays a trap's 20 cheese from its carried cheese first (InternalRobot.addCheese), and RobotInfo shows cheeseAmount, so a 20-cheese drop on an enemy rat would reveal a trap on one of its front tiles.
+  - Of the 2982 enemy traps with placer positions, 1184 (40%) came with a 20-cheese drop. 1746 (59%) were laid by placers carrying 0 cheese and paid from the bank, which shows nothing.
+  - 2673 of these traps fired on our rats (88%). In only 376 (14%) did the victim have the placer in its vision cone both one round before and at the lay, and only 117 of those were drop-20 traps.
+  - So inference from cheese would flag about 4% of the traps that hit us. Not built.
+  - The engine was also checked: traps are stored per team, so canPlaceRatTrap and canRemoveRatTrap reveal nothing about the enemy's traps.
