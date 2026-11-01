@@ -1,0 +1,6 @@
+name=u4c
+source=bots/ratbot
+source_sha=b993e7a76051
+commit=ee20fe1
+created=2026-10-31 17:44 PDT
+change=HUNGRY 300 (u3v + HUNGRY: any carrier delivers while the bank is under 300)

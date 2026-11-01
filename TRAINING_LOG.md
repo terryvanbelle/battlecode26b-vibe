@@ -4398,3 +4398,35 @@
   - Small-map wins: them 2, us 2, nobody 1.
   - So u2g broke the truce in 18 of 102 games (11 losses), not 24 of 99. The opponents' early reactive traps,
     not our bites, end most truces.
+- 17:45: hz1/hz2 head-to-heads vs u3v on 8 maps (DefaultMedium, DefaultSmall, Stash, arrows, canyoudig, cheesefarm,
+  evileye, keepout), both seats, with the u3v mirror (hz2) as the seat baseline. Seat A wins the mirror on
+  DefaultMedium, canyoudig and Stash; seat B wins the other five. A u3v clone scores 8 of 16 against it.
+  - u3z: 11 of 16, +4 -1 against the mirror's seat outcomes.
+  - u4a: 7 of 16, +1 -2.
+  - u4b: 10 of 16, +3 -1.
+  - None of them looks broken. These are 16 deterministic games each, a sanity check only; the replica decides.
+- clockwisdom. u3z's block-1 losses ended by king kill in 20 of 23 (kingkill.py): 9 by starvation, the rest
+  by bites, throws or a scratch.
+  - One starvation was clockwisdom A vs collegejunior (5795). The truce was never broken, and our king starved
+    at r930 with 19 babies alive and 2460 cheese in their paws. We had delivered 40 cheese in the whole game.
+  - On clockwisdom we deliver 0-40 a game on both seats in every replica game (4988/4989, 5575/5576,
+    5795/5796, 5073/5074), and 0-340 locally (ck1: u3v vs araid and the u3v mirror).
+  - The map is a spiral (mapbfs.py). By walking distance our nearest mines are (2,25) and (2,31), 59 and 65
+    steps away on the enemy's Euclidean half. The Euclidean home mines are 110-315 steps away.
+  - Symmetry stays ROT|HOR to r400 and beyond, since no rat sees the far half. The rushers flip between the two
+    king spots (2,49) and (56,49) every 10-30 rounds (trace1.py): the nearest by dist2 changes at x = 29, and
+    the bug walk along the ring wall carries them across it. Their flow searches stall, and they pick up cheese
+    they never bring home.
+  - The king lists no mine by r400; the gatherers explore toward far targets.
+  - Alive, 5795 A would have won on points: cat damage 20 to 0 is a 100% share, worth 0.5 of the score.
+- Starvation census (starvecarry.py) over 49 dumped field starvation losses (u3z, u3d, u2g sets). In 9 of them,
+  babies held 100+ raw cheese 60 rounds before the death, nearly all of it in attackers' paws: clockwisdom
+  2460, Hike 820 and 1245, uneasy_alliance 940 at R-100. The bank fell under 300 100-300 rounds before the death.
+- u4c pre-registered: u3v + HUNGRY 300. With this existing switch, any baby carrying cheese, attackers included,
+  delivers it while the bank is under 300.
+  - s3k's HUNGRY 150 was neutral in old self-play and never reached the field.
+  - Counter: bank and raw cheese at R-60 in starvation losses, and the 'H' share.
+  - Falsifier: screen t <= -1.5, or no delivery gain on clockwisdom.
+  - Instruments: hu1 (kvs's 48 cells, control kvs = u3v) and hu2 (clockwisdom vs araid and u3v, both seats).
+  - The rusher flip itself is RUSH_STICK's class (u0b, u0p and u2f were neutral locally, never on the
+    replica). It is the next clockwisdom candidate if u4c leaves the rushers stuck.
