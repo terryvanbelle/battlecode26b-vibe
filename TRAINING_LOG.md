@@ -5095,3 +5095,14 @@
     - (4) t ≤ -1.5 rejects.
   - Kill if (1), (2) or (3) fails.
 - 08:27: **u4n (FACE_REACH) rejected at replica block 1** (#158; 7121-7124, 7135-7138, 7248-7255) vs u4e's set-1 refs: 48 cells, 45 alike, D 3 (+1 Finals tiny A; -2 Icarus uneasy_alliance A/B), net -1, t -0.58. u4y and u4n both lost both uneasy_alliance seats that u4e's reference won, so that cell may be a lucky reference rather than two regressions. **u4z (CHIRAL_SYM, symmetry breaking) submitted** (#159), block 1 on set 1, 16 scrims queued (waiter build/wait_u4zb1.sh, matches above 7255).
+- 08:30: **u5g (GLANCE_MEM 20) killed at the screen by falsifier (2), by a hair.** gl1 vs pf2: picks 37.41 per 100 rat-turns (bar 37.6; u4e 38.74). (1) passed: enemy grabs of our rats 3.355 per 1000 rat-turns (bar 3.38; u4e 3.562). (3) 0 overruns. The screen leaned positive: 44 cells, D 15 (+9 -6), net +3, t about +0.8, 35 wins of 48 to 33; delivered 281.0k (u4e 285.3k).
+  - **Method lesson: the cost bars were tighter than the noise.** Over four screens of near-neutral switches the picks rate ranged 37.4-38.7 (u5d 38.20, u5f 38.45, u5g 37.41) against u4e's 38.74. Any change re-rolls every game's chaos, so a -3% bar is about one run-to-run spread, and two candidates in a row (u5f, u5g) died on it with positive screens. From now on, set a cost bar outside the spread of past screens: picks ≥ 36.5 per 100 rat-turns (-6%), or name a mechanism-specific cost. Both kills stand; neither bar is moved after the fact.
+  - Next: two near-misses with independent mechanisms (u5f: cat-scratch turn-back, cat deaths -5%; u5g: end-of-turn glance, grabs -6%) may be combined (§3). The combination is pre-registered fresh as u5h.
+- 08:31: **pre-registration, u5h = u4e + CAT_BLIND + CAT_BLIND_DMG 20 + GLANCE_MEM 20** (u5f + u5g, two near-misses with independent triggers: a hidden scratch at the start of the turn, an unseen grabber at the end of it). Snapshot only.
+  - Inspiring evidence: as u5f and u5g (field u4e 96 games; set-3 mincemeat and whatsthecatdoin seen before this).
+  - Bars on the local screen (48 kvs cells, control pf2 = u4e), set outside the screen's spread:
+    - (1) mechanisms: not both of cat-caused deaths ≥ 1.538 per 1000 rat-turns and enemy grabs ≥ 3.562 per 1000 (u4e's values);
+    - (2) cost: picks ≥ 36.5 per 100 rat-turns;
+    - (3) overruns ≤ 3;
+    - (4) t ≤ -1.5 rejects.
+  - Kill if (1), (2) or (3) fails. If it passes, it goes to the replica queue by screen evidence.

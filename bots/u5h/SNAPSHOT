@@ -1,0 +1,6 @@
+name=u5h
+source=bots/ratbot
+source_sha=12dcb2c7bce3
+commit=54b5d2f
+created=2026-11-01 08:30 PST
+change=2026-11-01 08:30 PST: u4e + CAT_BLIND + CAT_BLIND_DMG 20 + GLANCE_MEM 20 (u5f + u5g)
