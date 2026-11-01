@@ -1,0 +1,6 @@
+name=u5g
+source=bots/ratbot
+source_sha=c7f9bd36592e
+commit=9f401af
+created=2026-11-01 07:43 PST
+change=2026-11-01 07:43 PST: u4e + GLANCE_MEM 20 (at war, a rat with no enemy near ends its turn facing back when an enemy was seen within 20 rounds)

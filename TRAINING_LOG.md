@@ -5086,3 +5086,11 @@
 - 06:49: **u4y (FLOW_HELD 20, basics repair) submitted** (#157), block 1 on v4 set 1, 16 scrims queued (waiter build/wait_u4yb1.sh, matches above 7026). Remaining queue: u4n, u4z, u4s, u5b, u4w; u5f if its screen passes.
 - 07:41: **u4y (FLOW_HELD 20) rejected at replica block 1** (#157; 7041-7044, 7061-7064, 7085-7088, 7103-7106) vs u4e's set-1 refs: 48 cells, 42 alike, D 6 (+1 -5), net -4, t -1.63. **u4n (FACE_REACH) submitted** (#158), block 1 on set 1, 16 scrims queued (waiter build/wait_u4nb1.sh, matches above 7106).
 - 07:41: **u5f (CAT_BLIND + CAT_BLIND_DMG 20) killed at the screen by falsifier (1), by a hair.** bl2 vs pf2: cat-caused rat deaths 1.462 per 1000 rat-turns, against a bar of 1.46 (u4e 1.538, u5e 1.366). (2) passed (picks 38.45 per 100 rat-turns, bar 37.6); 1 overrun. The screen leaned positive (44 cells, D 15 (+9 -6), t about +0.8; 37 wins of 48 to u4e's 33), but transfers fell 8% (270.0k to 292.8k). The bar was pre-registered, so it stands. Narrowing the trigger kept the picks but lost most of the cat-death cut. So most of u5e's cut came from turns after non-scratch hits: two-cat or pounce-adjacent situations, or simply rats that turned and so saw cats sooner. The cat-sensing area has two kills now. VM: runs/bl2/replays removed.
+- 07:41: **pre-registration, u5g = u4e + GLANCE_MEM 20** (an existing switch, never tried alone on the replica; snapshot only). At war, a rat ending its turn with no enemy known near spends its unused turn facing back, when an enemy rat was seen or heard within 20 rounds. Rats are grabbed from behind by grabbers they cannot see. History: s4g passed the s4d rush run (t +1.52, king kills 14 to 17); it reached the replica only bundled as s4j (with MAX_BABIES_WAR 30), rejected at t -0.33. Unlike u5e it turns at the END of the turn, so the next step turns back for free and pays no strafe cost.
+  - Inspiring cells: set-3 whatsthecatdoin (Merlin 6956/6957 g2: throws kill 36-41 of our rats), and the 03:34 throwing-war entry (thunderdome, knifefight, tiny).
+  - Bars on the local screen (48 kvs cells, control pf2 = u4e):
+    - (1) mechanism: enemy grabs of our rats per 1000 rat-turns ≤ 3.38 (u4e 3.562, -5%);
+    - (2) cost: picks per 100 rat-turns ≥ 37.6 (u4e 38.74);
+    - (3) overruns ≤ 3;
+    - (4) t ≤ -1.5 rejects.
+  - Kill if (1), (2) or (3) fails.
