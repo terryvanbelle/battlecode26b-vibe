@@ -4430,3 +4430,22 @@
   - Instruments: hu1 (kvs's 48 cells, control kvs = u3v) and hu2 (clockwisdom vs araid and u3v, both seats).
   - The rusher flip itself is RUSH_STICK's class (u0b, u0p and u2f were neutral locally, never on the
     replica). It is the next clockwisdom candidate if u4c leaves the rushers stuck.
+- 17:51: u4c's clockwisdom check (hu2: vs araid and u3v, both seats) is identical to u3v's ck1 games: xfer
+  0/100, 80/340, 0/340 and 0/340. Seat A starves at r795-810 in a truce that is never broken.
+  - The hungry mode does fire, from about r700, with 480 'H' turns a game. But the carriers hold 200-1680
+    cheese each, and every unit carried adds 1% to both the movement and the action cooldown
+    (InternalRobot.addMovementCooldownTurns / addActionCooldownTurns). A rat with 1320 cheese moves 14x
+    slower, and none of them gets home before the king dies.
+  - One gatherer had found the spiral's mines and carried 1680 from r150 on without getting home.
+  - **u4c's pre-registered falsifier is hit** (no delivery gain on clockwisdom). Its screen hu1 runs to the
+    end for the record only.
+- Probe pb3 = u3v + HUNGRY 300 + CARRY_MAX 100 + ATK_CARRY 25 on clockwisdom (cq1), to bound what carry caps can
+  do there. Seat B delivered 1080 vs u3v (u3v as B: 340) and 440 as B vs u3v A, but it lost seat B to araid
+  (araid A won r807). Every game still ended with a king starving at r807-952. Clockwisdom needs mine
+  finding along the spiral, not carry rules. Parked: it is about 1 game in 48 on the replica.
+- Field load census (loads.py, u3z block 1, 48 games):
+  - Attackers carry 205 cheese on average, and 19.4% of attack-move turns carry 300+ (4x cooldown on moves and
+    bites). Gatherers average 16.
+  - Games with a 300+ load: 9 of 25 wins, 6 of 23 losses. That is no loss signal, so attacker caps stay off.
+- Engine note: the carried-robot multiplier is cast `(int) 1.5` = 1 in both cooldown functions. Carrying a rat
+  adds no cooldown.
