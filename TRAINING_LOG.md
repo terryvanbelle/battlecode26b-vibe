@@ -4449,3 +4449,12 @@
   - Games with a 300+ load: 9 of 25 wins, 6 of 23 losses. That is no loss signal, so attacker caps stay off.
 - Engine note: the carried-robot multiplier is cast `(int) 1.5` = 1 in both cooldown functions. Carrying a rat
   adds no cooldown.
+- VM disk was down to 542 MB free (the replica's own storage on it grows with every match). I deleted the kept
+  replays of six finished local runs: kf1, ma2, sm1, ud1, kv1 and pl1, 195 files, about 177 MB. Their
+  results.jsonl files stay. The disk is now at 715 MB free. The dump cache (3.1 GB, 372 of 374 dumps referenced
+  by ~/diag26b lists) is untouched.
+- Map census vs the v4 panel's in-band teams, since match 4700 (replica match.json):
+  - Lost on both seats every time: averystrangespace 0/20 (Icarus, YokoOno), Stash 0/16 (YokoOno), starvation
+    0/12 (Xzibit), mincemeat 0/8 (Icarus).
+  - Nearly always lost: DefaultMedium 1/16, arrows 1/16, learn_your_lesson 2/18.
+  - u3z broke the averystrangespace run in block 2: 5912 A vs YokoOno, won at r2000 on points.
