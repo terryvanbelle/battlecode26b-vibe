@@ -1,0 +1,6 @@
+name=u4p
+source=bots/ratbot
+source_sha=6cd41de82b36
+commit=81a29af
+created=2026-10-31 22:48 PDT
+change=u4e + KING_FRONT 25: the king's home mine skips mines with front value under 25 (100 at our start, 0 on the bisector); dirtpassageway's centre mine (20,26), front 20, was where u4e's king was bitten to death
