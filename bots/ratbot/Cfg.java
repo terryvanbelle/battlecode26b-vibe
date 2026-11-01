@@ -368,6 +368,11 @@ public final class Cfg {
      *  was seen or heard within GLANCE_MEM rounds (0 = off). A rat is grabbed when it cannot see the grabber: on
      *  knifefight 32 of bestsofar's 61 grabs came from behind, from enemies we never saw. */
     public static final int GLANCE_MEM = 0;
+    /** A baby whose health fell since the end of its last turn, with no cat and no enemy in view, turns to face back
+     *  before it senses, so a hidden attacker drives this turn's decision (a gatherer flees the cat). Field losses
+     *  u4e: 61% of the cheese loaded babies lost to cats in starved losses went with babies that had no sight of the
+     *  cat on any of their last 3 turns, many scratched at dist2 1-2 from behind. */
+    public static final boolean CAT_BLIND = false;
     /** Bite cheese (c = k*k gives +k damage), only when it makes the bite a kill: a king pays up to KING_BITE_MAX
      *  above KING_BITE_FLOOR, a baby up to FINISH_K*FINISH_K above FINISH_FLOOR. */
     public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;

@@ -66,6 +66,7 @@ public final class Baby {
         Debug.mark(1);
         sense();
         if (Cfg.SYM_MINELIST && Flow.left() > Cfg.BC_OPTIONAL) Sym.listCheck(Comms.mines, Comms.numMines, false);
+        if (Cfg.CAT_BLIND && rc.isTurningReady() && blindHurt(rc.getHealth(), hpEnd, rc.senseNearbyRobots(-1, null), G.them)) glance();
         RobotInfo[] robots = rc.senseNearbyRobots(-1, null);
         seen = robots;
         RobotInfo enemyKing = null, enemy = null;
@@ -204,9 +205,20 @@ public final class Baby {
         Debug.mark(9);
         if (Cfg.SEALED > 0) Seal.work();
         sense2();
+        hpEnd = rc.getHealth();
     }
 
     static int threatRound = -1000, glances;
+
+    /** Cfg.CAT_BLIND: our health at the end of our last turn (0 before the first). */
+    static int hpEnd;
+
+    /** Cfg.CAT_BLIND: health fell below last (the end of our last turn) and no cat or enemy robot is in view. */
+    static boolean blindHurt(int hp, int last, RobotInfo[] robots, Team them) {
+        if (hp >= last) return false;
+        for (RobotInfo r : robots) if (r.team == Team.NEUTRAL || r.team == them) return false;
+        return true;
+    }
 
     /** Whether a turn with no enemy known near should end facing back: an enemy was seen or heard within mem rounds. */
     static boolean glanceDue(int round, int threat, int mem) { return mem > 0 && round - threat <= mem; }

@@ -1,0 +1,6 @@
+name=u5e
+source=bots/ratbot
+source_sha=fe01d566dc5a
+commit=6d86e4a
+created=2026-11-01 05:36 PST
+change=2026-11-01 05:36 PST: u4e + CAT_BLIND (a hurt baby with no cat or enemy in view turns to face back before it senses)

@@ -5040,3 +5040,24 @@
   - Block 2: 48 cells, 46 alike, D 2 (+2 -0), t +1.41. Gains: AdamTan12_Finals dirtpassageway B and YokoOno Hike B.
   - Pooled with block 1: 94 cells, 86 alike, D 8 (+6 -2), net +4, t +1.41. That is between the block-2 bars (reject at t <= 1, accept at t >= 2), so u5a goes to block 3 on v4 set 3.
   - u4e has no set-3 games, so I'm resubmitting it as the reference and queuing its 16 set-3 scrims. u5a's block 3 follows. The set-3 reference will also serve later candidates' block 3s.
+- 05:20: **Cheese by carrier class** (carryrole.py over u4e's 32 replica matches, 96 games, full dumps). A rat's class comes from its decoded tags: FIGHT if the fight bit is set on half its turns or more, ATK if attack moves ('a') make up 30%+ of its other turns, GATHER otherwise.
+  - Wins (46): we pick 8307 a game. Attackers pick 30% of it and deliver 2%; 68% dies with them (cats 28%) and 28% is still held at the end. Gatherers deliver 86%, fighters 91%.
+  - Starved losses (23): we pick 4127. Attackers pick 40% and deliver 2% (died 54%, cats 29%, end 43%). Gatherers deliver 68% (died holding 25%, cats 16%). Fighters deliver 64% (died 33%, cats 25%).
+  - Other losses (27): gatherers deliver 90%, fighters 83%, and attackers pick only 15%.
+  - Reading. "We deliver 55% of what we pick" is mostly the attackers: a third of our pickups are attackers stripping piles they never bring home. The economy gap specific to starved losses is cats killing loaded fighters and gatherers. HUNGRY (u5a, now on the replica) makes attackers deliver when the bank is low, the starved-loss case. Cat avoidance has never been tried. The gatherer flee (GATHER_CAT_DIST) covers only role GATHER, and CAT_DEFEND's approach (a cat at our king draws every rat that sees it) runs first, whatever the load.
+  - Tool bug found and fixed. cflow.py booked deaths by the die row's x[1]. That is the killer's id: a cat's, or the rat itself on 'terminated'. The victim is x[5]. So cflow's "died" undercounted kills by cats and enemies, and its "rest" (14% in losses) was mostly those deaths. carryrole.py uses x[5]. Earlier cflow figures in this log carry the bias; the delivered and picked shares are unaffected.
+- 05:34: whether loaded cat victims saw the cat (catvis + catjoin, u4e's 96 field games, victims holding ≥ 50 cheese, their last 3 turns).
+  - Starved losses: 73 victims holding 19,586. 34 of them (12,043 cheese, 61%) never had the cat in their 90° vision cone. 46 did not see it on the first of the 3 turns. Many sat at dist2 1-2 from the cat (adjacent, behind us) for all 3 turns.
+  - By role in starved losses: gatherers 25 victims / 4,922 cheese, only 1,470 seen; fighters 26 / 4,033, 1,495 seen; attackers 22 / 10,631, 4,578 seen. Gatherers already flee a cat they see (GATHER_CAT_DIST), so most of their losses are to cats they never saw.
+  - Wins: 91 victims / 36,860, 56 seen. Most of it is attackers' hoards (31,140), which they rarely deliver.
+  - Concentration: one map dominates the unseen losses (clockwisdom, collegejunior: 6061 g0 4,680, 6060 g0 4,000, 6261 g0 900), then fullofsecrets (6021 g1, 6133 g1), Hike (6099 g0) and learn_your_lesson (6059 g1, 6116 g2).
+  - So a flee rule for seen cats would reach only about a third of the deliverable cheese lost (gatherers + fighters: ~270 per starved loss unseen, ~135 seen). The missing piece is sensing. Cat avoidance was never tried as a candidate (attempts.csv), so the area is open.
+- 05:35: pre-registration, u5e = u4e + CAT_BLIND (one change, switch off by default).
+  - Mechanism: a baby whose health fell since the end of its last turn, with no cat and no enemy robot in view, turns to face back before it senses. A hidden cat then drives this turn's decision: a gatherer flees it, a fighter takes it on as before. It costs the turn action, so the flee step is a strafe (cooldown 18, not 10).
+  - Inspiring cells (field, u4e): collegejunior clockwisdom (6059-6061, 6261), spsquared fullofsecrets (6021), Merlin fullofsecrets (6133), YokoOno Hike (6099), learn_your_lesson (6059, 6116).
+  - Budgets are rates on the local screen (run bl1, the 48 kvs cells, control pf2 = u4e):
+    - (1) mechanism: cat-caused rat deaths (pounce + crush + scratch) per 1000 rat-turns must fall from u4e's 1.538 to ≤ 1.46 (-5%). If not, kill.
+    - (2) cost: picks per 100 rat-turns must stay ≥ 37.6 (u4e 38.74, -3%). If not, kill.
+    - (3) overruns ≤ 3 (u4e 1).
+    - (4) the screen rejects at t ≤ -1.5, as always.
+  - Expected effect: small. The best case saves part of ~270 deliverable cheese per starved loss, and dropped cheese can be picked up again. It is cheap: one extra sense on hurt turns only.

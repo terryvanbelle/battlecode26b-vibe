@@ -2577,6 +2577,16 @@ public class BotTest {
     static void testGlance() {
         check(!Baby.glanceDue(500, 495, 0) && Baby.glanceDue(500, 495, 10) && Baby.glanceDue(500, 490, 10)
               && !Baby.glanceDue(500, 489, 10) && !Baby.glanceDue(500, -1000, 10), "glance: only within GLANCE_MEM rounds of a threat, never when 0");
+        {
+            MapLocation l = new MapLocation(5, 5);
+            RobotInfo[] none = new RobotInfo[0];
+            RobotInfo[] ally = {new RobotInfo(3, Team.A, UnitType.BABY_RAT, 100, l, Direction.NORTH, 0, 0, null)};
+            RobotInfo[] cat = {ally[0], new RobotInfo(4, Team.NEUTRAL, UnitType.CAT, 4000, l, Direction.NORTH, 0, 0, null)};
+            RobotInfo[] foe = {new RobotInfo(5, Team.B, UnitType.BABY_RAT, 100, l, Direction.NORTH, 0, 0, null)};
+            check(Baby.blindHurt(80, 100, none, Team.B) && Baby.blindHurt(80, 100, ally, Team.B), "blind: hurt with nothing hostile in view");
+            check(!Baby.blindHurt(100, 100, none, Team.B) && !Baby.blindHurt(100, 0, none, Team.B), "blind: not when unhurt or on the first turn");
+            check(!Baby.blindHurt(80, 100, cat, Team.B) && !Baby.blindHurt(80, 100, foe, Team.B), "blind: not with a cat or an enemy in view");
+        }
     }
 
     static void testFullLoad() {
