@@ -1,0 +1,6 @@
+name=u5j
+source=bots/ratbot
+source_sha=9c738936df1a
+commit=40bc0cf
+created=2026-11-01 11:46 PST
+change=2026-11-01 11:46 PST: u4s + MINE_MIRROR (u5b rebased on the new incumbent)

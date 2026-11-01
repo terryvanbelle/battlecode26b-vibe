@@ -1,0 +1,6 @@
+name=u5i
+source=bots/ratbot
+source_sha=efac1345ebfd
+commit=40bc0cf
+created=2026-11-01 11:45 PST
+change=2026-11-01 11:45 PST: u4s + CAT_BLIND + CAT_BLIND_DMG 20 + GLANCE_MEM 20 (u5h rebased on the new incumbent)

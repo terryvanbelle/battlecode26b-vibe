@@ -1,0 +1,6 @@
+name=u5k
+source=bots/ratbot
+source_sha=e831c4967b5f
+commit=40bc0cf
+created=2026-11-01 11:46 PST
+change=2026-11-01 11:46 PST: u4s + CAT_REACH 30 + AIM_LEFT 3000 (u4w rebased on the new incumbent)
