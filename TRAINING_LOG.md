@@ -5024,3 +5024,15 @@
   - Example: clockwisdom 6060 g0 has 10 home mines; 6 are idle at r700 with 1200-1740 each, and our 12 picks in 700 rounds at (35,17) leave 31 stale piles in its square. learn_your_lesson (17,36) sits in a walled room, so its 660-cheese mine-tile pile is out of reach.
   - Reading. Supply is not what binds us: unpicked cheese is plentiful in wins and losses alike. The gap is our pick rate per baby, 26 against their 45 per 100 baby-rounds in losses. Idle home mines don't separate wins from losses (we leave more of them idle in wins). Coverage tries (u0w SEEK_IDLE, u0x IDLE_SHIFT, rejected inside u1a at t -2.24) also argue against another coverage attempt. The trip cycle (u5d LOAD_AT) stays the lever under test.
 - 05:00: the per-rat pick rate is a war tax, not a crowding artefact (u4e light summaries). In losses we keep 19.6 rats alive on average and they keep 21.8, so they are not picking more simply by having fewer rats to share each mine. Our rate per 100 rat-turns is 28.6 against their 49.1. In wins ours is 39.3 against their 43.7. We spawn 69 rats a game in losses against 56 in wins. So our rate collapses in exactly the games where our half is contested (deaths, fights, theft), and a gatherer-routine change can only win back part of that gap.
+- 05:01: u5d (LOAD_AT 40) killed at the local screen by its pre-registered falsifier.
+  - ld1: 48 kvs cells, control pf2 = u4e.
+  - Budget results:
+    - (1) mean transfer 40.0 (u4e 29.7; bar >= 38): pass.
+    - (2) picks 38.20 per 100 rat-turns (u4e 38.74; bar >= 40.7): fail.
+    - (3) delivered 264,956 (u4e 285,254; bar >= 271k): fail, so kill.
+    - (4) starved kings 2 (u4e 6; bar <= 9): pass.
+  - Screen: 33 wins to 30 on 44 matched cells, D 9 (+6 -3), t +1.0.
+  - Why delivered fell: per 100 rounds it is flat (647.5 vs 645.8). The total dropped because u5d won some games sooner (jail B r467, starvation A r781, cheesefarm B r728, all r2000 for u4e). So (3) was confounded by game length. The kill stands anyway: the bar does not move after the data, and stage (2) shows the mechanism itself did not appear (full loads, but no more cheese picked per rat-turn).
+  - Method lesson: from now on, write economy budgets as rates (per 100 rounds or per rat-turn), not game totals. A candidate that wins sooner delivers less in total.
+  - Its +3 is noted as a near-miss for possible combination; the mechanism behind it is unknown (fewer starved kings, 2 vs 6?).
+  - The replica queue after u5a is now u4y (FLOW_HELD 20, basics repair), then u4n, u4z, u4s, u5b, u4w.
