@@ -4750,3 +4750,7 @@
   - 2673 of these traps fired on our rats (88%). In only 376 (14%) did the victim have the placer in its vision cone both one round before and at the lay, and only 117 of those were drop-20 traps.
   - So inference from cheese would flag about 4% of the traps that hit us. Not built.
   - The engine was also checked: traps are stored per team, so canPlaceRatTrap and canRemoveRatTrap reveal nothing about the enemy's traps.
+- 22:04: **u4k rejected** (replica #146, DELIVER_ANCHOR 3 on u4e). v4 set-1 block 1 (6148-6151, 6162-6165, 6171-6172, 6180-6181, 6189-6192) against u4e's set-1 games: 48 cells, 42 alike, D 6 (+1 -5), net -4, t -1.63. Block 1 rejects at t <= 0.
+  - Gained spsquared bed B. Lost AdamTan12_Finals DefaultSmall B, Icarus TheHeist A and uneasy_alliance A, Merlin peaceinourtime B, collegejunior rose A.
+  - Merlin's thunderdome went the same way in both seats again (lost).
+- 22:04: **u4l submitted** (replica #147: u4e + PEACE + MINE_ANY + MINE_TIES). Block 1 runs on v4 set 1 against u4e's set-1 games; 16 scrims are queued for the drain loop. progress/ refreshed after the scored block.
