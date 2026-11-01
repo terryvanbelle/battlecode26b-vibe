@@ -4679,3 +4679,9 @@
   - All ~22 gatherers have mt=10,7: the one mine we know. The 'x' explorers' searches to far never-seen tiles take 8-25 turns and find nothing.
   - So the loss comes from knowing one mine and from Flow's search speed on a 60x60 dirt maze (~344 bytecodes a node). The same class was tried as BREAKOUT (s9z, net 0), SEEK_FRONTIER (u2t), SWEEP (u2u/u2x) and BFLOW (u0c). BFLOW picked 2x here but transferred no more: carriers' fields toward a moving king never finished.
   - Two queued candidates touch it: u4a (CHIRAL_SYM: on this map the chirality-1 seat B would know the rotation at r1, so the attackers would stop targeting a wrong mirror spot) and u4j (PEACE: u3z gained averystrangespace A/B vs Icarus and A vs YokoOno). A faster search (BFLOW v2 with fields reused across king moves) stays the structural option for this map class.
+- 21:14: **u4i's diag fq1** (FACE_REACH; u4i vs araid on 8 maps, both seats). Controls: u3v's da1/dh1 games and fq1's own u3v cells.
+  - Wins 13 = 13 of 16 (no cell changed).
+  - Xfer 120.5k to 157.3k (+31%). EscapeTheNight went 19.1k to 50.7k, won on points at r2000 instead of by king kills at r840. Stash A went 6.8k to 13.7k.
+  - Counter (facereach.py): 'f' turns facing an enemy that no open tile lets reach us fell 15128 to 395 (-97%). Those beside an own traveller fell 4209 to 11.
+  - averystrangespace, rose and fullofsecrets were identical games.
+  - Falsifier not hit. Screen fq2 (kvs cells, control u3v) is running at jobs 1, beside pm1 at jobs 2. VM free 840 MB after 32 new dumps (lists fq1_u4i.txt, fq1_u3v.txt).
