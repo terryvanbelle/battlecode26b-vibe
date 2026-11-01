@@ -1,0 +1,6 @@
+name=u4q
+source=bots/ratbot
+source_sha=64022ee93f39
+commit=1cbad09
+created=2026-10-31 22:50 PDT
+change=u4e + ATK_DELIVER 50 (u3g's switch rebased on u4e): an attacker carrying 50+ raw cheese takes it to the nearest king before attacking again

@@ -4800,3 +4800,12 @@
   - No earlier attempt guarded KING_MINE's pick. KP_FRONT (u1z) did it for KING_PATH only, which is off; u1z was parked because its motivating map, krotus, was a starvation map.
 - 22:49: **u4p built** (u4e + KING_FRONT 25, new switch, BotTest testKingFront; commits 81a29af, 7fa3c9f; pre-registered in attempts.csv). Its screen runs after hw1, and its replica blocks after u4o's. A local probe on dirtpassageway is running (u4p vs arush).
 - 22:49: VM disk: I deleted 4 temporary full dumps in ~/diag26b/tmpdc that I had made for this analysis: the first copy of 2cfbf29a54101a99707d (field 6060, re-made since), 94408d9c966ec9e1099d (cw3 pb2 clockwisdom, 7.5 MB), f9d17203551ca7b7a24f (pj1 pb4, 7.6 MB) and 65fe3295d5de87063c41 (cw4 pb4 clockwisdom). They can all be regenerated from their replays.
+- 22:56: **u4l rejected after replica block 1** (v4 set 1: 6218-6221, 6247-6250, 6259-6264, 6268-6269, against u4e's set-1 games). 48 cells, 40 alike. D 8: gained 3, lost 5; net -2, t -0.71, and block 1 rejects at t ≤ 0.
+  - Gained: peaceinourtime A (Merlin), superioristhmus B (spsquared), clockwisdom B (collegejunior).
+  - Lost: rose B and uneasy_alliance A (Icarus), knifefight A and t_minus_five_minutes A (Varun), superioristhmus A (spsquared).
+  - PEACE's case, averystrangespace, is in set 2, which this block did not reach.
+  - u4l's own dirtpassageway game (6261 g1, seat A) repeats u4e's: the king reached (20,26) by r200 (570 HP), was down to 83 HP by r600, and died before r700. The second king, at (9,34), lived.
+- 22:56: **hw1 (u4o's screen) passes**: 44 distinct cells, u4o 32 wins to the u3v control's 30 (the screen rejects only at t ≤ -1.5). u4o is on the replica as submission 148, with 16 v4 set-1 scrims queued.
+- 22:56: **Local probe kf1** (u4p vs arush, dirtpassageway, seat A): won at r844. Our king stayed at (3,26) to r100, then went for (7,12) and stopped in the dirt band at (5,17). It kept 600 HP all game. u4p's screen is kf2 (kvs cells, jobs 3).
+- 22:56: **u4q built**: u4e + ATK_DELIVER 50, u3g's switch rebased on u4e (u3g never reached the replica). Pre-registered in attempts.csv, with pb3's cw3 clockwisdom result as its evidence.
+- 22:56: VM disk: I deleted 4 more temporary dumps in ~/diag26b/tmpdc (35 MB): 2cfbf29a54101a99707d (field 6060), d9403612809ccfad6319 (cw1 u4e vs s7d, clockwisdom), 73375a29f82af082ebc8 (field 6261) and 06cc2d0adeb8909a0ebb (kf1). I also deleted rp/kf1.bc26, my copy of the local kf1 replay. All can be regenerated.
