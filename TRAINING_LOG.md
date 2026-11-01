@@ -4380,3 +4380,21 @@
   - u4b's screen (pz3) is still running.
 - 17:07: u4b (u3v + u3d's trap set) screen pz3: 34 of 44 to 30, D 16 (+10 -6), net +4, t +1.00. That passes.
   The replica queue is u3z (block 1 running, 12 of 16 matches in), then u4a, then u4b.
+- 17:22: u3z (u3v + PEACE) block 1 on v4 set 1 (5764-5769, 5782-5783, 5793-5796, 5904-5907) vs u3v's set-1
+  games: 48 cells, 40 alike, D 8 (+5 -3), net +2, t +0.71. Block 1 rejects at t <= 0, so it passes; block 2
+  (set 2) is queued.
+  - Gained: AdamTan12_Finals tiny A, nzjt peaceinourtime A, spsquared bed B and superioristhmus B, collegejunior
+    clockwisdom B.
+  - Lost: AdamTan12_Icarus rose B, nzjt peaceinourtime B, spsquared superioristhmus A.
+- Field delivery (whostab.py on the block's 48 games). The first version counted the first hostile bite or grab
+  and showed "us" in 2 games, both on uneasy_alliance. stabwhy.py shows that in both, the opponent's rat trap
+  fired on our rat at r14, and the engine charges the trap's owner with the backstab; our bites came at r15-16,
+  in war. whostab.py now reads the engine's backstabBy from the summary. On that count u3z broke the truce in
+  **0 of 48** games: them 30 (median r13-68), nobody 8.
+- This corrects the 14:45 census. By the engine's count, u2g's in-band games break down as follows:
+  - Big-map losses: them 26 (median r31), us 8 (r51), nobody 7.
+  - Big-map wins: them 26 (r71), us 5 (r65), nobody 8.
+  - Small-map losses: them 13 (r20), us 3 (r11), nobody 1.
+  - Small-map wins: them 2, us 2, nobody 1.
+  - So u2g broke the truce in 18 of 102 games (11 losses), not 24 of 99. The opponents' early reactive traps,
+    not our bites, end most truces.
