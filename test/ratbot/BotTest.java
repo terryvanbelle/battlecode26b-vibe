@@ -2096,6 +2096,26 @@ public class BotTest {
         check(Baby.homeHalf(new MapLocation(5, 5)) && !Baby.homeHalf(new MapLocation(14, 14)), "raid: home half");
     }
 
+    static void testKingFront() {
+        // dirtpassageway (50x50, x flipped): kings (3,26) and (46,26); the centre mine (20,26) has front value 20
+        reset(); W = 50; H = 50; install();
+        Sym.mask = Sym.VER;
+        Comms.numMines = 0; Comms.numKings = 0;
+        Comms.mines[Comms.numMines++] = new MapLocation(20, 26);
+        MapLocation s = new MapLocation(3, 26);
+        int saved = King.kingFront;
+        King.kingFront = 0;
+        check(new MapLocation(20, 26).equals(King.pickHomeMine(s)), "king front: off, the centre mine is ours");
+        King.kingFront = 25;
+        check(King.pickHomeMine(s) == null, "king front: 25 skips the centre mine (front 20)");
+        King.kingFront = 20;
+        check(new MapLocation(20, 26).equals(King.pickHomeMine(s)), "king front: 20 keeps it");
+        Comms.mines[Comms.numMines++] = new MapLocation(7, 39);   // d2 185, front 81
+        King.kingFront = 25;
+        check(new MapLocation(7, 39).equals(King.pickHomeMine(s)), "king front: falls back to a mine behind the line");
+        King.kingFront = saved;
+    }
+
     static void testKingMine() {
         reset(); W = 60; H = 60; install();
         Sym.mask = Sym.ROT;
@@ -3480,7 +3500,7 @@ public class BotTest {
         testFormation();
         testReportPriority();
         testTrapTile();
-        testKingMine();
+        testKingMine(); testKingFront();
         testHandMirror(); testCentreMirror();
         testSymElimination();
         testChiral();

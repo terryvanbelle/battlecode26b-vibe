@@ -115,6 +115,14 @@ public final class Cfg {
      *  edge side): u1x's king went in from the centre side, 5-7 from the axis, and was bitten to death there in both
      *  games (A r283, B r392); u0m's greedy king stuck at the edge and lived. */
     public static final int KP_FRONT = 0;
+    /** King.pickHomeMine skips a mine whose front value 100 (e - d) / L2 is under KING_FRONT (0 = off): d, e = dist2
+     *  from the mine to our start and the enemy's, L2 = dist2 between the starts; 100 at our start, 0 on the bisector.
+     *  The king takes the first such mine anyone lists and keeps it. dirtpassageway (kings (3,26) and (46,26) in an open
+     *  middle band): the centre mine (20,26), f 20, 9 tiles from its twin, is listed before (7,39) and (7,12) (f 81,
+     *  behind dirt); u4e's king sat there from r150 and was bitten to death (6060: hp 562 at r150, 4 at r500), the
+     *  enemy's king damage 1108-1170 to our 68-114, and u4e and u3z lost all 8 field games there. u3z's 96 field games:
+     *  a king past halfway to the bisector at r200 won 5 of 15 (10 died), any other 46 of 81. */
+    public static final int KING_FRONT = 0;
     /** Moat (Moat.java): at war a king that sees an enemy rat within dist2 MOAT_D2 fills its Chebyshev-2 ring with
      *  dirt (one tile per action, helped by babies beside the ring while its alert is under MOAT_IDLE rounds old),
      *  keeping MOAT_PORT spawn tiles open, and holds still until MOAT_IDLE rounds pass without a sighting; no baby

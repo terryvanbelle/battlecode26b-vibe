@@ -394,6 +394,8 @@ public final class King {
     public static int traps;
     /** Cfg.SYM_FACE (a field, so tests can switch it). */
     static boolean faceSpawn = Cfg.SYM_FACE;
+    /** Cfg.KING_FRONT (a field, so tests can set it). */
+    static int kingFront = Cfg.KING_FRONT;
 
     /** War defense: a rat trap on the reachable tile nearest an approaching enemy rat (50 damage + stun). */
     static void ratTrap(RobotInfo[] enemies) throws GameActionException {
@@ -1099,6 +1101,8 @@ public final class King {
             int d = from.distanceSquaredTo(m);
             int e = m.distanceSquaredTo(ek);
             if (d >= bd || d > e || d == e && !Cfg.MINE_TIES) continue;
+            // KING_FRONT: not one near the bisector
+            if (kingFront > 0 && 100 * (e - d) < kingFront * from.distanceSquaredTo(ek)) continue;
             // another king already holds it
             boolean held = false;
             for (int k = 0; k < Comms.numKings; k++)
