@@ -4769,3 +4769,18 @@
 - 22:21: **The carry cap does not fix it** (cw2, against s7d's 300-1496). pb2 (CARRY_MAX 150) delivered 140 as A (lost r1005) and 300 as B (lost r985). pb3 (CARRY_MAX 150 + ATK_CARRY 25) delivered 0 as A (won r770, s7d starved first) and 420 as B (won r955). Every game ended in a starvation.
 - 22:21: **Next probe: TRAIL** (s5d's switch, withdrawn at s5c because EscapeTheNight's mine-bound babies jammed in the king's box). A carrier whose delivery stalls walks its own loop-free trail back from its spawn, which is a walked, wall-free path whatever the maze.
   - cw3 runs pb2 (u4e + TRAIL) and pb3 (u4e + TRAIL + ATK_DELIVER 50) against s7d on clockwisdom, EscapeTheNight (the old jam), fullofsecrets and pipes (TRAIL's old gains, carrier stalls 1339 to 155 and 913 to 121), both seats, with u4e controls.
+- 22:34: **TRAIL has never fired since the move decision became movement-ready only.** pb4 (pb2 with Trail.n, homing and homeStall in the indicator) on clockwisdom: carrier 11605 had a 46-tile trail home at r100 but homeStall stayed at 0-1 every turn.
+  - homeLeg restarts its count unless it ran on the round before. A carrier with 20+ cheese skips movement rounds (1% cooldown a unit), so the count never reaches FLOW_STALL.
+  - New switch TRAIL_GAP (off): the count survives a gap of up to TRAIL_GAP rounds. The gated BotTest home run (extra move cooldown, decision only on ready rounds) takes 43 turns with gap 12. Gap 0 takes 65, the same as nav alone. BotTest 1800/1800, unit tests pass (commit 78b16db).
+  - pb4 is now u4e + TRAIL + TRAIL_GAP 12; cw4 runs it on the same 4 maps against s7d, both seats.
+- 22:34: **cw3** (against s7d, both seats; u4e on clockwisdom from cw1). pb2's TRAIL was inert, so pb2 is u4e plus Trail.record's bytecodes: it won 6 of 8, as u4e.
+  - pb3 (u4e + ATK_DELIVER 50, trail inert): clockwisdom 2 of 2 with real deliveries (940 as A, 1800 as B; u4e 40 and 340, 1 of 2). EscapeTheNight 2 of 2, in r792-850 (u4e went to r2000). fullofsecrets 0 of 2, as u4e. pipes A lost r432 (u4e won it).
+  - u4e loses fullofsecrets in both seats against s7d. A: we broke the truce at r385, delivered 540 to 2619, and the king died r712. B: we broke it at r505 and lost on points, 4475 to 10798. This is a local reproduction of the field's fullofsecrets losses (6021 A, 6133 A, 6134 B).
+- 22:34: **averystrangespace is decided by cat damage, and PEACE is what changes it.** u4e lost all 4 set-2 games, 6098/6099 against YokoOno and 6131/6132 against Icarus, at r2000 on points. u3v lost the same 4 (5717/5718/5744/5745). u3z (u3v + PEACE) won 3 of the 4 (5912 A, 5920 A, 5921 B).
+  - Transfers against Icarus are even (u4e 4480 to 4415 as A). Cat damage decides it: u4e 0/87 to their 420/87; u3z 1065 to 296 and 587 to 87.
+  - u4e picks 4520 in every game: only mine (10,7), in its pocket. It digs 22-27 dirt tiles; u3z dug 163-239 and picked 8527-10969.
+  - digmin.py from (3,3): every other mine is 30+ dirt tiles away; the cheapest is (53,4) along the y=2 dirt corridor (50 steps, 30 digs).
+  - u4l (u4e + PEACE + MINE_ANY + MINE_TIES) is on the replica now; its set-2 block would test this.
+- 22:34: **Delivery-stall census** (dstall.py on u3z's 96 field games; a 'd' round is stalled when the BFS path length to the king has not dropped in 20 rounds): 34878 of 200138 'd' rounds were stalled.
+  - Far from the king (31+ steps): TheHeist 4812, fullofsecrets 3560, peaceinourtime 2288, averystrangespace 815, clockwisdom 739, Hike 389. This is TRAIL's class.
+  - Near the king (4-10 steps): rose 12089, a queue. u4e won all 4 set-1 rose games, so it is not a flippable loss.
