@@ -166,6 +166,13 @@ public final class Cfg {
     public static final int KING_DIG_MIN = 100;
     /** With no enemy or cat in view the king walks to cheese within Chebyshev KING_ROAM of its mine (0 = off). */
     public static final int KING_ROAM = 4;
+    /** The king's walks to a pile (KING_ROAM) and to its home mine take only steps that bring it strictly closer
+     *  (King.closer), not the sidesteps King.step allows (also not the mine walk's fallback when no dig opens the
+     *  way, mode 'z'). fullofsecrets (local u4e vs s7d, field 6134 B): the king saw piles of mine (2,26)
+     *  through its pocket's south wall and stepped (2,32)-(3,32)-(2,32) every 4 rounds all game (97 of 123 moves; 6134 B
+     *  121 of 275). Each step was a new delivery target, so carriers outside the wall never reached FLOW_STALL 4 and
+     *  transferred 0 of 4630 picked; the king starved at r545. */
+    public static final boolean KING_STRICT = false;
     /** A second king: the first king names a home-half mine as the site once it has FORM_BABIES babies and
      *  FORM_CHEESE global cheese after round FORM_FROM; babies within dist2 FORM_PULL_R2 gather in its 3x3. */
     public static final boolean FORM_KING = false;

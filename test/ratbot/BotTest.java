@@ -2625,6 +2625,22 @@ public class BotTest {
         check(d3 == null, "king dig: not off the map " + d3);
     }
 
+    static void testKingPile() throws GameActionException {
+        // the fullofsecrets pocket: a pile 4 south behind a wall row; the only open steps keep the distance
+        reset(); W = 30; H = 30; install(); type = UnitType.RAT_KING;
+        MapLocation c = new MapLocation(5, 5), pile = new MapLocation(5, 1);
+        for (int x = 3; x <= 7; x++) walls.add(new MapLocation(x, 4));
+        me = c; G.me = c; King.strict = false;
+        check(King.walkStep(c, pile) && !me.equals(c) && G.cheb(me, pile) == G.cheb(c, pile), "king pile: a sidestep keeps the distance (" + me + ")");
+        reset(); W = 30; H = 30; install(); type = UnitType.RAT_KING;
+        for (int x = 3; x <= 7; x++) walls.add(new MapLocation(x, 4));
+        me = c; G.me = c; King.strict = true;
+        check(!King.walkStep(c, pile) && me.equals(c), "king pile: strict, no step that is not closer (" + me + ")");
+        walls.clear();
+        check(King.walkStep(c, pile) && me.distanceSquaredTo(pile) < c.distanceSquaredTo(pile), "king pile: strict, an open step closer (" + me + ")");
+        King.strict = Cfg.KING_STRICT;
+    }
+
     static void testBiteGuard() {
         check(Baby.guardBite(95, 90) && Baby.guardBite(100, 90), "bite guard: healthier by up to one bite");
         check(!Baby.guardBite(90, 90) && !Baby.guardBite(101, 90), "bite guard: not equal, not out of one bite's reach");
@@ -3604,6 +3620,7 @@ public class BotTest {
         testGlance();
         testMineMirror();
         testKingDig();
+        testKingPile();
         testKingDodge();
         testBiteGuard();
         testCarryCap();

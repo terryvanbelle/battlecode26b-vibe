@@ -1,0 +1,6 @@
+name=u4v
+source=bots/ratbot
+source_sha=bee9d8226ff1
+commit=5c1d90b
+created=2026-11-01 01:14 PDT
+change=2026-11-01 01:14 PDT: KING_STRICT (the king's walks to a pile and to its home mine take only strictly closer steps)

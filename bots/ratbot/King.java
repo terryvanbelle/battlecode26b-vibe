@@ -136,6 +136,7 @@ public final class King {
     }
 
     static MapLocation nearCheese;   // nearest cheese pile within the roam leash, this turn
+    static boolean strict = Cfg.KING_STRICT;
 
     static void sense() throws GameActionException {
         MapInfo[] infos = G.rc.senseNearbyMapInfos();
@@ -480,12 +481,12 @@ public final class King {
             if (f != null) homeMine = f;
         }
         // a pile the king can reach is cheese no rat has to carry: walk until it is under our 3x3
-        if (nearCheese != null && G.cheb(c, nearCheese) > 1 && step(c, nearCheese)) { mineWhy = 'p'; pickUp(); return; }
+        if (nearCheese != null && G.cheb(c, nearCheese) > 1 && walkStep(c, nearCheese)) { mineWhy = 'p'; pickUp(); return; }
         if (homeMine == null) { mineWhy = 'n'; return; }
         if (G.cheb(c, homeMine) <= 1) { mineWhy = 'a'; return; }
         mineWhy = 'm';
         if (!Cfg.KING_DIG) {
-            if (step(c, homeMine)) pickUp();
+            if (walkStep(c, homeMine)) pickUp();
             return;
         }
         // a step that gets closer, else dig one (a sidestep that only keeps the distance jitters at a dirt face)
@@ -494,7 +495,7 @@ public final class King {
         if (!G.rc.isActionReady()) { mineWhy = 'x'; return; }
         if (G.rc.getGlobalCheese() < Cfg.KING_DIG_MIN) { mineWhy = 'y'; return; }
         MapLocation d = digTile(c, homeMine);
-        if (d == null) { mineWhy = 'z'; if (step(c, homeMine)) pickUp(); return; }
+        if (d == null) { mineWhy = 'z'; if (walkStep(c, homeMine)) pickUp(); return; }
         if (!G.rc.canRemoveDirt(d)) { mineWhy = 'q'; return; }
         G.rc.removeDirt(d); digs++; Sym.mem[G.idx(d)] &= ~Sym.DIRT; mineWhy = 'D';
     }
@@ -765,6 +766,11 @@ public final class King {
         rc.move(G.DIRS[bi]);
         G.me = rc.getLocation();
         return true;
+    }
+
+    /** The walk to a pile or the home mine: strictly closer steps under Cfg.KING_STRICT, else step's (sidesteps allowed). */
+    static boolean walkStep(MapLocation c, MapLocation t) throws GameActionException {
+        return strict ? closer(c, t) : step(c, t);
     }
 
     /** One king step toward t that strictly shortens the distance: straight or 45 degrees off. */
