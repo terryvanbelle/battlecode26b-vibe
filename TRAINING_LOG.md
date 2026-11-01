@@ -4863,3 +4863,12 @@
   - Locally u4e vs s7d (VM st1/st2): it won as B at r328 (delivered 2702 to 765) and lost as A at r933 (4409 to 7200). So this loss is to the centre-holding opponent, not to navigation; no candidate.
   - VM: deleted the st1/st2 game dirs (11 MB, regenerable).
 - 00:09: **u4r's learn_your_lesson check sq2** (VM, vs s7d, seeds 1-3, both seats): 6 of 6, all on points at r2000. It delivered 12966-17245 (mean 14992), with 0 overruns and at most 16010 bytecodes in a rat turn. u4e in sq1 won 1 of 6 (4252-11902). This matches pb5 and pb6, so the end-of-turn fill keeps the effect without the overrun. The screen kr1 is at 13 of 48.
+- 00:14: **Where field opponents lay rat traps** (scratch trapgeo.py over u4e's 96 lite games). Per game laid / fired on us: Finals 55.4/54.2, Varun 45.9/37.2, spsquared 37.9/35.4, Icarus 33.5/32.0, Xzibit 30.1/26.9, YokoOno 20.2/17.8, collegejunior 10.7/8.3, Merlin 3.7/3.7.
+  - The median trap fires 0-3 rounds after it is laid. 53-80% are laid within Chebyshev 4 of a mine, and for Finals, Icarus, Xzibit and spsquared about 70% are on our half. These are reactive traps laid in front of our rats at the mines, not minefields.
+  - Engine (TrapType): a rat trap costs 20 cheese, deals 50 damage and stuns for 30 turns, fires on an enemy entering its 3x3, and a team may hold 25.
+  - dirtpassageway vs Finals (6090/6091 g1, both lost): they laid 82 traps a game, and 29-30 of our rats died to traps.
+  - This is u4m's case, which goes next. A fuller trap doctrine (lower cheese floors, traps at contested mines) waits for u4m's field result.
+- 00:14: **Digging** (lite dumps). Opponents dig 2-13 times more than we do on the dirt-heavy maps: superioristhmus 552/game to our 93, ratsareants 365/189, averystrangespace 365/28, streetsofnewyork 191/94. We won 2 of those 10 games.
+  - On averystrangespace (6098 g1, scratch digmap.py) YokoOno dug 348 tiles in 800 rounds, tunnels the length of the dirt corridors from its pocket to the centre mines. We dug 23.
+  - DIG_COST (Flow's dirt tile cost, 4) was only ever probed in 8-game local diags (u2d, u2e). Probes pb7 = u4e + DIG_COST 2 and pb8 = u4e + DIG_COST 1 are queued as VM run dg1: u4e, pb7 and pb8 vs s7d on superioristhmus, ratsareants, averystrangespace, streetsofnewyork, dirtpassageway and cheesefarm, both seats, 36 games. It starts when kr1 ends.
+- 00:14: The structural slot is overdue: u4m to u4s are seven incremental attempts since u4l. The next structural design is a dig doctrine or a trap doctrine, whichever dg1 and u4m's block 1 support.
