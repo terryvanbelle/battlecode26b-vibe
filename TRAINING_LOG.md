@@ -4685,3 +4685,8 @@
   - Counter (facereach.py): 'f' turns facing an enemy that no open tile lets reach us fell 15128 to 395 (-97%). Those beside an own traveller fell 4209 to 11.
   - averystrangespace, rose and fullofsecrets were identical games.
   - Falsifier not hit. Screen fq2 (kvs cells, control u3v) is running at jobs 1, beside pm1 at jobs 2. VM free 840 MB after 32 new dumps (lists fq1_u4i.txt, fq1_u3v.txt).
+- 21:15: **u4j's screen pm1** (kvs cells, control kvs = u3v): 36 of 44 to 30, D 16 (+11 -5), net +6, t +1.50: pass. u3z, PEACE alone, scored net +2 and t +0.58 on the same cells.
+  - Gains: abrk DefaultSmall A, arrows B, canyoudig B, evileye A; araid DefaultMedium A/B, bed A, canyoudig B, learn_your_lesson A, starvation B, tiny B.
+  - Losses: araid arrows A, cheesefarm A, evileye B, starvation A, tiny A.
+  - Xfer 295.4k to 262.5k (-11%; peace games end at the last cat). Truce broken by u4j in 0 of 48 (araid median r36, abrk r30).
+  - **Queue re-ordered** after u4e: u4g (promised next; a basics repair), u4j, u4c, u4h, u4a, u4b, u4i (if fq2 passes), u4f. u4j moves up because both of its parts already have field evidence (pooled t 1.46 and 1.41 over 144 and 176 cells), which no other queued candidate has. u4f (screen D 0) goes last.
