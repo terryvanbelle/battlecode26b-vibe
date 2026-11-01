@@ -2708,6 +2708,49 @@ public class BotTest {
               "ring arcs: the rotated pocket counts the same");
     }
 
+    /** Cfg.PLUG_FAST: ringArcsFast and arcsOf give ringArcs's answers, and the king's own count follows the round. */
+    static void testRingArcsFast() {
+        // arcsOf against ringArcs's loops on every 16-bit closed mask
+        boolean ok = true;
+        for (int m = 0; m < 65536 && ok; m++) {
+            int cm = m;
+            for (int i = 0; i < 16; i += 4)
+                if ((cm >> i & 1) != 0 && (cm >> ((i + 1) & 15) & 1) == 0 && (cm >> ((i + 15) & 15) & 1) == 0) cm &= ~(1 << i);
+            int want = 0;
+            if (cm == 0) want = 1;
+            else for (int i = 0; i < 16; i++) if ((cm >> i & 1) == 0 && (cm >> ((i + 15) & 15) & 1) != 0) want++;
+            ok = King.arcsOf(m) == want;
+        }
+        check(ok, "ring arcs fast: the bit corner rule and arc count match the loops on all 65536 masks");
+        // ringArcsFast against ringArcs on random walls and dirt, a map that is not square, every tile (edges included)
+        java.util.Random r = new java.util.Random(26);
+        ok = true;
+        for (int t = 0; t < 6 && ok; t++) {
+            reset(); W = 23 + t; H = 31 - t; install();
+            int dens = 10 + 12 * t;
+            for (int i = 0; i < W * H; i++) {
+                int q = r.nextInt(100);
+                Sym.mem[i] = Sym.SEEN | (q < dens / 2 ? Sym.WALL : q < dens ? Sym.DIRT : 0) | (r.nextInt(9) == 0 ? Sym.MINE : 0);
+            }
+            for (int y = 0; y < H && ok; y++)
+                for (int x = 0; x < W && ok; x++) {
+                    MapLocation c = new MapLocation(x, y);
+                    ok = King.ringArcsFast(c) == King.ringArcs(c);
+                }
+        }
+        check(ok, "ring arcs fast: the unrolled ring matches ringArcs on random maps, edges and corners included");
+        // the king's own count is kept for a tile and round, and counted again on a new round
+        reset(); W = 30; H = 30; install();
+        for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
+        MapLocation c = new MapLocation(15, 15);
+        G.round = 300; King.arcsRound = -1;
+        int open = King.arcsHere(c);
+        for (int x = 0; x < W; x++) { Sym.mem[G.idx(x, 13)] |= Sym.WALL; Sym.mem[G.idx(x, 17)] |= Sym.WALL; }
+        int same = King.arcsHere(c);
+        G.round = 301;
+        check(open == 1 && same == 1 && King.arcsHere(c) == 2, "ring arcs fast: the king's own count is kept within a round, renewed the next");
+    }
+
     static void testTrapRiskNear() {
         boolean ok = true;
         for (int dy = -2; dy <= 2; dy++)
@@ -3284,6 +3327,7 @@ public class BotTest {
         testRoleFor();
         testScoutMore();
         testRingArcs();
+        testRingArcsFast();
         testHomeRank();
         testSweep();
         testWoundMask();

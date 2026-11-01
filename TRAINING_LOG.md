@@ -4487,3 +4487,22 @@
   - The games went to r2000 on war points. Our END_KING second king gives kings 2 to 1 (33.3 points), so we won 3
     of 4. The loss (5913) was on cat damage, 350 to 6930. With PEACE, the map is no longer a 0/20 hole, so it is
     not the next target.
+- 18:15: **u4d** (u3v + HUNGRY 600, the dose arm of u4c's HUNGRY 300) built and screened as hg1.
+- 18:38: **u4d's screen hg1**: 30 of 44 to 36, D 14 (+10 -4), net +6, t +1.60. That is below u4c's +8 (t 2.53),
+  so by its falsifier the dose arm stops here and only u4c goes to the replica. Its losses (DefaultSmall A and B,
+  cheesefarm A vs araid, bed A vs abrk) are cells u4c kept: a 600 bar sends carriers home in games the bank could
+  carry.
+- 18:38: **King bytecode regression: KING_PLUG overruns on lattice maps.** u3z's 31 block 1-2 field matches
+  (overruns_vm.py over replica replays) hold 1296 king overruns. 1279 of them are in four games, all lost:
+  mercifullattice B 381 and A 247, learn_your_lesson B 380 and 271. ko1 (u3v vs araid on those maps, both seats)
+  reproduces it locally; the king overruns about every other turn from r22 on mercifullattice.
+  - pb4 (a probe: u3v plus per-stage king bytecode counts in the indicator) in ko2 puts the rest of the turn at
+    7-10k and the overrun inside move(). KING_PLUG's ring test costs ~1150 bytecodes a call. Where the king's own
+    ring is split, unplug() counts its tile and all 8 neighbours, then closer() and step() count two more per
+    candidate step.
+  - **u4e** (u3v + PLUG_FAST) is a basics repair. It reads the 16 ring tiles unrolled, counts the corner rule and the
+    arcs in bit operations, keeps the king's own count for the move, and skips the test under 3000 bytecodes left.
+    The answers equal ringArcs's on all 65536 ring masks and on random maps, edges included (3 new BotTests,
+    1747/1747; unit tests exit 0). Overrun check pf1 (u4e vs araid on mercifullattice and learn_your_lesson, both
+    seats) is running. It goes on the replica ahead of u4c if pf1 holds; as a basics repair it accepts at t >= 0
+    after block 2.

@@ -1,0 +1,6 @@
+name=u4e
+source=bots/ratbot
+source_sha=4123d96e1b14
+commit=bcf81f6
+created=2026-10-31 18:36 PDT
+change=PLUG_FAST (u3v + PLUG_FAST: KING_PLUG's ring test unrolled with bit-op arc counts, the king's own count kept for the move, and skipped under 3000 bytecodes left; a basics repair of the king's move() overruns on lattice maps)

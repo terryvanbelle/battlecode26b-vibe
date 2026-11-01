@@ -84,6 +84,15 @@ public final class Cfg {
      *  rose vs spsquared (1796): the king walked toward its home mine into the pocket's only exit at r~60 and sat
      *  there to r2000 with all 20 babies shut in behind it (75% of our baby turns went to mine trips that never got out). */
     public static final boolean KING_PLUG = false;
+    /** KING_PLUG's ring test at a fraction of the bytecodes, same answers: the 16 ring tiles read unrolled (ring on the
+     *  map) with the corner rule and the arc count in bit operations, the king's own tile counted once a move, and the
+     *  test skipped (no unplug step, every step allowed) under PLUG_LEFT bytecodes left. u3z's field games: 1296 king
+     *  overruns in 31 matches, 1279 of them on mercifullattice (both seats, from r22) and learn_your_lesson (seat B), all
+     *  four lost; locally (ko1/ko2, u3v vs araid) the king overran every other turn there, in move(): unplug() counts
+     *  the ring of its tile and all 8 neighbours (~1150 bytecodes each) whenever its own ring is split, then closer()
+     *  and step() count two more per candidate step. */
+    public static final boolean PLUG_FAST = false;
+    public static final int PLUG_LEFT = 3000;
     public static final int KING_MINE_R2 = 400;
     /** King path (KPath): the king walks to the home mine nearest by a path for its 3x3 body (seen walls block,
      *  unseen tiles and dirt are open), searched from every seat at once with spare bytecode (KP_RESERVE kept) and

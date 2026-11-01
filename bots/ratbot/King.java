@@ -682,23 +682,81 @@ public final class King {
         return arcs;
     }
 
+    /** Cfg.PLUG_FAST: ringArcs(c) with the ring's 16 tiles read unrolled when the ring lies on the map (ringArcs itself
+     *  otherwise), the corner rule and the arc count in bit operations. Same answer as ringArcs. */
+    static int ringArcsFast(MapLocation c) {
+        int x = c.x, y = c.y, w = G.W;
+        if (x < 2 || y < 2 || x + 2 >= w || y + 2 >= G.H) return ringArcs(c);
+        int[] mem = Sym.mem;
+        int blk = Sym.WALL | Sym.DIRT, w2 = w + w, w3 = w2 + w, w4 = w3 + w;
+        int b = x - 2 + w * (y - 2), cm = 0;
+        if ((mem[b] & blk) != 0) cm |= 1;
+        if ((mem[b + 1] & blk) != 0) cm |= 2;
+        if ((mem[b + 2] & blk) != 0) cm |= 4;
+        if ((mem[b + 3] & blk) != 0) cm |= 8;
+        if ((mem[b + 4] & blk) != 0) cm |= 16;
+        if ((mem[b + 4 + w] & blk) != 0) cm |= 32;
+        if ((mem[b + 4 + w2] & blk) != 0) cm |= 64;
+        if ((mem[b + 4 + w3] & blk) != 0) cm |= 128;
+        if ((mem[b + 4 + w4] & blk) != 0) cm |= 256;
+        if ((mem[b + 3 + w4] & blk) != 0) cm |= 512;
+        if ((mem[b + 2 + w4] & blk) != 0) cm |= 1024;
+        if ((mem[b + 1 + w4] & blk) != 0) cm |= 2048;
+        if ((mem[b + w4] & blk) != 0) cm |= 4096;
+        if ((mem[b + w3] & blk) != 0) cm |= 8192;
+        if ((mem[b + w2] & blk) != 0) cm |= 16384;
+        if ((mem[b + w] & blk) != 0) cm |= 32768;
+        return arcsOf(cm);
+    }
+
+    /** Cfg.PLUG_FAST: ringArcs's corner rule and arc count for a 16-bit closed mask in ring order. */
+    static int arcsOf(int cm) {
+        int open = ~cm & 0xFFFF;
+        // a closed corner (bit 0, 4, 8, 12) with both ring neighbours open opens: bit i of nx is ring tile i+1 open,
+        // of pv tile i-1 open
+        int nx = (open >>> 1 | open << 15) & 0xFFFF, pv = (open << 1 | open >>> 15) & 0xFFFF;
+        cm &= ~(cm & 0x1111 & nx & pv);
+        if (cm == 0) return 1;
+        // arcs: open tiles whose previous ring tile is closed
+        int v = ~cm & (cm << 1 | cm >>> 15) & 0xFFFF;
+        v = v - (v >>> 1 & 0x5555);
+        v = (v & 0x3333) + (v >>> 2 & 0x3333);
+        v = v + (v >>> 4) & 0x0F0F;
+        return v + (v >>> 8) & 0x1F;
+    }
+
+    /** Cfg.PLUG_FAST: the ring arcs of the king's own tile, counted once a move (tile and round they were counted for). */
+    static MapLocation arcsAt;
+    static int arcsHere, arcsRound = -1;
+
+    static int arcsHere(MapLocation c) {
+        if (arcsRound != G.round || !c.equals(arcsAt)) { arcsAt = c; arcsRound = G.round; arcsHere = ringArcsFast(c); }
+        return arcsHere;
+    }
+
     /** Cfg.KING_PLUG: a move from c by d does not plug a passage (or plugs no worse than where the king stands). */
     static boolean unplugged(MapLocation c, Direction d) {
         if (!Cfg.KING_PLUG) return true;
+        if (Cfg.PLUG_FAST) {
+            if (KPath.left() < Cfg.PLUG_LEFT) return true;
+            int a = ringArcsFast(c.add(d));
+            return a <= 1 || a <= arcsHere(c);
+        }
         int a = ringArcs(c.add(d));
         return a <= 1 || a <= ringArcs(c);
     }
 
     /** Cfg.KING_PLUG: standing where the ring splits, step to the neighbour with the fewest arcs (fewer than here). */
     static boolean unplug(MapLocation c) throws GameActionException {
+        if (Cfg.PLUG_FAST && KPath.left() < Cfg.PLUG_LEFT) return false;
         RobotController rc = G.rc;
-        int here = ringArcs(c);
+        int here = Cfg.PLUG_FAST ? arcsHere(c) : ringArcs(c);
         if (here <= 1) return false;
         int best = 2 * here, bi = -1;
         for (int i = 0; i < 8; i++) {
             Direction d = G.DIRS[i];
             if (!rc.canMove(d)) continue;
-            int s = 2 * ringArcs(c.add(d)) + (G.hand(c, d) > 0 ? 1 : 0);
+            int s = 2 * (Cfg.PLUG_FAST ? ringArcsFast(c.add(d)) : ringArcs(c.add(d))) + (G.hand(c, d) > 0 ? 1 : 0);
             if (s < best) { best = s; bi = i; }
         }
         if (bi < 0) return false;
