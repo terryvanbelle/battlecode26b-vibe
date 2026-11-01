@@ -4518,3 +4518,7 @@
   - **VM disk:** I deleted 12 unreferenced dump-cache dirs (198 MB, the ko1, ko2 and pf1 dumps, logged in
     ~/diag26b/dcache_deleted.txt). They are our own and can be regenerated from the kept replays. VM free went from
     256 MB to 455 MB. I added ~/diag26b/u3z_b2.txt so the u3z block-2 dumps (5908-5923) stay referenced.
+- 18:53: **u3v's set-3 reference** (#143) is complete: 5924-5931, 5934-5937, 5939-5940 and 5954-5955 (16 matches,
+  fetched), 18 of 48 games. The set-3 panel has nzjt, Icarus and collegejunior at 0 of 6 or close to it. I submitted
+  u3z as #144 for block 3 and queued its 16 v4 set-3 scrims; the drain loop sends them as the hourly limit allows.
+  Pooled bars after block 3: reject at t <= 1.5, accept at t >= 2.
