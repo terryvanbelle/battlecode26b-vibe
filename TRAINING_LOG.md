@@ -4522,3 +4522,22 @@
   fetched), 18 of 48 games. The set-3 panel has nzjt, Icarus and collegejunior at 0 of 6 or close to it. I submitted
   u3z as #144 for block 3 and queued its 16 v4 set-3 scrims; the drain loop sends them as the hourly limit allows.
   Pooled bars after block 3: reject at t <= 1.5, accept at t >= 2.
+- 19:00: **u4e's screen pf2** (kvs cells, control kvs = u3v): 30 of 44 to 30, D 0 (no cell changed), xfer 292.8k to
+  295.4k. Pass. The screen's maps hold no lattice case where u3v lost to its overruns. u4e goes to the replica
+  after u3z's block 3, ahead of u4c.
+- 19:00: **Where in-band losses lose the cheese** (u3z's 96 field games, new scripts cheeseflow, pickrate,
+  minehalf, theft, homemines; all on the VM over the u3z_b1/u3z_b2 lists):
+  - Delivery is not it. We transfer about two thirds of what we pick in wins and in losses (4780 of 7721, 2967 of
+    4477), as the enemy does. A rat pays dig and trap costs out of the cheese it carries first (engine
+    addCheese), and cheese drops where it dies (571 a lost game).
+  - Picking is. In losses the enemy picks 8443 a game to our 4477, although we have more babies until r300 (19-21
+    to 15-17): they get about 51 per baby per 100 rounds, we get 30-33, at more mines (4.5-5.1 a window to 3.6).
+    Our share of gathering turns is higher in losses than in wins (r100-299 56% to 47%; whyshare).
+  - The enemy takes 1835 a lost game at mines on our half (787 in wins), and 72-83% of it with none of our rats
+    within 4. 69 of the 179 home-half mines in losses were never reached by us, and they picked 26.9k there.
+  - For 14 home mines in losses (21 in wins) we had seen the mirror twin 50+ rounds before we saw or reached the
+    mine itself (median delay 722 rounds). The enemy picked 12960 there, we 2700. The maps are clockwisdom,
+    fullofsecrets, rose, RUN and learn_your_lesson.
+  - **u4f** = u3v + MINE_MIRROR (s4e's switch, never on the replica alone): with one symmetry left the king lists the
+    our-half twin of every listed mine. Diag mm2 (u4f and u3v vs araid on those five maps, both seats, replays
+    kept) checks that the king lists the hidden twins earlier and that our picks there rise.
