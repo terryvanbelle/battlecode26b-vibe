@@ -4854,3 +4854,11 @@
 - 00:04: Disk deletions since 23:50, all our own regenerable data:
   - VM: the temporary full dumps tmpdc/ff523301c9a011ccf01d (field 6058, 6.2 MB), 9aac59a7c43e84eba14a (field 6079, 4.1 MB) and 2cfbf29a54101a99707d (field 6060, 9.9 MB); rp/6058.bc26 (my copy of that replay); and ~/diag26b/cwk1 (8.7 MB).
   - Local: build/kf1 (916K), build/ly2 and build/ly3 (22 MB): dumps of local probe games.
+- 00:08: **Field census of u4e's 96 games (sets 1-2; scratch econcensus.py and a summary scan of the lite dumps).**
+  - How games end. Our 46 wins: 20 by killing their king (median r226), 15 by their king starving (median r639), 11 on points. Our 50 losses: 24 by our king starving (median r683), 19 by it being killed (median r690), 7 on points. The early king kill is our main win, which fits the rejected rush cuts (u0o, u1o, t0g).
+  - Economy. We hold 20-22 babies to their 16-17 from r25 to r500, and our bank sits 250-600 below theirs from r50 on. In wins both sides deliver about 15 per 100 baby-rounds. In losses their rate pulls away from r150: 19.3 to our 13.8, then 23.8 to 15.5 at r200 and 29.5 to 17.9 at r300.
+  - Combat, per king-kill loss (43 games): enemy rats killed 45.6 of ours to our 32.7 of theirs. Trap deaths: ours 12.8, theirs 0. They lay 41.7 rat traps a game and hit our rats 38.6 times; we lay 0. **Their traps make up the whole kill gap.** Throws and bites are about even (throwLand 20.6/22.0, throwHit 5.7/6.7, bite 5.8/4.0). In wins we lose 5.2 rats a game to traps.
+  - So **u4m (u4e + u3d's reactive baby rat trap set) moves to the front of the queue, right after u4p.** u3d passed replica block 1 on u2g (t +0.58), and five trap-dodging attempts have lost. Then u4q, u4r, u4s.
+- 00:08: **Stash vs YokoOno** (6040, u4e as B, delivered 20 by r400). After the dirt gap (1,7) was dug at r25, 85-95% of our rat turns stayed in the home pocket. Attackers and mine-runners pressed against the wall under the centre mines at y 11, and the few rats that went out died to cat pounces, throws and traps while YokoOno held the centre with 17-23 rats.
+  - Locally u4e vs s7d (VM st1/st2): it won as B at r328 (delivered 2702 to 765) and lost as A at r933 (4409 to 7200). So this loss is to the centre-holding opponent, not to navigation; no candidate.
+  - VM: deleted the st1/st2 game dirs (11 MB, regenerable).
