@@ -5036,3 +5036,7 @@
   - Method lesson: from now on, write economy budgets as rates (per 100 rounds or per rat-turn), not game totals. A candidate that wins sooner delivers less in total.
   - Its +3 is noted as a near-miss for possible combination; the mechanism behind it is unknown (fewer starved kings, 2 vs 6?).
   - The replica queue after u5a is now u4y (FLOW_HELD 20, basics repair), then u4n, u4z, u4s, u5b, u4w.
+- 05:11: **u5a (HUNGRY 300) block 2** (#154, v4 set 2: 6835-6838, 6851-6854, 6866-6869, 6879-6882) against u4e's set-2 reference.
+  - Block 2: 48 cells, 46 alike, D 2 (+2 -0), t +1.41. Gains: AdamTan12_Finals dirtpassageway B and YokoOno Hike B.
+  - Pooled with block 1: 94 cells, 86 alike, D 8 (+6 -2), net +4, t +1.41. That is between the block-2 bars (reject at t <= 1, accept at t >= 2), so u5a goes to block 3 on v4 set 3.
+  - u4e has no set-3 games, so I'm resubmitting it as the reference and queuing its 16 set-3 scrims. u5a's block 3 follows. The set-3 reference will also serve later candidates' block 3s.
