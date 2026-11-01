@@ -2579,6 +2579,14 @@ public class BotTest {
               && !Baby.glanceDue(500, 489, 10) && !Baby.glanceDue(500, -1000, 10), "glance: only within GLANCE_MEM rounds of a threat, never when 0");
     }
 
+    static void testFullLoad() {
+        check(!Baby.fullLoad(0, false, 40) && !Baby.fullLoad(0, true, 40), "full load: nothing carried, no trip home");
+        check(!Baby.fullLoad(39, false, 40) && !Baby.fullLoad(10, false, 40), "full load: a part load stays out");
+        check(Baby.fullLoad(40, false, 40) && Baby.fullLoad(65, false, 40), "full load: at the load or more, home");
+        check(Baby.fullLoad(10, true, 40), "full load: late, any load goes home");
+        check(Cfg.LOAD_AT >= 0 && Baby.loadAt == Cfg.LOAD_AT, "full load: switch non-negative, the test field mirrors it");
+    }
+
     static void testCarryCap() {
         check(Baby.takeOk(0, 500, 120) && Baby.takeOk(100, 20, 120) && !Baby.takeOk(100, 40, 120) && Baby.takeOk(400, 400, 0),
               "carry cap: empty-handed takes any pile; loaded only within the cap; 0 = no cap");
@@ -3677,6 +3685,7 @@ public class BotTest {
         testKingDodge();
         testBiteGuard();
         testCarryCap();
+        testFullLoad();
         testBabyCap();
         testWalledOff();
         testNearKing();

@@ -32,6 +32,8 @@ public final class Baby {
     static boolean coopAtPick;        // Cfg.FIGHT_POST: the mine was picked during cooperation
     /** Cfg.FIGHT_POST (a field so tests can set it). */
     static int postMargin = Cfg.FIGHT_POST;
+    /** Cfg.LOAD_AT (a field so tests can set it). */
+    static int loadAt = Cfg.LOAD_AT;
     static MapLocation exploreTarget;
     static MapLocation catSeen;       // bottom-left of nearest cat sensed this turn
     static RobotInfo cat;
@@ -1205,7 +1207,10 @@ public final class Baby {
             if (approachCat(cat)) return;
         }
 
-        if ((raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= Cfg.DELIVER_IDLE))) && deliver()) return;
+        if (loadAt > 0) {
+            // full loads: no trip home with a part load; with no pile in sight the gatherer stays at its mine
+            if (fullLoad(raw, late, loadAt) && deliver()) return;
+        } else if ((raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= Cfg.DELIVER_IDLE))) && deliver()) return;
         if (Cfg.COURIER && Comms.numMines == 0 && myMineCount > 0) {
             // we found a mine nobody else knows: squeaks only reach the king from dist2 16, so carry the news home
             MapLocation k = Comms.nearestKing(G.me);
@@ -1968,6 +1973,11 @@ public final class Baby {
         if (rr) return cand[rrSlot % m];
         if (Cfg.MINE_BALANCE) return Cfg.IDLE_SHIFT ? cand[(slot % m + mineShift) % m] : cand[slot % m];
         return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
+    }
+
+    /** Cfg.LOAD_AT: a gatherer carrying raw cheese heads home once it holds at least the load, or late in the game. */
+    static boolean fullLoad(int raw, boolean late, int load) {
+        return raw > 0 && (raw >= load || late);
     }
 
     /** Cfg.ATK_DELIVER: an attacker carrying raw cheese at the threshold or more heads home with it. */

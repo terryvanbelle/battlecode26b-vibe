@@ -423,6 +423,11 @@ public final class Cfg {
      *  top field bots carry 33-41 cheese a transfer to our 24-31 (pipes, safelycontained, sittingducks vs AlexT101 and
      *  abcdezyxwv); our gatherers spend 29-39% of their turns walking to a mine ('M') and 11-19% delivering. */
     public static final int DELIVER_IDLE = 10;
+    /** Full loads (0 = off): a gatherer heads home only once it carries LOAD_AT raw cheese (or late), replacing the
+     *  DELIVER_AT / DELIVER_IDLE rule of the trip home; with a part load and no pile in sight it stays at its mine.
+     *  u4e's field games: our transfers average 27.5 in losses (77% at 10-29) to the opponents' 45.8, our cycle is
+     *  27 cheese per 63 rounds to their 44 per 72, and both sides leave half of a worked mine's cheese unpicked. */
+    public static final int LOAD_AT = 0;
     /** Global cheese below which any rat carrying cheese delivers it before fighting or running errands (0 = off):
      *  31 of our 45 king deaths on the replica were starvation, once with 728 cheese in our rats' paws. */
     public static final int HUNGRY = 0;

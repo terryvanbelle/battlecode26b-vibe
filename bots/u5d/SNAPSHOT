@@ -1,0 +1,6 @@
+name=u5d
+source=bots/ratbot
+source_sha=fbae66275a72
+commit=2bdcc46
+created=2026-11-01 04:38 PST
+change=2026-11-01 04:37 PST: u4e + LOAD_AT 40 (full loads: a gatherer heads home only with 40 raw cheese or late; structural economy doctrine)
