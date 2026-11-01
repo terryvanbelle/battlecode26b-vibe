@@ -4724,7 +4724,7 @@
 - 21:42: **Combat census** (fightx.py, rounds 1-300, per game; W 46, L 50):
   - Enemy rat traps: they lay 13.5 a game in our wins and 19.0 in our losses, and our rats fire 12.1 and 17.6 of them (about 92%). We lay 0 (BABY_RAT_TRAPS is off in u4e). Each trap does 50 damage and stuns 30 rounds.
   - By opponent: AdamTan12_Finals lays 46.2 and we fire 44.8; VarunVejalla 31.7 / 27.0; spsquared 20.1 / 18.8; Icarus 11.9 / 11.2; Xzibit 10.3 / 8.6; YokoOno 8.0 / 6.5; TheComplexMerlin 2.9 / 2.9; collegejunior 0.
-  - Throws: we throw 23.6 (W) and 33.7 (L) times, they throw 15.7 and 32.6. Our throws hit a robot or wall early 5.7 and 14.4 times, theirs 14.4 and 19.0: their throws strike much more often.
+  - Throws: we throw 23.6 (W) and 33.7 (L) times, they throw 15.7 and 32.6. Our thrown rats hit a robot 14.4 and 19.0 times (61%, 56%), theirs 5.7 and 14.4 (36%, 44%). Our throws are the better ones. (A throwHit row belongs to the thrown rat's team. This line first had the two sides swapped.)
   - trapwhere.py (6 dumped matches, 11 losses): 49.0 traps fired on us a lost game. 22.4 fired the round they were laid and 9.7 a round later: reactive traps, laid on a front tile next to the placer as our rat steps in. 94% fired in our rat's own move; 4% on landing from a throw.
   - The victims were mostly fighting: attack 5.6, war 5.9, face 5.4, carry-aim 4.0, flank 3.2 a game; gatherers' errands about 6.
   - **Dodging has been tried five times** and lost each time: RISK_FRESH (t0b), RISK_IN_FIGHT (s8h), FACE_HOLD (u1l), WOUNDED_HP (u1b), RISK_ADAPT (u0u). A detour round fresh enemy fronts costs fights more than it saves, and holding at Chebyshev 2 gives the trapper time.
