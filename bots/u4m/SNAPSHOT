@@ -1,0 +1,6 @@
+name=u4m
+source=bots/ratbot
+source_sha=8e78e1015551
+commit=a012755
+created=2026-10-31 21:43 PDT
+change=u4e + u3d's reactive baby rat trap set (BABY_RAT_TRAPS, TRAP_ADJ, TRAP_SPAWN_FIRST, RAT_TRAP_MIN_CHEESE 500, TRAP_OPEN_TO 150): u4b rebased on the accepted u4e
