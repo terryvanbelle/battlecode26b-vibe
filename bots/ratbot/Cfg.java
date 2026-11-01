@@ -413,6 +413,16 @@ public final class Cfg {
      *  EscapeTheNight: five babies in the king's room chased a pile 3 tiles away through a wall for 110 rounds, each
      *  re-picking it the turn after giving up, while their 19-tile path out was held by one another. */
     public static final int CHEESE_BAN = 0;
+    /** No chase of cheese in a sealed pocket (Seal.java): a pile whose flood fill over tiles not known to be walls
+     *  runs out within SEALED tiles without reaching us (0 = off). learn_your_lesson: four mines sit in walled 5x5
+     *  rooms; 5416 of u4e's 6051 cheese-chase turns (ly1, vs s7d) were toward piles inside them, 42% of its rat turns,
+     *  and u4e lost all 4 field games there with its king starved in 3 (deliveries 2775-3032 to 6079-6575). */
+    public static final int SEALED = 0;
+    /** With SEALED: the fill walks only tiles seen (or, with one symmetry left, whose twin was seen) instead of counting
+     *  unseen tiles as open. A region that runs out at unseen tiles without reaching us is skipped for Seal.OPEN_TTL
+     *  rounds, not marked. Rats see a room's pile through its near wall long before its far wall: in pb5's
+     *  learn_your_lesson game (ly3, vs s7d) 9200 of 12200 cheese-chase turns still aimed inside the rooms. */
+    public static final boolean SEAL_SEEN = false;
     /** CHEESE_BAN only piles behind a wall: the last flow path toward the pile was a detour (longer than
      *  2 * Chebyshev distance + 2) or its search failed. A stall in a crowd at a mine then bans nothing. */
     public static final boolean CHEESE_BAN_WALL = false;

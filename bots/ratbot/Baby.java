@@ -193,6 +193,7 @@ public final class Baby {
         guardTurn();
         if (Cfg.MOAT && !G.coop) Moat.baby(nearestEnemy != null ? nearestEnemy.location : null);
         Debug.mark(9);
+        if (Cfg.SEALED > 0) Seal.work();
         sense2();
     }
 
@@ -404,7 +405,9 @@ public final class Baby {
             if (mi.getCheeseAmount() > 0) {
                 if (los) { if (np < piles.length) piles[np++] = l; continue; }
                 int d = G.me.distanceSquaredTo(l);
-                if (d < bd && (Cfg.CHEESE_BAN == 0 || !bannedCheese(l, Cfg.CHEESE_BAN))) { bd = d; bestCheese = l; }
+                if (d < bd && (Cfg.CHEESE_BAN == 0 || !bannedCheese(l, Cfg.CHEESE_BAN))
+                        && (Cfg.SEALED == 0 || (Sym.mem[l.x + l.y * G.W] & Sym.SEAL) == 0)
+                        && (!Cfg.SEAL_SEEN || !Seal.skipped(l.x + l.y * G.W))) { bd = d; bestCheese = l; }
             } else if (cheeseTarget != null && cheeseTarget.equals(l)) {
                 cheeseTarget = null;
             }
@@ -416,6 +419,17 @@ public final class Baby {
                 if (d < bd && (Cfg.CHEESE_BAN == 0 || !bannedCheese(l, Cfg.CHEESE_BAN)) && !walledOff(G.me, l)) { bd = d; bestCheese = l; }
             }
             if (cheeseTarget != null && walledOff(G.me, cheeseTarget)) cheeseTarget = null;
+        }
+        // SEALED: drop a pile judged sealed; name one not yet judged for the end-of-turn fill (Seal.work)
+        if (Cfg.SEALED > 0) {
+            if (bestCheese != null) {
+                int v = Seal.verdict(bestCheese.x + bestCheese.y * G.W);
+                if (v > 0) bestCheese = null; else if (v < 0) Seal.want(bestCheese);
+            }
+            if (cheeseTarget != null) {
+                int v = Seal.verdict(cheeseTarget.x + cheeseTarget.y * G.W);
+                if (v > 0) cheeseTarget = null; else if (v < 0) Seal.want(cheeseTarget);
+            }
         }
         if (bestCheese != null) {
             if (cheeseTarget == null || G.me.distanceSquaredTo(cheeseTarget) > bd) cheeseTarget = bestCheese;

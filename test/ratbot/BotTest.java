@@ -2096,6 +2096,105 @@ public class BotTest {
         check(Baby.homeHalf(new MapLocation(5, 5)) && !Baby.homeHalf(new MapLocation(14, 14)), "raid: home half");
     }
 
+    static void testSeal() {
+        // a 7x7 wall ring at x, y 4..10 around a 5x5 room (5..9); the rat at (15, 15), outside
+        reset(); W = 20; H = 20; install();
+        me = new MapLocation(15, 15); G.startTurn();
+        for (int i = 4; i <= 10; i++) {
+            Sym.mem[G.idx(i, 4)] = Sym.mem[G.idx(i, 10)] = Sym.mem[G.idx(4, i)] = Sym.mem[G.idx(10, i)] = Sym.SEEN | Sym.WALL;
+        }
+        int saved = Seal.cap;
+        Seal.cap = 30; sealReset();
+        check(!Seal.sealed(new MapLocation(12, 12)), "seal: a pile outside the room is open");
+        check(Seal.sealed(new MapLocation(7, 7)), "seal: a pile in the walled room is sealed");
+        check((Sym.mem[G.idx(5, 9)] & Sym.SEAL) != 0 && (Sym.mem[G.idx(4, 7)] & Sym.SEAL) == 0, "seal: the room's tiles are marked, its walls not");
+        Sym.record(6, 6, false, false, false);
+        check((Sym.mem[G.idx(6, 6)] & Sym.SEAL) != 0, "seal: a fresh sighting keeps the mark");
+        // an unseen ring tile might be open: the room is not sealed
+        sealReset();
+        for (int x = 5; x <= 9; x++) for (int y = 5; y <= 9; y++) Sym.mem[G.idx(x, y)] &= ~Sym.SEAL;
+        Sym.mem[G.idx(10, 7)] = 0;
+        check(!Seal.sealed(new MapLocation(7, 7)), "seal: a gap of unseen tiles leaves the room open");
+        // ...unless its twin under the one symmetry left is a wall; the mirror room gets the mark too
+        Sym.mask = Sym.ROT;
+        Sym.mem[G.idx(19 - 10, 19 - 7)] = Sym.SEEN | Sym.WALL;
+        check(!Seal.sealed(new MapLocation(7, 7)), "seal: an open verdict is kept for a while");
+        round += Seal.OPEN_TTL; G.startTurn();
+        check(Seal.sealed(new MapLocation(7, 7)), "seal: a wall's twin closes the gap");
+        check((Sym.mem[G.idx(19 - 7, 19 - 7)] & Sym.SEAL) != 0, "seal: the twin room is marked");
+        // a room bigger than the cap is not sealed
+        Seal.cap = 20; sealReset();
+        for (int x = 5; x <= 9; x++) for (int y = 5; y <= 9; y++) Sym.mem[G.idx(x, y)] &= ~Sym.SEAL;
+        check(!Seal.sealed(new MapLocation(8, 8)), "seal: a 25-tile room is open under cap 20");
+        // short of bytecodes: the fill pauses, no other fill starts that turn, and it resumes on the next
+        Seal.cap = 30; sealReset();
+        int fills = Seal.fills, paused = Seal.paused;
+        Seal.fakeLeft = Seal.RESERVE + 3;
+        check(!Seal.sealed(new MapLocation(7, 7)) && Seal.paused == paused + 1 && Seal.pend == G.idx(7, 7) + 1, "seal: a fill pauses when short of bytecodes");
+        Seal.fakeLeft = 1 << 20;
+        check(!Seal.sealed(new MapLocation(16, 3)) && Seal.fills == fills + 1, "seal: no second fill in a turn after a pause");
+        round++; G.startTurn();
+        check(Seal.sealed(new MapLocation(7, 7)) && Seal.fills == fills + 1 && Seal.pend == 0, "seal: the paused fill resumes and finishes");
+        Seal.fakeLeft = Seal.RESERVE - 1;
+        Sym.mem[G.idx(13, 13)] &= ~Sym.SEAL;
+        check(!Seal.sealed(new MapLocation(13, 13)) && Seal.fills == fills + 1, "seal: no fill starts short of bytecodes");
+        // SEAL_SEEN: only seen tiles carry the fill; the ring is seen, the room's inside not yet
+        reset(); W = 20; H = 20; install();
+        me = new MapLocation(15, 15); G.startTurn();
+        for (int i = 4; i <= 10; i++) {
+            Sym.mem[G.idx(i, 4)] = Sym.mem[G.idx(i, 10)] = Sym.mem[G.idx(4, i)] = Sym.mem[G.idx(10, i)] = Sym.SEEN | Sym.WALL;
+        }
+        for (int x = 11; x <= 16; x++) for (int y = 11; y <= 16; y++) Sym.mem[G.idx(x, y)] = Sym.SEEN;
+        Sym.mem[G.idx(7, 7)] = Sym.SEEN;
+        boolean savedSeen = Seal.seenOnly;
+        Seal.seenOnly = true; Seal.cap = 30; sealReset();
+        int unknown = Seal.unknown;
+        check(!Seal.sealed(new MapLocation(12, 12)), "seal seen: a pile with a seen path to us is open");
+        check(Seal.sealed(new MapLocation(7, 7)) && Seal.unknown == unknown + 1 && (Sym.mem[G.idx(7, 7)] & Sym.SEAL) == 0,
+              "seal seen: a pile walled off from us by what we have seen is skipped, not marked");
+        check(Seal.skipped(G.idx(7, 7)) && !Seal.skipped(G.idx(12, 12)), "seal seen: the skip is kept for the sense loop");
+        Sym.mem[G.idx(18, 2)] = Sym.SEEN;
+        check(Seal.sealed(new MapLocation(18, 2)), "seal seen: a pile beyond unseen tiles is skipped");
+        Seal.seenOnly = false;
+        check(!Seal.sealed(new MapLocation(18, 3)), "seal: without SEAL_SEEN unseen tiles are open");
+        Seal.seenOnly = true;
+        round += Seal.OPEN_TTL; G.startTurn();
+        check(!Seal.skipped(G.idx(7, 7)), "seal seen: the skip expires");
+        for (int x = 5; x <= 9; x++) for (int y = 5; y <= 9; y++) Sym.mem[G.idx(x, y)] = Sym.SEEN;
+        check(Seal.sealed(new MapLocation(7, 7)) && (Sym.mem[G.idx(5, 5)] & Sym.SEAL) != 0, "seal seen: a fully seen room is sealed and marked");
+        // work(): the pile sense() names is judged at the end of the turn; a paused fill goes on first, then the next
+        Seal.seenOnly = false; sealRoom(); sealReset();
+        int room = G.idx(7, 7), out = G.idx(12, 12);
+        Seal.want(new MapLocation(7, 7)); Seal.want(new MapLocation(12, 12));
+        check(Seal.want == room + 1 && Seal.verdict(room) == -1, "seal work: the first pile named waits for the end of the turn");
+        Seal.fakeLeft = Seal.RESERVE + 3;
+        Seal.work();
+        check(Seal.pend == room + 1 && Seal.want == 0 && Seal.verdict(room) == -1, "seal work: short of bytecodes the fill pauses");
+        Seal.want(new MapLocation(12, 12));
+        round++; G.startTurn(); Seal.fakeLeft = -1;
+        Seal.work();
+        check(Seal.verdict(room) == 1 && Seal.verdict(out) == 0 && Seal.pend == 0 && Seal.want == 0, "seal work: the paused fill finishes, then the next pile is judged");
+        // a fill paused too long is dropped
+        sealRoom(); sealReset();
+        Seal.want(new MapLocation(7, 7)); Seal.fakeLeft = Seal.RESERVE + 3; Seal.work();
+        round += Seal.PEND_MAX + 1; G.startTurn(); Seal.fakeLeft = -1;
+        Seal.work();
+        check(Seal.pend == 0 && Seal.verdict(room) == -1, "seal work: a stale paused fill is dropped");
+        Seal.seenOnly = savedSeen; Seal.cap = saved; sealReset();
+    }
+
+    static void sealReset() { Seal.seen = null; Seal.openT = Seal.openR = null; Seal.openN = 0; Seal.pend = 0; Seal.pendRound = -1; Seal.fakeLeft = -1; Seal.want = 0; }
+
+    /** A fresh 20x20 world: a 7x7 wall ring at x, y 4..10 around a 5x5 room, the rat at (15, 15), every tile seen. */
+    static void sealRoom() {
+        reset(); W = 20; H = 20; install();
+        me = new MapLocation(15, 15); G.startTurn();
+        for (int i = 0; i < 400; i++) Sym.mem[i] = Sym.SEEN;
+        for (int i = 4; i <= 10; i++) {
+            Sym.mem[G.idx(i, 4)] = Sym.mem[G.idx(i, 10)] = Sym.mem[G.idx(4, i)] = Sym.mem[G.idx(10, i)] = Sym.SEEN | Sym.WALL;
+        }
+    }
+
     static void testKingFront() {
         // dirtpassageway (50x50, x flipped): kings (3,26) and (46,26); the centre mine (20,26) has front value 20
         reset(); W = 50; H = 50; install();
@@ -3500,7 +3599,7 @@ public class BotTest {
         testFormation();
         testReportPriority();
         testTrapTile();
-        testKingMine(); testKingFront();
+        testKingMine(); testKingFront(); testSeal();
         testHandMirror(); testCentreMirror();
         testSymElimination();
         testChiral();

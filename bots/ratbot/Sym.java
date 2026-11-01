@@ -17,6 +17,8 @@ public final class Sym {
     public static final int CAT = 256;
     /** A tile a robot held on our flow path (Flow.markHeld, Cfg.FLOW_HELD): searches go around it for a while. */
     public static final int HELD = 512;
+    /** A tile in a sealed pocket (Seal.sealed, Cfg.SEALED): its cheese is never chased. */
+    public static final int SEAL = 1024;
     /** Mine spacing the map validator enforces (GameConstants.MIN_CHEESE_MINE_SPACING_SQUARED). */
     public static final int MINE_SPACING2 = 25;
 
@@ -34,7 +36,7 @@ public final class Sym {
         int i = x + y * G.W;
         int v = SEEN | (wall ? WALL : 0) | (dirt ? DIRT : 0) | (mine ? MINE : 0);
         int old = mem[i];
-        mem[i] = v | (old & (EXP | KING | CAT | HELD));
+        mem[i] = v | (old & (EXP | KING | CAT | HELD | SEAL));
         if (Cfg.BFLOW && ((old ^ v) & (WALL | DIRT)) != 0) BitFlow.mark(x, y, v);
         if ((old & SEEN) != 0 || mask == ROT || mask == HOR || mask == VER) return false;
         int before = mask;
