@@ -1,0 +1,6 @@
+name=u5a
+source=bots/ratbot
+source_sha=1ae8a39b4934
+commit=479b46e
+created=2026-11-01 02:50 PST
+change=2026-11-01 02:51 PST: u4e + HUNGRY 300 (u4c rebased on u4e): any carrier delivers while the bank is under 300

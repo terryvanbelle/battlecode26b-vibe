@@ -1,0 +1,6 @@
+name=u5b
+source=bots/ratbot
+source_sha=c39a1cd3b99d
+commit=479b46e
+created=2026-11-01 02:51 PST
+change=2026-11-01 02:51 PST: u4e + MINE_MIRROR (u4f rebased on u4e): with one symmetry left the king lists the our-half twin of every listed enemy-half mine
