@@ -4838,3 +4838,19 @@
   - Local as1 (u4e vs s7d, seat A; VM dump): u4e won on points with kings 2 to 1, cat damage 0 to 0, 26 tiles dug. Attack moves ('a') took 35% of rat turns, walks to the one mine ('M') 30%, waits at the mine ('W') 27%. At r300 and r800 the attackers stood in the dead end at (7-8, 22-26), aimed at the flip spots (4-6,56) and (53,3) with the symmetry unresolved (sym=7).
   - **u4s = u4e + STALL_CAT 100** (u3q rebased; u3q's block 1 on set 1 had 45 of 48 cells alike) is pre-registered for the screen. The four averystrangespace cells are its inspiring cells.
 - 23:50: VM disk was 99% full (282 MB free) while the replica stores ~2 MB a match. **Deleted 180 of our own replay copies in VM ~/diag26b/rp (ids below 6000, 252 MB)**; the originals are in the local replay store. VM free is now 530 MB.
+
+## 2026-11-01 00:04 PDT: the end-of-turn seal fill, u4r, and the throw-rush losses
+
+- 00:04: **SEALED's fill moved to the end of the turn** (af65f1e). pb6 (seen-only, run inside sense) still overran once at r1768: a fighter's turn, stage -1. Now sense() only reads verdicts and names one pile to judge (Seal.want). Seal.work runs the fill just before sense2, on the bytecodes above RESERVE = SENSE2_LEFT + 500. It pauses there and resumes next turn, and drops a fill still unfinished after PEND_MAX 10 rounds. BotTest 1828/1828. A mutation that drops the leak line fails 3 checks.
+- 00:04: **sq1** (VM, learn_your_lesson seeds 1-3 vs s7d, both seats): u4e won 1 of 6 (delivered 4252-11902). pb5 won 6 of 6 (12113-16781). pb6 won 6 of 6 (12839-16428). Against araid (seed 1) all three won 2 of 2. No overruns anywhere.
+  - **u4r = u4e + SEALED 30** (end-of-turn fill, SEAL_SEEN off) is pre-registered as a basics repair: the battery row "movement: no unreachable target". Its inspiring cells are Xzibit learn_your_lesson A/B. Its screen kr1 and a learn_your_lesson check sq2 are running on the VM. SEAL_SEEN stays a possible follow-up.
+- 00:04: **Loss census, u4e's 49 lost field games** (sets 1-2): king starved about 24, bitten about 14, early throw rush 4 (knifefight A r90, thunderdome A/B r139/r120, tiny A r133), points 7 (averystrangespace x4, fullofsecrets B, learn_your_lesson B, superioristhmus B).
+- 00:04: **Thunderdome throw rush** (6079 g2, u4e as A vs Merlin, lost r139; full dump; scratch throwrush.py, whyb.py). The kings start 8 apart.
+  - Both sides grab enemy rats and throw them at 42 a hit. We threw 37 times: 5 hits on their king in r22-41 (600 to 364 HP), 27 on rats. They threw 80 times: 15 hits on our king in r74-139, which killed it, and 56 on rats.
+  - All 15 hits on our king were our own rats, grabbed beside it and thrown into it.
+  - Our attackers (spawn index 4-15) had 11 rats within Chebyshev 4 of their king at r20-39. Their king walked off to (31,13), and by r60-79 none of ours were within 8 of it. The attackers were dead (52 of our rats died to their 23), and the rest gathered near home.
+  - The defences for this class have all been tried: AMMO_AWAY (s8y, s9v, u1v: rejected on the replica) and GUARD_KING_R (s8d, s9w, u2w: rejected). No new candidate from it yet.
+- 00:04: The clockwisdom repro cwk1 (VM, u4e vs s7d) was a repeat of 22:21's cw1. u4e delivered 40 to 1160 and lost to starvation at r930. That class is u4q's (ATK_DELIVER 50).
+- 00:04: Disk deletions since 23:50, all our own regenerable data:
+  - VM: the temporary full dumps tmpdc/ff523301c9a011ccf01d (field 6058, 6.2 MB), 9aac59a7c43e84eba14a (field 6079, 4.1 MB) and 2cfbf29a54101a99707d (field 6060, 9.9 MB); rp/6058.bc26 (my copy of that replay); and ~/diag26b/cwk1 (8.7 MB).
+  - Local: build/kf1 (916K), build/ly2 and build/ly3 (22 MB): dumps of local probe games.
