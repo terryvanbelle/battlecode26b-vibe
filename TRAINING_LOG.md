@@ -4506,3 +4506,15 @@
     1747/1747; unit tests exit 0). Overrun check pf1 (u4e vs araid on mercifullattice and learn_your_lesson, both
     seats) is running. It goes on the replica ahead of u4c if pf1 holds; as a basics repair it accepts at t >= 0
     after block 2.
+- 18:43: **u4e's overrun check pf1** (u4e vs araid on mercifullattice and learn_your_lesson, both seats): 0 king
+  overruns in all four games. ko1's u3v had 915 on mercifullattice and about 790 on learn_your_lesson as seat B (0
+  as A). u4e's king turns run 10-13k on mercifullattice with a peak of 16640. The 3000-left floor, which cuts in at
+  17000 used, therefore did not fire at the sampled rounds: the saving is the cheaper test itself.
+  - Results are as in ko1. The seat-A learn_your_lesson game, where u3v never overran, came out the same game (lost
+    at r1322), as expected when the fast test gives the same answers. The falsifier passed. Screen pf2 (kvs cells)
+    is running.
+  - Field overruns are all the king's: in the staged field replays (overruns_vm.py) 1296 of 1296 are KING, none
+    are baby rats.
+  - **VM disk:** I deleted 12 unreferenced dump-cache dirs (198 MB, the ko1, ko2 and pf1 dumps, logged in
+    ~/diag26b/dcache_deleted.txt). They are our own and can be regenerated from the kept replays. VM free went from
+    256 MB to 455 MB. I added ~/diag26b/u3z_b2.txt so the u3z block-2 dumps (5908-5923) stay referenced.
