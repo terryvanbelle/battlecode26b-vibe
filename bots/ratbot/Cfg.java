@@ -592,6 +592,11 @@ public final class Cfg {
      *  the king for 1266 rounds); KING_BLOCK fixed that but lost on the replica (net -5) and in self-play (net -4). */
     public static final boolean KING_FLOW = false;
     public static final int FLOW_JAM_HOLD = 12;
+    /** A flow path dropped because a robot held its next tile past FLOW_HOLD turns: keep that tile out of searches
+     *  for FLOW_HELD rounds (0 = off), so the new search routes around the robot instead of rebuilding the same path.
+     *  cheesebottles (da1, u4g B): three empty rats in a dead-end strip under two kings, each planning through the
+     *  next rat's tile, rebuilt the same path every 6 turns for 230-270 rounds; the inner one's only exit was behind them. */
+    public static final int FLOW_HELD = 0;
     /** Path cost of a dirt tile (a dig is 5 cheese and 2.5 turns of action cooldown, plus the step). */
     public static final int DIG_COST = 4;
     /** Random samples per explore target, taking the first never-seen tile. */

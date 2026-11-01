@@ -55,7 +55,7 @@ public class BotTest {
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0; Sym.listDone = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
-        Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE;
+        Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE; Flow.held1 = 0;
         Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST; King.faceSpawn = Cfg.SYM_FACE;
         Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false; King.laneN = 0; King.lane0 = 0;
         Nav.swapHold = Cfg.SWAP_HOLD; Nav.swapFrom = null; Nav.swaps = 0; Baby.nearestEnemy = null;
@@ -583,6 +583,48 @@ public class BotTest {
             Flow.request(t);
             check(!f && Flow.building && Flow.builds == b0 + 1 && Flow.hits == 3, "flow cache: a wall on the path forgets it (" + f + ", " + Flow.hits + ")");
         }
+    }
+
+    /** Cfg.FLOW_HELD: a strip y 5, x 1-4, walled above and below, open to the west at x 1; its east end (5,5) is a wall
+     *  the rat at (2,5) has not seen. Toward (12,5) the search goes east through the strip; with (3,5) held (an ally
+     *  stuck there) it goes out west and round. A held tile beside the target is not kept out; it outlasts a re-sense
+     *  and expires after FLOW_HELD rounds. Both search directions. */
+    static void testFlowHeld() throws GameActionException {
+        for (int rv = 0; rv < 2; rv++) {
+            reset(); W = 20; H = 12; install();
+            Flow.rev = rv == 1;
+            for (int x = 1; x <= 5; x++) { walls.add(new MapLocation(x, 4)); walls.add(new MapLocation(x, 6)); }
+            walls.add(new MapLocation(5, 5));
+            for (MapLocation w : walls) if (w.x <= 4) Sym.record(w.x, w.y, true, false, false);
+            MapLocation t = new MapLocation(12, 5);
+            me = new MapLocation(2, 5); G.startTurn();
+            Flow.request(t); Flow.work(0);
+            boolean east = Flow.ready(t) && Flow.path[1] == G.idx(3, 5);
+            Flow.markHeld(G.idx(3, 5));
+            boolean bit = (Sym.mem[G.idx(3, 5)] & Sym.HELD) != 0 && Flow.held1 == G.idx(3, 5) + 1;
+            Flow.drop();
+            Flow.request(t);
+            Flow.block = Flow.heldBlock(Flow.block);
+            Flow.work(0);
+            boolean ok = Flow.ready(t), west = ok && Flow.path[1] % W == 1, avoids = ok;
+            for (int i = 0; ok && i < Flow.plen; i++) if (Flow.path[i] == G.idx(3, 5)) avoids = false;
+            check(east && bit && west && avoids, "flow held: a held strip tile sends the search out the open end (rev " + rv + ": "
+                  + east + ", " + bit + ", " + west + ", " + avoids + ")");
+        }
+        reset(); W = 20; H = 12; install();
+        Flow.tx = 12; Flow.ty = 5;
+        Flow.markHeld(G.idx(11, 5));
+        check(Flow.held1 == 0 && (Sym.mem[G.idx(11, 5)] & Sym.HELD) == 0, "flow held: a tile beside the target is not kept out");
+        Flow.markHeld(G.idx(6, 5));
+        Sym.record(6, 5, false, false, false);
+        int until = Flow.heldUntil;
+        boolean kept = (Sym.mem[G.idx(6, 5)] & Sym.HELD) != 0 && (Flow.heldBlock(Sym.WALL) & Sym.HELD) != 0;
+        Flow.markHeld(G.idx(7, 5));
+        boolean moved = (Sym.mem[G.idx(6, 5)] & Sym.HELD) == 0 && (Sym.mem[G.idx(7, 5)] & Sym.HELD) != 0;
+        round = Flow.heldUntil + 1; G.startTurn();
+        int b = Flow.heldBlock(Sym.WALL);
+        check(kept && moved && until == 1 + Cfg.FLOW_HELD && b == Sym.WALL && Flow.held1 == 0 && (Sym.mem[G.idx(7, 5)] & Sym.HELD) == 0,
+              "flow held: kept through a re-sense, one tile at a time, cleared once expired (" + kept + ", " + moved + ", " + b + ")");
     }
 
     /** Breakout: a walled room (x 3-9, y 3-9) whose one exit is a dirt tile at (9,6); inside and the ring are seen,
@@ -3320,6 +3362,7 @@ public class BotTest {
         testGrabMicro();
         testFlowProgress();
         testFlowCache();
+        testFlowHeld();
         testFlowRev();
         testFlowFast();
         testFlowW();

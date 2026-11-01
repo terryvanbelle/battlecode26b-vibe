@@ -149,6 +149,7 @@ public final class Flow {
         tgt = t;
         tIdx = G.idx(t);
         block = (Cfg.KING_BLOCK || Cfg.KING_FLOW) && !Nav.atKing(t) ? Sym.WALL | Sym.KING : Sym.WALL;
+        if (Cfg.FLOW_HELD > 0) block = heldBlock(block);
         tx = t.x; ty = t.y;
         builtRound = -1;
         building = true;
@@ -717,6 +718,26 @@ public final class Flow {
 
     static void drop() { builtRound = -1; tgt = null; }
 
+    /** Cfg.FLOW_HELD: 1 + the path tile a robot held (its path dropped), 0 for none; kept out of searches until
+     *  round heldUntil. */
+    static int held1, heldUntil;
+
+    /** Cfg.FLOW_HELD: keep tile i out of searches for FLOW_HELD rounds (one tile at a time; not beside the target). */
+    static void markHeld(int i) {
+        if (held1 > 0) Sym.mem[held1 - 1] &= ~Sym.HELD;
+        held1 = 0;
+        if (Math.max(Math.abs(i % G.W - tx), Math.abs(i / G.W - ty)) <= 1) return;
+        Sym.mem[i] |= Sym.HELD;
+        held1 = i + 1;
+        heldUntil = G.round + Cfg.FLOW_HELD;
+    }
+
+    /** Cfg.FLOW_HELD: block mask b for a new search, plus the held tile while it lasts (an expired one is cleared). */
+    static int heldBlock(int b) {
+        if (held1 > 0 && G.round > heldUntil) { Sym.mem[held1 - 1] &= ~Sym.HELD; held1 = 0; }
+        return held1 > 0 ? b | Sym.HELD : b;
+    }
+
     /** Take a cached path toward t (or one that started beside t, walked backwards) that passes beside us: the path
      *  becomes ready from its farthest tile beside us. False when none fits. */
     static boolean adopt(MapLocation t) {
@@ -841,7 +862,7 @@ public final class Flow {
                     if (s != null) Nav.step(s);
                     return true;
                 }
-                held = 0; ends[1]++; drop(); return false;
+                held = 0; ends[1]++; if (Cfg.FLOW_HELD > 0) markHeld(nx); drop(); return false;
             }
             return true;
         }
