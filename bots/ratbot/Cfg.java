@@ -545,6 +545,12 @@ public final class Cfg {
     /** A cat within dist2 CAT_DEFEND_R2 of one of our kings draws every rat that sees it, gatherers included
      *  (0 = off): attack_on_cat, a lone cat scratched our king to death in 113 rounds while 17 gatherers kept away. */
     public static final int CAT_DEFEND_R2 = 0;
+    /** A rat on a cat branch (CAT_DEFEND, a FIGHT rat's seen or known cat) whose walk to the cat has stalled CAT_REACH
+     *  turns (Nav.stall), or whose way there is a known detour (Flow.detour), leaves cats alone for CAT_REACH_TTL
+     *  rounds (0 = off). fullofsecrets 6134 B: a cat at 410 hp pounced over the wall row above our king at r110 and sat
+     *  beside our nearest mine to r2000; 10908 of our 38592 rat turns went to the cat branch (5169 stalled under the
+     *  wall) and the jam in the king's pocket stalled 3909 delivery turns; we delivered 3865 to their 9575. */
+    public static final int CAT_REACH = 0, CAT_REACH_TTL = 100;
     public static final boolean DIG = true;
     /** digToward before flow: one-tile dirt bands (cheesefarm's diagonal stripes) are dug through at once. */
     public static final boolean DIG_FIRST = true;

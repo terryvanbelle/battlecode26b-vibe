@@ -2096,6 +2096,35 @@ public class BotTest {
         check(Baby.homeHalf(new MapLocation(5, 5)) && !Baby.homeHalf(new MapLocation(14, 14)), "raid: home half");
     }
 
+    static void testCatReach() {
+        reset(); W = 20; H = 20; install();
+        round = 100; me = new MapLocation(5, 3); G.startTurn();
+        int saved = Baby.reachTurns;
+        MapLocation c = new MapLocation(5, 6);
+        Baby.reachTurns = 0; Baby.catBanUntil = -1; Nav.stall = 50;
+        Baby.catStalled(c);
+        check(Baby.catReach() && Baby.catBanUntil == -1, "cat reach: off, a stalled walk keeps the cat");
+        Baby.reachTurns = 30; Nav.stall = 29;
+        Baby.catStalled(c);
+        check(Baby.catReach(), "cat reach: a short stall keeps the cat");
+        Nav.stall = 30;
+        Baby.catStalled(c);
+        check(!Baby.catReach() && Baby.catBanUntil == 100 + Cfg.CAT_REACH_TTL, "cat reach: a long stall closes the cat branches");
+        round = 100 + Cfg.CAT_REACH_TTL; G.startTurn();
+        check(Baby.catReach(), "cat reach: the ban runs out");
+        Nav.stall = 0; Flow.failTgt = new MapLocation(5, 7); Flow.failRound = G.round;
+        Baby.catStalled(c);
+        check(!Baby.catReach(), "cat reach: a failed search toward the cat closes the cat branches");
+        Flow.failTgt = null; Baby.catBanUntil = -1;
+        Flow.lastTgt = c; Flow.lastLen = 9;
+        Baby.catStalled(c);
+        check(Baby.catReach(), "cat reach: a short path keeps the cat");
+        Flow.lastLen = 10;
+        Baby.catStalled(c);
+        check(!Baby.catReach(), "cat reach: a detour closes the cat branches");
+        Flow.lastTgt = null; Baby.catBanUntil = -1; Baby.reachTurns = saved; Nav.stall = 0;
+    }
+
     static void testSeal() {
         // a 7x7 wall ring at x, y 4..10 around a 5x5 room (5..9); the rat at (15, 15), outside
         reset(); W = 20; H = 20; install();
@@ -3602,7 +3631,7 @@ public class BotTest {
         testFormation();
         testReportPriority();
         testTrapTile();
-        testKingMine(); testKingFront(); testSeal();
+        testKingMine(); testKingFront(); testSeal(); testCatReach();
         testHandMirror(); testCentreMirror();
         testSymElimination();
         testChiral();

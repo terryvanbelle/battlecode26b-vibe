@@ -33,6 +33,8 @@ public final class Baby {
     static MapLocation catSeen;       // bottom-left of nearest cat sensed this turn
     static RobotInfo cat;
     static int catSeenRound = -100;
+    /** CAT_REACH: no cat branch before this round; reachTurns is Cfg.CAT_REACH (a field, so tests can set it). */
+    static int catBanUntil = -1, reachTurns = Cfg.CAT_REACH;
     static MapLocation lastCatTarget;
 
     // mines this rat has sensed (to report to kings)
@@ -1160,7 +1162,7 @@ public final class Baby {
         int raw = rc.getRawCheese();
         boolean late = G.round > 1960;
 
-        if (Cfg.CAT_DEFEND_R2 > 0 && cat != null && catAtKing(cat.location) && approachCat(cat)) { why = 'g'; return; }
+        if (Cfg.CAT_DEFEND_R2 > 0 && cat != null && catReach() && catAtKing(cat.location) && approachCat(cat)) { why = 'g'; return; }
         // keep gatherers out of cat reach
         if (cat != null && role == GATHER && catDist4(cat.location, G.me) <= 4 * Cfg.GATHER_CAT_DIST) {
             // flee the cat's centre (its location is the 2x2 body's low corner, which mirrors to the far corner)
@@ -1193,7 +1195,7 @@ public final class Baby {
         if (!G.coop && role == FIGHT && Cfg.FORT_R > 0 && fort()) { why = 'h'; return; }
         Debug.mark(16);
         why = 'g';
-        if (cat != null && role == FIGHT) {
+        if (cat != null && role == FIGHT && catReach()) {
             if (approachCat(cat)) return;
         }
 
@@ -1223,8 +1225,8 @@ public final class Baby {
             return;
         }
         if (role == FIGHT) {
-            MapLocation ct = knownCat();
-            if (ct != null) { Nav.goTo(ct); return; }
+            MapLocation ct = catReach() ? knownCat() : null;
+            if (ct != null) { Nav.goTo(ct); catStalled(ct); return; }
             if (Cfg.RAID && raider && rc.getHealth() >= Cfg.RAID_HP && raid()) { why = 'z'; return; }
         }
         if (scouting()) {
@@ -1904,7 +1906,17 @@ public final class Baby {
             }
         if (best == null) return false;
         Nav.goTo(best);
+        catStalled(best);
         return true;
+    }
+
+    /** CAT_REACH: the cat branches are open (no ban running). */
+    static boolean catReach() { return reachTurns == 0 || G.round >= catBanUntil; }
+
+    /** CAT_REACH: after a step toward the cat at t, a walk stalled reachTurns turns or known to be a detour closes the
+     *  cat branches for CAT_REACH_TTL rounds. */
+    static void catStalled(MapLocation t) {
+        if (reachTurns > 0 && (Nav.stall >= reachTurns || Flow.detour(t))) catBanUntil = G.round + Cfg.CAT_REACH_TTL;
     }
 
     static MapLocation pickMine() {
