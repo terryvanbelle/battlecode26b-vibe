@@ -2586,6 +2586,8 @@ public class BotTest {
             check(Baby.blindHurt(80, 100, none, Team.B) && Baby.blindHurt(80, 100, ally, Team.B), "blind: hurt with nothing hostile in view");
             check(!Baby.blindHurt(100, 100, none, Team.B) && !Baby.blindHurt(100, 0, none, Team.B), "blind: not when unhurt or on the first turn");
             check(!Baby.blindHurt(80, 100, cat, Team.B) && !Baby.blindHurt(80, 100, foe, Team.B), "blind: not with a cat or an enemy in view");
+            check(Baby.catHit(20, 20) && Baby.catHit(40, 20) && Baby.catHit(10, 0) && !Baby.catHit(0, 0), "blind: a scratch's loss, or any loss at step 0");
+            check(!Baby.catHit(10, 20) && !Baby.catHit(50, 20) && !Baby.catHit(60, 20) && !Baby.catHit(0, 20), "blind: not a bite's, a trap's or none");
         }
     }
 

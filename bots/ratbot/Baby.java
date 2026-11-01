@@ -66,7 +66,7 @@ public final class Baby {
         Debug.mark(1);
         sense();
         if (Cfg.SYM_MINELIST && Flow.left() > Cfg.BC_OPTIONAL) Sym.listCheck(Comms.mines, Comms.numMines, false);
-        if (Cfg.CAT_BLIND && rc.isTurningReady() && blindHurt(rc.getHealth(), hpEnd, rc.senseNearbyRobots(-1, null), G.them)) glance();
+        if (Cfg.CAT_BLIND && rc.isTurningReady() && catHit(hpEnd - rc.getHealth(), Cfg.CAT_BLIND_DMG) && blindHurt(rc.getHealth(), hpEnd, rc.senseNearbyRobots(-1, null), G.them)) glance();
         RobotInfo[] robots = rc.senseNearbyRobots(-1, null);
         seen = robots;
         RobotInfo enemyKing = null, enemy = null;
@@ -212,6 +212,9 @@ public final class Baby {
 
     /** Cfg.CAT_BLIND: our health at the end of our last turn (0 before the first). */
     static int hpEnd;
+
+    /** Cfg.CAT_BLIND_DMG: a health loss that may be a cat's (step, or twice it; any loss when step is 0). */
+    static boolean catHit(int loss, int step) { return step == 0 ? loss > 0 : loss == step || loss == 2 * step; }
 
     /** Cfg.CAT_BLIND: health fell below last (the end of our last turn) and no cat or enemy robot is in view. */
     static boolean blindHurt(int hp, int last, RobotInfo[] robots, Team them) {

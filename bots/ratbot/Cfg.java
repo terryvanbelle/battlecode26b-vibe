@@ -373,6 +373,10 @@ public final class Cfg {
      *  u4e: 61% of the cheese loaded babies lost to cats in starved losses went with babies that had no sight of the
      *  cat on any of their last 3 turns, many scratched at dist2 1-2 from behind. */
     public static final boolean CAT_BLIND = false;
+    /** CAT_BLIND fires only on a health loss of CAT_BLIND_DMG or twice it since our last turn (0 = any loss). A cat's
+     *  scratch is 20; a bite takes 10, a throw 10 + 4 a tile, a rat trap 50, and a pounce kills. u5e (any loss) cut
+     *  cat deaths 11% but picks per rat-turn 8.5%. */
+    public static final int CAT_BLIND_DMG = 0;
     /** Bite cheese (c = k*k gives +k damage), only when it makes the bite a kill: a king pays up to KING_BITE_MAX
      *  above KING_BITE_FLOOR, a baby up to FINISH_K*FINISH_K above FINISH_FLOOR. */
     public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;

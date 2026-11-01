@@ -1,0 +1,6 @@
+name=u5f
+source=bots/ratbot
+source_sha=53f7685978e6
+commit=4f707ce
+created=2026-11-01 06:11 PST
+change=2026-11-01 06:11 PST: u4e + CAT_BLIND + CAT_BLIND_DMG 20 (a baby that lost exactly 20 or 40 health with no cat or enemy in view turns to face back before it senses)
