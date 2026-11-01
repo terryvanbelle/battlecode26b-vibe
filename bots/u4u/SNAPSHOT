@@ -1,0 +1,6 @@
+name=u4u
+source=bots/ratbot
+source_sha=55098b5da96a
+commit=cefb80c
+created=2026-11-01 00:58 PDT
+change=2026-11-01 00:58 PDT: DIG_COST 2 (dirt path cost 4 to 2; = probe pb7)
