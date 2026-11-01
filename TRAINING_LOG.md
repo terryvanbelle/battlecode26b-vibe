@@ -4694,3 +4694,15 @@
   - averystrangespace: 24-27%, nearly all attackers with failed searches (14.5k and 16.5k). RUN: 2.5-4.4%, attackers. Both point at a target nobody can reach.
   - EscapeTheNight: 21-22% stalled, nearly all 'M' (heading to a mine), but with searches that succeeded (~550 with a failure). rose: 10-12%, M and a.
   - So a "BitFlow when A* fails" fallback would mostly move pitted attackers. It would not fix EscapeTheNight's mine queue, nor the one-known-mine economy on averystrangespace. Not built for now. The census is the baseline if it comes back.
+
+## 2026-10-31 21:20 PDT: u4e accepted (basics repair, king bytecodes); reign plan
+
+- 21:20: **u4e accepted over u3v** (replica #145).
+  - Block 2 (v4 set 2: 6088-6091, 6098-6101, 6114-6117, 6131-6134) vs u3v's set-2 games: 48 cells, 47 alike, D 1 (lost AdamTan12_Finals attack_on_cat B), net -1, t -1.00.
+  - Pooled over blocks 1-2: 94 cells, 92 alike, D 2 (+1 -1), net 0, t 0.00. A basics repair accepts at pooled t >= 0 after block 2.
+  - Field check of the mechanism (kingovr_all.py): 0 king overruns on mercifullattice A/B and learn_your_lesson A/B, max 18.3k bytecodes over 12 games. u3z's games had ~1279 on those maps.
+  - progress/ refresh started (owner rule).
+- Reign plan for u4e:
+  - References: u4e's own set-1 games (6021-6022, 6025-6026, 6039-6042, 6058-6061, 6077-6080) and set-2 games (the block above). These are its accepting sets, but it was crowned at net 0 with 92 of 94 cells the same as u3v's, so the winner's curse is negligible there. Set 3 needs a u4e reference before any candidate is scored on it.
+  - Queued candidates were built on u3v without PLUG_FAST, so each is rebased on u4e under a new codename before it is submitted. PLUG_FAST changed no local screen cell (pf2 D 0), so their screens carry over.
+  - First up: u4g's DELIVER_ANCHOR 3 on u4e, then u4j's PEACE + MINE_ANY + MINE_TIES on u4e.
