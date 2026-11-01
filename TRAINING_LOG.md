@@ -4598,3 +4598,13 @@
 - 19:59: u4h = u3v + FLOW_HELD 20. Diag dh1 started: u4h vs araid on da1's six maps (the da1 u3v games are the
   control; local games are deterministic, as mm2 and da1 gave identical u3v numbers), plus TheHeist and rose for both
   builds; jobs 1, BC_KEEP. u4e's replica block 1 is at 4 of 16.
+- 20:03: VM disk deletion: free space had fallen to 382 MB (da1's 24 replay dumps, 372 MB). I retired six
+  analysis lists for settled candidates to ~/diag26b/retired/ (rh1_u3h, u3c_12, hd1_u3g, ud1_u3d, ks1_u3e, ma2_u3c),
+  then deleted the dumps that were now unreferenced and over 3 h old: 140 dump dirs, about 1.25 GB, all regenerable from
+  their replays (names in ~/diag26b/dcache_deleted.txt). VM free is now 1.6 GB.
+- 20:03: Xzibit (3-9, worst in-band record): all 9 losses are king kills, each map lost in both seats (canyoudig r285-321,
+  starvation r482-556, learn_your_lesson, ZeroDay). In r0-50 we spend 1638 (30.5 spawns, about 41 each, plus 198 on
+  defensive cat traps) to their 782 (20 spawns, about 28 each). The early throw exchange is even, but our refills cost
+  more because our live count is higher. From r200 we bring in 180-240 per 100 rounds with 13-19 babies to their
+  360-450 with 11-12, and the king's 200 per 100 rounds empties the bank. Rush limits were all tried before (RUSH_UNTIL,
+  RUSH_LIFE, RUSH_BURN, RUSH_BAN, RUSH_TO 12).
