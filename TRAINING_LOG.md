@@ -4648,3 +4648,12 @@
 - 20:38: u4i = u3v + FACE_REACH (new switch; Baby.reach1, a test in BotTest, 1798/1798; unit tests exit 0).
   Pre-registered in attempts.csv. Diag fq1 (22 cells: u4i vs araid on EscapeTheNight, rose, fullofsecrets, RUN,
   averystrangespace, evileye, Stash, pipes, both seats; u3v on the last three new maps) is running, replays kept.
+- 20:42: How u3z's 45 field losses ended (howend/kingkill): 40 by king kill, of which 21 starvation (bank about 0 at
+  R-40, 0-1 babies left), 15 bites, 3 throw hits, 1 cat scratch. Opening economy (openecon.py, rounds.tsv engBabies
+  and bank; medians by opponent, us/them): the bots we lose to keep far bigger banks. Xzibit (3-9) r200 476/1278 and
+  r400 523/1321; TheComplexMerlin (4-8) r200 735/1380 and r400 296/1305; collegejunior (6-6) r400 882/1525. They run 16
+  babies to our 20. In collegejunior's learn_your_lesson win over us (5918 g2), they spawn nothing until about r100
+  (bank 2300) and keep 1400-2000 all game. Our bank sits at 250-350 from r400, under SPAWN_FLOOR's reach, so dead
+  babies aren't replaced (20 to 1 by r900). A bank gap that tracks the result is likely a consequence (the r0-50 rush
+  spend: 30 spawns to Xzibit's 20). Rush size is already bracketed on the replica (RUSH_TO 12 net -7, RUSH_TO 20
+  net -3), so no tuning candidate; kept as context for an economy swing.
