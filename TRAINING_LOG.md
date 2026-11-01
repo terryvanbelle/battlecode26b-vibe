@@ -4625,3 +4625,17 @@
   rat-turns, against D(1 + C/100) walking. In wins we spend about 1620 baby-turns a game holding 300+ cheese, mostly
   6-20 from our king (rich maps). In losses it's about 140 a game: their loads are light (1-29: 1580, 30-99: 1080 turns
   a game). A ferry would speed rich wins, not flip losses. Logged as an idea, not built.
+
+## 2026-10-31 20:31 PDT: u4e block 1 passes; u4h diag mixed, to the screen
+
+- 20:31: u4e (PLUG_FAST, a bytecode basics repair) block 1 on the replica (#145, set 1, 6021-6080): 48 cells, 47 the
+  same as u3v's, D 1 (gained Xzibit attack_on_cat B), net +1, t +1.00. Block 1 rejects only at t <= 0, so block 2
+  (set 2) is queued; a basics repair accepts at pooled t >= 0 after block 2.
+- 20:31: u4h (FLOW_HELD 20) diag dh1 vs u3v, each vs araid: wins 9 = 9 of the 12 da1 cells and 2 = 2 on
+  TheHeist/rose (gained rose B, lost TheHeist A by 865 to 900 xfer at r411). Robot-hold drops 6577 to 3139 (rose 3729
+  to 467). Stuck rounds 22864 to 15384 (rose 10485 to 316). On the 12 da1 cells stuck rounds rose from 12222 to 14764:
+  pipes went 1398 to 4511, nearly all delivery, because a held tile in a 1-wide pipe sends the next search on a long
+  detour. Xfer 149.8k to 145.0k (-3%, mostly EscapeTheNight 19.1k to 13.0k, which also fell under u4g). By the letter,
+  the fewer-xfer clause of the falsifier is hit. The aimed-at jam (rose's corridor) is gone, so it goes to the screen
+  qh1 as mixed. If it reaches the replica and a later fix is needed: skip the hold when the held tile has no free
+  side neighbour (a pipe).
