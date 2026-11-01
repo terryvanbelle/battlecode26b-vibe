@@ -4657,3 +4657,9 @@
   babies aren't replaced (20 to 1 by r900). A bank gap that tracks the result is likely a consequence (the r0-50 rush
   spend: 30 spawns to Xzibit's 20). Rush size is already bracketed on the replica (RUSH_TO 12 net -7, RUSH_TO 20
   net -3), so no tuning candidate; kept as context for an economy swing.
+- 20:50: **u4j pre-registered** (structural): u3v + PEACE + MINE_ANY + MINE_TIES, built by combining the two replica near-misses (TRAINING_ALGORITHM §3).
+  - u3z (PEACE) stopped at block 3 with pooled t 1.46 (net +7 over 144 cells). u3c (MINE_ANY + MINE_TIES on u2g) ended block 4 at pooled t 1.41 (net +6 over 176).
+  - Their gains fall on different cells, and the mechanisms meet. PEACE keeps cooperation going, and during it the enemy-half and axis mines are not fought over. So the spread can turn the longer peace into cheese (in-band losses: they picked 46 per 100 rat-turns to our 24).
+  - Falsifier: the replica block bars, or a screen t <= -1.5. Also falsified if, in the field blocks, we open the war in any game, or pickups before the war are no higher than u3z's.
+  - Its screen pm1 (kvs cells, control u3v) starts when qh1 frees the VM. bots/u4h was never committed; it goes in now with u4j.
+  - Replica queue after u4e: u4g, u4c, u4f, u4a, u4b (the order set at 19:38), then u4j, u4h and u4i as their local checks pass.

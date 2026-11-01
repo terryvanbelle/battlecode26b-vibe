@@ -1,0 +1,6 @@
+name=u4j
+source=bots/ratbot
+source_sha=d196928e5ca8
+commit=6236215
+created=2026-10-31 20:49 PDT
+change=u3v + PEACE + MINE_ANY + MINE_TIES: the two replica near-misses combined (u3z PEACE, pooled t 1.46; u3c MINE_ANY + MINE_TIES on u2g, pooled t 1.41): we never end cooperation, and gatherers spread over every known mine, either half and the axis

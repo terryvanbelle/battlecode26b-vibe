@@ -1,0 +1,6 @@
+name=u4h
+source=bots/ratbot
+source_sha=81136e242e88
+commit=af696e7
+created=2026-10-31 19:58 PDT
+change=FLOW_HELD 20: a path tile a robot held past FLOW_HOLD is kept out of the next searches for 20 rounds (u3v recipe otherwise)
