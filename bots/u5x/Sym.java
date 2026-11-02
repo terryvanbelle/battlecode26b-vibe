@@ -75,7 +75,7 @@ public final class Sym {
     static boolean fillDirty;
 
     public static boolean fillDue() { return fillAt < mem.length || fillDirty || mask != fillMask; }
-    /** Bytecodes backfill leaves for the rest of the turn (16 tiles cost at most ~16 fills, ~2.4k). */
+    /** Bytecodes backfill leaves for the rest of the turn. */
     static final int FILL_LEFT = 6000;
 
     public static void backfill(int n) {
@@ -84,8 +84,9 @@ public final class Sym {
         int[] mm = mem;
         int end = Math.min(mm.length, fillAt + n), W = G.W;
         int i = fillAt;
-        for (; i < end; i++) {
-            if ((i & 15) == 0 && Flow.left() < FILL_LEFT) break;
+        for (int k = 0; i < end; i++, k++) {
+            // checked on entry and every 8 tiles (8 fills under mask 7 cost ~2.4k), counted from the call's first tile
+            if ((k & 7) == 0 && Flow.left() < FILL_LEFT) break;
             int v = mm[i];
             if ((v & SEEN) != 0 && (v & (WALL | DIRT)) != 0) fill(i % W, i / W, v & (WALL | DIRT));
         }
