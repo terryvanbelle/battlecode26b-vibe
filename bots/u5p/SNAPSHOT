@@ -1,0 +1,6 @@
+name=u5p
+source=bots/ratbot
+source_sha=b5bbca25b0f4
+commit=494cbc3
+created=2026-11-02 03:21 PST
+change=03:21 PST: u4s + CARRY_BITE 60: an enemy baby carrying raw cheese ranks in the bite order as if up to 60 health weaker (never ahead of a rat carrying one of ours); a killed rat drops its cheese

@@ -536,6 +536,10 @@ public final class Cfg {
      *  goes to traps while the fight is already on) and gained the far ones (Stash, arrows, DefaultMedium,
      *  superioristhmus). In u4s's in-band losses 12.1 of our rats a game die to enemy traps, theirs 0 to ours. */
     public static final int TRAP_DIST = 0;
+    /** Bite order counts loot (0 = off): an enemy baby carrying raw cheese ranks as if up to CARRY_BITE health weaker
+     *  (never ahead of a rat carrying one of ours), since a rat killed drops its cheese where it dies. u4s's in-band
+     *  losses: by r400 the enemy picked 872 cheese a game in our half (127 in wins), we 1899 there of ~2770. */
+    public static final int CARRY_BITE = 0;
     /** An attacker keeps the mirror spot it walks to until that spot is seen empty, not the nearest live one each turn.
      *  groveisbeingdesecrated (gr1): the rushers stood at the band's wall midway between (7,2) and (52,2) and flipped
      *  targets 14-21 times by r190; every flip restarted their flow search, which never finished. */

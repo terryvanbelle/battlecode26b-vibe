@@ -873,6 +873,10 @@ public class BotTest {
         check(Baby.trapsAllowed(corner, 0, 20) && !Baby.trapsAllowed(corner, 0, 33), "trapDist: a far start allows traps, a near one doesn't");
         check(Baby.trapsAllowed(edge, Sym.VER, 20) && !Baby.trapsAllowed(edge, Sym.HOR, 20), "trapDist: the kings' live symmetry decides");
         check(Baby.trapsAllowed(edge, Sym.HOR, 0) && Cfg.TRAP_DIST == 0, "trapDist: 0 allows traps everywhere, off by default");
+        // CARRY_BITE: loot lowers the bite rank, capped, never ahead of a carrier of ours (1000)
+        check(Baby.biteScore(60, 0, 50) == 1060 && Baby.biteScore(60, 80, 0) == 1060, "carryBite: no loot or off, health alone");
+        check(Baby.biteScore(60, 30, 50) == 1030 && Baby.biteScore(60, 80, 50) == 1010, "carryBite: loot counts up to the cap");
+        check(Baby.biteScore(20, 80, 50) == 1001 && Cfg.CARRY_BITE == 0, "carryBite: floor 1001, off by default");
     }
 
     static void testRescue() throws GameActionException {

@@ -929,7 +929,7 @@ public final class Baby {
                 t = t.translate(dx, dy);
             }
             if (me.distanceSquaredTo(t) > 2) continue;
-            int s = (r.type == UnitType.RAT_KING ? 0 : 1000) + r.health;
+            int s = r.type == UnitType.RAT_KING ? r.health : biteScore(r.health, r.cheeseAmount, Cfg.CARRY_BITE);
             if (Cfg.BITE_GUARD && r.type == UnitType.BABY_RAT && guardBite(r.health, myHp)) s = 1011;
             // a rat carrying one of ours throws it next (often into our king): bite it before any other rat
             if (Cfg.BITE_CARRIER && r.carryingRobot != null && r.carryingRobot.team == G.us) s = 1000;
@@ -959,6 +959,12 @@ public final class Baby {
             return true;
         }
         return false;
+    }
+
+    /** A baby rat's bite rank (lower first): 1000 + hp, less its loot up to cap (Cfg.CARRY_BITE), never under 1001. */
+    static int biteScore(int hp, int cheese, int cap) {
+        int loot = Math.min(cheese, cap);
+        return loot > 0 ? Math.max(1001, 1000 + hp - loot) : 1000 + hp;
     }
 
     /** An enemy rat with hp can grab us (strictly healthier) and one bite (10) takes that away; not a kill. */
