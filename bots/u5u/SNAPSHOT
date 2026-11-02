@@ -1,0 +1,6 @@
+name=u5u
+source=bots/ratbot
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-02 03:41 PST
+change=10:01 PST: plateau step 5 pairing of near-misses u5o (trap set + TRAP_DIST 20) and u5p (CARRY_BITE 60); built from bots/nul1's source (u4s's switches), paired vs nul1
