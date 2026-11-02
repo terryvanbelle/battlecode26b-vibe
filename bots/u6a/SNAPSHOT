@@ -1,0 +1,6 @@
+name=u6a
+source=bots/ratbot
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-02 15:12 PST
+change=15:12 PST: u4s + AIM_LEFT 3000 alone (basics repair: the carry aim stops searching with 3000 bytecodes left; nul1 tiny vs araid r38-42 overran after aimCarry spent 6984)
