@@ -1,0 +1,7 @@
+name=u5s
+source=bots/ratbot
+source_sha=41bec8168918
+commit=8374f58
+created=2026-11-02 08:14 PST
+change=08:14 PST: LOAD_AT 40 (full loads; u5d retried on u4s), on u4s's recipe; paired vs nul1
+built from bots/nul1's source (not today's ratbot, which adds the inert THIEF_LOAD code) so the pair with nul1 differs only by LOAD_AT
