@@ -5141,3 +5141,14 @@
     - (3) 38.64 picks per 100 rat-turns (bar 36.5).
     - On the 44 cells shared with pf2's layout: D 9 (+7 −2), t ≈ +1.64, xfer 288,549 to 274,006. The gains are against abrk and araid on DefaultSmall, arrows, DefaultMedium (both seats), bed and starvation B. The losses are araid cheesefarm B and starvation A. 1 overrun (cb2 also 1).
   - Block 2 on v4 set 2 is queued (16 scrims, matches above 7888, waiter build/wait_u5lb2.sh; refs u4s's 7420-7423, 7440-7443, 7459-7462, 7488-7491).
+
+## 2026-11-01 19:27 PST: replica outage (VM disk full) fixed; replica replays pruned
+
+- 19:27: **Replica outage.** The owner reported that the site said "That episode was not found". The VM's root disk was 100% full (0 bytes free), so the replica's Postgres cluster (15/bc26) stopped taking connections. Every API call failed with psycopg2 OperationalError, so the frontend found no episode. 10 of u5l's 16 block-2 scrims ended in ERR (8028, 8029, 8031, 8032, 8034, 8035, 8065-8068); 6 finished (7902-7905, 8030, 8033). The disk had filled with replica replays (9.4 GB in /srv/bc26-galaxy/storage/bc26-replica-secure/episode/bc26/replays, about 1.2 MB per match, many matches an hour counting the field ladder).
+  - **Deletions on the VM (all our own data), in order:**
+    - ~/diag26b/rp: my 104 copies of replica replays (193 MB; every one also kept locally).
+    - 82 build/dumpcache dirs older than a day (719 MB; derived from replays and seeded games of finished analyses; names in ~/diag26b/dcache_deleted2.txt).
+    - Then, once the owner pointed out that no rule protects it (the "not ours to prune" note was my own caution, not theirs): **4,321 replica replays older than two days** (about 5 GB; matches before about 2026-10-31 03:20 UTC, mostly field-vs-field ladder games; file list in /root/bc26-replays-pruned-2026-11-02.txt on the VM). The site's Replay links for those old matches no longer work. Their results stay in the database, and our local match.json files are untouched.
+  - Postgres recovered by itself at 03:22 UTC once space was free. The site and API answer 200 again, and the VM now has 5.8 GB free (70%).
+  - The 10 failed u5l scrims are re-queued on the same seats and maps. u5l's block 2 counts the 6 finished plus the 10 reruns.
+  - Prevention: keep VM root free space at 2 GB or more. Prune old replica replays (older than two days) whenever it drops below that, and check it at every block.
