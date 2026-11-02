@@ -573,6 +573,11 @@ public final class Cfg {
      *  all game (uneruesansfin vs AlexT101: 60% of our baby turns to r400 were attack moves, 60 cheese picked in 400
      *  rounds, war opened by them at r472; where_are_you 41%, rose 44-52%). */
     public static final int RUSH_LIFE = 0;
+    /** RUSH_LIFE demotes only at war, never during cooperation. u5v (RUSH_LIFE 150) on the field gained the far
+     *  always-lost cells (learn_your_lesson A, Stash A, superioristhmus B: war open by r35-66) but lost rose twice:
+     *  there cooperation lasts to r459 or the end, our rushers never see the enemy king before r484, and stalled
+     *  attackers win the game hunting cats (STALL_CAT; cooperation points weigh cat damage). */
+    public static final boolean RUSH_LIFE_WAR = false;
     /** Rush attackers bite and grab enemy rats during cooperation too (the first bite ends it for everyone). */
     public static final boolean RUSH_BREAK = false;
     /** From this round on (0 = never) every baby bites and grabs enemy rats during cooperation too: the field rushers

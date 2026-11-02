@@ -99,7 +99,7 @@ public final class Baby {
         if (Cfg.RUSH_LIFE > 0 && role == ATTACK) {
             if (enemyKing != null) ekSeen = G.round;
             // a rush that has not found the enemy king in RUSH_LIFE rounds has failed for this rat: it gathers
-            else if (rushFailed(G.round, birthRound, ekSeen, Cfg.RUSH_LIFE)) { role = GATHER; demoted++; }
+            else if (rushDemote(G.coop, Cfg.RUSH_LIFE_WAR, G.round, birthRound, ekSeen, Cfg.RUSH_LIFE)) { role = GATHER; demoted++; }
         }
         if (Cfg.RUSH_BURN > 0 && role == ATTACK && trapsKnown(burnRound, Comms.read(Comms.SYM))
                 && rushStands(G.me, ref(), Cfg.RUSH_BURN)) { role = GATHER; demoted++; }
@@ -303,6 +303,11 @@ public final class Baby {
         if (t == null) { if (glanceDue(G.round, threatRound, Cfg.GLANCE_MEM)) glance(); return; }
         Direction to = G.me.directionTo(t);
         if (to != Direction.CENTER && rc.getDirection() != to && rc.canTurn(to)) { rc.turn(to); G.facing = to; }
+    }
+
+    /** Cfg.RUSH_LIFE (with RUSH_LIFE_WAR only once cooperation is over): demote this attacker to gatherer. */
+    static boolean rushDemote(boolean coop, boolean warOnly, int round, int birth, int seen, int life) {
+        return !(warOnly && coop) && rushFailed(round, birth, seen, life);
     }
 
     /** Cfg.RUSH_LIFE: an attacker born at birth that last saw the enemy king at seen has rushed for life rounds in vain. */

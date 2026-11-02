@@ -1,0 +1,6 @@
+name=u5w
+source=bots/ratbot
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-02 03:41 PST
+change=11:45 PST: RUSH_LIFE 150 + RUSH_LIFE_WAR (new switch: demote only at war); built from bots/nul1's source plus the rushDemote patch, paired vs nul1

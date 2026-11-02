@@ -2935,6 +2935,9 @@ public class BotTest {
         check(!Baby.rushFailed(160, 20, -10000, 150), "rush life: 140 rounds old is still rushing");
         check(Baby.rushFailed(171, 20, -10000, 150), "rush life: 151 rounds old, never saw the king: failed");
         check(!Baby.rushFailed(300, 20, 200, 150), "rush life: saw the enemy king 100 rounds ago: still rushing");
+        check(Baby.rushDemote(true, false, 171, 20, -10000, 150) && Baby.rushDemote(false, true, 171, 20, -10000, 150), "rush life war: a failed rush demotes at war, and in peace without the switch");
+        check(!Baby.rushDemote(true, true, 171, 20, -10000, 150) && !Baby.rushDemote(false, true, 160, 20, -10000, 150), "rush life war: never during cooperation; a live rush stays");
+        check(!Cfg.RUSH_LIFE_WAR, "rush life war: off by default");
         check(Baby.rushFailed(351, 20, 200, 150), "rush life: 151 rounds since it saw the king: failed");
         // RUSH_STICK: an attacker keeps its symmetry while that spot is live, else takes this turn's nearest
         check(Baby.stickSym(Sym.ROT | Sym.VER, Sym.ROT, Sym.VER) == Sym.ROT, "rush stick: a live target is kept");
