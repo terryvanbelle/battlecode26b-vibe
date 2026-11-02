@@ -2,5 +2,5 @@ name=u5x
 source=bots/ratbot
 source_sha=d8d1066e8b13
 commit=88ff5a1
-created=2026-11-02 03:41 PST
+created=2026-11-02 13:05 PST
 change=13:05 PST: u4s + SYM_KING_GAP + SYM_FILL 200 (terrain from symmetry: seen walls/dirt copied onto unseen twins where every live symmetry agrees; Stash attackers stuck in the home pocket r1-150)
