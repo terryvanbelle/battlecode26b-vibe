@@ -1,0 +1,6 @@
+name=u5t
+source=bots/ratbot
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-02 03:41 PST
+change=09:05 PST: CORE_BABIES 12 (from 18): past 12 babies every spawn passes the income test; built from bots/nul1's source (u4s's switches), paired vs nul1
