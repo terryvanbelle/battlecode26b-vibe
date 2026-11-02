@@ -27,7 +27,7 @@ public final class Sym {
     /** Count of eliminations rejected because they would have emptied the mask (must stay 0). */
     public static int contradictions;
 
-    public static void init() { mem = new int[G.W * G.H]; fillMask = ROT | HOR | VER; fillAt = 0; if (Cfg.BFLOW) BitFlow.init(); }
+    public static void init() { mem = new int[G.W * G.H]; fillMask = ROT | HOR | VER; fillAt = 0; fillDirty = false; if (Cfg.BFLOW) BitFlow.init(); }
 
     public static boolean known(int i) { return (mem[i] & SEEN) != 0; }
 
@@ -38,7 +38,7 @@ public final class Sym {
         int old = mem[i];
         mem[i] = v | (old & (EXP | KING | CAT | HELD | SEAL));
         if (Cfg.BFLOW && ((old ^ v) & (WALL | DIRT)) != 0) BitFlow.mark(x, y, v);
-        if (Cfg.SYM_FILL > 0 && (old & SEEN) == 0 && (v & (WALL | DIRT)) != 0) fill(x, y, v & (WALL | DIRT));
+        if (Cfg.SYM_FILL > 0 && (old & SEEN) == 0 && (v & (WALL | DIRT)) != 0) fillDirty = true;
         if ((old & SEEN) != 0 || mask == ROT || mask == HOR || mask == VER) return false;
         int before = mask;
         if (!mine && (old & EXP) != 0) { int e = (old >> 4) & mask; if (e != 0) eliminate(e); }
@@ -68,13 +68,19 @@ public final class Sym {
         }
     }
 
-    /** Cfg.SYM_FILL: tiles seen before the mask last shrank get their twins filled too, SYM_FILL tiles a turn. */
+    /** Cfg.SYM_FILL: the end-of-turn scan of remembered tiles that fills their twins, SYM_FILL tiles a turn. A pass
+     *  starts when the mask shrinks or after a wall or dirt tile was first seen (fillDirty); sensing itself only sets the
+     *  flag, so a turn near the bytecode limit pays nothing extra (u5x's first screen xy1 overran 8 times, in fights). */
     static int fillMask = ROT | HOR | VER, fillAt;
+    static boolean fillDirty;
+
+    public static boolean fillDue() { return fillAt < mem.length || fillDirty || mask != fillMask; }
     /** Bytecodes backfill leaves for the rest of the turn (16 tiles cost at most ~16 fills, ~2.4k). */
     static final int FILL_LEFT = 6000;
 
     public static void backfill(int n) {
-        if (mask != fillMask) { fillMask = mask; fillAt = 0; }
+        if (mask != fillMask) { fillMask = mask; fillAt = 0; fillDirty = false; }
+        else if (fillAt >= mem.length) { if (!fillDirty) return; fillAt = 0; fillDirty = false; }
         int[] mm = mem;
         int end = Math.min(mm.length, fillAt + n), W = G.W;
         int i = fillAt;

@@ -464,7 +464,13 @@ public class BotTest {
         check((Sym.mem[17 + 16 * 20] & Sym.WALL) != 0 && (Sym.mem[2 + 16 * 20] & Sym.WALL) != 0, "sym fill: backfill after the mask shrank");
         check(Sym.fillAt == 100 && Sym.fillMask == (Sym.ROT | Sym.HOR), "sym fill: backfill restarts at 0 on a new mask, n tiles a call (" + Sym.fillAt + ")");
         Sym.backfill(1000);
-        check(Sym.fillAt == 400, "sym fill: backfill stops at the map's end");
+        check(Sym.fillAt == 400 && !Sym.fillDue(), "sym fill: backfill stops at the map's end");
+        Sym.backfill(100);
+        check(Sym.fillAt == 400, "sym fill: a finished pass stays idle while nothing new was seen");
+        Sym.fillDirty = true;
+        check(Sym.fillDue(), "sym fill: a newly seen wall makes a pass due");
+        Sym.backfill(100);
+        check(Sym.fillAt == 100 && !Sym.fillDirty, "sym fill: a dirty map restarts the pass at 0");
     }
 
     static void testSymElimination() {
