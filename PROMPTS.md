@@ -102,3 +102,11 @@ Let's add that as a point to the BEST_PRACTICES doc in battlecode-vibe.  Spend y
 ## 21. 2026-10-31 15:17 PDT
 
 If you can get an advantage by breaking symmetry, then do so
+
+## 22. 2026-11-01 19:20 PST
+
+I can't access the replica.  I get the message "That episode was not found. Go Home?"
+
+## 23. 2026-11-01 19:23 PST
+
+Who said you couldn't prune /srv/bc26-galaxy?
