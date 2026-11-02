@@ -540,6 +540,12 @@ public final class Cfg {
      *  (never ahead of a rat carrying one of ours), since a rat killed drops its cheese where it dies. u4s's in-band
      *  losses: by r400 the enemy picked 872 cheese a game in our half (127 in wins), we 1899 there of ~2770. */
     public static final int CARRY_BITE = 0;
+    /** Thief hunt (0 = off): at war a rat not carrying a robot, with less than DELIVER_AT raw cheese, closes on the
+     *  nearest visible enemy baby within dist2 20 that carries THIEF_LOAD+ raw cheese, is not healthier than us (so
+     *  cannot grab us) and stands on our half (nearer our reference than its mirror), as a hunt: gatherers leave their
+     *  WAR_GATHER stance and fighters their standoff. A rat killed drops its cheese. A grabbable prey (POUNCE) comes
+     *  first. u4s's in-band losses: by r400 the enemy picked 872 cheese a game on our half (127 in wins). */
+    public static final int THIEF_LOAD = 0;
     /** An attacker keeps the mirror spot it walks to until that spot is seen empty, not the nearest live one each turn.
      *  groveisbeingdesecrated (gr1): the rushers stood at the band's wall midway between (7,2) and (52,2) and flipped
      *  targets 14-21 times by r190; every flip restarted their flow search, which never finished. */

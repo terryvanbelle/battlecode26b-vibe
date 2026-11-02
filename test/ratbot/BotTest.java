@@ -869,6 +869,8 @@ public class BotTest {
         check(Baby.liveSyms(Sym.HOR) == Sym.ROT, "rushDist: a slot that rules out all of ours falls back to ours");
         Sym.mask = all;
         check(Cfg.RUSH_DIST == 0, "rushDist: off by default");
+        check(Baby.ourHalf(new MapLocation(10, 10), corner, Sym.ROT) && !Baby.ourHalf(new MapLocation(30, 30), corner, Sym.ROT), "ourHalf: nearer our reference than its mirror");
+        check(!Baby.ourHalf(new MapLocation(19, 20), corner, Sym.ROT) && Baby.ourHalf(new MapLocation(30, 3), corner, Sym.HOR) && !Baby.ourHalf(new MapLocation(30, 3), corner, Sym.VER), "ourHalf: a tie is not ours; the symmetry decides");
         // TRAP_DIST: traps on far maps only; 0 allows them everywhere
         check(Baby.trapsAllowed(corner, 0, 20) && !Baby.trapsAllowed(corner, 0, 33), "trapDist: a far start allows traps, a near one doesn't");
         check(Baby.trapsAllowed(edge, Sym.VER, 20) && !Baby.trapsAllowed(edge, Sym.HOR, 20), "trapDist: the kings' live symmetry decides");
@@ -1943,6 +1945,15 @@ public class BotTest {
         RobotInfo[] rs = {strong, weak, far};
         check(Baby.prey(rs, 100) == weak, "prey: nearest weaker enemy within dist2 20");
         check(Baby.prey(rs, 40) == null, "prey: none when no enemy is strictly weaker in range");
+        // THIEF_LOAD: the nearest loaded enemy baby in range that is not healthier than us
+        RobotInfo loaded = new RobotInfo(43, Team.B, UnitType.BABY_RAT, 60, new MapLocation(7, 7), Direction.NORTH, 0, 30, null);
+        RobotInfo light = new RobotInfo(44, Team.B, UnitType.BABY_RAT, 60, new MapLocation(6, 6), Direction.NORTH, 0, 10, null);
+        RobotInfo strongLoaded = new RobotInfo(45, Team.B, UnitType.BABY_RAT, 100, new MapLocation(6, 7), Direction.NORTH, 0, 50, null);
+        RobotInfo farLoaded = new RobotInfo(46, Team.B, UnitType.BABY_RAT, 20, new MapLocation(5, 10), Direction.NORTH, 0, 50, null);
+        RobotInfo[] ts = {light, strongLoaded, loaded, farLoaded};
+        check(Baby.thief(ts, 80, 20) == loaded, "thief: nearest loaded, not healthier, within dist2 20");
+        check(Baby.thief(ts, 100, 20) == strongLoaded && Baby.thief(ts, 80, 40) == null, "thief: health and load bounds");
+        check(Baby.thief(new RobotInfo[]{farLoaded}, 80, 20) == null && Cfg.THIEF_LOAD == 0, "thief: range dist2 20; off by default");
         // a gatherer ignores an enemy two tiles away, but turns to face an adjacent one
         Baby.role = Baby.GATHER;
         Baby.nearestEnemy = strong;

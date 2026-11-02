@@ -122,6 +122,10 @@ public final class Baby {
                     hunting = true;
                 }
             }
+            if (Cfg.THIEF_LOAD > 0 && !hunting && rc.getCarrying() == null && rc.getRawCheese() < Cfg.DELIVER_AT) {
+                RobotInfo t = thief(robots, rc.getHealth(), Cfg.THIEF_LOAD);
+                if (t != null && ourHalf(t.location, ref(), firstSym())) { nearestEnemy = t; hunting = true; thiefHunts++; }
+            }
             guardKing = null;
             if (Cfg.GUARD_KING_R > 0 && rc.getCarrying() == null) {
                 RobotInfo b = kingBiter(robots, Cfg.GUARD_KING_R);
@@ -1817,6 +1821,25 @@ public final class Baby {
     public static int flanks, standoffs;
 
     /** Nearest enemy baby within dist2 20 that we could ratnap (strictly less health than ours), or null. */
+    public static int thiefHunts;
+
+    /** Cfg.THIEF_LOAD: the nearest enemy baby within dist2 20 carrying load+ raw cheese and not healthier than hp. */
+    static RobotInfo thief(RobotInfo[] robots, int hp, int load) {
+        RobotInfo t = null;
+        int td = Integer.MAX_VALUE;
+        for (RobotInfo r : robots) {
+            if (r.team != G.them || r.type != UnitType.BABY_RAT || r.health > hp || r.cheeseAmount < load) continue;
+            int d = G.me.distanceSquaredTo(r.location);
+            if (d <= 20 && d < td) { td = d; t = r; }
+        }
+        return t;
+    }
+
+    /** l is on our half: strictly nearer our reference than the reference's mirror under symmetry s. */
+    static boolean ourHalf(MapLocation l, MapLocation ref, int s) {
+        return l.distanceSquaredTo(ref) < l.distanceSquaredTo(G.mirror(ref, s));
+    }
+
     static RobotInfo prey(RobotInfo[] robots, int hp) {
         RobotInfo prey = null;
         int pd = Integer.MAX_VALUE;
