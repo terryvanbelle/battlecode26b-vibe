@@ -1,0 +1,6 @@
+name=u5m
+source=bots/ratbot
+source_sha=cf656116b89b
+commit=7f320e8
+created=2026-11-01 21:34 PST
+change=2026-11-01 21:34 PST: u4s + FORM_FROM 600 + HUNGRY 300 (near-misses u5l and u5a combined)
