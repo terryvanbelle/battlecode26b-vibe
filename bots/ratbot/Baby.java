@@ -162,7 +162,7 @@ public final class Baby {
         // a rescue one step away keeps the action for the grab after the move
         boolean saving = rescueT != null && rc.isMovementReady() && rc.isActionReady();
         if (Cfg.GRAB_MICRO && hostile && !saving && GrabMicro.act(robots)) saving = true;
-        if (!G.coop && Cfg.BABY_RAT_TRAPS && !saving) tryRatTrap();
+        if (!G.coop && Cfg.BABY_RAT_TRAPS && trapOk && !saving) tryRatTrap();
         Debug.mark(5);
         if (hostile && !saving) biteEnemies(robots);
         else if (!(Cfg.PEACE && G.coop) && role == ATTACK && enemyKing != null) biteEnemies(new RobotInfo[]{enemyKing});
@@ -343,6 +343,7 @@ public final class Baby {
         home = Comms.nearestKing(G.me);
         if (home == null) home = G.me;
         if (Cfg.RUSH_DIST > 0 && role == ATTACK && !rushNear(home, liveSyms(Comms.read(Comms.SYM)), Cfg.RUSH_DIST)) role = base;
+        trapOk = trapsAllowed(home, Comms.read(Comms.SYM), Cfg.TRAP_DIST);
         if (Cfg.HOME_START || Cfg.MINE_RR || Cfg.FORM_MINE) origin = heardStart(rc.readSqueaks(-1));
         int px = 2 * home.x - G.cx2, py = 2 * home.y - G.cy2;
         fu = px >= 0 ? 1 : -1;
@@ -364,6 +365,12 @@ public final class Baby {
     }
 
     /** Cfg.RUSH_DIST: the symmetries the kings' SYM slot still allows (our own mask when the slot is empty). */
+    /** Rat traps allowed for this baby (Cfg.TRAP_DIST), fixed at birth. */
+    static boolean trapOk = true;
+
+    /** Cfg.TRAP_DIST's test: true when d is 0 or no live symmetry (the kings' slot) mirrors home within Chebyshev d. */
+    static boolean trapsAllowed(MapLocation home, int slot, int d) { return d == 0 || !rushNear(home, liveSyms(slot), d); }
+
     static int liveSyms(int slot) {
         int m = slot & Sym.mask;
         return m == 0 ? Sym.mask : m;

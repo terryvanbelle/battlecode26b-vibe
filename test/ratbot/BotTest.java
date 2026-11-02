@@ -869,6 +869,10 @@ public class BotTest {
         check(Baby.liveSyms(Sym.HOR) == Sym.ROT, "rushDist: a slot that rules out all of ours falls back to ours");
         Sym.mask = all;
         check(Cfg.RUSH_DIST == 0, "rushDist: off by default");
+        // TRAP_DIST: traps on far maps only; 0 allows them everywhere
+        check(Baby.trapsAllowed(corner, 0, 20) && !Baby.trapsAllowed(corner, 0, 33), "trapDist: a far start allows traps, a near one doesn't");
+        check(Baby.trapsAllowed(edge, Sym.VER, 20) && !Baby.trapsAllowed(edge, Sym.HOR, 20), "trapDist: the kings' live symmetry decides");
+        check(Baby.trapsAllowed(edge, Sym.HOR, 0) && Cfg.TRAP_DIST == 0, "trapDist: 0 allows traps everywhere, off by default");
     }
 
     static void testRescue() throws GameActionException {

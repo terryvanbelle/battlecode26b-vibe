@@ -1,0 +1,6 @@
+name=u5o
+source=bots/ratbot
+source_sha=16924451b67d
+commit=22e4573
+created=2026-11-02 01:06 PST
+change=01:05 PST: u4s + u4m's reactive baby rat trap set (BABY_RAT_TRAPS, TRAP_ADJ, TRAP_SPAWN_FIRST, RAT_TRAP_MIN_CHEESE 500, TRAP_OPEN_TO 150) + TRAP_DIST 20: traps only where no live symmetry puts the enemy start within Chebyshev 20
