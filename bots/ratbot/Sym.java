@@ -27,7 +27,7 @@ public final class Sym {
     /** Count of eliminations rejected because they would have emptied the mask (must stay 0). */
     public static int contradictions;
 
-    public static void init() { mem = new int[G.W * G.H]; if (Cfg.BFLOW) BitFlow.init(); }
+    public static void init() { mem = new int[G.W * G.H]; fillMask = ROT | HOR | VER; fillAt = 0; if (Cfg.BFLOW) BitFlow.init(); }
 
     public static boolean known(int i) { return (mem[i] & SEEN) != 0; }
 
@@ -38,6 +38,7 @@ public final class Sym {
         int old = mem[i];
         mem[i] = v | (old & (EXP | KING | CAT | HELD | SEAL));
         if (Cfg.BFLOW && ((old ^ v) & (WALL | DIRT)) != 0) BitFlow.mark(x, y, v);
+        if (Cfg.SYM_FILL > 0 && (old & SEEN) == 0 && (v & (WALL | DIRT)) != 0) fill(x, y, v & (WALL | DIRT));
         if ((old & SEEN) != 0 || mask == ROT || mask == HOR || mask == VER) return false;
         int before = mask;
         if (!mine && (old & EXP) != 0) { int e = (old >> 4) & mask; if (e != 0) eliminate(e); }
@@ -46,6 +47,43 @@ public final class Sym {
         if ((mask & HOR) != 0) check(stat, x, G.H - 1 - y, HOR);
         if ((mask & VER) != 0) check(stat, G.W - 1 - x, y, VER);
         return mask != before;
+    }
+
+    /** Cfg.SYM_FILL: a seen wall or dirt tile (x, y) with terrain bits t is copied onto each unseen twin (not marked
+     *  SEEN, so sensing it later overwrites the guess) on which every live symmetry agrees: the twin's own twin under
+     *  each live symmetry is a seen tile with the same terrain. Paths stop crossing the enemy half's unseen walls. */
+    static void fill(int x, int y, int t) {
+        int m = mask, W = G.W, H = G.H;
+        for (int s = ROT; s <= VER; s <<= 1) {
+            if ((m & s) == 0) continue;
+            int tx = s == HOR ? x : W - 1 - x, ty = s == VER ? y : H - 1 - y, ti = tx + ty * W, tm = mem[ti];
+            if ((tm & SEEN) != 0 || (tm & (WALL | DIRT)) == t) continue;
+            boolean ok = true;
+            for (int s2 = ROT; s2 <= VER && ok; s2 <<= 1) {
+                if ((m & s2) == 0 || s2 == s) continue;
+                int u = mem[(s2 == HOR ? tx : W - 1 - tx) + (s2 == VER ? ty : H - 1 - ty) * W];
+                ok = (u & SEEN) != 0 && (u & (WALL | DIRT)) == t;
+            }
+            if (ok) mem[ti] = (tm & ~(WALL | DIRT)) | t;
+        }
+    }
+
+    /** Cfg.SYM_FILL: tiles seen before the mask last shrank get their twins filled too, SYM_FILL tiles a turn. */
+    static int fillMask = ROT | HOR | VER, fillAt;
+    /** Bytecodes backfill leaves for the rest of the turn (16 tiles cost at most ~16 fills, ~2.4k). */
+    static final int FILL_LEFT = 6000;
+
+    public static void backfill(int n) {
+        if (mask != fillMask) { fillMask = mask; fillAt = 0; }
+        int[] mm = mem;
+        int end = Math.min(mm.length, fillAt + n), W = G.W;
+        int i = fillAt;
+        for (; i < end; i++) {
+            if ((i & 15) == 0 && Flow.left() < FILL_LEFT) break;
+            int v = mm[i];
+            if ((v & SEEN) != 0 && (v & (WALL | DIRT)) != 0) fill(i % W, i / W, v & (WALL | DIRT));
+        }
+        fillAt = i;
     }
 
     private static void check(int stat, int mx, int my, int s) {

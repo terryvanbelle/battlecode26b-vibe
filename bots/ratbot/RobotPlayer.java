@@ -37,6 +37,7 @@ public strictfp class RobotPlayer {
                 if (Debug.ON) e.printStackTrace();
             }
             try {
+                if (Cfg.SYM_FILL > 0 && !G.king && rc.getRoundNum() == startRound && Sym.fillAt < Sym.mem.length | Sym.mask != Sym.fillMask) Sym.backfill(Cfg.SYM_FILL);
                 if (Cfg.FLOW && !G.king && rc.getRoundNum() == startRound) Flow.work(Cfg.FLOW_RESERVE);
                 if (Cfg.BFLOW && !G.king && rc.getRoundNum() == startRound) BitFlow.work(Cfg.FLOW_RESERVE);
             } catch (Exception e) {

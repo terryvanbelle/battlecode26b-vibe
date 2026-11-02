@@ -861,6 +861,12 @@ public final class Cfg {
     /** The first king also rules out a symmetry that mirrors its start within Chebyshev 2 of itself (the two kings'
      *  3x3 bodies would overlap), not only onto itself: uneasy_alliance's kings start 7 apart on one row. */
     public static final boolean SYM_KING_GAP = false;
+    /** Terrain from symmetry (owner rule: maps are symmetric in every aspect): a seen wall or dirt tile is copied onto
+     *  its unseen twins wherever every live symmetry agrees, and a baby re-scans SYM_FILL remembered tiles a turn after
+     *  the mask shrinks (0 = off). Flow treats unknown tiles as open, so on Stash (nul1 mirror, local st1) attackers
+     *  planned through the enemy's unseen wall row, broke the path on sighting it, and spent r1-150 rebuilding
+     *  (18-27 turns a build) inside the home pocket while the field went to the enemy. */
+    public static final int SYM_FILL = 0;
     public static final int DIG_MIN_CHEESE = 60;
     /** Live babies kept unconditionally (while CORE_FLOOR cheese remain) before the income test applies. */
     public static final int CORE_BABIES = 18, CORE_FLOOR = 300;

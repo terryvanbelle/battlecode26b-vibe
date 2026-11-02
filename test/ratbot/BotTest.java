@@ -421,6 +421,52 @@ public class BotTest {
         check(bad == 0, "walled off: mirrored walls and segments agree (bad=" + bad + ")");
     }
 
+    static void testSymFill() {
+        check(Cfg.SYM_FILL == 0, "sym fill: off in ratbot");
+        reset(); W = 20; H = 20; install();
+        Sym.mask = Sym.ROT | Sym.HOR;
+        // wall at (2,3): twins ROT (17,16), HOR (2,16); each twin's other twin, (17,3) and (2,3)... (17,3) is unseen
+        Sym.record(2, 3, true, false, false);
+        Sym.fill(2, 3, Sym.WALL);
+        check((Sym.mem[17 + 16 * 20] & Sym.WALL) == 0 && (Sym.mem[2 + 16 * 20] & Sym.WALL) == 0, "sym fill: no fill while a live symmetry is unchecked");
+        Sym.record(17, 3, true, false, false);
+        Sym.fill(17, 3, Sym.WALL);
+        int a = Sym.mem[2 + 16 * 20], b = Sym.mem[17 + 16 * 20];
+        check((a & Sym.WALL) != 0 && (b & Sym.WALL) != 0, "sym fill: twins filled once every live symmetry agrees");
+        check((a & Sym.SEEN) == 0 && (b & Sym.SEEN) == 0, "sym fill: filled twins stay unseen");
+        check(Sym.mask == (Sym.ROT | Sym.HOR), "sym fill: filling eliminates nothing");
+        Sym.record(2, 16, false, false, false);
+        check((Sym.mem[2 + 16 * 20] & Sym.WALL) == 0, "sym fill: sensing a filled tile overwrites the guess");
+        // disagreement: (5,5) wall, (14,5) dirt -> the twins (14,14)/(5,14) get nothing
+        reset(); install();
+        Sym.mask = Sym.ROT | Sym.HOR;
+        Sym.record(5, 5, true, false, false);
+        Sym.record(14, 5, false, true, false);
+        Sym.fill(5, 5, Sym.WALL); Sym.fill(14, 5, Sym.DIRT);
+        check((Sym.mem[14 + 14 * 20] & (Sym.WALL | Sym.DIRT)) == 0 && (Sym.mem[5 + 14 * 20] & (Sym.WALL | Sym.DIRT)) == 0, "sym fill: disagreeing symmetries fill nothing");
+        // a seen twin is never overwritten
+        reset(); install();
+        Sym.mask = Sym.ROT;
+        Sym.record(14, 14, false, false, false);
+        Sym.fill(5, 5, Sym.WALL);
+        check((Sym.mem[14 + 14 * 20] & Sym.WALL) == 0, "sym fill: a seen twin keeps what was sensed");
+        Sym.fill(6, 6, Sym.DIRT);
+        check((Sym.mem[13 + 13 * 20] & (Sym.DIRT | Sym.SEEN)) == Sym.DIRT, "sym fill: unique symmetry fills dirt onto the unseen twin");
+        // backfill: tiles seen under mask 7 get their twins once VER is ruled out
+        reset(); install();
+        Sym.record(2, 3, true, false, false);
+        Sym.record(17, 3, true, false, false);
+        Sym.fill(2, 3, Sym.WALL); Sym.fill(17, 3, Sym.WALL);
+        check((Sym.mem[17 + 16 * 20] & Sym.WALL) == 0, "sym fill: VER live, its unseen twin blocks the fill");
+        Sym.backfill(400);
+        Sym.eliminate(Sym.VER);
+        Sym.backfill(100);
+        check((Sym.mem[17 + 16 * 20] & Sym.WALL) != 0 && (Sym.mem[2 + 16 * 20] & Sym.WALL) != 0, "sym fill: backfill after the mask shrank");
+        check(Sym.fillAt == 100 && Sym.fillMask == (Sym.ROT | Sym.HOR), "sym fill: backfill restarts at 0 on a new mask, n tiles a call (" + Sym.fillAt + ")");
+        Sym.backfill(1000);
+        check(Sym.fillAt == 400, "sym fill: backfill stops at the map's end");
+    }
+
     static void testSymElimination() {
         reset(); W = 20; H = 20; install();
         // wall at (2,3); its mirrors: ROT (17,16), HOR (2,16), VER (17,3)
@@ -3758,6 +3804,7 @@ public class BotTest {
         testKingMine(); testKingFront(); testSeal(); testCatReach();
         testHandMirror(); testCentreMirror();
         testSymElimination();
+        testSymFill();
         testChiral();
         testSymMineList();
         testSymRelay();
