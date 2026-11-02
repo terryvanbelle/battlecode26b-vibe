@@ -1,0 +1,6 @@
+name=u5q
+source=bots/ratbot
+source_sha=86d28a58333f
+commit=66380f2
+created=2026-11-02 04:53 PST
+change=04:53 PST: u4s + FIGHT_EVERY 3 (from 2): one in three later babies is a cat fighter, not one in two, so more gather
