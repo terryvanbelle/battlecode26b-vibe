@@ -1,0 +1,6 @@
+name=u5v
+source=bots/ratbot
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-02 03:41 PST
+change=11:00 PST: RUSH_LIFE 150 (t0g retried on u4s): an attacker older than 150 rounds that has not seen the enemy king in 150 rounds gathers; built from bots/nul1's source, paired vs nul1
