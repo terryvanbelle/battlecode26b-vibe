@@ -525,6 +525,11 @@ public final class Cfg {
     /** Rush: babies with spawn index in [RUSH_FROM, RUSH_TO) attack the enemy king from birth. */
     public static final boolean RUSH = false;
     public static final int RUSH_FROM = 4, RUSH_TO = 16;
+    /** Rush only on near maps (0 = every map): a newborn rusher keeps ATTACK only while, under some live symmetry, the
+     *  enemy start (its king's start mirrored) is within Chebyshev RUSH_DIST; otherwise it takes its non-rush role.
+     *  u4e-u5m field games (kdist.py, 294 games by start distance): our king kills by r400 came in 12 of 28 games at
+     *  <= 10 and 9 of 24 at 11-20, but 2 of 62 at 21-30 and 7 of 180 at 31+, where we won 47% and 37%. */
+    public static final int RUSH_DIST = 0;
     /** An attacker keeps the mirror spot it walks to until that spot is seen empty, not the nearest live one each turn.
      *  groveisbeingdesecrated (gr1): the rushers stood at the band's wall midway between (7,2) and (52,2) and flipped
      *  targets 14-21 times by r190; every flip restarted their flow search, which never finished. */

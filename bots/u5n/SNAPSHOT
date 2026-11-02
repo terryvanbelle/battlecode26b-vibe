@@ -1,0 +1,6 @@
+name=u5n
+source=bots/ratbot
+source_sha=85420a69bf38
+commit=1ba112f
+created=2026-11-02 00:02 PST
+change=2026-11-02 00:02 PST: u4s + RUSH_DIST 20 (new switch: rushers only where some live symmetry puts the enemy start within Chebyshev 20)

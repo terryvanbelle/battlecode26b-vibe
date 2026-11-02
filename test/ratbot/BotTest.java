@@ -858,6 +858,17 @@ public class BotTest {
         // RUSH is off in the development Cfg: no baby attacks from birth, whatever its index or round
         for (int idx = 0; idx < 20; idx += 4) check(!Baby.rusher(idx, 10) && !Baby.rusher(idx, 500), "rusher: off with RUSH off");
         check(Cfg.RUSH_UNTIL == 0, "rusher: RUSH_UNTIL defaults to never");
+        // RUSH_DIST: on a 40x40 map a corner start's every mirror is 33 away; a mid-edge start's HOR twin is 1 away
+        reset(); W = 40; H = 40; install();
+        int all = Sym.ROT | Sym.HOR | Sym.VER;
+        MapLocation corner = new MapLocation(3, 3), edge = new MapLocation(3, 20);
+        check(!Baby.rushNear(corner, all, 20) && Baby.rushNear(corner, all, 33), "rushDist: a far start under every symmetry");
+        check(Baby.rushNear(edge, Sym.HOR, 20) && !Baby.rushNear(edge, Sym.ROT | Sym.VER, 20), "rushDist: only live symmetries count");
+        check(Baby.liveSyms(0) == all && Baby.liveSyms(Sym.ROT | Comms.SYM_BURN) == Sym.ROT, "rushDist: the kings' slot narrows the mask, empty = ours");
+        Sym.mask = Sym.ROT;
+        check(Baby.liveSyms(Sym.HOR) == Sym.ROT, "rushDist: a slot that rules out all of ours falls back to ours");
+        Sym.mask = all;
+        check(Cfg.RUSH_DIST == 0, "rushDist: off by default");
     }
 
     static void testRescue() throws GameActionException {

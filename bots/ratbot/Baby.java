@@ -337,10 +337,12 @@ public final class Baby {
         role = GATHER;
         if (idx >= Cfg.GATHER_FIRST && (G.round % Cfg.FIGHT_EVERY) == 0) role = FIGHT;
         raider = role == FIGHT && Cfg.RAID_EVERY > 0 && (G.round / Cfg.FIGHT_EVERY) % Cfg.RAID_EVERY == 0;
+        int base = role;
         if (rusher(idx, G.round)) role = ATTACK;
         Comms.readKings();
         home = Comms.nearestKing(G.me);
         if (home == null) home = G.me;
+        if (Cfg.RUSH_DIST > 0 && role == ATTACK && !rushNear(home, liveSyms(Comms.read(Comms.SYM)), Cfg.RUSH_DIST)) role = base;
         if (Cfg.HOME_START || Cfg.MINE_RR || Cfg.FORM_MINE) origin = heardStart(rc.readSqueaks(-1));
         int px = 2 * home.x - G.cx2, py = 2 * home.y - G.cy2;
         fu = px >= 0 ? 1 : -1;
@@ -359,6 +361,19 @@ public final class Baby {
     static int roleFor(int idx, int r) {
         if (rusher(idx, r)) return ATTACK;
         return idx >= Cfg.GATHER_FIRST && (r % Cfg.FIGHT_EVERY) == 0 ? FIGHT : GATHER;
+    }
+
+    /** Cfg.RUSH_DIST: the symmetries the kings' SYM slot still allows (our own mask when the slot is empty). */
+    static int liveSyms(int slot) {
+        int m = slot & Sym.mask;
+        return m == 0 ? Sym.mask : m;
+    }
+
+    /** Cfg.RUSH_DIST: some symmetry in mask puts the enemy start (home mirrored) within Chebyshev d of home. */
+    static boolean rushNear(MapLocation home, int mask, int d) {
+        for (int s = Sym.ROT; s <= Sym.VER; s <<= 1)
+            if ((mask & s) != 0 && G.cheb(home, G.mirror(home, s)) <= d) return true;
+        return false;
     }
 
     static boolean rusher(int idx, int r) {
