@@ -1,0 +1,6 @@
+name=u6s
+source=bots/u6a
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-03 01:16 PST
+change=01:16 PST: u6a + CARRY_MAX 100 (basics repair: carrier feedback loop). 10942 g0 clockwisdom (truce, 3 bites all game): rat 10004 made 68 pickups of 20 while heading home, reached 1460-1840 and crawled; our rats held up to 10760 while the king starved
