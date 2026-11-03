@@ -56,6 +56,8 @@ public final class Flow {
     /** Cfg.FLOW_FAST (a field so tests can set it), and its distance table: AB[d + AC] = |d| for |d| <= AC (maps are
      *  at most 60 wide), built once with the search arrays. */
     static boolean fast = Cfg.FLOW_FAST;
+    /** Cfg.FLOW_UNSEEN (a field so tests can set it): the path cost of a never-seen tile. */
+    static int unseen = Cfg.FLOW_UNSEEN;
     static final int AC = 64;
     static int[] AB;
     static int[][] bucket;
@@ -249,7 +251,7 @@ public final class Flow {
         if (frontier) { workFrontier(reserve); return; }
         if (rev) { workRev(reserve); return; }
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
-        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = tx, Y = ty, blk = block;
+        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, un = unseen, X = tx, Y = ty, blk = block;
         while (pending > 0) {
             if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) return;
             int b = curF & BMASK, u;
@@ -271,7 +273,7 @@ public final class Flow {
                 if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
                 int v = vx + vy * W, m = mem[v];
                 if ((m & blk) != 0 && v != tIdx) continue;
-                int ng = gu + ((m & Sym.DIRT) != 0 ? dig : 1);
+                int ng = gu + ((m & Sym.DIRT) != 0 ? dig : (m & Sym.SEEN) == 0 ? un : 1);
                 int gv = gg[v];
                 if (gv >= bs && gv - bs <= ng) continue;
                 gg[v] = bs + ng;
@@ -294,7 +296,7 @@ public final class Flow {
      *  target; nothing unseen reachable sets frontierFail. Neighbours expand in the side frame order (ox/oy). */
     static void workFrontier(int reserve) {
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
-        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, blk = block, s = sIdx;
+        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, un = unseen, blk = block, s = sIdx;
         while (pending > 0) {
             if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) return;
             int b = curF & BMASK, u;
@@ -338,7 +340,7 @@ public final class Flow {
         if (Cfg.FLOW_W > 1 && fast) { workRevW(reserve); return; }
         if (fast) { workRevFast(reserve); return; }
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
-        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = sx0, Y = sy0, blk = block, mx = G.me.x, my = G.me.y;
+        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, un = unseen, X = sx0, Y = sy0, blk = block, mx = G.me.x, my = G.me.y;
         while (pending > 0) {
             if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) return;
             int b = curF & BMASK, u;
@@ -359,7 +361,7 @@ public final class Flow {
                 finishRev(u);
                 return;
             }
-            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : 1);
+            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : (mem[u] & Sym.SEEN) == 0 ? un : 1);
             for (int k = 0; k < 8; k++) {
                 int vx = ux + OX[k], vy = uy + OY[k];
                 if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
@@ -389,7 +391,7 @@ public final class Flow {
     static void workRevFast(int reserve) {
         int[] gg = g, pp = par, mem = Sym.mem, ab = AB, hd = head, tl = tail, OX = ox, OY = oy;
         int[][] bk = bucket;
-        int W = G.W, W1 = W - 1, H1 = G.H - 1, bs = base, dig = Cfg.DIG_COST, blk = block, cf = curF, pend = pending;
+        int W = G.W, W1 = W - 1, H1 = G.H - 1, bs = base, dig = Cfg.DIG_COST, un = unseen, blk = block, cf = curF, pend = pending;
         int FU = OX[1], FV = OY[0], WV = FV * W, cx = AC - sx0, cy = AC - sy0;
         int mx0 = G.me.x - 1, mx1 = G.me.x + 1, my0 = G.me.y - 1, my1 = G.me.y + 1;
         boolean st = lifo;
@@ -413,7 +415,7 @@ public final class Flow {
                 finishRev(u);
                 return;
             }
-            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : 1), nb = bs + ng, v, gv, f, fb;
+            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : (mem[u] & Sym.SEEN) == 0 ? un : 1), nb = bs + ng, v, gv, f, fb;
             if (ux > 0 && uy > 0 && ux < W1 && uy < H1) {
                 // xr/yu: the heuristic one step along +ox/+oy
                 int xr = ab[bx + FU], xl = ab[bx - FU], yu = ab[by + FV], yd = ab[by - FV];
@@ -507,7 +509,7 @@ public final class Flow {
         }
         int[] gg = g, pp = par, mem = Sym.mem, ab = ABW, hd = head, tl = tail, OX = ox, OY = oy;
         int[][] bk = bucket;
-        int W = G.W, W1 = W - 1, H1 = G.H - 1, bs = base, dig = Cfg.DIG_COST, blk = block, cf = curF, pend = pending;
+        int W = G.W, W1 = W - 1, H1 = G.H - 1, bs = base, dig = Cfg.DIG_COST, un = unseen, blk = block, cf = curF, pend = pending;
         int FU = OX[1], FV = OY[0], WV = FV * W, cx = AC - sx0, cy = AC - sy0;
         int mx0 = G.me.x - 1, mx1 = G.me.x + 1, my0 = G.me.y - 1, my1 = G.me.y + 1;
         boolean st = lifo;
@@ -533,7 +535,7 @@ public final class Flow {
                 return;
             }
             int bx = ux + cx, by = uy + cy, a = ab[bx], c = ab[by];
-            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : 1), nb = bs + ng, ge = ng << 12, v, gv, f, fb;
+            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : (mem[u] & Sym.SEEN) == 0 ? un : 1), nb = bs + ng, ge = ng << 12, v, gv, f, fb;
             if (ux > 0 && uy > 0 && ux < W1 && uy < H1) {
                 int xr = ab[bx + FU], xl = ab[bx - FU], yu = ab[by + FV], yd = ab[by - FV];
                 v = u + WV; // N

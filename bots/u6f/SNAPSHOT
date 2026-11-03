@@ -1,0 +1,6 @@
+name=u6f
+source=bots/ratbot
+source_sha=1c234ab6107e
+commit=7870d45
+created=2026-11-02 20:34 PST
+change=20:34 PST: u6a + FLOW_UNSEEN 3 (basics repair, navigation: never-seen tiles cost 3 in Flow's target searches, so plans keep to walked corridors instead of guessing through unseen maze interiors; frontier search unchanged)

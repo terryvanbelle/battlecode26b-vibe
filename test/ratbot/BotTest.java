@@ -58,7 +58,7 @@ public class BotTest {
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
         Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE; Flow.held1 = 0;
-        Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST; King.faceSpawn = Cfg.SYM_FACE;
+        Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST; Flow.unseen = Cfg.FLOW_UNSEEN; King.faceSpawn = Cfg.SYM_FACE;
         Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false; King.laneN = 0; King.lane0 = 0;
         Nav.swapHold = Cfg.SWAP_HOLD; Nav.swapFrom = null; Nav.swaps = 0; Baby.nearestEnemy = null;
     }
@@ -931,6 +931,32 @@ public class BotTest {
         check(Baby.biteScore(60, 0, 50) == 1060 && Baby.biteScore(60, 80, 0) == 1060, "carryBite: no loot or off, health alone");
         check(Baby.biteScore(60, 30, 50) == 1030 && Baby.biteScore(60, 80, 50) == 1010, "carryBite: loot counts up to the cap");
         check(Baby.biteScore(20, 80, 50) == 1001 && Cfg.CARRY_BITE == 0, "carryBite: floor 1001, off by default");
+    }
+
+    /** A wall at x 15 with gaps at the bottom (y 0-2) and the top (y 17-19); every open tile at y <= 4 is unseen (the wall is known). Unseen tiles
+     *  at cost 1 take the short bottom route; at cost 3 the longer top route over seen tiles wins. */
+    static void testFlowUnseen() throws GameActionException {
+        boolean rev0 = Flow.rev, fast0 = Flow.fast;
+        for (int c = 0; c < 4; c++) {
+            int[] lo = new int[2];
+            for (int k = 0; k < 2; k++) {
+                reset(); W = 30; H = 20; install();
+                Flow.rev = (c & 1) != 0; Flow.fast = (c & 2) != 0;
+                for (int y = 3; y < 17; y++) walls.add(new MapLocation(15, y));
+                for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) { boolean w = walls.contains(new MapLocation(x, y)); if (w || y >= 5) Sym.record(x, y, w, false, false); }
+                Flow.unseen = k == 0 ? 1 : 3;
+                MapLocation t = new MapLocation(25, 6);
+                me = new MapLocation(5, 6); G.startTurn();
+                Flow.request(t);
+                for (int i = 0; i < 40 && !Flow.ready(t); i++) Flow.work(0);
+                int m = 99;
+                for (int i = 0; Flow.ready(t) && i < Flow.plen; i++) m = Math.min(m, Flow.path[i] / W);
+                lo[k] = Flow.ready(t) ? m : -1;
+            }
+            check(lo[0] >= 0 && lo[0] <= 2, "flow unseen " + c + ": at cost 1 the path takes the bottom gap (lowest y " + lo[0] + ")");
+            check(lo[1] >= 5, "flow unseen " + c + ": at cost 3 the path keeps to seen tiles over the top (lowest y " + lo[1] + ")");
+        }
+        Flow.rev = rev0; Flow.fast = fast0; Flow.unseen = Cfg.FLOW_UNSEEN;
     }
 
     static void testReserve() {
@@ -3803,6 +3829,7 @@ public class BotTest {
         testGrabSafe();
         testKeepRisk();
         testReserve();
+        testFlowUnseen();
         testHomeStart();
         testFormMine();
         testCatLay();

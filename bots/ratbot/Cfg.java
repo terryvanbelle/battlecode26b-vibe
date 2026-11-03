@@ -710,6 +710,11 @@ public final class Cfg {
     public static final int FLOW_HELD = 0;
     /** Path cost of a dirt tile (a dig is 5 cheese and 2.5 turns of action cooldown, plus the step). */
     public static final int DIG_COST = 4;
+    /** Path cost of a never-seen tile in Flow's target searches (1 = open, as before; the frontier search is unchanged).
+     *  Above 1 a path prefers corridors already walked over guesses through unseen space: on clockwisdom (59x59 ring
+     *  spiral; 10198 g0 vs run_away10) two carriers held 2200 raw each, walking away from the king for 300 rounds, as
+     *  each plan through an unseen ring broke on sighting its wall. At most DIG_COST (the Dial bucket bound). */
+    public static final int FLOW_UNSEEN = 1;
     /** Random samples per explore target, taking the first never-seen tile. */
     public static final int EXPLORE_TRIES = 12, EXPLORE_CENTER_FROM = 0;
     /** How a scout or seeker picks its next never-seen tile of our half from the EXPLORE_TRIES samples: 0 the nearest
