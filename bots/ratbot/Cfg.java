@@ -327,6 +327,11 @@ public final class Cfg {
     /** Gatherers keep the trap-risk mask while engaged (RISK_IN_FIGHT false then drops it for fighters only): the
      *  trap layers' front tiles are where our gatherers stepped in 50% of the enemy trap hits. */
     public static final boolean RISK_GATHER = false;
+    /** Every non-fighter (gatherers and attackers) keeps the trap-risk mask while engaged; fighters still drop it. Field
+     *  (u6a/nul1, 192 replica games): enemy rat traps killed 11.5 of our babies a lost game and 4.6 a won one (we kill
+     *  none of theirs); nearly all fired with an enemy rat within dist2 20 (the mask dropped), and about 60% of the
+     *  victims were non-fighters, attackers on their way (tag a) the largest share. */
+    public static final boolean RISK_NONFIGHT = false;
     /** Where the trap-risk mask is dropped (engaged, or hunting), still avoid the marks of the last RISK_FRESH rounds
      *  (0 = off): the front tiles of the enemies in view now or just before, where a reactive trap lands; aimCarry's
      *  steps keep to the mask too. s9s's 126 field games: the field laid 44 traps a game and our rats fired 37.8,

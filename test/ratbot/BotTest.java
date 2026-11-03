@@ -933,6 +933,20 @@ public class BotTest {
         check(Baby.biteScore(20, 80, 50) == 1001 && Cfg.CARRY_BITE == 0, "carryBite: floor 1001, off by default");
     }
 
+    static void testKeepRisk() {
+        int G = Baby.GATHER, F = Baby.FIGHT, A = Baby.ATTACK;
+        check(Baby.keepRisk(false, false, F, false, false, false), "keepRisk: free rat keeps the mask");
+        check(!Baby.keepRisk(true, false, G, true, true, true), "keepRisk: a hunt drops it");
+        check(!Baby.keepRisk(false, true, F, false, false, false), "keepRisk: engaged fighter drops it by default");
+        check(!Baby.keepRisk(false, true, A, false, false, false), "keepRisk: engaged attacker drops it by default");
+        check(Baby.keepRisk(false, true, F, true, false, false), "keepRisk: RISK_IN_FIGHT keeps it for fighters");
+        check(Baby.keepRisk(false, true, G, false, true, false), "keepRisk: RISK_GATHER keeps it for gatherers");
+        check(!Baby.keepRisk(false, true, A, false, true, false), "keepRisk: RISK_GATHER not for attackers");
+        check(Baby.keepRisk(false, true, A, false, false, true), "keepRisk: RISK_NONFIGHT keeps it for attackers");
+        check(Baby.keepRisk(false, true, G, false, false, true), "keepRisk: RISK_NONFIGHT keeps it for gatherers");
+        check(!Baby.keepRisk(false, true, F, false, false, true), "keepRisk: RISK_NONFIGHT not for fighters");
+    }
+
     static void testGrabSafe() throws GameActionException {
         reset(); install();
         G.round = 200; G.coop = false; Nav.avoid = 0; health = 60;
@@ -3776,6 +3790,7 @@ public class BotTest {
         testKingCarrier();
         testRescue();
         testGrabSafe();
+        testKeepRisk();
         testHomeStart();
         testFormMine();
         testCatLay();

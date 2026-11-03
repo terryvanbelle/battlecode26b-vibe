@@ -1,0 +1,6 @@
+name=u6d
+source=bots/ratbot
+source_sha=fffda35a9c33
+commit=e776f5a
+created=2026-11-02 19:48 PST
+change=19:48 PST: u6a + RISK_NONFIGHT (non-fighters, gatherers and attackers, keep the trap-risk mask while engaged; field: enemy traps kill 11.5 of our babies a lost game, nearly all with the mask dropped, ~60% non-fighters)

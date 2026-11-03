@@ -145,7 +145,7 @@ public final class Baby {
         boolean engaged = nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= 20;
         if (Cfg.RISK_ADAPT > 0) adaptRisk = false;
         if (!G.coop && Cfg.TRAP_RISK && (Cfg.RISK_MIN_AREA == 0 || G.W * G.H >= Cfg.RISK_MIN_AREA) && Nav.stall < 8) {
-            if (!(hunting && Cfg.HUNT_IGNORES_RISK) && (Cfg.RISK_IN_FIGHT || !engaged || Cfg.RISK_GATHER && role == GATHER))
+            if (keepRisk(hunting, engaged, role))
                 Nav.avoid |= TrapRisk.mask(G.me);
             else if (Cfg.RISK_FRESH > 0) Nav.avoid |= TrapRisk.mask(G.me, Cfg.RISK_FRESH);
             else if (Cfg.RISK_ADAPT > 0 && (adaptRisk = trapsKnown(burnRound, Comms.read(Comms.SYM))))
@@ -613,6 +613,15 @@ public final class Baby {
     }
 
     public static int grabSafe;
+    /** Whether the trap-risk mask applies this turn: always when not engaged; when engaged only under RISK_IN_FIGHT, for
+     *  gatherers under RISK_GATHER, or for every non-fighter under RISK_NONFIGHT. A hunt drops it (HUNT_IGNORES_RISK). */
+    static boolean keepRisk(boolean hunting, boolean engaged, int role) {
+        return keepRisk(hunting && Cfg.HUNT_IGNORES_RISK, engaged, role, Cfg.RISK_IN_FIGHT, Cfg.RISK_GATHER, Cfg.RISK_NONFIGHT);
+    }
+    static boolean keepRisk(boolean hunt, boolean engaged, int role, boolean inFight, boolean gather, boolean nonFight) {
+        if (hunt) return false;
+        return inFight || !engaged || gather && role == GATHER || nonFight && role != FIGHT;
+    }
 
     /**
      * Throw the carried rat along the direction that hurts most: the flight (6-8 tiles) hits the first robot,
