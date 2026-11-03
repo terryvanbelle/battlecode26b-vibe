@@ -5359,3 +5359,4 @@
 - 12:27: u7e = u6x + RETREAT_HP 20 (bracket of u7d). Screen zd4; falsifiers: wins < 31 or any overrun; to the replica only if it beats u7d's 35 or u7d is rejected.
 - 12:46: u7e (RETREAT_HP 20) REJECTED at screen zd4: 30 wins < 31 (u6x 32, u7d 35). Retreat is all-or-nothing: the half setting keeps the ammo walking home.
 - 12:46: u7f = u6x + GATHER_FIRST 4 (other side of u7a). Screen zd5; falsifiers: wins < 31 or any overrun.
+- 13:08: u7f (GATHER_FIRST 4) REJECTED at screen zd5 as a no-op: identical to zc6 to the unit (32 wins, 352,884 transfer); rushers take spawn indices 4-15 before the gather/fight split, so GATHER_FIRST < 6 is dead. u7d's block 1 is 12 of 16 matches in (4 behind the hourly limit).
