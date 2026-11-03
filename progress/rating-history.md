@@ -1,6 +1,6 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-03 11:23 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-03 12:26 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
 
@@ -155,3 +155,4 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 | #196 | u6y | 2026-11-03 10:06 | yes | 1,622 | 0 |
 | #197 | u7a | 2026-11-03 10:28 | yes | 1,622 | 2 |
 | #198 | u7b | 2026-11-03 11:19 | yes | 1,622 | 0 |
+| #199 | u7d | 2026-11-03 12:22 | yes | 1,622 | 0 |
