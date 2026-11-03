@@ -1,0 +1,6 @@
+name=u6g
+source=bots/ratbot
+source_sha=6fa282bc4a7c
+commit=e93def0
+created=2026-11-02 21:05 PST
+change=21:05 PST: u6a + s8o's rescue (RESCUE, RESCUE_D2 18, RESCUE_WALK): an enemy baby carrying one of ours within dist2 18 comes first; step or walk to a tile beside it that it cannot see and grab it (the carrier drops ours)
