@@ -972,6 +972,26 @@ public class BotTest {
 
     static RobotInfo rat(Team t, int x, int y) { return new RobotInfo(9, t, UnitType.BABY_RAT, 100, new MapLocation(x, y), Direction.NORTH, 0, 0, null); }
 
+    static RobotInfo hrat(Team t, int hp, RobotInfo held) { return new RobotInfo(9, t, UnitType.BABY_RAT, hp, new MapLocation(3, 3), Direction.NORTH, 0, 0, held); }
+
+    static void testBiteCarrier() {
+        G.us = Team.A;
+        RobotInfo ours = rat(Team.A, 3, 3), theirs = rat(Team.B, 3, 3);
+        RobotInfo weak = hrat(Team.B, 40, null), carrier = hrat(Team.B, 90, ours), carrierWeak = hrat(Team.B, 30, ours);
+        RobotInfo holdsTheirs = hrat(Team.B, 90, theirs);
+        check(King.holdsOurs(carrier), "holdsOurs carrier");
+        check(!King.holdsOurs(weak), "holdsOurs empty");
+        check(!King.holdsOurs(holdsTheirs), "holdsOurs own team rat");
+        check(King.betterBite(weak, carrier, false) && !King.betterBite(carrier, weak, false), "bite off: weaker wins");
+        check(King.betterBite(carrier, weak, true) && !King.betterBite(weak, carrier, true), "bite on: carrier over weaker");
+        check(King.betterBite(weak, holdsTheirs, true), "bite on: carrier of theirs not preferred");
+        check(King.betterBite(carrierWeak, carrier, true) && !King.betterBite(carrier, carrierWeak, true), "bite on: two carriers by health");
+        check(!King.betterBite(carrier, carrier, true), "bite on: equal not better");
+        G.us = Team.B;
+        check(King.holdsOurs(holdsTheirs) && !King.holdsOurs(carrier), "holdsOurs mirrored team");
+        G.us = Team.A;
+    }
+
     static void testFlee() {
         MapLocation c = new MapLocation(10, 10);
         RobotInfo[] none = {};
@@ -3849,6 +3869,7 @@ public class BotTest {
         testKeepRisk();
         testReserve();
         testFlee();
+        testBiteCarrier();
         testFlowUnseen();
         testHomeStart();
         testFormMine();

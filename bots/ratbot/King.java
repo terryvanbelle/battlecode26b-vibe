@@ -48,6 +48,8 @@ public final class King {
         Econ.received(rc.getGlobalCheese() - before);
         Debug.mark(45);
         // a fresh rat (100 HP, bites every turn) is worth far more than one king bite: spawn first
+        // (Cfg.KING_BITE_CARRIER: unless an enemy in reach holds one of ours, the ammo it is about to throw at us)
+        if (Cfg.KING_BITE_CARRIER && !G.coop) for (RobotInfo e : enemies) if (holdsOurs(e) && rc.canAttack(e.location)) { bite(enemies); break; }
         int sp = spawned;
         spawn(cats, enemies);
         // a king formed from a baby (Cfg.FORM_MINE) passes on its old home king's tile: the half test and the
@@ -242,13 +244,21 @@ public final class King {
         RobotInfo best = null;
         for (RobotInfo e : enemies) {
             if (!G.rc.canAttack(e.location)) continue;
-            if (best == null || e.health < best.health) best = e;
+            if (best == null || betterBite(e, best, Cfg.KING_BITE_CARRIER)) best = e;
         }
         if (best == null) return;
         int c = biteCheese(best.health, G.rc.getGlobalCheese());
         if (c > 0 && G.rc.canAttack(best.location, c)) G.rc.attack(best.location, c);
         else G.rc.attack(best.location);
     }
+
+    /** Bite pick: less health first; with carrierFirst (Cfg.KING_BITE_CARRIER) a carrier of one of our rats before any other. */
+    static boolean betterBite(RobotInfo e, RobotInfo best, boolean carrierFirst) {
+        if (carrierFirst && holdsOurs(e) != holdsOurs(best)) return holdsOurs(e);
+        return e.health < best.health;
+    }
+
+    static boolean holdsOurs(RobotInfo r) { return r.carryingRobot != null && r.carryingRobot.team == G.us; }
 
     /** Cfg.KING_CAT_BITE: bite the weakest cat in reach (nearest to our centre on equal health), any tile of its 2x2. */
     static void biteCat(RobotInfo[] cats) throws GameActionException {
