@@ -1,0 +1,2 @@
+u7d: u6x + RETREAT_HP 0 (from 40): a wounded baby near enemies no longer walks back to its king, where it is grabbed and thrown into it. 2026-11-03 11:44 PST.
+Falsifier: screen zd3 vs zc6 wins < 31 or any overrun rejects; on the replica, throw hits on our king (all opponents) not lower than u6x's.
