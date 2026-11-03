@@ -2,5 +2,5 @@ name=u6v
 source=bots/u6a + bots/ratbot/King.java
 source_sha=d8d1066e8b13
 commit=88ff5a1
-created=2026-11-03 04:58 PST
-change=04:58 PST: u6a + KING_FLEE 20 (structural: the king retreats from a rat assault; new switch, King.flee). With more enemy rats than our babies within dist2 20 the king steps from the enemies' centroid toward our babies' instead of standing at its mine. Field losses: they bite our king 222 a lost game; jail vs Finals and arrows vs YokoOno 0/12, all by bites
+created=2026-11-03 04:47 PST
+change=04:47 PST: u6a + KING_FLEE 20 (structural: the king retreats from a rat assault; new switch, King.flee). With more enemy rats than our babies within dist2 20 the king steps from the enemies' centroid toward our babies' instead of standing at its mine. Field losses: they bite our king 222 a lost game; jail vs Finals and arrows vs YokoOno 0/12, all by bites
