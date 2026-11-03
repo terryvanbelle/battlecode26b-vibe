@@ -1,0 +1,6 @@
+name=u6l
+source=bots/u6a
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-03 00:38 PST
+change=00:38 PST: u6a without FACE_ENEMY (ablation; plateau step 2: never ablated)
