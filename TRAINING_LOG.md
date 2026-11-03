@@ -5357,3 +5357,4 @@
 - 12:05: u7d (RETREAT_HP 0) screen zd3 passed: 35 wins vs 32, D 11 (+7 -4; gained araid cheesefarm A/B, evileye A, DefaultMedium B, canyoudig B, abrk canyoudig B, tiny B; lost abrk DefaultSmall B, bed A, araid DefaultMedium A, canyoudig A), 0 overruns, 0 starved kings. Queued for the replica after u7b.
 - 12:22: u7b (KING_BITE_CARRIER) REJECTED at replica block 1: 45 cells, 43 alike, D 2 (+1 -1), t 0. Merlin throw hits 5.2/game vs 5.9; thewaxmango 6.2/game, YokoOno/Xzibit 1.5. The king seldom has a carrier in bite reach before the throw: the throw lands from range. u7d (RETREAT_HP 0) submitted #199, block 1 after 11960.
 - 12:27: u7e = u6x + RETREAT_HP 20 (bracket of u7d). Screen zd4; falsifiers: wins < 31 or any overrun; to the replica only if it beats u7d's 35 or u7d is rejected.
+- 12:46: u7e (RETREAT_HP 20) REJECTED at screen zd4: 30 wins < 31 (u6x 32, u7d 35). Retreat is all-or-nothing: the half setting keeps the ammo walking home.
