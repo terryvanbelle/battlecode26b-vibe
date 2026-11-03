@@ -30,9 +30,16 @@ sync_milestones () {   # the replica website's rating charts draw progress/miles
   fi
 }
 export -f sync_milestones
+unstick_ratings () {   # siarnaq's rating chain stalls when an update task is lost (2026-11-01 16:00 PST autoscrim
+  # round: its ERR matches never triggered one; ratings froze ~2 days): finalize the stalled heads before reporting
+  source tools/vm.sh && ensure_vm > /dev/null &&
+  gssh 'sudo bc26-galaxy-manage shell' < tools/galaxy26/rating_unstick.py 2>&1 | grep '^unrated' | tail -1
+}
+export -f unstick_ratings
 echo "== start $(TZ=America/Los_Angeles date '+%H:%M PDT')"
 export -f pull_runs
 step "pull VM runs" 600 1 bash -c pull_runs
+step "unstick ratings" 600 1 bash -c unstick_ratings
 step "replica matches" 600 1 python3 -I tools/games.py replica
 step games 300 1 python3 -I tools/games.py build
 step elo 600 2 "$PY" -I tools/elo.py
