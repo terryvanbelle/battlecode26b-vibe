@@ -1,0 +1,6 @@
+name=u6w
+source=bots/u6a
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-03 05:53 PST
+change=u6a + PEACE + CARRY_MAX 300 (plateau step 5: near-misses in pairs; u6h PEACE pooled t +0.50 over 2 blocks, u6t CARRY_MAX 300 mechanism passed but t -0.58)
