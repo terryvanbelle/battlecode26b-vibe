@@ -1,0 +1,6 @@
+name=u6t
+source=bots/u6a
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-03 03:06 PST
+change=03:06 PST: u6a + CARRY_MAX 300 (basics repair: carrier feedback loop; u6s's 100 cut delivery 11%). Runaway loads were 940-10760

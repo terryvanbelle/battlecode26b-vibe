@@ -465,4 +465,5 @@ u6o,2026-11-03 00:38,u6a,u6a without RUSH_BREAK (ablation; plateau step 2: never
 u6p,2026-11-03 00:38,u6a,u6a without COURIER (ablation; plateau step 2: never ablated),"pending: replica block 1 (sub 191, after 11082); screen zb6 +5 -4, 34 vs 33 wins, delivered 317k"
 u6q,2026-11-03 00:38,u6a,u6a without GUARD_MEMORY (ablation; plateau step 2: never ablated),REJECTED at replica block 1: set 1 D 6 (+2 -4) net -2 t -0.82
 u6r,2026-11-03 00:38,u6a,u6a without HUNT_IGNORES_RISK (ablation; plateau step 2: never ablated),"REJECTED (ablation screen zb8): D 0, 33 vs 33 wins; inert locally"
-u6s,2026-11-03 01:16,u6a,"u6a + CARRY_MAX 100 (basics repair): a loaded rat takes no pile that lifts it above 100; 10942 clockwisdom: rat 10004 made 68 pickups of 20 walking home, reached 1460-1840 and crawled",pending: screen zc1 (after zb1-zb8)
+u6s,2026-11-03 01:16,u6a,"u6a + CARRY_MAX 100 (basics repair): a loaded rat takes no pile that lifts it above 100; 10942 clockwisdom: rat 10004 made 68 pickups of 20 walking home, reached 1460-1840 and crawled","REJECTED at screen zc1: D 6 (+3 -3), 33 vs 33 wins, delivered 264k (bar 285k)"
+u6t,2026-11-03 03:06,u6a,"u6a + CARRY_MAX 300 (basics repair: carrier feedback loop, cap above normal hauling; u6s's 100 cut delivery 11%)",pending: screen zc2
