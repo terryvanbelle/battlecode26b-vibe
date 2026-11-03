@@ -933,6 +933,29 @@ public class BotTest {
         check(Baby.biteScore(20, 80, 50) == 1001 && Cfg.CARRY_BITE == 0, "carryBite: floor 1001, off by default");
     }
 
+    static void testGrabSafe() throws GameActionException {
+        reset(); install();
+        G.round = 200; G.coop = false; Nav.avoid = 0; health = 60;
+        me = new MapLocation(5, 5); facing = Direction.EAST; G.me = me;
+        RobotInfo target = new RobotInfo(50, Team.B, UnitType.BABY_RAT, 40, new MapLocation(6, 5), Direction.EAST, 0, 0, null);
+        // beside us, facing us (NORTH is +y: from (5, 6) it faces SOUTH to see us), healthier: it can grab the carrier
+        RobotInfo strong = new RobotInfo(51, Team.B, UnitType.BABY_RAT, 80, new MapLocation(5, 6), Direction.SOUTH, 0, 0, null);
+        RobotInfo weak = new RobotInfo(52, Team.B, UnitType.BABY_RAT, 50, new MapLocation(5, 6), Direction.SOUTH, 0, 0, null);
+        RobotInfo away = new RobotInfo(53, Team.B, UnitType.BABY_RAT, 80, new MapLocation(5, 6), Direction.NORTH, 0, 0, null);
+        RobotInfo far = new RobotInfo(54, Team.B, UnitType.BABY_RAT, 80, new MapLocation(5, 7), Direction.SOUTH, 0, 0, null);
+        RobotInfo busy = new RobotInfo(55, Team.B, UnitType.BABY_RAT, 80, new MapLocation(5, 6), Direction.SOUTH, 0, 0, weak);
+        RobotInfo ally = new RobotInfo(56, Team.A, UnitType.BABY_RAT, 80, new MapLocation(5, 6), Direction.SOUTH, 0, 0, null);
+        check(Baby.grabRisk(new RobotInfo[]{target, strong}, 60, me), "grab safe: a healthier enemy beside us that sees us is a risk");
+        check(!Baby.grabRisk(new RobotInfo[]{target}, 60, me), "grab safe: the target alone is no risk");
+        check(!Baby.grabRisk(new RobotInfo[]{target, weak}, 60, me), "grab safe: a weaker neighbour cannot grab us");
+        check(!Baby.grabRisk(new RobotInfo[]{target, strong}, 80, me), "grab safe: equal health cannot grab (threshold 0, strictly more)");
+        check(!Baby.grabRisk(new RobotInfo[]{target, away}, 60, me), "grab safe: a neighbour facing away does not see us");
+        check(!Baby.grabRisk(new RobotInfo[]{target, far}, 60, me), "grab safe: two tiles away is no risk this round");
+        check(!Baby.grabRisk(new RobotInfo[]{target, busy}, 60, me), "grab safe: a neighbour already carrying cannot grab");
+        check(!Baby.grabRisk(new RobotInfo[]{target, ally}, 60, me), "grab safe: our own rats are no risk");
+        check(!Cfg.GRAB_SAFE, "grab safe: off by default");
+    }
+
     static void testRescue() throws GameActionException {
         reset(); install();
         G.round = 200; G.coop = false; Nav.avoid = 0;
@@ -3746,6 +3769,7 @@ public class BotTest {
         testKingBiter();
         testKingCarrier();
         testRescue();
+        testGrabSafe();
         testHomeStart();
         testFormMine();
         testCatLay();

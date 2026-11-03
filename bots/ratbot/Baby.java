@@ -588,11 +588,26 @@ public final class Baby {
             if (s > bs) { bs = s; best = r; }
         }
         if (best == null) return false;
+        if (Cfg.GRAB_SAFE && grabRisk(robots, rc.getHealth(), G.me)) { grabSafe++; return false; }
         rc.carryRat(best.location);
         carryRound = G.round;
         naps++;
         return true;
     }
+
+    /** Cfg.GRAB_SAFE: an enemy baby beside us, carrying nobody, with us in its view and more
+     *  health than ours can grab the carrier (freeing its ally) before our throw is ready two rounds after the grab.
+     *  The target itself needs no exclusion: one that sees us with more health cannot be grabbed. */
+    static boolean grabRisk(RobotInfo[] robots, int hp, MapLocation me) {
+        for (RobotInfo r : robots) {
+            if (r.team != G.them || r.type != UnitType.BABY_RAT || r.carryingRobot != null) continue;
+            if (G.cheb(me, r.location) != 1 || r.health <= hp) continue;
+            if (sees(r, me)) return true;
+        }
+        return false;
+    }
+
+    public static int grabSafe;
 
     /**
      * Throw the carried rat along the direction that hurts most: the flight (6-8 tiles) hits the first robot,

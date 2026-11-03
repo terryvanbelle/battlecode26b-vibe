@@ -34,6 +34,10 @@ public final class Cfg {
     public static final int KING_TRAP_DIST2 = 20;
     /** Babies at war grab adjacent enemies and throw them; lay rat traps toward enemies within BABY_TRAP_DIST2. */
     public static final boolean NAP = true, BABY_RAT_TRAPS = true;
+    /** Grab safety (off by default): no grab while another enemy baby beside us, carrying nobody, sees us and has more
+     *  health; it can grab the carrier before the throw (ready two rounds after the grab). Field set 1 (9093-9168,
+     *  9948-9963, r <= 300): 891 of our 3976 holds ended with the carrier grabbed, 583 of them in rounds 0-1. */
+    public static final boolean GRAB_SAFE = false;
     /** Bite first the adjacent enemy rat that could grab us (healthier by at most one bite): it then cannot. */
     public static final boolean BITE_GUARD = false;
     /** Bite first an adjacent enemy rat that carries one of ours (on knifefight bestsofar threw 41 of our rats, most

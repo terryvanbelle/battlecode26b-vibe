@@ -1,0 +1,6 @@
+name=u6b
+source=bots/ratbot
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-02 17:53 PST
+change=17:53 PST: u6a + GRAB_SAFE (new switch): no grab while another enemy baby beside us, carrying nobody, sees us with more health (it can grab our carrier before the throw is ready). Field: 891 of 3976 holds ended with our carrier grabbed, 583 in rounds 0-1
