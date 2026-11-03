@@ -5291,3 +5291,5 @@
   - u6q −GUARD_MEMORY: D 14 (+9 −5), 37 wins, delivered 271k (−9%). Replica candidate: the best screen of the set.
   - zb8 (−HUNT_IGNORES_RISK) is still running. The waiter timed out at 2 h because the VM's load is about 12.
   Replica order: u6s (basics repair) once its screen zc1 passes, then u6q, then u6p.
+- 02:47: Submitted u6q (−GUARD_MEMORY) to the replica as sub 190 while u6s's screen waits for the VM; block 1 is queued on set 1 after 10947. Falsifier (pre-registered): the replica block must not lose more than 3 cells where we are in-band (the 25-75% band). u6s goes next once its screen passes.
+- 02:53: Ablation zb8, u6r −HUNT_IGNORES_RISK: D 0 (all 44 cells alike), 33 wins, delivered 300k. The switch is inert against the archetypes, so the screen gives no signal; I'm not spending a replica block on it. u6s's screen zc1 has started (3 games in).
