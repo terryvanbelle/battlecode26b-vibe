@@ -1,0 +1,2 @@
+u7g: u7d + KING_BITE_MAX 400 (u7c's change on u7d; used only if u7d is accepted). 2026-11-03 13:47 PST.
+Falsifier: screen zd6 vs u7d's zd3 wins < 33 (35 - 2) or any overrun rejects; on the replica, bite damage on our king per loss not below u7d's 12.8.
