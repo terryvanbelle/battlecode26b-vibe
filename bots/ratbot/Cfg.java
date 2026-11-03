@@ -38,6 +38,11 @@ public final class Cfg {
      *  health; it can grab the carrier before the throw (ready two rounds after the grab). Field set 1 (9093-9168,
      *  9948-9963, r <= 300): 891 of our 3976 holds ended with the carrier grabbed, 583 of them in rounds 0-1. */
     public static final boolean GRAB_SAFE = false;
+    /** With GRAB_SAFE: 0 gates on adjacent enemies that see us (u6b, refuted on the field: carriers grabbed in hold rounds
+     *  0-1 fell only 14.7% -> 14.2%); R > 0 gates on any healthier enemy baby within Chebyshev R, whatever its facing.
+     *  Field (583 carriers grabbed within a round of their grab): the grabber was within 2 in 556, in our carrier's
+     *  cone in all, healthier in 325; our carrier had moved in 345 (it was followed into the tile it left). */
+    public static final int GRAB_SAFE_R = 0;
     /** Bite first the adjacent enemy rat that could grab us (healthier by at most one bite): it then cannot. */
     public static final boolean BITE_GUARD = false;
     /** Bite first an adjacent enemy rat that carries one of ours (on knifefight bestsofar threw 41 of our rats, most

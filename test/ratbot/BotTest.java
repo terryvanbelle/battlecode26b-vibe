@@ -954,6 +954,12 @@ public class BotTest {
         check(!Baby.grabRisk(new RobotInfo[]{target, busy}, 60, me), "grab safe: a neighbour already carrying cannot grab");
         check(!Baby.grabRisk(new RobotInfo[]{target, ally}, 60, me), "grab safe: our own rats are no risk");
         check(!Cfg.GRAB_SAFE, "grab safe: off by default");
+        // GRAB_SAFE_R: any healthier enemy within the radius, whatever its facing
+        check(Baby.grabRisk(new RobotInfo[]{target, away}, 60, me, 2), "grab safe r: a healthier neighbour facing away counts");
+        check(Baby.grabRisk(new RobotInfo[]{target, far}, 60, me, 2) && !Baby.grabRisk(new RobotInfo[]{target, far}, 60, me, 1), "grab safe r: two tiles out counts at radius 2, not 1");
+        check(!Baby.grabRisk(new RobotInfo[]{target, weak}, 60, me, 2), "grab safe r: a weaker one does not count");
+        check(!Baby.grabRisk(new RobotInfo[]{target, busy}, 60, me, 2) && !Baby.grabRisk(new RobotInfo[]{target, ally}, 60, me, 2), "grab safe r: carriers and allies do not count");
+        check(Cfg.GRAB_SAFE_R == 0, "grab safe r: off by default");
     }
 
     static void testRescue() throws GameActionException {
