@@ -1,0 +1,6 @@
+name=u6i
+source=bots/u6a
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-02 22:41 PST
+change=22:41 PST: u6a + KING_PRESS + PRESS_SHARED, PRESS_D2 225, PRESS_AGE 16, PRESS_HOPS 3 (s8a's recipe, never run on the u-series base): in lost field games they bite our king for 222 and we bite theirs for 12
