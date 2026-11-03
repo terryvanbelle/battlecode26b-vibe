@@ -5345,3 +5345,5 @@
 - 09:27: Local disk at 1.4 GB free. Deleted 180 build/dumpcache entries older than 2 h (1.3G, regenerable replay parses; list in build/dumpcache_deleted_2026-11-03c.txt). Replays untouched.
 - 10:07: Bracket screens vs u6x's zc6 (32 wins, 352,884 xfer). u6z (500): D 4 (+0 −4), 28 wins (bar 31): REJECTED; later rush spawns cost the abrk evileye/arrows long games. u6y (200): D 5 (+2 −3), 31 wins (bar 31: pass), delivered 349,950 (bar 340k: pass), starved kings 2, overruns 0. That is flat locally, so the replica decides: submitted as sub 196, block 1 after 11702, paired against u6x's set-1 games 11549-11677.
 - 10:09: u7a = u6x + GATHER_FIRST 9 (roles lever not tried alone on the replica; RUSH_LIFE was rejected twice, t0g and u5w). Screen zc9 vs zc6; falsifier: wins < 31 or delivered < 340k rejects.
+- 10:27: u6y (RUSH_UNTIL 200) REJECTED at replica block 1: 45 cells, 44 alike, D 1 (+0 -1), t -1.00 (lost spsquared bed B). RUSH_UNTIL bracket done: 300 stays.
+- 10:28: u7a screen zc9 passed (31 wins vs 32, D 1 lost araid DefaultMedium A, delivered 351k). Submitted #197, block 1 on set 1 after 11786.
