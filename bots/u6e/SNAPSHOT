@@ -1,0 +1,6 @@
+name=u6e
+source=bots/ratbot
+source_sha=9c493eff6c2d
+commit=b2344ac
+created=2026-11-02 20:12 PST
+change=20:12 PST: u6a + RESERVE_ROUNDS 300 (structural, bank reserve doctrine: every spawn floor holds our live kings' upkeep for 300 more rounds, capped at the game's end; one king keeps 600, not 300, or 100 in a collapse)

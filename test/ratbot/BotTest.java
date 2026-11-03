@@ -933,6 +933,17 @@ public class BotTest {
         check(Baby.biteScore(20, 80, 50) == 1001 && Cfg.CARRY_BITE == 0, "carryBite: floor 1001, off by default");
     }
 
+    static void testReserve() {
+        check(King.reserve(300, 1, 100, 0) == 300, "reserve: off leaves the floor");
+        check(King.reserve(300, 1, 100, 300) == 600, "reserve: one king, 300 rounds of upkeep");
+        check(King.reserve(300, 2, 100, 300) == 1200, "reserve: two kings eat twice");
+        check(King.reserve(100, 1, 100, 300) == 600, "reserve: the LOW_FLOOR collapse is held too");
+        check(King.reserve(300, 1, 1900, 300) == 300, "reserve: capped at the game's end, floor kept");
+        check(King.reserve(100, 1, 1900, 300) == 200, "reserve: 100 rounds left, one king");
+        check(King.reserve(900, 1, 100, 300) == 900, "reserve: a higher floor stays");
+        check(King.reserve(300, 0, 100, 300) == 600, "reserve: at least one king");
+    }
+
     static void testKeepRisk() {
         int G = Baby.GATHER, F = Baby.FIGHT, A = Baby.ATTACK;
         check(Baby.keepRisk(false, false, F, false, false, false), "keepRisk: free rat keeps the mask");
@@ -3791,6 +3802,7 @@ public class BotTest {
         testRescue();
         testGrabSafe();
         testKeepRisk();
+        testReserve();
         testHomeStart();
         testFormMine();
         testCatLay();

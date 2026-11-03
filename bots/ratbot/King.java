@@ -304,6 +304,13 @@ public final class King {
         return siege > 0 ? Math.min(r, siege) : r;
     }
 
+    /** Cfg.RESERVE_ROUNDS: a spawn floor f raised to the upkeep of `kings` kings (2 a round each) for `rounds` more
+     *  rounds, or to the end of the game if that is sooner; rounds 0 leaves f. */
+    static int reserve(int f, int kings, int round, int rounds) {
+        if (rounds <= 0) return f;
+        return Math.max(f, 2 * Math.max(kings, 1) * Math.min(rounds, 2000 - round));
+    }
+
     /** Cfg.TRAP_SPAWN_FIRST: a rat trap now would leave the king, under the baby cap, short of its next spawn. */
     static boolean trapStarvesSpawn(RobotController rc) {
         if (!Cfg.TRAP_SPAWN_FIRST) return false;
@@ -344,14 +351,14 @@ public final class King {
         boolean low = babies < Cfg.LOW_BABIES;
         boolean siege = !G.coop && enemies.length > 0;
         int sf = siege ? Cfg.SIEGE_FLOOR : 0;
-        boolean boot = babies < Cfg.CORE_BABIES && rc.getGlobalCheese() >= cost + Econ.floor(spawnFloor(Cfg.CORE_FLOOR, low, sf));
+        boolean boot = babies < Cfg.CORE_BABIES && rc.getGlobalCheese() >= cost + reserve(Econ.floor(spawnFloor(Cfg.CORE_FLOOR, low, sf)), Econ.kings(), G.round, Cfg.RESERVE_ROUNDS);
         // at war with enemies in sight, bodies now beat cheese later: spawn down to a short upkeep floor
-        boolean war = siege && rc.getGlobalCheese() >= cost + Econ.floor(spawnFloor(Cfg.WAR_FLOOR, low, sf));
+        boolean war = siege && rc.getGlobalCheese() >= cost + reserve(Econ.floor(spawnFloor(Cfg.WAR_FLOOR, low, sf)), Econ.kings(), G.round, Cfg.RESERVE_ROUNDS);
         spawnWhy = 's';
         if (!boot && !war && Econ.surplus() < cost + Cfg.SPAWN_MARGIN) return;
         // never spend the king's upkeep: SPAWN_FLOOR cheese (or what the rest of the game needs) stays
         spawnWhy = 'f';
-        if (rc.getGlobalCheese() < cost + Econ.floor(Math.min(spawnFloor(Cfg.SPAWN_FLOOR, low, sf), 2 * (2000 - G.round)))) return;
+        if (rc.getGlobalCheese() < cost + reserve(Econ.floor(Math.min(spawnFloor(Cfg.SPAWN_FLOOR, low, sf), 2 * (2000 - G.round))), Econ.kings(), G.round, Cfg.RESERVE_ROUNDS)) return;
         spawnWhy = 'c';
         if (babies >= babyCap(war, rc.getGlobalCheese())) return;
         // Spawn toward the most useful direction: away from visible cats, else toward the map centre.

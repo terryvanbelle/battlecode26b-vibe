@@ -29,6 +29,11 @@ public final class Cfg {
      *  king eats 2 a round): s5r on cheesebottles (1800) formed a second king, spawned to its 30-baby cap down to
      *  the one-king floor, and both kings starved from r650. */
     public static final boolean FLOOR_PER_KING = false;
+    /** Bank reserve doctrine (0 = off): every spawn floor (core, war, spawn, and the LOW_FLOOR collapse) holds at least
+     *  the upkeep of our live kings for RESERVE_ROUNDS more rounds (capped at the game's end). u6a/nul1's in-band
+     *  losses (192 replica games): the last king starved in 48 of 84; our bank sat at the 300 floor (150 rounds of
+     *  upkeep) and went to 0 within 50-150 rounds of the army's collapse, while the opponents banked 1000-1500. */
+    public static final int RESERVE_ROUNDS = 0;
     /** King places rat traps toward enemy rats within this squared distance once cooperation is over. */
     public static final boolean KING_TRAPS = true;
     public static final int KING_TRAP_DIST2 = 20;
