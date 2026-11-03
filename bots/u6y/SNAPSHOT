@@ -1,0 +1,6 @@
+name=u6y
+source=bots/u6x
+source_sha=d8d1066e8b13
+commit=73130b9
+created=2026-11-03 09:26 PST
+change=u6x + RUSH_UNTIL 200 (bracket the accepted 300)
