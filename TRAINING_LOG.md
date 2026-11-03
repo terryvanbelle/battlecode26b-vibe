@@ -5360,3 +5360,4 @@
 - 12:46: u7e (RETREAT_HP 20) REJECTED at screen zd4: 30 wins < 31 (u6x 32, u7d 35). Retreat is all-or-nothing: the half setting keeps the ammo walking home.
 - 12:46: u7f = u6x + GATHER_FIRST 4 (other side of u7a). Screen zd5; falsifiers: wins < 31 or any overrun.
 - 13:08: u7f (GATHER_FIRST 4) REJECTED at screen zd5 as a no-op: identical to zc6 to the unit (32 wins, 352,884 transfer); rushers take spawn indices 4-15 before the gather/fight split, so GATHER_FIRST < 6 is dead. u7d's block 1 is 12 of 16 matches in (4 behind the hourly limit).
+- 13:21: u7d (RETREAT_HP 0) replica block 1: 45 cells, 36 alike, D 9 (+5 -4), t +0.33: continue. Throw hits on our king/game: Merlin 2.0 (u6x 5.9, u7b 5.2), YokoOno+Xzibit 1.1 (1.5 under u7b), thewaxmango 7.3 (6.2). The mechanism works on Merlin; thewaxmango's throws come from elsewhere. Block 2 on set 2 queued after 12043.
