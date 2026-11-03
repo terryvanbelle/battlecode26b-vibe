@@ -461,7 +461,7 @@ u6k,2026-11-03 00:38,u6a,u6a without NAP (ablation; plateau step 2: never ablate
 u6l,2026-11-03 00:38,u6a,u6a without FACE_ENEMY (ablation; plateau step 2: never ablated),"REJECTED (ablation screen zb2): D 16 (+8 -8), 33 vs 33 wins, delivered 272k; keep FACE_ENEMY"
 u6m,2026-11-03 00:38,u6a,u6a without FIGHT_MINE (ablation; plateau step 2: never ablated),"REJECTED (ablation screen zb3): +3 -4, 32 vs 33 wins; neutral, keep"
 u6n,2026-11-03 00:38,u6a,u6a without CAT_TRAPS (ablation; plateau step 2: never ablated),"REJECTED (ablation screen zb4): +2 -3, 32 vs 33 wins; neutral, keep"
-u6o,2026-11-03 00:38,u6a,u6a without RUSH_BREAK (ablation; plateau step 2: never ablated),"pending: replica block 1 (sub 194, after ); screen zb5 +4 -4, 33 vs 33 wins, delivered 307k"
+u6o,2026-11-03 00:38,u6a,u6a without RUSH_BREAK (ablation; plateau step 2: never ablated),"pending: replica block 2 (set 2, after 11412); block 1 D 5 (+3 -2) t +0.45"
 u6p,2026-11-03 00:38,u6a,u6a without COURIER (ablation; plateau step 2: never ablated),REJECTED at replica block 1: set 1 D 8 (+2 -6) net -4 t -1.41
 u6q,2026-11-03 00:38,u6a,u6a without GUARD_MEMORY (ablation; plateau step 2: never ablated),REJECTED at replica block 1: set 1 D 6 (+2 -4) net -2 t -0.82
 u6r,2026-11-03 00:38,u6a,u6a without HUNT_IGNORES_RISK (ablation; plateau step 2: never ablated),"REJECTED (ablation screen zb8): D 0, 33 vs 33 wins; inert locally"
