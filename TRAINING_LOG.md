@@ -5352,3 +5352,4 @@
 - 11:00: u7b screen zd1 passed: 33 wins vs 32, D 5 (+3 -2: canyoudig B, tiny B x2 gained; tiny A, starvation A lost), delivered 353k, 0 overruns. Queued for the replica after u7a's block 1.
 - 11:19: u7a (GATHER_FIRST 9) REJECTED at replica block 1: 45 cells, 44 alike, D 1 (+0 -1: YokoOno Stash A), t -1.00. u7b (KING_BITE_CARRIER) submitted #198, block 1 on set 1 after 11868. VM disk 4.3 GB free.
 - 11:25: u7c = u6x + KING_BITE_MAX 400 (never tuned; king bites decide the 12 in-band losses' other half, 203 bite damage on our king vs 13 on theirs). Screen zd2; falsifier: wins < 31 or delivered < 340k.
+- 11:43: u7c (KING_BITE_MAX 400) REJECTED at screen zd2 by its falsifier: delivered 329k < 340k (wins 33 vs 32, D 3 +2 -1). 15k of the 23k drop is araid cheesefarm B won at r723 instead of drawn to r2000: the delivered bar is confounded by game length; next screen falsifiers state delivered per 1000 rounds instead.
