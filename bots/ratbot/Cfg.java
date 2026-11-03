@@ -168,6 +168,10 @@ public final class Cfg {
     public static final boolean KING_DIG = true;
     /** King steps out of a near cat's path (King.dodge) instead of only straight away from it. */
     public static final boolean KING_DODGE = false;
+    /** At war, with more enemy rats than our babies within this dist2 of the king, the king steps from the enemies'
+     *  centroid toward our babies' instead of standing still (0 = off). Field losses: enemy rats bite our king for
+     *  222 a lost game while it stands at its mine (move() returned on any enemy in view). */
+    public static final int KING_FLEE = 0;
     /** Cats within this dist2 of the king's centre make it dodge. */
     public static final int KING_DODGE_R2 = 25;
     /** A dodging king boxed in by dirt digs out (KING_DIG_MIN cheese and up). */

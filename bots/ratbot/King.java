@@ -476,6 +476,10 @@ public final class King {
         if (Cfg.CAT_LANE && offLane(c, cats)) { mineWhy = 'l'; return; }
         if (!Cfg.KING_MINE) return;
         if (Cfg.FORM_STILL && formSite != null) { mineWhy = 'f'; return; }
+        if (Cfg.KING_FLEE > 0 && !G.coop && enemies.length > 0) {
+            Direction away = flee(c, enemies, rc.senseNearbyRobots(Cfg.KING_FLEE, G.us), Cfg.KING_FLEE);
+            if (away != null) for (Direction d : G.fan(c, away)) if (rc.canMove(d)) { rc.move(d); mineWhy = 'r'; return; }
+        }
         if (enemies.length > 0 || cats.length > 0) { mineWhy = enemies.length > 0 ? 'e' : 'c'; return; }
         if (Cfg.KING_PLUG && unplug(c)) { mineWhy = 'u'; return; }
         if (Cfg.KING_PATH && KPath.follow(c)) return;
@@ -505,6 +509,20 @@ public final class King {
         if (d == null) { mineWhy = 'z'; if (walkStep(c, homeMine)) pickUp(); return; }
         if (!G.rc.canRemoveDirt(d)) { mineWhy = 'q'; return; }
         G.rc.removeDirt(d); digs++; Sym.mem[G.idx(d)] &= ~Sym.DIRT; mineWhy = 'D';
+    }
+
+    /** Cfg.KING_FLEE: with more enemy rats than our babies within dist2 r of c, the step from the enemies' centroid
+     *  toward our babies' (away from the enemies when none of ours is near); null to stay. Kings never count. */
+    static Direction flee(MapLocation c, RobotInfo[] enemies, RobotInfo[] ours, int r) {
+        int ne = 0, ex = 0, ey = 0, na = 0, ax = 0, ay = 0;
+        for (RobotInfo e : enemies)
+            if (e.type != UnitType.RAT_KING && c.distanceSquaredTo(e.location) <= r) { ne++; ex += e.location.x; ey += e.location.y; }
+        for (RobotInfo a : ours)
+            if (a.type != UnitType.RAT_KING) { na++; ax += a.location.x; ay += a.location.y; }
+        if (ne <= na) return null;
+        int dx = na == 0 ? ne * c.x - ex : ne * ax - na * ex, dy = na == 0 ? ne * c.y - ey : ne * ay - na * ey;
+        if (dx == 0 && dy == 0) return null;
+        return G.dirOf(dx, dy);
     }
 
     /** Lane tiles marked so far, and the lane under the king's 3x3 where move() found it (Cfg.CAT_LANE). */

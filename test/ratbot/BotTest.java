@@ -970,6 +970,25 @@ public class BotTest {
         check(King.reserve(300, 0, 100, 300) == 600, "reserve: at least one king");
     }
 
+    static RobotInfo rat(Team t, int x, int y) { return new RobotInfo(9, t, UnitType.BABY_RAT, 100, new MapLocation(x, y), Direction.NORTH, 0, 0, null); }
+
+    static void testFlee() {
+        MapLocation c = new MapLocation(10, 10);
+        RobotInfo[] none = {};
+        RobotInfo[] two = {rat(Team.B, 13, 10), rat(Team.B, 13, 11)};
+        check(King.flee(c, two, none, 20) == Direction.WEST, "flee: two enemies east, none of ours: west");
+        check(King.flee(c, two, new RobotInfo[]{rat(Team.A, 9, 10), rat(Team.A, 9, 11)}, 20) == null, "flee: matched by our babies: stay");
+        check(King.flee(c, two, new RobotInfo[]{rat(Team.A, 10, 7)}, 20) == Direction.SOUTHWEST, "flee: toward our baby from the enemies' centroid");
+        check(King.flee(c, two, none, 4) == null, "flee: enemies beyond r do not count");
+        check(King.flee(c, two, new RobotInfo[]{rat(Team.A, 6, 13)}, 20) == Direction.WEST, "flee: the step uses our baby's x, not the king's");
+        RobotInfo k = new RobotInfo(9, Team.B, UnitType.RAT_KING, 500, new MapLocation(12, 10), Direction.NORTH, 0, 0, null);
+        check(King.flee(c, new RobotInfo[]{k}, none, 20) == null, "flee: an enemy king does not count");
+        check(King.flee(c, new RobotInfo[]{rat(Team.B, 10, 10)}, none, 20) == null, "flee: no direction from the centre");
+        // mirror twin (x -> 20 - x): the step mirrors too
+        check(King.flee(c, new RobotInfo[]{rat(Team.B, 7, 10), rat(Team.B, 7, 11)}, none, 20) == Direction.EAST, "flee: mirrored inputs, mirrored step");
+        check(King.flee(c, new RobotInfo[]{rat(Team.B, 7, 10), rat(Team.B, 7, 11)}, new RobotInfo[]{rat(Team.A, 10, 7)}, 20) == Direction.SOUTHEAST, "flee: mirrored toward-ally step");
+    }
+
     static void testKeepRisk() {
         int G = Baby.GATHER, F = Baby.FIGHT, A = Baby.ATTACK;
         check(Baby.keepRisk(false, false, F, false, false, false), "keepRisk: free rat keeps the mask");
@@ -3829,6 +3848,7 @@ public class BotTest {
         testGrabSafe();
         testKeepRisk();
         testReserve();
+        testFlee();
         testFlowUnseen();
         testHomeStart();
         testFormMine();
