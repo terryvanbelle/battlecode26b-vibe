@@ -480,3 +480,4 @@ u7d,2026-11-03 11:44,,"u6x + RETREAT_HP 0 (from 40; s8b screened a weak pass on 
 u7e,2026-11-03 12:27,,u6x + RETREAT_HP 20 (from 40): bracket of u7d's 0,"REJECTED at screen zd4 by falsifier: wins 30 < 31 (u6x 32, u7d 35), 0 overruns"
 u7f,2026-11-03 12:46,,u6x + GATHER_FIRST 4 (from 6; other side of u7a's 9),"REJECTED at screen zd5 as a no-op: 44 cells identical to u6x's zc6 (32 wins, transfer 352,884 to the unit). Babies 4-5 are rushers either way (rusher(idx) takes 4 <= idx < 16 before the gather/fight split), so GATHER_FIRST below 6 changes nothing."
 u7g,2026-11-03 13:47,,"u7d + KING_BITE_MAX 400 (u7c's change rebased on u7d, for use if u7d is accepted)","DROPPED: built on u7d, which was rejected at replica block 3 (screen zd6 was a bare pass, D 2 +0 -2)"
+u7h,2026-11-03 15:38,,"u6x + RETREAT_HP 0 + FORM_FROM 600 (plateau step 5: near-misses u7d, pooled t +1.15, and u5l, t +1.00, in a pair)",pending screen zd7 vs u7d's zd3
