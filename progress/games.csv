@@ -21866,7 +21866,7 @@ local,zd1,45,us:abrk,us:u7b,arrows,0,1,B,2000,MORE_POINTS,0,41.4,58.6
 local,zd1,46,us:abrk,us:u7b,Stash,0,1,B,1235,RATKING_DESTROYED,0,0.0,100.0
 local,zd1,47,us:u7b,us:abrk,cheesefarm,1,0,A,2000,MORE_POINTS,0,52.5,47.5
 local,zd1,48,us:abrk,us:u7b,cheesefarm,0,1,B,2000,MORE_POINTS,0,44.4,55.6
-replica,unranked,1,bc26-example,bc26-example-copy,DefaultLarge+DefaultMedium+DefaultSmall,2,1,A,,,,66.7,33.3
+replica,unranked,1,bc26-example,bc26-example-copy,DefaultSmall+DefaultMedium+DefaultLarge,2,1,A,,,,66.7,33.3
 replica,unranked,5,bc26-example-copy,bc26-example,Excavation+5t4rv4t10n_1337+DefaultMedium,2,1,A,,,,66.7,33.3
 replica,ranked,6,bc26-example-copy,bc26-example,superioristhmus+safelycontained+fullofsecrets,1,2,B,,,,33.3,66.7
 replica,ranked,7,bc26-example,us:ratbot,uneasy_alliance+minimaze+knifefight,0,3,B,,,,0.0,100.0
@@ -21970,6 +21970,7 @@ replica,ranked,104,daannte_v47_Skadoosh,uravt_Version35,RUN+constrictinglattice+
 replica,ranked,105,TeamSPAARK_SPAARK,spsquared_TSPAARK_QUALS,averyfineline+mercifullattice+seepastyourgreed,2,1,A,,,,66.7,33.3
 replica,ranked,106,amcsz_fighterrats,AdamTan12_Icarus,heart+tiny+popthecork,0,3,B,,,,0.0,100.0
 replica,ranked,107,IvanGeffner_basic51,awu7_awubot_quals,groveisbeingdesecrated+tornadoes+keepout,3,0,A,,,,100.0,0.0
+replica,ranked,107,IvanGeffner_basic51,awu7_awubot_quals,groveisbeingdesecrated+tornadoes+keepout,3,0,A,,,,100.0,0.0
 replica,ranked,108,AlexT101_usqualsbot,quesswho_bot16,toomuchcheese+where_are_you+dirtpassageway,0,3,B,,,,0.0,100.0
 replica,ranked,109,anicolao_myplayer,VarunVejalla_final4_run_away10,UncomfortablyClose+pipes+arrows,0,3,B,,,,0.0,100.0
 replica,ranked,110,outercloudstudio_v_1_18,CS50Crab_protoSaberV7,TheHeist+dirtpassageway+cheeseguardians,2,1,A,,,,66.7,33.3
@@ -21978,6 +21979,7 @@ replica,ranked,112,VarunVejalla_final4_run_away10,Camleaf_mk1,heart+seepastyourg
 replica,ranked,113,Naton-Cai_ratplayer,battlecode-archive_result_408,Stash+attack_on_cat+jail,3,0,A,,,,100.0,0.0
 replica,ranked,114,quesswho_bot16,spsquared_TSPAARK_QUALS,groveisbeingdesecrated+Stash+Nofreecheese,1,2,B,,,,33.3,66.7
 replica,ranked,115,bman12345678_goonv23,justinottesen_carbonara,RUN+Hike+heart,3,0,A,,,,100.0,0.0
+replica,ranked,116,bc26vibe_bot,j2399_weighted_micro_v9,Nofreecheese+DefaultMedium+attack_on_cat,2,1,A,,,,66.7,33.3
 replica,ranked,116,bc26vibe_bot,j2399_weighted_micro_v9,Nofreecheese+DefaultMedium+attack_on_cat,2,1,A,,,,66.7,33.3
 replica,ranked,117,spsquared_TSPAARK_QUALS,quesswho_quals,corridorofdoomanddespair+seepastyourgreed+cheeseguardians,0,3,B,,,,0.0,100.0
 replica,ranked,118,battlecode-archive_result_408,HugoIngelsson_Xzibit,tiny+ZeroDay+externalsustenance,0,3,B,,,,0.0,100.0
@@ -24056,7 +24058,6 @@ replica,ranked,2190,Gavdingo_v1,vincentwang60_javabot,where_are_you+EscapeTheNig
 replica,ranked,2191,bc26vibe_bot,ask8000_bumchit67,ratsareants+wallsofparadis+DefaultLarge,3,0,A,,,,100.0,0.0
 replica,ranked,2192,anicolao_myplayer,Krak9n_robot,UncomfortablyClose+trapped+constrictinglattice,3,0,A,,,,100.0,0.0
 replica,ranked,2193,bman12345678_goonv23,AdamTan12_Finals,sunandmoon+starvation+cheesefarm,2,1,A,,,,66.7,33.3
-replica,ranked,2193,bman12345678_goonv23,AdamTan12_Finals,sunandmoon+starvation+cheesefarm,2,1,A,,,,66.7,33.3
 replica,ranked,2194,vincentwang60_javabot,seru9_TOTAL_AGGRO,cheesebottles+RUN+hatefullattice,3,0,A,,,,100.0,0.0
 replica,ranked,2195,outercloudstudio_v_1_18,us:s7d,starvation+streetsofnewyork+DefaultSmall,2,1,A,,,,66.7,33.3
 replica,ranked,2196,j2399_weighted_path,anicolao_myplayer,Stash+sittingducks+streetsofnewyork,3,0,A,,,,100.0,0.0
@@ -24065,7 +24066,6 @@ replica,ranked,2198,AdamTan12_Icarus,HugoIngelsson_Xzibit,Hike+TheHeist+trapped,
 replica,ranked,2199,XSercia_genies,CS50Crab_rapierV1,whatsthecatdoin+groveisbeingdesecrated+closeup,0,3,B,,,,0.0,100.0
 replica,ranked,2200,PixelRifts_mushakraj_mk3,bc26-example-copy,dirtpassageway+ratsareants+Hike,2,1,A,,,,66.7,33.3
 replica,ranked,2201,Naton-Cai_ratplayer,bc26-example-copy,houseofcards+mincemeat+hatefullattice,1,2,B,,,,33.3,66.7
-replica,ranked,2202,awu7_awubot_quals,quesswho_bot16,EscapeTheNight+TheHeist+dirtpassageway,1,2,B,,,,33.3,66.7
 replica,ranked,2202,awu7_awubot_quals,quesswho_bot16,EscapeTheNight+TheHeist+dirtpassageway,1,2,B,,,,33.3,66.7
 replica,ranked,2203,nubbbbbb_testplayer,quesswho_quals,tiny+uneruesansfin+ratsareants,2,1,A,,,,66.7,33.3
 replica,ranked,2204,AdamTan12_Icarus,AlexT101_usqualsbot,arrows+rift+DefaultLarge,2,1,A,,,,66.7,33.3
@@ -25120,6 +25120,7 @@ replica,unranked,3252,us:s9s,spsquared_TSPAARK_QUALS,thunderdome+jail+evileye,1,
 replica,unranked,3253,spsquared_TSPAARK_QUALS,us:s9s,thunderdome+jail+evileye,1,2,B,,,,33.3,66.7
 replica,unranked,3254,us:s9s,AdamTan12_Finals,sunandmoon+attack_on_cat+dirtpassageway,3,0,A,,,,100.0,0.0
 replica,unranked,3255,AdamTan12_Finals,us:s9s,sunandmoon+attack_on_cat+dirtpassageway,0,3,B,,,,0.0,100.0
+replica,unranked,3255,AdamTan12_Finals,us:s9s,sunandmoon+attack_on_cat+dirtpassageway,0,3,B,,,,0.0,100.0
 replica,unranked,3256,us:s9s,outercloudstudio_v_1_18,Excavation+dirtfulcat+EscapeTheNight,1,2,B,,,,33.3,66.7
 replica,unranked,3257,outercloudstudio_v_1_18,us:s9s,Excavation+dirtfulcat+EscapeTheNight,2,1,A,,,,66.7,33.3
 replica,unranked,3258,us:s9s,bc26vibe_bot,uneasy_alliance+canyoudig+gridlock,3,0,A,,,,100.0,0.0
@@ -25128,6 +25129,7 @@ replica,unranked,3260,us:s9s,CS50Crab_rapierV1,5t4rv4t10n_1337+thunderdome+evile
 replica,unranked,3261,CS50Crab_rapierV1,us:s9s,5t4rv4t10n_1337+thunderdome+evileye,0,3,B,,,,0.0,100.0
 replica,unranked,3262,us:s9s,AlexT101_usqualsbot,constrictinglattice+tiny+starvation,0,3,B,,,,0.0,100.0
 replica,unranked,3263,AlexT101_usqualsbot,us:s9s,constrictinglattice+tiny+starvation,2,1,A,,,,66.7,33.3
+replica,unranked,3264,us:s9s,abcdezyxwv_bestsofar,Excavation+Stash+constrictinglattice,0,3,B,,,,0.0,100.0
 replica,unranked,3264,us:s9s,abcdezyxwv_bestsofar,Excavation+Stash+constrictinglattice,0,3,B,,,,0.0,100.0
 replica,unranked,3265,abcdezyxwv_bestsofar,us:s9s,Excavation+Stash+constrictinglattice,3,0,A,,,,100.0,0.0
 replica,unranked,3266,us:s9s,spsquared_TSPAARK_QUALS,rose+TheHeist+rift,1,2,B,,,,33.3,66.7
@@ -27166,7 +27168,6 @@ replica,ranked,5298,quesswho_bot16,TeamSPAARK_SPAARK,Hike+closeup+sittingducks,2
 replica,ranked,5299,j2399_weighted_path,Victor-Ramirez-Garcia_battleca,houseofcards+Excavation+constrictinglattice,1,2,B,,,,33.3,66.7
 replica,ranked,5300,awu7_awubot_us,IvanGeffner_basic51,peaceinourtime+Stash+attack_on_cat,1,2,B,,,,33.3,66.7
 replica,ranked,5301,Camleaf_mk1,Gavdingo_v1,rose+hatefullattice+5t4rv4t10n_1337,1,2,B,,,,33.3,66.7
-replica,ranked,5301,Camleaf_mk1,Gavdingo_v1,rose+hatefullattice+5t4rv4t10n_1337,1,2,B,,,,33.3,66.7
 replica,ranked,5302,daannte_v47_Skadoosh,AlexT101_finalsbot,ratsareants+peaceinourtime+hatefullattice,1,2,B,,,,33.3,66.7
 replica,ranked,5303,HugoIngelsson_YokoOno,thewaxmango_collegejunior,rift+bed+thunderdome,1,2,B,,,,33.3,66.7
 replica,ranked,5304,CS50Crab_rapierV1,amcsz_fighterrats,TheHeist+diamond+UncomfortablyClose,1,2,B,,,,33.3,66.7
@@ -27175,7 +27176,6 @@ replica,ranked,5306,uravt_Version35,IvanGeffner_basic51,canyoudig+averystrangesp
 replica,ranked,5307,j2399_weighted_micro_v9,battlecode-archive_result_408,safelycontained+sittingducks+bed,0,3,B,,,,0.0,100.0
 replica,ranked,5308,CS50Crab_protoSaberV7,outercloudstudio_v_1_18,evileye+heart+houseofcards,0,3,B,,,,0.0,100.0
 replica,ranked,5309,battlecode-archive_testplayer,awu7_awubot_quals,houseofcards+minimaze+popthecork,2,1,A,,,,66.7,33.3
-replica,ranked,5310,HugoIngelsson_Xzibit,bman12345678_goonv23,constrictinglattice+houseofcards+t_minus_five_minutes,0,3,B,,,,0.0,100.0
 replica,ranked,5310,HugoIngelsson_Xzibit,bman12345678_goonv23,constrictinglattice+houseofcards+t_minus_five_minutes,0,3,B,,,,0.0,100.0
 replica,unranked,5311,us:u3c,HugoIngelsson_YokoOno,averystrangespace+Hike+streetsofnewyork,1,2,B,,,,33.3,66.7
 replica,unranked,5312,HugoIngelsson_YokoOno,us:u3c,averystrangespace+Hike+streetsofnewyork,2,1,A,,,,66.7,33.3
@@ -28350,6 +28350,7 @@ replica,ranked,6480,bc26vibe_bot,PixelRifts_mushakraj_mk3,Hike+popthecork+cheese
 replica,ranked,6481,AlexT101_usqualsbot,HugoIngelsson_Xzibit,groveisbeingdesecrated+safelycontained+houseofcards,3,0,A,,,,100.0,0.0
 replica,ranked,6482,XSercia_genies,PixelRifts_mushakraj_mk3,superioristhmus+cheesebottles+evileye,1,2,B,,,,33.3,66.7
 replica,ranked,6483,vincentwang60_javabot,Gavdingo_v1,diamond+krotus+houseofcards,1,2,B,,,,33.3,66.7
+replica,ranked,6483,vincentwang60_javabot,Gavdingo_v1,diamond+krotus+houseofcards,1,2,B,,,,33.3,66.7
 replica,ranked,6484,abcdezyxwv_bestsofar,nubbbbbb_testplayer,TheHeist+toomuchcheese+learn_your_lesson,2,1,A,,,,66.7,33.3
 replica,ranked,6485,anicolao_myplayer,j2399_weighted_path,FreeTheCheese+whereisthecheese+5t4rv4t10n_1337,1,2,B,,,,33.3,66.7
 replica,ranked,6486,GuzziFlipFlops_Hermesv8,ask8000_bumchit67,dirtfulcat+Excavation+canyoudig,1,2,B,,,,33.3,66.7
@@ -28358,6 +28359,7 @@ replica,ranked,6488,quanticsoul4772_ratbot,Gavdingo_v1,trapped+bed+peaceinourtim
 replica,ranked,6489,VarunVejalla_final4_run_away10,us:u4p,corridorofdoomanddespair+safelycontained+DefaultMedium,2,1,A,,,,66.7,33.3
 replica,ranked,6490,uravt_Version35,IvanGeffner_basic51,minimaze+peaceinourtime+jail,1,2,B,,,,33.3,66.7
 replica,ranked,6491,quesswho_bot16,IvanGeffner_basic51,t_minus_five_minutes+jail+constrictinglattice,0,3,B,,,,0.0,100.0
+replica,ranked,6492,daannte_v47_Skadoosh,thewaxmango_PhD,fullofsecrets+sunandmoon+Meow,1,2,B,,,,33.3,66.7
 replica,ranked,6492,daannte_v47_Skadoosh,thewaxmango_PhD,fullofsecrets+sunandmoon+Meow,1,2,B,,,,33.3,66.7
 replica,ranked,6493,AdamTan12_Icarus,AdamTan12_Finals,DefaultSmall+groveisbeingdesecrated+gridlock,1,2,B,,,,33.3,66.7
 replica,ranked,6494,uravt_Version41,uravt_Version35,starvation+streetsofnewyork+thunderdome,2,1,A,,,,66.7,33.3
@@ -30465,7 +30467,6 @@ replica,unranked,8674,nzjt_TheComplexMerlin,us:u4s,sunandmoon+DefaultLarge+RUN,2
 replica,ranked,8675,nzjt_TheComplexMerlin,quesswho_bot16,superioristhmus+cheeseguardians+arrows,2,1,A,,,,66.7,33.3
 replica,ranked,8676,abcdezyxwv_bestsofar,uravt_Version41,bed+minimaze+Nofreecheese,0,3,B,,,,0.0,100.0
 replica,ranked,8677,IvanGeffner_basic51,uravt_Version41,closeup+cheesefarm+tornadoes,2,1,A,,,,66.7,33.3
-replica,ranked,8677,IvanGeffner_basic51,uravt_Version41,closeup+cheesefarm+tornadoes,2,1,A,,,,66.7,33.3
 replica,ranked,8678,Naton-Cai_ratplayer,vincentwang60_javabot,diamond+houseofcards+FreeTheCheese,1,2,B,,,,33.3,66.7
 replica,ranked,8679,justinottesen_carbonara,battlecode-archive_result_408,mercifullattice+keepout+RUN,0,3,B,,,,0.0,100.0
 replica,ranked,8680,awu7_awubot_us,thewaxmango_PhD,TheHeist+DefaultLarge+keepout,3,0,A,,,,100.0,0.0
@@ -30474,7 +30475,6 @@ replica,ranked,8682,seru9_TOTAL_AGGRO,battlecode-archive_result_408,hatefullatti
 replica,ranked,8683,spsquared_TSPAARK_QUALS,us:u5o,dirtpassageway+Nofreecheese+hatefullattice,2,1,A,,,,66.7,33.3
 replica,ranked,8684,GuzziFlipFlops_Hermesv8,Gavdingo_v1,superioristhmus+attack_on_cat+ultimatestarvation,1,2,B,,,,33.3,66.7
 replica,ranked,8685,Camleaf_mk1,vincentwang60_javabot,attack_on_cat+Hike+tornadoes,3,0,A,,,,100.0,0.0
-replica,ranked,8686,bc26-example-copy,justinottesen_alfredo,EscapeTheNight+UncomfortablyClose+sittingducks,1,2,B,,,,33.3,66.7
 replica,ranked,8686,bc26-example-copy,justinottesen_alfredo,EscapeTheNight+UncomfortablyClose+sittingducks,1,2,B,,,,33.3,66.7
 replica,ranked,8687,GuzziFlipFlops_Hermesv8,justinottesen_carbonara,trapped+where_are_you+EscapeTheNight,1,2,B,,,,33.3,66.7
 replica,ranked,8688,awu7_awubot_us,IvanGeffner_basic51,uneasy_alliance+peaceinourtime+krotus,1,2,B,,,,33.3,66.7
@@ -33627,5 +33627,37 @@ replica,ranked,11834,bman12345678_goonv23,thewaxmango_collegejunior,TheHeist+che
 replica,ranked,11835,justinottesen_alfredo,Camleaf_mk1,dirtfulcat+thunderdome+Stash,2,1,A,,,,66.7,33.3
 replica,ranked,11836,ask8000_bumchit67,bc26-example-copy,5t4rv4t10n_1337+sittingducks+averystrangespace,3,0,A,,,,100.0,0.0
 replica,ranked,11837,j2399_weighted_micro_v9,seru9_TOTAL_AGGRO,TheHeist+Excavation+constrictinglattice,0,3,B,,,,0.0,100.0
+replica,ranked,11838,awu7_awubot_quals,daannte_v47_Skadoosh,attack_on_cat+constrictinglattice+t_minus_five_minutes,1,2,B,,,,33.3,66.7
 replica,ranked,11839,GuzziFlipFlops_Hermesv8,seru9_TOTAL_AGGRO,Excavation+diamond+canyoudig,2,1,A,,,,66.7,33.3
+replica,ranked,11840,IvanGeffner_basic51,uravt_Version41,DefaultMedium+keepout+safelycontained,2,1,A,,,,66.7,33.3
 replica,ranked,11841,quanticsoul4772_ratbot,GuzziFlipFlops_Hermesv8,uneasy_alliance+TheHeist+uneruesansfin,0,3,B,,,,0.0,100.0
+replica,ranked,11842,daannte_v47_Skadoosh,AdamTan12_Icarus,learn_your_lesson+DefaultLarge+houseofcards,2,1,A,,,,66.7,33.3
+replica,ranked,11843,Gavdingo_v1,justinottesen_alfredo,attack_on_cat+groveisbeingdesecrated+starvation,3,0,A,,,,100.0,0.0
+replica,ranked,11844,AdamTan12_Finals,AlexT101_usqualsbot,UncomfortablyClose+ultimatestarvation+rift,2,1,A,,,,66.7,33.3
+replica,ranked,11845,vincentwang60_javabot,ask8000_bumchit67,DefaultLarge+EscapeTheNight+starvation,0,3,B,,,,0.0,100.0
+replica,ranked,11846,thewaxmango_PhD,AdamTan12_Finals,popthecork+averystrangespace+fullofsecrets,2,1,A,,,,66.7,33.3
+replica,ranked,11847,AlexT101_finalsbot,daannte_v47_Skadoosh,wallsofparadis+tornadoes+cheesebottles,1,2,B,,,,33.3,66.7
+replica,ranked,11848,daannte_v47_Skadoosh,us:u7a,rift+cheesefarm+canyoudig,2,1,A,,,,66.7,33.3
+replica,ranked,11849,ask8000_bumchit67,justinottesen_carbonara,diamond+Excavation+toomuchcheese,3,0,A,,,,100.0,0.0
+replica,ranked,11850,j2399_weighted_micro_v9,bc26-example-copy,EscapeTheNight+TheHeist+jail,0,3,B,,,,0.0,100.0
+replica,ranked,11851,quesswho_quals,awu7_awubot_us,fullofsecrets+DefaultMedium+evileye,1,2,B,,,,33.3,66.7
+replica,ranked,11852,AlexT101_finalsbot,spsquared_TSPAARK_QUALS,averystrangespace+closeup+popthecork,1,2,B,,,,33.3,66.7
+replica,ranked,11853,bc26vibe_bot,ask8000_bumchit67,sittingducks+diamond+groveisbeingdesecrated,3,0,A,,,,100.0,0.0
+replica,ranked,11854,daannte_v52_ThisGuy,thewaxmango_collegejunior,dirtpassageway+safelycontained+DefaultMedium,3,0,A,,,,100.0,0.0
+replica,ranked,11855,AlexT101_finalsbot,daannte_v52_ThisGuy,jail+tiny+externalsustenance,0,3,B,,,,0.0,100.0
+replica,ranked,11856,VarunVejalla_final4_run_away10,us:u7a,seepastyourgreed+knifefight+ratsareants,1,2,B,,,,33.3,66.7
+replica,unranked,11857,us:u7a,HugoIngelsson_YokoOno,arrows+clouds+Stash,1,2,B,,,,33.3,66.7
+replica,unranked,11858,HugoIngelsson_YokoOno,us:u7a,arrows+clouds+Stash,2,1,A,,,,66.7,33.3
+replica,unranked,11859,us:u7a,VarunVejalla_final4_run_away10,knifefight+DefaultMedium+t_minus_five_minutes,2,1,A,,,,66.7,33.3
+replica,unranked,11860,VarunVejalla_final4_run_away10,us:u7a,knifefight+DefaultMedium+t_minus_five_minutes,1,2,B,,,,33.3,66.7
+replica,unranked,11861,us:u7a,HugoIngelsson_Xzibit,learn_your_lesson+starvation+attack_on_cat,2,1,A,,,,66.7,33.3
+replica,unranked,11862,HugoIngelsson_Xzibit,us:u7a,learn_your_lesson+starvation+attack_on_cat,1,2,B,,,,33.3,66.7
+replica,unranked,11863,us:u7a,thewaxmango_collegejunior,rose+dirtpassageway+clockwisdom,1,2,B,,,,33.3,66.7
+replica,unranked,11864,thewaxmango_collegejunior,us:u7a,rose+dirtpassageway+clockwisdom,1,2,B,,,,33.3,66.7
+replica,unranked,11865,us:u7a,AdamTan12_Icarus,uneasy_alliance+rose+TheHeist,2,1,A,,,,66.7,33.3
+replica,unranked,11866,AdamTan12_Icarus,us:u7a,uneasy_alliance+rose+TheHeist,1,2,B,,,,33.3,66.7
+replica,unranked,11867,us:u7a,nzjt_TheComplexMerlin,peaceinourtime+corridorofdoomanddespair+thunderdome,2,1,A,,,,66.7,33.3
+replica,unranked,11868,nzjt_TheComplexMerlin,us:u7a,peaceinourtime+corridorofdoomanddespair+thunderdome,2,1,A,,,,66.7,33.3
+replica,ranked,11869,Naton-Cai_ratplayer,Gavdingo_v1,diamond+mincemeat+safelycontained,2,1,A,,,,66.7,33.3
+replica,ranked,11870,vincentwang60_javabot,GuzziFlipFlops_Hermesv8,averyfineline+thunderdome+hatefullattice,2,1,A,,,,66.7,33.3
+replica,ranked,11871,AlexT101_usqualsbot,nubbbbbb_testplayer,jail+gridlock+averyfineline,1,2,B,,,,33.3,66.7
