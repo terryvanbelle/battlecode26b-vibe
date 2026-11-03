@@ -5315,3 +5315,4 @@
   (1) screen zc3 wins ≥ 31 and starved kings ≤ 3 (control 3);
   (2) on the replica, in learn_your_lesson/Stash losses our babies must not reach 0 while the bank is ≥ 30, and learn_your_lesson vs Xzibit must win at least 1 game of 2-4 within the blocks.
   It accepts at t ≥ 0 after block 2. Screen zc3 is on the VM; it goes to the replica after u6t.
+- 04:30: u6u REJECTED at screen zc3 (falsifier 1, starvation): D 3 (+2: abrk arrows B, canyoudig B; −1: araid arrows A), 34 vs 33 wins (pass), but starved kings 6 vs 3 (bar ≤ 3: fail). Delivered 298k. A 30 floor lets the king spend itself to death elsewhere. The spawn lock in the learn_your_lesson spiral is real, but a flat floor cut is the wrong fix; a spawn that pays back (gatherer, rich map, a mine in reach) would need a new switch. Reject 13.
