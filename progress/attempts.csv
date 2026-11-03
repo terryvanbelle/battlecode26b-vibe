@@ -473,3 +473,4 @@ u6w,2026-11-03 05:53,u6a,"u6a + PEACE + CARRY_MAX 300 (plateau step 5: the two n
 u6x,2026-11-03 07:27,u6a,u6a + RUSH_UNTIL 300: rush spawns stop at r300; with 0 every replacement born with 4-15 babies alive attacks all game,"ACCEPTED after replica block 2 (2026-11-03 09:21 PST): block 1 (11549-11677) D 3 (+3 -0) t +1.73, block 2 (11678-11702) D 2 (+2 -0) t +1.41; pooled 93 cells D 5 net +5 t +2.24. Screen zc6 delivered 355k vs 299k"
 u6y,2026-11-03 09:26,u6x,u6x + RUSH_UNTIL 200 (bracket),"pending: replica block 1 (sub 196, after 11702); screen zc7 D 5 (+2 -3), 31 vs 32 wins, delivered 350k"
 u6z,2026-11-03 09:26,u6x,u6x + RUSH_UNTIL 500 (bracket),"REJECTED at screen zc8: D 4 (+0 -4), 28 vs 32 wins"
+u7a,,,u6x + GATHER_FIRST 9 (from 6): more early gatherers before the first cat fighter; s8s (10) passed screen but was only tried on the replica inside bundle s8x,pending screen zc9 vs zc6
