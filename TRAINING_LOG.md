@@ -5302,3 +5302,16 @@
   - Opponent rates: Icarus 73%, spsquared 71%, run_away10 54%, collegejunior 50%, Merlin 42%, Finals 40%, YokoOno 31%, Xzibit 29%.
   - 18 in-band cells are lost every time (n ≥ 5). Eight opponent-map pairs are 0/12 on BOTH sides: Finals jail, Xzibit learn_your_lesson, Xzibit starvation, YokoOno Stash, YokoOno arrows, run_away10 DefaultMedium, Merlin thunderdome, collegejunior dirtpassageway.
   - These deterministic losses are where the next structural attempt should aim; another 18 in-band cells are coin flips. Next: how our king dies in each.
+- 04:13: How our last king dies in the eight 0/12 pairs (klose over the pooled games; build/syslost.txt):
+  - Stash vs YokoOno: starved 11/12, median r508. A second king forms in only 4 of the 12, so that is not the general cause.
+  - learn_your_lesson vs Xzibit: starved 12/12, median r991.
+  - starvation vs Xzibit: bitten 8, starved 4.
+  - DefaultMedium vs run_away10: bitten 6, starved 6, median r245.
+  - thunderdome vs Merlin: thrown rats 8/10, median r139.
+  - jail vs Finals: bitten 12/12. arrows vs YokoOno: bitten 12/12.
+  - dirtpassageway vs collegejunior: mixed.
+  learn_your_lesson is a death spiral (11076 g1). From r667 our babies fall 7 → 0 while Xzibit holds 20, and 7.7k-12.3k cheese lies unpicked on the map. Our bank sits at 26-90, under LOW_FLOOR 100, while a spawn costs 10-20 under 8 babies. So the king never respawns a gatherer and starves next to a full map.
+- 04:13: u6u pre-registered (basics repair, economy: low-army spawn lock): u6a + LOW_FLOOR 30. LOW_FLOOR has never been tuned. Falsifiers:
+  (1) screen zc3 wins ≥ 31 and starved kings ≤ 3 (control 3);
+  (2) on the replica, in learn_your_lesson/Stash losses our babies must not reach 0 while the bank is ≥ 30, and learn_your_lesson vs Xzibit must win at least 1 game of 2-4 within the blocks.
+  It accepts at t ≥ 0 after block 2. Screen zc3 is on the VM; it goes to the replica after u6t.

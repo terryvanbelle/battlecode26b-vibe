@@ -1,0 +1,6 @@
+name=u6u
+source=bots/u6a
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-03 04:12 PST
+change=04:12 PST: u6a + LOW_FLOOR 30 (basics repair: low-army spawn lock). learn_your_lesson vs Xzibit is lost 12/12, all starvation: 11076 g1 r667-1067 our babies fall 7 to 0 with bank 26-90 under LOW_FLOOR 100 (a spawn costs 10-20) while 7.7k-12.3k cheese lies on the map
