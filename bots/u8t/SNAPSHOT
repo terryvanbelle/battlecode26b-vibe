@@ -1,0 +1,11 @@
+u8t = u6x + CAT_RING (existing switch; the other half of u8r's pair). The reactive cat trap (a baby with a cat in
+sight) may also go on a tile beside the cat's body, which the cat sets off on its next step, and during cooperation
+it needs only the 600 floor, not the projected surplus. Evidence as u8r's (bots/u8r/SNAPSHOT) and u8s's: on u8r's
+screen zd42 most of the extra trap damage (44.5k vs 16.7k) came in war, where only this switch acts (the
+backstabbed side may lay cat traps for 100 rounds), and delivery fell 11%.
+Registered 2026-11-04 09:17 PST, before its first game.
+Falsifiers:
+  1. screen zd44: wins below 31, any overrun, or delivered below 340k (zc6 354.8k);
+  2. replica (if sent): cat-trap damage a game not above 1.25x the twin's same-set value (set 3: 826) rejects;
+  3. replica: transfer a game below 0.9x the twin's (set 3: 4409) rejects.
+Queue rule: as in bots/u8s/SNAPSHOT.

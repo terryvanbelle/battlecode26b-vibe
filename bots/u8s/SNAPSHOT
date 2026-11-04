@@ -1,0 +1,16 @@
+u8s = u6x + CAT_LAY (existing switch; one half of u8r's pair, to find which half costs the economy). During
+cooperation babies mark the tiles cats walk (CatLane); a tile under a cat on two passes 20+ rounds apart is lane, and
+a baby beside a lane tile the cat left 3+ rounds ago lays a cat trap there with 400+ global cheese. Evidence as u8r's
+(bots/u8r/SNAPSHOT: 6 of the twin's 9 points-decided set-3 losses flip with 25-1400 more cat damage). u8r's screen
+zd42: 34 wins vs zc6's 32, 0 overruns, but delivered 316.3k vs 354.8k (-11%) and picks per 100 rat-turns 32.0 vs
+35.6; cat-trap damage 44.5k vs 16.7k and bite damage 124.6k vs 158.1k over 48 games, with only about 40 rounds of
+cooperation a game against the archetypes, so most of u8r's extra traps there came from CAT_RING's war-time
+beside-the-body option (in the backstabbed side's 100-round window), not from CAT_LAY.
+Registered 2026-11-04 09:17 PST, before its first game.
+Falsifiers:
+  1. screen zd43: wins below 31, any overrun, or delivered below 340k (zc6 354.8k; the economy-neutral screens since
+     u8h span 346-370k);
+  2. replica (if sent): cat-trap damage a game not above 1.25x the twin's same-set value (set 3: 826) rejects;
+  3. replica: transfer a game below 0.9x the twin's (set 3: 4409) rejects.
+If u8s or u8t passes falsifier 1 and u8r has not started its replica block, the passing one with the higher screen
+cat-trap damage replaces u8r in the replica queue (both passing: u8r stays, the pair being the doctrine).
