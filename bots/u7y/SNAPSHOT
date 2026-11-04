@@ -1,0 +1,2 @@
+u7y: u6x + SEEK_IDLE 10 + IDLE_SHIFT (bracket below u7x's 20; u7w 40 screened 32 wins, u7x 20 screened 37): a gatherer idle 10 turns within Chebyshev 4 of its mine without a pickup seeks never-seen home tiles (once per SEEK_RETRY 200) and moves to the next mine of its list. 2026-11-04 00:14 PST.
+Falsifiers: screen zd23 vs zc6 wins < 31 or any overrun rejects; kept over u7x only with more wins than 37.
