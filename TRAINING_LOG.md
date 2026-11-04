@@ -5674,3 +5674,8 @@
   - Kings 3 and more tiles from a mine are the rule on both sides: Chebyshev distance from the king to its nearest mine averages 6.8 at r100 for us and 5.5-11 for them.
   - RAID is dead code in u6x: raider needs RAID_EVERY > 0, and RAID_EVERY is 0 (the 10-31 ablation found it inert for this reason). Raiding was last tried on s7d (s8i, s8j; rejected at replica block 2 on 10-29).
   - Their own home mines are harvested at 76-81% (u8p's census), so raiders of ours would find few piles there. The gap is attendance at our own mines: they hold more rat-rounds at our mines than we do (Stash vs YokoOno: 1037/1139/716 to our 628/786/998 by r414). u8x (on the replica) targets that.
+- 13:10: **What our babies near our king are doing** (same 96 games, rounds 51-400; scratch nearktag.py). In losses, 36.1% of our tagged baby-turns are within Chebyshev 4 of one of our kings (29.0% in wins).
+  - Walking to a mine (M): 11.5% of all turns (gatherers 6.9, fighters 4.6). Wandering at a mine (W): 7.7% (4.7 and 3.0). Together 19.2% in losses, 16.6% in wins; they carry no cheese and a quarter of those turns stand still.
+  - War near the king: 4.6%. Rushers just out of the spawn ring: 2.6%. Walking to visible cheese: 3.6%. Delivering: only 0.5%.
+  - So the near-king time is the mine queue (u8x's target, on the replica now), not delivery.
+  - The 19:48 (11-03) trap-trigger census found almost every enemy trap fired with an enemy rat within dist2 20, where Baby drops the TrapRisk mask. Every fight-time avoidance variant since (RISK_GATHER, RISK_FRESH, RISK_ADAPT, WOUNDED_HP, FACE_HOLD, AMMO_AWAY) was weak locally against our own trap builds and never reached the replica.
