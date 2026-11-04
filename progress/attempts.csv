@@ -504,4 +504,5 @@ u8b,2026-11-04 00:56,,u7x + FIGHT_SHIFT with FIGHT_IDLE 40 (fighter idle-shift d
 u8c,2026-11-04 01:38,,u7x + FIGHT_SHIFT with FIGHT_IDLE 10 (fighter idle-shift dose arm below u7z's 20),rejected at screen zd27: 38 wins but delivered 359k (bar 360k); FIGHT_IDLE dose series flat
 u8d,2026-11-04 02:20,,"u6x + RICH2_BABIES 80 at bank 3000 (mass army when rich, abcdezyxwv style)","screen zd28 passed (33 vs 32 wins, D 1); replica queue"
 u8e,2026-11-04 02:20,,"u6x + FORM_MINE (second king forms on a home-half mine; structural, field style)","rejected at screen zd29: 29 wins (bar 31), delivered -14%, 7 starved kings"
-u8f,2026-11-04 02:45,,"u6x + reactive baby rat traps at field dose (TRAP_ADJ, cap 25, floor 300, spawn first); structural",
+u8f,2026-11-04 02:45,,"u6x + reactive baby rat traps at field dose (TRAP_ADJ, cap 25, floor 300, spawn first); structural","screen zd30 passed (33 vs 32 wins, +6 -5), delivered 281k vs 355k; replica queue"
+u8g,2026-11-04 03:18,,u8f + TRAP_NO_GATHER (gatherers lay no rat traps),
