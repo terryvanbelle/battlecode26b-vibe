@@ -5679,3 +5679,18 @@
   - War near the king: 4.6%. Rushers just out of the spawn ring: 2.6%. Walking to visible cheese: 3.6%. Delivering: only 0.5%.
   - So the near-king time is the mine queue (u8x's target, on the replica now), not delivery.
   - The 19:48 (11-03) trap-trigger census found almost every enemy trap fired with an enemy rat within dist2 20, where Baby drops the TrapRisk mask. Every fight-time avoidance variant since (RISK_GATHER, RISK_FRESH, RISK_ADAPT, WOUNDED_HP, FACE_HOLD, AMMO_AWAY) was weak locally against our own trap builds and never reached the replica.
+- 13:19: **u8z (u6x without RUSH) fails its ablation screen on falsifier 2** (zd49 vs zc6, both u6x-lineage, 48 cells vs the archetypes, jobs 3). Wins rose: 38 of 44 compared cells to 32 (D 10, +8 -2; funnel 41 of 48 to 34). But picks per 100 rat-turns fell to 29.41, under the registered bar of 33.8 (control 35.56). Delivered fell to 334.8k from 354.8k (-5.6%) and picked to 412.2k from 442.1k (-6.8%). No overruns.
+  - The registered rule: "wins below 31, any overrun, or picks per 100 rat-turns below 33.8: the switch earns its keep, keep it, no replica block". So RUSH stays and u8z gets no replica block.
+  - The gains were 7 of 8 on seat B, and 7 of 8 against araid (tiny B against both araid and abrk at r58-61, now wins at r82-84). Against the raid archetypes a home without rushers holds better.
+  - The field history agrees with the rule: every rush cut lost on the replica (u0o RUSH_TO 12 net -7, u1o RUSH_TO 20 net -3, u5n RUSH_DIST 20 net -4, t0g RUSH_LIFE 150 net -4). The archetypes reward a home guard, while the field games reward harassment.
+- 13:21: **Corpus run registered** (TRAINING_ALGORITHM §3.1 and the §8 cadence: "play the whole corpus from both sides against one strong bot (queued replica scrimmages) and sort maps by graded score: the worst show basics failures the panel hides"). It is due once per 10 attempts and has never been logged.
+  - Build: u6x, the incumbent (u7p is its byte-identical twin). It is submitted after u8x's replica run ends: after block 1 if that rejects, else after u8x's last block. The next candidate waits for the corpus.
+  - Opponent: VarunVejalla_final4_run_away10. It is the in-band bot nearest 50%: 6-6 against the twin on sets 1 and 3.
+  - Maps: 20 of the 74 corpus maps are on no panel set (Excavation, UncomfortablyClose, cheeseguardians, constrictinglattice, diamond, dirtfulcat, gridlock, hatefullattice, heart, houseofcards, krotus, pipes, popthecork, safelycontained, seepastyourgreed, sittingducks, toomuchcheese, trapped, ultimatestarvation, whereisthecheese).
+  - 9 maps already have u6x/u7p games against Varun on sets 1-3 and are reused.
+  - The other 65 maps, plus thunderdome as a repeat, go in 22 triples (research/panel/corpus-01..22.json, never-paneled maps first), each played from both seats: 44 matches, about 4-5 h of the replica's hourly limit.
+  - Analysis, fixed now:
+    - Per map: the graded score (field_report.py graded: 1/0 for a game decided by kings, else our points share), averaged over the seats.
+    - Maps sorted by that score. The worst 10 get replay diagnosis for basics failures: navigation stalls, starvation, symmetry still unknown late, overruns, delivery against theirs, king-kill rounds.
+    - Seat splits (A won, B lost or the reverse) are listed as symmetry suspects.
+    - Repairs that come out of it are new candidates with their own registrations.
