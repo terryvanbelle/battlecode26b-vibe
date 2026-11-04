@@ -983,10 +983,15 @@ public class BotTest {
         check(!Baby.mayRetreat(1, 0, false, false), "RETREAT_HP 0 never retreats");
         G.us = Team.A;
         RobotInfo ours = rat(Team.A, 3, 3), carrier = hrat(Team.B, 90, ours), plain = hrat(Team.B, 90, null);
-        check(Baby.sawThrower(false, carrier, true), "a carrier of ours is a thrower");
-        check(!Baby.sawThrower(false, plain, true), "an empty-handed enemy is not");
-        check(!Baby.sawThrower(false, carrier, false), "adapt off never sets it");
-        check(Baby.sawThrower(true, plain, true), "the flag stays set");
+        MapLocation near = new MapLocation(6, 6), far = new MapLocation(20, 3);
+        check(Baby.sawThrower(false, carrier, true, null, 0), "a carrier of ours is a thrower");
+        check(!Baby.sawThrower(false, plain, true, near, 0), "an empty-handed enemy is not");
+        check(!Baby.sawThrower(false, carrier, false, near, 0), "adapt off never sets it");
+        check(Baby.sawThrower(true, plain, true, null, 4), "the flag stays set");
+        check(Baby.sawThrower(false, carrier, true, near, 3), "a carrier at Chebyshev 3 of our king counts at rad 3");
+        check(!Baby.sawThrower(false, carrier, true, near, 2), "but not at rad 2");
+        check(!Baby.sawThrower(false, carrier, true, far, 4), "a carrier far from our king does not count");
+        check(!Baby.sawThrower(false, carrier, true, null, 4), "no known king: no count at rad > 0");
     }
 
     static void testBiteCarrier() {

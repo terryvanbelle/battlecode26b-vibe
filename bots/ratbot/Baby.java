@@ -110,7 +110,7 @@ public final class Baby {
             int bd = Integer.MAX_VALUE;
             for (RobotInfo r : robots) {
                 if (r.team != G.them || r.type == UnitType.RAT_KING) continue;
-                throwSeen = sawThrower(throwSeen, r, Cfg.THROW_ADAPT);
+                if (Cfg.THROW_ADAPT && !throwSeen && holdsOurs(r)) throwSeen = sawThrower(false, r, true, Comms.nearestKing(r.location), Cfg.THROW_ADAPT_R);
                 int d = G.me.distanceSquaredTo(r.location);
                 if (d < bd) { bd = d; nearestEnemy = r; }
             }
@@ -1943,9 +1943,10 @@ public final class Baby {
     /** Cfg.THROW_ADAPT: this rat has seen an enemy carrying one of ours (the enemy throws rats). */
     static boolean throwSeen;
 
-    /** Cfg.THROW_ADAPT: the throwSeen flag after sensing enemy rat r (set for good once r carries one of ours). */
-    static boolean sawThrower(boolean seen, RobotInfo r, boolean adapt) {
-        return seen || adapt && holdsOurs(r);
+    /** Cfg.THROW_ADAPT: the throwSeen flag after sensing enemy rat r (set for good once r carries one of ours, within
+     *  Chebyshev rad of our king k when rad > 0: grabs far from our king are not throws at it). */
+    static boolean sawThrower(boolean seen, RobotInfo r, boolean adapt, MapLocation k, int rad) {
+        return seen || adapt && holdsOurs(r) && (rad == 0 || k != null && G.cheb(k, r.location) <= rad);
     }
 
     /** Whether a baby with health hp may retreat to its king: at or below RETREAT_HP, and (Cfg.THROW_ADAPT) not
