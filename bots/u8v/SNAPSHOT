@@ -1,0 +1,18 @@
+u8v = u6x + OPEN_IDX (new switch; basics repair: economy and board exploration). A newborn takes its first turn the
+round after its spawn, after the king has spawned the next baby, so the cost step it reads counts itself and that next
+baby: baby k reads k+1 and idx 0 ("0-3 babies alive") covers babies 1-2 only. While the cost step still matches a spawn
+every round since round 1 (round 24 at most), OPEN_IDX takes idx from the count before the baby's own spawn (round - 2):
+babies 1-4 gather, 5-16 rush (still 12), 17-20 fight or gather. Two more opening gatherers; the rush starts two rounds
+later. Evidence:
+  - keepout 13821 g0 (u8p vs AdamTan12_Finals, smuggle tags): babies 1-2 gathered, the 3rd (first turn r4) attacked;
+    our nearest home mine (47,30), 7 from our king, was first seen at r243 while Finals worked it from r149; two of our
+    six home mines were never worked and Finals took 11,860 from our side.
+  - u8p block 1 losses (allsee.py, theft1.py): the opponent harvests 79/76/81/51% of its rank 1/2/3/4+ home mines' spawn
+    to our 57/55/44/25%, and steals 1,766 a game from our side to our 574 from theirs.
+Registered 2026-11-04 10:08 PST, before its first scored game (a local opening trace, build/oi1, checks the roles).
+Falsifiers:
+  1. screen zd46: wins below 31, any overrun, or delivered below 340k (zc6 = u6x: 32 wins, 354.8k);
+  2. replica: cheese picked by r400 a game (bankat.py, games reaching r400) below 2300 on set 3 (twin 2187), or below
+     the twin's same-set value plus 5% on other sets, rejects: the extra gatherers must raise the opening income;
+  3. replica: king-kill wins before r150 more than one below the twin's on the same cells (set 3: 3) rejects: the
+     two-round later rush must not cost the early kills.
