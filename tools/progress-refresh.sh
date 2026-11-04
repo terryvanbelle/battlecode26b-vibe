@@ -36,7 +36,7 @@ unstick_ratings () {   # siarnaq's rating chain stalls when an update task is lo
   gssh 'sudo bc26-galaxy-manage shell' < tools/galaxy26/rating_unstick.py 2>&1 | grep '^unrated' | tail -1
 }
 export -f unstick_ratings
-echo "== start $(TZ=America/Los_Angeles date '+%H:%M PDT')"
+echo "== start $(TZ=America/Los_Angeles date '+%H:%M %Z')"
 export -f pull_runs
 step "pull VM runs" 600 1 bash -c pull_runs
 step "unstick ratings" 600 1 bash -c unstick_ratings
@@ -47,5 +47,5 @@ step replica 600 1 "$PY" -I tools/replica_report.py
 step "replica milestones" 600 1 bash -c sync_milestones
 step chart 300 1 "$PY" -I tools/plot_progress.py
 step attempts 300 1 "$PY" -I tools/attempts.py render
-echo "== done $(TZ=America/Los_Angeles date '+%H:%M PDT')"
+echo "== done $(TZ=America/Los_Angeles date '+%H:%M %Z')"
 if [ "${#FAILS[@]}" -gt 0 ]; then echo "!! failed steps: ${FAILS[*]} (their progress/ files are stale)"; exit 1; fi
