@@ -5712,3 +5712,27 @@
   - Picks per 100 rat-turns 31.69 against the 33.8 bar (control 35.56); delivered 338.4k against 354.8k; 0 overruns.
   - 6 of the 9 lost cells are against abrk (DefaultSmall twice, bed, cheesefarm twice, evileye), the archetype that rushes and forms its own second king.
   - No replica block. Next in the sweep: zd51 (u9b, without TRAP_SHARE), launched.
+- 13:52: **Starvation census** (scratch starve.py; u8x block 1 plus the twin's sets 1 and 3, 89 losses). Our last king starved in 39 losses (44%); 36 have a usable ledger.
+  - In 29 of the 36, spawn cost beat picked minus upkeep over the 200 rounds before the bank first ended a 50-round window under 100. Means over those 200 rounds: picked 663, spawn cost 806 (22 spawns), upkeep 467, digs 62, traps 29, dropped 308.
+  - Two shapes:
+    - The early grinder: 10 games, collapse in r101-250, 45-58 spawns costing 1,760-2,240 by r150-200 while we picked 240-775. Maps: averyfineline and mincemeat vs Icarus, 5t4rv4t10n vs YokoOno, whatsthecatdoin vs Merlin, DefaultMedium vs Varun, uneasy_alliance vs Icarus.
+    - The late squeeze: collapse in r450-1350, income about equal to upkeep (keepout, FreeTheCheese and Stash with 2 kings; wallsofparadis, externalsustenance with one), where 3-18 cheap replacements tip the bank under the floor.
+  - A crude counterfactual (no spawn after the bank first ends a window under 600) keeps the bank positive to the death round in all 36. But it ignores that fewer spawns mean fewer pickers and fighters: u6e (RESERVE_ROUNDS 300) lost 11 cells net on its screen ("the thinner army loses fights"); u5t (CORE_BABIES 12) went -1 on the replica, and u6u (LOW_FLOOR 30) was rejected. The reserve levers are priced, so this is no candidate by itself.
+  - Next: the death census on the grinder games (who dies, where, to what), to tell our own replacement rush from their pressure.
+- 13:53: **The grinder games' deaths** (deathtag.py to r200 on the 10 matches that hold them: 14156-14157, 13288-13289, 14134, 13264, 14158, 13290-13291, 12787; 25 lost games, 5 won).
+  - Losses: 31.9 of our babies die by r200 (wins 7.8), 45.0 spawned (theirs 39.1). 19.5 of the deaths come within 50 rounds of birth.
+  - Where: mid-map 21.7, enemy third 7.4, home 2.8.
+  - Causes: enemy throws 11.4 (land 8.9, hit 2.5) plus 1.0 thrown into cats; cats 11.0 (pounce 6.5, crush 3.8, scratch 0.7); enemy traps 4.2; bites 4.2. Wins: cats 3.8, traps 1.8, throws 1.4, bites 0.8.
+  - By last tag: attack moves 5.3, fighters chasing cats (F:g) 3.9, retreats 3.1, carriers aiming (T) 2.6, facing (f) 2.4.
+  - So the grinder is a mid-map meat market: rushers and their replacements, and fighters drawn to cats, crossing the middle where enemy throwers and cats work.
+- 13:56: **Grab census** (scratch grabvictim.py to r300; u8x block 1 plus the twin's set 1). Enemy grabs of our babies: 2,289 on health (the grabber has more hp) and 1,262 blind (we could not see it): 64% on health. Our grabs of theirs: 2,531 on health and 1,207 blind (68%).
+  - Victims' last tags for health grabs: facing 379, attack move 376, carriers aiming a throw 307, retreating 184.
+  - So the war turns on bite-then-grab: one bite makes a rat grabbable by any full-health enemy from any side. Facing fixes (KING_EYES, GLANCE_MEM, FACE_HOLD) reach only the blind third.
+  - Fighters as cat hunters are priced: FIGHT_EVERY 3 (u5q) -3 and GATHER_FIRST 9 (u7a) -1 on the replica, so the F:g cat deaths buy cat points the field pays for.
+- 14:03: **u9b's ablation screen passes** (zd51, u6x without TRAP_SHARE, vs zc6 = u6x): 37 vs 32 wins on 44 cells (+8 -3, net +5, t 1.5), funnel 40/48 vs 34, picks/100 36.14 vs 35.56, 0 overruns.
+  - The gains are mostly against araid (cheesefarm both seats, arrows, evileye, DefaultMedium, canyoudig), plus abrk on canyoudig and tiny. The losses are abrk DefaultSmall, araid bed and araid starvation (all seat A).
+  - Falsifier 3: neutral or better, so it queues for the replica as a simplification, behind u8x's run and the corpus run.
+  - Mechanism to check on the replica: the shared trap-risk mask may cost more in detours than it saves in trap deaths. Without it, each rat still marks the enemies it sees itself.
+- 14:03: **Bite damage census** (scratch biteboost.py; u8x block 1, twin sets 1 and 3; summary dmgBy.bite over rat plus king bites, killing blows capped). Damage per bite: ours 9.94; spsquared 9.90, AdamTan12_Finals 9.59, YokoOno 9.95, VarunVejalla 9.88, Xzibit 9.95, thewaxmango 10.11, Icarus 9.45, nzjt 11.74.
+  - So every field bot but nzjt bites at the plain 10. The engine adds ceil(sqrt(c)) for c cheese, taken from the rat's own load first and then the bank: 1 cheese buys +1, and 2 cheese buy +2.
+  - Grabs need the grabber strictly healthier (HEALTH_GRAB_THRESHOLD 0). With equal bite counts, a +1 boost leaves the enemy 1 hp lower per bite: our next grab is legal, theirs is not. A parity census (scratch parity.py) is sizing how many health grabs on us a +1 or +2 boost would have blocked.
