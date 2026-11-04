@@ -10,8 +10,9 @@ public final class Comms {
     public static final int SYM = 1;
     public static final int FORM_X = 0, FORM_Y = 23, FORM_T = 63;  // king formation site x+1, y+1, heartbeat
     public static final int KING0 = 2, KING_SLOTS = 5;           // 3 ints each: x+1, y+1, heartbeat round%1024
-    public static final int ALERT = 17;    // (x+1) | threat<<6, y+1, round%1024: a king sees enemies in war; threat =
-                                           // enemy rats within Cfg.KING_THREAT_D2 of it (at most 15)
+    public static final int ALERT = 17;    // (x+1) | threat<<6, (y+1) | side<<6, round%1024: a king sees enemies in war;
+                                           // threat = enemy rats within Cfg.KING_THREAT_D2 of it (at most 15), side =
+                                           // direction ordinal + 1 to the nearest of them (Cfg.ALERT_SIDE, else 0)
     public static final int EKING = 20;                          // x+1, y+1, round%1024 last seen
     public static final int MINE0 = 24, MINE_SLOTS = 16;         // 2 ints each
     public static final int CAT0 = 56, CAT_SLOTS = 2;            // 3 ints each: x+1, y+1, round%1024
@@ -142,7 +143,19 @@ public final class Comms {
     public static MapLocation alertLoc() {
         int v = read(ALERT);
         if (v == 0) return null;
-        return new MapLocation((v & 63) - 1, read(ALERT + 1) - 1);
+        return new MapLocation((v & 63) - 1, (read(ALERT + 1) & 63) - 1);
+    }
+
+    /** Cfg.ALERT_SIDE: ALERT + 1's upper bits, the direction (ordinal + 1) from the alerting king to its nearest
+     *  threatening enemy rat; 0 = none. */
+    public static int alertSide() { return read(ALERT + 1) >> 6; }
+
+    /** The tile two steps from king k toward side (alertSide()), just outside its 3x3; null for none or off the map. */
+    public static MapLocation sideTarget(MapLocation k, int side, int w, int h) {
+        if (k == null || side < 1 || side > 8) return null;
+        Direction d = Direction.values()[side - 1];
+        int x = k.x + 2 * d.dx, y = k.y + 2 * d.dy;
+        return x < 0 || y < 0 || x >= w || y >= h ? null : new MapLocation(x, y);
     }
 
     public static int alertThreat() { return read(ALERT) >> 6; }

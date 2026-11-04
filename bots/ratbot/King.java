@@ -65,10 +65,16 @@ public final class King {
         if (Cfg.PRESS_SHARED && !G.coop) noteEKing(enemies);
         threat = 0;
         if (!G.coop && enemies.length > 0) {
-            for (RobotInfo e : enemies)
-                if (e.type != UnitType.RAT_KING && e.location.distanceSquaredTo(G.me) <= Cfg.KING_THREAT_D2) threat++;
+            int side = 0, sd = Cfg.KING_THREAT_D2 + 1;
+            for (RobotInfo e : enemies) {
+                if (e.type == UnitType.RAT_KING) continue;
+                int d = e.location.distanceSquaredTo(G.me);
+                if (d > Cfg.KING_THREAT_D2) continue;
+                threat++;
+                if (Cfg.ALERT_SIDE && d < sd) { sd = d; side = G.me.directionTo(e.location).ordinal() + 1; }
+            }
             Comms.write(Comms.ALERT, (G.me.x + 1) | (Math.min(15, threat) << 6));
-            Comms.write(Comms.ALERT + 1, G.me.y + 1);
+            Comms.write(Comms.ALERT + 1, (G.me.y + 1) | (side << 6));
             Comms.write(Comms.ALERT + 2, Comms.stamp());
         }
         if (Cfg.KING_TRAPS && !G.coop) ratTrap(enemies);

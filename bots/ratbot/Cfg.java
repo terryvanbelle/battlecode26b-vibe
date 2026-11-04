@@ -445,6 +445,10 @@ public final class Cfg {
     public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;
+    /** The king's alert also names the side of it its nearest threatening enemy rat is on; a rat at war with no
+     *  enemy in view goes to that side's tile next to the king's 3x3 instead of the king's centre. u6x vs Finals
+     *  DefaultSmall (12531): 59 of 59 bites on our king unanswered while 4 of ours hovered on its far side. */
+    public static final boolean ALERT_SIDE = false;
     /** King defense: enemy rats within KING_THREAT_D2 of a king's centre raise its alert's threat count; gatherers
      *  within DEFEND_D2 of it then fight (war movement, no standoff against the king's attackers). */
     public static final boolean DEFEND = true;

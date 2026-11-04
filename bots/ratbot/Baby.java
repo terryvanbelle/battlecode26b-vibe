@@ -1660,6 +1660,13 @@ public final class Baby {
         }
         if (Comms.fresh(Comms.read(Comms.ALERT + 2), 3)) {
             MapLocation a = Comms.alertLoc();
+            // the king's centre is its own body: a rat walking at it stalls there while the biter on the far side
+            // goes unseen (u6x vs Finals DefaultSmall 12531, araid locally: nav target the king's centre)
+            MapLocation t = Cfg.ALERT_SIDE && a != null ? Comms.sideTarget(a, Comms.alertSide(), G.W, G.H) : null;
+            if (t != null && G.me.distanceSquaredTo(a) <= Cfg.ALERT_DIST2 && G.me.distanceSquaredTo(t) > 2) {
+                Nav.goTo(t);
+                return true;
+            }
             if (a != null && G.me.distanceSquaredTo(a) <= Cfg.ALERT_DIST2 && G.me.distanceSquaredTo(a) > 8) {
                 Nav.goTo(a);
                 return true;

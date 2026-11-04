@@ -84,7 +84,7 @@ public final class Moat {
     static MapLocation alertKing() {
         int a = Comms.read(Comms.ALERT);
         if (a == 0 || !Comms.fresh(Comms.read(Comms.ALERT + 2), Cfg.MOAT_IDLE)) return null;
-        int x = (a & 63) - 1, y = Comms.read(Comms.ALERT + 1) - 1;
+        int x = (a & 63) - 1, y = (Comms.read(Comms.ALERT + 1) & 63) - 1;
         for (int k = 0; k < Comms.numKings; k++)
             if (Comms.kings[k].x == x && Comms.kings[k].y == y) return Comms.kings[k];
         return null;

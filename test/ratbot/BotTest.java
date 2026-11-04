@@ -974,6 +974,22 @@ public class BotTest {
 
     static RobotInfo hrat(Team t, int hp, RobotInfo held) { return new RobotInfo(9, t, UnitType.BABY_RAT, hp, new MapLocation(3, 3), Direction.NORTH, 0, 0, held); }
 
+    static void testSideTarget() {
+        MapLocation k = new MapLocation(5, 5);
+        check(Comms.sideTarget(k, 0, 20, 20) == null, "side 0: no target");
+        check(Comms.sideTarget(k, 9, 20, 20) == null, "side CENTER: no target");
+        check(Comms.sideTarget(null, 1, 20, 20) == null, "no king: no target");
+        for (Direction d : Direction.values()) {
+            if (d == Direction.CENTER) continue;
+            MapLocation t = Comms.sideTarget(k, d.ordinal() + 1, 20, 20);
+            check(t != null && t.x == 5 + 2 * d.dx && t.y == 5 + 2 * d.dy, "side " + d + " two steps out");
+            check(t != null && G.cheb(k, t) == 2, "side " + d + " just outside the 3x3");
+        }
+        check(Comms.sideTarget(new MapLocation(1, 1), Direction.SOUTHWEST.ordinal() + 1, 20, 20) == null, "off the map low");
+        check(Comms.sideTarget(new MapLocation(18, 18), Direction.NORTHEAST.ordinal() + 1, 20, 20) == null, "off the map high");
+        check(Comms.sideTarget(new MapLocation(17, 2), Direction.EAST.ordinal() + 1, 20, 20) != null, "x 19 on a 20-wide map");
+    }
+
     static void testFormHold() {
         check(!King.formHold(5, 0), "FORM_SAFE 0 never holds");
         check(!King.formHold(0, 1), "no threat: no hold");
@@ -3900,6 +3916,7 @@ public class BotTest {
         testBiteCarrier();
         testMayRetreat();
         testFormHold();
+        testSideTarget();
         testFlowUnseen();
         testHomeStart();
         testFormMine();
