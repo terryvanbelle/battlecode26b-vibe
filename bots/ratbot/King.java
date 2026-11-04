@@ -63,8 +63,8 @@ public final class King {
         if (!G.coop) bite(enemies);
         if (Cfg.KING_CAT_BITE) biteCat(cats);
         if (Cfg.PRESS_SHARED && !G.coop) noteEKing(enemies);
+        threat = 0;
         if (!G.coop && enemies.length > 0) {
-            int threat = 0;
             for (RobotInfo e : enemies)
                 if (e.type != UnitType.RAT_KING && e.location.distanceSquaredTo(G.me) <= Cfg.KING_THREAT_D2) threat++;
             Comms.write(Comms.ALERT, (G.me.x + 1) | (Math.min(15, threat) << 6));
@@ -871,8 +871,19 @@ public final class King {
 
     /** The first king names a formation site and keeps it fresh until the king cap is reached, a king forms there
      *  (Cfg.FORM_GAP) or it times out. */
+    /** Enemy rats within Cfg.KING_THREAT_D2 of this king at war, counted this turn. */
+    static int threat;
+
+    /** Cfg.FORM_SAFE: with at least min enemy rats threatening our king, no second king is formed (0 = off). */
+    static boolean formHold(int threat, int min) { return min > 0 && threat >= min; }
+
     static void formation() throws GameActionException {
         if (slot != 0) return;
+        // our king under attack: the babies a formation pulls into its 3x3 are the ones that can defend it
+        if (formHold(threat, Cfg.FORM_SAFE)) {
+            if (formSite != null) { formSite = null; Comms.write(Comms.FORM_T, 0); }
+            return;
+        }
         if (Comms.numKings >= Math.min(formCap(G.coop), Comms.KING_SLOTS) && !(Cfg.FORM_RICH_BANK > 0 && rich())) { formSite = null; Comms.write(Comms.FORM_T, 0); return; }
         if (formSite != null) {
             boolean formed = Cfg.FORM_GAP > 0 && Comms.numKings > formKings;

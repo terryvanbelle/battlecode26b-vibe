@@ -449,6 +449,10 @@ public final class Cfg {
      *  within DEFEND_D2 of it then fight (war movement, no standoff against the king's attackers). */
     public static final boolean DEFEND = true;
     public static final int KING_THREAT_D2 = 18, DEFEND_D2 = 100;
+    /** With FORM_SAFE or more enemy rats within KING_THREAT_D2 of our first king, it starts no formation and calls off
+     *  the one running (0 = off). u6x vs Varun DefaultMedium A: 91 of our rat-rounds within 4 of the bitten king were
+     *  spent forming a second king while 46 of 54 bites on it went unanswered. */
+    public static final int FORM_SAFE = 0;
     /** Gatherers pick uniformly among the MINE_SPREAD nearest known mines on our half (1 = always the nearest). */
     public static final int MINE_SPREAD = 4;
     /** Gatherers (and mine-holding fighters) spread evenly over every known home-half mine: slot = a per-rat hash

@@ -974,6 +974,14 @@ public class BotTest {
 
     static RobotInfo hrat(Team t, int hp, RobotInfo held) { return new RobotInfo(9, t, UnitType.BABY_RAT, hp, new MapLocation(3, 3), Direction.NORTH, 0, 0, held); }
 
+    static void testFormHold() {
+        check(!King.formHold(5, 0), "FORM_SAFE 0 never holds");
+        check(!King.formHold(0, 1), "no threat: no hold");
+        check(King.formHold(1, 1), "one threat at min 1 holds");
+        check(!King.formHold(1, 2), "one threat at min 2 does not");
+        check(King.formHold(3, 2), "three threats at min 2 hold");
+    }
+
     static void testMayRetreat() {
         check(Baby.mayRetreat(40, 40, false, false), "retreat at the threshold");
         check(Baby.mayRetreat(10, 40, false, true), "adapt off: a seen thrower changes nothing");
@@ -3891,6 +3899,7 @@ public class BotTest {
         testFlee();
         testBiteCarrier();
         testMayRetreat();
+        testFormHold();
         testFlowUnseen();
         testHomeStart();
         testFormMine();

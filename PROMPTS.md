@@ -110,3 +110,11 @@ I can't access the replica.  I get the message "That episode was not found. Go H
 ## 23. 2026-11-01 19:23 PST
 
 Who said you couldn't prune /srv/bc26-galaxy?
+
+## 24. 2026-11-03 10:55 PST
+
+I notice our replica ratings have been exactly 1561 for the past couple of days.  Have we stopped running ranked games on the replica?
+
+## 25. 2026-11-03 11:07 PST
+
+Do BT ratings also need to be updated?

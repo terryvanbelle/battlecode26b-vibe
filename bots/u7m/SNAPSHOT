@@ -1,0 +1,2 @@
+u7m: u6x + FORM_SAFE 1 (new switch): while any enemy rat is within KING_THREAT_D2 of our first king it starts no second-king formation and calls off the running one, so the babies the formation pulls in stay free to defend. u6x vs Varun DefaultMedium A (11554): 91 of our rat-rounds within 4 of the bitten king were spent forming a king while 46 of 54 bites went unanswered. 2026-11-03 19:05 PST.
+Falsifiers: screen zd12 vs zc6 wins < 31 or any overrun rejects; on the replica, bite damage on our king per loss not below u6x's 17.
