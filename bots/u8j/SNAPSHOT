@@ -1,0 +1,11 @@
+u8j = u8i + LEAN_SIEGE (new gate): the lean floor stands aside at war with enemies in the king's sight.
+u8i = u6x + LEAN_DEBT 1200 / LEAN_FLOOR 800 / LEAN_MIN 4: once the king's spawn spending runs more than 1200 ahead
+of the income it has measured since round 1, a spawn must leave 800 banked. u8i lost screen zd33 30-32 (D 8, +3 -5)
+on short rush games: abrk bed A/B, araid bed A, DefaultSmall B, starvation A, where the king held 800 with the
+enemy at its ring; it delivered 366.0k to zc6's 352.9k. The field's starvation losses (externalsustenance,
+averyfineline, canyoudig) overspend in the opening with no enemy at the king.
+Registered 2026-11-04 04:43 PST.
+Falsifiers:
+  1. screen zd34: wins below 31 or any overrun (zc6 = u6x: 32 wins);
+  2. replica: starvation as our last king's death in more than 12 of a block's king-destroyed losses (u6x twin 15);
+  3. replica: our median bank at r150 in losses not above u6x's same-set reference.
