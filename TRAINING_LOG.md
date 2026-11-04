@@ -5637,3 +5637,9 @@
 - 12:26: **u8x passed screen zd47** (falsifier 1): 44 cells, 33 wins to zc6's 32, D 7 (+4: araid arrows A and B, cheesefarm B, starvation B; -3: abrk DefaultSmall B and evileye A, araid DefaultSmall B), 0 overruns, funnel 37/48 (zc6 34/48). Picks per 100 rat-turns 35.07 (bar 33.8, zc6 35.56); delivered 341.8k.
   - u8x goes to the replica once u8w's blocks end, ahead of u8r and u8d: the census names the king's queue as our largest leak, and u8r (cat traps) and u8d (baby cap) work other areas. Screen zd48 (u8y) runs for attribution only.
   - attempts.csv: the empty base of u7a-u8u filled in from their descriptions (46 rows).
+- 12:36: **How our rank-2 and rank-3 home mines get found** (u6x twin, sets 3 and 1, 96 replica games; scratch minelag.py on the VM). In losses our rank-2 home mine is first seen at median r87 and first worked at r185. In 13 of 45 loss game-sides none of ours sees it by r600: cheesebottles (both seats), fullofsecrets, whatsthecatdoin, clouds, thunderdome, uneruesansfin, FreeTheCheese, TheHeist, averystrangespace and dirtpassageway. Where it is seen, a rat works it before any seer reaches the king: work comes a median 16 rounds before the report. So the lag is sight, not allocation. The first seers are cheese chasers (C, 13 of 32 seen) and rushers (a, 9); scouts (S) are 3. Rank 3: seen r74, worked r103, 5 of 33 never seen.
+- 12:36: **Baby deaths over whole games** (same 96 games; scratch deathcause.py).
+  - In losses, 55.3 of ours die a game: thrown and landed 17.0, their rat traps 9.4, cat pounce 9.0, their bites 6.3, cat crush 4.8, throw hits 4.7, king formation 2.2.
+  - 66.3 of theirs die: cat pounce 20.4, thrown by us 19.7, cat crush 10.9, throw hits 6.6, formation 2.9, our king's bites 2.6, our rats' bites 1.4.
+  - Our rat kills come from throws (26.3 a loss game). Theirs come from throws (21.7), traps (9.4) and bites (6.3).
+  - In wins, 35.4 of ours and 36.4 of theirs die.
