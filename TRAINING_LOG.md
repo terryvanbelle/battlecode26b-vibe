@@ -5377,3 +5377,4 @@
 - 17:40: u7j screen zd9 passed: 32 wins (u6x 32), 0 overruns, 2 starved kings. Submitted #204, block 1 on set 1 after 12429. VM disk 3.5 GB.
 - 18:13: **u7j (THROW_ADAPT_R 4) rejected at replica block 1**: 45 cells, 41 alike, D 4 (+1 -3), t -1.00; Merlin throw hits back to 4.0/game (u7i 1.2). The retreat line (u7d, u7e, u7h, u7i, u7j) closes for now: no-retreat helps against throwers and every gating we tried either misses Merlin or catches Varun/YokoOno. Varun knifefight A is lost by every variant, including u7j where retreat mostly stays on.
 - 18:13: u7c (KING_BITE_MAX 400, reinstated 13:26) submitted #205, block 1 on set 1 after 12514 (bites are the king killer now: 12.8-17 per loss).
+- 18:18: u7k = u6x + KING_BITE_MAX 900 (bracket of u7c). Screen zd10; falsifiers: wins < 31 or any overrun; to the replica only if it beats u7c's 33 screen wins or u7c fails.
