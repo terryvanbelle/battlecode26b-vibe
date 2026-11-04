@@ -5537,3 +5537,10 @@
   - Local keepout pair (u6x replay reproduces zc6's cell exactly): u6x saw one mine by r60 (r59), u8p four (r25-r51, the rank-2 mine at r26). But u8p's gatherers balanced over those near mines (12-17k rat-rounds at each for about 4.7k cheese), and araid took the two contested north mines (21,47) and (28,47) first (r139 and r357, about 9k). u6x's centre-first opening had found and held them (r322 and r499, 9.1k).
   - The field census has the same crowding: in losses we spend 7,912 rat-rounds a game at our rank-1 mine for a 64% share, they 1,784 at theirs for 76%.
   - u8p goes to the replica next, after u8m's block and ahead of u8d (RICH2 is nearly inert, screen D 1). Its falsifiers 2-3 test the mechanism (rank-2 sighting) and the opening's income (picked by r400).
+- 08:30: **u8m (SIEGE_HURT 30) REJECTED at replica block 1** (#218, set 3: 13676-13818, 16/16, twin-anchored `paired 13248-13291 --crown 12130-12163`): 48 cells, 46 alike, D 2 (+1 Varun corridorofdoomanddespair B, -1 Xzibit minimaze A), net 0, t 0.00. Block 1 rejects at t <= 0.
+  - 29 of its 48 cells replay u6x's crowning game exactly: the hurt-king spending window seldom fires against the field. Its 37-win screen came from the archetypes' sieges, which the field does not reproduce.
+  - The SIEGE_HURT line (u8l, u8m, u8n) closes.
+- 08:30: **u8p submitted (#219), block 1 on set 3** (twin-anchored; 12 scrims queued after 13818, the rest under the hourly limit; waiter build/wait_u8pb1.sh). Falsifiers to score:
+  - rank2see.py median first sighting of our rank-2 home mine, against the twin's r249;
+  - bankat.py picked by r400, against the bar of 2100.
+  - u8d (RICH2_BABIES 80) waits behind it.
