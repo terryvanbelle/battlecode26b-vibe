@@ -1,0 +1,2 @@
+u7t: u7d + FORM_FILL (= u7o + RETREAT_HP 0). Prepared for the case u7d is accepted (21:45 plan): u7o's formation fill (joiners walk to the nearest free tile of the site's 3x3, not its centre), a basics repair. Not submitted unless u7d is the incumbent. 2026-11-03 21:51 PST.
+Falsifiers: screen zd18 vs u7d's zd3 (35 wins) wins < 34 or any overrun rejects; on the replica, formation rat-rounds (code K) per game not below u7d's.
