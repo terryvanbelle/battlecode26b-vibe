@@ -1,0 +1,7 @@
+u8m = u8l with SIEGE_HURT 30 (from 10): the dose bracket above u8l. Same switch, same floor (20) and cap (40); the
+hurt window after our king last lost HP with an enemy baby within dist2 18 lasts 30 rounds instead of 10, so the king
+keeps spending through gaps in a siege (13396 DefaultMedium vs Varun: bites came in runs with 5-15 round gaps).
+Registered 2026-11-04 07:01 PST.
+Falsifiers:
+  1. screen zd37: wins below 31 or any overrun (zc6 = u6x: 32 wins; u8l's zd36: 36);
+  2. it goes to the replica only if it beats u8l's 36 wins on the screen, and then under u8l's replica falsifiers.
