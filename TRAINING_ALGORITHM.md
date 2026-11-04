@@ -169,7 +169,9 @@ rarely: price a reallocation against what it displaces; give freed capacity a jo
   incumbent on those cells, and replaying the incumbent only repeats it. Every candidate then scores low there (the
   winner's curse), and a lucky crowning stalls the reign. So a reign orders its sets control blocks first and accepting
   sets last, and an accepting set is re-anchored before anyone is scored on it: play a twin of the incumbent (the same
-  switches from the current code, or a changed tie-break salt) there and use the twin's games as the reference. Test
+  switches from the current code, or a changed tie-break salt) there and use the twin's games as the reference, except
+  that a candidate game repeating the crowning game exactly (same winner and length) scores 0 there: a candidate that
+  barely changes play replays the lucky draw, and the twin alone would credit it with that luck. Test
   determinism once a season: the same pairing played twice gives the same game. A basics repair (a battery row turned to pass) instead accepts at t ≥ 0 after
   block 2, its false accepts simulated apart. A real but narrow gain usually closes below resolution, not refuted (§8).
 - **Simulate every bar before relying on it**, results in `HANDOFF.md`: the screen's false-reject rate and how well

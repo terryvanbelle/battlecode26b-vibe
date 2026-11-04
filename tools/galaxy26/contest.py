@@ -268,6 +268,35 @@ def block_cells_all(ids, root=REPLAYS, team=TEAM):
     return out
 
 
+def block_games(ids, root=REPLAYS, team=TEAM):
+    """block_cells_all with each game's round count: (opponent, map, our side, won, rounds)."""
+    out = []
+    for i in ids:
+        f = os.path.join(root, str(i), 'match.json')
+        if os.path.exists(f):
+            with open(f) as fh:
+                gs = json.load(fh)['games']
+            for g in gs:
+                opp, side, won = our_view(g, team)
+                out.append((opp, g['map'], side, int(won), g['rounds']))
+    return out
+
+
+def identity_ref(crown, twin, cand):
+    """The reference for a candidate scored on an accepting (crowning) set re-anchored by a twin (TRAINING_ALGORITHM
+    §4): a candidate game that repeats the crowning game on its cell (same winner and round count; games are
+    deterministic) is a replay of the lucky draw, so the crowning game is its reference there (d = 0); every other
+    candidate cell is a fresh draw and keeps the twin's games. All three are (opponent, map, side, won, rounds) lists.
+    Returns (reference cells (opponent, map, side, won), number of replayed cells)."""
+    first = {}
+    for g in crown:
+        first.setdefault(g[:3], g[3:])
+    same = {g[:3] for g in cand if first.get(g[:3]) == g[3:]}
+    ref = [g[:4] for g in crown if g[:3] in same and first[g[:3]] == g[3:]]
+    ref += [g[:4] for g in twin if g[:3] not in same]
+    return ref, len(same)
+
+
 @functools.lru_cache(maxsize=None)
 def field_report():
     """(tools/field_report.py, the current dumper hash), once per process: imported here, as only --graded needs the
@@ -474,6 +503,12 @@ def paired_cmd(a):
             specs = [b for b in (line.split('#')[0].strip() for line in f) if b]
     ref = [g for s in specs for g in games(s)]
     miss = [i for s in specs for i in missing(s)]
+    crown = getattr(a, 'crown', None)
+    if crown and graded:
+        print('~ --crown scores won/lost only; not with --graded')
+        return 2
+    if crown:
+        miss += missing(crown)
     if miss:
         print(f'~ reference matches not downloaded: {miss}')
     if bad:
@@ -489,6 +524,11 @@ def paired_cmd(a):
               + ('' if a.partial else '; refused (--partial scores the rest)'))
         if not a.partial:
             return 3
+    if crown:
+        cg = [g for b in a.blocks for g in block_games(block_ids(b), a.dir)]
+        ref, nsame = identity_ref(block_games(block_ids(crown), a.dir), [g for s in specs for g in block_games(block_ids(s), a.dir)], cg)
+        print(f'~ identity (--crown {crown}): {nsame} candidate cells replay the crowning game (d 0); the rest are '
+              f'scored against {a.ref}')
     rows, unref, s = paired_score(ref, cand)
     if unref and not a.partial:
         print(f'~ NO REFERENCE: the champion has no game on {len(unref)} cells (play its control block on that set '
@@ -544,6 +584,8 @@ def main(argv=None):
     p = sub.add_parser('paired'); p.add_argument('ref'); p.add_argument('blocks', nargs='+')
     p.add_argument('--partial', action='store_true'); p.add_argument('--dir', default=REPLAYS)
     p.add_argument('--graded', action='store_true', help="a game's graded score (field_report) instead of won")
+    p.add_argument('--crown', help='MATCHES: the crowning draw REF (a twin) re-anchors; candidate games repeating it '
+                   'score 0 (identity_ref)')
     p.add_argument('--studied', help='OPPONENT_PREFIX:MAP,... the cells the candidate was designed from')
     a = ap.parse_args(argv)
     if a.cmd == 'compare':

@@ -414,6 +414,43 @@ def contest_tests(tmp, root, team):
         CT.field_report = real
     check(cells == [] and bad == {21: 'tools/build-tools.sh failed:', 22: 'tools/build-tools.sh failed:'},
           f'contest graded_cells: a dumper that does not build grades nothing {cells} {bad}')
+    identity_tests(croot)
+
+
+def identity_tests(croot):
+    """contest.py paired --crown: a candidate game that repeats the crowning game (winner and rounds) scores 0 against
+    it; every other candidate cell is scored against the twin."""
+    crown = [('o', 'M1', 'A', 1, 500), ('o', 'M2', 'A', 1, 700), ('o', 'M3', 'B', 0, 300), ('o', 'M4', 'B', 1, 300)]
+    twin = [('o', 'M1', 'A', 0, 480), ('o', 'M2', 'A', 0, 650), ('o', 'M3', 'B', 0, 300), ('o', 'M4', 'B', 0, 310)]
+    cand = [('o', 'M1', 'A', 1, 500), ('o', 'M2', 'A', 1, 640), ('o', 'M3', 'B', 1, 900), ('o', 'M4', 'B', 0, 300)]
+    ref, n = CT.identity_ref(crown, twin, cand)
+    check(n == 1 and sorted(ref) == [('o', 'M1', 'A', 1), ('o', 'M2', 'A', 0), ('o', 'M3', 'B', 0), ('o', 'M4', 'B', 0)],
+          f'identity_ref: only M1 repeats the crowning game (M2 same winner, other rounds; M4 same rounds, other winner) {n} {ref}')
+    s = CT.paired_score(ref, [g[:4] for g in cand])[2]
+    check((s['D'], s['gained'], s['lost'], s['net']) == (2, 2, 0, 2), f'identity_ref paired: M1 d 0, M2 and M3 +1 vs the twin {s}')
+    ref, n = CT.identity_ref(crown, twin, crown)
+    check(n == 4 and CT.paired_score(ref, [g[:4] for g in crown])[2]['D'] == 0, f'identity_ref: the crowning draw scores 0 {n}')
+    ref, n = CT.identity_ref(crown, twin, twin)
+    check(n == 1 and CT.paired_score(ref, [g[:4] for g in twin])[2]['D'] == 0, f'identity_ref: the twin scores 0 {n}')
+
+    def mk(mid, games):
+        os.makedirs(os.path.join(croot, str(mid)))
+        gs = [{'game': i, 'map': m, 'team_a': CT.TEAM, 'team_b': 'opp', 'reversed': False,
+               'winner_team': CT.TEAM if w else 'opp', 'rounds': r, 'reason': 'RATKING_DESTROYED'}
+              for i, (m, w, r) in enumerate(games)]
+        json.dump({'match': mid, 'games': gs}, open(os.path.join(croot, str(mid), 'match.json'), 'w'))
+    mk(31, [('M1', 1, 500), ('M2', 1, 700), ('M3', 0, 300)])        # crowning draw
+    mk(32, [('M1', 0, 480), ('M2', 0, 650), ('M3', 0, 300)])        # twin
+    mk(33, [('M1', 1, 500), ('M2', 1, 640), ('M3', 1, 900)])        # candidate
+    run = lambda **k: _paired(types.SimpleNamespace(**dict(dict(ref='32', blocks=['33'], partial=False, dir=croot,
+                                                                 studied=None), **k)))
+    rc, out = run(crown='31')
+    check(rc == 0 and '~ identity (--crown 31): 1 candidate cells replay the crowning game' in out
+          and '~ paired: 3 cells, 1 alike; D 2 (gained 2, lost 0), net +2.00' in out, f'contest paired --crown {out}')
+    rc, out = run()
+    check(rc == 0 and '~ paired: 3 cells, 0 alike; D 3 (gained 3, lost 0)' in out, f'contest paired without --crown {out}')
+    rc, out = run(crown='31', graded=True)
+    check(rc == 2 and 'not with --graded' in out, f'contest paired --crown refuses --graded {out}')
 
 
 def _paired(a):
