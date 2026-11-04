@@ -5544,3 +5544,5 @@
   - rank2see.py median first sighting of our rank-2 home mine, against the twin's r249;
   - bankat.py picked by r400, against the bar of 2100.
   - u8d (RICH2_BABIES 80) waits behind it.
+- 08:37: **u8q = u6x + SEEK_CROWD 3** (from 6; registered in bots/u8q/SNAPSHOT before its first game). It targets the crowding: 66% of our home-mine rat-rounds sit at the nearest mine (twin set 3, 412k of 625k over 42 games). A gatherer whose cone shows 3+ allies nearer its mine seeks never-seen home ground for up to 150 rounds and reports what it finds. At 6 the test seldom fires. Alone it was never screened against the archetypes or sent to the replica (s7q bundled it with MINE_ANY_COOP, t 0.53). Screen zd41 is running on the VM.
+  - Falsifiers: wins below 31 or any overrun; on the replica, rank 1's share of our home-mine rat-rounds at 59% or more (twin 66%), or picked by r400 below 2100.
