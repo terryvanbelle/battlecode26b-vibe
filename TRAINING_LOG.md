@@ -5760,3 +5760,17 @@
   - Falsifier 3 also fails on set 1. Picked by r400 averaged 2,454 (losses 2,412, wins 2,503) against a bar of 2,804: the twin's 2,670 plus 5%. The mechanism held: M+W within 4 of our king fell to about 8% of baby-turns (10.2% in losses, 5.9% in wins; twin 20%), and king HP lost to bites and throws was 332 a loss against the 395 bar. So the freed turns did not turn into picks on set 1.
   - Economy now has four straight rejects (u8p, u8q, u8w, u8x), so the next new candidate goes to another area.
 - 14:27: **Corpus run submitted** (#223, u6x, the registered build). Queued 22 triples from both seats against VarunVejalla_final4_run_away10: 4 sent, 40 queued for the drain. The 44 matches come after 14221; waiter build/wait_corpus.sh. Analysis as registered at 13:21 (graded score per map, the worst 10 diagnosed, seat splits listed).
+- 14:37: **King-death census by map class** (kingdeath.py over twin sets 1 and 3 plus u8x blocks 1-2: 192 games, 115 losses; poor = 3 or fewer mines in build/census.tsv).
+  - Poor maps with one king went 5-17, and poor maps where we formed a second king 0-2. Rich maps with one king went 40-61, and with two kings 32-35.
+  - Last-king death causes in losses: starvation 49 (9 before r300, 26 in r300-800, 13 in r800-1500, 1 later), bites 25, thrown rats 14, cats 7. 20 losses were on points with a king alive (12 of them with two kings).
+  - On poor maps 10 of the 17 one-king losses are starvations, 6 of them before r300.
+  - Record by opponent over the same games: Xzibit 16-8, spsquared 13-11, Varun 12-12, Icarus 10-14, collegejunior 9-15, YokoOno 7-17, Finals 5-19, nzjt 5-19. The poor-map losses are almost all in-band: Icarus averyfineline 0-4 and mincemeat 0-4, Xzibit starvation 0-4, collegejunior tiny 0-4.
+- 14:37: **u9i registered** (structural, production) = u6x + RESERVE_ROUNDS 300 from RESERVE_FROM 300. This is u6e's bank reserve doctrine, reopened on fresh blocks under the 14:27 screen rule and binding from r300 only, so the opening army and the rush window are u6x's.
+  - From r300, every spawn floor holds the live kings' upkeep for 300 more rounds: 600 for one king, 1,200 for two.
+  - Area: the spawn policy. The four straight economy rejects were all harvest allocation.
+  - Falsifiers are in bots/u9i/SNAPSHOT:
+    - Screen zd57 is a basics gate: inert, any overrun, or picks per 100 rat-turns under 33.8.
+    - On the replica, starvation must end under 40% of our king-destroyed losses, pooled (twin 52%).
+    - King bite plus throw damage must stay at or under 395 a loss.
+    - Standard block rules.
+  - zd57 is chained after the ablation chain (zd53-zd56). Replica order after the corpus run: u9i first, since it targets the largest loss mode. Then u8r (cooperation cat traps), u9b (a simplification) and u8d (RICH2_BABIES 80, D 1 on its screen: nearly inert).
