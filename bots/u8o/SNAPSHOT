@@ -1,0 +1,13 @@
+u8o = u6x + SCOUT_EVERY 2 (from 4; existing switch, untuned since s3f on 2026-10-28): one gatherer in two, not one in
+four, explores never-seen tiles of our half until r150, then gathers. Basics: board exploration. Evidence (u6x twin,
+set 3, 13248-13291; scratch mineleft2.py, rank2.py): in losses the opponent takes 44% of our second-nearest home
+mine's cheese and we 35%; they first pick there at a median r107, we at r163.5 (on their own rank 2 they start at
+r55). Rank 2 is never visited by us on cheesebottles, whatsthecatdoin and FreeTheCheese vs nzjt and uneruesansfin vs
+Xzibit. Twelve scout variants (targets, sweeps, frontier, idle seeking) were neutral; the dose never moved.
+Registered 2026-11-04 07:30 PST.
+Falsifiers:
+  1. screen zd39: wins below 31 or any overrun (zc6 = u6x: 32 wins);
+  2. replica: in a block's losses, the median first pickup of ours at our rank-2 home mine (rank2.py; never = 9999)
+     not earlier than r163.5 (the twin's, set 3) rejects;
+  3. replica: our cheese picked by r400 a game (bankat.py, all games reaching r400) below 2100 (twin set 3: 2187)
+     rejects: the extra scouts must not cost the opening's income.
