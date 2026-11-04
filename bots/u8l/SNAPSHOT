@@ -1,0 +1,16 @@
+u8l = u6x + SIEGE_HURT 10 / SIEGE_HURT_FLOOR 20 / SIEGE_HURT_CAP 40 (new switch; structural: spending doctrine
+under attack). For 10 rounds after our king's HP fell with an enemy baby within KING_THREAT_D2 (dist2 18), at war with
+enemies in its sight, every spawn floor drops to 20 and the baby cap rises to 40: banked cheese is worth nothing once
+the king is dead. Mechanism: u6x's set-3 twin (13248-13291) lost 7 of its 23 king-destroyed games holding cheese:
+DefaultMedium and tiny vs thewaxmango with 100-330 banked and 6-10 babies (held by the 300 spawn floor), thunderdome
+vs Varun with 550-840 and 19-20 babies (the 18 cap) while our king was bitten from 456 to 0 HP over r240-412.
+13396 DefaultMedium vs Varun: our king died at r178 holding 160-300 with 8 babies; theirs had 2 HP and was starving
+(bank 0 from r155 after spending it on 18 babies). Earlier relatives on old bases: s7t SIEGE_FLOOR 20 whenever
+enemies were in sight (neutral on screen, never alone on the replica), s4h MAX_BABIES_WAR 30 (rush run lean positive,
+replica only in bundle s4j).
+Registered 2026-11-04 06:28 PST.
+Falsifiers:
+  1. screen zd36: wins below 31 or any overrun (zc6 = u6x: 32 wins);
+  2. replica: in a block's king-destroyed losses where our last king did not starve, median bank 20 rounds before
+     the death not below u6x's same-set reference (the floor and cap must actually spend it);
+  3. replica: starvation as our last king's death in more than 18 of a block's king-destroyed losses.
