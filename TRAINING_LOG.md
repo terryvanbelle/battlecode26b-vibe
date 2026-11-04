@@ -5562,3 +5562,11 @@
   - Per cell (xferdiff.py), most of the drop is wins that end sooner: araid cheesefarm B r920 vs r2000, evileye A r862, DefaultMedium A r455 vs r892.
   - Among full 2000-round games, delivery is about even: cheesefarm +1.1k to +2.5k, arrows A +1.0k, wallsofparadis A +1.2k; keepout A/B -2.0k/-1.4k, wallsofparadis B -0.8k.
   - Replica queue: u8p (block 1 playing), then u8q, then u8d. u8r's screen zd42 is running.
+- 09:18: **u8r (CAT_LAY + CAT_RING) passed screen zd42**: 44 cells, 34 wins to zc6's 32, D 6 (+4: abrk canyoudig B and tiny B, araid canyoudig B and evileye B; -2: araid DefaultSmall B and bed A), 0 overruns, 0 exceptions.
+  - The economy cost is real: delivered 316.3k to 354.8k (-11%), picks per 100 rat-turns 32.0 to 35.6. Full-length wins lost delivery: wallsofparadis B -8.2k, keepout B -6.8k and A -2.6k, learn_your_lesson B -2.4k.
+  - Over 48 games, cat-trap damage was 44.5k to 16.7k and bite damage 124.6k to 158.1k, so total cat damage barely moved (169k to 175k). Rats lost to cats fell 25% (1,301 to 1,744), spawns fell 8%, and picks fell 10% on the same rat-turns. One reading: stunned cats linger near our rats and gatherers keep away from them.
+  - Cooperation lasts about 40 rounds a game against the archetypes. So most of the extra traps here came from CAT_RING's beside-the-body option in war, laid in the window the backstabbed side keeps (100 rounds), not from CAT_LAY, which acts only in cooperation.
+  - u8r joins the replica queue behind u8q. Its replica falsifier 3 (transfer at least 0.9x the twin's) tests this cost on the field.
+- 09:18: **u8r's pair split** to find the costly half: u8s = u6x + CAT_LAY (screen zd43, running) and u8t = u6x + CAT_RING (zd44, chained after it). Both were registered before their first games, with a delivery bar of 340k added to the screen falsifier.
+  - If either passes while u8r has not yet started on the replica, the one with more screen trap damage takes u8r's slot. If both pass, u8r stays.
+- 09:18: Baseline for u8p's rank-2 falsifier on set 1 (rank2see.py over the twin 12771-12813): our rank-2 home mine is first seen at a median r28, with 25 of 38 games by r100. Set 3's twin: r249, 14 of 38. On set 1 u8p must beat r28.
