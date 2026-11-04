@@ -5570,3 +5570,15 @@
 - 09:18: **u8r's pair split** to find the costly half: u8s = u6x + CAT_LAY (screen zd43, running) and u8t = u6x + CAT_RING (zd44, chained after it). Both were registered before their first games, with a delivery bar of 340k added to the screen falsifier.
   - If either passes while u8r has not yet started on the replica, the one with more screen trap damage takes u8r's slot. If both pass, u8r stays.
 - 09:18: Baseline for u8p's rank-2 falsifier on set 1 (rank2see.py over the twin 12771-12813): our rank-2 home mine is first seen at a median r28, with 25 of 38 games by r100. Set 3's twin: r249, 14 of 38. On set 1 u8p must beat r28.
+- 09:36: **u8p (NOMINE_HOME) passes replica block 1** (#219, set 3: 13819-13834, 16/16, twin-anchored `paired 13248-13291 --crown 12130-12163`): 48 cells, 38 alike, D 10, net +2, t +0.63. It clears block 1's bar; block 1 never accepts.
+  - Gained 6: spsquared TheHeist A and B, Varun corridorofdoomanddespair B, Xzibit uneruesansfin A, YokoOno 5t4rv4t10n_1337 B and externalsustenance B.
+  - Lost 4: Xzibit minimaze B and uneruesansfin B, YokoOno 5t4rv4t10n_1337 A and Stash A.
+  - Four of the gains are twin losses decided on points or by a narrow race. Both TheHeist games ended sooner, when the last cat died (r303 and r277 against the twin's r457 and r651), with our transfer just ahead (620 to 610, 629 to 460).
+  - Falsifier 2 holds: our rank-2 home mine is first seen at a median r98 over 38 games (20 by r100), against the twin's r249 (14). In losses it moved from r165.5 to r91.5. The opponent's take from it fell from 24,565 to 13,740, and ours rose from 19,295 to 26,720.
+  - Falsifier 3 holds: 2,313 picked by r400 a game (28 games reached r400) against the bar of 2,100 (twin 2,187).
+  - Block 2 runs on set 1 (8 scrims sent after 13834, 8 queued under the hourly limit; waiter build/wait_u8pb2.sh). Its rank-2 bar there is the set-1 twin's r28.
+- 09:42: **u8s (CAT_LAY alone) REJECTED at screen zd43** (falsifier 1, delivery): 44 cells, 34 wins to zc6's 32, D 4 (+3: abrk tiny B, araid canyoudig B and evileye A; -1: abrk evileye B), 0 overruns, but delivered 331.6k (bar 340k; zc6 354.8k).
+  - The loss sits in a few long-cooperation araid cells, as in u8r: wallsofparadis B -8.6k (a 2000-round win, 14.3k to 5.7k) and keepout A -2.6k; Stash A and learn_your_lesson A were wins that ended sooner. 27 of 44 cells did not change.
+  - Cat-trap damage was 24.5k to 16.7k and rats lost to cats 1,533 to 1,744. The lane traps cost delivery even where cooperation is short.
+  - u8t (CAT_RING alone) runs as zd44. **u8u = u8p + SEEK_CROWD 3** (u8q's switch rebased on u8p, registered 09:39 before its first game) is chained as zd45. If u8p is accepted, u8u is u8q's rebase; if not, it is dropped.
+- 09:42: Progress refreshed after u8p's block 1 (no warnings).
