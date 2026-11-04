@@ -1,0 +1,2 @@
+u8b: u7x + FIGHT_SHIFT with FIGHT_IDLE 40 (dose series after u7z's 20): a FIGHT_MINE fighter that spends 40 turns within Chebyshev 4 of its mine without a pickup moves on along its pick list (no seeking); gatherers keep SEEK_IDLE 20. u7z (fighters at 20) screened 39 wins and +9% delivered over u7x but failed a mis-set pick-rate bar. 2026-11-04 00:55 PST.
+Falsifiers: screen zd26 vs zc6 wins below 37 (u7x), any overrun, or delivered below 360k rejects.
