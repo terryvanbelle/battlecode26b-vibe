@@ -5643,3 +5643,7 @@
   - 66.3 of theirs die: cat pounce 20.4, thrown by us 19.7, cat crush 10.9, throw hits 6.6, formation 2.9, our king's bites 2.6, our rats' bites 1.4.
   - Our rat kills come from throws (26.3 a loss game). Theirs come from throws (21.7), traps (9.4) and bites (6.3).
   - In wins, 35.4 of ours and 36.4 of theirs die.
+- 12:44: **Local keepout trio, A side vs araid** (kx1 u8x, kx2 u6x, kx3 u8y; one game each; scratch tagwin.py).
+  - Picked by babies plus kings: u6x 33.5k + 2.6k, u8x 30.5k + 2.8k, u8y 25.2k + 4.3k. Cat deaths 59 / 86 / 48. Points 67-32 / 52-47 / 63-36.
+  - Picks per 100 baby-turns by 400-round window: u8y 48.7, 33.4, 33.4, 35.2, 35.8. That is lower than u8x (48.4, 60.2, 41.7, 37.8, 36.3) and u6x (42.0, 63.9, 44.0, 44.7, 42.5).
+  - u8y does not have SEEK_CROWD 3, so the lower picks are not from that change. One game on one cell is noise here. Attribution between u8x's two parts waits for screen zd48 (40 of 48 games played).
