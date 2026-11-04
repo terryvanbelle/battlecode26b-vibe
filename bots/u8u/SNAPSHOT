@@ -1,0 +1,13 @@
+u8u = u8p + SEEK_CROWD 3 (u8q's switch rebased on u8p, pre-screened while u8p plays its replica blocks). u8p
+(u6x + NOMINE_HOME) passed replica block 1 on set 3 (D 10, net +2, t +0.63): our rank-2 home mine is first seen at a
+median r98 against the twin's r249, but on its screen (zd40) and the local keepout pair its gatherers balanced over
+the newly found near mines and crowded them. u8q (u6x + SEEK_CROWD 3: a gatherer whose cone shows 3+ allies nearer
+its mine seeks never-seen home ground for up to 150 rounds) passed screen zd41 with 36 wins to zc6's 32. Together:
+find the home mines early, then spread over them. If u8p is accepted, this is u8q's rebase on the new incumbent; if
+u8p is rejected, u8u is dropped and u8q goes on alone.
+Registered 2026-11-04 09:39 PST, before its first game.
+Falsifiers:
+  1. screen zd45: wins below 31 or any overrun (zc6 = u6x: 32; u8p's zd40: 31; u8q's zd41: 36);
+  2. replica (if sent): the nearest home mine's share of our home-mine rat-rounds (mineleft2.py ranks 1-6, both
+     results) at or above 59% (u6x twin 66%) rejects;
+  3. replica: cheese picked by r400 a game (bankat.py, all games reaching r400) below 2100 rejects.
