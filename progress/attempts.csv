@@ -489,4 +489,4 @@ u7m,2026-11-03 19:03,,u6x + FORM_SAFE 1: no second-king formation while an enemy
 u7n,2026-11-03 19:32,,"u6x + ALERT_SIDE: king alert names the side of its nearest threatening enemy rat; idle war rats go to that side, not the king's centre",rejected: replica block 1 t -0.58 (D 3 +1 -2) vs u6x's crowning set-1 refs; rescore vs the u7p twin pending
 u7o,2026-11-03 20:26,,"u6x + FORM_FILL: formation joiners walk to the nearest free tile of the site's ring, not its centre (basics repair)","screen zd14 31 vs zc6 32 (+1 -2), 0 overruns; queued for replica after u7n"
 u7p,2026-11-03 20:55,,"u6x + HAND_FLIP: salted twin to re-anchor u6x's crowning sets 1-2 (reference, not a candidate)",
-u7q,2026-11-03 21:03,,u6x + KING_EYES: king squeaks nearest enemy rat; babies strafe facing heard threats within dist2 8 (anti-grab from behind),
+u7q,2026-11-03 21:03,,u6x + KING_EYES: king squeaks nearest enemy rat; babies strafe facing heard threats within dist2 8 (anti-grab from behind),"screen zd15 34 vs zc6 32 (+5 -3), 0 overruns; queued for replica after u7o"
