@@ -5666,3 +5666,11 @@
 - 13:06: **How the field lays rat traps** (same games; scratch trapstyle.py over the actions dumps). Every opponent's traps are reactive and nearly all fire on us: 88-97% fire in our losses, 60-85% within 3 rounds of being laid (median 1-2 rounds).
   - Finals lays 84 a lost game (81 fire), 78% of them in the third nearest our start. Varun lays 59 (54 fire), Icarus 35 (32), spsquared 29 (28, 70% after r800), YokoOno 22, Xzibit 23, nzjt 4, collegejunior 4.
   - At 20 cheese a trap, Finals pays about 1,690 for 4,050 damage a lost game. u8f's traps fired at the same rate (38 of 39 a lost game) but were paid out of the bank that starves. The trap line stays closed; what differs is their income (Finals picks 21.6k a lost game to our 7.2k, set 3).
+- 13:08: **Field style against us** (same 96 games; scratch fieldstyle.py; means per game, opponents' numbers from our losses).
+  - Babies alive at r100: we have 22.9 in losses (24.2 in wins), opponents 14-20. At r400 we have 18.1 to their 15-24. They field fewer early and keep them alive.
+  - Picks per 100 baby-turns, r1-400: ours 27.1 in losses (22.5 in wins); Finals 56.6, Icarus 56.1, Varun 52.7, spsquared 50.3, nzjt 47.8, Xzibit 38.7, YokoOno 36.5, collegejunior 34.9.
+  - Baby-turns in the other team's half (nearer the other start): ours 9.2% in losses, 11.1% in wins; theirs 20-33% in our losses (Varun 33, Finals 30, Xzibit 28, YokoOno 24, Icarus 22, nzjt 21), except spsquared 8 and collegejunior 15.
+  - Baby-turns within Chebyshev 4 of their own king: ours 37.3% in losses, 31.6% in wins; theirs 13-28%.
+  - Kings 3 and more tiles from a mine are the rule on both sides: Chebyshev distance from the king to its nearest mine averages 6.8 at r100 for us and 5.5-11 for them.
+  - RAID is dead code in u6x: raider needs RAID_EVERY > 0, and RAID_EVERY is 0 (the 10-31 ablation found it inert for this reason). Raiding was last tried on s7d (s8i, s8j; rejected at replica block 2 on 10-29).
+  - Their own home mines are harvested at 76-81% (u8p's census), so raiders of ours would find few piles there. The gap is attendance at our own mines: they hold more rat-rounds at our mines than we do (Stash vs YokoOno: 1037/1139/716 to our 628/786/998 by r414). u8x (on the replica) targets that.
