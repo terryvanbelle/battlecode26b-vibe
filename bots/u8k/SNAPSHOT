@@ -1,0 +1,11 @@
+u8k = u8j with LEAN_DEBT 800 (dose arm; u8j: 1200).
+u8j = u6x + LEAN_DEBT / LEAN_FLOOR 800 / LEAN_MIN 4 + LEAN_SIEGE: once the king's spawn spending runs more than
+LEAN_DEBT ahead of the income it has measured since round 1, a spawn must leave 800 banked, except at war with
+enemies in the king's sight. u8j passed screen zd34 (34 wins vs zc6's 32, delivered 369.5k vs 352.9k). At 1200 the
+lean starts too late for canyoudig vs Xzibit (12877 g1): by r100 we spent 1670 on spawns against 445 picked, so
+the debt passed 1200 only near r95 with 415 banked. u6x's in-band losses average 1340 spent to 301 picked by r100
+(debt about 1040), so at 800 the lean fires in many ordinary openings too.
+Registered 2026-11-04 05:05 PST.
+Falsifiers:
+  1. screen zd35: wins below 31 or any overrun (zc6 = u6x: 32 wins);
+  2. kept over u8j only with at least u8j's 34 wins on zd35.
