@@ -1,0 +1,2 @@
+u7x: u6x + SEEK_IDLE 20 + IDLE_SHIFT (bracket of u7w's 40): a gatherer idle 20 turns within Chebyshev 4 of its mine without a pickup seeks never-seen home tiles (once per SEEK_RETRY 200) and moves to the next mine of its list. Mines drop a pile about every 12.5 rounds, so 20 idle turns means roughly two spawns missed or taken by a crowd-mate. 2026-11-03 23:55 PST.
+Falsifiers: screen zd22 vs zc6 wins < 31 or any overrun rejects; versus u7w's zd21 (32 wins, picks/100 rat-turns 37.1) it is kept only with more wins or a higher pick rate.
