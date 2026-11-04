@@ -502,5 +502,5 @@ u7z,2026-11-04 00:18,,u7x + FIGHT_SHIFT: idle FIGHT_MINE fighters shift along th
 u8a,2026-11-04 00:44,,"u7x + ALERT_SIDE (u7n): near-miss pair, idle shift economy + war rats to the king's threatened side","rejected at screen zd25: 35 wins < 37, delivered 337k < 348k"
 u8b,2026-11-04 00:56,,u7x + FIGHT_SHIFT with FIGHT_IDLE 40 (fighter idle-shift dose after u7z's 20),rejected at screen zd26: delivered 345k < 360k (wins 37 pass)
 u8c,2026-11-04 01:38,,u7x + FIGHT_SHIFT with FIGHT_IDLE 10 (fighter idle-shift dose arm below u7z's 20),rejected at screen zd27: 38 wins but delivered 359k (bar 360k); FIGHT_IDLE dose series flat
-u8d,2026-11-04 02:20,,"u6x + RICH2_BABIES 80 at bank 3000 (mass army when rich, abcdezyxwv style)",
+u8d,2026-11-04 02:20,,"u6x + RICH2_BABIES 80 at bank 3000 (mass army when rich, abcdezyxwv style)","screen zd28 passed (33 vs 32 wins, D 1); replica queue"
 u8e,2026-11-04 02:20,,"u6x + FORM_MINE (second king forms on a home-half mine; structural, field style)",
