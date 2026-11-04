@@ -493,4 +493,4 @@ u7q,2026-11-03 21:03,,u6x + KING_EYES: king squeaks nearest enemy rat; babies st
 u7r,2026-11-03 21:26,,u7n + FORM_FILL + KING_EYES (exploratory bundle of three screened singles),"screen zd16 37 vs zc6 32 (+10 -5), 0 overruns, 5 starved kings: no stacking over u7n's 37 (falsifier); not submitted"
 u7s,2026-11-03 21:52,,"u7d + KING_EYES (u7q + RETREAT_HP 0), prepared rebase","screen zd17 36 vs u7d zd3 35 (+4 -3), 0 overruns: passed; shelved (u7d rejection stands 22:40)"
 u7t,2026-11-03 21:52,,"u7d + FORM_FILL (u7o + RETREAT_HP 0), prepared rebase","screen zd18 36 vs u7d zd3 35 (+1 -0), 0 overruns: passed; shelved (u7d rejection stands 22:40)"
-u7u,2026-11-03 22:45,,,
+u7u,2026-11-03 22:45,,u7n + RETREAT_HP 0 (near-miss pair: ALERT_SIDE + no retreat),"REJECTED at screen zd19: 33 wins < 37 bar (zc6 32, u7n 37), D 17 (+9 -8), 0 overruns, 4 starved kings, transfer 325k"

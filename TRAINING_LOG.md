@@ -5421,3 +5421,4 @@
   4. u7i (THROW_ADAPT), block 2 on set 3 (+1.41).
   u7h (u7d + FORM_FROM 600) drops, since its block-1 cells were u7d's and u7d is now decided.
 - 22:45: u7u = u7n + RETREAT_HP 0 (plateau step 5, the two near-misses paired; both move war rats near our king, from different triggers). Screen zd19 vs zc6. Falsifiers: wins < 37 (u7n's own screen) or any overrun.
+- 23:06: u7u (u7n + RETREAT_HP 0) REJECTED at screen zd19: 33 wins vs the 37 bar (zc6 32, u7n 37), D 17 (+9 -8), 0 overruns, 4 starved kings, transfer 325k (-8%). The pair is worse than ALERT_SIDE alone: no-retreat sends wounded rats into the side fights ALERT_SIDE starts. u7o's set-3 block is 8 of 16 in.
