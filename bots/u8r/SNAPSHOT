@@ -1,0 +1,24 @@
+u8r = u6x + CAT_LAY + CAT_RING (an existing pair, t0n's, never on the replica; one doctrine: trap cats during
+cooperation). CAT_LAY: babies mark the tiles cats walk (CatLane); a tile under a cat on two passes 20+ rounds apart
+is lane, and a baby beside a lane tile the cat left 3+ rounds ago lays a cat trap there with 400+ global cheese.
+CAT_RING: the reactive cat trap may also go on a tile beside the cat's body, and in cooperation it needs only the
+600 floor, not the projected surplus. A cat trap costs 10 and deals 100 cat damage (the cooperation score weighs cat
+damage 0.5, kings 0.3, transfer 0.2; after a backstab 0.3/0.5/0.2, and only the backstabbed side may lay new cat
+traps, for 100 rounds). Evidence:
+  - u6x twin set 3 (13248-13291, field_report games): 9 losses were decided on points. Six of them flip with
+    25-1400 more cat damage and everything else unchanged, against 550-4850 more transfer (or none):
+    averystrangespace A vs Icarus +25 (cooperation to r1511, our trap damage 100), rose B vs spsquared +300 (to r415,
+    our trap damage 0: one cat trap stood all game and never fired, while the bank held 1100-1800 and spsquared's
+    2-3 traps took 800), corridorofdoom B vs Varun +625, TheHeist A/B vs spsquared +700/+600 (no backstab; ended when
+    the last cat died, each side 4000), uneruesansfin A vs Xzibit +1400 (to r566).
+  - The twin's mean cat-trap damage is 826 a game (median 200; 28 of 48 games above 0); in the 10 games with 300+
+    rounds of cooperation, 1935.
+  - Locally on s9s (Oct 30): CAT_LAY alone (cy1) 10 of 16 vs s9s, traps laid 18 a game to 13; with CAT_RING (cy2)
+    11 of 16, trap damage 1459 to 972; screen ra_t0n vs ra_s9s 80 cells +2.5 pts, t +0.64, net +1. Never submitted.
+Registered 2026-11-04 08:52 PST, before its first game.
+Falsifiers:
+  1. screen zd42: wins below 31 or any overrun (zc6 = u6x: 32 wins);
+  2. replica: our cat-trap damage a game over a block (field_report games catTrapUs) not above 1.25x the twin's
+     same-set value (set 3: 826) rejects: the traps did not fire;
+  3. replica: our cheese transferred a game (xUs) below 0.9x the twin's same-set value (set 3: 4409) rejects:
+     the traps' cheese and action time must not cost the economy.
