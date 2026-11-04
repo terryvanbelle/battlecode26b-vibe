@@ -2174,9 +2174,33 @@ public final class Baby {
             }
             return true;
         }
-        Nav.goTo(site);
+        MapLocation t = Cfg.FORM_FILL ? fillTile(site) : null;
+        Nav.goTo(t != null ? t : site);
         return true;
     }
+
+    /** Cfg.FORM_FILL: the free tile of site's ring nearest us (open terrain as far as we know, no robot sensed on
+     *  it), ties by the side frame; null when none is free. Walking at the centre stalls behind the rats already
+     *  holding the near side while the far side stays empty (u7n vs araid DefaultSmall: 6 of 9 site tiles held,
+     *  the 3 free ones against the map edge, 5 rats waiting one ring out, ~630 rat-rounds and no king). */
+    static MapLocation fillTile(MapLocation site) throws GameActionException {
+        int[] mem = Sym.mem;
+        int blk = Sym.WALL | Sym.DIRT, best = -1;
+        long bk = Long.MAX_VALUE;
+        for (int i = 0; i < 8; i++) {
+            Direction d = G.DIRS[i];
+            int x = site.x + d.dx, y = site.y + d.dy;
+            if (x < 0 || y < 0 || x >= G.W || y >= G.H || (mem[x + G.W * y] & blk) != 0) continue;
+            MapLocation t = new MapLocation(x, y);
+            if (G.rc.canSenseLocation(t) && G.rc.senseRobotAtLocation(t) != null) continue;
+            long k = fillKey(G.me.distanceSquaredTo(t), d.dx, d.dy, fu, fv);
+            if (k < bk) { bk = k; best = i; }
+        }
+        return best < 0 ? null : site.add(G.DIRS[best]);
+    }
+
+    /** fillTile's order: squared distance from us, then the ring offset in our side frame (mirrored rats agree). */
+    static long fillKey(int d2, int dx, int dy, int fu, int fv) { return ((long) d2 << 4) + (dx * fu + 1) * 3 + dy * fv + 1; }
 
     /** Cfg.FORM_MINE: a baby beyond FORM_PULL_R2 (d2 from the site) still joins within FORM_MINE_PULL_R2 when its
      *  slot is drawn; attackers never. */

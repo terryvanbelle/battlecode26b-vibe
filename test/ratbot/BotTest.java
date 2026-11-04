@@ -974,6 +974,19 @@ public class BotTest {
 
     static RobotInfo hrat(Team t, int hp, RobotInfo held) { return new RobotInfo(9, t, UnitType.BABY_RAT, hp, new MapLocation(3, 3), Direction.NORTH, 0, 0, held); }
 
+    static void testFillKey() {
+        check(Baby.fillKey(1, 1, 1, 1, 1) < Baby.fillKey(2, -1, -1, 1, 1), "nearer ring tile first");
+        check(Baby.fillKey(5, 1, 0, 1, 1) < Baby.fillKey(5, -1, 0, 1, 1) == Baby.fillKey(5, -1, 0, -1, 1) < Baby.fillKey(5, 1, 0, -1, 1),
+            "x-mirrored rats break ties alike");
+        check(Baby.fillKey(5, 0, 1, 1, 1) < Baby.fillKey(5, 0, -1, 1, 1) == Baby.fillKey(5, 0, -1, 1, -1) < Baby.fillKey(5, 0, 1, 1, -1),
+            "y-mirrored rats break ties alike");
+        check(Baby.fillKey(5, 1, 1, 1, 1) == Baby.fillKey(5, -1, -1, -1, -1), "rotated rats score alike");
+        java.util.HashSet<Long> ks = new java.util.HashSet<>();
+        for (int dx = -1; dx <= 1; dx++) for (int dy = -1; dy <= 1; dy++) ks.add(Baby.fillKey(4, dx, dy, 1, -1));
+        check(ks.size() == 9, "distinct ring offsets, distinct keys");
+        check(Baby.fillKey(4, 1, 1, 1, 1) < Baby.fillKey(5, -1, -1, 1, 1), "offset never outweighs one unit of distance");
+    }
+
     static void testSideTarget() {
         MapLocation k = new MapLocation(5, 5);
         check(Comms.sideTarget(k, 0, 20, 20) == null, "side 0: no target");
@@ -3917,6 +3930,7 @@ public class BotTest {
         testMayRetreat();
         testFormHold();
         testSideTarget();
+        testFillKey();
         testFlowUnseen();
         testHomeStart();
         testFormMine();
