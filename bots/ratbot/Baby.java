@@ -143,6 +143,9 @@ public final class Baby {
         Nav.guard = null;
         if (!G.coop && Cfg.GUARD_DIST2 > 0 && nearestEnemy != null && rc.getCarrying() == null
                 && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
+        // a squeaked enemy close behind us (Cfg.KING_EYES): steps strafe facing it (a strafe costs 18, so only at 8)
+        if (Cfg.KING_EYES && Nav.guard == null && !G.coop && Cfg.GUARD_DIST2 > 0 && rc.getCarrying() == null)
+            Nav.guard = nearestHeard(G.me, TrapRisk.heardE, TrapRisk.nHeard, 8);
         boolean engaged = nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= 20;
         if (Cfg.RISK_ADAPT > 0) adaptRisk = false;
         if (!G.coop && Cfg.TRAP_RISK && (Cfg.RISK_MIN_AREA == 0 || G.W * G.H >= Cfg.RISK_MIN_AREA) && Nav.stall < 8) {
@@ -273,6 +276,17 @@ public final class Baby {
     static boolean hostile() {
         if (Cfg.PEACE && G.coop) return false;
         return !G.coop || Cfg.RUSH_BREAK && role == ATTACK || Cfg.BREAK_ROUND > 0 && G.round >= Cfg.BREAK_ROUND;
+    }
+
+    /** The heard enemy position nearest me within d2 r of the first n, or null (the first wins a tie). */
+    static MapLocation nearestHeard(MapLocation me, MapLocation[] heard, int n, int r) {
+        MapLocation best = null;
+        int bd = r + 1;
+        for (int i = 0; i < n; i++) {
+            int d = me.distanceSquaredTo(heard[i]);
+            if (d < bd) { bd = d; best = heard[i]; }
+        }
+        return best;
     }
 
     /** End the turn facing the nearest enemy rat close enough to grab us next round. */

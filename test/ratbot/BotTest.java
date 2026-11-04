@@ -974,6 +974,26 @@ public class BotTest {
 
     static RobotInfo hrat(Team t, int hp, RobotInfo held) { return new RobotInfo(9, t, UnitType.BABY_RAT, hp, new MapLocation(3, 3), Direction.NORTH, 0, 0, held); }
 
+    static void testKingEyes() {
+        MapLocation k = new MapLocation(10, 10);
+        RobotInfo near = rat(Team.B, 12, 10), far = rat(Team.B, 13, 13), out = rat(Team.B, 15, 10);
+        RobotInfo king = new RobotInfo(5, Team.B, UnitType.RAT_KING, 500, new MapLocation(11, 10), Direction.NORTH, 0, 0, null);
+        RobotInfo blind = new RobotInfo(6, Team.B, UnitType.BABY_RAT, 100, new MapLocation(11, 11), Direction.CENTER, 0, 0, null);
+        check(King.eyesTarget(new RobotInfo[] {far, near}, k, 18) == near, "eyes: nearest enemy baby");
+        check(King.eyesTarget(new RobotInfo[] {out}, k, 18) == null, "eyes: beyond r2 not squeaked");
+        check(King.eyesTarget(new RobotInfo[] {far}, k, 18) == far, "eyes: dist2 18 is in");
+        check(King.eyesTarget(new RobotInfo[] {king, far}, k, 18) == far, "eyes: kings skipped");
+        check(King.eyesTarget(new RobotInfo[] {blind}, k, 18) == null, "eyes: no facing, nothing to squeak");
+        check(King.eyesTarget(new RobotInfo[0], k, 18) == null, "eyes: no enemies");
+        MapLocation me = new MapLocation(5, 5);
+        MapLocation[] h = {new MapLocation(8, 5), new MapLocation(6, 7), new MapLocation(5, 6), null};
+        check(Baby.nearestHeard(me, h, 3, 8).equals(new MapLocation(5, 6)), "heard: nearest of n");
+        check(Baby.nearestHeard(me, h, 2, 8).equals(new MapLocation(6, 7)), "heard: only the first n");
+        check(Baby.nearestHeard(me, h, 1, 8) == null, "heard: beyond 8 ignored");
+        check(Baby.nearestHeard(me, h, 0, 8) == null, "heard: none");
+        check(Baby.nearestHeard(me, new MapLocation[] {new MapLocation(7, 7)}, 1, 8) != null, "heard: dist2 8 is in");
+    }
+
     static void testFillKey() {
         check(Baby.fillKey(1, 1, 1, 1, 1) < Baby.fillKey(2, -1, -1, 1, 1), "nearer ring tile first");
         check(Baby.fillKey(5, 1, 0, 1, 1) < Baby.fillKey(5, -1, 0, 1, 1) == Baby.fillKey(5, -1, 0, -1, 1) < Baby.fillKey(5, 1, 0, -1, 1),
@@ -3931,6 +3951,7 @@ public class BotTest {
         testFormHold();
         testSideTarget();
         testFillKey();
+        testKingEyes();
         testFlowUnseen();
         testHomeStart();
         testFormMine();

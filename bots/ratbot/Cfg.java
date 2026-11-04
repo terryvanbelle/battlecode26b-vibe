@@ -400,6 +400,11 @@ public final class Cfg {
     public static final int GUARD_DIST2 = 13;
     /** Guard also faces enemies seen at the start of the turn or squeaked by allies when none is in view. */
     public static final boolean GUARD_MEMORY = true;
+    /** The king squeaks the nearest enemy baby within KING_THREAT_D2 of it (as SQ_TRAP, when it sent no SQ_START and
+     *  sees no cat), and a baby with a heard enemy within dist2 8 strafes facing it. thewaxmango 12602-12603: 44 of
+     *  our rats thrown into our king in 6 games, first grabs mostly full-health newborns walking to a mine 2-3 tiles
+     *  from the king (code M in 47 of 100), grabbed from behind; the king saw the grabbers, they did not. */
+    public static final boolean KING_EYES = false;
     /** At war, a turn that ends with no enemy rat known near spends the unused turn facing back, when an enemy rat
      *  was seen or heard within GLANCE_MEM rounds (0 = off). A rat is grabbed when it cannot see the grabber: on
      *  knifefight 32 of bestsofar's 61 grabs came from behind, from enemies we never saw. */

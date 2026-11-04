@@ -59,6 +59,12 @@ public final class King {
             MapLocation o = Baby.origin != null ? Baby.origin : formed ? Baby.home : start;
             rc.squeak(Comms.squeak(Comms.SQ_START, o.x, o.y, Cfg.MINE_RR ? rrNext() : 0));
         }
+        // the king sees all round; a baby sees a 90-degree cone and is grabbed from behind. One squeak a turn: after
+        // SQ_START (which then wins), the nearest enemy rat by the king goes out as an ally's SQ_TRAP would
+        if (Cfg.KING_EYES && !G.coop && cats.length == 0) {
+            RobotInfo e = eyesTarget(enemies, rc.getLocation(), Cfg.KING_THREAT_D2);
+            if (e != null) rc.squeak(Comms.squeak(Comms.SQ_TRAP, e.location.x, e.location.y, e.direction.ordinal()));
+        }
         Debug.mark(46);
         if (!G.coop) bite(enemies);
         if (Cfg.KING_CAT_BITE) biteCat(cats);
@@ -882,6 +888,19 @@ public final class King {
 
     /** Cfg.FORM_SAFE: with at least min enemy rats threatening our king, no second king is formed (0 = off). */
     static boolean formHold(int threat, int min) { return min > 0 && threat >= min; }
+
+    /** Cfg.KING_EYES: the enemy baby nearest k within r2 that has a facing (SQ_TRAP carries it), ties by
+     *  G.pickBit; null when none. */
+    static RobotInfo eyesTarget(RobotInfo[] enemies, MapLocation k, int r2) {
+        RobotInfo best = null;
+        int bd = r2 + 1;
+        for (RobotInfo e : enemies) {
+            if (e.type != UnitType.BABY_RAT || e.direction == null || e.direction == Direction.CENTER) continue;
+            int d = e.location.distanceSquaredTo(k);
+            if (d < bd || d == bd && best != null && G.pickBit(k, e.location) && !G.pickBit(k, best.location)) { bd = d; best = e; }
+        }
+        return best;
+    }
 
     static void formation() throws GameActionException {
         if (slot != 0) return;
