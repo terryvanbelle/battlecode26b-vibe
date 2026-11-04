@@ -5558,3 +5558,7 @@
   - CAT_LAY (traps on learned cat lanes) and CAT_RING (a reactive trap beside the cat's body, on the floor alone in cooperation) were tried only locally on s9s on Oct 30: 10 of 16 and 11 of 16 against s9s; screen +2.5 pts, t +0.64. They never reached the replica.
 - 08:53: **u8r registered** (bots/u8r/SNAPSHOT, 08:52, before its first game) = u6x + CAT_LAY + CAT_RING, one doctrine: trap cats during cooperation. Screen zd42 is chained after zd41 on the VM.
   - Falsifiers: (1) screen wins below 31 or any overrun; (2) on the replica, cat-trap damage a game not above 1.25x the twin's same-set value (set 3: 826); (3) transfer a game below 0.9x the twin's (set 3: 4409).
+- 08:57: **u8q (SEEK_CROWD 3) passed screen zd41**: 44 cells, 36 wins to zc6's 32, D 8 (+6: araid arrows A and B, cheesefarm A and B, evileye A, starvation B; -2: abrk arrows B, araid DefaultSmall B), 0 overruns, 0 exceptions. Delivered 348.4k to 354.8k (-1.8%; funnel over 48), picks per 100 rat-turns 36.94 to 35.56.
+  - Per cell (xferdiff.py), most of the drop is wins that end sooner: araid cheesefarm B r920 vs r2000, evileye A r862, DefaultMedium A r455 vs r892.
+  - Among full 2000-round games, delivery is about even: cheesefarm +1.1k to +2.5k, arrows A +1.0k, wallsofparadis A +1.2k; keepout A/B -2.0k/-1.4k, wallsofparadis B -0.8k.
+  - Replica queue: u8p (block 1 playing), then u8q, then u8d. u8r's screen zd42 is running.
