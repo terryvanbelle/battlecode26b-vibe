@@ -5414,3 +5414,10 @@
 - 22:44: API sweep (§6.2), RobotController methods u6x never calls: removeRatTrap (own traps only), isBeingThrown/isBeingCarried, the cooldown getters, senseRobot, and MapInfo.flyingRobot(), which shows rats in flight.
   - Thrown-rat hits on our king (195 in the thewaxmango/Merlin games) by damage: 88 at 42 (carrier 2 tiles from the king's edge, impact on the throw turn), 26 at 38 and 9 at 34 (one turn of flight), 52 at 30 and 7 at 26 (two turns). So 55% arrive a turn or two after the throw.
   - The king can't use that warning: its movement cooldown is 40 against the baby's 10, about one step per four turns, and a 3x3 body needs two steps to clear a line through its centre. A shield of babies on the line would trade baby health for king health, the guard trade that u7l (GUARD_KING_R) already lost. Not pursued.
+- 22:45: Replica queue under the re-anchored measurement. Block 1 rejects only at t ≤ 0, and on the identity-aware rescore several set-1 rejects were above 0, so they continue rather than restart:
+  1. u7o (FORM_FILL), block 1 on set 3, now playing;
+  2. u7q (KING_EYES), block 1 on set 3;
+  3. u7n (ALERT_SIDE), block 2 on set 3 (block-1 identity t +0.82);
+  4. u7i (THROW_ADAPT), block 2 on set 3 (+1.41).
+  u7h (u7d + FORM_FROM 600) drops, since its block-1 cells were u7d's and u7d is now decided.
+- 22:45: u7u = u7n + RETREAT_HP 0 (plateau step 5, the two near-misses paired; both move war rats near our king, from different triggers). Screen zd19 vs zc6. Falsifiers: wins < 37 (u7n's own screen) or any overrun.
