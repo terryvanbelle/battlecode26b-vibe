@@ -1,0 +1,14 @@
+u8i = u6x + LEAN_DEBT 1200 / LEAN_FLOOR 800 / LEAN_MIN 4 (new switch; structural: spending doctrine).
+Once the king's spawn spending runs more than 1200 ahead of the income it has measured since round 1 (Econ.total),
+a spawn must leave 800 banked (with 4 or more babies alive; fewer spawn at the usual floors). Rats that die before
+paying for themselves are no longer replaced out of the king's upkeep; spawning resumes as income catches up.
+Mechanism: starvation is our last king's death in 15 of 23 king-destroyed losses of u6x's set-3 twin (median r437).
+externalsustenance vs YokoOno (13263 g2): r1-100 we spent 1840 on 46 spawns (+210 traps) and picked 235, banked
+455 to their 1015, starved r460. averyfineline vs Icarus (13288 g0): 1550 on 39 spawns by r50, 120 picked, starved
+r209 while Icarus held 16 at r100. A flat 600 reserve on every map (u6e) lost 11 cells on the screen: this one
+fires only where spending outruns income.
+Registered 2026-11-04 04:24 PST.
+Falsifiers:
+  1. screen zd33: wins below 31 or any overrun (zc6 = u6x: 32 wins);
+  2. replica: starvation as our last king's death in more than 12 of a block's king-destroyed losses (u6x twin 15);
+  3. replica: our median bank at r150 in losses not above u6x's same-set reference.
