@@ -506,3 +506,4 @@ u8d,2026-11-04 02:20,,"u6x + RICH2_BABIES 80 at bank 3000 (mass army when rich, 
 u8e,2026-11-04 02:20,,"u6x + FORM_MINE (second king forms on a home-half mine; structural, field style)","rejected at screen zd29: 29 wins (bar 31), delivered -14%, 7 starved kings"
 u8f,2026-11-04 02:45,,"u6x + reactive baby rat traps at field dose (TRAP_ADJ, cap 25, floor 300, spawn first); structural","screen zd30 passed (33 vs 32 wins, +6 -5), delivered 281k vs 355k; replica queue"
 u8g,2026-11-04 03:18,,u8f + TRAP_NO_GATHER (gatherers lay no rat traps),"screen zd31 passed (31 wins, delivered 313k); held as u8f's follow-up arm"
+u8h,2026-11-04 03:56,,"u6x + RUSH_BURN 6 (existing switch, never on the replica alone): once enemy rat traps fire on us, a rusher more than Chebyshev 6 from the enemy start turns gatherer. averyfineline vs Icarus (13288 g0): 53 babies by r100 for 2110 cheese, 220 picked, king starved r209",pending: screen zd32
