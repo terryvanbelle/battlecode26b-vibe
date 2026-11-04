@@ -5602,3 +5602,16 @@
   - The drop comes from faster wins, not a weaker economy. The six largest drops are wins that came sooner: abrk Stash B r1235 to r457 (-9.6k), araid Stash A r1062 to r497 (-7.8k), jail A r2000 to r590 (-6.0k), DefaultSmall B r692 to r321. Picks per 100 rat-turns are 35.43 to 35.56.
   - **New rule from 10:38**: a screen's delivery bar is delivered per 100 rounds played over the cells (or picks per 100 rat-turns), never the screen's total, which shrinks when wins come sooner. It applies to candidates registered from now on.
   - Under "no rule applies backwards", OPEN_IDX reopens only on fresh blocks: as **u8w** (u8v's code under a new package), on the replica panel after u8q, with u8v's replica falsifiers 2 and 3 unchanged.
+- 11:07: **u8q (SEEK_CROWD 3) block 1** (set 3, 13904-13940, 16/16, twin-anchored `paired 13248-13291 --crown 12130-12163`): 48 cells, 43 alike, D 5 (+4: Varun corridorofdoomanddespair B, spsquared TheHeist A and B, thewaxmango_collegejunior FreeTheCheese B; -1: spsquared rift A), net +3, t +1.34. Block 1 never accepts and rejects at t <= 0, so it plays on.
+  - Falsifier 2 holds: the nearest home mine has 55% of our home-mine rat-rounds (ranks 1-6, both results; bar 59%, twin 66%). The crowd dispersed.
+  - Falsifier 3 holds: picked by r400 averages 2,277 a game (17 losses 2,214, 17 wins 2,339; bar 2,100, twin 2,187).
+  - Block 2 (set 1) is queued after 13971.
+- 11:07: **How our kings die** (scratch kingdeath.py over king_report, 192 replica games: twin set 3 and set 1, u8p's two blocks; 115 losses, 77 wins).
+  - The last king to fall in a loss: starvation 46, bites 29, thrown rats 19, cat scratches 6.
+  - HP our kings lost in losses: starvation 31,570, bites 22,449, thrown rats 13,858, scratches 6,750.
+  - In our wins, the opponent's last king died of starvation 24 times, thrown rats 9, scratches 5, bites 5. Whoever runs out of cheese first loses.
+  - Early starvation with no enemy damage at all: mincemeat vs Icarus (4 games, r375-486), whatsthecatdoin vs nzjt (4, r310-342), averyfineline vs Icarus (4, r195-231, plus throws).
+  - The ledger (econ_report) shows the shape. averyfineline 13831 g0, two mines: we spawned 58 babies for 2,220 cheese by r125 (37 of them in r1-50 under the 40 cap while the bank held 1,000) and picked 315. Icarus spawned 43 for 1,480, laid traps for 830, and picked 890. Our babies died to their traps (14), throws (22), bites (12) and cats (10).
+  - mincemeat 13831 g2, three middle mines: we spawned 43 by r100 for 1,750 and picked 420; Icarus spawned 29 for 920 and picked 595. Cats crushed 13 of ours in r51-100 (7 of theirs).
+  - whatsthecatdoin 13834 g2: 42 spawned by r150 for 1,700, 499 picked all game. nzjt threw 29 of our babies to death, picked 2,575, and took 460 of our far mine's 760 (we never picked it).
+  - The spending fixes already tried only delay this (u8j: the starved kings' median death moved from r437 to r779, net +1). It is a fight and harvest loss on small maps, with the spending as the multiplier.
