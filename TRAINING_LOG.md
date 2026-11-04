@@ -5546,3 +5546,15 @@
   - u8d (RICH2_BABIES 80) waits behind it.
 - 08:37: **u8q = u6x + SEEK_CROWD 3** (from 6; registered in bots/u8q/SNAPSHOT before its first game). It targets the crowding: 66% of our home-mine rat-rounds sit at the nearest mine (twin set 3, 412k of 625k over 42 games). A gatherer whose cone shows 3+ allies nearer its mine seeks never-seen home ground for up to 150 rounds and reports what it finds. At 6 the test seldom fires. Alone it was never screened against the archetypes or sent to the replica (s7q bundled it with MINE_ANY_COOP, t 0.53). Screen zd41 is running on the VM.
   - Falsifiers: wins below 31 or any overrun; on the replica, rank 1's share of our home-mine rat-rounds at 59% or more (twin 66%), or picked by r400 below 2100.
+- 08:53: **Who stands at our nearest home mine** (u6x twin, set 3, 13248-13291; scratch r1roles.py decodes our turn tags within Chebyshev 4 of the rank-1 home mine). In losses, fighters doing mine work make up 34.5% of those rat-rounds (F:M 18.0%, F:W 16.5%) and gatherers 37.3% (G:M 19.6%, G:W 17.7%); wins are alike. Fighters and gatherers share one pick (cand[slot % m] over the known home mines), so the crowd means few mines are known, not a role mix. Our king stands within 4 of that mine half its rounds.
+- 08:53: **Death causes are not the gap** (scratch deathcause.py, same block): in losses the opponent loses 66.3 babies a game to our 50.2, and 37.2 of theirs die to cats (pounce 26.5, crush 10.7) against 13.5 of ours. Our largest causes are thrown-rat landings (14.2), enemy rat traps (8.3) and bites (5.6).
+- 08:53: **Points-decided losses turn on cat damage** (field_report games, same block). 9 of the 32 losses were decided on points. Holding everything else fixed, 6 of them flip with 25-1400 more cat damage, against 550-4850 more transfer (or none):
+  - averystrangespace A vs Icarus +25 (cooperation to r1511);
+  - rose B vs spsquared +300 (to r415): one cat trap stood all game and never fired, with the bank at 1100-1800, while spsquared's 2-3 traps took about 800;
+  - corridorofdoom B vs Varun +625;
+  - TheHeist A/B vs spsquared +700/+600 (no backstab; the game ended when the last cat died, 4000 damage each);
+  - uneruesansfin A vs Xzibit +1400 (to r566).
+  - The twin's cat-trap damage is 826 a game (median 200), and 1935 in the 10 games with 300+ rounds of cooperation.
+  - CAT_LAY (traps on learned cat lanes) and CAT_RING (a reactive trap beside the cat's body, on the floor alone in cooperation) were tried only locally on s9s on Oct 30: 10 of 16 and 11 of 16 against s9s; screen +2.5 pts, t +0.64. They never reached the replica.
+- 08:53: **u8r registered** (bots/u8r/SNAPSHOT, 08:52, before its first game) = u6x + CAT_LAY + CAT_RING, one doctrine: trap cats during cooperation. Screen zd42 is chained after zd41 on the VM.
+  - Falsifiers: (1) screen wins below 31 or any overrun; (2) on the replica, cat-trap damage a game not above 1.25x the twin's same-set value (set 3: 826); (3) transfer a game below 0.9x the twin's (set 3: 4409).
