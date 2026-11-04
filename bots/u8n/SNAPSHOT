@@ -1,0 +1,7 @@
+u8n = u8l with SIEGE_HURT 60 (from 10): the next step of the dose series (u8l 10: 36 screen wins, u8m 30: 37).
+Same switch, floor 20 and cap 40; the hurt window lasts 60 rounds after our king last lost HP to a siege.
+Registered 2026-11-04 07:26 PST.
+Falsifiers:
+  1. screen zd38: wins below 31 or any overrun (zc6 = u6x: 32 wins);
+  2. it replaces u8m in the replica queue only with more than 37 screen wins and delivered at least 361k (u8m's
+     zd37: 37 wins, 361,489 delivered); otherwise SIEGE_HURT 30 is the series' peak and u8n is superseded.
