@@ -295,6 +295,10 @@ public final class Cfg {
     public static final boolean POUNCE = true;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */
     public static final int RETREAT_HP = 40;
+    /** A baby that has seen an enemy carrying one of our rats never retreats (RETREAT_HP) from then on: against a
+     *  thrower, retreaters are its ammunition beside our king (u7d, RETREAT_HP 0: Merlin's throw hits on our king
+     *  5.9 -> 2.0 a game, but cells lost to non-throwers; pooled t +1.15). */
+    public static final boolean THROW_ADAPT = false;
     /** At war a baby with health <= AMMO_HP within Chebyshev AMMO_R of our king's centre, whose nearest enemy rat is
      *  within dist2 AMMO_D2 and has more health (so it can grab us facing it or not), steps away from the king ahead of
      *  retreat(): such rats are the enemy's ammunition. tiny (rsu1): s8u killed s7d's king with 11 of our own rats

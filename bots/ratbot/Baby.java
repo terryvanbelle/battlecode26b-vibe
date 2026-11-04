@@ -110,6 +110,7 @@ public final class Baby {
             int bd = Integer.MAX_VALUE;
             for (RobotInfo r : robots) {
                 if (r.team != G.them || r.type == UnitType.RAT_KING) continue;
+                throwSeen = sawThrower(throwSeen, r, Cfg.THROW_ADAPT);
                 int d = G.me.distanceSquaredTo(r.location);
                 if (d < bd) { bd = d; nearestEnemy = r; }
             }
@@ -1939,8 +1940,22 @@ public final class Baby {
         return hp <= Cfg.AMMO_HP && ehp > hp && d2 <= Cfg.AMMO_D2 && cheb <= Cfg.AMMO_R;
     }
 
+    /** Cfg.THROW_ADAPT: this rat has seen an enemy carrying one of ours (the enemy throws rats). */
+    static boolean throwSeen;
+
+    /** Cfg.THROW_ADAPT: the throwSeen flag after sensing enemy rat r (set for good once r carries one of ours). */
+    static boolean sawThrower(boolean seen, RobotInfo r, boolean adapt) {
+        return seen || adapt && holdsOurs(r);
+    }
+
+    /** Whether a baby with health hp may retreat to its king: at or below RETREAT_HP, and (Cfg.THROW_ADAPT) not
+     *  against an enemy seen carrying our rats, which grabs retreaters beside our king and throws them into it. */
+    static boolean mayRetreat(int hp, int retreatHp, boolean adapt, boolean seen) {
+        return hp <= retreatHp && !(adapt && seen);
+    }
+
     static boolean retreat() throws GameActionException {
-        if (G.rc.getHealth() > Cfg.RETREAT_HP || !nearEnemy(20)) return false;
+        if (!mayRetreat(G.rc.getHealth(), Cfg.RETREAT_HP, Cfg.THROW_ADAPT, throwSeen) || !nearEnemy(20)) return false;
         MapLocation k = Comms.nearestKing(G.me);
         if (k == null || G.cheb(G.me, k) <= 2) return false;
         Nav.goTo(k);

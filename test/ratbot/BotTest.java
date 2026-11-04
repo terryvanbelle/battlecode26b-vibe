@@ -974,6 +974,21 @@ public class BotTest {
 
     static RobotInfo hrat(Team t, int hp, RobotInfo held) { return new RobotInfo(9, t, UnitType.BABY_RAT, hp, new MapLocation(3, 3), Direction.NORTH, 0, 0, held); }
 
+    static void testMayRetreat() {
+        check(Baby.mayRetreat(40, 40, false, false), "retreat at the threshold");
+        check(Baby.mayRetreat(10, 40, false, true), "adapt off: a seen thrower changes nothing");
+        check(!Baby.mayRetreat(41, 40, false, false), "no retreat above the threshold");
+        check(Baby.mayRetreat(10, 40, true, false), "adapt on, no thrower seen: retreat");
+        check(!Baby.mayRetreat(10, 40, true, true), "adapt on, thrower seen: no retreat");
+        check(!Baby.mayRetreat(1, 0, false, false), "RETREAT_HP 0 never retreats");
+        G.us = Team.A;
+        RobotInfo ours = rat(Team.A, 3, 3), carrier = hrat(Team.B, 90, ours), plain = hrat(Team.B, 90, null);
+        check(Baby.sawThrower(false, carrier, true), "a carrier of ours is a thrower");
+        check(!Baby.sawThrower(false, plain, true), "an empty-handed enemy is not");
+        check(!Baby.sawThrower(false, carrier, false), "adapt off never sets it");
+        check(Baby.sawThrower(true, plain, true), "the flag stays set");
+    }
+
     static void testBiteCarrier() {
         G.us = Team.A;
         RobotInfo ours = rat(Team.A, 3, 3), theirs = rat(Team.B, 3, 3);
@@ -3870,6 +3885,7 @@ public class BotTest {
         testReserve();
         testFlee();
         testBiteCarrier();
+        testMayRetreat();
         testFlowUnseen();
         testHomeStart();
         testFormMine();
