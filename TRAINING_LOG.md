@@ -5615,3 +5615,7 @@
   - mincemeat 13831 g2, three middle mines: we spawned 43 by r100 for 1,750 and picked 420; Icarus spawned 29 for 920 and picked 595. Cats crushed 13 of ours in r51-100 (7 of theirs).
   - whatsthecatdoin 13834 g2: 42 spawned by r150 for 1,700, 499 picked all game. nzjt threw 29 of our babies to death, picked 2,575, and took 460 of our far mine's 760 (we never picked it).
   - The spending fixes already tried only delay this (u8j: the starved kings' median death moved from r437 to r779, net +1). It is a fight and harvest loss on small maps, with the spending as the multiplier.
+- 11:48: **u8q (SEEK_CROWD 3) REJECTED at its block 2** (set 1, 13973-14034, against the set-1 twin 12771-12813, crown 11549-11677): 48 cells, 42 alike, D 6 (+3 -3), net 0, block t 0.00. Pooled with block 1 (net +3, D 5): 96 cells, D 11 (+7 -4), net +3, t 0.90, under block 2's bar of 1.
+  - Gains: AdamTan12_Finals DefaultSmall B, spsquared bed A and superioristhmus A. Losses: AdamTan12_Finals tiny A, VarunVejalla knifefight A, nzjt peaceinourtime A.
+  - The crowd did disperse in block 1 (rank-1 share 66% to 55%), but the record did not move. Spreading the crowd within our half is now 0 for 4 on the replica (u3e never played; u8p NOMINE_HOME, u8q SEEK_CROWD 3 rejected; KMINE_SKIP neutral head-to-head).
+  - **u8w (u6x + OPEN_IDX) takes the replica**: submission 221, block 1 on set 3 queued after 14036 (12 of 16 queued for the drain; waiter build/wait_u8wb1.sh). Queue after it: u8r, u8d.
