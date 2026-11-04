@@ -1,0 +1,18 @@
+u8w = u6x + OPEN_IDX, reopened: u8v's code under a new package (no other change). u8v was rejected at screen zd46 by
+its delivery bar (319.2k to the 340k bar), which a 10:38 rule found confounded by game length: the six largest drops
+were wins that came sooner (abrk Stash B r1235 to r457, araid Stash A r1062 to r497, jail A r2000 to r590), and picks
+per 100 rat-turns were 35.43 to 35.56. Under "no rule applies backwards" the change reopens only on fresh blocks: the
+replica panel. zd46 is not a gate for u8w and its cells do not judge it.
+The switch: a newborn takes its first turn the round after its spawn, after the king has spawned the next baby, so the
+cost step it reads counts itself and that next baby: baby k read k+1 and idx 0 covered babies 1-2 only. While the cost
+step still matches a spawn every round since round 1 (round 24 at most), idx comes from the count before the baby's
+own spawn (round - 2): babies 1-4 gather, 5-16 rush (still 12), 17-20 fight or gather.
+Evidence (from u8v's registration): keepout 13821 g0, our nearest home mine first seen r243 (Finals worked it from
+r149); u8p block 1 losses, the opponent harvests 79/76/81/51% of its rank 1/2/3/4+ home mines' spawn to our
+57/55/44/25%.
+Registered 2026-11-04 10:39 PST, before its first replica game.
+Falsifiers (u8v's replica falsifiers, unchanged):
+  1. replica: cheese picked by r400 a game (bankat.py, games reaching r400) below 2300 on set 3 (twin 2187), or below
+     the twin's same-set value plus 5% on other sets, rejects: the extra gatherers must raise the opening income;
+  2. replica: king-kill wins before r150 more than one below the twin's on the same cells (set 3: 3) rejects: the
+     two-round later rush must not cost the early kills.
