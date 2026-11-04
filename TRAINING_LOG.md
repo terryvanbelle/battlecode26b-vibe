@@ -5694,3 +5694,21 @@
     - Maps sorted by that score. The worst 10 get replay diagnosis for basics failures: navigation stalls, starvation, symmetry still unknown late, overruns, delivery against theirs, king-kill rounds.
     - Seat splits (A won, B lost or the reverse) are listed as symmetry suspects.
     - Repairs that come out of it are new candidates with their own registrations.
+- 13:36: **u8x (KMINE_SKIP 2 + SEEK_CROWD 3) passes replica block 1** (#222, set 3, 14129-14159, 16/16; twin-anchored `paired 13248-13291 --crown 12130-12163`): 48 cells, 41 alike, D 7 (+4 -3), net +1, t +0.38. Block 1 rejects only at t <= 0.
+  - Gained: Varun corridorofdoomanddespair B, spsquared TheHeist A and B, collegejunior FreeTheCheese B. Lost: Finals where_are_you B, YokoOno Stash A, spsquared rift A.
+  - Falsifier 2 holds: stage 1, M+W baby-turns within Chebyshev 4 of our king, measured exactly (scratch mwexact.py, nearktag's criteria, r51-400) is 9.69% (L 6.19%, W 13.72%) against the 10% bar. The twin on the same set has 20.09%, and on sets 3 and 1 together 18.07% (the registered 17.9%).
+  - Falsifier 3 holds: picked by r400 is 2,378 a game (bankat: L 2,324 over 19 games, W 2,447 over 15) against the 2,296 bar (the twin's set-3 2,187 plus 5%).
+  - Falsifier 4 holds: our kings lost 229 HP a loss to bites and enemy-thrown rats (bites 4,173, throws 2,694, 30 losses) against 395 (1.25 x the twin's 316).
+  - The last king to fall in a loss: starvation 16, bites 6, throws 2, scratches 2.
+  - Block 2 on set 1: 16 matches queued after 14159 (all held by the hourly limit for the drain). Waiter build/wait_u8xb2.sh.
+  - The corpus run moves behind u8x's last block.
+- 13:36: **Replacement rushers** (twin, sets 1 and 3, 96 games; scratch lateRush.py). A baby counts as an attacker if it ever carries the smuggled 'a' tag.
+  - Attackers born in r60-300 (replacements, since the rush index is the live-baby count): 3.1 a loss game, 1.1 a win.
+  - In the 18 losses whose last king fell before r400, attackers hold 36.7% of our baby-turns in the final 60 rounds, replacements 28.4%, at a median Chebyshev 8.8 from our king. Our babies within 4 of the king average 3.2.
+  - Extremes: thunderdome vs nzjt has 26 and 32 attackers born before r60 (a death spiral: every replacement in the 4-15 band rushes). DefaultMedium vs Varun 12787: our last babies rushed (59 of 175 baby-turns in r151-200 tagged 'a') while 1-4 enemy rats bit our lone king to death.
+  - Not a candidate by itself: RUSH_UNTIL doses 100-200 were neutral (u2i, s8v, u6y), and a 3-rat effect per loss is small.
+- 13:40: **u9a (u6x without FORM_KING) fails its ablation screen** (falsifier 2): FORM_KING earns its keep.
+  - Screen zd50 against zc6 (u6x): 26 wins of 44 cells against 32 (D 12, +3 -9); funnel 28 of 48 against 34.
+  - Picks per 100 rat-turns 31.69 against the 33.8 bar (control 35.56); delivered 338.4k against 354.8k; 0 overruns.
+  - 6 of the 9 lost cells are against abrk (DefaultSmall twice, bed, cheesefarm twice, evileye), the archetype that rushes and forms its own second king.
+  - No replica block. Next in the sweep: zd51 (u9b, without TRAP_SHARE), launched.
