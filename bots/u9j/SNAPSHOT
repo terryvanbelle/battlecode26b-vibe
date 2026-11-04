@@ -1,0 +1,31 @@
+u9j = u9i + u8f's field-dose reactive baby rat traps (BABY_RAT_TRAPS, TRAP_ADJ, TRAP_CAP 25, TRAP_SPAWN_FIRST,
+RAT_TRAP_MIN_CHEESE 300) + TRAP_RESERVE (new switch): from round 300 no baby trap spends below u9i's reserve, the
+live kings' upkeep for 300 more rounds (600 for one king). One doctrine on u9i's base: the field's trap style under
+u9i's bank reserve. Structural (combat doctrine, with the production rule it needs).
+
+Evidence:
+- u8f (these traps on u6x) against the twin u7p on the same 96 replica games (sets 3 and 1): 41-55 to 37-59. By
+  opponent: Varun 9-3 to 6-6, spsquared 7-5 to 4-8, Icarus 6-6 to 4-8, Xzibit 8-4 both, Merlin 3-9 both;
+  YokoOno 2-10 to 4-8, Finals 2-10 to 3-9, collegejunior 4-8 to 5-7. Paired with the crown it was net -1, t -0.30.
+- u8f won the rat exchange and lost the bank: its traps fired 34.1 times a lost game by r400 and their rats died 17.8
+  times within 30 rounds of a hit; our rat deaths against Varun fell from 42 to 26.5 a game. Starvation ended 17 of
+  its 25 king-destroyed losses (twin 52%), with about 700 a game spent on traps.
+- Trap census (15:21, 192 games): the three heaviest trappers (Finals 41.0, Varun 38.1, Icarus 20.2 a game) are the
+  three highest pickers. Corpus forensic (15:43, 48 games against Varun, r1-400): 1,862 enemy trap hits on our babies,
+  90% on our own moves, 74% of the tagged ones combat moves (attack, flank, face, war, aim), 54% within a round of
+  the lay. u6x lays no rat traps.
+- u9i's reserve binds spawns only. A trap floor of 300 under a 600 spawn reserve would spend the reserve on traps,
+  so TRAP_RESERVE puts both under the same rule. Before r300 the floor stays 300, as in u8f.
+
+Registered 2026-11-04 15:43 PST
+
+Falsifiers:
+1. Screen zd58 (the xt2 cells against abrk and araid, jobs 3; control zc6 = u6x: 32 wins of 44 cells, picks per 100
+   rat-turns 35.56, 0 overruns; u9i's zd57: 28 wins, 36.34) is a basics gate. D 0 against zd57, any overrun, or picks
+   per 100 rat-turns under 33.8 rejects. Wins are recorded but do not veto: the archetypes lay no reactive traps.
+2. Replica order: u9j plays only if u9i is accepted, and its blocks are paired against u9i's. If u9i is rejected,
+   u9j is dropped unplayed.
+3. Replica, mechanism: our rat traps must fire at least 10 times a game, pooled over the block, and starvation must
+   end under 40% of our king-destroyed losses (u9i's own bar). A fail rejects.
+4. Standard block rules: block 1 rejects at pooled t <= 0, blocks 2 and 3 at t <= 1 and 1.5, and from block 2 t >= 2
+   accepts. Block order: set 3, set 1, set 2, set 4.
