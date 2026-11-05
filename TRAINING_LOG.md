@@ -6031,3 +6031,8 @@
   - Wins 30 of 44 cells to 32 (D 14, +6 −8), funnel 32 of 48 to 34. Picks/100 rat-turns 34.49 (bar 33.8), delivered 311.1k to 354.8k (−12%), 1 starved king, 0 overruns, 0 exceptions.
   - It cost the economy as well: rat-turns −7.6%, pickups −9.3%, spawns −9.1%. Our rat deaths fell 9% (2,806 to 2,544), but so did our rat kills (1,537 to 1,385).
   - This is the sixth fight-time trap mask to fail its local check (t0b, u0u, u1l, u1b/u1n, u9n). On the archetypes, keeping the trap mask on does not keep our rats off the traps.
+- 10:57: **u9b (u6x without TRAP_SHARE) REJECTED at replica block 2** (#226; set 1: 16155-16170, 16/16, twin-anchored `paired 12771-12813 --crown 11549-11677`).
+  - Paired: 48 cells, 41 alike, D 7 (+4: Icarus rose B, YokoOno clouds B, Varun knifefight B, spsquared bed A; −3: Xzibit attack_on_cat A, YokoOno Stash A, spsquared bed B), net +1, t 0.38.
+  - Pooled with block 1 (D 4, net +2): D 11, net +3, t 0.90, under the block-2 bar of 1. TRAP_SHARE stays on in ratbot.
+  - YokoOno Stash A was lost on both sets, as by u8r and u9i: every recent candidate loses that cell to the twin.
+- 10:57: **u9d submitted** (#227, u6x without KING_FLOW, the ablation that passed zd53 at 36 vs 32 wins). Block 1 is on set 3 after 16170: 4 sent, 12 queued for the drain; waiter build/wait_u9db1.sh. Queue after it: u8d.
