@@ -5917,3 +5917,31 @@
   - Trap hits on our rats to r300: Alex 42.4 (14.3 deaths), Varun 38.3 (12.0), abcd 3.6 (0.9). Over the game: 108 (40), 65 (22), 34 (12). We lay none, so they take none.
   - Our rat deaths by cause to r300 against Alex: throwLand 15.4, trap 14.3, pounce 5.0, crush 3.8, throwHit 2.9. Theirs: throwLand 9.8, pounce 5.7, crush 3.8, throwHit 2.9.
   - A census of where the unpicked cheese lies (scratch floor.py: floor cheese per mine at r150/300/600, by half and by which side covered the mine) is running on the VM.
+- 17:25: **u9i rejected at block 1** (set 3, 14464-14479, #224).
+  - Paired against the twin: 48 cells, 42 alike (26 replay u6x's crowning games exactly), D 6 (gained 1, lost 5), net -4, t -1.63. Block 1 rejects at t <= 0.
+  - Lost: AdamTan12_Finals where_are_you B, Xzibit clouds B and minimaze B, YokoOno Stash A, collegejunior FreeTheCheese A. Gained collegejunior FreeTheCheese B.
+  - Falsifiers 2 and 3 were not computed; rule 4 decided it. u9j, built on u9i, is dropped with it.
+- 17:25: **VM dump cache.**
+  - The VM's tools/game_report.py lacked the local cache trim, and its build/dumpcache had reached 2.3 GB (239 dumps) with 2.3 GB free on root.
+  - Copied the local game_report.py there (the dump key hashes only the dumper classes and the engine, so the cache stays valid). The old copy is kept as ~/diag26b/game_report.vm-backup.py.
+  - VM censuses now run with BC_DUMPCACHE_MAX_MB=2000.
+- 17:25: **Where the unpicked cheese lies** (scratch floor.py; floor cheese per mine from a tile model of actions.tsv; a mine is covered when a side's rat stood within 4 of it in the 30 rounds before).
+  - At r300 in our losses to Varun (63 games):
+    - We covered 2.4 of our 3.6 home mines and 0.4 of their 4.1. Varun covered 2.3 of ours and 3.4 of theirs.
+    - Floor in our half: 56 at mines both sides covered, 81 at mines only we covered, 117 at mines only they covered, and 488 at mines nobody covered. Their half: 17 / 36 / 211 / 489.
+  - Against Alex and abcd the shape is the same, and by r600 the uncovered piles reach 1,000-1,200 a half.
+  - So covered mines are picked clean, and the floor cheese sits at mines nobody works.
+- 17:30: **Unworked mines** (scratch unworked.py and unworked2.py; the 132 corpus games; unworked = 200+ floor cheese at r300).
+  - Of our 500 home mines, 229 (46%) were unworked. Of Varun's 556, 250 (45%).
+  - Unworked against worked (ours): Chebyshev from the king's start median 23 against 13; no path without digging 66% against 30%; never reached by us by r300 47% against 2%. Varun's are the same: 66% dirt-blocked, 33% never reached.
+  - By map the two sides match: externalsustenance 24/24 each, TheHeist 16/18 each, cheeseguardians 14/18 each, seepastyourgreed 14/16 and 16/16, grove 16/16 and 15/20.
+  - On the maps we lose from both seats, both sides work every mine: Meow 0/8, mercifullattice 0/10, uneasy_alliance 0/12, bed 0/4, arrows 0/4.
+  - So far mines behind dirt are left unworked by both sides alike. That is an edge nobody takes, but it does not explain our losses.
+- 17:30: **The losses' economy** (scratch pickgroup.py: pickhalf.py on the 30 maps we lose from both seats against the rest).
+  - To r300 in the 56 games on those maps, Varun picks 698 of the 2,557 cheese our half's mines spawn (27%) and we pick 1,383 (54%).
+  - Of their half's 2,916 they pick 2,086 (72%) and we pick 112 (4%).
+  - In our 53 wins Varun picks 5% of our half and we pick 6% of theirs.
+  - Trap hits on our rats to r300: 41.8 on those maps (13.0 deaths), 17.7 in our wins.
+  - So in the losses Varun takes a quarter of our home harvest at mines we cover, behind a trap screen we never answer. A pickup-race census (scratch race.py: who reaches each of our half's spawns first, from how far, and whether our nearest baby had it in its cone) is running.
+- 17:30: **u8r submitted** (#225; u6x + CAT_LAY + CAT_RING, the cooperation cat-trap doctrine; never on the replica). Set 3 block 1: 4 sent, 12 queued after 14479 (waiter build/wait_u8rb1.sh). Its falsifiers are in bots/u8r/SNAPSHOT.
+  - The identity re-run is satisfied by the paired tool's replay check: in every block, cells the candidate's change never touches replay u6x's crowning games exactly (26 of 48 for u9i). So the replica stays deterministic and the measuring path holds, and a renamed copy would only repeat that.
