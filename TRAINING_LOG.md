@@ -6007,3 +6007,9 @@
   - The staged form in the same game: nine rushers held at Chebyshev 18-22 of u6x's king through r36, and six were within 10-12 of it at r45. 0 overruns, a 52-47 points win, and no king died before r458.
   - On that map the nearest mirror spot (VERTICAL, 20 from home) lies inside the line, so the rushers first held 3 from home until r21, then retargeted to the true king and held on its line.
   - Falsifiers (bots/u9m/SNAPSHOT): the screen's basics gate; replica arrivals by r100 below 1.5x the twin's same-set value (set 3: 3.18) reject; rush kills over blocks 1-2 below the twin's 7 reject.
+- 19:03: **u9m (RUSH_STAGE 24) REJECTED at its screen** (zd59 against zc6, falsifier 1: the picks bar).
+  - Picks per 100 rat-turns 31.82, below the bar of 33.8 (zc6 35.56). Wins 32 of 44 cells to zc6's 32 (D 14, +7 −7). Delivered 323.8k to 354.8k, 3 starved kings, 0 overruns, 0 exceptions.
+  - Combat moved: on the 44 shared cells we killed 1,861 enemy rats to u6x's 1,537 (+21%) and lost 2,562 to 2,806 (−9%).
+  - The economy cost: rat-turns +4.4%, pickup amount −4.0%, spawns −5%. The surviving rushers keep the attacker role, which never picks cheese, and several wins ended sooner (Stash B against araid at r483 instead of r861), so less was delivered.
+  - That is the third straight reject in the rush area (u8h RUSH_BURN, u8z no rush, u9m), so the next attempt goes elsewhere. u9n (RISK_GATHER, a trap doctrine for the economy's rats) is already screening as zd60.
+  - The full unit suite passed (exit 0) after the RUSH_STAGE port to ratbot.
