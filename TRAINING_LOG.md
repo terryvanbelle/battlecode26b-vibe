@@ -5837,7 +5837,7 @@
   - 1,601-2,500 tiles: losses (32) 864 and 1,465, picked 1,744/2,333; wins (24) 594 and 1,078, picked 1,813/1,600.
   - Over 2,500 tiles: losses (19) 797 and 1,508, picked 2,075/3,230; wins (11) 587 and 935, picked 1,484/1,377.
   - Reading: we are 17-37 on small maps. The RICH spend does not tell small-map wins from losses (on larger maps the wins spend less). What separates them everywhere is the opponent's picks by r300: 1.3-1.8 times ours in losses, about equal in wins. No candidate from this.
-- 16:27: **Capability sweep** (TRAINING_ALGORITHM §3.3; the last was 10-31).
+- 16:27: **Capability sweep, priced** (TRAINING_ALGORITHM §3.3). The 02:21 sweep listed the same unused methods and stopped there; this one reads the engine for each and prices the one that could matter.
   - Of the 85 RobotController methods, u6x never calls 23. Most are trivial or debug: adjacentLocation, canMoveForward, moveForward, canSenseRobot, senseRobot, canSenseRobotAtLocation, isLocationOccupied, getAllPartLocations, the three cooldown getters, resign, setIndicatorDot/Line, setTimelineMarker.
   - The ones that could change play: disintegrate, isBeingCarried, isBeingThrown, getBackstabbingTeam, and removeRatTrap/removeCatTrap (these remove only our own traps and refund nothing).
   - Engine facts from the source:
