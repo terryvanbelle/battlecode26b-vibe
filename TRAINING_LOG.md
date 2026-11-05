@@ -5889,3 +5889,31 @@
   - Anything else 8.8% / 3.3%: 62% W, i.e. gatherers wandering the 7x7 around their mine without a pickup.
   - Overall 21.5% of our baby turns run 12k+ bytecodes, Varun's 4.3%.
   - So about a fifth of our baby-rounds go to babies standing still on the way to a mine (M, about 10%) or wandering at a mine with nothing to pick (W, about 10%). Varun has almost none of either. On grove, 57% of our baby turns were attack moves: the 12 rushers walked the band west to its dead end and searched there.
+- 17:20: **Stalled mine walkers** (scratch probem.py; the 132 corpus games). 217,668 of our M rounds were static.
+  - 85% of them stepped that round. 65% ended exactly 2 from the nearest mine, and 36% had 3 or more of our robots beside them.
+  - Only 9.5% ran a 12k+ search (moving M rounds: 29%), and enemies beside averaged 0.01.
+  - So these babies are not blocked. They pace the edge of a mine square:
+    - wanderAround draws targets up to 3 from the mine, but atMine counts only within 2.
+    - A baby that steps out to 3 turns M and steps back. turns.tsv positions are end-of-turn, so an M round that ends at 2 began at 3.
+    - The 17:07 reading that these babies target another mine does not follow. Static M and static W are one behaviour: idling at a crowded mine.
+  - By map: rift 40k rounds, superioristhmus 29k, FreeTheCheese 11k (3.25 own robots beside), averystrangespace 10k (3.27), minimaze 9.5k (2.83).
+- 17:20: **The strong bots' style** (scratch style.py).
+  - Sources: abcdezyxwv and AlexT101 from the 32 unranked matches of 10-31 to 11-01, when we ran u2g-era builds; Varun from the u6x corpus.
+  - Means a game, theirs / ours, in our losses (45 vs Alex, 42 vs abcd, 79 vs Varun):
+    - Spawns by r60: Alex 20/33, abcd 25/31, Varun 21/30. By r300: 43/57, 46/51, 53/54.
+    - Bank at r300: 1486/630, 1733/655, 338/387 (Varun spends; the other two hoard).
+    - Picks by r300: 3408/2600, 3298/2079, 3012/1756. Picks per 100 baby-turns to r300: 63/42, 55/31, 50/32.
+    - Static share to r600: 0.09/0.32, 0.12/0.35, 0.13/0.39.
+    - Rat traps laid by r150 (r300): Alex 30 (48), Varun 28 (44), abcd 2 (4). Ours: 0.
+    - Babies lost by r300: 26/44, 27/39, 33/43.
+  - In our 53 wins against Varun the gap closes: picks by r300 2073/1980, static 0.18/0.31, babies lost 20/26.
+- 17:20: **Where each side's cheese comes from** (scratch pickhalf.py; the same games).
+  - Method: a tile is ours or theirs by dist2 to the two first kings' starts. Pickups come from actions.tsv pickup rows, which run about 700 a game below the rounds.tsv picks column.
+  - To r300, in our losses:
+    - Mine spawn in our half / theirs: Alex 3717/4172, Varun 3188/3517, abcd 2306/2123.
+    - We pick 48% / 3% of the two halves' spawn against Alex, 43% / 4% against Varun, 48% / 4% against abcd. They pick 16% / 49%, 20% / 59%, 17% / 69%.
+    - So by r300 a third to a half of each half's spawn has not been picked.
+  - Over whole lost games they take far more from our half than we take from theirs: Varun 2621 (we take 325 of theirs), abcd 3698 (more than our own 3551), Alex 3445.
+  - Trap hits on our rats to r300: Alex 42.4 (14.3 deaths), Varun 38.3 (12.0), abcd 3.6 (0.9). Over the game: 108 (40), 65 (22), 34 (12). We lay none, so they take none.
+  - Our rat deaths by cause to r300 against Alex: throwLand 15.4, trap 14.3, pounce 5.0, crush 3.8, throwHit 2.9. Theirs: throwLand 9.8, pounce 5.7, crush 3.8, throwHit 2.9.
+  - A census of where the unpicked cheese lies (scratch floor.py: floor cheese per mine at r150/300/600, by half and by which side covered the mine) is running on the VM.
