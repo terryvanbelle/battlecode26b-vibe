@@ -6061,3 +6061,9 @@
 - 13:58: **VM replay prune** (owner rule #23). The VM root was at 2.1 GB free with the replica's replay store at 7.5 GB (about 2,100 replay files a day, about 2.4 GB a day, now that the field plays around the clock).
   - Pruned the 1,847 files (2.3 GB) older than 48 hours, listed in /root/bc26-replays-pruned-20261105-2157.txt. The root now has 4.2 GB free. Our own copies under ~/projects/vibe/bc26b-galaxy-replays are untouched.
   - At this rate the root falls back to 2 GB in about a day, so the prune needs repeating daily (or a timer).
+- 14:35: **u9p, set-1 block 2** (#229; 16486-16489, 16526-16537, 16/16; twin-anchored `paired 12771-12813 --crown 11549-11677`).
+  - 48 cells, 38 alike (7 replay the crowning game), D 10 (+7 −3), net +4, t 1.26. Gained Finals DefaultSmall B, Icarus rose B, YokoOno clouds B, Varun knifefight B, spsquared bed A, fullofsecrets A and B; lost Icarus rose A, spsquared bed B, collegejunior clockwisdom B.
+  - Six of the seven gains were cells one of the halves had gained on this set: u8r (fullofsecrets A and B, rose B, bed A) and u9b (rose B, clouds B, knifefight B, bed A). The losses rose A and bed B were lost by u8r and u9b respectively. So the pair carries both halves' gains with fewer of their losses.
+  - Pooled with block 1 (D 8, net +2): D 18, net +6, t 1.42. Block 2 rejects at t <= 1 and accepts at t >= 2, so it continues to block 3, which rejects at t <= 1.5.
+  - Falsifier 2 holds on set 1: cheese transferred is 4,425 a game against the floor of 4,133 (twin 4,592, −3.6%; u8r had 3,941). Cat-trap damage is 1,256 a game (u8r 1,252; twin 1,016).
+- 14:35: **u9p block 3 (set 2)** queued after 16537 (`build/block_v4s2.sh`, new: the set-1 script on `v4-set2.json`): the hourly limit took none at once, so all 16 wait for the drain; waiter build/wait_u9pb3.sh. It is scored against the twin's set 2 with `paired 12838-12899 --crown 11678-11702` (the 11-03 22:40 rule).
