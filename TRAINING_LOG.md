@@ -5826,3 +5826,33 @@
   - So the traps (about 720 cheese by r400) were paid for with about 9 fewer spawns and a lower bank. The exchange improved, from 1.16 of our deaths per enemy death to 0.91, but the army was smaller at every checkpoint.
   - The 12 cells u8f flipped to wins came from keeping rats alive, not from income: it picked 1,486 by r400 to the twin's 2,638, but lost 11.0 rats to 22.2. The 7 it flipped to losses came with income falling (823 to 1,262 by r400; babies 8.4 to 12.7 at r400).
   - That fits the 13:08 field-style census. Every one of the eight opponents picks more per baby-turn than we do (27.1 in our losses against 34.9-56.6). The heavy trappers carry traps on that income, while u8f bought them out of a 27-per-100 economy.
+- 16:17: **u9j passes its basics gate.** Screen zd58 (the xt2 cells against abrk and araid, jobs 3) against u9i's zd57:
+  - 27 wins of 44 cells to 28 (D 15, +7 −8; the control zc6 has 32).
+  - 0 overruns. Picks per 100 rat-turns 39.08 (bar 33.8; zd57 36.34). Delivered 266.0k to zd57's 321.7k (−17%). 1 starved king (zd57 4).
+  - The wins stay on record without a veto (14:27 rule: the archetypes lay no reactive traps). u9j plays only if u9i is accepted, paired against u9i's blocks.
+- 16:27: **Opening census by map area** (180 replica games: twin sets 1-3 and the corpus run to 14327; scratch opening.py). Means per game, ours/theirs:
+  - Small maps (900 tiles or fewer), 37 losses: babies alive 23/16 at r50 and 7/15 at r300; bank 533/1,008 at r100 and 160/580 at r300; picked by r300 1,533/2,775. The enemy laid 15 traps by r60 and 32 by r150. Our spawn spend with 18+ babies alive (the RICH tier) was 1,284 by r100 and 1,591 by r300.
+  - Small maps, 17 wins: the same RICH spend (1,272 and 1,563); picked by r300 1,763/1,620.
+  - 901-1,600 tiles: losses (24) RICH 958 by r100 and 1,423 by r300, picked 1,400/2,005; wins (16) 761 and 1,241, picked 1,416/1,566.
+  - 1,601-2,500 tiles: losses (32) 864 and 1,465, picked 1,744/2,333; wins (24) 594 and 1,078, picked 1,813/1,600.
+  - Over 2,500 tiles: losses (19) 797 and 1,508, picked 2,075/3,230; wins (11) 587 and 935, picked 1,484/1,377.
+  - Reading: we are 17-37 on small maps. The RICH spend does not tell small-map wins from losses (on larger maps the wins spend less). What separates them everywhere is the opponent's picks by r300: 1.3-1.8 times ours in losses, about equal in wins. No candidate from this.
+- 16:27: **Capability sweep** (TRAINING_ALGORITHM §3.3; the last was 10-31).
+  - Of the 85 RobotController methods, u6x never calls 23. Most are trivial or debug: adjacentLocation, canMoveForward, moveForward, canSenseRobot, senseRobot, canSenseRobotAtLocation, isLocationOccupied, getAllPartLocations, the three cooldown getters, resign, setIndicatorDot/Line, setTimelineMarker.
+  - The ones that could change play: disintegrate, isBeingCarried, isBeingThrown, getBackstabbingTeam, and removeRatTrap/removeCatTrap (these remove only our own traps and refund nothing).
+  - Engine facts from the source:
+    - Every robot runs its turn while carried or thrown, but it fails isActionReady, isMovementReady and isTurningReady. disintegrate has no precondition.
+    - carryRat adds 20 action cooldown, so the carrier throws two turns later at the earliest.
+    - A throw that hits deals 10 + 4·(2·turns of flight left + 1 on the first step), up to 46, to the robot hit and to the thrown rat.
+    - A grab needs the grabber outside the victim's 90° cone (5 of its 8 neighbours) or more health than the victim (HEALTH_GRAB_THRESHOLD 0). So a full-health rat can be grabbed only from its blind side. u6x's guard facing (GUARD_DIST2 13) already turns toward known enemies.
+- 16:27: **What the enemy's grabs of our rats cost** (228 replica games, the same set; scratch disint.py, disint2.py; counts per grab, so a rat grabbed twice counts twice).
+  - Per lost game (133): 76.6 grabs and 56.9 throws. The throws dealt 90 damage to our king (2.5 hits) and 702 to our babies (5.6 killed), and 69.6 to their own units. The grabbed rat died on landing 44.4 times, died later within 30 rounds 15.9 times, and was alive 30 rounds on 16.4 times.
+  - Per won game (95): 36.9 grabs, 12 damage to our king, 361 to our babies.
+  - By the victim's health at the grab, per lost game (grabs; damage to our king; damage to our babies, with kills; alive 30 rounds on):
+    - 10 or less: 8.5; 10; 70 (0.6); 0.6.
+    - 11-46: 22.6; 29; 173 (1.5); 2.8.
+    - 47-60: 22.7; 19; 230 (1.8); 5.4.
+    - 61+: 22.8; 32; 228 (1.7); 7.5.
+  - **u9l priced and dropped** (built, never registered): u6x + DISINTEGRATE_HP, under which a carried rat at or below that health disintegrates.
+    - The best dose, 46, denies 39 damage to our king and 243 to our babies (2.1 kills) per lost game. It gives up 22 damage to their own units. It loses 3.4 rats that would have lived 30 more rounds, brings forward 2.7 deaths, and drops their cheese at the carrier's feet.
+    - Net: about 1.3 rats lost and 39 king damage saved per lost game, below the replica's resolution. Higher doses lose more rats than they save: the 61+ band gives up 15.6 rats for 1.7 kills.
