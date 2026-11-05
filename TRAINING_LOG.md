@@ -6040,3 +6040,6 @@
   - Paired: 48 cells, 40 alike (11 replay the crowning game), D 8 (+3: Varun corridorofdoomanddespair B, spsquared TheHeist A and B; −5: Finals where_are_you B, Xzibit minimaze B, YokoOno Stash A, spsquared rift B and rose A), net −2, t −0.71. Block 1 rejects at t <= 0. KING_FLOW stays on.
 - 11:59: **u8d submitted** (#228, u6x + RICH2_BABIES 80 at bank 3000; screen zd28 33 vs 32 wins). Block 1 is on set 3 after 16281: 8 sent, 8 queued; waiter build/wait_u8db1.sh. Its replica falsifier is starvation as our last king's death in more than 18 of the block's king-destroyed losses (u6x set 3: 15 of 26).
   - It is the last screened build waiting for the replica. The next candidate must be built and screened while u8d runs, and not in the rush or fight-time trap-mask areas.
+- 13:00: **u8d (u6x + RICH2_BABIES 80 at bank 3000) REJECTED at replica block 1** (#228; set 3: 16289-16296, 16373-16380, 16/16, twin-anchored `paired 13248-13291 --crown 12130-12163`).
+  - All 48 cells replay the crowning game (D 0, net 0, t 0.00): the switch is inert against the panel. With babies at the 40 cap our bank never reaches 3,000 on these maps, so the second tier never opens (the screen zd28 had D 1 too).
+  - The replica queue of screened builds is now empty.
