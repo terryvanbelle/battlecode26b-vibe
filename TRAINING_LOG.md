@@ -6053,3 +6053,11 @@
   - On the 44 shared cells: cat-trap damage 38,260 to 16,226 (2.4×); cheese transferred 321.6k to 324.2k (−0.8%); rat kills 1,956 to 1,537 (+27%), our rat deaths 2,862 to 2,806 (+2%). The archetypes' rat-trap hits on us rose to 1,044 from 946 (+10%): with TRAP_SHARE off our babies no longer share trap-risk marks.
   - For comparison, the two halves alone: u8r (zd42) 34 vs 32 (+4 −2), u9b (zd51) 37 vs 32 (+8 −3).
 - 13:20: **u9p submitted** (#229). Set-3 block 1 after 16398: 12 sent, 4 queued; waiter build/wait_u9pb1.sh.
+- 13:58: **u9p, set-3 block 1** (#229; 16422-16433, 16470-16473, 16/16; twin-anchored `paired 13248-13291 --crown 12130-12163`).
+  - 48 cells, 40 alike (10 replay the crowning game), D 8 (+5 −3), net +2, t 0.71. Gained YokoOno 5t4rv4t10n_1337 B and externalsustenance B, spsquared TheHeist A and B, collegejunior FreeTheCheese B; lost Xzibit minimaze B, YokoOno 5t4rv4t10n_1337 A, spsquared rift A.
+  - YokoOno Stash A is not among the changed cells: u9p keeps the twin's win there, which u8r, u9i, u9b and u9d all lost.
+  - Falsifier 2 holds: cheese transferred is 4,466 a game (field_report xUs, 48 games) against the floor of 3,968 (twin 4,409, +1.3%). Cat-trap damage is 1,414 a game (u8r on this set 1,401; twin 826).
+  - Block 1 rejects at t <= 0, so it continues. Block 2 (set 1) was queued at 13:58: 4 sent, 12 queued; waiter build/wait_u9pb2.sh.
+- 13:58: **VM replay prune** (owner rule #23). The VM root was at 2.1 GB free with the replica's replay store at 7.5 GB (about 2,100 replay files a day, about 2.4 GB a day, now that the field plays around the clock).
+  - Pruned the 1,847 files (2.3 GB) older than 48 hours, listed in /root/bc26-replays-pruned-20261105-2157.txt. The root now has 4.2 GB free. Our own copies under ~/projects/vibe/bc26b-galaxy-replays are untouched.
+  - At this rate the root falls back to 2 GB in about a day, so the prune needs repeating daily (or a timer).
