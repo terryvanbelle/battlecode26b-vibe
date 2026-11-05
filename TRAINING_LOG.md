@@ -6043,3 +6043,7 @@
 - 13:00: **u8d (u6x + RICH2_BABIES 80 at bank 3000) REJECTED at replica block 1** (#228; set 3: 16289-16296, 16373-16380, 16/16, twin-anchored `paired 13248-13291 --crown 12130-12163`).
   - All 48 cells replay the crowning game (D 0, net 0, t 0.00): the switch is inert against the panel. With babies at the 40 cap our bank never reaches 3,000 on these maps, so the second tier never opens (the screen zd28 had D 1 too).
   - The replica queue of screened builds is now empty.
+- 13:01: **u9p = u6x + CAT_LAY + CAT_RING − TRAP_SHARE** (TRAINING_ALGORITHM §6 step 5, near-misses in pairs; we are on the plateau: 8+ straight rejects and no accept in 24 h). Built from bots/u8r with TRAP_SHARE off; Cfg.java differs from u6x in exactly those three switches, and nothing else differs.
+  - Why: the two nearest misses of the last day are u8r (pooled D 15, net +3, t 0.77) and u9b (pooled D 11, net +3, t 0.90), both on sets 3 and 1. Their switches act on different mechanisms (cat traps laid in cooperation vs the shared rat-trap-risk squeaks), so if both effects are real they should add.
+  - Falsifiers (bots/u9p/SNAPSHOT): the screen's basics gate (overruns or exceptions, picks/100 below 33.8, or D 0); replica cheese transferred below 0.9× the twin's same-set value (set 3: 3,968; set 1: 4,133), the falsifier u8r failed on set 1; the standard block rules.
+  - Screen zd61 launched at 13:02 on the VM (chain after zd60, `runs/xt2/cells.tsv` layout); waiter build/wait_zd61.sh.
