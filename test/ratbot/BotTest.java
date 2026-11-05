@@ -921,6 +921,17 @@ public class BotTest {
         check(Baby.liveSyms(Sym.HOR) == Sym.ROT, "rushDist: a slot that rules out all of ours falls back to ours");
         Sym.mask = all;
         check(Cfg.RUSH_DIST == 0, "rushDist: off by default");
+        // RUSH_STAGE (the candidate's 24, last rusher r17, slack 4): the launch round, and who holds before it
+        MapLocation h = new MapLocation(3, 5), t = new MapLocation(36, 34);
+        int L = Baby.stageLaunch(h, t, 24, 17, 4);
+        check(L == 17 + 9 * 5 / 4 + 4 && Baby.stageLaunch(h, new MapLocation(6, 2), 24, 17, 4) == 21, "rushStage: launch = last birth + 5/4 of the walk to the line + slack");
+        check(Baby.staged(L - 1, new MapLocation(12, 20), h, t, 24, L) && !Baby.staged(L, new MapLocation(12, 20), h, t, 24, L), "rushStage: on the line it holds until the launch round");
+        check(!Baby.staged(L - 1, new MapLocation(11, 20), h, t, 24, L) && !Baby.staged(L - 1, new MapLocation(31, 30), h, t, 24, L), "rushStage: not before the line, nor within 6 of the target");
+        check(!Baby.staged(20, new MapLocation(5, 5), h, new MapLocation(20, 20), 24, 21) && Baby.staged(20, new MapLocation(6, 5), h, new MapLocation(20, 20), 24, 21), "rushStage: not within 2 of home (the spawn ring)");
+        for (int s = Sym.ROT; s <= Sym.VER; s <<= 1)
+            check(Baby.staged(L - 1, G.mirror(new MapLocation(12, 20), s), G.mirror(h, s), G.mirror(t, s), 24, Baby.stageLaunch(G.mirror(h, s), G.mirror(t, s), 24, 17, 4))
+                  && Baby.stageLaunch(G.mirror(h, s), G.mirror(t, s), 24, 17, 4) == L, "rushStage: holding mirrors under symmetry " + s);
+        check(Cfg.RUSH_STAGE == 0, "rushStage: off by default");
         check(Baby.ourHalf(new MapLocation(10, 10), corner, Sym.ROT) && !Baby.ourHalf(new MapLocation(30, 30), corner, Sym.ROT), "ourHalf: nearer our reference than its mirror");
         check(!Baby.ourHalf(new MapLocation(19, 20), corner, Sym.ROT) && Baby.ourHalf(new MapLocation(30, 3), corner, Sym.HOR) && !Baby.ourHalf(new MapLocation(30, 3), corner, Sym.VER), "ourHalf: a tie is not ours; the symmetry decides");
         // TRAP_DIST: traps on far maps only; 0 allows them everywhere

@@ -1498,8 +1498,29 @@ public final class Baby {
         }
         MapLocation t = rushTarget();
         if (t == null) return false;
+        if (Cfg.RUSH_STAGE > 0 && birthRound <= Cfg.RUSH_LAST
+                && staged(G.round, G.me, home, t, Cfg.RUSH_STAGE, stageLaunch(home, t, Cfg.RUSH_STAGE, Cfg.RUSH_LAST, Cfg.RUSH_SLACK))) {
+            // the opening rush gathers on its stage line and leaves it together: hold, facing the target
+            RobotController rc = G.rc;
+            Direction f = G.me.directionTo(t);
+            if (f != Direction.CENTER && rc.getDirection() != f && rc.canTurn(f)) { rc.turn(f); G.facing = f; }
+            return true;
+        }
         Nav.goTo(t);
         return true;
+    }
+
+    /** Cfg.RUSH_STAGE: an opening rusher at me holds when it is inside the stage line (within Chebyshev stage of its
+     *  target t, but farther than 6, and 3+ from home, clear of the king's spawn ring) before the launch round. */
+    static boolean staged(int round, MapLocation me, MapLocation home, MapLocation t, int stage, int launch) {
+        int dt = G.cheb(me, t);
+        return dt <= stage && dt > 6 && G.cheb(me, home) >= 3 && round < launch;
+    }
+
+    /** Cfg.RUSH_STAGE: the round the last opening rusher (born by round last) can have walked from home to the stage line
+     *  (5/4 of the Chebyshev distance, for detours), plus slack. */
+    static int stageLaunch(MapLocation home, MapLocation t, int stage, int last, int slack) {
+        return last + Math.max(0, G.cheb(home, t) - stage) * 5 / 4 + slack;
     }
 
     static MapLocation rushTarget() throws GameActionException {

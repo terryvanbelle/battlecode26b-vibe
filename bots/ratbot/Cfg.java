@@ -617,6 +617,16 @@ public final class Cfg {
      *  replacement born with 4-15 babies alive is an attacker all game (rsu1: s8u lost both DefaultSmall games to s7d
      *  in a long war, 7 rats to 13-15 at r150). */
     public static final int RUSH_UNTIL = 0;
+    /** The opening rush leaves its stage line together (structural: mass arrival; 0 = off). An attacker born by round
+     *  RUSH_LAST that is within Chebyshev RUSH_STAGE of its rush target (but farther than 6, and 3+ from the spot its
+     *  king spawned it from) holds there, facing the target, until the launch round: RUSH_LAST, plus the walk from home
+     *  to the line (5/4 of the Chebyshev distance), plus RUSH_SLACK. Then all of them cross the last RUSH_STAGE tiles
+     *  together. The u6x-era replica games (rush.py, 522): the rush killed a king by r200 in 41 (8%). Against Varun, in
+     *  the 17 that did 7.7 rushers reached Chebyshev 4 of its king (the first at r18) and 3.8 died on the way; in the 163
+     *  that did not 2.8 arrived (the first at r44.5) and 7.2 died on the way (thrown 2.0, trapped 1.9, cats 2.0), a
+     *  median 13 tiles from its king (quartiles 9-21): rushers born r4-17 walk out one a round and meet the enemy's
+     *  half alone. */
+    public static final int RUSH_STAGE = 0, RUSH_LAST = 17, RUSH_SLACK = 4;
     /** An attacker older than RUSH_LIFE rounds that has not seen the enemy king in the last RUSH_LIFE rounds turns
      *  gatherer (0 = off). s9s's field games: on maps where the rush cannot reach the enemy king its attackers walk
      *  all game (uneruesansfin vs AlexT101: 60% of our baby turns to r400 were attack moves, 60 cheese picked in 400
