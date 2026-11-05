@@ -6036,3 +6036,7 @@
   - Pooled with block 1 (D 4, net +2): D 11, net +3, t 0.90, under the block-2 bar of 1. TRAP_SHARE stays on in ratbot.
   - YokoOno Stash A was lost on both sets, as by u8r and u9i: every recent candidate loses that cell to the twin.
 - 10:57: **u9d submitted** (#227, u6x without KING_FLOW, the ablation that passed zd53 at 36 vs 32 wins). Block 1 is on set 3 after 16170: 4 sent, 12 queued for the drain; waiter build/wait_u9db1.sh. Queue after it: u8d.
+- 11:59: **u9d (u6x without KING_FLOW) REJECTED at replica block 1** (#227; set 3: 16180-16183, 16270-16281, 16/16, twin-anchored `paired 13248-13291 --crown 12130-12163`).
+  - Paired: 48 cells, 40 alike (11 replay the crowning game), D 8 (+3: Varun corridorofdoomanddespair B, spsquared TheHeist A and B; −5: Finals where_are_you B, Xzibit minimaze B, YokoOno Stash A, spsquared rift B and rose A), net −2, t −0.71. Block 1 rejects at t <= 0. KING_FLOW stays on.
+- 11:59: **u8d submitted** (#228, u6x + RICH2_BABIES 80 at bank 3000; screen zd28 33 vs 32 wins). Block 1 is on set 3 after 16281: 8 sent, 8 queued; waiter build/wait_u8db1.sh. Its replica falsifier is starvation as our last king's death in more than 18 of the block's king-destroyed losses (u6x set 3: 15 of 26).
+  - It is the last screened build waiting for the replica. The next candidate must be built and screened while u8d runs, and not in the rush or fight-time trap-mask areas.
