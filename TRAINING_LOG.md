@@ -5961,3 +5961,21 @@
   - Deaths to r300 on those maps: ours are throwLand 14.1, trap 13.0, pounce 5.1, throwHit 4.6, crush 3.1, bite 2.6 (about 45). Varun's are throwLand 16.9, pounce 6.1, throwHit 5.1, crush 4.1, bite 2.5 (about 35). The 10-death gap is the trap deaths.
   - Engine (GameWorld.placeTrap, RobotControllerImpl.processTrapsAtLocation): a rat trap arms every tile within distance² 2 of it (its 3x3), and fires only when an enemy rat moves onto one of those tiles. It deals 50, sets the movement cooldown to 30, and is consumed. A baby lays only on an adjacent tile it can sense, so on its three front tiles. A rat that stands still is never trapped.
   - So the loss-maker against Varun is trap-and-steal at our mines: it seeds our mine squares, stuns and kills our gatherers as they move, and picks what they leave. We have never answered it on the replica (all trap and mine-trap candidates were about laying our own).
+- 18:02: **Could our trap mask have known the traps that catch us?** (scratch trapseen.py; the strong and corpus games; every enemy rat-trap trigger on our rats in r1-600, matched to its lay row).
+  - On the 30 lost-both maps, in our losses (all opponents): the trap was a median 1 round old (99% under TrapRisk's 150-round TTL). 1% were laid during cooperation, when our babies skip TrapRisk.observe.
+  - The layer stood in the victim's cone at the end of the lay round or the round before in 60% of hits, and in some baby of ours' cone in 86%.
+  - The victim was engaged (an enemy baby in its cone within dist2 20) in 78%, and in 55% it was both informed and engaged: u6x drops the mask while engaged (RISK_IN_FIGHT false, RISK_GATHER false).
+  - 55% of victims stood within 4 of a mine. Their tags spread over every branch: none decoded 36% (dead or carried that round), a 8.7%, wF 6.3%, M 6.2%, fF 5.4%, w 5.3%, f 4.6%, T 4.5%, k 3.8%, C 2.5%, d 2.4%.
+  - Our wins and other maps look the same. So these are reactive combat traps laid beside our rats as they engage, not a seeded mine square. The fight-time masks already tried (t0b RISK_FRESH, u0u RISK_ADAPT, u1l FACE_HOLD, u1b/u1n WOUNDED_HP) all failed their local mechanism checks: fires on us did not fall.
+- 18:02: **How our games end** (scratch kings.py; the same games, summary.json).
+  - Against Varun: 73 of 79 losses were king kills (mean round 712) and 6 on points; of 53 wins, 35 were king kills and 18 on points.
+  - Of the 6 points losses, one more king of ours would have flipped 5. Against Alex and abcd nearly every loss is a king kill.
+  - The points formula (GameWorld.setWinnerIfMorePoints) weighs kings alive 0.5 after a backstab and cheese transferred only 0.2.
+- 18:02: **Flippable cells** (local; match.json of all 635 u6x-era unranked matches since 11549, 268 cells of opponent, map and seat).
+  - 69 cells with 3+ games have mixed results (971 games, 514 won). These are the cells a candidate can flip; replays are deterministic, so a cell is mixed only across builds.
+  - In them, losses are king kills at a median r499 (359) or points at r2000 (98). Wins are king kills at a median r226 (256; Varun r78, Icarus r44, Merlin r60) or points (258).
+- 18:02: **The opening rush** (scratch rush.py; 522 u6x-era games on the VM; rushers are spawn index 4-15, all born by r17).
+  - It kills a king by r200 in 41 of 522 games (8%): Varun 17 of 180, Xzibit 8 of 48, YokoOno 7 of 48, Finals 5 of 48, Icarus and Merlin 2 each, spsquared and collegejunior 0.
+  - When it works against Varun, 7.7 rushers reach Chebyshev 4 of the king (the first at r18) and 3.8 die on the way. When it fails, 2.8 arrive and 7.2 die on the way: thrown 2.0, trapped 1.9, cats 2.0, hit by thrown rats 0.7.
+  - The rush lands only where the enemy king is near. Elsewhere 12 babies cross the map and die en route. RUSH_TO, RUSH_DIST, RUSH_LIFE and RUSH_BURN have each been rejected on the replica, so the rush's presence still pays for itself somehow.
+  - A census of how our rats fire enemy traps (walked in, thrown or dropped onto them, or grabbed just before) is running.
