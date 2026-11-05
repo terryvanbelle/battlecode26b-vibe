@@ -5880,4 +5880,12 @@
   - The worst maps by our stuck share: rift 0.37, groveisbeingdesecrated 0.30 (Varun 0.06), Hike 0.30, Nofreecheese 0.29 (0.03), pipes 0.29, gridlock 0.28 (0.09), attack_on_cat 0.25 (0.05), fullofsecrets 0.25, Stash 0.22 (0.11).
   - Stuck share does not tell losses from wins (0.151 in losses, 0.160 in wins); static share does a little (0.403 to 0.338).
   - Our king deaths in the 79 losses (every king, not only the last): bitten 40, starved 38, scratched 6, trapped 1, a thrown rat 1.
-  - A breakdown of the static rounds (carrying, near an enemy, at a mine with and without pickups, at the king, searching at 12k+ bytecodes) is running (stuck2.py).
+- 17:07: **What our static babies are doing** (scratch stuck2.py and stuck3.py, the same 132 games; our replica builds carry Debug.TAG, so each turn's move decision decodes from its bytecode count with tools/smuggle.py; F = role FIGHT). Each static round takes the first class that fits; shares are of all baby-rounds, ours / Varun's:
+  - Carrying cheese 6.0% / 8.3%. Ours are mostly delivering (d 48%), so carriers queue at the king.
+  - Within Chebyshev 4 of an enemy 9.0% / 2.1%, and 14.2% / 2.5% in our losses. Tags: war 28%, faceEnemy 18%, walking to a mine 18%, wandering at a mine 16%.
+  - Within 2 of a mine with a pickup in the 30 rounds 2.4% / 0.3%; with none 8.9% / 0.6%. Of the 8.9%, 66% are tagged M (walking to the mine they target, so it is another mine) and 19% W (wandering at their mine).
+  - Within 3 of our king 4.8% / 1.2% (41% W, 25% M).
+  - Searching (12k+ bytecodes) 2.6% / 0.3%: in losses 64% are attackers ('a'). By map: groveisbeingdesecrated 26%, Hike 22%, seepastyourgreed 15%, TheHeist 11%, uneruesansfin 6%.
+  - Anything else 8.8% / 3.3%: 62% W, i.e. gatherers wandering the 7x7 around their mine without a pickup.
+  - Overall 21.5% of our baby turns run 12k+ bytecodes, Varun's 4.3%.
+  - So about a fifth of our baby-rounds go to babies standing still on the way to a mine (M, about 10%) or wandering at a mine with nothing to pick (W, about 10%). Varun has almost none of either. On grove, 57% of our baby turns were attack moves: the 12 rushers walked the band west to its dead end and searched there.
