@@ -6047,3 +6047,9 @@
   - Why: the two nearest misses of the last day are u8r (pooled D 15, net +3, t 0.77) and u9b (pooled D 11, net +3, t 0.90), both on sets 3 and 1. Their switches act on different mechanisms (cat traps laid in cooperation vs the shared rat-trap-risk squeaks), so if both effects are real they should add.
   - Falsifiers (bots/u9p/SNAPSHOT): the screen's basics gate (overruns or exceptions, picks/100 below 33.8, or D 0); replica cheese transferred below 0.9× the twin's same-set value (set 3: 3,968; set 1: 4,133), the falsifier u8r failed on set 1; the standard block rules.
   - Screen zd61 launched at 13:02 on the VM (chain after zd60, `runs/xt2/cells.tsv` layout); waiter build/wait_zd61.sh.
+- 13:20: **u9p passes screen zd61** (against zc6 = u6x; falsifier 1 holds).
+  - Wins 38 of 44 cells to zc6's 32 (D 12, +9 −3; gained abrk canyoudig B and tiny B, araid DefaultMedium B, arrows A, canyoudig B, cheesefarm A and B, evileye A, tiny B; lost araid DefaultMedium A, DefaultSmall A, starvation A). Funnel 41 of 48 games to 34.
+  - Picks/100 rat-turns 34.21 (bar 33.8), delivered 352.0k to 354.8k, 2 starved kings, 0 overruns, 0 exceptions.
+  - On the 44 shared cells: cat-trap damage 38,260 to 16,226 (2.4×); cheese transferred 321.6k to 324.2k (−0.8%); rat kills 1,956 to 1,537 (+27%), our rat deaths 2,862 to 2,806 (+2%). The archetypes' rat-trap hits on us rose to 1,044 from 946 (+10%): with TRAP_SHARE off our babies no longer share trap-risk marks.
+  - For comparison, the two halves alone: u8r (zd42) 34 vs 32 (+4 −2), u9b (zd51) 37 vs 32 (+8 −3).
+- 13:20: **u9p submitted** (#229). Set-3 block 1 after 16398: 12 sent, 4 queued; waiter build/wait_u9pb1.sh.
