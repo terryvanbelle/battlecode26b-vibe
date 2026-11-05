@@ -6013,3 +6013,21 @@
   - The economy cost: rat-turns +4.4%, pickup amount −4.0%, spawns −5%. The surviving rushers keep the attacker role, which never picks cheese, and several wins ended sooner (Stash B against araid at r483 instead of r861), so less was delivered.
   - That is the third straight reject in the rush area (u8h RUSH_BURN, u8z no rush, u9m), so the next attempt goes elsewhere. u9n (RISK_GATHER, a trap doctrine for the economy's rats) is already screening as zd60.
   - The full unit suite passed (exit 0) after the RUSH_STAGE port to ratbot.
+- 19:10: **u8r (CAT_LAY + CAT_RING) REJECTED at replica block 2** (#225; set 1: 14547-14620, 16/16, twin-anchored `paired 12771-12813 --crown 11549-11677`).
+  - Paired: 48 cells, 39 alike, D 9 (+5: spsquared bed A, fullofsecrets A and B, superioristhmus B, Icarus rose B; −4: Icarus rose A, Xzibit attack_on_cat B, YokoOno Stash A, thewaxmango clockwisdom B), net +1, t 0.33. Pooled with block 1 (D 6, net +2): D 15, net +3, t 0.77, under the block-2 bar of 1.
+  - Falsifier 2 failed: cat-trap damage 1,252 a game against the bar of 1,270 (1.25 × the twin's 1,016 on set 1; block 1 on set 3 had 1,401 against 1,033). Falsifier 3 failed: cheese transferred 3,941 a game against the floor of 4,133 (0.9 × the twin's 4,592). Block 1's transfer was 4,360 against the twin's 4,409 (−1%), so set 1 shows the economy cost (−14%) that set 3 hid.
+  - Four of the five gains were against spsquared, as were two of block 1's points flips (rose B and TheHeist in the evidence). Cooperation cat trapping may pay against that one opponent; it does not pay across the panel.
+- 19:10: **u9b submitted** (#226, u6x without TRAP_SHARE, the ablation that passed zd51 at 37 vs 32 wins). Block 1 is on set 3 after 14620: 4 sent, 12 queued for the drain; waiter build/wait_u9bb1.sh.
+  - It goes ahead of u9n because zd60 had 9 of 48 cells done, so the replica would otherwise idle about 40 minutes. Queue after it: u9n (if zd60 passes its gate), u9d, u8d.
+
+## 2026-11-05 10:55 PST: u9b passes replica block 1; u9n rejected at its screen
+- 10:55: **The session stopped at 19:10 yesterday** and resumed at 10:43. u9b's block 1 finished overnight; nothing else was waiting on it (the drain had sent all 16 by about 22:30).
+- 10:55: **u9b (u6x without TRAP_SHARE), set-3 block 1** (14633-14640, 14663-14666, 14679-14682, 16/16; twin-anchored `paired 13248-13291 --crown 12130-12163`).
+  - 48 cells, 44 alike (15 replay the crowning game), D 4 (+3 −1), net +2, t 1.00. Gained Icarus averyfineline A, YokoOno 5t4rv4t10n_1337 B and externalsustenance A; lost YokoOno Stash A.
+  - Block 1 rejects at t <= 0, so it continues. YokoOno Stash A is also lost by u8r and u9i on this set, so it reads as the twin's lucky cell.
+  - Block 2 (set 1, `build/block_v4s1.sh`) was queued at 10:52.
+- 10:55: **u9n (RISK_GATHER) REJECTED at screen zd60** (against zc6, falsifier 1: the archetypes' rat-trap hits).
+  - The archetypes' rat-trap hits on us were 909 against zc6's 946 on the 44 shared cells (0.96×), above the 0.9× bar: the mask did not keep our gatherers off the traps.
+  - Wins 30 of 44 cells to 32 (D 14, +6 −8), funnel 32 of 48 to 34. Picks/100 rat-turns 34.49 (bar 33.8), delivered 311.1k to 354.8k (−12%), 1 starved king, 0 overruns, 0 exceptions.
+  - It cost the economy as well: rat-turns −7.6%, pickups −9.3%, spawns −9.1%. Our rat deaths fell 9% (2,806 to 2,544), but so did our rat kills (1,537 to 1,385).
+  - This is the sixth fight-time trap mask to fail its local check (t0b, u0u, u1l, u1b/u1n, u9n). On the archetypes, keeping the trap mask on does not keep our rats off the traps.
