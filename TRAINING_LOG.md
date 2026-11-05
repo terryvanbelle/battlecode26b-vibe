@@ -6067,3 +6067,9 @@
   - Pooled with block 1 (D 8, net +2): D 18, net +6, t 1.42. Block 2 rejects at t <= 1 and accepts at t >= 2, so it continues to block 3, which rejects at t <= 1.5.
   - Falsifier 2 holds on set 1: cheese transferred is 4,425 a game against the floor of 4,133 (twin 4,592, −3.6%; u8r had 3,941). Cat-trap damage is 1,256 a game (u8r 1,252; twin 1,016).
 - 14:35: **u9p block 3 (set 2)** queued after 16537 (`build/block_v4s2.sh`, new: the set-1 script on `v4-set2.json`): the hourly limit took none at once, so all 16 wait for the drain; waiter build/wait_u9pb3.sh. It is scored against the twin's set 2 with `paired 12838-12899 --crown 11678-11702` (the 11-03 22:40 rule).
+- 15:36: **u9p (u6x + CAT_LAY + CAT_RING − TRAP_SHARE) REJECTED at replica block 3** (#229; set 2: 16572-16575, 16591-16594, 16636-16643, 16/16; twin-anchored `paired 12838-12899 --crown 11678-11702`).
+  - Block 3: 48 cells, 40 alike (10 replay the crowning game), D 8 (+4: YokoOno streetsofnewyork A, Varun clouds A, spsquared evileye B and jail B; −4: Varun clockwisdom B, ratsareants A and B, Merlin knifefight A), net 0, t 0.00.
+  - Pooled over sets 3, 1 and 2: 144 cells, D 26 (+16 −10), net +6, t 1.18, under block 3's bar of 1.5.
+  - Varun ratsareants A and B were also lost by u7d on this set (the 11-03 22:40 re-anchoring), and YokoOno streetsofnewyork A and spsquared evileye B were gained by it, so set 2's changed cells repeat across candidates.
+  - It is the best pooled result of this reign's candidates (u8r: D 15, net +3 over two sets; u9b: D 11, net +3), but at about +4% of cells it is below what three blocks can resolve. A fourth set (set 4) would need a u6x reference block first (the 11-03 22:40 note).
+  - The switches stay off in ratbot. The pair is closed as a pair; the near-miss-pairs step (§6 step 5) has been tried once.
