@@ -5945,3 +5945,19 @@
   - So in the losses Varun takes a quarter of our home harvest at mines we cover, behind a trap screen we never answer. A pickup-race census (scratch race.py: who reaches each of our half's spawns first, from how far, and whether our nearest baby had it in its cone) is running.
 - 17:30: **u8r submitted** (#225; u6x + CAT_LAY + CAT_RING, the cooperation cat-trap doctrine; never on the replica). Set 3 block 1: 4 sent, 12 queued after 14479 (waiter build/wait_u8rb1.sh). Its falsifiers are in bots/u8r/SNAPSHOT.
   - The identity re-run is satisfied by the paired tool's replay check: in every block, cells the candidate's change never touches replay u6x's crowning games exactly (26 of 48 for u9i). So the replica stays deterministic and the measuring path holds, and a renamed copy would only repeat that.
+- 17:46: **Pickup races at our mines** (scratch race.py; each mine spawn on our half's tiles in r1-600 and who picks it first, with positions and cones at the end of the round before).
+  - On the 30 maps we lose from both seats (10,138 spawns in 56 games against Varun): we pick 46%, Varun picks 26%, and 28% lies 60+ rounds.
+  - When we pick, latency is a median 1 round and our baby was nearer 84% of the time.
+  - When Varun picks, latency is a median 5. Its baby was nearer 74% of the time and within 4 tiles 75%; ours was within 4 only 34%. Our babies had the tile in a cone 16% of the time, Varun's 41%.
+  - The same shape holds on our other lost maps (Varun picks 15%) and in our wins (6%).
+- 17:46: **What our babies did at the races we lost** (scratch contested.py; decoded tags of our nearest two babies within Chebyshev 6).
+  - 1.88 of our babies stood within 6 of the tile against 3.18 of Varun's. In 39.5% of these races none of ours was within 6.
+  - The tags present: M 6.9%, C 4.7%, d+c 4.6%, a 4.5%, fF 4.4%, f 2.7%, w 2.7%, MF 2.4%, wF 2.4%, W 2.4%, T 2.2%. No single behaviour dominates; mostly we are absent.
+- 17:46: **Where Varun's traps catch us** (scratch traploc.py; enemy rat-trap lays and the triggers on our rats, r1-600, by half and by distance to the nearest mine).
+  - Lost-both maps (56 games): Varun lays 41.6 traps a game in our half (26.1 within 4 of a mine) and 17.6 in its own. Its traps catch our rats 38.1 times in our half (24.3 by a mine) and 14.3 in its half. Hits are 25.9 in r1-150 and 26.5 in r151-600.
+  - Our other losses (23): 25.0 laid in our half (19.3 by a mine), 22.9 hits there.
+  - Our wins (53): 10.6 laid in our half, 10.1 hits there.
+  - On the lost maps, the hits fall a median 11 tiles from our king's start and 16 from Varun's.
+  - Deaths to r300 on those maps: ours are throwLand 14.1, trap 13.0, pounce 5.1, throwHit 4.6, crush 3.1, bite 2.6 (about 45). Varun's are throwLand 16.9, pounce 6.1, throwHit 5.1, crush 4.1, bite 2.5 (about 35). The 10-death gap is the trap deaths.
+  - Engine (GameWorld.placeTrap, RobotControllerImpl.processTrapsAtLocation): a rat trap arms every tile within distance² 2 of it (its 3x3), and fires only when an enemy rat moves onto one of those tiles. It deals 50, sets the movement cooldown to 30, and is consumed. A baby lays only on an adjacent tile it can sense, so on its three front tiles. A rat that stands still is never trapped.
+  - So the loss-maker against Varun is trap-and-steal at our mines: it seeds our mine squares, stuns and kills our gatherers as they move, and picks what they leave. We have never answered it on the replica (all trap and mine-trap candidates were about laying our own).
