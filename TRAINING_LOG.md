@@ -5979,3 +5979,18 @@
   - When it works against Varun, 7.7 rushers reach Chebyshev 4 of the king (the first at r18) and 3.8 die on the way. When it fails, 2.8 arrive and 7.2 die on the way: thrown 2.0, trapped 1.9, cats 2.0, hit by thrown rats 0.7.
   - The rush lands only where the enemy king is near. Elsewhere 12 babies cross the map and die en route. RUSH_TO, RUSH_DIST, RUSH_LIFE and RUSH_BURN have each been rejected on the replica, so the rush's presence still pays for itself somehow.
   - A census of how our rats fire enemy traps (walked in, thrown or dropped onto them, or grabbed just before) is running.
+- 18:19: **VM replay prune** (17:49; owner rule #23). The replica's replay store held 5.4 GB and the VM root was down to 2.2 GB free.
+  - Pruned 217 replay files (293 MB) older than two days from /srv/bc26-galaxy/storage/bc26-replica-secure/episode/bc26/replays. Their list is in /root/bc26-replays-pruned-20261105-0149.txt.
+  - The VM root now has 2.5 GB free. Our own copies of our matches under ~/projects/vibe/bc26b-galaxy-replays are untouched.
+- 18:19: **How our rats fire enemy traps** (scratch thrownhit.py; the 522 u6x-era games on the VM; every enemy rat-trap trigger on our rats in r1-600).
+  - Each hit is classed as thrown onto the trap (a land row that round), dropped onto it, grabbed in the 3 rounds before, or walked in.
+  - Against Varun, in losses (4,651 hits): walked in 73%, thrown 8%, dropped 7%, grabbed just before 11%. In wins (1,756): 69%, 7%, 10%, 14%.
+  - Against the others, walk-ins are 70-83% of hits in losses and wins alike.
+  - A walk-in kills our rat that round 31-36% of the time (it was at 50 hp or less 16-32%). A throw onto a trap kills 68-94%.
+  - So the traps catch our rats on their own moves, which a rat that holds still never makes. This puts "step-in discipline" (COMBAT.md §3: hold a ready attack and let the enemy step into you) on the list for a later candidate.
+- 18:19: **u8r, set-3 block 1** (14481-14530, 16/16; twin-anchored paired 13248-13291 --crown 12130-12163).
+  - 48 cells, 42 alike (18 replay the crowning game), D 6 (+4 -2), net +2, t 0.82. Gained Xzibit uneruesansfin A, Varun corridorofdoomanddespair B, and spsquared TheHeist A and B; lost YokoOno Stash A and spsquared rift A.
+  - Falsifier 2 passes: our cat-trap damage is 1,401 a game against the bar of 1,033 (1.25 x the twin's 826).
+  - Falsifier 3 passes: cheese transferred is 4,360 a game against the floor of 3,968 (0.9 x the twin's 4,409).
+  - Block 1 never accepts, and t > 0 continues. Block 2 (set 1) was queued at 18:12 (waiter build/wait_u8rb2.sh).
+  - All four gains are cells u8r's SNAPSHOT named in advance as points losses that more cat damage would flip: TheHeist (+600/+700), uneruesansfin (+1,400) and corridorofdoom (+625). So the mechanism is doing what it was designed to do.
