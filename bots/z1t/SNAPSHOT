@@ -1,0 +1,14 @@
+name=z1t
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=d48c864
+created=2026-11-06 05:36 PST
+
+z1t = u9p + END_CAT 1650 + END_CAT_IDLE 20 (z0c's endgame cat switch, with a new gate). From r1650 at war, a baby with less than DELIVER_AT raw, no carried rat, no threatened king and no enemy within dist2 8 walks to the nearest seen or known cat. A gatherer joins only after 20 turns within Chebyshev 4 of its mine with no pickup, and then hunts to the end. Fighters and others join as in z0c. Registered 2026-11-06 05:36 PST, before any z1t game.
+Evidence:
+- z0c (the same switch, every role) passed screen zd91 (t -1.00, D 1). On the replica it won cells: pooled 96 cells D 19, net +5, t 1.15, cat share 0.658 to 0.584. It was rejected only on the set-1 transfer floor: xUs 3,988 < 4,133, per round 0.86 of the twin's.
+- 588 replica rows: all 44 points losses were at war, most with our cat share 0.06-0.35. On rift vs spsquared (16422) our cat damage rose 44 in the 1500 war rounds to their 3,670.
+Falsifiers:
+- Screen zd131 vs u9p zd61 (s6, fresh games): paired t <= -1.5 rejects. Per-cell picks z <= -2, per rat-turn or per round, rejects. Transfer per round on shared cells below 0.97x u9p's rejects. Any overrun or exception rejects.
+- Inert: summed dmgCat of z1t over shared-cell games that reach r1650 at war not above u9p's.
+- Replica: the standard block rules on sets 3, 1, 2, then 4, with the transfer floors. Transfer per round below 0.95x the twin's on any block rejects (z0c's failure: 0.86).
