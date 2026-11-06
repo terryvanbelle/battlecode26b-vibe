@@ -1,0 +1,18 @@
+name=z3c
+source=bots/z3b
+source_sha=146faaa4c397
+commit=0e1b7b0
+created=2026-11-06 12:33 PST
+
+z3c = z3b + CAT_HUSH (z2y's code, unchanged: the ledger hook in Baby.report, K 11, and Baby.catNear; HUSH_D2 36).
+A baby does not squeak while a cat can hear it: a cat in attack mode turns toward the first squeak it hears each
+turn. z2y (z2x + CAT_HUSH) passed screen zd152 vs zd136 (n 22, D 3, net +1, t +0.57; picks z +2.41; transfer 1.040;
+0 overruns) and was net +2 against z2x's zd151 (D 4: gains evileye B and starvation B). It is the follow-up to z3b on
+the replica: if z3b continues past block 1, z3c takes the slot only after z3b is decided; if z3b is rejected at block
+1, z3c is next (its set-3 block scored against z1z's 17946-17961).
+
+Falsifiers, registered before any z3c game:
+1. Screen zd155 vs zd136 (z1z's control), s6 gates; paired against zd154 (z3b): t <= -1.5 drops it.
+2. Hush counter (Baby.hushed): it must fire in cooperation games; a screen whose cells all equal zd154's means
+   CAT_HUSH is inert on this base.
+3. Replica: block rules (TRAINING_ALGORITHM s4).

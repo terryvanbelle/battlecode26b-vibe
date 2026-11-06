@@ -6684,3 +6684,6 @@
   - Falsifiers in bots/z3b/SNAPSHOT: minimaze A must replay z1z's win, and corridor B must stay a win.
   - Set-3 block 1 queued (18150-18153 sent, 12 in the drain queue); waiter build/wait_z3bb1.sh (IDs > 18149).
   - Screen **zd154** (z3b vs zd136) is at the head of the queue. zd153 (z3a) is dropped from the queue (superseded). Local checks in VM ~/diag26b/zb (vs araid: starvation B, superioristhmus A, keepout A).
+- 12:33: **zd152 (z2y = z2x + CAT_HUSH vs zd136) passes the s6 gates.** n 22, D 3, net +1, t +0.57; picks/100 34.79 vs 32.60 (per-cell z +2.41); transfer 1.040; 0 overruns (zd136 0, zd151 0); kings formed 46 (zd151 48, zd136 34).
+  - Against z2x's zd151: D 4, net +2, t +1.00. It gains evileye B (win at r2000 where z2x lost at r1748) and starvation B (a king kill at r535 where z2x starved at r1373).
+  - **z3c = z3b + CAT_HUSH** (z2y's hook, unchanged). It follows z3b on the replica. Falsifiers in bots/z3c/SNAPSHOT. Screen **zd155** heads the queue, behind the running zd154 (z3b).
