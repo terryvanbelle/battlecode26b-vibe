@@ -1,0 +1,14 @@
+name=z1p
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=8b0c04e
+created=2026-11-06 04:48 PST
+
+z1p = z1o + FLOW_PROGRESS (existing switch, rejected on s4d 2026-10-29, never on the u6x line): a step along a flow path resets Nav's stall, so a detour leading away from the target does not end the chase after 12 turns. z1o's dose arm.
+Evidence: Stash, u9p vs abrk A (VM ~/diag26b/fw, seed 0): all six mines lie in the middle band (y 8-21) between walled home strips; the first gatherer (13770) switched cheese targets 12 times in r36-100 (11,16 -> 19,20 -> 17,21 -> 12,21 -> 9,21 -> 12,21 -> 17,21 ...) as piles beyond the wall came nearer by straight line, dropping a 21-step path the round after it was ready (r39-40), took 9 flow steps in 100 rounds and never left the strip; the first 8 rats' median first round in the middle was r176 (A) and r141.5 (B), two never. Replica: Stash vs YokoOno lost 8 of 12 in the z0c-z0q blocks (17570: 80 delivered by r100). CHEESE_LOS (s5t, 2026-10-29) dropped walled piles outright and was rejected at screen (t -1.75); this keeps them and only stops the thrash.
+Falsifiers (registered 2026-11-06 04:48 PST, before any z1p game): mechanism chain on VM ~/diag26b/cs (Stash, seepastyourgreed, rift and pipes vs abrk, both seats, seed 0; u9p alongside, its Stash games from ~/diag26b/fw):
+(1) Stash: the median first-middle round of the first 8 rats (scratch firstexit.py) must be at least 10 rounds earlier than u9p's in both seats, or z1p is inert.
+(2) Transfer by r300 summed over its 8 games not above u9p's drops it.
+(3) Any exception or overrun drops it.
+(4) Fewer wins than u9p over the 8 games drops it.
+Then the s6 screen vs u9p's zd61 (paired t <= -1.5, picks/100 per-cell z <= -2, overrun or exception, transfer per round on the shared cells < 0.97x reject). If both pass the chain, both screen (z1o first). Replica: standard block rules and transfer floors.
