@@ -6329,3 +6329,5 @@
   - Our banks ended at 4.2-11.8k to their 1.0-11.0k. Our babies sat at the 40 cap to their 47-76.
   - One more king would flip z0g A (0.460 to 0.51).
   - This is z1r's target (RICH2_BABIES 80; replica order sets 1, 2, 3, 4; superioristhmus is in set 1), and the formation work (z1a, z1c) after it.
+- 06:54: **The replica is the bottleneck.** The hourly limit lets about 4 of our matches through an hour (drain.log: z0k's block 2 has 4 sent and 8 queued), so a 16-match block takes ~4 hours and a candidate 2-4 blocks. Six candidates are queued (z1q, z1r, z1x, u9t, z0r, u7z), about a day of replica time one by one.
+- 06:54: **z1y registered** = u9p + z1x + z1q + z1r, hand-merged (their diffs against u9p touch different code: the seekers' FIGHT branch and Nav, the idle-at-mine shift, the baby cap). Falsifiers are in bots/z1y/SNAPSHOT: the s6 screen gates, withdrawal if z1x's zd134 fails, and the standard replica rules on sets 3, 1, 2, 4. Screen zd135 is at the front of the queue. If it passes, z1y takes the replica slot after z0k ahead of the singles. z1q stays next only if zd135 fails.

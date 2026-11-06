@@ -1,0 +1,17 @@
+name=z1y
+source=bots/z1x
+source_sha=419048af3ae7
+commit=989dc67
+created=2026-11-06 06:54 PST
+
+z1y = u9p + three independent candidates, hand-merged: z1x (CAT_SEEK 3 + CAT_SEEK_DIG: seekers tunnel to the cats or the map centre in cooperation), z1q (SEEK_IDLE 20 + IDLE_SHIFT + FIGHT_SHIFT: idle gatherers and mine fighters move along the pick list) and z1r (RICH2_BABIES 80 above RICH2_BANK 3000). Built from z1x by applying z1q's Baby.java lines 1310/1312 and Cfg lines, and z1r's one Cfg line; each candidate's own diff against u9p is unchanged in z1y. Registered 2026-11-06 06:54 PST, before any z1y game.
+Why a bundle: the replica's hourly limit runs about 4 matches an hour, so a 16-match block takes ~4 hours and a candidate 2-4 blocks. The three act on different code: the seekers' FIGHT branch and Nav (z1x), the idle-at-mine shift (z1q) and the king's baby cap (z1r).
+Evidence (each in its own SNAPSHOT and in TRAINING_LOG 2026-11-06):
+- z1q: screen zd128 t +0.81, per-round pickAmt 1.025 (z +2.31), transfer per round 1.022. wp chain: busiest-mine share 53 to 20% on jail and 56 to 24% on wallsofparadis; transfer +14% vs araid/abrk.
+- z1r: screen zd129 t -1.00, per-round pickAmt 1.015 (z +2.21), transfer per round 1.026. Target: rich war points games capped at 40 babies with 4-12k banked (superioristhmus vs spsquared, 6 losses).
+- z1x: chain tn won 3 of 4 vs u9p on averystrangespace; seekers reach the centre by r194-444 (u9p r840+); peace cat damage 3.8-6.6k to 0. Screen zd134 is running.
+Falsifiers:
+- Screen zd135 (s6 cells vs u9p zd61): paired t <= -1.5; per-round picks z <= -2; transfer per round on the shared cells below 0.97x u9p's; any overrun or exception.
+- If z1x's screen zd134 fails, z1y is withdrawn (the bundle carries a component that failed alone).
+- Replica: the standard block rules (blocks 1-3 reject at pooled t <= 0, 1, 1.5; t >= 2 accepts from block 2; block 4 rejects below 2), sets 3, 1, 2, 4, with the transfer floors (set 3 3,968; set 1 4,133).
+- Reported, not gates: z1x's averystrangespace peace cat damage against the twin's; the 40-baby cap on the rich points games (engBabies at the end); z1q's per-round picks.
