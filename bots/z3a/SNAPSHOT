@@ -1,0 +1,19 @@
+name=z3a
+source=bots/z2x
+source_sha=1097df7f6d7b
+commit=525518a
+created=2026-11-06 12:15 PST
+
+z3a = z2x + CASH_KINGS 1 (new knob in Baby.cashOk, inside CASH's G.settle hooks): the rescue formation runs only
+while the team has one king. CASH's trigger, a bank under 250, is the spawn floor's resting level once a team has
+two kings, not a sign of starvation. z2x lost zd151's araid starvation B (z1z won it): CASH named (22,13) at r955
+with the bank at 248-307, 15 rats joined, the third king formed at r970, and the bank slid to 0 by r1373, when all
+three kings starved together (starveDmg 1,494; ~/diag26b/zst). z1z, on two kings, banked 750-960 and won at r2000.
+CASH's census targets (fullofsecrets, rose: 92 starvation losses, TRAINING_LOG 08:36-09:00) were lone kings.
+
+Falsifiers, registered before any z3a game (VM ~/diag26b/za, vs araid, seed 0):
+1. starvation B: z3a must replay z2x's game until r955 and then form no third king; a loss, or starve damage on
+   our kings above z1z's 250, drops it.
+2. fullofsecrets A and B (CASH's lone-king rescue): a seat z2x wins and z3a loses, or fewer kings formed than
+   z2x there, drops it.
+3. Screen vs zd136 (z1z's control), s6 gates; paired against zd151 (z2x): t <= -1.5 drops it.

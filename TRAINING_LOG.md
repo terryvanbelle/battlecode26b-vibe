@@ -6657,3 +6657,18 @@
   - Overruns 8 in 6 games (zd136: 8 in 6); 0 exceptions. Kings formed 31 to 25.
   - 10 of 22 cells differ, and the outcome flips in one: **araid starvation B was lost at r1373 by king kill**, after a second king formed; z1z won it at r2000 with 7,854 transfer to 4,949. It is the endgame-king line's risk, a formation that starves the bank on a poor map. Dumps (z2x and z1z, seed 0) are running in ~/diag26b/zst.
   - z2x is already on the replica (#240).
+- 12:15: **z2z DROPPED by falsifier 1** (~/diag26b/zz, vs araid, seed 0).
+  - clockwisdom transfer was A 185 and B 145, against z2x's 0 and 200: 330 to 200, under the 2x bar. Both seats were lost, as z2x lost them.
+  - Regression games were fine: keepout A won 5 kings, 32.2k transfer; superioristhmus A won 5 kings, 48.9k.
+  - **The clockwisdom diagnosis was wrong in kind.**
+    - In z2x's dump, 12 of the 20 babies are attackers (mv=a) from r100 to r700. They carry 4,200-4,600 raw by r500-700 and never deliver.
+    - The king's mine list is empty until r700 (km=n0), and income is 0.
+    - The bank drains 1,690 to 40 by r800, and the king starves at r880.
+    - Navigation of the few gatherers is not the bottleneck. The hoard family (ATK_CARRY, ATK_DELIVER, HUNGRY 300: u5a pooled net +1 over 138 cells) is closed on the replica.
+- 12:15: **Why z2x lost araid starvation B** (dumps ~/diag26b/zst, seed 0).
+  - z2x replays z1z until r955. Then **CASH** names (22,13) with the bank at 248-307 (two kings, the spawn floor's resting level), 15 rats join, and a third king forms at r970.
+  - The bank slides to 0 by r1373, and all three kings starve together (starveDmg 1,494).
+  - z1z, still on two kings, banks 750-960 and wins at r2000.
+  - **z3a = z2x + CASH_KINGS 1**: the rescue runs only for a lone king, which was its design target. The CASH_END endgame king is lone-king already. Falsifiers in bots/z3a/SNAPSHOT.
+  - Checks in ~/diag26b/za: starvation B, plus fullofsecrets A/B against z2x's.
+  - z2x is on the replica with this flaw. If z2x's block 1 does not reject, z3a, which contains z2x, can take its slot from block 2.
