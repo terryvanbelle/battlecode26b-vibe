@@ -560,3 +560,5 @@ w0a,2026-11-05 17:45,u9p,u9p + FORM_RICH_MAX 5 (points lever: kings alive weigh 
 w0b,2026-11-05 17:45,u9p,u9p + FORM_RICH_MAX 5 + FORM_RICH_BANK 2000,screen zd82 queued
 w0c,2026-11-05 17:45,u9p,u9p + FORM_LATE (a lone king may form a second until r1940),screen zd83 queued
 w0d,2026-11-05 17:45,u9p,u9p + FORM_RICH_MAX 5 + FORM_LATE,screen zd84 queued
+x0a,2026-11-05 18:04,u9q,u9q + FORT_R 4 (fighters hold a ring by the king at war),screen zd85 queued
+x0b,2026-11-05 18:04,u9q,u9q + FORT_R 6,screen zd86 queued
