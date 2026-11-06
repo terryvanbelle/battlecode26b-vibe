@@ -6073,3 +6073,11 @@
   - Varun ratsareants A and B were also lost by u7d on this set (the 11-03 22:40 re-anchoring), and YokoOno streetsofnewyork A and spsquared evileye B were gained by it, so set 2's changed cells repeat across candidates.
   - It is the best pooled result of this reign's candidates (u8r: D 15, net +3 over two sets; u9b: D 11, net +3), but at about +4% of cells it is below what three blocks can resolve. A fourth set (set 4) would need a u6x reference block first (the 11-03 22:40 note).
   - The switches stay off in ratbot. The pair is closed as a pair; the near-miss-pairs step (§6 step 5) has been tried once.
+- 17:28: **Owner, PROMPTS #27-28**: never ask permission to try an idea, never stop trying new ideas, and the two hours the screen machine sat idle while u9p's blocks ran were wasted. From now on a batch of candidates screens while the replica plays (screens take about 17 minutes, a replica block about an hour), so the replica always has a screened build waiting.
+- 17:32: **u6x resubmitted** (#230) so the replica's ranked games play the incumbent, not the rejected u9p. Its **set-4 reference block** is queued after 16818 (`build/block_v4s4.sh`, new), so later candidates can have a fourth block; waiter build/wait_u6xr4.sh.
+- 17:32: **Batch: u9p plus the reign's other near-misses** (§6 step 5, stacked). All four are u9p with only these changes:
+  - u9q = u9p + RETREAT_HP 0 (u7d: reached block 3).
+  - u9r = u9p + THROW_ADAPT (u7i's code: never retreat once an enemy has been seen carrying one of ours; u7i pooled t +2.14 at block 2, failed its Merlin throw-hit falsifier).
+  - u9s = u9p + SEEK_CROWD 3 (u8q: block 1 D 5, +4 −1, t 1.34).
+  - u9t = u9p + THROW_ADAPT + SEEK_CROWD 3.
+  - Screens zd62-zd65 run one after another at 3 jobs each (runs/seq_zd62.sh on the VM). The falsifiers are in each SNAPSHOT: u9p's (the basics gate, the replica transfer floor, the block rules).

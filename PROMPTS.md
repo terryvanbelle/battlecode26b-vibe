@@ -126,3 +126,7 @@ Please continue
 ## 27. 2026-11-05 17:28 PST
 
 Never, ever ask me for my permission to try something like this.  Never, ever stop trying new ideas
+
+## 28. 2026-11-05 17:28 PST
+
+You just wasted two hours sitting there when you could have been doing something useful

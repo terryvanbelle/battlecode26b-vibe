@@ -1,0 +1,8 @@
+name=u9s
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=45b16ad
+created=2026-11-05 17:30 PST
+
+u9s = u9p + SEEK_CROWD 3 (u8q's: a mine with 3+ allies nearer sends a gatherer to seek new home mines). §6 step 5: u8q block 1 D 5 (+4 -1) net +3 t 1.34. Registered 2026-11-05 17:31 PST.
+Falsifiers: screen vs zc6 (= u6x: 32 wins of 44 cells, picks/100 35.56), the basics gate (the 14:27 rule): any overrun or exception, picks/100 rat-turns below 33.8, or D 0 rejects; on the replica, cheese transferred below 0.9x the twin (set 3: 3,968; set 1: 4,133) rejects; the standard block rules, sets 3, 1, 2, then 4 (u6x set-4 reference queued 2026-11-05 17:35).
