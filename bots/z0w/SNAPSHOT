@@ -1,0 +1,8 @@
+name=z0w
+source=bots/z0q
+source_sha=50494307f22f
+commit=56eb18b
+created=2026-11-06 02:14 PST
+
+z0w = u9p + RAW_TRAPS + CAT_HUSH (z0q + z0r's CAT_HUSH and HUSH_D2 36, code copied unchanged): the two screen passers combined into one replica candidate, since the replica runs one build at a time. z0q passed zd109 (t −0.70, picks z −1.58, transfer per round 0.9725; 141 raw traps, 97% fired; kills +8.5%); z0r passed zd110 (t +0.37, picks z +0.38, transfer per round 0.977; squeaks −36%, kills +17%). The switches act on different turns (a trap from an attacker's action at war, a skipped report squeak near a cat), so they should not interact. Registered 2026-11-06 02:16 PST, before any z0w game.
+Falsifiers: screen zd115 vs u9p's zd61 (s6): paired t <= −1.5 rejects; picks/100 per-cell paired z <= −2 rejects; any overrun or exception rejects; transfer per round on the shared cells below 0.97x u9p's rejects. Mechanisms: raw traps under 100 (0.7x z0q's 141) or squeaks above 0.8x u9p's 20,602 on the shared cells drop it as a broken combination. If z0w's t is below both parents' (−0.70), z0q goes to the replica alone instead. Replica: the standard block rules on sets 3, 1, 2, then 4 against the twin's anchors; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block.
