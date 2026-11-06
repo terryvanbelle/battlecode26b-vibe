@@ -1,0 +1,19 @@
+name=z2q
+source=bots/z2p
+source_sha=312d2cec776f
+commit=75dcb51
+created=2026-11-06 11:01 PST
+
+z2q = z2p + RICH_MORE 900 (new switch, inside King.rich()'s ledger hook): from r900 to the r1150 cut, a team with
+three or four kings and 600 banked names one more king's site while Econ.surplus(kings + 1), the bank projected to
+r2000 with that upkeep, is 3000 or more. FORM_RICH (bank 3000, up to 4 kings, no income test) stays as it was, so
+RICH_MORE adds a 4th king from a smaller bank and the 5th king, which nothing formed before.
+Why (scratch lever.py over the 624 games of the ~/diag26b block files, 36 r2000 losses): one more king of ours flips
+18, one fewer of theirs 23. Superioristhmus vs spsquared is 11 of the 36: 2-3 kings to their 3-4 with 3-15k banked at
+r2000. RICH_FIX (in z2p) makes the 4th king's formation succeed; against a 4-king spsquared, 4-4 is 25-25 of the
+kings' 50 war points and 5-4 is 27-22, which flips 17749 B (45-52 with 3 kings to 4) and 17273/17443 B (46-51).
+Upkeep: 2 a round a king, so a 5th king from r1100 costs about 1,800 by r2000.
+Checks (VM ~/diag26b/zq): superioristhmus A and B and keepout A vs araid, against z2p's games: identical until a
+fourth or fifth king's site opens; a 5th king formed where z2m held 4 at r1190; no overrun; no king starves.
+Falsifiers: screen vs zc6 (s6 gates: t, picks z, transfer >= 0.97, no overrun or exception); a 5th king that dies or
+starves before r2000 in a screen game counts against it; the replica only after z2p.

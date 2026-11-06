@@ -6555,3 +6555,15 @@
   - Cause: a flaw in the ledger. When CASH acts, its hooks cost thousands, and crediting them makes left() overstate the budget by that much, so the late-turn work runs past the limit.
   - Fix: **G.settle(cd, cb, k)** credits a hook's cost only while it is at most 300 (SETTLE_CAP). Every CASH hook costs far less on its silent path, so silent turns stay exact; an acting hook's real cost reaches the budget reads. Added to tools/ledger.py.
   - **z2o** = z2j with its three CASH hooks closed through G.settle (K 20, 18, 20 from the javap listing). Checks running (~/diag26b/zo): keepout A vs u6x's dump (exact, every hot= equal) and wallsofparadis B (no overruns). Then z2o's 5 acting cells.
+- 11:02: **z2o validated: G.settle keeps the ledger exact and ends the overruns** (~/diag26b/zo, vs araid).
+  - keepout A replays u6x's dump for 2000 rounds, every hot= equal (74,340 turns).
+  - Acting cells, all won with 0 overruns: wallsofparadis B 63-36 (z2j overran 14 times in zd146's cell), learn_your_lesson A 61-38 and B 66-33, evileye A 58-41. wallsofparadis A is still running.
+- 11:02: **z2p = z2n + z2o's fix** (the three CASH hooks close through G.settle; King hooks unchanged, their acting work runs after the hook). Checks (~/diag26b/zp): superioristhmus A and cheesefarm A replay z2n's games exactly (won 69-30 with 4 kings, 55-44 with 3); wallsofparadis B 0 overruns, won 63-36. **Screen zd149 (z2p vs zc6) queued after zd148.** z2p is the replica candidate after z1z's block 4 (the u6x line; if z1z is accepted it needs porting).
+- 11:02: **Which lever flips the field points losses** (tools/lever.py on the VM over the ~/diag26b block files: 624 games, 36 lost at r2000; points recomputed with one change):
+  - One fewer enemy king flips 23, one more of ours 18 (two more: 6 others), 25-50% more cat damage 9, 10-50% more transfer 7; 9 flip with none.
+  - Of the 23, one-king opponents (HugoIngelsson averystrangespace, clouds, learn_your_lesson; Varun corridorofdoomandsadness) mean killing their last king, a win outright.
+  - Superioristhmus vs spsquared is 11 of the 36: 2-3 kings to their 3-4, with 3-15k banked at r2000. RICH_FIX (z2p) fixes the 4th king's formation. Against their 4, a 5th wins 27-22 of the kings' 50 points.
+- 11:02: **z2q registered** = z2p + RICH_MORE 900 (new switch, inside King.rich()'s ledger hook).
+  - From r900 to the r1150 cut, three or four kings with 600 banked name one more site while Econ.surplus(kings + 1) is 3000 or more. That gives a 4th king from a bank under FORM_RICH's 3000, and a 5th, which nothing formed before.
+  - w0a (u9p + FORM_RICH_MAX 5, 11-05) was inert in its screen: no game held 4 kings rich before r1150, because the 4th formation failed (fixed now by RICH_FIX).
+  - Checks running (~/diag26b/zq): superioristhmus A/B and keepout A vs araid. Falsifiers in bots/z2q/SNAPSHOT.
