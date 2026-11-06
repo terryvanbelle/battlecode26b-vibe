@@ -96,7 +96,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 04:20 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 04:12 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). Candidates
   descend from u9p = u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18), each one
   switch screened against u9p's zd61. **z0q = u9p + RAW_TRAPS** is on the replica (submission 236): block 1 (set 3,
@@ -107,15 +107,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   $HOME/diag26b/z0qb2.jsonl,$HOME/diag26b/twin_s1.jsonl IDS 12771-12813`; set-3 twin rows are rp_games.jsonl).
   Next on the replica: **z0r** (u9p + CAT_HUSH; passed zd110). z0w (z0q + CAT_HUSH) was dropped at zd115 (raw traps
   97 vs bar 100). Held after passing screens: z0d (STAB_LAY), z0e (END_CAT 1450).
-- Cat-bite cheese (04:00-04:20): a bite with c cheese does 10 + ceil(sqrt c), so c = 2 is 1 damage a unit. The bank
-  sits at 900-1,100 through cooperation games and 900-2,000 at war while the cats live, with u9p's BUDGET rule keeping
-  nearly every cat bite at 0. z1h (attackers dump their load) was inert and z1i (cooperation, 2 a bite) failed its
-  cat-damage bar. **z1j** (cooperation, 5 a bite at bank 600+) and **z1k** (war, 2 a bite at bank 800+) have mechanism
-  chains on the VM (~/diag26b/ci, ~/diag26b/wk; per-bite damage = summary catDmgBite / bitesCat: actions.tsv bite rows
-  carry a lethal flag, not the cheese); screens zd125 and zd126 have their cells made.
-- Screening (VM queue runs/screenq.txt): **zd119 z1a** (running from 04:15), **zd121 z1c, zd120 z1e**,
+- Cat-bite cheese (03:20-04:02, closed): a bite with c cheese does 10 + ceil(sqrt c). z1h (attackers dump their
+  load) was inert; z1i, z1j (cooperation, 2 or 5 a bite) and z1k (war, 2 a bite at bank 800+) all fired but cut summed
+  cat damage: the cheese bites come with fewer cat-trap hits (10 cheese buys 100 damage). Per-bite damage = summary
+  catDmgBite / bitesCat (actions.tsv bite rows carry a lethal flag, not the cheese).
+- Replica losses (04:02 entry): king kills dominate (240 recent games: ending <500 52, <1200 49). Early ones: starve
+  28, bite 12, thrown rats 10; reserve and anti-throw doctrines are closed (u6e, u9i, u1k, u7b, u7i). The rose stem
+  jam (king starves with 600-1,040 raw within 10) is **z1l** (u9p + SWAP_LOADED 30, SWAP_HOME 10): mechanism games
+  in VM ~/diag26b/sl (from 04:01), falsifiers in bots/z1l/SNAPSHOT; screen zd127 has its cells made. FreeTheCheese vs
+  collegejunior is the same stem shape (one delivery tile at the stem mouth), but there the army had shrunk first.
+- VM disk: 3.1 GB free after pruning 76 replica replays (list /root/bc26-replays-pruned-20261106-1203.txt), 143 old
+  build/dumpcache dirs and 259 old ~/diag26b replays (tsv kept).
+- Screening (VM queue runs/screenq.txt): **zd119 z1a** (running from 03:53), **zd121 z1c, zd120 z1e**,
   zd112 z0t (z0q + RAW_ANY), zd113 z0u (MINE_BURN 50), zd114 z0v (RAW_RAID_HALF 1), zd107 z0p (FACE_REACH), zd108 z0o
-  (BURY), then the old sweep. zd122 (z1g) waits on its mechanism games. Each candidate's falsifiers are in its
+  (BURY), then the old sweep. z1g was dropped at its mechanism games (zd122 not queued). Each candidate's falsifiers are in its
   bots/NAME/SNAPSHOT. Screen transfer gates from z0q on are per round on the shared cells (inline script in
   TRAINING_LOG 02:12). The screen maps hold no lone-king map: king-lever screens only show harm.
 - King lever (02:14-03:30 in the log): one more king at r2000 swings the war points margin by 16.7 and flips 17 of
@@ -124,8 +129,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   king; clouds second king r647, but evileye lost faster with both kings side by side), **z1e** (END_PULL_R2 10000:
   from r1850 babies join from any distance; uneruesansfin second king r1913). **z1g** (END_KING_DYN_FROM 1890: from r1890
   END_KING's bar min(400, 80 + 4 * max(0, R - 55)); a king formed with 55 rounds left lives to r2000 on an empty bank;
-  met in all 12 lost lone-king replica points games, 9 of which never had 400) has mechanism games running in VM
-  ~/diag26b/dk (chain.sh; falsifiers in its SNAPSHOT; z1f, the same with a king-health condition, never fired). Those that pass their screens can go as one hand-merged candidate (they act on
+  met in all 12 lost lone-king replica points games, 9 of which never had 400) was dropped at its mechanism games
+  (two kings in 1 of 3 bar-met games; gaps: king survival after forming, no site on narrow maps). Those that pass their screens can go as one hand-merged candidate (they act on
   different code; tools/bundle.sh NAME BASE CAND... appends Cfg lines and patches the rest strictly, tested on z1a-z1d).
 - Replica scoring (twin-anchored; pass explicit match IDS, others' matches sit in the ranges):
   set 3 `contest.py paired 13248-13291 IDS --crown 12130-12163`; set 1 `paired 12771-12813 IDS --crown 11549-11677`;
