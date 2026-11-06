@@ -1,0 +1,24 @@
+name=z2z
+source=bots/z2x
+source_sha=1097df7f6d7b
+commit=9791b64
+created=2026-11-06 12:07 PST
+
+z2z = z2x + FLOW_FIRST (new switch, ledger hook in Baby.deliver, K 11 by javap): a delivery more than Chebyshev 6
+from its king whose straight line to it crosses a known wall asks for a flow path at once (Flow.request; FLOW_REV
+walks on meanwhile), instead of after FLOW_STALL 4 turns without getting closer. The check (Baby.flowFirst,
+wallLine) has no side effects; only the request acts.
+Target: clockwisdom. z1z lost all 6 replica games there (blocks 1-4: waxmango, Varun, Xzibit, both seats; king
+starved r880-980; transfer 0-260 to their 1,800-3,425). Couriers walk greedily into a dead-end band between the
+wall rings, each step cutting the straight-line distance, so Nav's stall stays 0 and no path is asked for; the
+pickups on the way slow them to a move in 11 rounds (TRAINING_LOG 2026-11-06 08:31; u9p lost both local seats vs
+araid, HAND_FLIP's z2b won both by luck of hand). Never tried: FLOW_STALL 2 (s7a) still waited for a stall; TRAIL
+(u4o), FLOW_UNSEEN (u6f), CARRY_MAX (u6s/u6t) are other families.
+
+Falsifiers, registered before any z2z game (VM ~/diag26b/zz, vs araid, seed 0):
+1. Mechanism: clockwisdom A and B transfer summed not above 2x z2x's (z2x's own games in the same run), or z2z
+   loses a clockwisdom seat z2x wins: drop as inert/harmful.
+2. Regression: keepout A or superioristhmus A transfer below 0.95x z2x's (~/diag26b/zx), or a lost game: drop.
+3. Screen vs zd136 (z1z's control), s6 gates (t <= -1.5, picks z <= -2, transfer per round < 0.97, overrun games
+   above zd136's 6) and paired vs zd151 (z2x) t <= -1.5: drop.
+4. Replica: after z2x's verdict (on z1z if z2x is rejected).

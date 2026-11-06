@@ -6638,3 +6638,16 @@
   - Mechanism games run on the VM in ~/diag26b/zy (arrows A and evileye A vs araid, z2x and z2y).
   - **Screen zd152 (z2y vs zd136)** is at the head of the queue, ahead of zd150.
   - z2y follows z2x on the replica only if z2x is accepted. Otherwise it is rebuilt on z1z.
+- 12:07: **z2y's mechanism games** (~/diag26b/zy, vs araid, A seat, catsq1.py):
+  - Rounds a cat heard us first fell from 100 (z2x, arrows 50 + evileye 50) to 7 (2 + 5). Falsifier 1 passes.
+  - Both maps were won as z2x won them (falsifier 2 passes): arrows 61-38 (z2x 70-29; transfer 10.5k to 11.9k), evileye 58-41 as z2x.
+  - Cats killed 101 of ours to z2x's 97: the hush does not save rats here. **A weak mechanism**; screen zd152 decides.
+- 12:07: **What z1z loses on the replica** (blocks 1-4, 192 games, ~/diag26b/z1zb*.jsonl): 80 losses, of which 72 are king kills (39 before r600, 33 after) and only 8 go to r2000.
+  - The 11:02 lever table looked only at r2000 losses.
+  - The king-kill losses after r600 mostly end with the bank at 0-1, which points to starvation.
+  - **clockwisdom: 6 of 6 lost** (waxmango, Varun and Xzibit, both seats), r880-980. Transfer was 0-260 against their 1,800-3,425, with 20 babies alive at r500. This is the 08:31 delivery failure: greedy walks into the dead-end band between wall rings, so the stall stays 0.
+- 12:07: **z2z = z2x + FLOW_FIRST** (new switch, ledger hook in Baby.deliver, K 11 by javap).
+  - A delivery more than Chebyshev 6 from its king, whose straight line crosses a known wall, asks for a flow path at once (FLOW_REV walks on meanwhile).
+  - Never tried before: s7a (FLOW_STALL 2) still waited for a stall, and TRAIL, FLOW_UNSEEN and CARRY_MAX are other families.
+  - Falsifiers in bots/z2z/SNAPSHOT.
+  - Mechanism games in ~/diag26b/zz: clockwisdom A/B for z2x and z2z, plus keepout A and superioristhmus A for z2z against zx's z2x games.
