@@ -1,0 +1,11 @@
+name=z2d
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=0dfa309
+created=2026-11-06 08:04 PST
+
+z2d = u9p + PICK_FLIP (new salt constant: G.pickBit returns the other way; hand() unchanged). A second salted twin of
+u9p, a reference and not a candidate. It differs from z2b (HAND_FLIP flips hand(), which pickBit also uses with
+SYM_HAND off), so the two twins diverge from zd61 and from each other on different turns.
+Purpose: with zd61, zd138 (z2b) and zd140 (z2d), the pooled screen control averages three u9p games per cell
+(scratch pooled.py). Reading rules are the same as z2b's (bots/z2b/SNAPSHOT). Registered before any z2d game.

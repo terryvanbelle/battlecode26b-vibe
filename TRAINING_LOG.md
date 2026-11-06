@@ -6397,3 +6397,6 @@
   - In r100-399 every one of our M and W turns was in the bottom corridor (y 0-7, x 4-35). Finals' rats filled the octagon.
   - Our rushers crossed the octagon in r0-100 (866 rat-turns inside), so the rings are passable for us.
   - Locally vs araid (war at r131), u9p does work (21,37) and (27,28) (wpmine.py on ~/diag26b/wp). So on the replica the inner mines are held by Finals' force, not closed by dirt. That makes this a contest problem, and the contest families are closed. No candidate.
+- 08:05: **z2d registered** (u9p + PICK_FLIP, a new salt constant; reference only). Screen zd140 is queued right after zd138. With zd61 and z2b's zd138, the pooled control averages three u9p games per cell.
+  - scratch pooled.py (copy in ~/diag26b) scores a run against the mean of several control runs per cell. It reports the wins t, the per-round picks and transfer z, and the transfer ratio in the gate's form.
+  - The gate's form (total transfer over total rounds) is what failed z1x: 0.956 there, while the per-cell mean ratio is 1.002 with z +0.07. The total is dominated by a few long, rich games.
