@@ -1,0 +1,17 @@
+name=z3m
+source=bots/z3j
+source_sha=1a4eb75743ba
+commit=21e2f4c
+created=2026-11-06 14:26 PST
+
+z3m = z3j + DRY = z1z + ledger + CAT_HUSH + FORM_WAR_FROM 300 + DRY (DRY_W 100, DRY_BANK 1200), merged with
+tools/bundle.sh from a ledgered z1z (bots/zl0, scratch) and z3j and z3k: z3m differs from z3j only by z3k's DRY
+lines and from z3k only by z3j's two switches. z3j passed zd160 and is on replica block 1 (#243); z3k's local games
+vs araid flipped clockwisdom A and rose A (DRY carries the hoards home once 100 rounds pass without income). This is
+the follow-up to z3j if z3j continues and z3k's screen zd161 passes.
+
+Falsifiers, registered before any z3m game:
+1. Local games vs araid (~/diag26b/dm, seed 0) on clockwisdom A and B and rose A, with z3j on the same cells (CAT_HUSH
+   perturbs almost every game, so z3j is the reference): at least one of z3k's two flips must hold against z3j.
+2. Screen zd162 vs zd136 on the s6 gates; no worse than zd160 (z3j) by more than one net cell.
+3. Replica: block rules against z1z's set-3 block, only after z3j's block 1 is in.
