@@ -1061,14 +1061,21 @@ public final class Baby {
      *  while the stash holds less than BURY_STOCK. */
     static boolean stockDirt() throws GameActionException {
         RobotController rc = G.rc;
-        if (role != ATTACK || !rc.isActionReady() || rc.getDirt() >= Cfg.BURY_STOCK || rc.getGlobalCheese() < Cfg.BURY_DIG_CHEESE) return false;
+        if (!rc.isActionReady() || rc.getDirt() >= Cfg.BURY_STOCK || rc.getGlobalCheese() < Cfg.BURY_DIG_CHEESE) return false;
         if (nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= 20) return false;
+        if (role != ATTACK && (cheeseTarget != null || rc.getRawCheese() > 0 || rc.getCarrying() != null)) return false;
         MapLocation me = rc.getLocation();
         for (Direction d : G.DIRS) {
             MapLocation t = me.add(d);
-            if (!rc.onTheMap(t) || homeHalf(t) || eKing != null && G.cheb(t, eKing.location) <= 2) continue;
+            if (!rc.onTheMap(t) || nearOurKing(t) || eKing != null && G.cheb(t, eKing.location) <= 2) continue;
             if (rc.canRemoveDirt(t)) { rc.removeDirt(t); stocked++; Sym.mem[G.idx(t)] &= ~Sym.DIRT; return true; }
         }
+        return false;
+    }
+
+    /** Cfg.BURY: t lies within Chebyshev BURY_HOME_R of one of our kings (its walls stay up). */
+    static boolean nearOurKing(MapLocation t) {
+        for (int k = 0; k < Comms.numKings; k++) if (G.cheb(Comms.kings[k], t) <= Cfg.BURY_HOME_R) return true;
         return false;
     }
 

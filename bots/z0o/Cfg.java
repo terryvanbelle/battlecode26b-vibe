@@ -572,12 +572,16 @@ public final class Cfg {
     /** Bury: a baby beside a free tile of an enemy king's spawn ring (the 16 tiles at Chebyshev 2 from its centre:
      *  buildRat puts babies there, and every step of the 3x3 body needs three of them) fills it with dirt from the
      *  team stash; placing dirt is no backstab. While the stash holds dirt, attackers that see an enemy king walk to
-     *  the free ring tile nearest them, and on the way they dig dirt beside them on the enemy half until the stash
-     *  holds BURY_STOCK (5 cheese a tile; not under BURY_DIG_CHEESE global). A ring with a mine tile is never full, so
-     *  its king is left alone. Cached replica dumps (182 matches): the field placed 3,786 dirt tiles, none within 3 of
-     *  our start (most on their own half); we dig about 7 a game (wallsofparadis vs AdamTan12_Finals: 7, they 79). */
+     *  the free ring tile nearest them. Until the stash holds BURY_STOCK, attackers and idle babies (no pile in view,
+     *  nothing carried) with no enemy within dist2 20 dig a dirt tile beside them that is not within Chebyshev
+     *  BURY_HOME_R of one of our kings (5 cheese a tile; not under BURY_DIG_CHEESE global). A ring with a mine tile is
+     *  never full, so its king is left alone. Cached replica dumps (182 matches): the field placed 3,786 dirt tiles,
+     *  none within 3 of our start (most on their own half); we dig about 7 a game (wallsofparadis vs
+     *  AdamTan12_Finals: 7, they 79). z0o's first games stocked nothing with attackers alone on the enemy half: on
+     *  DefaultSmall and dirtpassageway no dirt lies beside the rush paths, so ring tiles went down one at a time from
+     *  path digs (9-10 a game) and never closed a ring. */
     public static final boolean BURY = true;
-    public static final int BURY_STOCK = 16, BURY_DIG_CHEESE = 300;
+    public static final int BURY_STOCK = 16, BURY_DIG_CHEESE = 300, BURY_HOME_R = 4;
     /** From this round on (0 = never) every baby bites and grabs enemy rats during cooperation too: the field rushers
      *  open the war at r36-40 (abrk, whose attackers must first walk over, at r66). */
     public static final int BREAK_ROUND = 30;
