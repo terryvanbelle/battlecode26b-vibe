@@ -96,37 +96,34 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 09:40 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 11:07 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). The u9p line is
   u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18).
-- **On the replica: z1z** (u9p + SEEK_IDLE/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Block 1 (set 3, 17946-17961):
-  D 8 (+6 -2), t 1.41, transfer 4,932 (floor 3,968; rows ~/diag26b/z1zb1.jsonl). **Block 2 on set 1** (IDs > 17961;
-  waiter build/wait_z1zb2.sh): score `paired 12771-12813 IDS --crown 11549-11677` pooled with block 1; transfer floor
-  4,133 (blockcheck.py vs twin_s1). Accept at pooled t >= 2 (then z2g = z1z + CASH, screen zd143, is its follow-up);
-  reject at <= 1; else block 3 on set 2, where every u9p-line candidate so far lost ~2 cells (TRAINING_LOG 09:14).
-- **Exact silence (09:34-10:00):** no "silent" switch replayed its parent until the ledger: any added bytecode moves
-  Flow.work (it spends whatever a turn leaves) and the other budget reads, so games drift after a few hundred rounds.
-  **tools/ledger.py bots/NAME** applies the exact ledger to a u6x-family bot (G.debt, G.bc(), the left() and direct
-  reads, Debug.mark, the turn resets); its docstring has the engine's counting model (a basic block is counted only at
-  its end; a Clock read is no block end; calls of our code cost 0) and the hook recipe. Check a ledgered bot with a
-  dumped game vs its base: `python3 ~/diag26b/replay_eq.py BASE_DIR CAND_DIR` and `hot_eq.py BASE_DIR CAND_DIR
-  [LAST_ROUND]` (every hot= equal). Screens: `python3 ~/diag26b/scr_eq.py zc6 u6x RUN BOT` lists the cells that differ.
-  - **z2h** = u6x + CASH (ledgered): keepout A identical for 2000 rounds, hot= equal in all 74,340 turns. Screen
-    **zd144** playing (12 of 12 cells identical so far).
-  - **z2i** = u6x + RICH2_BABIES 80 (ledgered): identical to u6x until r706, its first possible act. Screen **zd145**
-    queued next.
-  - **z2j** = z2h + CASH_END 1880 (endgame second king through CASH's formation; kings are 0.5 of war points at
-    r2000). Mechanism games passed (4 of 4 second kings, 4 wins; evileye A flipped). Screen **zd146** playing.
-  - **z2k** = u6x + RICH_LATE 1050 (new: from r1050 to the r1150 cut, two kings and 600 banked name a third king's
-    site while Econ.surplus(3) >= 3000). Validated on cheesefarm A (identical to r1056, third king by r1080, 55-44
-    where u6x lost 49-50). Screen **zd147** queued next.
-  - **z2l** = z2j + RICH_LATE: the bundle. It replays z2k on cheesefarm and z2j on evileye exactly, so it needs no
-    screen of its own (only a cell where both switches act would). Replica candidate after z1z if zd146 and zd147 pass.
-  - zd144: z2h identical to zc6 in 44 of 44 cells (CASH never acts there).
-- **Replica order after z1z:** z2l if zd146 and zd147 pass (else whichever of z2j/z2k passes; z2i's RICH2 can join
-  the bundle if zd145 passes: under the ledger only the cells where a switch acts move); else z2c (passed zd139: t +1.00, picks z +2.26,
-  transfer 1.016). Then u9t, z0r (CAT_HUSH). Submit: `contest.py submit bots/NAME -m TEXT`, `bash
-  build/block_v4sN.sh`, `git checkout research/panel/`.
+- **On the replica: z1z** (u9p + SEEK_IDLE/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Blocks 1-3 pooled: D 33, net
+  +9, t 1.57 (block 3 on set 2: D 12, net +2). **Block 4 on set 4** (sent 10:49, matches > 18041; waiter
+  build/wait_z1zb4.sh for 16 OK matches): score `paired 16848-16863 IDS` pooled with D 33 / net +9; transfer floor on
+  the VM (blockcheck.py; a set-4 twin file is needed). Accept at pooled t >= 2 (attempts set, progress-refresh.sh,
+  commit progress/), else reject.
+- **Exact silence:** **tools/ledger.py bots/NAME** applies the exact ledger to a u6x-family bot; its docstring has the
+  engine's counting model and the hook recipe. A hook whose acting path is costly closes with **G.settle(cd, cb, K)**
+  (K = 18 + base-absent instructions after it): crediting an acting hook made left() overstate the budget and z2j
+  overran 17 times in zd146 (Seal.work/sense2). Check a ledgered bot with a dumped game vs its base:
+  `python3 ~/diag26b/replay_eq.py BASE_DIR CAND_DIR` and `hot_eq.py BASE_RUN CAND_RUN` (every hot= equal). Screens:
+  `python3 ~/diag26b/scr_eq.py zc6 u6x RUN BOT` lists the cells that differ.
+- **The endgame-king line (all on u6x, ledgered; kings alive at r2000 weigh 0.5 of war points):**
+  - z2h CASH (passed zd144, inert); z2j = z2h + CASH_END 1880 (zd146: D 1 net +1, picks/transfer fine, but 17
+    overruns); **z2o** = z2j with settle-capped CASH hooks (exact on keepout A; 0 overruns in all 5 acting cells).
+  - z2k RICH_LATE 1050 (third king r1050-1150 on a surplus; zd147 playing, identical so far); z2m RICH_FIX (rich-site
+    formation fixes; zd148 next); z2i RICH2_BABIES 80 (zd145).
+  - **z2p** = CASH + CASH_END + RICH_LATE + RICH_FIX + settle: the bundle. Checks pass (= z2n's games). **Screen zd149**.
+  - **z2q** = z2p + RICH_MORE 900 (4th/5th king while Econ.surplus(kings+1) >= 3000): inert in practice, the 4th king
+    came at r1111-1133. **z2r** = z2q + RICH_GAP 40 (after a rich king forms, the next site opens 40 rounds later, not
+    210). Checks ~/diag26b/zr; **screen zd150** after zd149.
+  - Field census (tools/lever.py on the VM, 36 field r2000 losses in 624 games): one fewer enemy king flips 23, one
+    more of ours 18; superioristhmus vs spsquared (2-3 kings to their 3-4, 3-15k banked) is 11 of them.
+- **Replica order after z1z:** z2p if zd149 passes (z2r if zd150 passes too); if z1z is accepted, the bundle is ported
+  onto z1z first. Else z2c (passed zd139). Submit: `contest.py submit bots/NAME -m TEXT`, `bash build/block_v4sN.sh`,
+  `git checkout research/panel/`.
 - **CASH (rescue formation; bots/z2e/SNAPSHOT):** when the bank is 60-249, a carrier group 5+ from any king with
   3+ rats and 250+ raw names a site and promotes a rat there (becomeRatKing banks the 3x3's raw). Chain cq2 on u9p:
   won 7 of 8 to u9p's 2. z2f (on u6x, no ledger) failed screen zd142 on transfer (0.964 in the gate form; D 4, net +2,

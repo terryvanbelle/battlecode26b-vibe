@@ -1,0 +1,18 @@
+name=z2r
+source=bots/z2q
+source_sha=1c1a5564ed59
+commit=eacfc9d
+created=2026-11-06 11:07 PST
+
+z2r = z2q + RICH_GAP 40 (new switch, in King.formation()'s drop hook, K 13 from the javap listing): when a king forms
+at a site opened with two or more kings, the site closes and the next may open 40 rounds later, not after FORM_TTL +
+FORM_RETRY (210 rounds from the site's opening).
+Why: z2q's checks (superioristhmus A, keepout A vs araid) formed kings at r685, r904, r1111 and r715, r923, r1133.
+The fourth came just before the r1150 cut, so RICH_MORE's fifth never had time, and both ended on 4 kings with
+11.9k and 13.1k banked. With the gap, the 4th site opens about r945 and a 5th can form by about r1050.
+Field target (tools/lever.py): superioristhmus vs spsquared at 2-3 kings to their 3-4 with 3-15k banked, 11 of the 36
+field r2000 losses; rift vs spsquared 3 to 4 with 8-9k banked.
+Checks (VM ~/diag26b/zr): superioristhmus A/B and keepout A vs araid. Identical to z2q's games until the third king
+forms; then 5 kings before r1150 where z2q held 4, no king starved or killed, no overrun.
+Falsifiers: screen vs zc6 (s6 gates); a 5th king that dies before r2000 in screen games, or a bank that runs dry with
+5 kings (king starvation).
