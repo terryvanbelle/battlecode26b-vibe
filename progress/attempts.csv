@@ -549,7 +549,7 @@ v0f,2026-11-05 17:41,u9p,u9p + RESCUE (capability sweep on u9p),screen zd71 queu
 v0g,2026-11-05 17:41,u9p,u9p + GRAB_MICRO (capability sweep on u9p),"REJECTED at screen zd72 (2026-11-05 PST; s6 overrun gate): 545 overruns vs 0; D 10 (+6 -4) net +2 t +0.63, picks z +0.39; transfer -11%"
 v0h,2026-11-05 17:41,u9p,u9p + THROW_CHECK (capability sweep on u9p),screen zd73 queued
 v0i,2026-11-05 17:41,u9p,u9p + KING_FORAGE (capability sweep on u9p),screen zd74 queued
-v0j,2026-11-05 17:41,u9p,u9p + FACE_REACH (capability sweep on u9p),screen zd75 queued
+v0j,2026-11-05 17:41,u9p,u9p + FACE_REACH (capability sweep on u9p),"dropped from the queue unrun (2026-11-06 00:54 PST): same build as z0p (u9p + FACE_REACH), screened as zd107"
 v0k,2026-11-05 17:41,u9p,u9p + CAT_BLIND (capability sweep on u9p),screen zd76 queued
 v0l,2026-11-05 17:41,u9p,u9p + MINE_ANY (capability sweep on u9p),screen zd77 queued
 v0m,2026-11-05 17:41,u9p,u9p + GATHER_STILL (capability sweep on u9p),screen zd78 queued
@@ -570,7 +570,7 @@ z0c,2026-11-05 21:05,u9p,"u9p + END_CAT 1650 (new switch, Baby.endCat): from r16
 z0d,2026-11-05 21:15,u9p,"u9p + STAB_LAY (new switch): for the 100 rounds after the enemy backstabs, the cooperation cat-trap rules (lane traps, floor-only ring) hold","passed screen zd92 (s6 t +0.81, picks z -1.90; trap mechanism ~65 cat damage a game); held behind z0c (z0f, with it, failed the picks gate)"
 z0e,2026-11-05 21:45,u9p,u9p + END_CAT 1450 (z0c 200 rounds earlier: dose test),"passed screen zd93 (2026-11-05 22:08 PST; s6 t -0.57, picks z -0.43; dmgCat +2.8% over z0c in games reaching r1450): dose adds little; not submitted ahead of z0c/z0f"
 z0f,2026-11-05 22:05,u9p,u9p + END_CAT 1650 + STAB_LAY (z0c + z0d: both cat-share mechanisms),"REJECTED at screen zd94 (2026-11-05 22:19 PST; s6 picks gate): picks/100 31.97 vs 34.30, z -2.46; t +0.81 D 6 +4 -2"
-z0g,2026-11-05 22:34,u9p,u9p + PEACE_FROM 100 (new switch: a truce that has lasted to r100 is kept; early breaks untouched): our late war openings give the victim 100 rounds of cat traps,"on the replica (#235, 2026-11-06 00:05 PST): passed screen zd95 and mechanism run zd96; set-3 block 1 queued after 17415"
+z0g,2026-11-05 22:34,u9p,u9p + PEACE_FROM 100 (new switch: a truce that has lasted to r100 is kept; early breaks untouched): our late war openings give the victim 100 rounds of cat traps,"on the replica (#235): block 1 (set 3, 17426-17441) D 10 (+7 -3) net +4 t 1.26, transfer 4,359 (floor 3,968), 0 r100+ openings; set-1 block 2 queued"
 z0h,2026-11-05 22:44,u9p,u9p + FORM_RICH_BANK 1500 (from 3000): rich kings from a 1500 bank; local rift coop game banked 9.7k with the third king at r1059,"pending: screen zd97 (s6 vs zd61) and mechanism run zd98 (vs u6h/s7d, zd96 cells)"
 z0i,2026-11-05 22:55,u9p,"u9p + RECYCLE_AGE 300 (new switch: at the 10-cat-trap cap in cooperation, lift our stale cat traps; dead lane traps held u9p at the cap 1,774 of 2,000 rounds on rift)","DROPPED before screening (2026-11-05 22:55 PST): its diagnostic rift game lifted 19 cat traps, most 1-74 rounds old (tiles never seen counted stale); replaced by z0j"
 z0j,2026-11-05 22:55,u9p,u9p + LAY_MAX 6 + RECYCLE_AGE 300 strict (cat-trap slots: lane traps only under 6 live; at the cap lift traps on tiles where we saw a cat 300+ rounds ago),"REJECTED at mechanism run zd102 (2026-11-06 PST): catTrapHits 636 vs u9p 674, cat damage 165.9k vs 167.6k (registered: both must rise); wins 21 vs 18"
