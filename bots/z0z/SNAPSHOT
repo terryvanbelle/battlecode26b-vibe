@@ -1,0 +1,8 @@
+name=z0z
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=b9c8024
+created=2026-11-06 02:57 PST
+
+z0z = u9p + FORM_KEEP (z0y's switch without FORM_FILL; z0y was dropped by its all-refusals bar, which FORM_FILL's joiners decide, while FORM_KEEP's own refusals "cats or rat kings" fell 55 to 0) + END_KING_SAVE 1800 (new: from r1800 a lone king with 10+ babies and no enemy in view spawns only above END_KING_CHEESE + 50). Evidence (dump cache, 2026-11-06): in 19 replica points games we ended with one king the bank never reached 400 over r1850-2000 in 15 (most 39-357, the spawn floor), so END_KING never named a site; where it did (learn_your_lesson u9p and z0g A, bank 505-1035) 18 babies queued from r1850 and every centre in reach was blocked by our king's body; field rows: a second king flips 8 of the 15 lone-king points losses (clouds vs Xzibit x3, corridorofdoom vs Varun x3, TheHeist, learn_your_lesson). Registered 2026-11-06 02:58 PST, before any z0z game.
+Falsifiers: mechanism (~/diag26b/lk: z0z vs u6h as A, seed 0, on uneruesansfin, rose, corridorofdoomanddespair, clouds, averystrangespace, peaceinourtime, TheHeist; u9p's games there the control): the games ending with 2+ of our kings must exceed u9p's by 2 or more, or z0z is dropped as inert; any of our kings starving to death where u9p's did not drops it. Screen zd118 vs u9p's zd61 (s6): paired t <= −1.5 rejects; picks/100 per-cell paired z <= −2 rejects; any overrun or exception rejects; transfer per round on the shared cells below 0.97x u9p's rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block; kings alive at r2000 in the block's points games not above the twin's rejects.
