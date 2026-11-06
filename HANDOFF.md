@@ -96,10 +96,12 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-05 19:30 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-05 22:35 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). Candidates
-  descend from it: u9p = u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18);
-  **u9q = u9p + RETREAT_HP 0** is on the replica (#231).
+  descend from u9p = u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18), each one
+  switch screened against u9p's zd61. **z0c = u9p + END_CAT 1650** is on the replica (#234; set-3 block 1 is 16
+  requests queued after match 17187, waiter build/wait_z0cb1.sh). Held after passing screens: z0d (STAB_LAY, picks z
+  -1.90), z0e (END_CAT 1450).
 - Replica scoring (twin-anchored; pass explicit match IDS, others' matches sit in the ranges):
   set 3 `contest.py paired 13248-13291 IDS --crown 12130-12163`; set 1 `paired 12771-12813 IDS --crown 11549-11677`;
   set 2 `paired 12838-12899 IDS --crown 11678-11702`; set 4 `paired 16848-16863 IDS` (u6x reference, 28 of 48).
@@ -108,16 +110,21 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   ($4=="vibe26b"||$7=="vibe26b")'`, then `contest.py fetch --new --pages 8`. Transfer floor (u9p family): field_report
   xUs per game >= 0.9x the twin (set 3: 3,968; set 1: 4,133): rsync the 16 match dirs to the VM's ~/diag26b/rp/
   and run `tools/field_report.py games --ids LO-HI --csv` there (never locally: the laptop disk filled at 100%).
-- u9q: set-3 block 1 (16881-16885, 16931-16942) D 11 (+7 -4), net +3, t 0.90, xUs 4,358; set-1 block 2 from 16957
-  (waiter build/wait_u9qb2.sh). Then set 2 (block 3, rejects at pooled t <= 1.5), then set 4.
+- Closed 2026-11-05/06 on the u9p base: u9q (RETREAT_HP 0: transfer floor), w0b and z0b (inert), w0c (kings
+  falsifier after block 2; its replica games replayed u9p's), z0a (RETREAT_CARRY: transfer gate), z0f (END_CAT +
+  STAB_LAY: picks z -2.46). The replica is deterministic: a switch that never fires replays its parent's games.
 - Local screens (VM): `runs/xt2/cells.tsv` with bots/u5n replaced, `arena.py matrix ... --jobs 3` (~35 min with the
   replica sharing the 8 cores). Score with `build/score_screen.sh RUN BOT [CTRL_RUN CTRL_BOT]`. Controls: zc6 (u6x,
   32 of 44, picks/100 35.56), zd61 (u9p, 38), zd62 (u9q, 40). Basics gate (14:27 rule): overruns/exceptions, picks/100
-  below 33.8, D 0. Queue: VM `runs/seq_main5.sh` (zd87 y0a, zd88 v1a, zd82 w0b, zd83 w0c, zd69 v0p, zd72 v0g, zd70
-  v0e, zd85 x0a, zd86 x0b, then the v0 switch sweep). `tools/abort_watch.py` (VM: runs/abort_watch.py
-  runs/gates_main4.tsv; gates in research/screens/gates_main4.tsv) stops a screen once its wins gate is unreachable.
-  Waiters: `tools/wait_run.sh RUN`. To reorder the queue, start a new seq script that waits on the running arena's
-  pid, then kill the old seq script by pid (never by pattern: a pkill/pgrep -f matched the ssh shell once).
+  below 33.8, D 0. Queue: VM `tools/screenq.sh 3` pops run names from runs/screenq.txt (insert at the front with
+  `flock runs/screenq.lock sed -i '1i zdNN' runs/screenq.txt`; cells first: `sed 's#bots/u9q\b#bots/NEW#g'
+  runs/zd62/cells.tsv > runs/zdNN/cells.tsv`). Gates: research/screens/gates.tsv, rsynced to VM runs/gates.tsv, read
+  every minute by `tools/abort_watch.py runs/gates.tsv --follow` (stops a screen once its wins gate is unreachable).
+  Score with `bash tools/score_screen.sh RUN BOT zd61 u9p`. Waiters: `tools/wait_run.sh RUN`; kill by pid only (a
+  pkill/pgrep -f once matched the ssh shell).
+- VM disk: the replica's replay store grows ~2.4 GB a day; prune replays older than ~36 h by hand (`find ... -mmin
+  +2160`, list to /root/bc26-replays-pruned-*.txt) whenever `df -h /` shows under 2 GB free. An hourly root cron for
+  this was not installed (the harness denied the persistence; the owner decides).
 - Recent evidence (TRAINING_LOG 2026-11-05): u9p's 59 king-kill losses: the last king starved in 34 (after the army
   collapsed), bite 16, throw hits 7; enemy rat traps killed 805 of ours, ours 0. u9q's set-3 fast losses are
   grab-and-throw wars on small maps (tiny vs waxmango: their grabs 108 to our 67, 39% of our grabs ended with our
