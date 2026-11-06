@@ -1,0 +1,8 @@
+name=y0a
+source=bots/u9q
+source_sha=baaa1dbedba3
+commit=86f36b0
+created=2026-11-05 18:08 PST
+
+y0a = u9q + u8f's field-dose reactive baby rat traps (BABY_RAT_TRAPS, TRAP_ADJ, TRAP_CAP 25, TRAP_SPAWN_FIRST, RAT_TRAP_MIN_CHEESE 300). Evidence: u9p's 59 king-kill losses: their rat traps killed 805 of ours (113.7k HP), ours 0; grabs, throws and bites are otherwise even. u8f on u6x was rejected at block 2 (pooled D 11 net -1); the base is now u9q (no retreat, cooperation cat traps, no trap squeaks). Registered 2026-11-05 18:08 PST.
+Falsifiers: screen vs u9q's zd62 (40 wins of 44): any overrun or exception, picks/100 below 33.8, D 0, or wins below 39 rejects; starved kings above 2 rejects (u0q's failure mode). Replica: u9p's falsifiers plus our rat-trap kills a game below 5 (the traps must kill).
