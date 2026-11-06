@@ -600,3 +600,4 @@ z1g,2026-11-06 03:28,u9p,"u9p + END_KING_DYN_FROM 1890: from r1890 END_KING's ba
 z1h,2026-11-06 03:38,u9p,u9p + COOP_DUMP 10: in cooperation an attacker spends its whole carried load on its next cat bite,dropped: inert (no cat bite spent cheese; the dump was limited to the ATTACK role)
 z1i,2026-11-06 03:45,u9p,u9p + COOP_BITE 2: cooperation cat bites spend 2 cheese (bank >= 300 or carried),"pending: mechanism ~/diag26b/ci, then screen zd124"
 z1j,2026-11-06 03:45,u9p,z1i + COOP_BITE_HI 5 (bank >= 600): cooperation cat bites spend 5 from an idle bank,"pending: mechanism ~/diag26b/ci, then screen zd125"
+z1k,2026-11-06 03:47,z1i,u9p + WAR_CAT_BITE 2: at war cat bites spend 2 cheese while the bank holds 800,"pending: mechanism ~/diag26b/wk, then screen zd126"

@@ -1,0 +1,15 @@
+name=z1k
+source=bots/z1i
+source_sha=46d894062fe4
+commit=405f489
+created=2026-11-06 03:47 PST
+
+z1k = u9p + WAR_CAT_BITE 2 (floor 800). Made from z1i's code with COOP_BITE 0, so cooperation is u9p's. At war a cat bite spends 2 cheese (12 damage, 1 a unit) while the bank holds 800. Cat damage is 0.3 of the war points from the cats' fixed health, and transfer is 0.2 of a pool near 10-20k by r2000. In u9p's local war games (clouds vs abrk, araid, u6h) our rats bit cats 391-445 times, and 1-2 of those bites spent cheese (the BUDGET rule) while the bank held 900-2,000 before the cats died (r900-1300).
+Falsifiers, registered before any z1k game:
+- Mechanism (VM ~/diag26b/wk, seed 0, A seat: clouds vs abrk, clouds vs araid, clouds vs u6h, corridorofdoomanddespair vs u6h; u9p's dk and lk games the control).
+  - Under half of our war cat bites made with the bank at 800+ spending cheese drops it as inert.
+  - Our cat damage summed over the 4 not above u9p's 16,803 drops it.
+  - A game lost that u9p won drops it.
+  - Fewer kings formed than u9p in any game, or a starved king, drops it.
+- Screen zd126 vs u9p's zd61 (s6), with the standard gates.
+- Replica: the standard block rules.
