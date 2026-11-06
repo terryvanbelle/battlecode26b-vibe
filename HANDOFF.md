@@ -96,29 +96,32 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 03:03 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 03:30 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). Candidates
   descend from u9p = u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18), each one
-  switch screened against u9p's zd61. z0g (PEACE_FROM 100) was rejected after block 3 (pooled D 30, net +4, t 0.73).
-  **z0q = u9p + RAW_TRAPS** is on the replica (submission 236): set-3 block 1 queued after match 17486 (16 in the
-  drain queue), waiter build/wait_z0qb1.sh; score with `paired 13248-13291 IDS --crown 12130-12163`; block 1 rejects
-  at t <= 0; set-3 transfer floor 3,968 (field_report xUs per game, rows on the VM). Twin rows for set 3 are in the
-  z0g block-1 era files on the VM (~/diag26b; set 1 twin_s1.jsonl, set 2 twin_s2.jsonl).
+  switch screened against u9p's zd61. **z0q = u9p + RAW_TRAPS** is on the replica (submission 236): block 1 (set 3,
+  17502-17542) D 10, net +2, t 0.63, transfer 4,396 (floor 3,968), continues; set-1 block 2 queued after match
+  17542 (4 sent, 12 in the drain queue), waiter build/wait_z0qb2.sh; score with `paired 12771-12813 IDS --crown
+  11549-11677`; transfer floor 4,133 (rows: rsync the 16 match dirs to VM ~/diag26b/rp, `field_report.py games
+  --dir ~/diag26b/rp --ids IDS > ~/diag26b/z0qb2.jsonl`, then `research/audits/blockcheck.py
+  $HOME/diag26b/z0qb2.jsonl,$HOME/diag26b/twin_s1.jsonl IDS 12771-12813`; set-3 twin rows are rp_games.jsonl).
   Next on the replica: **z0w** (z0q + CAT_HUSH) if it passes screen zd115, else **z0r** (u9p + CAT_HUSH; passed
-  zd110: t +0.37, picks z +0.38, transfer per round 0.977x). Held after passing screens: z0d (STAB_LAY), z0e (END_CAT 1450).
+  zd110). Held after passing screens: z0d (STAB_LAY), z0e (END_CAT 1450), z0h (zd97; mechanism run zd98).
 - Screening (VM queue runs/screenq.txt): zd98 (z0h's mechanism run, running: `research/audits/mech_cmp.py
-  runs/zd98/results.jsonl z0h runs/zd96/results.jsonl u9p`; z0h passed its screen zd97: D 0, kingsFormed 35 vs 31),
-  zd115 z0w, zd112 z0t (z0q + RAW_ANY), zd113 z0u (MINE_BURN 50), zd114 z0v (RAW_RAID_HALF 1), zd107 z0p (FACE_REACH),
-  zd108 z0o (BURY), then the old sweep. Each candidate's falsifiers are in its bots/NAME/SNAPSHOT.
-  Screen transfer gates from z0q on are per round on the shared cells (inline script in TRAINING_LOG 02:12).
-- King lever (02:14-03:03 in the log): one more king at r2000 flips 17 of 38 war points losses; lone-king points
-  losses never open a formation mid-game (income 1-3 cheese/round, the test needs 4) and END_KING (r1850) fails:
-  the bank sits under 400 (15 of 19 games), the site by the king pulls ~4 babies (FORM_PULL_R2 72), the king's body
-  covers the site, and joiners cannot reach a corner site's far tiles ("Not enough rats in the 3x3" is the main
-  refusal). Candidates, each with mechanism falsifiers before its screen: z0z (u9p + FORM_KEEP + END_KING_SAVE) and
-  z1b (z0z + END_PULL_R2) on the seven lk maps vs u6h (VM ~/diag26b/lk, u9p's games the control, scratch lkinc.py);
-  z1a (u9p + FORM_PACK) via its debug copy zfk4 on the four fk3 games (~/diag26b/fk3, `fkcount.py`; zfk's refusals
-  535, bar 268). Debug copies bots/zfk* are untracked and not candidates. z0x and z0y were dropped by the same bar.
+  runs/zd98/results.jsonl z0h runs/zd96/results.jsonl u9p`), zd115 z0w, **zd119 z1a, zd121 z1c, zd120 z1e**,
+  zd112 z0t (z0q + RAW_ANY), zd113 z0u (MINE_BURN 50), zd114 z0v (RAW_RAID_HALF 1), zd107 z0p (FACE_REACH), zd108 z0o
+  (BURY), then the old sweep. zd122 (z1f) waits on its mechanism games. Each candidate's falsifiers are in its
+  bots/NAME/SNAPSHOT. Screen transfer gates from z0q on are per round on the shared cells (inline script in
+  TRAINING_LOG 02:12). The screen maps hold no lone-king map: king-lever screens only show harm.
+- King lever (02:14-03:30 in the log): one more king at r2000 swings the war points margin by 16.7 and flips 17 of
+  38 war points losses. Passed their mechanism tests and queued: **z1a** (FORM_PACK: ring rats make room so joiners
+  reach a corner site's far tiles; refusals 535 -> 164), **z1c** (FORM_RING_FROM 400: a ring site beside a corner
+  king; clouds second king r647, but evileye lost faster with both kings side by side), **z1e** (END_PULL_R2 10000:
+  from r1850 babies join from any distance; uneruesansfin second king r1913). **z1f** (END_KING_DYN: END_KING's bar
+  min(400, 80 + 4 * max(0, R - 55)); a king formed with 55 rounds left lives to r2000 on an empty bank; met in all 12
+  lost lone-king replica points games, 9 of which never had 400) has mechanism games running in VM ~/diag26b/dk
+  (falsifiers in its SNAPSHOT). Those that pass their screens can go as one hand-merged candidate (they act on
+  different code; tools/bundle.sh NAME BASE CAND... appends Cfg lines and patches the rest strictly, tested on z1a-z1d).
 - Replica scoring (twin-anchored; pass explicit match IDS, others' matches sit in the ranges):
   set 3 `contest.py paired 13248-13291 IDS --crown 12130-12163`; set 1 `paired 12771-12813 IDS --crown 11549-11677`;
   set 2 `paired 12838-12899 IDS --crown 11678-11702`; set 4 `paired 16848-16863 IDS` (u6x reference, 28 of 48).
@@ -127,7 +130,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   ($4=="vibe26b"||$7=="vibe26b")'`, then `contest.py fetch --new --pages 8`. Transfer floor (u9p family): field_report
   xUs per game >= 0.9x the twin (set 3: 3,968; set 1: 4,133): rsync the 16 match dirs to the VM's ~/diag26b/rp/
   and run `tools/field_report.py games --ids LO-HI --csv` there (never locally: the laptop disk filled at 100%).
-- Closed 2026-11-06: z0x and z0y (formation refusal bar), z0g (PEACE_FROM 100: block 3), z0s (RAW_RAID: transfer 0.950), z0j (LAY_MAX: mechanism), z0k (FORM_WAR_FROM 300: picks z -3.26), z0l (SIEGE_STAY 20:
+- Closed 2026-11-06: z0z (FORM_KEEP + END_KING_SAVE: inert on the lk maps), z1b (z0z + END_PULL: mechanism bar), z1d (FORM_NET100_COOP: mechanism), z0x and z0y (formation refusal bar), z0g (PEACE_FROM 100: block 3), z0s (RAW_RAID: transfer 0.950), z0j (LAY_MAX: mechanism), z0k (FORM_WAR_FROM 300: picks z -3.26), z0l (SIEGE_STAY 20:
   transfer gate 0.952), z0m (RETREAT_HP 20: wins gate), z0n (END_CAT without gatherers: transfer 0.946). Closed 2026-11-05/06 on the u9p base: u9q (RETREAT_HP 0: transfer floor), w0b and z0b (inert), w0c (kings
   falsifier after block 2; its replica games replayed u9p's), z0a (RETREAT_CARRY: transfer gate), z0f (END_CAT +
   STAB_LAY: picks z -2.46). The replica is deterministic: a switch that never fires replays its parent's games.
