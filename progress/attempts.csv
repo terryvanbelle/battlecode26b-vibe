@@ -558,7 +558,7 @@ v0n,2026-11-05 17:41,u9p,u9p + BUG_DIG (capability sweep on u9p),screen zd79 que
 v0o,2026-11-05 17:41,u9p,u9p + SEEK_FRONTIER (capability sweep on u9p),screen zd80 queued
 w0a,2026-11-05 17:45,u9p,u9p + FORM_RICH_MAX 5 (points lever: kings alive weigh 0.5),"REJECTED at screen zd81 as inert (2026-11-05 19:05 PST): D 0, every shared cell and total equal to u9p's zd61 (kingsFormed 31 = 31); 38 wins of 44; picks/100 34.21"
 w0b,2026-11-05 17:45,u9p,u9p + FORM_RICH_MAX 5 + FORM_RICH_BANK 2000,REJECTED at screen zd82 as inert (2026-11-05 19:52 PST; falsifiers_v2 D 0): 38 wins of 44 = u9p; picks/100 34.69 (z +1.23); kingsFormed 34 vs 31
-w0c,2026-11-05 17:45,u9p,u9p + FORM_LATE (a lone king may form a second until r1940),"passed screen zd83 (s6: t -1.00, picks z -1.00, D 1); replica #233 block 1 (set 3) running"
+w0c,2026-11-05 17:45,u9p,u9p + FORM_LATE (a lone king may form a second until r1940),"replica #233: block 1 set 3 D 8 +5 -3 net +2 t 0.71 (xUs 4,462; points-game kings 2.00 vs twin 1.87); block 2 set 1 running"
 w0d,2026-11-05 17:45,u9p,u9p + FORM_RICH_MAX 5 + FORM_LATE,DROPPED unscreened (2026-11-05 19:05 PST): screen-equivalent to w0c by construction (FORM_RICH_MAX 5 inert on zd81 and acts only before r1150; FORM_LATE only after)
 x0a,2026-11-05 18:04,u9q,u9q + FORT_R 4 (fighters hold a ring by the king at war),screen zd85 queued
 x0b,2026-11-05 18:04,u9q,u9q + FORT_R 6,screen zd86 queued
