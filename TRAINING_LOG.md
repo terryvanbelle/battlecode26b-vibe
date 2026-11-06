@@ -6536,3 +6536,8 @@
   - Every addition sits in a measured hook (King: the walk, the drop and the rich pick, K 11 each; Baby.formKing: K 9, 11 and 9; all javap-checked). The rich pick runs u6x's pickFormSite and ringSite unchanged until a rich site has been banned.
   - So a game replays u6x's exactly until a third (or later) king's site opens. z2a (the same switches for every site, on u9p) formed 12 of 14 bursts to u9p's 6 of 13 on superioristhmus and passed zd137, but drifted every game.
   - Running (~/diag26b/rf): validation keepout A vs u6x's dump, and the mechanism on superioristhmus A and B vs araid (z2m and u6x). Falsifiers in bots/z2m/SNAPSHOT.
+- 10:37: **z2m validated, and its mechanism games pass** (~/diag26b/rf, vs araid, seed 0):
+  - keepout A is identical to u6x's dump through r918. At r919 a joiner on an open rich site (mv=K; u6x holds 2 kings from r715) takes the FORM_FILL step from (47,31) to (47,32). The hook acting is the first divergence.
+  - Kings at r1190: superioristhmus A 4 (u6x 3), superioristhmus B 4 (u6x 4), keepout A 4 (u6x 3). All won, 0 king deaths. Transfer within 3% of u6x's in each.
+  - Screen **zd148** queued after zd147 (z2k), ahead of zd145 (z2i).
+  - zd146 (z2j) at 22 of 48: 4 cells differ (wallsofparadis and learn_your_lesson, all CASH_END cells), all still won.
