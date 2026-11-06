@@ -1,0 +1,16 @@
+name=z2w
+source=bots/z2u
+source_sha=1ca52e8cd4a2
+commit=87b422e
+created=2026-11-06 11:31 PST
+
+z2w = z2u + RICH_FIX_KINGS 1: RICH_FIX's formation fixes (the joiner shift/fill steps, the king keeping off its own
+site, dropping a site with a king on it, and banning a timed-out site with a 20-round retry while rich) also cover
+sites opened with one king, so the second king. The five conditions read Cfg.RICH_FIX_KINGS instead of 2 (inlined
+constants: the same bytecode shapes inside the same hooks).
+Why: z2u's checks. z1z on superioristhmus A vs araid tried a second king at r800-850 and r1000-1050 (1,542 and
+1,492 baby-turns walking to the sites), both failed, and it held one king with 20k banked until END_KING formed one at
+r1974 (z2u: CASH_END at r1881). u6x forms that king at r685. In the field z1z sat at 2 kings to spsquared's 3 there.
+Checks (VM ~/diag26b/zw): superioristhmus A/B and keepout A vs araid, against z2u's games: identical until the first
+second-king site; then a second king by about r850 and more after; no king lost, no overrun.
+Falsifiers: screen against z1z's control (zd136) with the s6 gates; then the replica only if z1z is the incumbent.

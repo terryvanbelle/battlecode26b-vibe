@@ -6585,3 +6585,11 @@
 - 11:24: **z2t's checks:** it acted on cheesefarm A (3rd king r978, 4th r1125, won 59-40; z2r 55-44, 3 kings) and superioristhmus B (5th king r922, z2r r1130; 75-24 both). Superioristhmus A and keepout A replayed z2r's games exactly. No king lost, no starve damage, no overrun on our side.
   - Why A didn't move: the 2nd king reaches FORM_MAX (2) while rich() is false (bank just under 3,000), so formation()'s cap check clears the site and returns before the open-site branch's gap runs. formStart then holds the 3rd site until about r885.
   - **z2v = z2t + the gap in the cap branch** (new ledger hook, K 11 from javap). Checks running (~/diag26b/zv).
+- 11:31: **z2u validated** (~/diag26b/zu, z1z and z2u vs araid):
+  - superioristhmus A replays z1z's game until CASH_END acts at r1880 (2nd king r1881; z1z's END_KING r1974). Both won 62-37.
+  - keepout A replays it until RICH_LATE acts at r1050. Kings 3, 4 and 5 then form at r1054, r1101 and r1150; won 70-29 (z1z 62-37).
+  - No overrun or exception in either game.
+- 11:31: **z1z cannot form a 2nd king on superioristhmus A** (u6x does at r685).
+  - Baby-turns walking to sites: 1,542 at r800-850 and 1,492 at r1000-1050. Both sites failed, and it held 1 king with 17-22k projected surplus until r1974.
+  - RICH_FIX covers only sites opened with 2+ kings, so z2u can't help there.
+  - **z2w = z2u + RICH_FIX_KINGS 1** (RICH_FIX's five conditions read the knob instead of 2). Checks running (~/diag26b/zw).
