@@ -1,0 +1,23 @@
+name=z2i
+source=bots/u6x
+source_sha=2105e4472090
+commit=4ecef29
+created=2026-11-06 09:56 PST
+
+z2i = u6x + RICH2_BABIES 80 (u6x's own second rich tier: with 3,000+ banked the baby cap rises from RICH_BABIES 40
+to 80), under the exact bytecode ledger (tools/ledger.py, as z2h). King.babyCap runs u6x's body unchanged
+(babyCap0, javap-identical) and then the RICH2 check inside a measured hook (K 14), so z2i replays u6x's games exactly
+until a king with 3,000+ banked would spawn past 40 babies.
+Why: rich points losses. Replica superioristhmus vs spsquared (u9p line): 0 of 6, 4.2-11.8k banked, our babies held at
+the 40 cap while theirs ran 50-52 (17551); u0m's set-2 superioristhmus games ended with 22-31k banked and 40 rats
+while outercloud ran 53-66. Babies eat nothing; only the spawn price. On the u9p line (z1r) the switch passed screen
+zd129 (t -1.00, per-round pickAmt 1.015, z +2.21; transfer 1.026), but every u9p-line replica block was the same
+drift (TRAINING_LOG 09:14), so it was never read on its own. Under the ledger only games that reach a 3,000 bank with
+40 babies can move: on the screen and on the replica, every other cell repeats u6x's game.
+Validation: z2i vs araid keepout A (seed 0) against u6x's dump: u6x first holds 3,000 with 40 babies at r705, so
+every hot= reading before r705 must equal u6x's (hot_eq.py) and the state must not differ before r705 (replay_eq.py).
+Falsifiers:
+- Screen vs zc6 (u6x's 48 cells, seed 0) with the s6 gates (t <= -1.5; per-round picks z <= -2; transfer per round
+  < 0.97 in the gate's form; any overrun or exception), and a replay check: a differing cell must reach a 3,000 bank
+  in zc6's game (or z2i's); 2 or more differing cells that never do mean the ledger leaks.
+- Replica: standard block rules with identity-aware scoring (--crown) and the per-block transfer floor.
