@@ -1,0 +1,8 @@
+name=z0a
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=585ff19
+created=2026-11-05 19:50 PST
+
+z0a = u9p + RETREAT_CARRY (new switch, one line in Baby.retreat): the RETREAT_HP 40 retreat applies only to a baby carrying raw cheese; a wounded empty-handed baby keeps fighting. Evidence: u9q (u9p + RETREAT_HP 0) on the replica, 96 cells pooled D 23 net +9 t 1.90 against the twin, but set-1 delivery 3,915 a game (u9p 4,425; floor 4,133), and on its screen shared-cell transfer -4.9% vs u9p. Reading under test: u9q's win gain comes from wounded fighters staying in the fight, its delivery loss from wounded carriers dying with their cheese. Registered 2026-11-05 19:50 PST, before any z0a game.
+Falsifiers: screen zd89 vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 on per-cell win/loss rejects; picks/100 worse by per-cell paired z <= -2 rejects; any overrun or exception, or D 0, rejects; transferAmt on the shared cells below 0.97x u9p's rejects (u9q read 0.951). Replica: the standard block rules on sets 3, 1, 2, then 4 against the twin's anchors; cheese transferred below 0.9x the twin's (set 3: 3,968 a game; set 1: 4,133) rejects in that set's block. The screen runs while block 1 plays; a screen reject stops the replica block.
