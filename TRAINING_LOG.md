@@ -6301,3 +6301,10 @@
   - Transfer floor met: 4,504 a game (floor 3,968; VM ~/diag26b/z0kb1.csv).
   - Its mechanism falsifiers (twin rows in VM ~/diag26b/twin_s3.csv): z0k never formed a king at war before r300. In the 7 games where the twin did, z0k won 2 to the twin's 1 (bar: the twin's wins + 1). FreeTheCheese B vs waxmango flipped with the second king at r316 instead of r280.
   - Block 2 (set 1, build/block_v4s1.sh) is queued after match 17742: 4 sent, 12 left to the drain loop (hourly limit).
+- 06:48: **z1s (COOP_GUARD) REJECTED at screen zd130** vs u9p zd61: n 44, D 1, net −1, t −1.00. Two gates failed: transfer per round on the shared cells 0.933 (gate 0.97), and per-round pickAmt ratio 0.937 with z −2.03 (gate −2). Per-rat-turn picks were 33.13 vs 34.30; 0 overruns, 0 exceptions. Its no-step-beside-an-enemy rule costs gathering in the screen's wars. The rift A cell vs spsquared stays open.
+- 06:48: **Where our babies reach the centre late** (scratch centrescan.py over the 145 cached replica games; first round a baby stood within Chebyshev 6 of the centre, median, us/them):
+  - wallsofparadis never/142 (0 of 8 won): a war from r52 by Finals' trap, and we never pass the dirt-gated rings.
+  - averystrangespace 859/462 (13 of 16 games 150+ rounds late).
+  - uneruesansfin 614/356 (wars at r287-566).
+  - fullofsecrets 161/66, ratsareants 208/148.
+  - Everywhere else we arrive within ~40 rounds of them. The seekers' tunnel only runs in cooperation, so wallsofparadis would need a war-time version.
