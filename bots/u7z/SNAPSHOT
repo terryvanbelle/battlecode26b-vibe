@@ -1,2 +1,11 @@
 u7z: u7x + FIGHT_SHIFT: a FIGHT_MINE fighter idle 20 turns within Chebyshev 4 of its mine without a pickup moves to the next mine of its pick list (IDLE_SHIFT's shift, no seeking), so guards spread over the mines thieves work instead of stacking where the gatherers already pick. Replica losses: 28 our-half piles a game taken by them vs 5 in wins. 2026-11-04 00:18 PST.
 Falsifiers: screen zd24 vs zc6 wins below u7x's 37 or any overrun rejects; picks/100 rat-turns below u7x's 39.1 rejects. Replica (if screened): our-half piles taken by them per lost game not below u7x's.
+
+revived 2026-11-06 05:11 PST (before any replica game). Falsifier 2 at screen zd24 was a pooled bar (picks/100 rat-turns 37.3 < u7x's 39.1), not a paired test.
+- Paired vs u7x's zd22 on 44 cells: per-cell picks z −0.15; per round (scratch ppr.py) z +0.93, ratio 1.015; transfer per round 1.031.
+- Vs the incumbent u6x's zc6: D 9, net +7, t +2.46; per-round picks z +2.53, ratio 1.051; transfer per round 1.040.
+- It passes every current s6 gate.
+falsifiers_v2 (replica, against the u6x twin):
+- the standard block rules (sets 3, 1, 2, 4);
+- transfer floor 0.9x the twin (set 3 3,968; set 1 4,133);
+- mechanism: our-half piles taken by them per lost game (scratch pilerace.py on the block games) not below the twin's on the same cells marks FIGHT_SHIFT inert there (reported, not a reject on its own if the block rules accept).

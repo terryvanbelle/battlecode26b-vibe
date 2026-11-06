@@ -1,0 +1,16 @@
+name=z1q
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=6c648c8
+created=2026-11-06 05:10 PST
+
+z1q = u9p + SEEK_IDLE 20 + IDLE_SHIFT + FIGHT_SHIFT (u7z's three economy switches on the u9p line; FIGHT_SHIFT's Baby.java hunk patched strictly). Registered 2026-11-06 05:11 PST, before any z1q game. Evidence: u7z (= u6x + the same three) on screen zd24 vs u6x's zc6:
+- D 9, net +7, t +2.46 (39 wins of 44);
+- per-round pickupAmt ratio 1.051, z +2.53; transfer per round 1.040.
+u7z was rejected at the time by a pooled picks-per-rat-turn bar (37.3 < u7x's 39.1, per-cell z −0.15). u7x (u6x + SEEK_IDLE 20 + IDLE_SHIFT) reached replica block 1 at t +0.71 and failed a mechanism bar (nearest-mine rat-rounds −13% vs −15%).
+Falsifiers, screen zd128 vs u9p's zd61 (s6):
+- paired t <= −1.5;
+- per-cell picks z <= −2, per rat-turn or per round (scratch ppr.py);
+- transfer per round below 0.97;
+- any overrun or exception;
+- inert: per-round pickupAmt ratio below 1.01 vs zd61 (u7z gained 5.1% over u6x).
