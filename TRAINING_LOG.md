@@ -6598,3 +6598,12 @@
   - keepout A: kings at r715, **r760, r817, r895** (z2r had no 5th). Won 71-28 (70-29).
   - superioristhmus B and cheesefarm A: as z2t.
   - No king lost, no starve damage, no overrun on our side.
+- 11:46: **z1z ACCEPTED over u6x** (replica block 4 on set 4: 18042-18045, 18052-18055, 18071-18078 vs `paired 16848-16863`).
+  - Block 4: 48 cells, 35 alike, D 13, net +5.
+    - Gained 9: Finals attack_on_cat B; Xzibit Hike A; YokoOno Meow A and B, tornadoes B; Varun arrows B, groveisbeingdesecrated A; Merlin RUN B, sunandmoon A.
+    - Lost 4: Finals averyfineline B, Icarus tiny A, YokoOno rose B, Merlin RUN A.
+  - Pooled over blocks 1-4: D 46, net +14, **t 2.06** (accept at 2).
+  - Transfer floor (field_report rows on the VM, ~/diag26b/z1zb4.jsonl vs the new ~/diag26b/twin_s4.jsonl, blockcheck.py): 4,291 a game vs a floor of 3,188 (twin 3,542), so it passes. Won 33 to the twin's 28; king-kill wins 20 each; points games 13 to 8; kings alive at the end of them 1.62 to 1.75.
+  - attempts set, tools/progress-refresh.sh (all steps ok), progress/ committed.
+  - **The incumbent is z1z.** Screens now compare against zd136 (z1z's control), and the replica follow-up is the z1z-based bundle (z2u line: z2w, checks running).
+  - The field_report runs added 32 dumps (416 MB) to build/dumpcache and the VM fell to 1.8 GB. I removed those (chmod first: the cache is read-only) and gzipped the finished chains' big tsv files (wp 751 to 161 MB, cq2, fz, sk, tn, av, zq, zs, zo): 2.9 GB free.

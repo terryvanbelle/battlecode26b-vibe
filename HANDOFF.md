@@ -96,14 +96,13 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 11:07 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). The u9p line is
-  u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18).
-- **On the replica: z1z** (u9p + SEEK_IDLE/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Blocks 1-3 pooled: D 33, net
-  +9, t 1.57 (block 3 on set 2: D 12, net +2). **Block 4 on set 4** (sent 10:49, matches > 18041; waiter
-  build/wait_z1zb4.sh for 16 OK matches): score `paired 16848-16863 IDS` pooled with D 33 / net +9; transfer floor on
-  the VM (blockcheck.py; a set-4 twin file is needed). Accept at pooled t >= 2 (attempts set, progress-refresh.sh,
-  commit progress/), else reject.
+## State (2026-11-06 11:46 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- Incumbent: **z1z** (accepted 2026-11-06 11:46 PST over u6x; replica blocks 1-4 pooled D 46, net +14, t 2.06; u9p + SEEK_IDLE
+  20/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Screen control: **zd136** (z1z). Before it: u6x (control zc6).
+- **Replica: idle until the next submission.** The follow-up is the z1z-based endgame-king bundle: **z2u** (z1z +
+  ledger + z2r's bundle, built by patching the ledgered-u6x -> z2r diff onto ledgered z1z with no fuzz; validated) and
+  **z2w** (z2u + RICH_FIX_KINGS 1: z1z's second-king formations fail on superioristhmus). Set-4 twin rows:
+  ~/diag26b/twin_s4.jsonl.
 - **Exact silence:** **tools/ledger.py bots/NAME** applies the exact ledger to a u6x-family bot; its docstring has the
   engine's counting model and the hook recipe. A hook whose acting path is costly closes with **G.settle(cd, cb, K)**
   (K = 18 + base-absent instructions after it): crediting an acting hook made left() overstate the budget and z2j
