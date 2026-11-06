@@ -1,0 +1,16 @@
+name=z1l
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=9567f65
+created=2026-11-06 04:01 PST
+
+z1l = u9p + SWAP_LOADED 30 (SWAP_HOME 10) (new). A rat carrying 30+ raw, held 2 turns behind an allied baby carrying under 10 on its next step within Chebyshev 10 of our nearest king, carries the ally past (the dormant swapPast) and sets it down behind. No other pair swaps. Replica evidence (scratch starvejam.py over the z0c, z0g and z0q blocks): on rose our king starved at r1107-1342 with 19-20 babies alive and 600-1,040 raw held within Chebyshev 10 for 200 rounds (vs thewaxmango, AdamTan12_Icarus, spsquared twice); fullofsecrets vs spsquared alike (1,030 raw within 10). At 17455 r1000 empty rats sat in the mouth of the 1-wide stem out of our king's pocket while the loaded ones waited inside it. The general swap (u1s: SWAP_HOLD 2 + YIELD + NO_ALONG) was rejected at screen (t −1.16, net −10); this one fires only for a loaded rat near home against an empty one.
+Falsifiers, registered before any z1l game:
+- Mechanism (VM ~/diag26b/sl, seed 0; u9p alongside as the control): rose vs araid, abrk, u6h and fullofsecrets vs abrk, both seats (8 games each).
+  - Fewer than 10 ally grabs over z1l's 8 games (summary grabsAlly) drops it as inert.
+  - If u9p shows the jam in any game (a king starved with 300+ raw within Chebyshev 10 of it 100 rounds before), z1l must not starve in at least half of those games.
+  - z1l's wins over the 8 below u9p's drops it.
+  - z1l's summed transfer below 0.95x u9p's drops it.
+  - Any exception or overrun drops it.
+- Screen zd127 vs u9p's zd61 (s6; no rose cells, so it tests harm only), with the standard gates.
+- Replica: the standard block rules.

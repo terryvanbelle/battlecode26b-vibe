@@ -601,3 +601,4 @@ z1h,2026-11-06 03:38,u9p,u9p + COOP_DUMP 10: in cooperation an attacker spends i
 z1i,2026-11-06 03:45,u9p,u9p + COOP_BITE 2: cooperation cat bites spend 2 cheese (bank >= 300 or carried),"dropped: mechanism fired (12.0 a bite) but cat damage 16,052 vs u9p 17,165 (registered bar: above)"
 z1j,2026-11-06 03:45,u9p,z1i + COOP_BITE_HI 5 (bank >= 600): cooperation cat bites spend 5 from an idle bank,"dropped: lost peaceinourtime B (u9p won); cat damage 16,248 vs 17,165; trap hits fell (21/29 vs 38/34)"
 z1k,2026-11-06 03:47,z1i,u9p + WAR_CAT_BITE 2: at war cat bites spend 2 cheese while the bank holds 800,"pending: mechanism ~/diag26b/wk, then screen zd126"
+z1l,2026-11-06 04:01,u9p,u9p + SWAP_LOADED 30 (SWAP_HOME 10): near home a loaded rat carries an empty ally that blocks it past (rose stem jam),"pending: mechanism ~/diag26b/sl, then screen zd127"
