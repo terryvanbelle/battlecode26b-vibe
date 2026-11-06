@@ -1,0 +1,25 @@
+name=z2m
+source=bots/u6x
+source_sha=aa3d424c2ca7
+commit=11c54e9
+created=2026-11-06 10:25 PST
+
+z2m = u6x + RICH_FIX (new switch: z2a's FORM_OFF, FORM_FILL and FORM_RICH_RETRY 20, only for sites opened with two
+or more kings), under the exact bytecode ledger (tools/ledger.py). Every addition sits in a measured hook (King: the
+king's walk K 11, formation's drop K 11, the rich pick K 11; Baby.formKing: K 9, 11, 9; javap-checked), and the rich
+pick runs u6x's pickFormSite/ringSite unchanged until a rich site has been banned (pickFormSite2/ringSite2 skip banned
+sites after that). So a game replays u6x's exactly until a third (or later) king's site opens.
+Why: field r2000 losses that one more king flips (the ~/diag26b block files, 732 games, 2026-11-06 10:22):
+superioristhmus vs spsquared 7 times (12771, 17272, 17273, 17442, 17443, 17551, 17748/17749), 2-3 kings to their 3-4
+with 6-14k banked, i.e. rich() was on and the formations failed. The 07:35 diagnosis (TRAINING_LOG): joiners queue one
+tile out while the far tiles of the 3x3 stay free (pockets), and the king walks into its own site's 3x3. z2a (the same
+switches on u9p, for every site) formed 12 of 14 bursts to u9p's 6 of 13 on superioristhmus (kings at r1190 4/4/4/3 vs
+2/2/3/3) and passed screen zd137, but drifted every game.
+Validation: z2m vs araid keepout A (seed 0) against u6x's dump: identical until the first site opened with two kings.
+Mechanism: superioristhmus vs araid A and B (seed 0), z2m vs u6x: kings at r1190 at least u6x's in both.
+Falsifiers:
+- Validation: a divergence before the first rich site opens means a leak: fixed or dropped. Mechanism: fewer kings at
+  r1190 than u6x in either game: dropped.
+- Screen vs zc6 (48 cells, seed 0) with the s6 gates (t <= -1.5; per-round picks z <= -2; transfer per round < 0.97
+  in the gate's form; any overrun or exception), plus kingsFormed over the screen not below zc6's.
+- Replica: standard block rules with identity-aware scoring (--crown) and the per-block transfer floor.

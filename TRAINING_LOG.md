@@ -6528,3 +6528,11 @@
   - Check: cheesefarm A vs araid replays z2k's game exactly (no divergence in 2000 rounds; kings 3-2, 55-44). Evileye A ends as z2j's (kings 2-1, 58-41). Under the ledger the switches add: each moves only the games where it acts.
   - So z2l needs no screen of its own. Its cells are z2j's where CASH_END acts, z2k's where RICH_LATE acts, and zc6's elsewhere; only a cell where both act would need a game. If zd146 and zd147 both pass, z2l is the replica candidate after z1z.
   - Running on the VM: field_report over all 498 replica matches in ~/diag26b/rp (all_rp.jsonl), to count the field points losses one more king would flip (rp_games.jsonl had only 156 games: 3 two-king losses that flip with a third, 3 one-king 1-1 losses that flip with a second).
+- 10:22: **Field r2000 losses that one more king would flip** (the ~/diag26b block jsonl files: 732 replica games, 187 at r2000, 50 lost; points recomputed with one more king of ours):
+  - 24 of the 50 flip. By our kings at r1000: two kings 5 (RICH_LATE's case), three kings 4, one king 9 (mostly poor: 52-519 banked at the end; CASH_END's r1945+ bar of 60 covers some).
+  - **Superioristhmus vs spsquared is 7 of the 24** (12771, 17272/17273, 17442/17443, 17551, 17748/17749): 2-3 kings to their 3-4 with 6-14k banked. So rich() was on and the formations failed: the 07:35 diagnosis (joiners queue one tile out while pocket tiles stay free; the king walks into its own site).
+  - The full corpus (all 498 matches of ~/diag26b/rp) is being scanned on the VM (all_rp.jsonl, about 2 hours).
+- 10:25: **z2m registered** = u6x + RICH_FIX (new switch) under the exact ledger: z2a's FORM_OFF, FORM_FILL and FORM_RICH_RETRY 20, but only for sites opened with two or more kings.
+  - Every addition sits in a measured hook (King: the walk, the drop and the rich pick, K 11 each; Baby.formKing: K 9, 11 and 9; all javap-checked). The rich pick runs u6x's pickFormSite and ringSite unchanged until a rich site has been banned.
+  - So a game replays u6x's exactly until a third (or later) king's site opens. z2a (the same switches for every site, on u9p) formed 12 of 14 bursts to u9p's 6 of 13 on superioristhmus and passed zd137, but drifted every game.
+  - Running (~/diag26b/rf): validation keepout A vs u6x's dump, and the mechanism on superioristhmus A and B vs araid (z2m and u6x). Falsifiers in bots/z2m/SNAPSHOT.
