@@ -547,7 +547,7 @@ v0c,2026-11-05 17:41,u9p,u9p + KING_STRICT (capability sweep on u9p),screen zd68
 v0p,2026-11-05 17:41,u9p,u9p + BITE_GUARD (capability sweep on u9p),screen zd69 queued
 v0e,2026-11-05 17:41,u9p,u9p + BITE_CARRIER (capability sweep on u9p),screen zd70 queued
 v0f,2026-11-05 17:41,u9p,u9p + RESCUE (capability sweep on u9p),screen zd71 queued
-v0g,2026-11-05 17:41,u9p,u9p + GRAB_MICRO (capability sweep on u9p),screen zd72 queued
+v0g,2026-11-05 17:41,u9p,u9p + GRAB_MICRO (capability sweep on u9p),"REJECTED at screen zd72 (2026-11-05 PST; s6 overrun gate): 545 overruns vs 0; D 10 (+6 -4) net +2 t +0.63, picks z +0.39; transfer -11%"
 v0h,2026-11-05 17:41,u9p,u9p + THROW_CHECK (capability sweep on u9p),screen zd73 queued
 v0i,2026-11-05 17:41,u9p,u9p + KING_FORAGE (capability sweep on u9p),screen zd74 queued
 v0j,2026-11-05 17:41,u9p,u9p + FACE_REACH (capability sweep on u9p),screen zd75 queued
