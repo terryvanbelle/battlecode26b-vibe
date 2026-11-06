@@ -1,0 +1,7 @@
+name=z1j
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=c4db2fe
+created=2026-11-06 03:45 PST
+
+z1j = u9p + COOP_BITE 2 (floor 300) + COOP_BITE_HI 5 (floor 600): z1i's cooperation cat-bite cheese, with 5 cheese (+3 damage, 0.6 a unit) while the bank holds 600 or the rat carries 5. It is the bracket of z1i for an idle bank: in u9p's cooperation games the bank sat at 900-1,100, so the extra 3 a bite comes from cheese that otherwise ends the game unspent. Falsifiers, registered before any z1j game: mechanism on VM ~/diag26b/ci (as z1i's, u9p's games the control): fewer than half of our cat bites spending cheese drops it as inert; summed cat damage not above u9p's 17,165 drops it; a cooperation game lost that u9p won drops it; a king starved drops it; a bank under 300 at any round after r100 in a cooperation game drops it. Screen zd125 vs zd61 with the standard gates; on the replica only if it beats z1i's screen (paired against it on the shared cells).

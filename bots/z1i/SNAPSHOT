@@ -1,0 +1,19 @@
+name=z1i
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=c4db2fe
+created=2026-11-06 03:45 PST
+
+z1i = u9p + COOP_BITE 2 (floor 300): in cooperation every cat bite spends 2 cheese (10 + ceil(sqrt 2) = 12 damage) when the bank holds 300 or the rat carries 2. 2 cheese is the most damage per unit. Cat damage is 0.5 of the cooperation points from a fixed pool (the cats' health), transfer 0.2 of a pool both teams grow, so a unit spent this way is worth about twice a unit delivered. In u9p's cooperation games vs u6h (peaceinourtime, TheHeist, both seats) the bank sat at 900-1,100 all game, and its BUDGET rule kept every cat bite at 0 cheese (actions.tsv: 43 cat bites, none with cheese). Successor of z1h (dropped: its dump was limited to the ATTACK role, and cooperation cat biters are other roles).
+Falsifiers, registered before any z1i game:
+- Mechanism (VM ~/diag26b/ci, vs u6h, seed 0, peaceinourtime and TheHeist, both seats; u9p's lk A and cp B games the control).
+  - Fewer than half of our cat bites spending cheese drops it as inert.
+  - Our cat damage summed over the 4 not above u9p's 17,165 drops it.
+  - A cooperation game lost that u9p won drops it.
+  - A king starved drops it.
+- Screen zd124 vs u9p's zd61 (s6).
+  - Paired t <= −1.5 rejects.
+  - Picks/100 per-cell paired z <= −2 rejects.
+  - Any overrun or exception rejects.
+  - Transfer per round on the shared cells below 0.97x u9p's rejects.
+- Replica: the standard block rules on sets 3, 1, 2, then 4; transfer floors per set.
