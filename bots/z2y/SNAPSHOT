@@ -1,0 +1,20 @@
+name=z2y
+source=bots/z2x
+source_sha=1097df7f6d7b
+commit=7a91b58
+created=2026-11-06 12:02 PST
+
+z2y = z2x + CAT_HUSH (z0r's switch, code unchanged, inside a ledger hook in Baby.report, K 11 checked by javap):
+no baby report squeak while the cat in view can hear it, or a cat known in the last 10/30 rounds is within dist2 36.
+A cat in attack mode turns toward the first squeak it hears each turn. 150 cached replica dumps (2026-11-06 01:16,
+scratch catsq.py): in lost games a cat heard us first on 73 rounds a game (them 200); in the 5 rounds after it heard
+us first it killed 24.9 of ours to 6.0 of theirs. z0r (u9p + CAT_HUSH) passed screen zd110 (n 44, D 7, net +1,
+t +0.37, picks z +0.38, transfer per round 0.977) and never reached the replica: the queue went to z1q/z1r/z1z.
+
+Falsifiers, registered before any z2y game:
+1. Mechanism (VM ~/diag26b/zy, arrows A and evileye A vs araid, z2x the control, ~/diag26b/catsq1.py): rounds on
+   which a cat heard us first, summed over both maps, above half of z2x's: inert, drop.
+2. Same games: a game z2x wins and z2y loses, or a king of ours lost to a cat that z2x keeps: drop.
+3. Screen zd152 vs zd136 (z1z's control), s6 gates: t <= -1.5, per-cell picks z <= -2, transfer per round < 0.97,
+   or more overrun games than zd136's 6: drop. Also paired against zd151 (z2x): t <= -1.5 drops it.
+4. Replica: only after z2x's verdict; if z2x is rejected, z2y is rebuilt on z1z first.

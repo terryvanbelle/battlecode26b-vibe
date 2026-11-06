@@ -6629,3 +6629,12 @@
     - Score it against z1z's set-3 block: `paired 17946-17961 IDS`.
     - Floor: z1z's rows ~/diag26b/z1zb1.jsonl.
 - 11:58: **zd148 (z2m vs zc6), for the record:** 22 shared cells, D 1, net +1, t +1.00; picks z +1.04; transfer 1.019; overruns 6 in 2 games (u6x's control: 6 in 2). It passes, but the u6x line is moot now that z1z is accepted.
+- 12:02: **Two levers checked and dropped before building:**
+  - **Cheese on bites against enemy kings.** A bite does 10 + ceil(sqrt(cheese)) and draws on the bank, and our bites on kings spend none (Baby.tryBite: finishCheese for babies only). But in the 18 cached replica dumps, kings that fall low almost never survive: they fall at a king kill's end. A finishing bite would rarely act.
+  - **Spending the end bank.** z1z's r2000 losses end with 1-2,880 banked (keepout vs Finals 194 and 90; superioristhmus vs spsquared 2,880). Only the winning araid games bank 18k.
+- 12:02: **z2y = z2x + CAT_HUSH** (z0r's switch, code unchanged, ledger hook in Baby.report, K 11 by javap).
+  - z0r passed screen zd110 on u9p (t +0.37, picks z +0.38) but never got a replica slot.
+  - Falsifiers in bots/z2y/SNAPSHOT before any game.
+  - Mechanism games run on the VM in ~/diag26b/zy (arrows A and evileye A vs araid, z2x and z2y).
+  - **Screen zd152 (z2y vs zd136)** is at the head of the queue, ahead of zd150.
+  - z2y follows z2x on the replica only if z2x is accepted. Otherwise it is rebuilt on z1z.
