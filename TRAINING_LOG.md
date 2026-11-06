@@ -6308,3 +6308,16 @@
   - uneruesansfin 614/356 (wars at r287-566).
   - fullofsecrets 161/66, ratsareants 208/148.
   - Everywhere else we arrive within ~40 rounds of them. The seekers' tunnel only runs in cooperation, so wallsofparadis would need a war-time version.
+- 06:51: **wp chain done** (VM ~/diag26b/wp; u9p and z1q vs araid and abrk on wallsofparadis, jail, keepout and mercifullattice, both seats, seed 0; scratch crowd.py and dgcheck.py). z1q spreads the gatherers as intended. The share of our r100-700 baby-rounds within Chebyshev 4 of the busiest mine:
+
+  | map | u9p | z1q |
+  |---|---|---|
+  | jail | 52.8% | 19.9% |
+  | keepout | 31.1% | 12.8% |
+  | mercifullattice | 26.2% | 21.1% |
+  | wallsofparadis | 55.9% | 24.2% |
+
+  - Transfer at r700, mean: jail 2,139 to 2,504; keepout 8,788 to 10,148; mercifullattice 7,338 to 7,462; wallsofparadis 1,819 to 2,454.
+  - Final transfer 321k to 282k (+14%). Both won 16 of 16; 0 exceptions, 0 overruns.
+  - Cat damage on our kings: 200 to 20 (one game; not a gate).
+  - z1q stays next on the replica after z0k.
