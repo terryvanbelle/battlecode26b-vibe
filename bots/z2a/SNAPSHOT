@@ -15,6 +15,12 @@ Evidence (TRAINING_LOG 2026-11-06 07:3x; scratch formking.py, formgrid.py, ringc
   tiles of the 3x3 stay free for the whole 60-round TTL.
 - Replica superioristhmus B (z0q, r666-726): the king walked from (13,3) to its home mine at (12,2), into the 3x3 of
   its ring site (10,2). 7-9 of ours then stood on ring sites around it for 60 rounds with no king.
+Prior work (TRAINING_LOG 02:35-03:35, found again at 07:35 after a context summary): z0x (FORM_FILL, walk to the
+nearest free ring tile; refusals 0.73x, dropped), z0y (+ FORM_KEEP, the king's steps keep off the site; refusals
+330 vs bar 268, kings 6 to 5, dropped), z1a (FORM_PACK, ring rats shift to tiles fewer outside tiles touch; refusals
+535 to 164, kings 5 to 5; rejected at screen zd119: kingsFormed 30 vs 31, transfer 0.965). New here: the rich retry
+(the 150-round wait bounds rich attempts to about 3 in r600-1150), the king holding still near the site instead of
+a step filter, and an inside shift along the entry heading.
 Switches:
 - FORM_OFF: the king does not walk while within Chebyshev 5 of an open site (cat dodges and lane steps still move
   it); a site with one of our kings within Chebyshev 2 is dropped at once.

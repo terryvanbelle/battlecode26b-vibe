@@ -6360,8 +6360,12 @@
   - The grids show the same picture each time (u9p mirror on superioristhmus at r672, z1q jail vs araid at r480, u9p keepout vs araid at r950). Joiners arrive from one side and fill the near tiles. The next ones queue one tile out, because Nav steps only toward the centre. The far 2-4 tiles stay free for the whole 60-round TTL, and then the 150-round retry wait starts.
   - On superioristhmus the free tiles sit in a dead-end pocket between the king's body, the map edge and walls. They can be reached only through the 3x3.
   - Replica superioristhmus B (z0q, r666-726; ringcount.py) shows a second failure mode. The king named ring site (10,2) from (13,3), then walked to its home mine at (12,2), which put its body in the site's 3x3. From then on becomeRatKing was impossible, even though 7-9 of ours stood on the ring sites around it with the centre rat on K and action-ready.
-  - u9p's FORM_STILL (the king freezes while any site is open) was only ever tried inside s5x's bundle.
-- 07:35: **z2a registered** = u9p + three new switches:
+  - **Correction (07:58): this repeats today's 02:35-03:13 diagnosis**, which I lost when my context was summarized. That work found the corner pocket (03:01, zfk minimaze B) and the king walking into its own site (02:42, zfk2 superioristhmus). It tried:
+    - z0x (FORM_FILL: walk to the nearest free ring tile): refusals 0.73x, dropped.
+    - z0y (+ FORM_KEEP, the king steps off the open site): refusals 330 vs a bar of 268, dropped, although it formed 6 kings to 5.
+    - z1a (FORM_PACK, inside rats shift to ring tiles that fewer outside tiles touch): refusals 535 to 164 but no extra king (5 to 5), then rejected at screen zd119 on kingsFormed 30 vs 31 and transfer 0.965.
+    - Also z1c, z1e, z1f and z1g on the site choice and END_KING.
+- 07:35: **z2a registered** = u9p + three switches. FORM_RICH_RETRY is new; FORM_OFF and FORM_FILL redo z0y's FORM_KEEP and z1a's FORM_PACK with different rules (see the correction above):
   - FORM_OFF: the king does not walk while within Chebyshev 5 of an open site, and a site with a king's body in it is dropped at once.
   - FORM_RICH_RETRY 20: a failed rich() site is banned, and the next one opens 20 rounds later (u9p waits 150).
   - FORM_FILL: a joiner one tile out steps onto any free tile of the 3x3. A rat inside steps on along its entry heading (or 45 degrees off it) onto a free tile, so free tiles drift toward the queue; at most two shifts per rat, so rats can't trade tiles back and forth.
