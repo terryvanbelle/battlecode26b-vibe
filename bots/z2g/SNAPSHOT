@@ -1,0 +1,16 @@
+name=z2g
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=6a7b435
+created=2026-11-06 09:16 PST
+
+z2g = z1z + CASH: z2e's diff against u9p (the rescue formation; design in bots/z2e/SNAPSHOT), applied with patch -F0
+onto z1z, and the same Cfg block (CASH_BANK 250, CASH_FLOOR 60, CASH_RAW 60, CASH_N 3, CASH_R 4, CASH_MIN 250,
+CASH_FAR 5, CASH_PULL 8, CASH_TTL 50). Made at 09:2x so that it is ready if z1z is accepted at replica block 2.
+z1z is on block 2 now, and the u9p line nets about +4 on set 1. CASH is silent until a rescue site is named, so
+z2g's games replay z1z's except where a rescue starts.
+Falsifiers:
+- Screen zd143 vs z1z's zd136 (the same 48 cells, seed 0) with the s6 gates (t <= -1.5; per-round picks z <= -2;
+  transfer per round < 0.97 in the gate's form; any overrun or exception), plus the replay check from bots/z2f/SNAPSHOT:
+  more than 4 of 48 cells differing from zd136 with no rescue started withdraws it as not silent.
+- Replica only if z1z is accepted (else z2f, u6x + CASH, is the CASH candidate): standard block rules and the transfer floor.

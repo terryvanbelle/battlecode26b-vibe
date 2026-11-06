@@ -6459,3 +6459,5 @@
     - Still failing: z0a (transfer 0.960) and z1s (0.957).
     - Passers against the pool: z1z (zd136) wins t +1.67, picks z +3.13, transfer z +2.72; z2c (zd139) t +2.21, picks z +2.98, transfer z +2.15; z2a (zd137) t +0.87.
   - These are all u9p-line switches, and a u9p-line candidate replays u9p's replica games until its switch fires (entry above). The revived ones are worth the replica only rebased on u6x, where only the cells where the switch fires move. That is the z2f pattern: switches that act in losing positions.
+- 09:16: **u6x still reproduces zc6**: the rerun of u6x vs araid keepout (seed 0) gave A, r2000, transfer 31,615 to 19,989, the same as zc6's game. So z2f's replay check is valid: a cell with no rescue must repeat zc6 exactly.
+  - **z2g registered** = z1z + CASH (the same patch onto z1z, clean). It is ready in case z1z is accepted at block 2: the u9p line nets about +4 on set 1, and z1z's block 1 was +4. Screen **zd143** vs z1z's own zd136 (same cells) has the same replay check. Queue: zd142 (z2f, playing since 09:14), zd143, zd141 (z2e), zd132 ...
