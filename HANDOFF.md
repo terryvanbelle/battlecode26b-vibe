@@ -106,9 +106,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   --dir ~/diag26b/rp --ids IDS > ~/diag26b/z0qb2.jsonl`, then `research/audits/blockcheck.py
   $HOME/diag26b/z0qb2.jsonl,$HOME/diag26b/twin_s1.jsonl IDS 12771-12813`; set-3 twin rows are rp_games.jsonl).
   Next on the replica: **z0w** (z0q + CAT_HUSH) if it passes screen zd115, else **z0r** (u9p + CAT_HUSH; passed
-  zd110). Held after passing screens: z0d (STAB_LAY), z0e (END_CAT 1450), z0h (zd97; mechanism run zd98).
-- Screening (VM queue runs/screenq.txt): zd98 (z0h's mechanism run, running: `research/audits/mech_cmp.py
-  runs/zd98/results.jsonl z0h runs/zd96/results.jsonl u9p`), zd115 z0w, **zd119 z1a, zd121 z1c, zd120 z1e**,
+  zd110). Held after passing screens: z0d (STAB_LAY), z0e (END_CAT 1450).
+- Screening (VM queue runs/screenq.txt): zd115 z0w (running from 03:25), **zd119 z1a, zd121 z1c, zd120 z1e**,
   zd112 z0t (z0q + RAW_ANY), zd113 z0u (MINE_BURN 50), zd114 z0v (RAW_RAID_HALF 1), zd107 z0p (FACE_REACH), zd108 z0o
   (BURY), then the old sweep. zd122 (z1g) waits on its mechanism games. Each candidate's falsifiers are in its
   bots/NAME/SNAPSHOT. Screen transfer gates from z0q on are per round on the shared cells (inline script in
@@ -130,7 +129,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   ($4=="vibe26b"||$7=="vibe26b")'`, then `contest.py fetch --new --pages 8`. Transfer floor (u9p family): field_report
   xUs per game >= 0.9x the twin (set 3: 3,968; set 1: 4,133): rsync the 16 match dirs to the VM's ~/diag26b/rp/
   and run `tools/field_report.py games --ids LO-HI --csv` there (never locally: the laptop disk filled at 100%).
-- Closed 2026-11-06: z0z (FORM_KEEP + END_KING_SAVE: inert on the lk maps), z1b (z0z + END_PULL: mechanism bar), z1d (FORM_NET100_COOP: mechanism), z1f (END_KING_DYN with a health condition: never fired), z0x and z0y (formation refusal bar), z0g (PEACE_FROM 100: block 3), z0s (RAW_RAID: transfer 0.950), z0j (LAY_MAX: mechanism), z0k (FORM_WAR_FROM 300: picks z -3.26), z0l (SIEGE_STAY 20:
+- Closed 2026-11-06: z0z (FORM_KEEP + END_KING_SAVE: inert on the lk maps), z1b (z0z + END_PULL: mechanism bar), z1d (FORM_NET100_COOP: mechanism), z1f (END_KING_DYN with a health condition: never fired), z0h (FORM_RICH_BANK 1500: mechanism run zd98, king deaths and wins), z0x and z0y (formation refusal bar), z0g (PEACE_FROM 100: block 3), z0s (RAW_RAID: transfer 0.950), z0j (LAY_MAX: mechanism), z0k (FORM_WAR_FROM 300: picks z -3.26), z0l (SIEGE_STAY 20:
   transfer gate 0.952), z0m (RETREAT_HP 20: wins gate), z0n (END_CAT without gatherers: transfer 0.946). Closed 2026-11-05/06 on the u9p base: u9q (RETREAT_HP 0: transfer floor), w0b and z0b (inert), w0c (kings
   falsifier after block 2; its replica games replayed u9p's), z0a (RETREAT_CARRY: transfer gate), z0f (END_CAT +
   STAB_LAY: picks z -2.46). The replica is deterministic: a switch that never fires replays its parent's games.
