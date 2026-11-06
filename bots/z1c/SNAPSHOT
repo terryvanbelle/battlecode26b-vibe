@@ -1,0 +1,8 @@
+name=z1c
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=0635927
+created=2026-11-06 03:06 PST
+
+z1c = u9p + FORM_RING_FROM 400 (new): from r400 pickFormSite falls back to ringSite (a clear 3x3 just off the king's body) when neither a clearly-ours mine nor the spot four behind the king is clear; the income test and every other gate unchanged. Evidence: u9p vs u6h on clouds (A, ~/diag26b/lk, 2026-11-06): the king sat at (2,8) all game; the income test passed from r400 (inc 588-960) with 20-40 babies and a ~1,000 bank; no formation turn before r1850 (no site), second king only by END_KING at r1894; replica clouds vs HugoIngelsson_Xzibit lost 47-52 three times (u9p, z0g, z0c) on 1 king to 2. FORM_RING (t0h on s9s, #106) lost evileye to two kings starved after a second king at r100-125; hence r400. Registered 2026-11-06 03:06 PST, before any z1c game.
+Falsifiers: mechanism (~/diag26b/rf: z1c vs u6h, seed 0): no second king before r1150 on clouds (A) drops it as inert; on evileye (A and B, u9p's games there the control) any of our kings starving where u9p's did not drops it. Screen (s6 vs u9p's zd61): paired t <= −1.5 rejects; picks/100 per-cell paired z <= −2 rejects; any overrun or exception rejects; transfer per round on the shared cells below 0.97x u9p's rejects; kingsFormed not above u9p's 31 rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer floors per set; kings alive at r2000 in the block's points games not above the twin's rejects.
