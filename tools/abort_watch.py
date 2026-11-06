@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Stop a local screen once its wins gate can no longer be met (runs on the VM, from the repo root).
 
-  abort_watch.py GATES.tsv [--every 60]
+  abort_watch.py GATES.tsv [--every 60] [--follow]
 
 GATES.tsv: one line per run, `RUN CTRL_RUN CTRL_BOT CAND_BOT GATE` (whitespace separated), on the cells the run
 shares with the control run (opponent, map, side). GATE is MIN_WINS (an integer: the candidate needs that many wins)
@@ -10,7 +10,8 @@ run is in progress (results.jsonl present, no DONE), once the gate cannot be met
 goes its way (a win, so +1 where the control lost, 0 where it won), the arena process for that run (cmdline starting
 `python3 -I tools/arena.py matrix runs/RUN/cells.tsv`) and its game children are killed, and runs/RUN/ABORTED
 records why. The sequence script then touches DONE and goes on to the next run.
-Exits when every gated run has DONE."""
+The gates file is re-read every pass, so a gate can be appended while it runs. Exits when every gated run has DONE,
+unless --follow (then it keeps watching for new lines)."""
 import json, math, os, signal, subprocess, sys, time
 
 
@@ -91,9 +92,9 @@ def best_t(shared, ctrl, got):
 
 
 def main():
-    gates = [l.split() for l in open(sys.argv[1]) if l.strip() and not l.startswith('#')]
     every = int(sys.argv[sys.argv.index('--every') + 1]) if '--every' in sys.argv else 60
     while True:
+        gates = [l.split() for l in open(sys.argv[1]) if l.strip() and not l.startswith('#')]
         pending = 0
         for run, crun, cbot, bot, need in gates:
             d = 'runs/%s' % run
@@ -115,7 +116,7 @@ def main():
             elif lost > len(shared) - int(need):
                 stop(run, 'gate unreachable: %d lost of %d shared cells after %d games (%d won), needs %s wins'
                      % (lost, len(shared), len(got), won, need))
-        if not pending:
+        if not pending and '--follow' not in sys.argv:
             return
         time.sleep(every)
 

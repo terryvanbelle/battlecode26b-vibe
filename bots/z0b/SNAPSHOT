@@ -1,0 +1,8 @@
+name=z0b
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=d8dcae6
+created=2026-11-05 19:55 PST
+
+z0b = u9p + STEP_IN 8 (new switch, Micro.score): in a fight that is ours, a tile with no enemy in bite reach but with an enemy at Chebyshev 2 whose 90-degree cone covers it scores -8, so the baby holds at 3 (or steps in and bites) instead of closing to 2, where that enemy steps in and bites first (a baby can move and bite in one turn). Evidence: walk-ins are 70-83% of the enemy rat-trap hits on our rats in 522 u6x-era replica games (a walk-in kills 31-36%), and rat fights decide u9q's gains (pooled 96 cells D 23, net +9). Registered 2026-11-05 19:56 PST, before any z0b game.
+Falsifiers: screen zd90 vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 on per-cell win/loss rejects; picks/100 worse by per-cell paired z <= -2 rejects; any overrun or exception, or D 0, rejects; killsRat on the shared cells not above u9p's while deathsRat is not below (the change is a fight change; neither moved) is inert and rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer below 0.9x the twin's (set 3: 3,968; set 1: 4,133) rejects in that set's block.
