@@ -1,0 +1,27 @@
+name=z2f
+source=bots/u6x
+source_sha=aa3d424c2ca7
+commit=e2f4732
+created=2026-11-06 09:13 PST
+
+z2f = u6x (the incumbent) + CASH: z2e's diff against u9p (Baby.cashTick/cashMove/cashSpot/cashClear, Comms.SQ_CASH,
+the Debug indicator, the Cfg block), applied with patch -F0 onto u6x. Cfg as z2e: CASH_BANK 250, CASH_FLOOR 60,
+CASH_RAW 60, CASH_N 3, CASH_R 4, CASH_MIN 250, CASH_FAR 5, CASH_PULL 8, CASH_TTL 50. Design and census: bots/z2e/SNAPSHOT.
+Why on u6x and not u9p: every u9p-line candidate on the replica (z0c, z0g, z0q, z1l, z0k, z1z) flips the same cells
+against the twin, because a switch that has not fired replays u9p's game. Set 3 nets about +3 (YokoOno 5t4rv4t10n B,
+TheHeist both seats, uneruesansfin A, externalsustenance B, FreeTheCheese B; minus 5t4rv4t10n A, rift A, Stash A), set
+1 about +4, and set 2 about -2 (Varun clockwisdom B, ratsareants A and B, Merlin knifefight A, Finals attack_on_cat A
+lost; evileye B, jail B gained). So the u9p line dies at block 3 whatever the switch. On u6x, CASH is silent until a
+rescue site is named (cashTick returns before any action while the bank is 250+ or no group qualifies, and report()
+runs as before), so replica and local games replay u6x's own games except where a rescue starts, mostly in losing
+games (bank under 150 in 3% of rounds from r200 in u9p's wins, 26% in its king-kill losses).
+Mechanism evidence on u9p (z2e, chain ~/diag26b/cq2, rose and fullofsecrets vs araid and abrk, both seats): won 7 of 8
+to u9p's 2; king starvations 2 (one game) to u9p's 4 (four games); transfer 4-12k where u9p made 170-1,785 on
+fullofsecrets.
+Falsifiers:
+- Screen zd142 vs u6x's zc6 (same 48 cells, seed 0) with the s6 gates (t <= -1.5; per-round picks z <= -2; transfer
+  per round < 0.97 in the gate's form; any overrun or exception). Replay check: a cell where no rescue started must
+  repeat zc6's game (same winner and rounds); more than 4 of 48 cells differing with no plausible rescue (bank never
+  under 250 per rounds.tsv when dumped) means CASH perturbs games without firing, and it is withdrawn as not silent.
+- Replica: standard block rules (sets 3, 1, 2, 4; blocks 1/2/3 reject at pooled t <= 0/1/1.5; t >= 2 accepts from
+  block 2; block 4 rejects below 2) with identity-aware scoring (--crown), and the per-block transfer floor.
