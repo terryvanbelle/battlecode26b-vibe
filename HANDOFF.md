@@ -96,122 +96,36 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (see TRAINING_LOG.md for the history)
-- Incumbent on the replica: **u2g** (#126/#128), accepted 2026-10-31 02:09 PDT over u0m: u0m + END_KING 1850 +
-  FORM_RICH_BANK 3000 (FORM_RICH_MAX 4: a third and fourth king before r1150 while the bank holds 3000; a second
-  king late). Blocks: set 3 (4516-4521, 4526-4529, 4537-4538, 4545-4546) +1, set 4 (4553-4558, 4569-4574,
-  4576-4577) +1, set 1 (4723-4736) +2 (CS50Crab streetsofnewyork A, spsquared superioristhmus A) vs u0m's
-  reference #127; pooled 126 cells, D 4, +4 -0, t +2.02. u2g = U0M recipe + 'END_KING = 0, END_KING_CHEESE =
-  400=>END_KING = 1850, END_KING_CHEESE = 400' 'FORM_RICH_BANK = 0, FORM_RICH_MAX = 4=>FORM_RICH_BANK = 3000,
-  FORM_RICH_MAX = 4'. Previous: u0m (#114), accepted 2026-10-30 12:49 PDT over s9s (basics repair).
-- u2g's reign: 122 of its 126 cells matched u0m's games, so its accepting luck sits in the 4 gained cells. Order:
-  block 1 = set 2 against u2g's own set-2 reference 4737-4750 (26 of 42: outercloud 5/6, bc26vibe 6/6, CS50Crab
-  6/6, AlexT101 0/6, abcdezyxwv 2/6, spsquared 5/6, AdamTan12 2/6), block 2 = set 3 (reference u2g 4516-4521,4526-4529,4537-4538,4545-4546, and `contest.py pool`
-  with v3-set3-pool.txt), block 3 = set 4 (reference u2g 4553-4558,4569-4574,4576-4577, and the set-4 pool), set 1
-  last after a salted twin of u2g (HAND_FLIP) re-anchors it. Local candidates are rebased on u2g; screens use
-  control build/vmruns/runs/ra_u2g/results.jsonl.
-- u0m's reign (history): set 3 reference 3819-3822, 3836-3837, 3849-3856 (25 of 42); set 4 3756-3767,
-  3785-3786; set 1 #127 4588-4591, 4601-4602, 4611-4614, 4719-4722 (23 of 42).
-- Scoring in u2g's reign: set 2 `contest.py paired 4737-4750 IDS`; set 3 `contest.py paired
-  4516-4521,4526-4529,4537-4538,4545-4546 IDS` AND `contest.py pool 3819-3822,3836-3837,3849-3856
-  research/panel/v3-set3-pool.txt IDS`; set 4 `contest.py paired 4553-4558,4569-4574,4576-4577 IDS` AND
-  `contest.py pool 3284-3297 research/panel/v3-set4-pool.txt IDS`. Blocks 1-3 reject at pooled t <= 0, 1, 1.5;
-  from block 2, t >= 2 accepts (D >= 4); block 4 final. Hard cells: AlexT101 constrictinglattice/starvation and
-  abcdezyxwv Stash/constrictinglattice are 0 of 24 pool games each, Excavation 1. Rejected under u0m: u2b (#125,
-  MOAT), u1y (#124), u1v (#123, AMMO_AWAY), u1r (#122, BUG_DIG), u1o (#121, RUSH_TO 20), u0y, u1p, u0o, u0q.
-- Per opponent over the last blocks: abcdezyxwv 1 of 18, AlexT101 1 of 18; outercloud 15, CS50Crab 13, bc26vibe 12,
-  spsquared 11, AdamTan12 10. Against abcdezyxwv the rat war is lost: 3764 superioristhmus our rats took 10.3k damage
-  from throws and 6.6k from 159 trap fires (theirs 5.7k and 0); their grabs of ours 78-359 a game to our 61-228,
-  ~60% from behind, ~35% by the health rule (our rat weaker); the grabber was already adjacent at the end of our
-  rat's turn in 60-70%. Their bank holds ~2k all game while they run 3-5 kings and 50-127 babies.
-- Now: panel v4 is set (07:46): spsquared, AdamTan12_Finals (v3 maps) + YokoOno, VarunVejalla, Xzibit,
-  collegejunior, AdamTan12_Icarus, nzjt_TheComplexMerlin (sweep maps), research/panel/v4-set1.json; u2g 21 of 48 on
-  set 1, reference 4723-4736 + 4969-4974, 4988-4989, 5010-5013. u2g's set-2 references (v4-set2.json) are running
-  from 5071 (waiter build/wait_s2ref.sh); then submit u3c (u2g + MINE_ANY + MINE_TIES; diag ma2 12 of 16 to 14,
-  picks per turn up) and queue its set-1 block: all eight opponents @+ and @- with --panel v4-set1.json.
-  Rule (owner #19/#20): diagnose losses against in-band opponents and flippable cells only. In-band losses are an
-  economy deficit (they pick 46 per 100 baby turns to our 24; transfer 4971 to 1811 a lost game) plus reactive
-  traps (17.5 trap deaths a lost game; we lay none when the bank is low). Next idea after u3c: u1q's opening trap
-  floor (reactive traps, TRAP_OPEN_TO 150) on u2g.
-  Scratch tools in ~/diag26b: econshare.py, minetime.py, kingcount.py, deathsum.py, dumpids.py, dumprun.py (new);
-  deaths2.py, race.py/minerace.py/minewhy.py, rushpay.py, ammo.py, thrower.py, grabwhy.py, saves.py, carriers.py,
-  kdef.py/kdef2.py. Lists: inband.txt (sweep + AdamTan12 dumps), ma2_u3c.txt/ma2_u2g.txt. Replay dir column is
-  FlatHelpers order (0 CENTER, 1 W, 2 SW, 3 S, 4 SE, 5 E, 6 NE, 7 N, 8 NW).
-  Parked: u2t (SEEK_FRONTIER, mixed), u0p (RUSH_STICK). The side-symmetry bundle (u2s's switches) stays off in ratbot.
-- KING_PATH evidence: kpa (u1x vs u0m) 22-10 and king pickups 21980 to 3440 in self-play, but no field gain;
-  against AdamTan12 the king died before reaching the mines (wallsofparadis still lost both sides).
-- King kills (r1v vs AlexT101/abcdezyxwv): 73 of 81 throw hits on our king were our own rats thrown in at point blank
-  (42-46 each); scratch kthrow.py and siege.py on the VM (~/diag26b/) give per-game hits and siege timelines.
-- Mine coverage (keepout, u1r 4344/4345): our rats never came within sight of 4 of our 6 home mines (one 10 from
-  our king), our first pickup came at r100, and AdamTan12 worked all 12 mines. explore() with no mine known heads for
-  the map centre (EXPLORE_CENTER_FROM 0), but keepout's mines sit on the edges. scratch minesee.py/minepick.py on
-  the VM (~/diag26b/) show it per mine.
-- Stash pocket (TRAINING_LOG 2026-10-30 19:28): the bug walk treated dirt as wall, so rats waited 20-26 turns each
-  for a reverse flow search; BUG_DIG digs through in the sweep (exit open r22 locally). The 1-wide corridor still
-  jams afterwards; the corridor swap fixes that locally but loses elsewhere. ~/diag26b/mobility.py REPLAY... compares
-  how fast each side's rats leave home.
-- Trap war (TRAINING_LOG 2026-10-30 17:24): the top three's traps fire on us ~92% of the time, on our own fight moves.
-  u0q's reactive traps lifted K/D vs AlexT101 from 0.76 to 0.98 and vs abcdezyxwv from 0.93 to 1.08 in the field.
-  Scripts on the VM: ~/diag26b/kdsum.py LABEL DUMPDIR... (deaths by cause, both sides), trapsrc.py, trapind.py
-  (local games: the victim's mv= code at each fire).
-- u0q (#115, u0m + BABY_RAT_TRAPS + TRAP_ADJ + TRAP_SPAWN_FIRST) was rejected on set 3, t -1.63 (D 6, +1 -5): 39 traps
-  in r0-49 on dirtfulcat starved its king, and on rose it lost on points where u0m killed the king. Every field bot but
-  bc26vibe lays rat traps, 30-310 a game, ~95% fire on us (set 2: 3801 constrictinglattice 305 fires, 126 of our
-  deaths), mostly as our rat closes from d2 4-20 or steps off an adjacent enemy. Laying our own does not pay; the open
-  problem is not walking into theirs. RISK_ADAPT (u0u) cut fires by 4% only (ad1 377 vs adc 391, 7 games), and
-  TrapRisk's mark array is never allocated on 60x60 maps (needs 18.8k bytecodes left).
-- Mine coverage: we work 1-2 of 3-8 home mines on the big walled maps; the field finds their twins 5-10x sooner
-  (wallsofparadis 3800: rings first seen r392-503, field r54-135). u0w = u0m + SEEK_IDLE 40, u0x = u0w + IDLE_SHIFT;
-  diags iw1/ix1 vs control iwc (8 maps, both sides, vs s9s), screen ra_u0w queued.
-- Submit a candidate only after a block finishes (`contest.py submit bots/NAME -m TEXT`, then
-  `contest.py scrim --vs ... --panel research/panel/v3-setN.json --queue research/panel/queue.tsv`; the drain loop
-  sends the queue under the hourly limit). Score: `contest.py paired REF CAND`.
-- Candidates on the s9s base (screens use `gauntlet.py selfplay RUN/results.jsonl --base araid --control
-  build/vmruns/runs/ra_s9s/results.jsonl`):
-  - Replica games are deterministic against most of the panel: t0f (s9s's twin, #111) replayed set 4
-    (3610-3613, 3718-3727) 42 of 42 cells alike, 38 of 42 games identical in rounds. A candidate's differing cells
-    are its own change's chaos plus its real effect, never seed luck; a twin on the same set adds nothing.
-  - Set 2 is re-anchored by u0f (s9s + HAND_FLIP, #112): 3728-3741, 18 of 42 (s9s's set-2 draw 2115-2128 was 23 of
-    42: D 11, +3 -8, t -1.51). Score a candidate's set-2 block against 3728-3741.
-  - On the replica: u0m (#114) = @s9s + u0e's margins (SENSE2_LEFT 6000, IND_LEFT 1000) + FLOW_ALLOC (t0v) +
-    FLOW_REV_TURNS 60 (u0k), the basics repair bundle. Block 1 = set 4 (3756-3767, 3785-3786) vs 3284-3297: net -3,
-    t -1.00 (D 9, +3 -6); pooled over the 9 set-4 draws 22 of 42 vs 23.4 expected, z -0.82. Block 2 = set 2 from
-    3796 (reference u0f 3728-3741). Reading of the repair rule: two blocks without the block-1 reject, then accept
-    at pooled t >= 0. Why: on cheesebottles s9s's 12 rushers sit in the walled room by our (20,13) mine from r75 to
-    r400, their reverse searches dropped at 25 turns (234 given up a game; u0k 3). fx1 (u0m vs s9s) 7 of 16.
-  - Set 4 carries s9s's luck: all 9 candidates scored there against 3284-3297 came out net <= 0 (mean -1.9), and
-    s9s's own draw sits ~1.7 wins above the pooled cell rates. Score set-4 blocks with
-    `contest.py pool 3284-3297 research/panel/v3-set4-pool.txt CAND` as well as `paired`.
-  - u0e (#113) alone: set-4 block net -2, t -1.00 (D 4), 0 overruns in 42 (reference 2); folded into u0m.
-  - Next after u0m (all built on u0m): u0n = END_KING 1850 (u0d; ek1 11 of 16 vs s9s), u0r = u0n + END_KING_MSITE
-    (u0i's END_KING_MINE was inert: clear3 wants king-seen tiles; er1 running), u0s = KING_FORAGE (27 of 78 king
-    deaths in 50 replica matches were starvation, 16 with no enemy damage; fg1 vs fgc running on the starvation
-    maps), u0o = RUSH_TO 12 (t0t), u0p = RUSH_STICK. u0q = BABY_RAT_TRAPS + TRAP_ADJ + TRAP_SPAWN_FIRST: weak
-    (tq1 6 of 16; traps hit 91% but it spawns fewer). u0j (reactive traps on s9s) weak, tj1 7 of 16.
-  - Dropped: u0h (HOME_ALL_SYM, hs1 6 of 16), u0b (RUSH_STICK, st1 8 of 16). Parked: u0c (BitFlow, bf1 5 of 16).
-    u0l = u0k + RUSH_STICK (rushers stop flipping between the two king spots; cb4: 4 in the room at r100, u0k 11).
-  - Rejected: t0p (MINE_ANY + MINE_TIES) on set 4, net -2, t -1.00.
-  - Rejected: t0i (FORM_MINE) on set 4, net -3, t -1.00; t0o (MINE_TIES) on set 4, net -1, t -1.00; t0g (RUSH_LIFE 150) on set 4, net -4, t -2.00; t0h (FORM_RING) on set 4, net -1, t -0.45 (evileye: two kings starved); t0c (KING_TRAPS) on set 4,
-    net -1, t -0.45; s9z (BREAKOUT_TTL 150) on set 4, net 0; t0b (RISK_FRESH 2)
-    at its screen, t -1.73. Dropped: t0d (t0c + BABY_RAT_TRAPS).
-  - Screens (runs/screenq.txt; ra_t0p, ra_t0j, ra_t0v running), then ra_t0r, ra_t0t, ra_t0n, ra_t0l, ra_t0m:
-    - t0e = @s9s + RISK_ROWS (screen done: 80 cells, t -0.75, a weak pass).
-    - t0i = @s9s + FORM_MINE (extra kings on home mines, no income test for mine sites; fm3 10 of 16 vs s9s).
-      t0j = t0i + FORM_MAX 3. t0m = @s9s + FORM_MINE + FORM_RING + FORM_MAX 4 (fm4 9 of 16, delivers 11.9k to 14.8k).
-    - t0k = @s9s + CAT_LAY (cat traps on the cats' lanes in cooperation; cy1 10 of 16 vs s9s, trap damage 1424 to
-      1169). t0n = t0k + CAT_RING (cy2 11 of 16).
-    - t0l = @s9s + ATK_CARRY 25 (attackers stay light).
-    - t0p = @s9s + MINE_ANY + MINE_TIES (gatherers over every known mine, either half; ma1 9 of 16).
-    - t0q = @s9s + SYM_FLOW + SYM_CENTRE + SYM_HAND + SYM_FACE (side symmetry; s9s diverges at r2 on Stash; run sym1).
-    - t0r = t0q + SYM_TIE + FLOW_QUOTA 18 (t0q still split at r27 superioristhmus on a tied spawn tile and r38 Stash
-      on flow search depth; self-mirror run sym2, screen queued). Mirror checks: `tools/mirror_check.py F F` on a
-      self-play replay; knifefight splits at r4 on turn order (first to move bites), which no bot change removes.
-    - t0s = @s9s + DELIVER_AT 50: dropped (dl1 7 of 16 vs s9s).
-    - t0t = @s9s + RUSH_TO 12 (8 rushers; rz1 10 of 16 vs s9s, screen queued). t0u = RUSH_TO 20: parked (rz2 9 of 16).
-    - t0v = @s9s + FLOW_ALLOC (a bug fix: flow arrays allocated a piece at a time, so busy rats start their searches;
-      al1 vs s9s 5 of 10 so far, screen ra_t0v t +1.41 at 30 cells). t0w = t0r + FLOW_ALLOC. Likely next submission.
-  - t0f = twin of s9s from current code, for re-anchoring sets 2/3/1.
-- Owner rules: assume every map is symmetric in all aspects (PROMPTS.md #14); refresh and commit progress/ after
-  every acceptance and every scored replica block (#16).
-- Local machine: 2 GB RAM, 2 cores; one replay analysis at a time. Volume games run on the VM (arena.py matrix,
-  screen queue runs/screenq.txt). Field bots play only on the replica.
+## State (2026-11-05 19:30 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). Candidates
+  descend from it: u9p = u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18);
+  **u9q = u9p + RETREAT_HP 0** is on the replica (#231).
+- Replica scoring (twin-anchored; pass explicit match IDS, others' matches sit in the ranges):
+  set 3 `contest.py paired 13248-13291 IDS --crown 12130-12163`; set 1 `paired 12771-12813 IDS --crown 11549-11677`;
+  set 2 `paired 12838-12899 IDS --crown 11678-11702`; set 4 `paired 16848-16863 IDS` (u6x reference, 28 of 48).
+  Order: sets 3, 1, 2, 4. Block scripts `build/block_v4sN.sh` (they touch research/panel/*.json: `git checkout
+  research/panel/` after). IDS: `contest.py matches --pages 8 | awk '$1>LAST && $2=="OK!" && $3=="unranked" &&
+  ($4=="vibe26b"||$7=="vibe26b")'`, then `contest.py fetch --new --pages 8`. Transfer floor (u9p family): field_report
+  xUs per game >= 0.9x the twin (set 3: 3,968; set 1: 4,133): rsync the 16 match dirs to the VM's ~/diag26b/rp/
+  and run `tools/field_report.py games --ids LO-HI --csv` there (never locally: the laptop disk filled at 100%).
+- u9q: set-3 block 1 (16881-16885, 16931-16942) D 11 (+7 -4), net +3, t 0.90, xUs 4,358; set-1 block 2 from 16957
+  (waiter build/wait_u9qb2.sh). Then set 2 (block 3, rejects at pooled t <= 1.5), then set 4.
+- Local screens (VM): `runs/xt2/cells.tsv` with bots/u5n replaced, `arena.py matrix ... --jobs 3` (~35 min with the
+  replica sharing the 8 cores). Score with `build/score_screen.sh RUN BOT [CTRL_RUN CTRL_BOT]`. Controls: zc6 (u6x,
+  32 of 44, picks/100 35.56), zd61 (u9p, 38), zd62 (u9q, 40). Basics gate (14:27 rule): overruns/exceptions, picks/100
+  below 33.8, D 0. Queue: VM `runs/seq_main5.sh` (zd87 y0a, zd88 v1a, zd82 w0b, zd83 w0c, zd69 v0p, zd72 v0g, zd70
+  v0e, zd85 x0a, zd86 x0b, then the v0 switch sweep). `tools/abort_watch.py` (VM: runs/abort_watch.py
+  runs/gates_main4.tsv; gates in research/screens/gates_main4.tsv) stops a screen once its wins gate is unreachable.
+  Waiters: `tools/wait_run.sh RUN`. To reorder the queue, start a new seq script that waits on the running arena's
+  pid, then kill the old seq script by pid (never by pattern: a pkill/pgrep -f matched the ssh shell once).
+- Recent evidence (TRAINING_LOG 2026-11-05): u9p's 59 king-kill losses: the last king starved in 34 (after the army
+  collapsed), bite 16, throw hits 7; enemy rat traps killed 805 of ours, ours 0. u9q's set-3 fast losses are
+  grab-and-throw wars on small maps (tiny vs waxmango: their grabs 108 to our 67, 39% of our grabs ended with our
+  carrier grabbed: v1a GRAB_SAFE) and reactive-trap fields (wallsofparadis vs AdamTan12: 74 traps, 72 fired,
+  mean life 3.1 rounds, 26 of our rats). Merlin out-farms us 2-3x on FreeTheCheese/cheesebottles.
+- Closed on this base: SEEK_CROWD and THROW_ADAPT (u9r, u9s, u9t: picks bar), FORM_RICH_MAX 5 (w0a inert).
+  Long closed: PEACE (u3w, u3z, u4l, u6h, u6w), RUSH_TO, RISK_FRESH/RISK_ADAPT, FACE_HOLD, WOUNDED_HP.
+- Owner rules: never ask permission to try an idea, never stop trying (PROMPTS #27); never leave the VM idle while
+  the replica plays (#28); maps symmetric (#14); refresh and commit progress/ after every accept (#16).
+- Local machine: 2 cores, 1 GB RAM, ~1 GB disk free: replay analysis runs on the VM. Volume games run on the VM;
+  field bots play only on the replica.
