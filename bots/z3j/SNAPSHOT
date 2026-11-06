@@ -1,0 +1,15 @@
+name=z3j
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=6969ef7
+created=2026-11-06 13:38 PST
+
+z3j = z1z + tools/ledger.py + CAT_HUSH (z3h's Baby hook) + FORM_WAR_FROM 300 (z3g's King hook). These are the two
+single switches that passed screens on the closed bundle's base, now together on plain z1z: zd155 (z3c, CAT_HUSH:
+t +0.57, picks z +2.42) and zd157 (z3e, FORM_WAR_FROM: net +1 game against z3b's zd154, 0 overruns). The two act in
+different places (baby squeaks near cats, king formations at war before r300), so their cells should compose.
+
+Falsifiers, registered before any z3j game:
+1. Screen zd160 vs zd136 on the s6 gates.
+2. Paired against zd158 (z3h) and zd159 (z3g), it must not net below either.
+3. Replica: block rules, against z1z's set-3 block 17946-17961.

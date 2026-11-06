@@ -6721,3 +6721,19 @@
   - Screens **zd158** (z3h) and **zd159** (z3g) are at the head of the queue, behind the running zd157 (z3e).
   - zd156 (z3d, bundle plus one-king fixes) moves to the queue's tail, since its base is closed.
   - z3h's local checks vs araid run in VM ~/diag26b/zh: keepout A, starvation B, and evileye B (z2y's gain there) alongside z1z's evileye B.
+- 13:47: **zd157 (z3e = z3b + FORM_WAR_FROM 300 vs zd136) passes the s6 gates.** n 22, D 2, net 0, t 0.00; picks z −0.49; transfer ×1.004; 0 overruns, 0 exceptions (araid's overruns aside).
+  - Against z3b's zd154, 17 of 44 cells differ (the hook changes how many kings form). Three results flip: it gains DefaultMedium A (r231 win where z3b lost at r374) and DefaultSmall B (z3b lost at r379), and loses starvation B (r1335, as z3g's local check did). That is net +1 game, so falsifier 1 holds.
+  - z3e is not for the replica, since its bundle base is closed. FORM_WAR_FROM goes on in z3g (screen zd159) and z3j.
+- 13:47: **z3h's local checks pass** (~/diag26b/zh vs araid, 0 overruns). evileye B won at r2000 where z1z lost at r1748, the same gain z2y showed. keepout A won. starvation B won at r535 by a king kill, where z1z won on points at r2000.
+- 13:47: **z3j = z1z + ledger + CAT_HUSH + FORM_WAR_FROM 300** (z3h's Baby hook plus z3g's King hook; the two act in different places). Screen **zd160** is queued after zd159. Falsifiers are in its SNAPSHOT.
+- 13:47: **Enemy rat traps, from the cached replica dumps** (scratch trapcensus.py, traptrig.py, trapwhy.py in VM ~/diag26b).
+  - **We lay no rat traps** (placeUs 0 in every game). Per game, the opponents lay: Finals 84, Varun 49, Hugo 42, Icarus 37, spsquared 18, waxmango 6, Merlin 4. Our rats fire about 96% of them.
+  - Traps cause 25 of our 58 deaths a game against Finals, 14 of 51 against Hugo, 13 of 41 against Varun and 9 of 47 against Icarus.
+  - How they fire (Finals, 27 games, 2,189 fires): 93% on our own move. 40% fire in the round they were laid and 28% in the next. 77% of the victims were already inside the trap's 3x3 when it was laid, and 67% of the fires were a step from one zone tile to another. Hugo, Varun and Icarus look the same.
+  - By move decision (the replay tag), the highest fire rates per 1,000 war turns are flank steps ('k'/'kF', 54-104 against Finals and Varun), faceEnemy steps ('fF', 85 against Finals) and carry aims ('T', 30-42). FACE_HOLD covers part of 'f'.
+  - The commonest tag on a firing turn is '-', but that is the rat dying in the trap: a rat killed mid-turn records 0 bytecodes, which decodes as '-'.
+  - The trap family is well covered: our own traps 11 times (s9a through u9j); avoidance through RISK_FRESH (t0b), RISK_ADAPT (u0u), WOUNDED_HP (u1b, u1n), FACE_HOLD (u1l, u4x), RUSH_BURN and MINE_BURN. Of the burn-gated switches (RISK_ADAPT, FACE_HOLD, WOUNDED_HP), none was ever on the replica alone. Under the ledger they act only after a trap fires on us, so a screen against araid/abrk would replay z1z. Parked as replica-only tests.
+- 13:47: **Throws and grabs** (scratch naps.py and napend.py). We throw more than most opponents and kill more by throws (Finals: 65 throws a game to their 46, 29 kills to their 18). The exceptions are Merlin (they throw 62 a game to our 36, and kill 31 of ours to 18 of theirs) and waxmango (60 to 38, 24 to 17).
+  - Opponents throw 2-3 rounds after the grab (Merlin 887 of 1,293 throws, spsquared 334 of 367). We mostly throw at 4-6, holding for a 2-for-1 (THROW_MIN 84, THROW_HOLD 6). The earliest throw is 2 rounds after a grab for everyone.
+  - Grab legality: the victim cannot see the grabber, or is weaker. In the Merlin game 44 of their 86 grabs took a weaker rat that could see the grabber. On tiny we out-grab Finals (92 to 64, and 104 to 62) yet lost one of the two games.
+  - Side: z1z won 53 of 96 games as A and 59 of 96 as B, and 11 cells favour B to 5 for A (p ≈ 0.2). No side effect to exploit.
