@@ -1,0 +1,8 @@
+name=z1a
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=680d303
+created=2026-11-06 03:00 PST
+
+z1a = u9p + FORM_PACK (new): a baby on the formation site's ring with the centre taken steps to a free ring tile beside it that fewer passable (or unseen) tiles outside the 3x3 touch, so the free tiles joiners can reach stay on the open side. Evidence: zfk vs u6h on minimaze (B, r330; ~/diag26b/fk3): the site (32,44) sits in the map's corner; six of ours held (31,43)-(33,43), (31,44), (31,45) and the centre, the corner tiles (32,45), (33,45), (33,44) touch nothing outside the 3x3 and stayed empty while K rats waited at (30,44), (30,42), (32,42); 203 refusals "Not enough rats in the 3x3" in that game, 535 over the four fk3 games, the main formation fault (FORM_FILL, which sends joiners to the nearest free ring tile, took them to 362 and failed its 0.5x bar). Registered 2026-11-06 03:01 PST, before any z1a or zfk4 game.
+Falsifiers: mechanism (zfk4 = zfk + FORM_PACK + a pack-step count, on the four fk3 games vs u6h, same seats, ~/diag26b/fk3): refusals summed not below 0.5x zfk's 535 (so 268 or more) drops it; kings formed summed below zfk's 5 drops it; no pack steps in a game where zfk was refused 100+ times marks it inert there. Screen (s6 vs u9p's zd61): paired t <= −1.5 rejects; picks/100 per-cell paired z <= −2 rejects; any overrun or exception rejects; transfer per round on the shared cells below 0.97x u9p's rejects; kingsFormed not above u9p's 31 rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer floors per set; kings alive at r2000 in the block's points games not above the twin's rejects.
