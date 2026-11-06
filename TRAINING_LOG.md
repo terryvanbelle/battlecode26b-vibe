@@ -6321,3 +6321,4 @@
   - Final transfer 321k to 282k (+14%). Both won 16 of 16; 0 exceptions, 0 overruns.
   - Cat damage on our kings: 200 to 20 (one game; not a gate).
   - z1q stays next on the replica after z0k.
+- 06:52: **Opening event stream vs each opponent** (scratch openscan.py over the 145 cached replica games, medians us/them; ECONOMY §1.3 from the re-read). We spawn more by r50 (22-32 to their 15-22) and by r100 (28-35 to 19-30). Our first pickup comes 3-7 rounds later than Finals', Icarus', YokoOno's and waxmango's, and we pick less by r100: Finals 280 to 500, YokoOno 240 to 380, Merlin 260 to 380, spsquared 280 to 320. Transfer by r150 is close (215-431 to 215-385). This matches the 04:35 finding (more babies, fewer picks per baby-round: the early rushers), whose family is closed. No new lever.
