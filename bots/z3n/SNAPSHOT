@@ -1,0 +1,19 @@
+name=z3n
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=df96599
+created=2026-11-06 14:35 PST
+
+z3n = z1z + tools/ledger.py + CAT_YIELD. At war, CAT_DEFEND (a cat within dist2 36 of our king draws every rat that
+sees it) gives way when the rat sees an enemy baby within dist2 20 or our king's alert says enemy rats are on it; the
+rat falls through to retreat/war() (defend the threatened king, engage the seen enemy) instead of walking to the cat.
+Target: the early small-map king kills. Replica averyfineline vs Finals (both seats lost by r200): 95-155 of our
+r30-200 'g' (cat branch) turns came with an enemy baby within Chebyshev 3, about half our bites went to the cat (646
+rat damage dealt against 1,226-1,368 taken) while 10-12 of theirs bit our king from r88. The hook is ledgered (K 11).
+
+Falsifiers, registered before any z3n game:
+1. Local mechanism games vs araid and abrk on averyfineline, tiny, DefaultSmall, thunderdome (both seats): the games
+   where the switch never fires must replay z1z's game; where it fires, our bite damage on enemy rats must rise and
+   no z1z win may turn into a loss without a matching loss-to-win.
+2. Screen vs zd136 (z1z's control) on the s6 gates (t > -1.5, picks z > -2, xfer >= 0.97, overruns <= 0).
+3. Replica: block rules (TRAINING_ALGORITHM s4) against z1z's set-3 block 17946-17961.
