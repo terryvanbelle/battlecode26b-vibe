@@ -1,0 +1,8 @@
+name=z0l
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=158b085
+created=2026-11-05 23:33 PST
+
+z0l = u9p + SIEGE_STAY 20 (new switch; Baby.retreat): a wounded baby (health <= RETREAT_HP 40, enemy within dist2 20) does not retreat while it sees the enemy king within dist2 20, so a siege that has reached the king keeps biting. Evidence: thunderdome A vs Varun, a cell that flips between builds (4 of 10 won): u9q (RETREAT_HP 0, 16933) and z0a (RETREAT_CARRY, 17047) killed Varun's king at r77; u9p (16428) and w0c lost at r784. Our babies' turns within dist2 20 of their king (scratch nearking.py on the dumps): z0a/u9q r25-49 174 (93 at health <= 40), r50-74 123 (86); u9p r25-49 68 (3), none after r50. Both blanket switches lost delivery (u9q set 1 0.888 of the twin's per round; z0a screen transfer 0.940), since wounded rats elsewhere die instead of going home; this one keeps retreat everywhere but at the enemy king. Registered 2026-11-05 23:34 PST, before any z0l game.
+Falsifiers: screen zd104 vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 on per-cell win/loss rejects; picks/100 worse by per-cell paired z <= -2 rejects; any overrun or exception rejects; shared-cell transferAmt below 0.97x u9p's rejects (z0a's registered gate, which z0a failed at 0.940). Replica: the standard block rules on sets 3, 1, 2, then 4 against the twin's anchors; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block; our wins by king kill in the block not above the twin's on the same cells rejects.
