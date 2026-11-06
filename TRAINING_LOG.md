@@ -6694,3 +6694,16 @@
   - We leave our own half unpicked. By r300 we have picked about half of its mine spawns. In wins 69% of the midO spawn is still unpicked by anyone at r300.
   - Merlin (7 of 24 for z1z, the weakest matchup; transfer 1,892 to 4,004 a game). FreeTheCheese A (17960 g0): they picked 4,985 in our half, against our 5,275; we picked 380 in theirs. We transferred 2,779 of the 5,655 we picked; they transferred 11,566 of 17,283. Cats killed 29 of ours (midO 15, ours 12) and 143 of theirs. They still dealt 10,860 cat damage to our 5,119.
   - The early-war lever is closed: PEACE family (u3w, u3z, u6h, u6w, z0g) and COOP_GUARD (z1s). So is the low-bank last-gasp spawn (u6u LOW_FLOOR 30).
+- 12:46: **z3b's local checks pass** (~/diag26b/zb, vs araid, seed 0; the first run named the opponent wrong and was rerun).
+  - starvation B: won at r2000 with 9,374 transferred, z1z's game exactly.
+  - keepout A: won, 4 kings formed, 34,967 transferred, z2x's game exactly.
+  - superioristhmus A: won with **1 king formed** and 45,495 transferred.
+  - 0 overruns, 0 exceptions.
+  - The cost is that RICH_FIX_KINGS 2 also drops the one-king fixes' target. z1z lost superioristhmus A to spsquared 47-52 in set 1 (17962, 2 kings to 3), and its second-king formations fail there with 20k banked.
+- 12:46: **z3d = z3b + RICH_FIX_KINGS 1 + RICH_FIX_BANK 1500.** One-king sites get the fixes again from r600, but only while 1,500+ is banked (G.fixOn; every call is inside a ledger hook). minimaze A's starving formation had 500 banked; superioristhmus A's failures had 20k.
+  - Checks in ~/diag26b/zd3: superioristhmus A won with 4 kings formed and 49,968 transferred. Its one overrun is z2x's (a fresh rat's first turn at r1212, 17,501). keepout A and starvation B are the same as z3b's.
+  - Screen **zd156** is queued after zd155. Falsifiers in bots/z3d/SNAPSHOT. On the replica it would follow z3b: its set-3 games replay z3b's except where a rich one-king fix acts.
+- 12:46: **Early second kings at war lose** (z1z's 192 replica games, rows ~/diag26b/z1zb*.jsonl). By second-king round: none 69 of 125 won; before r300, 8 of 28; r300-599, 8 of 9; r600-1199, 11 of 12; later, 16 of 18.
+  - All 26 of the before-r300 formations that came after the backstab went 6 wins to 20 losses, most ending with the bank at 0-1. The two in peace (rift) won.
+  - The lever has been tried: u5l and u7h (FORM_FROM 600) and z0k (FORM_WAR_FROM 300 on u9p, pooled D 27, net +5, t 0.96). All of those ran with bytecode drift in every cell.
+  - A ledgered retry on z1z would change only the formation cells (about 14% of games). At z0k's rate that is about net +1 a block, under the replica's resolution. Parked unless a sharper trigger shows up.

@@ -1,0 +1,16 @@
+name=z3d
+source=bots/z3b
+source_sha=146faaa4c397
+commit=862ae4d
+created=2026-11-06 12:41 PST
+
+z3d = z3b with the one-king rich-site fixes back (RICH_FIX_KINGS 1, from r600), but only while global cheese is
+RICH_FIX_BANK 1500 or more (G.fixOn; every call is inside a ledger hook). The fixes' target was superioristhmus A, where
+z1z's second-king formations failed with 20k banked (z1z lost it to spsquared 47-52 in set 1, 17962). z3b drops them
+because z2x's fired at r825 on minimaze A vs Xzibit with 500 banked, at war, and both kings starved (18124).
+
+Falsifiers, registered before any z3d game (VM ~/diag26b/zd3, vs araid, seed 0):
+1. superioristhmus A must form more kings than z3b's game (1 king formed, ~/diag26b/zb) and not lose; keepout A and
+   starvation B must not lose.
+2. Screen vs zd136 (z1z's control), s6 gates; paired against zd154 (z3b): t <= -1.5 drops it.
+3. Replica: only after z3b is decided (it would replay z3b's set-3 games except where a rich one-king fix acts).
