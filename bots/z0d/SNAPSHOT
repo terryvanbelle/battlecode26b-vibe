@@ -1,0 +1,8 @@
+name=z0d
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=dbe2202
+created=2026-11-05 20:50 PST
+
+z0d = u9p + STAB_LAY (new switch; G.stabbed, two conditions in Baby): when the enemy ended cooperation, for the 100 rounds the engine still lets us place cat traps (GameWorld.catTrapsAllowed: the backstabbed team, within CAT_TRAP_ROUNDS_AFTER_BACKSTAB), the cooperation cat-trap rules hold: CAT_LAY lane traps (layLane) and the CAT_RING floor-only rule in tryCatTrap, instead of the war rule that wants a projected surplus. Evidence: in 63 replica points losses (954 games, scratch ptsgames.py) the enemy backstabbed in 36, and our cat-damage share cost 6.8 points on average, more than kings (3.9) or transfer (4.7); a cat trap deals 100 for 10 cheese. Registered 2026-11-05 20:51 PST, before any z0d game.
+Falsifiers: screen zd92 vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 on per-cell win/loss rejects; picks/100 worse by per-cell paired z <= -2 rejects; any overrun or exception rejects; D 0 rejects unless our catTraps rose in shared-cell games the opponent backstabbed (then it fired, no cell turned, and it goes on to the replica on mechanism). Mechanism: our catTraps in those games not above u9p's rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block; our cat-damage share in the block's points games not above the twin's rejects.

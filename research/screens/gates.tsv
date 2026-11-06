@@ -1,3 +1,4 @@
 # run ctrl_run ctrl_bot cand_bot gate (TRAINING_ALGORITHM s6; each line registered before its run starts; read every pass by abort_watch.py --follow)
 zd90 zd61 u9p z0b t:-1.5
 zd91 zd61 u9p z0c t:-1.5
+zd92 zd61 u9p z0d t:-1.5
