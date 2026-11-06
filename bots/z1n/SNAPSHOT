@@ -1,0 +1,22 @@
+name=z1n
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=86f19ee
+created=2026-11-06 04:24 PST
+
+Description (2026-11-06 04:24 PST): u9p + FLOW_W 3 (existing switch, never played as a candidate). Flow's reverse
+search pops on f = g + 3 * Chebyshev rather than g + Chebyshev, so tiles near the rat come up first. Stash (replica
+17570 g0 vs YokoOno, delivery 80 by r100 and 100 by r300 against their 2,605): 96% of our rat-turns before r200 were in the home strip. Locally
+(VM ~/diag26b/stx, u9p vs abrk A) the first gatherer searched toward (10,18) from r9 to r26 and never finished. The
+first rats left the strip at r47-96, and two never left. Offline (2026-10-30 log) weight 2 popped 325-457 tiles to
+weight 1's 419-606, with the same path costs. NB 8 buckets allow w up to 7 - DIG_COST = 3.
+Falsifiers (registered before any z1n game): mechanism chain on VM ~/diag26b/fw (Stash, cheesebottles, FreeTheCheese,
+wallsofparadis vs abrk, both seats; u9p, z1m and z1n alike, seed 0):
+(1) Stash: the median round at which a bot's first 8 rats first stand outside the home strip (y 8-21) must be at
+    least 10 rounds earlier than u9p's in the same seat, in both seats, or z1n is inert.
+(2) Our transfer by r300 summed over its 8 games not above u9p's drops it.
+(3) Any exception or overrun drops it.
+(4) Fewer wins than u9p over the 8 games drops it.
+Then s6 screen vs u9p's zd61 (paired t <= -1.5, picks/100 per-cell z <= -2, overrun or exception, transfer per round
+on the shared cells < 0.97x reject). If z1m and z1n both pass the chain, both screen (z1m first). Replica: standard
+block rules and transfer floors.
