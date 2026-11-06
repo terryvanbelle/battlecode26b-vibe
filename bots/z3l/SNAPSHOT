@@ -1,0 +1,15 @@
+name=z3l
+source=bots/z3k
+source_sha=4ad3d811db30
+commit=b4e6255
+created=2026-11-06 14:21 PST
+
+z3l = z3k + DRY_HOLD: a baby latched on the dry signal (no rise in the global cheese for 100 rounds while under 1,200)
+takes no pile until its load is home. In z3k's clockwisdom B game (araid, seed 0) rat 11720 set out at r322 with 100
+raw, took piles on the way to 1,960 (each unit carried adds 1% to the move cooldown: 80-168 by r500), and was still 10
+tiles out when the king starved at r855. The hook is ledgered in pickUp (K 11); without a latched rat it replays z3k.
+
+Falsifiers, registered before any z3l game:
+1. Local games vs araid (~/diag26b/dry): on clockwisdom B and fullofsecrets B, z3l's transfer must beat z3k's (330
+   and 705) and its king must live longer; clockwisdom A must stay a win.
+2. If it holds: screen vs zd136 on the s6 gates, in place of z3k's zd161 if z3k has not started.

@@ -6765,3 +6765,11 @@
 - 14:17: **zd160 (z3j = z1z + ledger + CAT_HUSH + FORM_WAR_FROM 300 vs zd136) passes the s6 gates.** n 22, D 3, net +1, t +0.57; picks z +0.48; transfer per round 6.828 to 7.142 (x1.046); 0 overruns and 0 exceptions of ours. Against zd158 (z3h, the hush alone) there is one flip, +araid DefaultSmall A (r410 win, transfer 2,184 to 1,030). Submitted z3j as #243 (14:16); set-3 block 1 is queued, with 4 requests sent and 12 waiting in the drain queue. zd159 (z3g, FORM_WAR_FROM alone) is now on the screen.
 - 14:17: **z3k local checks** (~/diag26b/dry vs araid, seed 0). Clockwisdom A: z3k won at r1067 with 1 king and 825 transferred; z1z lost at r880 with 0. Clockwisdom B: both lost, z3k at r855 with 330 transferred, z1z at r967 with 200. fullofsecrets B: both lost, z3k at r770 with 705, z1z at r635 with 330. Falsifier 1 holds (A flips; transfer is up on both seats), so screen zd161 stays queued.
   - Why B failed (hpath.py): the dry signal fires at r321 as the bank passes 1,200. Rat 11720 starts home with 100 raw from (29,6) and keeps taking piles on the way (pickUp runs after every move, for every role). It reaches 1,960 raw by r647 with move cooldown 80-168, and is still 10 tiles from the king when the king dies. Three others die on the way; two deliver 260 and 80.
+- 14:27: **z3k regression games** (~/diag26b/dry vs araid, seed 0; z1z in brackets).
+  - rose A: a points win at r2000 with 2 kings and 7,265 transferred [lost at r1285, 1,420]. The dry signal fires near r400 (H 196, then 1,359 in r500-600).
+  - Stash A: replays z1z's game (replay_eq: 754 rounds, no divergence).
+  - EscapeTheNight A: won at r974 with 7,457 [r910, 11,516]. uneruesansfin B: won on points with 2,940 [3,480].
+  - Both fire in the opening (H 194 in r200-300 and 366 in r300-400), before the first steady deliveries. fullofsecrets B fires at r100-200 too (H 1,264 in r200-300).
+  - On rose, one or two rats stay latched on H for 900 rounds without getting home.
+  - Tally over 8 maps: +2 flips (clockwisdom A, rose A), fullofsecrets B lasts 135 rounds longer, clockwisdom B dies 112 rounds sooner, and two wins come with less transfer.
+  - z3l (z3k + DRY_HOLD: a latched rat takes no pile until its load is home) is on clockwisdom A/B, fullofsecrets B, rose A and Stash A now. Falsifiers are in bots/z3l/SNAPSHOT.
