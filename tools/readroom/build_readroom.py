@@ -8,6 +8,9 @@ V = os.path.expanduser('~/projects/vibe')
 SRC = {'bc22': 'reference/battlecode22-vibe', 'bc25': 'reference/battlecode25-vibe', 'bc21': 'reference/battlecode21-vibe',
        'bc20': 'reference/battlecode20-vibe', 'bc24': 'reference/battlecode24-vibe', 'bc23': '2023', 'bc19': '2019',
        'advice': 'reference/battlecode-vibe', 'bcenv': 'reference/bcenv'}
+# Whole files left out: a synthesis across seasons that includes 2026 carries 2026 evidence in untagged
+# "every year" claims, so block filtering cannot clean it (scope line "(2020-2026)"; seen 2026-11-06).
+EXCLUDE = {'advice/MISSED_IDEAS.md'}
 SKIP = {'.git', '.venv', 'node_modules', 'gauntlet', 'matches', 'build', 'site-packages', '__pycache__', 'benchmarks'}
 RR = sys.argv[1] if len(sys.argv) > 1 else f'{V}/reference/readroom-no2026'
 tot = hits = 0
@@ -19,6 +22,7 @@ for k, s in SRC.items():
             if not (f.endswith('.md') or f.endswith('.txt')): continue
             p = os.path.join(d, f)
             if os.path.getsize(p) > 2_000_000: continue
+            if TAG.search(os.path.relpath(p, root)) or f'{k}/{os.path.relpath(p, root)}' in EXCLUDE: continue   # a file named for 2026 (yearly/MISSED_IDEAS_2026.md) is never copied
             out = os.path.join(RR, k, os.path.relpath(p, root))
             os.makedirs(os.path.dirname(out), exist_ok=True)
             t = filt(open(p, errors='replace').read())

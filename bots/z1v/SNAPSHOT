@@ -1,0 +1,14 @@
+name=z1v
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=4d0e66e
+created=2026-11-06 05:57 PST
+
+z1v = u9p + CAT_SEEK 3 (new switch; CAT_SEEK_FLOOR 60, CAT_SEEK_REST 100). In cooperation, one in three FIGHT babies (by birth round) that knows no cat walks to the last cat location it knew, of any age, or else the map centre. It lays lane cat traps from 60 global cheese instead of 400. A stalled walk (30 turns), or the centre reached with no cat in view, sends it back to its mine for 100 rounds. Until now a FIGHT baby chased only a cat it knew (knownCat: seen within 10 rounds or a fresh comms slot); otherwise it mined. Source: the 2026-11-06 re-read (ADVICE §16 "was I ever ahead?", §19 "match the opponent's rate on a proportional term"). Registered 2026-11-06 05:57 PST, before any z1v game.
+Evidence:
+- "Was I ever ahead?" over the 101 cached replica points games (scratch ahead.py, engine formula per round): of 24 losses, 13 never led after r500, 9 led until r500-1499, 2 led after r1500. In the 13, the end deficit is 138 points of cat share, 49 of transfer, 1 of kings.
+- Peace cat damage over 91 replica games with 300+ peace rounds: we did 0 while they did some in 3 games, all averystrangespace seat A (12867 and 17625 vs YokoOno, 12896 vs Icarus), all lost on points. No baby of ours came within dist2 20 of a cat in 1,100-1,500 peace rounds (their babies did in 15-49 of the sampled rounds). Cat traps 0 to their 0-21; cat damage 0-133 to 386-2,740; banks 46-101; the cats circled the centre ~22 from each king; our 33 babies stayed within 16 of our corner king. Cat gaps 17-30 points; 12896 was lost by about 1.
+Falsifiers:
+- Screen zd133 vs u9p zd61 (s6, fresh games): paired t <= -1.5; per-cell picks z <= -2, per rat-turn or per round; transfer per round on shared cells below 0.97x u9p's; any overrun or exception. The local opponents open the war before r140, so the screen prices the cost only.
+- Mechanism chain sk (VM ~/diag26b/sk; z1v vs u9p and u9p vs u9p on averystrangespace, rose, TheHeist and clockwisdom, seed 0, both seats for z1v): in games where the peace lasts 300+ rounds, z1v's peace cat damage summed must exceed u9p's in the same games; otherwise inert (dropped). Any exception or overrun rejects.
+- Replica: the standard block rules, sets 3, 1, 2, then 4, with the transfer floors. In the block's averystrangespace games, z1v's peace cat damage must be above zero wherever the twin's was zero, or it is inert there.

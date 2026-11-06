@@ -10,6 +10,7 @@ import re, sys
 
 TAG = re.compile(
     r"(?<![\d-])2026(?![-/]\d)"                     # 2026 as a contest year; calendar dates 2026-10-27 are kept
+    r"|\b(?:19|20)\d\d\s*[-\u2013]\s*'?(?:20)?26\b"   # a span of seasons that ends in 2026 ("2020-2026", "2019-'26")
     r"|\bbc-?26|battlecode-?26|\b'26\b|\bBC ?26\b"
     r"|Uneasy Allianc|\brats?\b|rat ?kings?|baby ?rats?|ratnap|kidnap|cheese|squeak|backstab|pounce"
     r"|\bcats?\b(?!\s+[~/$\-\w.]*[/.~$])"           # the cat unit, not `cat ~/file`

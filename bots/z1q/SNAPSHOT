@@ -14,3 +14,4 @@ Falsifiers, screen zd128 vs u9p's zd61 (s6):
 - transfer per round below 0.97;
 - any overrun or exception;
 - inert: per-round pickupAmt ratio below 1.01 vs zd61 (u7z gained 5.1% over u6x).
+mechanism_wp (registered 05:18 PST, before the wp games): chain VM ~/diag26b/wp, u9p and z1q vs araid and abrk on wallsofparadis, jail, keepout and mercifullattice, both seats, seed 0. Measure (scratch crowd.py): for each game, the share of our baby-rounds in r100-700 within Chebyshev 4 of the mine that holds the most of them. z1q's mean share over the wallsofparadis games must be 10+ points under u9p's, or z1q is inert on the crowding loss (reported with the screen; not a reject on its own). Exceptions or overruns reject.

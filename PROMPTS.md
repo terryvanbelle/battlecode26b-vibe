@@ -130,3 +130,7 @@ Never, ever ask me for my permission to try something like this.  Never, ever st
 ## 28. 2026-11-05 17:28 PST
 
 You just wasted two hours sitting there when you could have been doing something useful
+
+## 29. 2026-11-06 05:41 PST
+
+I'd like you to re-read the top-level documents in the battlecode-vibe repository, making sure to filter out anything associated with 2026

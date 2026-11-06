@@ -1,0 +1,14 @@
+name=z1u
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=4d0e66e
+created=2026-11-06 05:39 PST
+
+z1u = u9p + CAT_LAY_MAX 5 (new switch). CAT_LAY lays lane traps only while we have fewer than 5 live cat traps, so the traps laid in front of an approaching cat (tryCatTrap, CAT_RING) always keep 5 of the engine's 10 slots. New cat traps are barred at war for the backstabber, so this acts in peace and in the victim's 100-round window. Registered 2026-11-06 05:39 PST, before any z1u game.
+Evidence:
+- Replica rift vs spsquared A (16422 g1, u9p; dumped): we held 10 live cat traps for 1,775 rounds. One rat laid 5 lane traps down x 19 at r243-269 behind a cat that never came back; none fired. Our cat traps: 39 laid, 29 hits. The crown twin u7p (no lane traps, 13248 g1): 53 laid, 47 hits, and it won 54-45 on cat damage 5,640 to 4,000.
+- Dumped u9p-line replica games (z0g, z0q, u9p), cats alive: 10 live traps for 340-1,800 rounds on rift (both seats), corridorofdoom A, where_are_you (both seats), minimaze A and rose B.
+Falsifiers:
+- Screen zd132 vs u9p zd61 (s6, fresh games): paired t <= -1.5 rejects. Per-cell picks z <= -2, per rat-turn or per round, rejects. Transfer per round on shared cells below 0.97x u9p's rejects. Any overrun or exception rejects. The local opponents open the war before r140, so lane traps barely act there; the screen tests only the cost.
+- Replica: the standard block rules on sets 3, 1, 2, then 4, with the transfer floors.
+- Mechanism (dumped block games against the z0q block dumps on the same cells; scratch catcap.py): rounds at 10 live cat traps with the cats alive must fall. Summed cat-trap hits in the games that stay at peace past r500 not above z0q's after block 2 rejects as inert.
