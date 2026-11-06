@@ -1,0 +1,13 @@
+name=z2p
+source=bots/z2n
+source_sha=9448fa9afefe
+commit=b3d07f8
+created=2026-11-06 10:56 PST
+
+z2p = z2n with z2o's fix: its three CASH hooks close through G.settle (K 20, 18, 20), so an acting CASH hook's
+thousands of bytecodes reach the budget reads instead of being credited (z2j's 17 overruns in zd146). The rest is z2n:
+CASH + CASH_END 1880, RICH_LATE 1050, RICH_FIX, all under the exact ledger. The King hooks stay plain: their acting
+work (richDrop, richPick, the off-site return) runs after the hook closes, so only the conditions are credited.
+Checks: as z2n's (superioristhmus A replays z2m's game; cheesefarm A forms the late third king), plus wallsofparadis B
+with no overruns.
+Falsifiers: any overrun or exception; the component screens. This is the replica candidate after z1z's block 4.

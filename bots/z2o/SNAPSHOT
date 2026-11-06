@@ -1,0 +1,15 @@
+name=z2o
+source=bots/z2j
+source_sha=b42f48a835f5
+commit=bc0352b
+created=2026-11-06 10:53 PST
+
+z2o = z2j with its three CASH hooks closed through G.settle(cd, cb, K) instead of `G.debt = cd + G.bc() - cb + K`
+(K 20, 18, 20 from the javap listing: 18 counted instructions of settle's own plus the base-absent ones after it).
+settle credits a hook's cost only while it is at most SETTLE_CAP (300). zd146 found z2j overrunning 17 times
+(wallsofparadis A 3, B 14; 219 overrun turns in a dumped wallsofparadis B from r1888, all in Seal.work and sense2): an
+acting CASH hook costs thousands, and crediting them made left() overstate the turn's budget by as much.
+Checks (VM ~/diag26b/zo): keepout A vs araid replays u6x's game exactly (state and every hot= reading); wallsofparadis
+B vs araid has no overruns.
+Falsifiers: any overrun in its acting cells (wallsofparadis A/B, lyl A/B, evileye A); a cell where CASH stays silent
+that differs from zc6.
