@@ -6371,3 +6371,10 @@
   - FORM_FILL: a joiner one tile out steps onto any free tile of the 3x3. A rat inside steps on along its entry heading (or 45 degrees off it) onto a free tile, so free tiles drift toward the queue; at most two shifts per rat, so rats can't trade tiles back and forth.
   - Build z2a-38798ce4eb40. Its falsifiers are in bots/z2a/SNAPSHOT.
   - The mechanism chain fz is running on the VM: superioristhmus vs u9p in both seats, seeds 0-1, plus the 16 wp cells (jail, keepout, wallsofparadis, mercifullattice vs araid and abrk), compared with u9p's games on the same cells.
+- 07:52: **z1z PASSED screen zd136** (z1q + z1r bundle) vs u9p's zd61: n 44, D 6, net +2, t +0.81. Picks/100 rat-turns 32.85 vs 34.30 (per-cell z −0.48). Per-round pickAmt ratio 1.016 (z +2.38). Transfer per round 1.009. 0 overruns, 0 exceptions. kingsFormed 29 vs 31, but z1z is not a formation switch. Spawned 4,451 vs 4,031 (the RICH2 cap). It goes on the replica after z0k.
+- 07:52: **Formation denial measured, no candidate** (scratch enform.py over 143 cached replica points games). The enemy formed 61 kings after round 1, 19 at peace and 42 at war. None of ours stood within Chebyshev 3 of the site the round before. Every site was deep in their half: spsquared on superioristhmus and rift, Finals on where_are_you, TheComplexMerlin on cheesebottles. Kings at the end were ours 270, theirs 202. Blocking a site needs 3 of our babies inside their 3x3, which means an incursion into their home. The REREAD item is closed.
+- 07:55: **z2a's superioristhmus chain (fz) meets its falsifiers.** Four games vs u9p, both seats, seeds 0-1 (formcmp.py):
+  - z2a: 14 bursts, 12 formed, 2 failed, 15 kings at r1190, 3 of 4 won.
+  - u9p in the same games: 13 bursts, 6 formed, 7 failed, 10 kings at r1190.
+  - Failed bursts are 2 against a bar of 3.5 (half of u9p's). Kings at r1190 were never below u9p's in any game (4/4/4/3 vs 2/2/3/3). 0 exceptions and 0 overruns on either side.
+  - The 16 wp cells (chain2) are still playing, and screen zd137 is running.
