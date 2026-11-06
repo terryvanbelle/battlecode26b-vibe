@@ -96,17 +96,19 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-05 23:50 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 00:30 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). Candidates
   descend from u9p = u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18), each one
-  switch screened against u9p's zd61. **z0c = u9p + END_CAT 1650** is on the replica (#234): set-3 block 1 continued
-  (D 11, net +1, t +0.30); set-1 block 2 queued after match 17262, waiter build/wait_z0cb2.sh. Pool blocks as
-  t = (net1 + net2) / sqrt(D1 + D2). Replica queue after z0c: **z0g** (PEACE_FROM 100; passed zd95 and mechanism run
-  zd96). Held after passing screens: z0d (STAB_LAY, picks z -1.90), z0e (END_CAT 1450).
-- Screening (VM queue runs/screenq.txt): zd102 z0j mechanism (LAY_MAX 6 + strict RECYCLE_AGE 300; score with
-  `research/audits/mech_cmp.py runs/zd102/results.jsonl z0j runs/zd96/results.jsonl u9p`), zd103 z0k (FORM_WAR_FROM
-  300), zd104 z0l (SIEGE_STAY 20), zd105 z0m (RETREAT_HP 20), zd101 z0j s6, zd98/zd97 z0h (FORM_RICH_BANK 1500),
-  then the old sweep. Each candidate's falsifiers are in its bots/NAME/SNAPSHOT.
+  switch screened against u9p's zd61. **z0g = u9p + PEACE_FROM 100** is on the replica (#235): set-3 block 1 after
+  match 17415, waiter build/wait_z0gb1.sh. Score it with `paired 13248-13291 IDS --crown 12130-12163` plus
+  `research/audits/blockcheck.py ~/diag26b/z0gb1.jsonl,~/diag26b/rp_games.jsonl IDS 13248-13291` on the VM
+  (transfer floor 3,968; z0g never opens at r100+). Pool blocks as t = (net1 + net2) / sqrt(D1 + D2).
+  z0c (END_CAT 1650) was rejected after block 2 on the transfer floor (3,988 < 4,133). Held after passing screens:
+  z0d (STAB_LAY, picks z -1.90), z0e (END_CAT 1450).
+- Screening (VM queue runs/screenq.txt): zd103 z0k (FORM_WAR_FROM 300) running, then zd104 z0l (SIEGE_STAY 20),
+  zd105 z0m (RETREAT_HP 20), zd106 z0n (END_CAT without gatherers), zd98/zd97 z0h (FORM_RICH_BANK 1500; zd98 is a
+  mechanism run: `research/audits/mech_cmp.py runs/zd98/results.jsonl z0h runs/zd96/results.jsonl u9p`), then the
+  old sweep. z0j was rejected at zd102 (mechanism). Each candidate's falsifiers are in its bots/NAME/SNAPSHOT.
 - Replica scoring (twin-anchored; pass explicit match IDS, others' matches sit in the ranges):
   set 3 `contest.py paired 13248-13291 IDS --crown 12130-12163`; set 1 `paired 12771-12813 IDS --crown 11549-11677`;
   set 2 `paired 12838-12899 IDS --crown 11678-11702`; set 4 `paired 16848-16863 IDS` (u6x reference, 28 of 48).
