@@ -1,0 +1,16 @@
+name=z2t
+source=bots/z2s
+source_sha=131562b06497
+commit=456532d
+created=2026-11-06 11:18 PST
+
+z2t = z2s with RICH_LATE 750 (from 1050) and RICH_MORE 750 (from 900): the surplus-tested third, fourth and fifth
+kings may start at r750, and z2s's gap opens the next site 40 rounds after each king formed from r600.
+Why: in z2r/z2s's checks the third king waited for a 3,000 bank (superioristhmus A: second king r685 with 3,090,
+third r904) while the projected surplus read 12-13k from r700. z2s alone (the gap after the second king) changed
+nothing there. Kings raise transfer (z2r vs z2q on superioristhmus A: 40.8k vs 31.8k), and upkeep from r750 is about
+500 more a king than from r1000.
+Checks (VM ~/diag26b/zt): superioristhmus A/B, keepout A, cheesefarm A vs araid, against z2r's games: identical until
+r750 (or the first act after); 5 kings earlier; no king lost, no starving bank, no overrun.
+Falsifiers: screen vs zc6 (s6 gates), and against z2r's zd150: lost cells where an earlier formation emptied the army
+before r1200, kings lost, or the bank running dry (starve damage).
