@@ -1,0 +1,20 @@
+name=z3e
+source=bots/z3b
+source_sha=146faaa4c397
+commit=954b009
+created=2026-11-06 12:52 PST
+
+z3e = z3b + FORM_WAR_FROM 300 (z0k's switch, in a ledger hook at the head of King.formation): at war, no formation
+site before round 300, and an open site is dropped when the war starts. Forming a king takes 7 babies into the merge
+and 50 cheese from a war that has just begun.
+
+Evidence (z1z's 192 replica games, ~/diag26b/z1zb*.jsonl): in games at war that were still running at r250, the ones
+that had formed a second king by then went 2-12 and the others 51-42. Early second kings at war overall went 6-20, and
+second kings formed r300-599 went 8-1. z0k (the same switch on u9p, before the ledger, so every cell drifted) passed
+blocks 1 and 2 and was rejected at block 3: pooled 144 cells, D 27, net +5, t 0.96.
+
+Falsifiers, registered before any z3e game:
+1. Screen zd157 vs zd136 (z1z's control), s6 gates. Paired against zd154 (z3b): the games that differ are the ones
+   where the switch acted. If those games net below 0, z3e is dropped.
+2. Mechanism: no second king may form at war before r300 in any zd157 game (checked on dumps of the differing games).
+3. Replica: block rules. It would follow z3b (its set-3 games replay z3b's except where a war site was refused).
