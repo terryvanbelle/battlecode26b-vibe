@@ -96,16 +96,24 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 13:20 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 14:53 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **z1z** (accepted 2026-11-06 11:46 PST over u6x; replica blocks 1-4 pooled D 46, net +14, t 2.06; u9p + SEEK_IDLE
-  20/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Screen control: **zd136** (z1z). Before it: u6x (control zc6).
-- **Replica: z3c (#242, = z3b + CAT_HUSH) on set-3 block 1** (submitted 13:20; 18211-18214 sent, 12 in the drain
-  queue; waiter build/wait_z3cb1.sh, IDs > 18210). Score: `contest.py fetch --new --pages 3`, then
-  `paired 17946-17961 IDS` (z1z's set-3 block; block 1 rejects at t <= 0). Transfer floor: ~/diag26b/z1zb1.jsonl.
-  - The endgame-king bundle (z2x, z3b) is closed: both netted <= 0 on the same 48 cells (z3b: 46 alike, D 2, t 0.00;
-    +corridor B, -rose A where CASH and RICH_MORE formed kings at r970/r981 that starved by r1252). z3c tests CAT_HUSH.
-  - Next: CAT_HUSH and FORM_WAR_FROM on plain z1z under the ledger (z3g = z1z + ledger + FORM_WAR_FROM, built,
-    unscreened). Screens: zd157 (z3e = z3b + FORM_WAR_FROM, running), zd156 (z3d), zd150, zd145, zd141, zd132.
+  20/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Screen control: **zd136** (z1z). Ledgered z1z for tools/bundle.sh: bots/zl0
+  (scratch, untracked: `cp -r bots/z1z bots/zl0`, sed the package, `python3 tools/ledger.py bots/zl0`).
+- **Replica: z3j (#243, z1z + ledger + CAT_HUSH + FORM_WAR_FROM 300) on set-3 block 1** (submitted 14:16; 12 of 16 in
+  (18281-18299), Icarus and Merlin in the drain queue; waiter build/wait_z3jb1.sh, IDs > 18269). Partial (14:43): 36
+  cells, D 8 (+2 -6), net -4, t -1.41, the same flips as z3c (z3b + CAT_HUSH, rejected): **CAT_HUSH loses on the replica**
+  though it passed zd158/zd160 locally. Score: `contest.py fetch --new --pages 3`, `paired 17946-17961 IDS` (block 1
+  rejects at t <= 0).
+- **Replica order next:** **z3g** (z1z + ledger + FORM_WAR_FROM 300 alone; zd159 passed, t +0.00). z1z's 192 replica
+  games: second king formed at war before r300 won 6, lost 20 (r300+: 28-4; no second king at war: 60-49); z0k (same
+  switch on u9p) pooled net +5 over three blocks. Then **z3p** (z1z + ledger + CASH_END 1880 alone: the endgame second
+  king that gained corridorofdoom B for z2x and z3b) if its local checks (~/diag26b/cp) hold, then z3k if zd161 passes.
+- Screens: **zd161** (z3k = z1z + ledger + DRY) running; the rest of runs/screenq.txt (zd150, zd145, zd141, zd132, ...)
+  is on closed lines. Dropped today at local checks: z3l (DRY_HOLD), z3m (z3j + DRY), z3n (CAT_YIELD).
+- Closed today on the replica: z2x, z3b (endgame-king bundle with mid-game CASH/RICH: formations that starve the bank),
+  z3c (CAT_HUSH). Closed locally: DRY variants beyond z3k, CAT_YIELD (bite damage on rats does not rise), early cat
+  traps (no loss signal), nap timing (no gap to the field).
 - **Exact silence:** **tools/ledger.py bots/NAME** applies the exact ledger to a u6x-family bot; its docstring has the
   engine's counting model and the hook recipe. A hook whose acting path is costly closes with **G.settle(cd, cb, K)**
   (K = 18 + base-absent instructions after it): crediting an acting hook made left() overstate the budget and z2j
