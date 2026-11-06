@@ -6509,3 +6509,8 @@
   - Mechanism games are running on the VM (~/diag26b/ce): araid evileye A, wallsofparadis B, learn_your_lesson A and B, the r2000 cells u6x ended 1-1 on kings. Falsifiers are in bots/z2j/SNAPSHOT.
   - The other engine facts used: becomeRatKing costs 50, needs 7 of our babies in a passable on-map 3x3 with no cat or king, kills every robot in the 3x3 (enemy babies too) and banks their raw. After r1200 a team may form a king only while it has fewer than 2.
   - z2h screen zd144 so far: 12 of 12 cells repeat zc6 exactly.
+- 10:07: **z2j's mechanism games pass: 4 of 4 end with a second king, and all 4 are won.**
+  - araid evileye A: u6x lost 49-50 (kings 1-1). z2j wins 58-41 (kings 2-1, bank 292 at the end).
+  - wallsofparadis B: u6x won 54-45; z2j 63-36. learn_your_lesson A: 53-46 to 61-38. learn_your_lesson B: 58-41 to 66-33. All with kings 2-1.
+  - Screen **zd146** (z2j on zc6's cells) went to the head of screenq, ahead of zd145 (z2i). z2j contains z2h, so it is the ledgered CASH line's replica candidate if it passes.
+  - zc6 also has cheesefarm A and B lost 49-50 at kings 2-2. A second king cannot help there (after r1200 a team forms a king only while it has fewer than 2), so only transfer or cat damage can move those.

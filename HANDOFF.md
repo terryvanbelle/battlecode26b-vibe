@@ -104,15 +104,22 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   waiter build/wait_z1zb2.sh): score `paired 12771-12813 IDS --crown 11549-11677` pooled with block 1; transfer floor
   4,133 (blockcheck.py vs twin_s1). Accept at pooled t >= 2 (then z2g = z1z + CASH, screen zd143, is its follow-up);
   reject at <= 1; else block 3 on set 2, where every u9p-line candidate so far lost ~2 cells (TRAINING_LOG 09:14).
-- **Silence finding (09:34):** no "silent" switch so far replayed its parent exactly. Any added bytecode moves
-  Flow.work (it spends whatever a turn leaves) and the other budget reads, so games drift after a few hundred rounds
-  (z2f, u6x + CASH: keepout A left u6x's game at r525 with no rescue possible). **z2h** = z2f + an exact bytecode
-  ledger (G.debt; bots/z2h/SNAPSHOT): every budget read adds back the bytecodes spent on code u6x does not run, and
-  Debug.mark reads the adjusted count (its hot-stage branch costs bytecodes). Test: `python3 ~/diag26b/replay_eq.py
-  ~/diag26b/rep2/u6x ~/diag26b/rep3/z2h` (first round where any robot's state differs). The first build drifted at
-  r1050 (the Debug.mark leak); the fix is being rerun. If exact, z2h screens vs zc6 and goes to the replica next: its
-  cells move only where a rescue fires. The same ledger can make any rarely-firing switch exactly silent on u6x.
-- **Replica order after z1z:** z2h (if exact and its screen passes), else z2c (passed zd139: t +1.00, picks z +2.26,
+- **Exact silence (09:34-10:00):** no "silent" switch replayed its parent until the ledger: any added bytecode moves
+  Flow.work (it spends whatever a turn leaves) and the other budget reads, so games drift after a few hundred rounds.
+  **tools/ledger.py bots/NAME** applies the exact ledger to a u6x-family bot (G.debt, G.bc(), the left() and direct
+  reads, Debug.mark, the turn resets); its docstring has the engine's counting model (a basic block is counted only at
+  its end; a Clock read is no block end; calls of our code cost 0) and the hook recipe. Check a ledgered bot with a
+  dumped game vs its base: `python3 ~/diag26b/replay_eq.py BASE_DIR CAND_DIR` and `hot_eq.py BASE_DIR CAND_DIR
+  [LAST_ROUND]` (every hot= equal). Screens: `python3 ~/diag26b/scr_eq.py zc6 u6x RUN BOT` lists the cells that differ.
+  - **z2h** = u6x + CASH (ledgered): keepout A identical for 2000 rounds, hot= equal in all 74,340 turns. Screen
+    **zd144** playing (12 of 12 cells identical so far).
+  - **z2i** = u6x + RICH2_BABIES 80 (ledgered): identical to u6x until r706, its first possible act. Screen **zd145**
+    queued next.
+  - **z2j** = z2h + CASH_END 1880 (endgame second king through CASH's formation; kings are 0.5 of war points at
+    r2000). Mechanism games in ~/diag26b/ce (DONE marker); falsifiers in its SNAPSHOT. If they pass, screen it vs zc6.
+- **Replica order after z1z:** the ledgered CASH line: z2j if its mechanism games and screen pass, else z2h if its
+  screen passes (a bundle with z2i's RICH2 if that passes too: under the ledger only the cells where a switch acts
+  move); else z2c (passed zd139: t +1.00, picks z +2.26,
   transfer 1.016). Then u9t, z0r (CAT_HUSH). Submit: `contest.py submit bots/NAME -m TEXT`, `bash
   build/block_v4sN.sh`, `git checkout research/panel/`.
 - **CASH (rescue formation; bots/z2e/SNAPSHOT):** when the bank is 60-249, a carrier group 5+ from any king with
