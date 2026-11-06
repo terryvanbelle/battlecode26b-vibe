@@ -1926,10 +1926,14 @@ public final class Baby {
         return dx * dx + dy * dy <= 9 && !(Math.abs(p.x - k.x) <= 1 && Math.abs(p.y - k.y) <= 1);
     }
 
-    /** Cfg.END_CAT: walk to the nearest seen or known cat (the bite step bites it); false when this baby has other work. */
+    /** Cfg.END_CAT: walk to the nearest seen or known cat (the bite step bites it); false when this baby has other work
+     *  (a load, a carried rat, a threatened king, an enemy in reach, a formation site to join). */
     static boolean endCat(int raw) throws GameActionException {
         if (raw >= Cfg.DELIVER_AT || G.rc.getCarrying() != null || !catReach()) return false;
         if (threatenedKing() != null || nearEnemy(8)) return false;
+        // a king formation (END_KING) outweighs the cat: its joiners go on to formKing
+        if (formSite() != null) return false;
+        if (Comms.numKings < 2 && G.globalCheese >= endCatBar(G.round)) return false;
         if (cat != null) return approachCat(cat);
         MapLocation ct = knownCat();
         if (ct == null) return false;
@@ -1937,6 +1941,10 @@ public final class Baby {
         catStalled(ct);
         return true;
     }
+
+    /** Cfg.END_CAT with a lone king: the bank below which END_KING cannot name a site (END_KING_CHEESE), so the babies
+     *  have no formation to stay for. */
+    static int endCatBar(int round) { return Cfg.END_KING_CHEESE; }
 
     static MapLocation knownCat() {
         if (catSeen != null && G.round - catSeenRound < 10) return catSeen;

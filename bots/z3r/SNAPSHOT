@@ -17,3 +17,11 @@ Falsifiers, registered before any z3r game:
    transfer must stay at 0.9 or more of z1z's in each, and no z1z win may turn into a loss.
 3. Screen vs zd136 on the s6 gates.
 4. Replica: block rules, including the transfer floor (~/diag26b/z1zb1.jsonl).
+
+Revision 15:33 PST (after falsifiers 1-2 passed on the first build, ~/diag26b/cr): moveDecision runs END_CAT ahead of
+formKing and cashMove, so from r1850 the errand would pull joiners off a formation site, and with a lone king it would
+scatter the 7 babies END_KING needs (z1z's late second kings, r1897-1974 on the replica, carry the 0.5 kings share).
+endCat now also returns false while a formation site is fresh (formSite()), and with a lone king while the bank is
+at END_KING_CHEESE (400) or more (endCatBar). Short games and 2+-king games are unchanged from the first build; the
+lone-king games (learn_your_lesson B vs araid, corridorofdoom B vs abrk) are re-run in ~/diag26b/cs. Screen zd165
+(first build) was stopped at 8 of 48 and replaced by zd166.

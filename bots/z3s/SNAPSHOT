@@ -1,0 +1,22 @@
+name=z3s
+source=bots/z3q
+source_sha=7381c1b1eb68
+commit=453e560
+created=2026-11-06 15:33 PST
+
+z3s = z3q + z3r's END_CAT (z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850), z3r's diff applied by
+hand to z3q (Baby.java END_CAT hook after CAT_DEFEND, endCat and endCatBar; Debug.WHY 'e'; Cfg.END_CAT after
+CAT_DEFEND_R2). endCat skips a baby that heard a CASH site (cashSite) or sees a fresh formation site, and with a lone
+king it runs only while the bank is below min(END_KING_CHEESE, CASH_END's bar max(CASH_FLOOR, 4(2000 - r - 55) + 10)),
+so it never takes the babies CASH_END's or END_KING's second king needs. The three switches act in disjoint states:
+FORM_WAR_FROM before r300, END_CAT from r1850 with 2+ kings (or a lone king too poor to form), CASH_END from r1880
+with a lone king. On the replica, a cell that differs from z3q's game can only be an END_CAT cell.
+
+Falsifiers, registered before any z3s game:
+1. Local (~/diag26b/cs): DefaultSmall A vs abrk and B vs araid replay z3q's games (replay_eq vs ~/diag26b/cq); in the
+   corridorofdoom and learn_your_lesson r2000 games vs araid/abrk, z3s keeps every king z3q/z3p formed (numKings at
+   r2000 not below), cat damage does not fall, transfer stays at 0.9 or more of z3q's, and no win turns into a loss.
+2. Screen: z3s needs no screen of its own if zd164 (z3p) and zd166 (z3r) both pass, since its cells are z3p's where
+   CASH_END acts, z3r's where END_CAT acts, and zd136's elsewhere; a cell where both act is checked locally (1).
+3. Replica: block rules plus the transfer floor; it follows z3q on the replica only if z3q is not rejected at block 1
+   or as z3q's replacement if it is.
