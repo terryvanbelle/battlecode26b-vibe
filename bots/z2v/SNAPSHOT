@@ -1,0 +1,16 @@
+name=z2v
+source=bots/z2t
+source_sha=996d9b4b36bc
+commit=2bb77cf
+created=2026-11-06 11:24 PST
+
+z2v = z2t + RICH_GAP in formation()'s cap branch (a new ledger hook, K 11 from the javap listing). When the king that
+forms at our open site reaches the cap (FORM_MAX 2) while rich() is false, the cap check clears the site before
+the open-site branch's gap is reached, so the next site waited the full 210 rounds. Now that branch starts the gap
+too (same conditions: RICH_GAP_KINGS 1, RICH_GAP_FROM 600).
+Why: z2t's superioristhmus A replayed z2r's game exactly (2nd king r685, 3rd r904) although RICH_LATE 750's surplus
+test passed from r750: formStart still blocked the 3rd site until about r885. z2t acted elsewhere: cheesefarm A
+3rd king r978 and 4th r1125 (won 59-40; z2r 55-44), superioristhmus B 5th king r922 (z2r r1130).
+Checks (VM ~/diag26b/zv): superioristhmus A/B, keepout A, cheesefarm A vs araid against z2t's games: identical until
+a 2nd king forms from r600 on; then a 3rd site from r750; no king lost, no starve damage, no overrun.
+Falsifiers: screen vs zc6 (s6 gates); against zd150 (z2r): lost cells where an earlier king emptied the army.
