@@ -1,0 +1,8 @@
+name=z0p
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=f53fb74
+created=2026-11-06 00:36 PST
+
+z0p = u9p + FACE_REACH (an existing switch, Baby.reach1): faceEnemy passes over an enemy at Chebyshev 2 when no tile beside both rats is open (a known wall or dirt), so a rat no longer freezes to face an enemy that cannot reach it in one move. Its only replica test was u4n on the u4e base (#158, block 1: D 3, +1 -2, t -0.58, a small-D reject); u9p has changed since in rushers, grab micro and retreat. Evidence (2026-11-06): local u9p vs u6h on pipes (~/diag26b/park/u6h, indicators on): of our baby samples standing on one tile for 50+ rounds, 323 are fighters on 'f' turns, all on x=27 at y=9-19, facing enemies in the centre column x=24-25 through the x=26 wall; the replica's most parked game is pipes vs VarunVejalla (14254 g1: 23% of our baby samples parked 50+ rounds, transfer 3,793 to 20,240, a r1880 king kill); local z0o vs araid on Stash: two attackers stood at (9,8) and (10,8) from r590 to r800 on 'f' turns facing araid's king pocket through the y=7 wall. Registered 2026-11-06 00:37 PST, before any z0p game.
+Falsifiers: screen vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 on per-cell win/loss rejects; picks/100 worse by per-cell paired z <= -2 rejects; any overrun or exception rejects; shared-cell transferAmt below 0.97x u9p's rejects. Mechanism: local u9p vs u6h on pipes again with z0p: fighter samples parked 50+ rounds on 'f' turns not below half of u9p's 323 drops it as inert. Replica: the standard block rules on sets 3, 1, 2, then 4 against the twin's anchors; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block.
