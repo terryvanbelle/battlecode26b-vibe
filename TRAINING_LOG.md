@@ -6651,7 +6651,7 @@
   - Never tried before: s7a (FLOW_STALL 2) still waited for a stall, and TRAIL, FLOW_UNSEEN and CARRY_MAX are other families.
   - Falsifiers in bots/z2z/SNAPSHOT.
   - Mechanism games in ~/diag26b/zz: clockwisdom A/B for z2x and z2z, plus keepout A and superioristhmus A for z2z against zx's z2x games.
-- 12:17: **zd151 (z2x vs zd136, z1z's control) PASSES the s6 gates.**
+- 12:10: **zd151 (z2x vs zd136, z1z's control) PASSES the s6 gates.**
   - n 22, D 1, net −1, t −1.00 (gate −1.5).
   - Picks per-cell z +2.01; transfer per round 1.003; pickAmt per round 1.012.
   - Overruns 8 in 6 games (zd136: 8 in 6); 0 exceptions. Kings formed 31 to 25.
