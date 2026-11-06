@@ -1,0 +1,8 @@
+name=z0i
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=5285cd7
+created=2026-11-05 22:46 PST
+
+z0i = u9p + RECYCLE_AGE 300 (new switch; Baby.recycle(), called before the cat-trap step during cooperation): while our team holds the engine's cap of 10 cat traps, a baby lifts one of ours within reach (dist2 2; removal costs no cooldown, refunds nothing) whose tile it has not seen a cat on for 300 rounds or never, so the slot goes to a trap a cat will set off. Evidence: local u9p vs u6h on rift (~/diag26b/kf, cooperation to r2000, scratch trapcap.py over the dump's actions): one baby laid 10 lane traps behind a cat at r229-269 along x=19, the cat never crossed them again, and we held the cap for 1,774 of 2,000 rounds; cat traps placed 39 and fired 29 to u6h's 65 and 60 (u6h at the cap 6 rounds), cat damage 4,880 to 8,206, lost on points with kings and transfer level. Cat damage is half the cooperation points and 0.3 of war points. Registered 2026-11-05 22:47 PST, before any z0i game.
+Falsifiers: screen zd99 vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 rejects; picks/100 per-cell paired z <= -2 rejects; any overrun or exception rejects (D 0 does not reject: cooperation is short on these cells; zd100 is the mechanism test). Mechanism run zd100 (z0i vs u6h and s7d on zd96's 32 cells; control u9p's zd96 games): our cat traps fired (catTrapHits) on those cells not above u9p's rejects; our cat damage not above u9p's rejects; wins below u9p's - 2 reject. Replica: the standard block rules on sets 3, 1, 2, then 4 against the twin's anchors; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block; our cat-trap damage (catDmgTrap) summed over the block not above the twin's rejects.
