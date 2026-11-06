@@ -6541,3 +6541,8 @@
   - Kings at r1190: superioristhmus A 4 (u6x 3), superioristhmus B 4 (u6x 4), keepout A 4 (u6x 3). All won, 0 king deaths. Transfer within 3% of u6x's in each.
   - Screen **zd148** queued after zd147 (z2k), ahead of zd145 (z2i).
   - zd146 (z2j) at 22 of 48: 4 cells differ (wallsofparadis and learn_your_lesson, all CASH_END cells), all still won.
+- 10:41: **VM disk filled (6 MB free).** The full-corpus field_report run (started 10:20) writes a ReplayDump of every match into build/dumpcache: about 300 dumps, 2.9 GB, in 26 minutes. I stopped it (by pid) and cleared those dumps and stale ~/diag26b/rf runs: 3.0 GB free.
+  - Casualties: z2n's superioristhmus check (rerunning) and one zd146 cell (Stash, abrk vs z2j: the game finished, z2j won as B at r1235, but its replay write failed, so the row has no stats; it gets replayed when zd146 ends).
+  - The corpus scan is abandoned; the block files' 732 games carry the census. A full scan would need its dumps deleted as it goes.
+- 10:40: **z2n registered** = z2l + RICH_FIX: the full ledgered endgame-king bundle (CASH + CASH_END, RICH_LATE, RICH_FIX). King.java is z2m's plus RICH_LATE; Baby.java is z2m's plus CASH.
+  - Checks: evileye A plays z2j's game (58-41, same transfer, spawns and deaths); cheesefarm A forms the late third king at r1067 (z2k r1080) and wins 55-44 (first divergence from z2k's game at r1062, when RICH_FIX acts on the late site).

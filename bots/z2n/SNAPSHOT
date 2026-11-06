@@ -1,0 +1,18 @@
+name=z2n
+source=bots/z2l
+source_sha=35f320702547
+commit=1b513a2
+created=2026-11-06 10:38 PST
+
+z2n = z2l + RICH_FIX (z2m's switch, its code blocks copied verbatim: z2n's King.java is z2m's plus z2k's RICH_LATE,
+its Baby.java z2m's plus z2j's CASH/CASH_END). The full ledgered endgame-king bundle on u6x:
+- CASH + CASH_END 1880 (z2j): a lone king's babies form a second king from r1880 while the bank keeps it alive;
+- RICH_LATE 1050 (z2k): two kings name a third king's site in r1050-1150 on a projected surplus;
+- RICH_FIX (z2m): z2a's formation fixes for sites opened with two or more kings.
+Under the exact ledger each switch moves only the games where it acts. RICH_FIX also acts on RICH_LATE's sites (they
+are opened with two kings), so cheesefarm-like games run both.
+Checks (VM ~/diag26b/rn): superioristhmus A vs araid replays z2m's game (no CASH_END or RICH_LATE there); cheesefarm A
+forms the late third king; evileye A ends as z2j's (kings 2-1).
+Falsifiers: the component screens (zd146 z2j, zd147 z2k, zd148 z2m) must pass; a cell where two switches act needs its
+own game. Then the replica: standard block rules with identity-aware scoring (--crown) and the per-block transfer
+floor.
