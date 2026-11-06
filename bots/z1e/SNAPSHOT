@@ -1,0 +1,8 @@
+name=z1e
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=804f0a2
+created=2026-11-06 03:16 PST
+
+z1e = u9p + END_PULL_R2 10000 (z1b's switch without z0z's FORM_KEEP and END_KING_SAVE, which played u9p's games on all seven lk maps): from END_KING r1850 babies join the endgame formation from any distance, not only within FORM_PULL_R2 72; FORM_JOIN 8 still sends back those that see 8 allies nearer the site. z1b was dropped by its registered bar (2+ kings at the end in u9p's count + 2; it reached 3 of u9p's 3 with averystrangespace and the three short games unplayed, so at most 4), but it formed the king u9p missed on uneruesansfin (r1913) and cost 60 transfer there.
+Falsifiers, registered before any z1e game: mechanism (z1e vs u6h as A, seed 0, on uneruesansfin; u9p's ~/diag26b/lk game the control): no second king by r2000 drops it. Screen zd120 vs u9p's zd61 (s6, fresh games): kingsFormed not above u9p's 31 drops it as inert; any of our kings starving where u9p's cell had none, or a cell lost by king destruction after r1850 that u9p won, drops it; paired t <= −1.5 rejects; picks/100 per-cell paired z <= −2 rejects; any overrun or exception rejects; transfer per round on the shared cells below 0.97x u9p's rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer floors per set; kings alive at r2000 in the block's points games not above the twin's rejects.
