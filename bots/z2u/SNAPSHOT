@@ -1,0 +1,15 @@
+name=z2u
+source=bots/z1z
+source_sha=76845870ad18
+commit=e2f4589
+created=2026-11-06 11:20 PST
+
+z2u = z1z + the exact ledger (tools/ledger.py) + z2r's endgame-king bundle, for the case where z1z is accepted at
+replica block 4 (partial block 4 at 11:20: pooled D 41, net +13, t 2.03).
+Built mechanically: tools/ledger.py on copies of u6x and z1z (the same 22 clock reads remain in each), then the diff
+ledgered-u6x -> z2r (537 lines: CASH + CASH_END 1880 with G.settle, RICH_LATE 1050, RICH_FIX, RICH_MORE 900, RICH_GAP
+40) applied to ledgered z1z with patch -F0 (no fuzz; one hunk offset by 4 lines in Cfg.java). The hooks' K values
+carry over because every hunk's context is byte-identical.
+Checks (VM ~/diag26b/zu): keepout A vs araid replays z1z's game until the first act; superioristhmus A forms the
+4th/5th kings; no overrun.
+Falsifiers: the checks; then a screen against z1z's control (zd136); then replica rules if z1z is the incumbent.
