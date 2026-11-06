@@ -1,0 +1,15 @@
+name=z1r
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=bbc9dac
+created=2026-11-06 05:14 PST
+
+z1r = u9p + RICH2_BABIES 80 (RICH2_BANK 3000; existing switch, u8d's on u6x): with 3000+ banked, the baby cap rises from 40 to 80. Registered 2026-11-06 05:15 PST, before any z1r game.
+Evidence:
+- Replica 17551 (z0q, superioristhmus vs spsquared A, lost 48-51 on points, kings 3-3): from r400 our babies sat at 38-40 while theirs grew to 50-52. Our bank held 4.2-8.1k from r800. Map cheese rose from 5.4k to 10.2k. Their transfer was 25.5k over r1000-2000 to our 14.5k.
+- Every superioristhmus vs spsquared game is a points loss (0 of 6) with 4.2-11.8k banked; the rift losses end with 8-9k banked.
+- u8d (the same switch on u6x) went 33 vs 32 wins on screen zd28, per-round picks z +2.27 (ratio 1.022), transfer per round 1.030. Its per-rat-turn picks z was −2.25, the denominator effect of more babies. On the replica it was inert on set 3 (all 48 cells replayed) and was rejected at block 1 with t 0.00.
+Falsifiers:
+- Screen zd129 vs u9p's zd61 (s6): paired t <= −1.5; per-round picks z <= −2 (scratch ppr.py; the per-rat-turn picks are exempt, since a spawn-cap switch adds rat-turns); transfer per round below 0.97; any overrun or exception.
+- Replica: block order set 1, 2, 3, 4, because set 3 holds no rich game (u8d replayed it). Standard block rules on that order; transfer floor 0.9x the twin.
+- Mechanism: in the block games where the twin ended with 3000+ banked, z1r's transfer must exceed the twin's in most of them, or it is inert (reported with the block result).
