@@ -544,7 +544,6 @@ u9t,2026-11-05 17:32,u6x,u9p + THROW_ADAPT + SEEK_CROWD 3 (u9r + u9s),REJECTED a
 v0a,2026-11-05 17:41,u9p,u9p + KING_DODGE (capability sweep on u9p),screen zd66 queued
 v0b,2026-11-05 17:41,u9p,u9p + YIELD_KING (capability sweep on u9p),screen zd67 queued
 v0c,2026-11-05 17:41,u9p,u9p + KING_STRICT (capability sweep on u9p),screen zd68 queued
-v0p,2026-11-05 17:41,u9p,u9p + BITE_GUARD (capability sweep on u9p),screen zd69 queued
 v0e,2026-11-05 17:41,u9p,u9p + BITE_CARRIER (capability sweep on u9p),screen zd70 queued
 v0f,2026-11-05 17:41,u9p,u9p + RESCUE (capability sweep on u9p),screen zd71 queued
 v0g,2026-11-05 17:41,u9p,u9p + GRAB_MICRO (capability sweep on u9p),"REJECTED at screen zd72 (2026-11-05 PST; s6 overrun gate): 545 overruns vs 0; D 10 (+6 -4) net +2 t +0.63, picks z +0.39; transfer -11%"
@@ -556,6 +555,7 @@ v0l,2026-11-05 17:41,u9p,u9p + MINE_ANY (capability sweep on u9p),screen zd77 qu
 v0m,2026-11-05 17:41,u9p,u9p + GATHER_STILL (capability sweep on u9p),screen zd78 queued
 v0n,2026-11-05 17:41,u9p,u9p + BUG_DIG (capability sweep on u9p),screen zd79 queued
 v0o,2026-11-05 17:41,u9p,u9p + SEEK_FRONTIER (capability sweep on u9p),screen zd80 queued
+v0p,2026-11-05 17:41,u9p,u9p + BITE_GUARD (capability sweep on u9p),screen zd69 queued
 w0a,2026-11-05 17:45,u9p,u9p + FORM_RICH_MAX 5 (points lever: kings alive weigh 0.5),"REJECTED at screen zd81 as inert (2026-11-05 19:05 PST): D 0, every shared cell and total equal to u9p's zd61 (kingsFormed 31 = 31); 38 wins of 44; picks/100 34.21"
 w0b,2026-11-05 17:45,u9p,u9p + FORM_RICH_MAX 5 + FORM_RICH_BANK 2000,REJECTED at screen zd82 as inert (2026-11-05 19:52 PST; falsifiers_v2 D 0): 38 wins of 44 = u9p; picks/100 34.69 (z +1.23); kingsFormed 34 vs 31
 w0c,2026-11-05 17:45,u9p,u9p + FORM_LATE (a lone king may form a second until r1940),"REJECTED after replica block 2 (2026-11-05 22:08 PST; kings falsifier): points-game kings 2.00 vs twin 2.00 pooled (set 1 2.00 vs 2.22); cells pooled 96 D 18 net +6 t 1.42; xUs set 3 4,462, set 1 4,425"
@@ -574,3 +574,4 @@ z0g,2026-11-05 22:34,u9p,u9p + PEACE_FROM 100 (new switch: a truce that has last
 z0h,2026-11-05 22:44,u9p,u9p + FORM_RICH_BANK 1500 (from 3000): rich kings from a 1500 bank; local rift coop game banked 9.7k with the third king at r1059,"pending: screen zd97 (s6 vs zd61) and mechanism run zd98 (vs u6h/s7d, zd96 cells)"
 z0i,2026-11-05 22:55,u9p,"u9p + RECYCLE_AGE 300 (new switch: at the 10-cat-trap cap in cooperation, lift our stale cat traps; dead lane traps held u9p at the cap 1,774 of 2,000 rounds on rift)","DROPPED before screening (2026-11-05 22:55 PST): its diagnostic rift game lifted 19 cat traps, most 1-74 rounds old (tiles never seen counted stale); replaced by z0j"
 z0j,2026-11-05 22:55,u9p,u9p + LAY_MAX 6 + RECYCLE_AGE 300 strict (cat-trap slots: lane traps only under 6 live; at the cap lift traps on tiles where we saw a cat 300+ rounds ago),"pending: screen zd101 (s6 vs zd61) and mechanism run zd102 (vs u6h/s7d, zd96 cells)"
+z0k,2026-11-05 23:28,u9p,"u9p + FORM_WAR_FROM 300 (new switch: no formation site at war before r300; after an opening before r100 our early-war formations won 6 of 55, no formation 30%)",pending: screen zd103 (s6 vs zd61)
