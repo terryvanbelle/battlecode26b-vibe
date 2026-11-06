@@ -1,0 +1,8 @@
+name=z0h
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=3300f49
+created=2026-11-05 22:42 PST
+
+z0h = u9p + FORM_RICH_BANK 1500 (from 3000; existing switch, FORM_RICH_MAX stays 4): the first king names a site past the 2-king cap while the bank holds 1500, up to r1150. Evidence: local u9p vs u6h on rift (~/diag26b/kf, cooperation to r2000): our bank 1251 at r500, 2634 at r750, 4313 at r1000; the third king formed only at r1059 (u6h's at r795), and we ended with 9,721 cheese unspent (the bank scores nothing) and lost on points with 3 kings each; replica spsquared rift (16422, 16881, 17040): 2 kings to their 3 at r500 and 4 at r1000, a 9,144 bank at the end, lost 40-59. w0b (FORM_RICH_BANK 2000 + FORM_RICH_MAX 5) was rejected as inert on screen zd82 (D 0; kingsFormed 34 vs 31), where the war games keep the bank low, so the bank threshold was never tested where banks grow: in cooperation on big maps. Registered 2026-11-05 22:43 PST, before any z0h game.
+Falsifiers: screen zd97 vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 rejects; picks/100 per-cell paired z <= -2 rejects; any overrun or exception rejects (D 0 does not reject here: the rich bank is rare at war on these cells; zd98 is the mechanism test). Mechanism run zd98 (z0h vs u6h and s7d on zd96's 32 cells; control: u9p's games in zd96): kingsFormed on those cells not above u9p's rejects; king deaths above u9p's + 2 reject (extra kings must not starve); wins below u9p's - 2 reject. Replica: the standard block rules on sets 3, 1, 2, then 4 against the twin's anchors; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block; kings alive at r2000 in the block's points games not above the twin's rejects.
