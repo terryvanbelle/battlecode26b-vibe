@@ -6385,3 +6385,8 @@
   - Screen zd138 (z2b vs zd61, the same 48 cells) is at the head of screenq, before zd132.
   - Reading rules are in bots/z2b/SNAPSHOT. If z2b scores picks z ≤ −1 or transfer ≤ 0.98, I re-score past screens against the pooled control (zd61 + zd138).
 - 07:56: **zd132 (z1u, CAT_LAY_MAX 5) was never played.** It fell out of runs/screenq.txt when I reordered the queue at 06:56. It is queued again after zd138.
+- 08:00: **Where zd61 was lucky** (scratch lucky.py: per screen cell, u9p's zd61 game against every candidate game since zd89 that diverged on it).
+  - On transfer per round, nearly every candidate fell short of u9p on: araid bed B (15 of 15), Stash vs both opponents (A vs araid 19 of 20, B vs abrk 21 of 22, A vs abrk 16 of 19), araid arrows A (20 of 20) and abrk evileye B (19 of 20).
+  - The Stash, cheesefarm and keepout cells carry 10-14 cheese a round each, so they weigh most in the pooled transfer ratio.
+  - On wins it cuts both ways. u9p lost araid arrows B, evileye B, starvation A and B, and DefaultSmall A, and most candidates won those (+9, +9, +12, +6, +10). u9p won abrk arrows A, where half the candidates lost (−10 of 20).
+  - So the wins t-test sees roughly symmetric noise, while the transfer ratio and per-round picks lean against every candidate. zd138 (the salted twin) measures the size of that lean.
