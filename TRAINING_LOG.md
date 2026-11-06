@@ -6400,3 +6400,9 @@
 - 08:05: **z2d registered** (u9p + PICK_FLIP, a new salt constant; reference only). Screen zd140 is queued right after zd138. With zd61 and z2b's zd138, the pooled control averages three u9p games per cell.
   - scratch pooled.py (copy in ~/diag26b) scores a run against the mean of several control runs per cell. It reports the wins t, the per-round picks and transfer z, and the transfer ratio in the gate's form.
   - The gate's form (total transfer over total rounds) is what failed z1x: 0.956 there, while the per-cell mean ratio is 1.002 with z +0.07. The total is dominated by a few long, rich games.
+- 08:09: **z2a PASSED screen zd137** vs u9p's zd61.
+  - n 44, D 2 (+1: araid starvation A; −1: araid DefaultMedium B), net 0, t 0.00.
+  - Per-round picks 0.979 (per-cell z −0.78). Transfer per round 0.978, against the 0.97 gate. 0 overruns, 0 exceptions.
+  - kingsFormed was 31 to u9p's 31. The registered gate is "below 31", so it passes. My 07:55 handoff note said "above 31", which misquoted the SNAPSHOT.
+  - The screen cells rarely see a failed rich formation, so this screen prices cost. The mechanism shows in chain fz.
+- 08:09: **z2c registered** = z1z + z2a's diff (patch -F0, checked hunk by hunk; build z2c-2b2c7b9ea2ec). Its falsifiers are in bots/z2c/SNAPSHOT. Screen zd139 is at the head of screenq, after zd138 (now playing). If it passes, z2c takes z1z's replica slot after z0k. **u7z** (u6x + z1q's switches) is superseded by z1z/z2c and leaves the replica queue.

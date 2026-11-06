@@ -1,0 +1,19 @@
+name=z2c
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=bd056da
+created=2026-11-06 07:59 PST
+
+z2c = z1z + z2a's changes (= u9p + SEEK_IDLE 20 + IDLE_SHIFT + FIGHT_SHIFT + RICH2_BABIES 80 + FORM_OFF +
+FORM_RICH_RETRY 20 + FORM_FILL). z2a's diff against u9p (Baby.formKing, King formation and move, Cfg) applied with
+patch -F0 onto z1z; z1z's own diff against u9p is unchanged in z2c (checked hunk by hunk).
+Why one candidate: the replica runs about 4 of our matches an hour, and z1z (economy: idle-at-mine shift, baby cap
+above a 3,000 bank) and z2a (formation mechanics) touch different code. Both target the rich points losses
+(superioristhmus vs spsquared: 40-baby cap, 2-3 kings with 4-10k banked).
+Registered before any z2c game, and only if z2a passes screen zd137 (otherwise z2c is withdrawn and z1z goes alone).
+Falsifiers:
+- Withdrawn if z2a fails screen zd137 or its chain2 falsifiers (bots/z2a/SNAPSHOT).
+- Screen vs u9p's zd61 with the s6 gates (t <= -1.5; per-round picks z <= -2; transfer per round < 0.97;
+  overruns or exceptions) and kingsFormed above u9p's 31 (z2a's formation gate).
+- Replica: the standard block rules on sets 3, 1, 2, 4 (blocks 1/2/3 reject at pooled t <= 0/1/1.5; t >= 2 accepts
+  from block 2; block 4 rejects below 2) and the per-block transfer floor via blockcheck.
