@@ -1,0 +1,8 @@
+name=z1b
+source=bots/z0z
+source_sha=cbbc7982399e
+commit=7ecce96
+created=2026-11-06 03:02 PST
+
+z1b = z0z (u9p + FORM_KEEP + END_KING_SAVE 1800) + END_PULL_R2 10000 (new: from END_KING r1850 babies join a formation from any distance, not only within FORM_PULL_R2 72; FORM_JOIN 8 still sends back those that see 8 allies nearer the site). Evidence: z0z and u9p vs u6h on uneruesansfin (A, ~/diag26b/lk) play the same game: END_KING named its site by our king at (4,54) from r1850 with 21-24 babies alive and a 690-890 bank (the SAVE never bound; the baby cap did), about 4 babies within dist2 72 joined (80 K turns a 20-round span), and no king formed; one king each at r2000, a points win for us there but the replica's uneruesansfin games vs Xzibit were lost on 1 king each (41-58). Registered 2026-11-06 03:02 PST, before any z1b game.
+Falsifiers: mechanism (~/diag26b/lk, z1b vs u6h as A, seed 0, the seven lk maps; u9p's games the control): games ending with 2+ of our kings must exceed u9p's by 2, or it is dropped as inert; no second king on uneruesansfin drops it; any of our kings starving to death where u9p's did not, or a game lost by king destruction after r1850 that u9p did not lose, drops it. Screen (s6 vs u9p's zd61): paired t <= −1.5 rejects; picks/100 per-cell paired z <= −2 rejects; any overrun or exception rejects; transfer per round on the shared cells below 0.97x u9p's rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer floors per set; kings alive at r2000 in the block's points games not above the twin's rejects.
