@@ -6570,3 +6570,10 @@
 - 11:07: **z2q's checks (~/diag26b/zq, vs araid): RICH_MORE never acted.** superioristhmus A won 68-31 with 4 kings (11,900 banked), B 73-26 with 4, keepout A 70-29 with 4 (13,089 banked). The first three kings formed exactly as in z2p's games (r685, r904, r1111 on superioristhmus A; r715, r923, r1133 on keepout A).
   - Cause: kings form 210 rounds apart (FORM_TTL 60 + FORM_RETRY 150 from each site's opening, FORM_GAP 0). The 4th came just before the r1150 cut, so a 5th had no time.
   - **z2r = z2q + RICH_GAP 40** (new switch, in formation()'s drop hook, K 13 from the javap listing): once a king forms at a site opened with 2+ kings, the site closes and the next may open 40 rounds later. Checks (superioristhmus A/B, keepout A, cheesefarm A) running in ~/diag26b/zr. **Screen zd150** queued after zd149. FORM_GAP had been tried only once, inside an old bundle (s5x, 10-29).
+- 11:14: **z2r's checks pass: 5 kings where z2q had 4** (~/diag26b/zr, vs araid; first divergence from z2q's games at the third king, r906/r925/r623).
+  - superioristhmus A: kings r685, r904, **r961, r1025** (z2q: r1111 and none), won 71-28 (z2q 68-31), transfer 40,776 (31,811), 18,609 banked.
+  - superioristhmus B: r413, r621, r873, **r1130**, won 75-24 (73-26), transfer 43,080 (40,862).
+  - keepout A: 4th king r983 (z2q r1133), no 5th (RICH_MORE's surplus gate held), won 70-29 as before. cheesefarm A 55-44 as z2p.
+  - No king lost, no overrun or exception on our side in any of the four.
+  - The 2nd king waits for a 3,000 bank (r685, r413) because pickFormSite finds no site (no babies walk to a site before r675). Early 2nd kings are closed ground (before r600 they went 5-12 in the u4e field; s4q, s5o, t0h FORM_RING, z1c FORM_RING_FROM rejected), so that stays.
+- 11:14: **z2s registered** = z2r with RICH_GAP_KINGS 1 and RICH_GAP_FROM 600: the gap also follows a 2nd king formed from r600 on, so a rich team's 3rd site opens 40 rounds later (z2r superioristhmus A: 2nd r685, 3rd r904). Checks running (~/diag26b/zs).
