@@ -110,8 +110,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `contest.py submit bots/NAME -m TEXT`, `bash build/block_v4sN.sh`, `git checkout research/panel/`.
 - **averystrangespace lock-in, closed 07:04:** in the u9p mirror neither side leaves its dirt-sealed corner until
   ~r880. z1x (seekers tunnel to the cats or the centre) won 3 of 4 there (chain tn) and 4 of 4 in the partial tx
-  chain (~/diag26b/tx), but failed screen zd134 on transfer (0.956; wallsofparadis 6.84 to 4.90 a round: seekers dig
-  into the dirt-ringed centre where no cat is). z1y (z1x + z1q + z1r) was withdrawn with it. Map renders:
+  chain (~/diag26b/tx), but failed screen zd134 on transfer (0.956; mostly wallsofparadis 6.84 to 4.90 a round, a
+  single-game divergence after r1200, not the seekers: they ran 100 turns before the r131 war, ~/diag26b/wq). z1y (z1x + z1q + z1r) was withdrawn with it. Map renders:
   `arena.java_tool('bc26tools.MapCensus', arena.MAPS, '--ascii', MAP)` on the VM.
 - **Screen gates (method change 05:06):** s6 also rejects at per-round picks z <= -2 (scratch ppr.py, copy in
   ~/diag26b: `python3 ~/diag26b/ppr.py zd61 u9p RUN BOT` on the VM); a switch that changes the number of formations
