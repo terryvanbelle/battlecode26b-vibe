@@ -693,6 +693,10 @@ public final class Cfg {
      *  catsq.py): in lost games a cat heard us first on 73 rounds a game (them 200), and within 5 rounds after it
      *  heard us first it killed 24.9 of ours to 6.0 of theirs, after hearing them first 11.2 to 58.0. */
     public static final boolean CAT_HUSH = true;
+    /** CAT_HUSH also while a recently known cat (Baby.knownCat) is within this dist2. Amended 2026-11-06 before any
+     *  decision game: in the first diagnostic (arrows vs araid) cats still heard us first on 30 rounds (u9p 20); the
+     *  squeakers did not see the cat. */
+    public static final int HUSH_D2 = 36;
     /** Babies relay mine squeaks to each other while the team knows no mine. */
     public static final boolean GOSSIP = true;
     /** Gossip all game: a rat away from the king squeaks a mine it knows that the king's list lacks, and every rat

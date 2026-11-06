@@ -1099,7 +1099,7 @@ public final class Baby {
 
     /** Squeak one fact: to a king in hearing range a mine it may not know or a sharper symmetry mask; at war, an enemy's front. */
     static void report() {
-        if (Cfg.CAT_HUSH && cat != null && catInEarshot(cat.location, G.me)) { hushed++; return; }
+        if (Cfg.CAT_HUSH && catNear()) { hushed++; return; }
         MapLocation k = Comms.numKings == 0 ? null : Comms.nearestKing(G.me);
         boolean near = k != null && (Cfg.SYM_HEAR_TILE ? kingInEarshot(G.me) : G.me.distanceSquaredTo(k) <= 16);
         // RISK_ADAPT: news of an enemy trap goes rat to rat and to the kings until the shared bit is set
@@ -1168,6 +1168,14 @@ public final class Baby {
     static int symSqueaked = -100;
     /** Cfg.CAT_HUSH: report() turns skipped for a cat in earshot. */
     static int hushed;
+
+    /** Cfg.CAT_HUSH: the cat in view can hear us, or a cat known in the last rounds (ours 10, the kings' 30) is within
+     *  dist2 HUSH_D2 (a cat walks a tile every two rounds; a rat's 90-degree cone misses one behind it). */
+    static boolean catNear() {
+        if (cat != null && catInEarshot(cat.location, G.me)) return true;
+        MapLocation c = knownCat();
+        return c != null && G.me.distanceSquaredTo(c) <= Cfg.HUSH_D2;
+    }
 
     /** Some tile of one of our kings (3x3) is within squeak range (d2 16) of p. */
     static boolean kingInEarshot(MapLocation p) {
