@@ -1,0 +1,22 @@
+name=z3p
+source=bots/z3b
+source_sha=see z3b
+commit=1feed11
+created=2026-11-06 14:51 PST
+
+z3p = z3b with every mid-game formation switch off: CASH_KINGS 0 (no rescue formation at any king count), RICH_FIX
+false, RICH_LATE 0, RICH_MORE 0, RICH_GAP 0. What is left is z1z + tools/ledger.py + CASH_END 1880: from r1880 a lone
+king's babies run CASH's formation for a second king, no raw needed, while the bank keeps the new king alive to r2000
+(Baby.cashEnd). Kings alive at r2000 weigh 0.5 of war points (2-1 is 33-17).
+Replica evidence on z1z's set-3 block 1: z2x (the full bundle) and z3b (z2x minus the two-king CASH and one-king
+RICH_FIX) both gained corridorofdoomanddespair B vs Varun, where CASH_END formed a second king at r1906 and won at
+r2000 (z1z lost on points). Their losses were mid-game formations that starved the bank: rose A (CASH/RICH_MORE at
+r970/r981) and minimaze A (one-king RICH_FIX at r825). z3p keeps only the endgame king.
+
+Falsifiers, registered before any z3p game:
+1. Local exactness: games where no lone king reaches r1880 must replay z1z's game (replay_eq vs ~/diag26b/cy's z1z
+   dumps, 16 games that end before r500).
+2. Local endgame games vs araid where z1z is a lone king at r1880: the second king must form by r1960 and live to
+   r2000, and no z1z win may turn into a loss.
+3. Replica: block rules (TRAINING_ALGORITHM s4) against z1z's set-3 block 17946-17961. On block 1 every cell but
+   corridorofdoomanddespair B should replay z1z's game; that cell should stay a win.
