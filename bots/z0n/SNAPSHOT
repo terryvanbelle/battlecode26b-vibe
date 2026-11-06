@@ -1,0 +1,8 @@
+name=z0n
+source=bots/z0c
+source_sha=ba7321641d02
+commit=9f4b006
+created=2026-11-06 00:04 PST
+
+z0n = u9p + END_CAT 1650 with END_CAT_GATHER false (new switch on z0c's code): z0c's endgame cat errand (from r1650 at war, a baby with less than DELIVER_AT raw, no rat in its paws, no threatened king and no enemy within dist2 8 walks to the nearest seen or known cat) for every role but gatherers, which keep mining. Evidence: z0c was rejected after replica block 2 on set 1's transfer floor (3,988 a game to 4,133; 4.63 a round to the twin's 5.37; in r2000 games 14,778 to 17,279), with pooled D 19, net +5, t 1.15 and its cat falsifier holding (share 0.658 to 0.584 on set 1, 0.511 to 0.444 on set 3); the screen saw dmgCat +8.5% in late games. Taking gatherers off the errand should keep delivery; whether enough cat damage stays is the question. Registered 2026-11-06 00:04 PST, before any z0n game.
+Falsifiers: screen zd106 vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 on per-cell win/loss rejects; picks/100 worse by per-cell paired z <= -2 rejects; any overrun or exception rejects; shared-cell transferAmt below 0.97x u9p's rejects; mechanism, our dmgCat in shared-cell games reaching r1650 not above u9p's rejects. Replica: the standard block rules on sets 3, 1, 2, then 4 against the twin's anchors; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block; our cat-damage share in the block's r2000 points games not above the twin's rejects.
