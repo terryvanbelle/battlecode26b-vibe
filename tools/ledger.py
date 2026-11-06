@@ -28,6 +28,11 @@ The candidate's own code is then wrapped by hand, as in bots/z2h/Baby.java:
 K = 9 plus the counted instructions after the second read that the base does not run (2 for `if (flag) ...` on a
 boolean the hook set). Static fields of new code must not have initialisers (no <clinit> cost). Check the result with
 a dumped game against the base: ~/diag26b/replay_eq.py (state) and ~/diag26b/hot_eq.py (every hot= equal).
+
+A hook whose acting path is costly closes with `G.settle(cd, cb, K)` instead (K = 18 plus the instructions after the
+call the base does not run): it credits the hook's cost only while that is at most G.SETTLE_CAP (300). Crediting an
+acting hook's thousands makes left() overstate the budget, and the late-turn work overruns (z2j: 219 overrun turns on
+wallsofparadis B once CASH_END's formation ran, TRAINING_LOG 2026-11-06 10:54).
 The tool fails if a pattern is missing, and lists every clock read left in the bot for review."""
 import re
 import sys
@@ -68,6 +73,17 @@ G_FIELDS = '''
      *  (a jump, label, return or call of our own code), and a Clock read is no block end, so a read inline would see a
      *  count that depends on javac's line labels. The call to bc() ends the caller's block; its own return counts 1. */
     static int bc() { return Clock.getBytecodeNum(); }
+
+    /** Ledger: close a hook opened with {@code int cd = G.debt, cb = G.bc();}. The hook's cost, plus k (its counted
+     *  instructions outside the two reads), is credited only while the cost is at most SETTLE_CAP: a hook that costs
+     *  more has acted, and its bytecodes must reach the budget reads (tools/ledger.py). */
+    static void settle(int cd, int cb, int k) {
+        int c = bc() - cb;
+        debt = cd;
+        if (c <= SETTLE_CAP) debt = cd + c + k;
+    }
+
+    static final int SETTLE_CAP = 300;
 '''
 
 
