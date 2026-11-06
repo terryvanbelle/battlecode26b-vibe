@@ -1,0 +1,16 @@
+name=z1s
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=021cb0f
+created=2026-11-06 05:29 PST
+
+z1s = u9p + COOP_GUARD (new switch). During cooperation a baby that is not a rusher does not step onto a tile next to a visible enemy baby (Nav.avoid; off when every step is next to one or Nav.stall >= 8). It also ends its turn facing the nearest enemy baby within Chebyshev 2, in view or seen at the start of the turn (guardTurn, war-only in u9p). Registered 2026-11-06 05:29 PST, before any z1s game.
+Evidence:
+- Replica rift vs spsquared, seat A: the u9p line lost all 6 games (16422, 16881, 17040, 17224, 17426, 17502) after spsquared opened the war at r494 or r539. The crown twin u7p (13248 g1) saw no war and won 54-45.
+- 16422 g1 (dumped): at r493 their 80-hp rat stood 2 tiles in front of our 100-hp rat, which carried 713 cheese. At r494 our rat stepped next to it, it moved to our blind side (31,16) and grabbed. The war went 40-59 on cat damage 4,330 to 8,770 (they bit cats 347 times in the war).
+- Engine (assertCanCarryRat): a grab needs adjacency and either a target that cannot see the grabber (vision cone 90 degrees) or a target weaker by more than the threshold. From Chebyshev 2 an enemy we face can only step into our cone.
+- 588 field rows: the opponents opened 395 wars, 158 of them with grabs (we won 64). We won 42 of the 51 games with no war.
+Falsifiers:
+- Screen zd130 vs u9p zd61 (s6, fresh games): paired t <= -1.5 rejects. Per-cell picks z <= -2, per rat-turn or per round, rejects. Transfer per round on shared cells below 0.97x u9p's rejects. Any overrun or exception rejects. The local opponents all open the war before r140, so the screen tests only the cost.
+- Replica: the standard block rules on sets 3, 1, 2, then 4, with the transfer floors.
+- Mechanism (field_report rows, every block): count the games where the opponent opened the war with a grab, against the reference rows on the same cells. If z1s's count is not below the reference's after block 2, it is rejected as inert.
