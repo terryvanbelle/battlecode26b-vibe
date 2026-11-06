@@ -6355,3 +6355,15 @@
   - Pooled with block 1: D 19, net +5, t 1.15. That is between block 2's reject bar (t ≤ 1) and its accept bar (t ≥ 2).
   - Falsifiers (blockcheck.py on VM ~/diag26b/z0kb2.jsonl vs twin_s1.jsonl): transfer 4,324 a game against the floor of 4,133 (twin 4,592), so it passes. 26 games won to the twin's 21; king-kill wins 17 to 13; cat share in the 9 points games 0.634 to 0.584.
   - Block 3 is on set 2 (build/block_v4s2.sh): 14887-14890 sent and 12 in the drain queue. Waiter build/wait_z0kb3.sh watches IDs > 17787.
+- 07:35: **Why the rich second and third kings fail to form.** I scanned formation bursts (scratch formking.py over 49 local game dirs on the VM; formgrid.py and ringcount.py draw the tiles).
+  - Locally, 33 bursts failed. In 27 no king came within Chebyshev 2 of the site, and at most 6 of ours stood in the 3x3 in almost all of them (7 are needed).
+  - The grids show the same picture each time (u9p mirror on superioristhmus at r672, z1q jail vs araid at r480, u9p keepout vs araid at r950). Joiners arrive from one side and fill the near tiles. The next ones queue one tile out, because Nav steps only toward the centre. The far 2-4 tiles stay free for the whole 60-round TTL, and then the 150-round retry wait starts.
+  - On superioristhmus the free tiles sit in a dead-end pocket between the king's body, the map edge and walls. They can be reached only through the 3x3.
+  - Replica superioristhmus B (z0q, r666-726; ringcount.py) shows a second failure mode. The king named ring site (10,2) from (13,3), then walked to its home mine at (12,2), which put its body in the site's 3x3. From then on becomeRatKing was impossible, even though 7-9 of ours stood on the ring sites around it with the centre rat on K and action-ready.
+  - u9p's FORM_STILL (the king freezes while any site is open) was only ever tried inside s5x's bundle.
+- 07:35: **z2a registered** = u9p + three new switches:
+  - FORM_OFF: the king does not walk while within Chebyshev 5 of an open site, and a site with a king's body in it is dropped at once.
+  - FORM_RICH_RETRY 20: a failed rich() site is banned, and the next one opens 20 rounds later (u9p waits 150).
+  - FORM_FILL: a joiner one tile out steps onto any free tile of the 3x3. A rat inside steps on along its entry heading (or 45 degrees off it) onto a free tile, so free tiles drift toward the queue; at most two shifts per rat, so rats can't trade tiles back and forth.
+  - Build z2a-38798ce4eb40. Its falsifiers are in bots/z2a/SNAPSHOT.
+  - The mechanism chain fz is running on the VM: superioristhmus vs u9p in both seats, seeds 0-1, plus the 16 wp cells (jail, keepout, wallsofparadis, mercifullattice vs araid and abrk), compared with u9p's games on the same cells.

@@ -1,0 +1,31 @@
+name=z2a
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=11e390c
+created=2026-11-06 07:35 PST
+
+z2a = u9p + FORM_OFF + FORM_RICH_RETRY 20 + FORM_FILL (three new switches; formation mechanics only). Registered
+2026-11-06 07:35 PST, before any z2a game.
+Target: second and later kings that fail to form while the bank holds thousands. Superioristhmus vs spsquared sat at
+2-3 kings with 4-10k banked and 40 babies at r1190 in 5 of 6 losses; one more king flips about 4 replica cells.
+Evidence (TRAINING_LOG 2026-11-06 07:3x; scratch formking.py, formgrid.py, ringcount.py):
+- Local u9p-family games (VM ~/diag26b, 49 dirs): 33 formation bursts failed. In 27 of them no king came near the
+  site, and the most of ours inside the 3x3 was 6 in almost all (7 needed). Grids (u9p mirror superioristhmus r672,
+  z1q jail r480, u9p keepout r950): joiners arrive from one side, fill the near tiles and queue one tile out; the far
+  tiles of the 3x3 stay free for the whole 60-round TTL.
+- Replica superioristhmus B (z0q, r666-726): the king walked from (13,3) to its home mine at (12,2), into the 3x3 of
+  its ring site (10,2). 7-9 of ours then stood on ring sites around it for 60 rounds with no king.
+Switches:
+- FORM_OFF: the king does not walk while within Chebyshev 5 of an open site (cat dodges and lane steps still move
+  it); a site with one of our kings within Chebyshev 2 is dropped at once.
+- FORM_RICH_RETRY 20: in rich() mode a failed site is banned and the next opens 20 rounds later (u9p waits 150).
+- FORM_FILL: a joiner one tile out steps onto any free tile of the 3x3; a rat inside steps on along its entry
+  heading (or 45 degrees off it) onto a free tile, so free tiles drift to the queue (at most two shifts a rat).
+Falsifiers:
+- Mechanism chain (VM ~/diag26b/fz, vs u9p, superioristhmus both seats seeds 0-1, plus jail and keepout A vs araid):
+  failed bursts (formking.py) must fall to at most half of u9p's on the same games, and kings at r1190 must not fall
+  below u9p's in any game; 0 exceptions, 0 overruns.
+- Screen (s6 cells vs u9p zd61): paired t <= -1.5; per-round picks z <= -2; transfer per round below 0.97x u9p's on
+  the shared cells; kingsFormed below u9p's 31; any overrun or exception.
+- Replica: the standard block rules (blocks 1-3 reject at pooled t <= 0, 1, 1.5; t >= 2 accepts from block 2; block
+  4 rejects below 2), sets 3, 1, 2, 4, with the transfer floors (set 3 3,968; set 1 4,133).
