@@ -579,7 +579,7 @@ public final class Baby {
             if (s > bs) { bs = s; best = r; }
         }
         if (best == null) return false;
-        if (Cfg.GRAB_SAFE && !holdsOurs(best) && grabExposed(robots, best)) { grabSkips++; return false; }
+        if (Cfg.GRAB_SAFE && !holdsOurs(best) && grabExposed(rc.senseNearbyRobots(8, G.them), best)) { grabSkips++; return false; }
         rc.carryRat(best.location);
         carryRound = G.round;
         naps++;
@@ -588,15 +588,15 @@ public final class Baby {
 
     public static int grabSkips;
 
-    /** Cfg.GRAB_SAFE: another free enemy baby (not victim) within Chebyshev 2 could grab us next round: it is
-     *  healthier, or it reaches in one step a tile next to us that our cone does not cover. */
+    /** Cfg.GRAB_SAFE: another free enemy baby (robots: those within dist2 8; not victim) within Chebyshev 2 could
+     *  grab us next round: it is healthier, or it reaches in one step a tile next to us our cone does not cover. */
     static boolean grabExposed(RobotInfo[] robots, RobotInfo victim) throws GameActionException {
         RobotController rc = G.rc;
         MapLocation me = G.me;
         int hp = rc.getHealth();
         Direction f = rc.getDirection();
         for (RobotInfo e : robots) {
-            if (e.team != G.them || e.type != UnitType.BABY_RAT || e.ID == victim.ID || e.carryingRobot != null) continue;
+            if (e.type != UnitType.BABY_RAT || e.ID == victim.ID || e.carryingRobot != null) continue;
             if (G.cheb(e.location, me) > 2) continue;
             if (e.health > hp) return true;
             for (Direction d : G.DIRS) {
