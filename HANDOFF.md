@@ -96,14 +96,17 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 04:33 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 04:52 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). Candidates
   descend from u9p = u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18), each one
   switch screened against u9p's zd61. **z0q = u9p + RAW_TRAPS** is on the replica (submission 236): block 1 (set 3,
   17502-17542) D 10, net +2, t 0.63; block 2 (set 1, 17551-17605) D 6, net +4, t 1.63, transfer 4,214 (floor 4,133);
   pooled 96 cells D 16 (+11 -5) net +6 t 1.51, so block 3 on set 2 (build/block_v4s2.sh sent 14700-14703 after
   match 17605, 12 in the drain queue; score with `paired 12838-12899 IDS --crown 11678-11702`, rows via field_report
-  to ~/diag26b/z0qb3.jsonl, then blockcheck with twin_s2.jsonl; block 3 rejects at pooled t <= 1.5, accepts at >= 2).
+  to ~/diag26b/z0qb3.jsonl, then blockcheck with twin_s2.jsonl; block 3 rejects at pooled t <= 1.5, accepts at >= 2). Waiter build/wait_z0qb3.sh (16 OK after 17605). Partial at
+  36 cells (04:50): D 9 (+4 -5), net -1, t -0.33, pooled about t 1.0, so a rejection is likely.
+  Submit a candidate: `contest.py submit bots/NAME -m TEXT`, then `bash build/block_v4s3.sh` (set 3 first) and
+  `git checkout research/panel/`.
   Next on the replica: **z1l** if it passes screen zd127 (its mechanism games are the strongest of the line: 6 of 8
   to u9p's 3, rose jam fixed, FreeTheCheese A flipped), else **z0r** (u9p + CAT_HUSH; passed zd110). Held after
   passing screens: z0d (STAB_LAY), z0e (END_CAT 1450).
@@ -116,13 +119,23 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   jam (king starves with 600-1,040 raw within 10) is **z1l** (u9p + SWAP_LOADED 30, SWAP_HOME 10): mechanism games
   in VM ~/diag26b/sl (from 04:01), falsifiers in bots/z1l/SNAPSHOT; screen zd127 has its cells made. FreeTheCheese vs
   collegejunior is the same stem shape (one delivery tile at the stem mouth), but there the army had shrunk first.
-- Mechanism chains on the VM (serial, one game at a time): ~/diag26b/sl2 (FreeTheCheese vs abrk/araid, u9p and z1l),
-  ~/diag26b/fw (z1m FLOW_W 2, z1n FLOW_W 3 vs u9p on Stash, cheesebottles, FreeTheCheese, wallsofparadis; falsifiers
-  in their SNAPSHOTs: first-exit rounds on Stash), ~/diag26b/mz and ~/diag26b/wc (u9p on minimaze and whatsthecatdoin,
-  diagnosis only). Tables: scratch sltab.py DIR, jamchk.py DIR/* (copies in ~/diag26b).
-- VM disk: 3.1 GB free after pruning 76 replica replays (list /root/bc26-replays-pruned-20261106-1203.txt), 143 old
-  build/dumpcache dirs and 259 old ~/diag26b replays (tsv kept).
-- Screening (VM queue runs/screenq.txt): zd119 z1a rejected (kings 30, transfer 0.965); **zd121 z1c** (running), **zd127 z1l** next, **zd120 z1e**,
+- Mechanism chains on the VM (serial, one game at a time; tables scratch sltab.py DIR, jamchk.py, firstexit.py,
+  mvtally.py, atkjump.py; copies in ~/diag26b): **~/diag26b/dg** (v0a = u9p + KING_DODGE vs u9p on bed,
+  uneasy_alliance, cheesebottles, attack_on_cat vs araid; falsifiers mechanism_dg in bots/v0a/SNAPSHOT: king scratch
+  damage below u9p's, wins, exceptions), **~/diag26b/cs** (z1o CHEESE_STICK, z1p + FLOW_PROGRESS vs u9p on Stash,
+  seepastyourgreed, rift, pipes vs abrk; falsifiers in their SNAPSHOTs: Stash first-middle rounds 10+ earlier in both
+  seats, r300 transfer, wins). Done: sl2, mz, wc (diagnosis: u9p wins minimaze and whatsthecatdoin locally), fw
+  (z1m/z1n dropped: Stash exits not earlier; stopped after Stash).
+- Diagnoses 04:35-04:50 (TRAINING_LOG): we field more babies than in-band opponents early but pick 0.18-0.26 per
+  baby-round to their 0.36-0.50 (12 of the first 16 are rushers; the rush family is closed). Cats killed our king in
+  10 of 201 replica losses (bed vs spsquared B: the king fled ahead of a cat into a corner on the cat's waypoint path).
+  Stash: gatherers in the walled home strip switch cheese targets every few rounds as piles beyond the wall come
+  nearer, dropping flow paths the round they are ready; attackers lose paths at blockers in the 1-wide comb.
+  uneasy_alliance vs Icarus: they lay ~54 rat traps on our approach tiles by r250 (trap-risk family closed).
+- VM disk: 2.9 GB free (04:44) after deleting 49 build/dumpcache entries older than 3 h (dirs are read-only: chmod
+  u+w first; regenerable from ~/diag26b/rp).
+- Screening (VM queue runs/screenq.txt): zd119 z1a rejected (kings 30, transfer 0.965); zd121 z1c rejected (transfer
+  0.949); **zd127 z1l** (running), **zd120 z1e**, **zd66 v0a** (KING_DODGE, moved up; dg chain decides first),
   zd112 z0t (z0q + RAW_ANY), zd113 z0u (MINE_BURN 50), zd114 z0v (RAW_RAID_HALF 1), zd107 z0p (FACE_REACH), zd108 z0o
   (BURY), then the old sweep. z1g was dropped at its mechanism games (zd122 not queued). Each candidate's falsifiers are in its
   bots/NAME/SNAPSHOT. Screen transfer gates from z0q on are per round on the shared cells (inline script in
