@@ -14,6 +14,7 @@ Registered before any z2c game, and only if z2a passes screen zd137 (otherwise z
 Falsifiers:
 - Withdrawn if z2a fails screen zd137 or its chain2 falsifiers (bots/z2a/SNAPSHOT).
 - Screen vs u9p's zd61 with the s6 gates (t <= -1.5; per-round picks z <= -2; transfer per round < 0.97;
-  overruns or exceptions) and kingsFormed above u9p's 31 (z2a's formation gate).
+  overruns or exceptions) and kingsFormed below u9p's 31 (z2a's formation gate as registered; corrected 08:12,
+  before any z2c game, from "above", which misquoted it).
 - Replica: the standard block rules on sets 3, 1, 2, 4 (blocks 1/2/3 reject at pooled t <= 0/1/1.5; t >= 2 accepts
   from block 2; block 4 rejects below 2) and the per-block transfer floor via blockcheck.
