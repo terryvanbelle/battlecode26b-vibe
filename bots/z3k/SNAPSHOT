@@ -1,0 +1,21 @@
+name=z3k
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=643a80e
+created=2026-11-06 14:08 PST
+
+z3k = z1z + tools/ledger.py + DRY (DRY_W 100, DRY_BANK 1200). A baby that has seen the global cheese not rise for
+DRY_W rounds while it is under DRY_BANK takes whatever raw it carries home, in HUNGRY's slot of moveDecision, and keeps
+going until its raw is 0. The target is clockwisdom: z1z lost 5 of 6 there on the replica (blocks 2-4) with transfer
+0-260, 12 rushers holding 4,200-4,600 raw, the king's mine list empty, and the king starving at r880-980. In the 162
+cached replica games the signal (no bank rise for 100 rounds after r100, bank < 1200) comes in 19 of 68 losses, 9 of
+50 king-kill wins (all with 1,600+ banked, so DRY_BANK keeps them out) and 3 of 44 long games. HUNGRY (s3k, u4c, u4d,
+u5a) acted whenever the bank ran low; this acts only when deliveries have stopped. Both hooks are ledgered (K 9, K 11).
+
+Falsifiers, registered before any z3k game:
+1. Local mechanism games vs araid (~/diag26b/dry): on clockwisdom A and B, z3k's transfer must rise well above z1z's
+   and its 'H' tags must show after the first dry stretch; at least one of the two must improve (win, or a later king
+   death). Games where the signal never fires must replay z1z's game (replay_eq).
+2. Screen zd161 vs zd136 (z1z's control) on the s6 gates (t > -1.5, picks z > -2, xfer >= 0.97, overruns <= 0).
+3. Replica: block rules (TRAINING_ALGORITHM s4) against z1z's set-3 block 17946-17961. Block 1 has no clockwisdom
+   game, so the block may be inert; the blocks after it carry the test.
