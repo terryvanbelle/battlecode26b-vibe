@@ -6461,3 +6461,17 @@
   - These are all u9p-line switches, and a u9p-line candidate replays u9p's replica games until its switch fires (entry above). The revived ones are worth the replica only rebased on u6x, where only the cells where the switch fires move. That is the z2f pattern: switches that act in losing positions.
 - 09:16: **u6x still reproduces zc6**: the rerun of u6x vs araid keepout (seed 0) gave A, r2000, transfer 31,615 to 19,989, the same as zc6's game. So z2f's replay check is valid: a cell with no rescue must repeat zc6 exactly.
   - **z2g registered** = z1z + CASH (the same patch onto z1z, clean). It is ready in case z1z is accepted at block 2: the u9p line nets about +4 on set 1, and z1z's block 1 was +4. Screen **zd143** vs z1z's own zd136 (same cells) has the same replay check. Queue: zd142 (z2f, playing since 09:14), zd143, zd141 (z2e), zd132 ...
+- 09:34: **z2f is not silent (its replay check fails).** A dump rerun of keepout A (seed 0, u6x and z2f vs araid) diverges at **round 525**. The two games end the same (A, r2000), but u6x's bank never fell below 250 in that game, so no rescue could start. The first 4 zd142 cells to finish also all differ from zc6.
+  - Cause: CASH costs bytecodes on every baby turn (the cashTick check, two hook tests). u6x spends whatever a turn leaves on `Flow.work(FLOW_RESERVE)`. It also has budget checks (Flow/Seal/KPath/BitFlow `left()`, King 150/857, Baby THROW_BC/SENSE2_LEFT/SWEEP_LEFT). So any added bytecode shifts flow-field work between turns, and the games drift apart after a few hundred rounds. Every "silent" candidate so far drifted this way: none of them replayed their parent exactly; they only replayed it for a while.
+  - z2f is withdrawn as a silent candidate. zd142 still plays as an ordinary screen of u6x + CASH.
+  - **z2h = z2f + an exact bytecode ledger.** `G.debt` counts the bytecodes this turn spends on code u6x does not run, minus 2. Each budget read adds it back:
+    - The `left()` variants become `Clock.getBytecodesLeft() + G.debt`: the same 4 instructions, with the clock read 2 earlier, which the −2 absorbs.
+    - The 5 direct reads become `Clock.getBytecodesLeft() + (G.debt += 8) - 6`.
+    - Each CASH hook is measured between two `getBytecodeNum()` reads, plus a constant for the instructions outside them (11, 9 and 11, checked in javap).
+    - Statics with initialisers are dropped (no `<clinit>` cost). The ledger resets to −2 after Flow.work.
+  - Test: z2h vs araid keepout A must match u6x's game state for all 2000 rounds (`replay_eq.py`, state columns of turns.tsv; the same check finds z2f's r525). If it does, z2h is the real silent candidate and replaces z2f in the queue.
+- 09:35: **zd142 (z2f, u6x + CASH) vs zc6: rejected at the screen.**
+  - Results: n 44, D 4, net +2, wins t +1.00. Picks per round 0.967 (per-cell z −0.71). 0 overruns, 0 exceptions. kingsFormed 32 vs u6x's 35.
+  - It fails one gate: **transfer per round is 0.964 in the gate's form** (< 0.97).
+  - Replay check: only 5 of the 22 cells the scorer could match repeat zc6, so the non-silence above shows here too.
+  - Caveat: the gate's form is noisy. u9p's salted twin z2b scored 0.930 on it while its per-cell mean was 0.999. So this rejection is one gate on a candidate whose games drift for reasons unrelated to CASH. z2h (the exact ledger) is the clean test of CASH on u6x: its cells with no rescue must equal zc6 exactly, so only rescue cells can move any gate.
