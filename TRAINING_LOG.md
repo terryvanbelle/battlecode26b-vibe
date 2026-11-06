@@ -6616,3 +6616,16 @@
   - **zd149 (z2p, u6x line) aborted** 6 games in: z1z's acceptance made it moot.
   - **zd151 = z2x vs zd136** (z1z's control) is now playing; zd150 is now z2u vs zd136.
   - Checks running (~/diag26b/zx). The replica waits on them (about 15 minutes).
+- 11:58: **z2x's checks** (~/diag26b/zx, vs araid), all won:
+  - superioristhmus A: kings at r837, r885, r953, r1030; won 72-27, transfer 50.0k.
+  - superioristhmus B: kings at r820, r873, r934, r1004; won 73-26.
+  - keepout A: kings at r134, r762, r829, r879. It replays z2u until r750; won 71-28.
+  - cheesefarm A: kings at r178, r752, r797, r868. **Won 81-18 at r912 by a king kill**, and araid starved (1,022 starve damage).
+  - **The one overrun on our side** (sup A) is a fresh rat's first turn at r1212: 17,501 bytecodes, 1 over the limit (no OVR= in its indicator; NEAR=1).
+    - z1z's own sup-A game has our rats at 17,452-17,499.
+    - Every control overruns a little: zd136 (z1z) has 8 overruns in 6 of 48 games, zc6 (u6x) 6 in 2.
+    - So this is the base's tight first-turn budget meeting a new game state, not a ledger leak. The gate reads "no more than the control".
+  - **z2x submitted** (#240) at 11:56. Its set-3 block 1 is out: 18116-18127 sent, 4 in the drain queue. Waiter build/wait_z2xb1.sh counts 16 OK matches after 18115.
+    - Score it against z1z's set-3 block: `paired 17946-17961 IDS`.
+    - Floor: z1z's rows ~/diag26b/z1zb1.jsonl.
+- 11:58: **zd148 (z2m vs zc6), for the record:** 22 shared cells, D 1, net +1, t +1.00; picks z +1.04; transfer 1.019; overruns 6 in 2 games (u6x's control: 6 in 2). It passes, but the u6x line is moot now that z1z is accepted.
