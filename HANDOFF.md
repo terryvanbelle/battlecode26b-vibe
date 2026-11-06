@@ -96,18 +96,29 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 07:12 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 07:45 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). The u9p line is
   u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18); most candidates add one switch to
   it, screened against u9p's zd61.
-- **On the replica: z0k** (FORM_WAR_FROM 300, reopened; falsifiers_v2 in its SNAPSHOT). Block 1 (set 3) passed: 48
-  cells D 9 (+5 -4), t +0.33. Block 2 is on set 1 (matches above 17742; waiter build/wait_z0kb2.sh; drain.log shows
-  the rest queued under the hourly limit). Score with `paired 12771-12813 IDS --crown 11549-11677`, pooled with block
-  1. Block 2 rejects at pooled t <= 1 and accepts at t >= 2. Transfer floor 4,133 (field_report on the VM). Then set 2.
+- **On the replica: z0k** (FORM_WAR_FROM 300, reopened; falsifiers_v2 in its SNAPSHOT). Block 1 (set 3): D 9, t
+  +0.33. Block 2 (set 1, 17748-17787): D 10 (+7 -3), t 1.26; pooled D 19, net +5, t 1.15; transfer 4,324 (floor
+  4,133). **Block 3 is on set 2** (14887-14890 sent at 07:28, 12 in the drain queue; waiter build/wait_z0kb3.sh
+  watches IDs > 17787). Score with `paired 12838-12899 IDS --crown 11678-11702`, pooled with blocks 1-2 (block 3
+  rejects at pooled t <= 1.5, accepts at t >= 2); transfer vs ~/diag26b/twin_s2.jsonl (blockcheck.py). Then set 4.
 - **Replica order after z0k:** **z1z** if screen zd136 passes (= u9p + z1q + z1r, hand-merged; falsifiers in
   bots/z1z/SNAPSHOT). Otherwise **z1q** (u9p + u7z's three switches; passed zd128), then **z1r** (RICH2_BABIES 80;
   passed zd129; block order sets 1, 2, 3, 4). Then **u9t**, **z0r** (CAT_HUSH), **u7z** (on u6x). Submit:
   `contest.py submit bots/NAME -m TEXT`, `bash build/block_v4sN.sh`, `git checkout research/panel/`.
+  If z2a passes its chain and screen, bundle it with z1z (different code: King/Baby formation vs gatherer shifts).
+- **z2a (formation fixes), registered 07:35:** u9p + FORM_OFF (king holds still within 5 of an open site; a site
+  with a king's body in it is dropped) + FORM_RICH_RETRY 20 (failed rich sites banned, 20-round retry) + FORM_FILL
+  (joiners step onto any free 3x3 tile; rats inside shift along their entry heading). Cause: joiners queue on one
+  side while the far tiles stay free (27 of 33 local failures, max 6 inside); on the replica the king also walks
+  into its own site (z0q superioristhmus B r666-726). Replica points games: 73 of 205 bursts failed. Mechanism
+  chain fz on the VM (~/diag26b/fz chain1: superioristhmus vs u9p both seats seeds 0-1; ~/diag26b/wp/z2a-* chain2:
+  16 wp cells; DONE1/DONE2). Compare with `python3 ~/diag26b/formcmp.py DIR:TEAM ...` against the u9p dirs
+  (baseline 20 games: 28 bursts, 9 failed, 33 kings at r1190, 18 wins). Screen **zd137** is queued first; pull it
+  if the chain fails its falsifiers (bots/z2a/SNAPSHOT).
 - **averystrangespace lock-in, closed 07:04:** in the u9p mirror neither side leaves its dirt-sealed corner until
   ~r880. z1x (seekers tunnel to the cats or the centre) won 3 of 4 there (chain tn) and 4 of 4 in the partial tx
   chain (~/diag26b/tx), but failed screen zd134 on transfer (0.956; mostly wallsofparadis 6.84 to 4.90 a round, a
@@ -120,9 +131,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   kings not lower). Diagnoses: enemy trap deaths near our king are the opening brawl against rushers (young,
   never-carried rats walking out among 4+ enemies); DefaultMedium 0 of 10 (early-war merges, army collapse);
   thunderdome vs nzjt is a throw race (they throw 2-3x as often; king hits by thrown rats).
-- Screening (VM runs/screenq.txt): **zd131 z1t** (END_CAT 1650 + END_CAT_IDLE 20; resumed after a pause), then
-  **zd136 z1z**, zd132 z1u (CAT_LAY_MAX 5), zd112 z0t, zd113 z0u, zd114 z0v, zd107 z0p, zd108 z0o and the old sweep.
-  Passed today: zd127 z1l, zd128 z1q, zd129 z1r. Rejected: zd130 z1s, zd134 z1x.
+- Screening (VM runs/screenq.txt): **zd136 z1z** (running), **zd137 z2a**, zd132 z1u (CAT_LAY_MAX 5), zd112 z0t, zd113 z0u, zd114 z0v, zd107 z0p, zd108 z0o and the old sweep.
+  Passed today: zd127 z1l, zd128 z1q, zd129 z1r. Rejected: zd130 z1s, zd134 z1x, zd131 z1t (picks z -2.98).
 - Lead under study (07:01 log): peace games end when the last cat dies, settled on points then (19 dumped replica
   games). On two-cat maps each side kills the cat in its half, so a bite on the other side's cat outweighs the
   transfer margin. Scan: ~/diag26b/catsteal.py build/dumpcache (steal windows: peace rounds after our cat died while
