@@ -1,0 +1,15 @@
+name=z2l
+source=bots/z2j
+source_sha=b42f48a835f5
+commit=0adece6
+created=2026-11-06 10:16 PST
+
+z2l = z2j + RICH_LATE 1050 (z2k's switch: King.rich/rich0/lateRich and the Cfg block copied verbatim; z2l's King.java
+is z2k's, its Baby.java is z2j's). Bundle of the two ledgered endgame-king switches: CASH + CASH_END (a second king
+for a lone king from r1880) and RICH_LATE (a third king for two kings in r1050-1150 on a projected surplus).
+Under the exact ledger each switch moves only the games where it acts, so z2l's game in any cell is z2j's where only
+CASH/CASH_END acts, z2k's where only RICH_LATE acts, and u6x's elsewhere.
+Checked (10:20): cheesefarm A vs araid replays z2k's game exactly (replay_eq: no divergence in 2000 rounds; 3-2 kings,
+55-44); evileye A vs araid ends as z2j's (2-1 kings, 58-41).
+Falsifiers: z2j's (zd146) and z2k's (zd147) screens must both pass; a cell where both act needs its own game. Then the
+replica: standard block rules with identity-aware scoring (--crown) and the per-block transfer floor.

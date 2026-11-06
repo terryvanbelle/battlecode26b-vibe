@@ -6524,3 +6524,7 @@
 - 10:16: **z2k validated.** On cheesefarm A vs araid (seed 0) its game is identical to u6x's dump through r1056 (replay_eq.py: first divergence r1057, when the late site's joiners move).
   - The third king formed by r1080. Kings 3-2 at r2000; z2k won 55-44 where u6x lost 49-50. 0 king deaths, 4,706 banked at the end (u6x 8,883); transfer 22,077 to 20,248.
   - Screen **zd147** queued after zd146 (z2j), ahead of zd145 (z2i).
+- 10:20: **z2l registered** = z2j + RICH_LATE (z2k's switch copied verbatim): both ledgered endgame-king switches in one bot.
+  - Check: cheesefarm A vs araid replays z2k's game exactly (no divergence in 2000 rounds; kings 3-2, 55-44). Evileye A ends as z2j's (kings 2-1, 58-41). Under the ledger the switches add: each moves only the games where it acts.
+  - So z2l needs no screen of its own. Its cells are z2j's where CASH_END acts, z2k's where RICH_LATE acts, and zc6's elsewhere; only a cell where both act would need a game. If zd146 and zd147 both pass, z2l is the replica candidate after z1z.
+  - Running on the VM: field_report over all 498 replica matches in ~/diag26b/rp (all_rp.jsonl), to count the field points losses one more king would flip (rp_games.jsonl had only 156 games: 3 two-king losses that flip with a third, 3 one-king 1-1 losses that flip with a second).
