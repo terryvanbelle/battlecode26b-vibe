@@ -1,0 +1,8 @@
+name=z0e
+source=bots/z0c (u9p + END_CAT)
+source_sha=ba7321641d02
+commit=26604fc
+created=2026-11-05 21:25 PST
+
+z0e = u9p + END_CAT 1450 (z0c's switch, 200 rounds earlier): a dose test. z0c (1650) raised our cat share in late screen games from 0.582 to 0.629 (+8.5% dmgCat); starting earlier gives the hunt more rounds at the cost of more gatherer turns. Registered 2026-11-05 21:26 PST, before any z0e game.
+Falsifiers: screen zd93 vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 rejects; picks/100 worse by per-cell paired z <= -2 rejects; any overrun or exception rejects. Mechanism: our dmgCat in shared-cell games reaching r1450 not above z0c's zd91 on the same games rejects (the dose must buy more). Replica: as z0c's.
