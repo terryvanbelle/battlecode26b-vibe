@@ -6514,3 +6514,10 @@
   - wallsofparadis B: u6x won 54-45; z2j 63-36. learn_your_lesson A: 53-46 to 61-38. learn_your_lesson B: 58-41 to 66-33. All with kings 2-1.
   - Screen **zd146** (z2j on zc6's cells) went to the head of screenq, ahead of zd145 (z2i). z2j contains z2h, so it is the ledgered CASH line's replica candidate if it passes.
   - zc6 also has cheesefarm A and B lost 49-50 at kings 2-2. A second king cannot help there (after r1200 a team forms a king only while it has fewer than 2), so only transfer or cat damage can move those.
+- 10:15: **zd144 (z2h vs zc6): all 44 shared cells repeat u6x's games exactly** (scr_eq: 44 identical, 0 differ; D 0, transfer 1.000, picks 34.94 = 34.94). The exact ledger holds over a full screen.
+  - CASH itself never acts in zc6's cells, so z2h is inert locally. It is subsumed by z2j (z2h + CASH_END), whose screen zd146 is now playing. Any cell zd146 moves is a CASH_END cell.
+- 10:13: **z2k registered** = u6x + RICH_LATE 1050 (new switch, RICH_LATE_BANK 600, RICH_LATE_SUR 3000) under the exact ledger.
+  - From r1050 to the r1150 cut, a team with two kings and 600 banked names a third king's site through FORM_RICH's path, while Econ.surplus(3) (the bank projected to r2000 with three kings' upkeep) is 3,000 or more.
+  - Target: zc6 cheesefarm vs araid A and B, lost 49-50 at kings 2-2 (49.99 to 50.01 before truncation; cat damage settled by r600). u6x's dumped game (~/diag26b/cf/u6x) banked 1,682 at r1150 on 11.5 a round (sur=5514 at r1100), reached FORM_RICH_BANK 3000 at r1300, after the cut, and ended with 8,883 unspent. A third king makes the king share 30-20.
+  - King.rich runs u6x's body unchanged (rich0, javap-identical) and then the late check in a measured hook (K 12, from the javap listing).
+  - z0h (FORM_RICH_BANK 1500 over r80-1150, no ledger) was rejected on king deaths. This one acts only in the last 100 rounds before the cut, and only on a projection. Validation game (cheesefarm A vs the u6x dump) running; falsifiers in bots/z2k/SNAPSHOT.

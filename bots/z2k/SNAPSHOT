@@ -1,0 +1,27 @@
+name=z2k
+source=bots/u6x
+source_sha=aa3d424c2ca7
+commit=b5b4497
+created=2026-11-06 10:12 PST
+
+z2k = u6x + RICH_LATE 1050 (new switch; RICH_LATE_BANK 600, RICH_LATE_SUR 3000), under the exact bytecode ledger
+(tools/ledger.py). From r1050 to the r1150 cut, a team with two kings and 600+ banked names a third king's site through
+FORM_RICH's path while Econ.surplus(3) (the bank projected to r2000 with three kings' upkeep) is 3,000 or more.
+King.rich runs u6x's body unchanged (rich0, javap-identical) and then the late check inside a measured hook (K 12:
+istore r, getstatic, istore cd before the first read; bc's ireturn, 6 of arithmetic, iload r and ireturn after the
+second).
+Why: zc6 cheesefarm vs araid, A and B: kings 2-2 from r200, cat damage settled by r600, lost 49-50 both (49.99 to 50.01
+before truncation). u6x's dumped game (~/diag26b/cf/u6x): bank 1,682 at r1150 on 11.5 a round of income (the king's
+sur=5514 at r1100), FORM_RICH_BANK 3000 reached at r1300, after the cut, and 8,883 unspent at r2000. A third king
+before r1200 makes the king share 30-20. After r1200 a team with two kings cannot form another (engine cutoff), so the
+window is r1050-1150 (FORM_TTL 60 keeps a site open to r1210 at most). z0h (u9p + FORM_RICH_BANK 1500 over the whole
+r80-1150 range, no ledger) was rejected on king deaths 13 vs 10; this one acts only late and only on a projection.
+Validation: z2k vs araid cheesefarm A (seed 0) against u6x's dump: identical state before r1050 (replay_eq.py), and a
+third king by r1200.
+Falsifiers:
+- Validation: any divergence before r1050, or no third king on cheesefarm A: dropped (or the gate fixed).
+- Screen vs zc6 (48 cells, seed 0), s6 gates (t <= -1.5; per-round picks z <= -2; transfer per round < 0.97 in the
+  gate's form; any overrun or exception), and a replay check: a differing cell must name a late rich site (two kings at
+  r1050-1150); 2 or more differing cells that never do mean the ledger leaks. King deaths over the screen above zc6's
+  by 3 or more: rejected (z0h's failure).
+- Replica: standard block rules with identity-aware scoring (--crown) and the per-block transfer floor.
