@@ -1,0 +1,34 @@
+name=z2e
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=716f134
+created=2026-11-06 08:49 PST
+
+z2e = u9p + CASH (new switch family; structural: a rescue formation). Cfg.CASH_BANK 250, CASH_FLOOR 60, CASH_RAW 60,
+CASH_N 3, CASH_R 4, CASH_MIN 250, CASH_FAR 5, CASH_PULL 8, CASH_TTL 50; Baby.cashTick/cashMove, Comms.SQ_CASH.
+While the bank is under 250 (and at least 60), a loaded baby 5+ from every king, the heaviest of 3+ of ours in view
+within Chebyshev 4 holding 250+ raw, names a clear 3x3 at or beside itself and squeaks it. Babies that hear it
+within Chebyshev 8 walk into the 3x3 and relay it. When the centre promotes, the engine banks the raw cheese of
+every rat in the 3x3 (RobotControllerImpl.becomeRatKing), and the new king stands where the stuck carriers were.
+Engine fact behind it (not in the log before): becomeRatKing moves all raw cheese held in its 3x3 to the bank.
+What is new against earlier attempts: the carrier-hoard family (ATK_CARRY t0l/u2n/u5z, ATK_DELIVER u3g/u4q/u6j,
+HUNGRY u4c/u4d/u5a/u5m, CARRY_MAX s3l/u6s/u6t/u6w, RUSH_LIFE t0g/u5v/u5w, TRAIL u4o, FLOW_UNSEEN u6f) all tried to
+get the load home or keep it light. CASH needs no walk home, and every earlier formation site (FORM_*, z0x-z2a,
+END_KING) is named by the first king near itself or a mine; this one is named by the babies where they stand.
+Census (scratch rawhold.py, cashin.py on the 435 dumped replica games): 92 losses where our last king starved;
+17 with 300+ raw on our babies at the end; when the bank first fell under 150, a group of 7+ of ours within
+Chebyshev 5 held 320-935 raw in 11 (fullofsecrets 5, rose 4, clockwisdom 1, uneasy_alliance 1). The bank sits under
+150 in 3% of rounds from r200 in our wins and 26% in king-kill losses (banklow.py), so the trigger is loss-heavy.
+Local probe ~/diag26b/cq (vs araid, seed 0, both seats, before registration): fullofsecrets A won 2000 on points
+(xfer 12,125 to 6,407; u9p lost r905, xfer 950): a site at (9,30) from r447, outside the king's sealed pocket, a
+king formed there by r500, bank 240 -> 944. fullofsecrets B won on points (8,220 to 10,370; site (32,17) r533, bank
+275 -> 587; u9p B lost r342 on points in a peace game). clockwisdom A lost r900 (xfer 0, no site: the heavy carriers
+were spread out) and B lost r732 (a site at (32,57) drew only 5 rats and timed out); u9p lost both too.
+Falsifiers:
+- Screen vs u9p's zd61 with the s6 gates (t <= -1.5; per-round picks z <= -2; transfer per round < 0.97 in the gate's
+  form; any overrun or exception). Also reported against the pooled control (zd61 + zd138 + zd140), not gated.
+- Mechanism chain (~/diag26b/cq2: rose and fullofsecrets vs araid and abrk, both seats, z2e and u9p): z2e's king
+  starvations above u9p's, or no completed rescue (a king formed from a CASH site) in the chain, withdraws it.
+- Replica: the standard block rules (sets 3, 1, 2, 4; blocks 1/2/3 reject at pooled t <= 0/1/1.5; t >= 2 accepts from
+  block 2; block 4 rejects below 2) and the per-block transfer floor. Mechanism: over its blocks, losses where our
+  last king starved with 300+ raw held must be fewer than the reference's on the same cells, or it is not accepted.
