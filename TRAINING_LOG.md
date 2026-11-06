@@ -6296,3 +6296,8 @@
   - 0 exceptions, 0 overruns.
   - The loss (z1x as B, seed 0) was a starvation in a poor game: both sides picked little (5.6k and 2.0k). z1x formed a second king, its bank hit 0 at r750 while babies held 1,255-1,530 raw, 14 of its babies were pounced by the cats, and both kings starved at r878.
   - Screen zd134 (queued after zd132) prices the cost on the standard cells. If it passes, z1x goes to the replica after z1q, sets 2, 3, 1, 4.
+- 06:39: **z0k continues after replica block 1** (#238; set 3, 17706-17742; `paired 13248-13291 IDS --crown 12130-12163`). 48 cells, 39 alike, D 9 (+5 −4), net +1, t 0.33 (block 1 rejects at t ≤ 0).
+  - Gained: YokoOno 5t4rv4t10n_1337 B and externalsustenance B, spsquared TheHeist A and B, waxmango FreeTheCheese B. Lost: Xzibit minimaze B, YokoOno 5t4rv4t10n_1337 A, spsquared rift A, waxmango FreeTheCheese A.
+  - Transfer floor met: 4,504 a game (floor 3,968; VM ~/diag26b/z0kb1.csv).
+  - Its mechanism falsifiers (twin rows in VM ~/diag26b/twin_s3.csv): z0k never formed a king at war before r300. In the 7 games where the twin did, z0k won 2 to the twin's 1 (bar: the twin's wins + 1). FreeTheCheese B vs waxmango flipped with the second king at r316 instead of r280.
+  - Block 2 (set 1, build/block_v4s1.sh) is queued after match 17742: 4 sent, 12 left to the drain loop (hourly limit).
