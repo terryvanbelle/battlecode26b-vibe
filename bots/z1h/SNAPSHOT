@@ -1,0 +1,8 @@
+name=z1h
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=5e62d4e
+created=2026-11-06 03:38 PST
+
+z1h = u9p + COOP_DUMP 10 (new): in cooperation an attacker carrying 10+ cheese spends all of it on its next cat bite. Engine (1.2.6): a bite with c cheese does 10 + ceil(sqrt(c)), taken from the rat's load first, then the bank; a baby's action and move cooldowns grow 1% a unit carried, charged before the bite spends the cheese; pickups cost no cooldown; only kings receive cheese. Attackers never deliver. Cat damage is 0.5 of cooperation points; 10 of our 13 replica cooperation points wins were by one point and the 3 losses by 1-4. Replica dumps (scratch coopraw.py, 22 u9p-family cooperation points games): our rats held 41.6k cheese when the cats died, 19.6k on attackers; attack turns carried 29-110 on average in the long games. Distinct from the attacker-cheese switches closed before (t0l/u2n/u5z ATK_CARRY 25, u3g/u4q ATK_DELIVER 50, u6j ATK_DELIVER 200: war and cooperation, carry caps or trips home); this one keeps the pickups and turns the load into cat damage in cooperation only.
+Falsifiers, registered before any z1h game: mechanism (VM ~/diag26b/cd, vs u6h, seed 0, peaceinourtime and TheHeist, both seats; u9p's games the control: ~/diag26b/lk A, ~/diag26b/cp B): the mean load on our attack-move turns ('a') over the 4 games not below half of u9p's drops it as inert; our cat damage summed over the 4 not above u9p's drops it; a cooperation game lost that u9p won drops it. Screen zd123 vs u9p's zd61 (s6): paired t <= −1.5 rejects; picks/100 per-cell paired z <= −2 rejects; any overrun or exception rejects; transfer per round on the shared cells below 0.97x u9p's rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer floors per set.
