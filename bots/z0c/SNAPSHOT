@@ -1,0 +1,8 @@
+name=z0c
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=942647f
+created=2026-11-05 20:48 PST
+
+z0c = u9p + END_CAT 1650 (new switch; Baby.endCat, one call at the head of moveDecision): from round 1650 at war, a baby of any role holding less than DELIVER_AT raw, carrying no rat, not needed at a threatened king and with no enemy rat within dist2 8 walks to the nearest seen (approachCat) or known cat; the existing bite step bites it (10 a bite). Evidence: the engine's war points are 0.5 kings, 0.3 cat damage, 0.2 transfer shares (GameWorld.setWinnerIfMorePoints); in 954 replica games (field_report on ~/diag26b/rp, 318 matches, builds of the u-era) 63 points losses at r2000 cost us on average 3.9 points on kings, 6.8 on cat damage and 4.7 on transfer, and cat parity alone would have won 18 of the 63 (kings 9, transfer 8), often on a few hundred damage (Icarus averystrangespace 110 to 386 with kings 2 to 1; spsquared jail 32 to 520 and rose 230 to 1430; Varun corridorofdoomanddespair 332 to 1280). Registered 2026-11-05 20:49 PST, before any z0c game.
+Falsifiers: screen zd91 vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 on per-cell win/loss rejects; picks/100 worse by per-cell paired z <= -2 rejects; any overrun or exception rejects; D 0 rejects as untested unless our dmgCat on the shared cells rose (then the switch fired but no cell turned, and it goes on to the replica on mechanism). Mechanism: our dmgCat on the shared cells' games that reach r1650 not above u9p's rejects. Replica: the standard block rules on sets 3, 1, 2, then 4 against the twin's anchors; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block; and our cat-damage share in the block's r2000 points games not above the twin's rejects.
