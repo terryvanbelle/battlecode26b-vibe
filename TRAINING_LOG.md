@@ -6521,3 +6521,6 @@
   - Target: zc6 cheesefarm vs araid A and B, lost 49-50 at kings 2-2 (49.99 to 50.01 before truncation; cat damage settled by r600). u6x's dumped game (~/diag26b/cf/u6x) banked 1,682 at r1150 on 11.5 a round (sur=5514 at r1100), reached FORM_RICH_BANK 3000 at r1300, after the cut, and ended with 8,883 unspent. A third king makes the king share 30-20.
   - King.rich runs u6x's body unchanged (rich0, javap-identical) and then the late check in a measured hook (K 12, from the javap listing).
   - z0h (FORM_RICH_BANK 1500 over r80-1150, no ledger) was rejected on king deaths. This one acts only in the last 100 rounds before the cut, and only on a projection. Validation game (cheesefarm A vs the u6x dump) running; falsifiers in bots/z2k/SNAPSHOT.
+- 10:16: **z2k validated.** On cheesefarm A vs araid (seed 0) its game is identical to u6x's dump through r1056 (replay_eq.py: first divergence r1057, when the late site's joiners move).
+  - The third king formed by r1080. Kings 3-2 at r2000; z2k won 55-44 where u6x lost 49-50. 0 king deaths, 4,706 banked at the end (u6x 8,883); transfer 22,077 to 20,248.
+  - Screen **zd147** queued after zd146 (z2j), ahead of zd145 (z2i).
