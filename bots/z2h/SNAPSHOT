@@ -1,0 +1,37 @@
+name=z2h
+source=bots/z2f
+source_sha=ffd6cf128d52
+commit=11e7a97
+created=2026-11-06 09:52 PST
+
+z2h = z2f (u6x + CASH) + an exact bytecode ledger, so that u6x + CASH replays u6x's games exactly until a rescue acts.
+Why: z2f was not silent. Its keepout A game vs araid left u6x's at round 525, though no rescue could start (u6x's bank
+never under 250 there). u6x spends whatever a turn leaves on Flow.work(FLOW_RESERVE), and other budget checks read the
+clock too, so CASH's few hundred bytecodes a turn moved flow work between turns and the games drifted. Every "silent"
+candidate so far drifted the same way.
+The ledger: G.debt = the bytecodes this turn spent on code u6x does not run, minus 2; every budget read adds it back.
+- Flow/Seal/KPath/BitFlow left(): Clock.getBytecodesLeft() + G.debt (the same 4 instructions as u6x's
+  unlimited ? MAX : Clock.getBytecodesLeft() on the false branch, with the clock read 2 instructions earlier: the -2).
+- The direct reads (King floor and END_KING_LEFT, Baby THROW_BC, SENSE2_LEFT, SWEEP_LEFT):
+  Clock.getBytecodesLeft() + (G.debt += 8) - 6 (8 extra instructions, counted as they run).
+- Each CASH hook in Baby.turn and moveDecision sits between two G.bc() reads (Clock.getBytecodeNum() in a method of
+  its own: the engine counts a basic block only at its end, a Clock read is no block end, and a call of our own code
+  is one, so the count read does not depend on javac's line labels), and the debt grows by their difference plus the
+  hook's instructions outside them (11, 9, 11; checked in javap against the engine's instrumenter).
+- Debug.mark reads u6x's count (getBytecodeNum() - (G.debt += 8) + 6): its hot-stage branch costs bytecodes.
+- cashHeard/cashBan start at 0, not -100: no <clinit> cost (0 is safe in both uses).
+- G.debt = 0 before G.init (its own 2 instructions) and -2 at the end of each turn, after Debug.mark(99) and before the replay tag (the next turn starts at 0 extra).
+The indicator, stats and replay tag after Flow.work see the raw clock; they change no game state (the tag's pad keeps
+its value mod 128).
+Validation: z2h vs araid keepout A (seed 0) matches u6x's game state (turns.tsv, every robot's position, facing,
+health, cheese and cooldowns) for all 2000 rounds (replay_eq.py; the same check finds z2f's divergence at r525), and
+every one of our 74,340 turns reports the same hot= reading (costliest stage segment and its bytecodes) as u6x's
+(hot_eq.py): the ledger is exact, not just lucky. Three earlier builds drifted at r950-r1050 (TRAINING_LOG 09:42, 09:55).
+Mechanism evidence: bots/z2e/SNAPSHOT (chain cq2 on u9p: won 7 of 8 to u9p's 2).
+Falsifiers:
+- Screen vs zc6 (u6x's 48 cells, seed 0) with the s6 gates (t <= -1.5; per-round picks z <= -2; transfer per round
+  < 0.97 in the gate's form; any overrun or exception). Replay check: a cell whose game differs from zc6's must show a
+  rescue (kingsFormed above u6x's, or an SQ_CASH squeak in the dump when dumped); 2 or more cells differing with no
+  rescue means the ledger leaks, and z2h is withdrawn as not silent.
+- Replica: standard block rules (sets 3, 1, 2, 4; blocks 1/2/3 reject at pooled t <= 0/1/1.5; t >= 2 accepts from
+  block 2; block 4 rejects below 2) with identity-aware scoring (--crown), and the per-block transfer floor.

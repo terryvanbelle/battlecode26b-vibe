@@ -6475,3 +6475,23 @@
   - It fails one gate: **transfer per round is 0.964 in the gate's form** (< 0.97).
   - Replay check: only 5 of the 22 cells the scorer could match repeat zc6, so the non-silence above shows here too.
   - Caveat: the gate's form is noisy. u9p's salted twin z2b scored 0.930 on it while its per-cell mean was 0.999. So this rejection is one gate on a candidate whose games drift for reasons unrelated to CASH. z2h (the exact ledger) is the clean test of CASH on u6x: its cells with no rescue must equal zc6 exactly, so only rescue cells can move any gate.
+- 09:42: **z2h ledger, debugging on keepout A.** The first build left u6x's game at r1050 and the second at r950, always first in Flow.work: robot 11276's flow finished a turn earlier at r815. Two leaks:
+  - Debug.mark's hot-stage branch costs bytecodes and branches on the raw count. Fixed: mark reads `getBytecodeNum() - (G.debt += 8) + 6`, which is u6x's count.
+  - The per-turn reset sat before Debug.mark(99), so mark(99)'s +8 carried into the next turn. Every turn started with the ledger 8 high, giving Flow.work 8 extra bytecodes a turn. It showed in the hot= field: stage-1 readings were 8 low in 284 turns. Fixed: the reset is now the last step of the turn, after mark(99) and before the replay tag (so the tag still pads to its value).
+  - Check tools (scratch, copies in ~/diag26b): `replay_eq.py A B` gives the first round where any robot's state differs; `ind_eq.py A B` gives the first indicator difference (hot=, mbc= and NEAR= dropped). Once the ledger is exact, hot= should match too.
+- 09:55: **How the engine counts bytecodes (engine source, instrumenter/bytecode/InstrumentingMethodVisitor.java):**
+  - Each instruction counts 1. The counter is flushed only at a basic block's end: a jump or switch (counted), a label (jump targets, and javac's line-number labels), a return or throw, or a call of our own code. The call itself counts 0.
+  - Engine API calls add their MethodCosts.txt cost to the pending count but do not end a block (only Clock.yield does).
+  - So a `Clock.getBytecodeNum()`/`getBytecodesLeft()` read sees the count as of the last block end. Instructions earlier in its own block are not counted yet, and which ones those are depends on where javac put line labels.
+  - z2h's third build read the clock inline in its CASH hooks, so every hook's constant was 2 high. Each hook credited the turn 2 extra bytecodes and Flow.work got them: the keepout game left u6x's again at r1050, and the hot= readings across stage 7-20 were 2 low (17 turns).
+  - Fix: the hooks read through `G.bc()`, a method of its own. The call ends the caller's block, so the count is fixed whatever the labels, and the constants are 11, 9, 11 by this model.
+  - The left() and direct reads were already robust: their code before the read is u6x's own.
+- 09:52: **z2h is exactly silent.** The fourth build (hooks read through G.bc()) replays u6x's keepout A game vs araid for all 2000 rounds (`replay_eq.py`: no divergence). Its hot= reading equals u6x's in all 74,340 of our turns (`hot_eq.py`), so the ledger is exact turn by turn, not just lucky in one game.
+  - **Screen zd144** (z2h on zc6's 48 cells) is at the head of screenq. Falsifiers are in bots/z2h/SNAPSHOT: s6 gates, plus a replay check. A cell that differs from zc6's must show a rescue; 2 or more differing cells with no rescue withdraw z2h as leaking.
+  - Every cell where no rescue starts now plays u6x's own game, on the screen and on the replica. So differences come only from games where CASH acts. The same ledger (G.debt, G.bc(), the adjusted Debug.mark and direct reads) can carry any rarely-firing switch on u6x.
+- 09:52: **z1z replica block 2 (set 1, 17962-17977):** 48 cells, 35 alike, D 13 (+8 −5), net +3, t 0.83.
+  - Gained: Finals DefaultSmall B, Icarus rose B, YokoOno arrows A and B, YokoOno clouds B, Varun knifefight B, spsquared bed A, spsquared superioristhmus B. Lost: Finals tiny A, YokoOno Stash A, Varun t_minus_five_minutes B, collegejunior clockwisdom A and B.
+  - Pooled with block 1: D 21, net +7, **t 1.53**. Between the reject (≤ 1) and accept (≥ 2) lines, so **block 3 goes on set 2** (sent 09:50; the hourly limit holds some in the drain queue; waiter build/wait_z1zb3.sh, IDs > 17977).
+  - Transfer per game 4,173 ≥ floor 4,133 (twin 4,592). Won 25 of 48 games to the twin's 21. Kings alive at the end of points games 1.71 to 2.22.
+  - Set 2 is where every u9p-line candidate lost about 2 cells (09:14 entry). Block 3 needs pooled t ≥ 2 to accept, about net +5 there.
+  - VM disk was 1.5 GB: pruned build/dumpcache entries older than 3 h (145 of 193), now 2.9 GB.

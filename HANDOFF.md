@@ -96,32 +96,34 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 08:09 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 09:40 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). The u9p line is
-  u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18); most candidates add one switch to
-  it, screened against u9p's zd61.
-- **On the replica: z0k** (FORM_WAR_FROM 300, reopened; falsifiers_v2 in its SNAPSHOT). Block 1 (set 3): D 9, t
-  +0.33. Block 2 (set 1, 17748-17787): D 10 (+7 -3), t 1.26; pooled D 19, net +5, t 1.15; transfer 4,324 (floor
-  4,133). **Block 3 is on set 2** (14887-14890 sent at 07:28, 12 in the drain queue; waiter build/wait_z0kb3.sh
-  watches IDs > 17787). Score with `paired 12838-12899 IDS --crown 11678-11702`, pooled with blocks 1-2 (block 3
-  rejects at pooled t <= 1.5, accepts at t >= 2); transfer vs ~/diag26b/twin_s2.jsonl (blockcheck.py). Then set 4.
-- **Replica order after z0k:** **z2c** = z1z + z2a (registered 08:10; bots/z2c/SNAPSHOT) if screen **zd139**
-  passes (s6 gates; kingsFormed not below 31), else **z1z** (passed zd136: t +0.81, per-round picks z +2.38, transfer
-  1.009). Then **u9t**, **z0r** (CAT_HUSH). u7z is superseded by z1z/z2c (same three switches on u6x). Revivals from
-  the pooled-control re-score (below) may join. Submit: `contest.py submit bots/NAME -m TEXT`, `bash
+  u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18).
+- **On the replica: z1z** (u9p + SEEK_IDLE/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Block 1 (set 3, 17946-17961):
+  D 8 (+6 -2), t 1.41, transfer 4,932 (floor 3,968; rows ~/diag26b/z1zb1.jsonl). **Block 2 on set 1** (IDs > 17961;
+  waiter build/wait_z1zb2.sh): score `paired 12771-12813 IDS --crown 11549-11677` pooled with block 1; transfer floor
+  4,133 (blockcheck.py vs twin_s1). Accept at pooled t >= 2 (then z2g = z1z + CASH, screen zd143, is its follow-up);
+  reject at <= 1; else block 3 on set 2, where every u9p-line candidate so far lost ~2 cells (TRAINING_LOG 09:14).
+- **Silence finding (09:34):** no "silent" switch so far replayed its parent exactly. Any added bytecode moves
+  Flow.work (it spends whatever a turn leaves) and the other budget reads, so games drift after a few hundred rounds
+  (z2f, u6x + CASH: keepout A left u6x's game at r525 with no rescue possible). **z2h** = z2f + an exact bytecode
+  ledger (G.debt; bots/z2h/SNAPSHOT): every budget read adds back the bytecodes spent on code u6x does not run, and
+  Debug.mark reads the adjusted count (its hot-stage branch costs bytecodes). Test: `python3 ~/diag26b/replay_eq.py
+  ~/diag26b/rep2/u6x ~/diag26b/rep3/z2h` (first round where any robot's state differs). The first build drifted at
+  r1050 (the Debug.mark leak); the fix is being rerun. If exact, z2h screens vs zc6 and goes to the replica next: its
+  cells move only where a rescue fires. The same ledger can make any rarely-firing switch exactly silent on u6x.
+- **Replica order after z1z:** z2h (if exact and its screen passes), else z2c (passed zd139: t +1.00, picks z +2.26,
+  transfer 1.016). Then u9t, z0r (CAT_HUSH). Submit: `contest.py submit bots/NAME -m TEXT`, `bash
   build/block_v4sN.sh`, `git checkout research/panel/`.
-- **z2a passed screen zd137** (D 2, net 0; per-round picks z -0.78; transfer 0.978; kingsFormed 31 = u9p's, gate is
-  "below 31") and chain fz (failed bursts 2 vs 7, kings at r1190 15 vs 10). Chain2 (~/diag26b/wp/z2a-*, 12 of 16 at
-  08:10; DONE2 when done) must still meet its falsifiers: failed bursts at most half of u9p's on the same games, kings
-  at r1190 never below u9p's (`python3 ~/diag26b/formcmp.py DIR:TEAM ...` vs wp/u9p-*). If it fails, withdraw z2c
-  and send z1z.
-- **Is the screen control lucky? Salted twins z2b (HAND_FLIP, zd138, playing) and z2d (PICK_FLIP, zd140).** Screens
-  zd89-zd136 average per-round picks z about -0.95 and transfer z about -1.1 vs zd61 (`python3 ~/diag26b/sweep2.py`);
-  per cell (`python3 ~/diag26b/lucky.py`) nearly every candidate falls short of zd61 on Stash, araid bed B, araid arrows
-  A. When both twins are done, `python3 ~/diag26b/pooled.py zd61,zd138,zd140 RUN...` re-scores runs against the
-  three-game control; reading rules in bots/z2b/SNAPSHOT. Candidates rejected on the picks or transfer gate (z0s, z1a,
-  z1c, z1s, z1t, z1x) are the ones to check. The gate's transfer form (total over total) is dominated by a few long
-  rich games (z1x: 0.956 total form, 1.002 cell mean, z +0.07).
+- **CASH (rescue formation; bots/z2e/SNAPSHOT):** when the bank is 60-249, a carrier group 5+ from any king with
+  3+ rats and 250+ raw names a site and promotes a rat there (becomeRatKing banks the 3x3's raw). Chain cq2 on u9p:
+  won 7 of 8 to u9p's 2. z2f (on u6x, no ledger) failed screen zd142 on transfer (0.964 in the gate form; D 4, net +2,
+  t +1.00). Screens zd143 (z2g vs zd136) and zd141 (z2e vs zd61) are queued.
+- **Pooled-control re-score (09:15):** against u9p plus its two salted twins, z0f, z0l, z0n, z0s, z1c, z1t and z1x
+  no longer fail a gate; z0a and z1s still do; z1a fails kingsFormed. They are u9p-line switches: worth the replica
+  only rebased on u6x (ideally with the ledger).
+- Screening (VM runs/screenq.txt): zd143 z2g (running), zd141 z2e, zd132 z1u, zd112 z0t, zd113 z0u, zd114 z0v, zd107
+  z0p, zd108 z0o and the old sweep. Controls: zc6 (u6x), zd61 (u9p), zd136 (z1z).
 - **averystrangespace lock-in, closed 07:04:** in the u9p mirror neither side leaves its dirt-sealed corner until
   ~r880. z1x (seekers tunnel to the cats or the centre) won 3 of 4 there (chain tn) and 4 of 4 in the partial tx
   chain (~/diag26b/tx), but failed screen zd134 on transfer (0.956; mostly wallsofparadis 6.84 to 4.90 a round, a
