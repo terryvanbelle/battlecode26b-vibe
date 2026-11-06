@@ -96,7 +96,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 05:12 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 05:35 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). The u9p line is
   u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18); most candidates add one switch to
   it, screened against u9p's zd61.
@@ -120,7 +120,10 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   seepastyourgreed, rift, pipes vs abrk; falsifiers in their SNAPSHOTs: Stash first-middle rounds (firstexit.py)
   10+ earlier in both seats, r300 transfer, wins). On DONE: if one passes, cells zdNNN + gates + queue.
 - Screening (VM runs/screenq.txt): **zd128 z1q** (u9p + u7z's three switches; inert below per-round pickupAmt ratio
-  1.01), zd120 z1e (running), zd112 z0t, zd113 z0u, zd114 z0v, zd107 z0p, zd108 z0o, then the old sweep. zd127 z1l
+  1.01), **zd129 z1r** (RICH2_BABIES 80), **zd130 z1s** (u9p + COOP_GUARD, new 05:30: no step next to an enemy baby
+  at peace, end the turn facing one within Chebyshev 2; rift A vs spsquared is lost 6 of 6 by the u9p line after a
+  peace-time grab from our blind side at r494; replica mechanism ~/diag26b/grabwar.py CAND.jsonl REF_LO-REF_HI counts
+  grab-opened wars against the reference rows), zd112 z0t, zd113 z0u, zd114 z0v, zd107 z0p, zd108 z0o, then the old sweep. zd127 z1l
   passed (t -0.57, transfer 0.991).
 - Cat-bite cheese (03:20-04:02, closed): a bite with c cheese does 10 + ceil(sqrt c). z1h (attackers dump their
   load) was inert; z1i, z1j (cooperation, 2 or 5 a bite) and z1k (war, 2 a bite at bank 800+) all fired but cut summed
