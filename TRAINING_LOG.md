@@ -6593,3 +6593,8 @@
   - Baby-turns walking to sites: 1,542 at r800-850 and 1,492 at r1000-1050. Both sites failed, and it held 1 king with 17-22k projected surplus until r1974.
   - RICH_FIX covers only sites opened with 2+ kings, so z2u can't help there.
   - **z2w = z2u + RICH_FIX_KINGS 1** (RICH_FIX's five conditions read the knob instead of 2). Checks running (~/diag26b/zw).
+- 11:32: **z2v's checks pass, and z2v takes zd150's slot from z2r** (zd150 had not started; z2r's mechanism is part of z2v). Results (~/diag26b/zv, vs araid):
+  - superioristhmus A: kings at r685, **r751, r821, r868** (z2r: r904, r961, r1025). Won 72-27 (z2r 71-28), transfer 42.2k (40.8k). First divergence from z2t at r745.
+  - keepout A: kings at r715, **r760, r817, r895** (z2r had no 5th). Won 71-28 (70-29).
+  - superioristhmus B and cheesefarm A: as z2t.
+  - No king lost, no starve damage, no overrun on our side.
