@@ -1,0 +1,8 @@
+name=z0f
+source=bots/z0c (u9p + END_CAT; STAB_LAY added as in bots/z0d)
+source_sha=ba7321641d02
+commit=64f8af2
+created=2026-11-05 21:44 PST
+
+z0f = u9p + END_CAT 1650 + STAB_LAY (z0c's and z0d's switches together; two mechanisms, one target: our cat-damage share in war, 0.3 of the r2000 points). Both passed their screens vs u9p's zd61: z0c (zd91) t -1.00, late-game dmgCat +8.5%, cat share 0.582 -> 0.629; z0d (zd92) t +0.81, net +2, picks z -1.90, catTraps in games the opponent backstabbed 298 -> 318. Stacked because the replica is the bottleneck (4 blocks, ~6-8 h a candidate). Registered 2026-11-05 21:44 PST, before any z0f game.
+Falsifiers: screen zd94 vs u9p's zd61 (TRAINING_ALGORITHM s6): paired t <= -1.5 rejects; picks/100 worse by per-cell paired z <= -2 rejects; any overrun or exception rejects. Mechanism: our dmgCat on the shared cells not above u9p's rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block; our cat-damage share in the block's r2000 points games not above the twin's rejects.
