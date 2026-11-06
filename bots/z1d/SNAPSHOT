@@ -1,0 +1,8 @@
+name=z1d
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=693b5d1
+created=2026-11-06 03:09 PST
+
+z1d = u9p + FORM_NET100_COOP -200 (new: during cooperation the formation's income test is 0.75 x income - 2 x (kings + 1) >= -2 cheese/round, not -1; war unchanged). Evidence: replica field rows (444 games): 27 cooperation points games, 21 ended by r676 (the cats die); 1-1 kings: 16 won, 3 lost (TheHeist vs spsquared 48-52 twice, peaceinourtime vs nzjt 49-50), 1-2: 1 lost (peaceinourtime 40-59, nzjt's second king at r265). Local u9p vs u6h on peaceinourtime (A, ~/diag26b/lk): our income estimate 160-340 a hundred rounds with 27-30 babies and a ~900 bank (the test needs 400); u6h (same formation settings, PEACE) formed at r376 on 480 at its back spot and won on points 2 kings to 1 when the cats died at r450. Registered 2026-11-06 03:09 PST, before any z1d game.
+Falsifiers: mechanism (~/diag26b/cp: z1d vs u6h, seed 0, peaceinourtime and TheHeist, both seats; u9p's games there the control): a second king before the game ends in at least 2 of the 4 where u9p formed none, or it is dropped as inert; any of our kings starving, or a cooperation game we lose that u9p won, drops it. Screen (s6 vs u9p's zd61; mostly war cells, a no-harm check): paired t <= −1.5 rejects; picks/100 per-cell paired z <= −2 rejects; any overrun or exception rejects; transfer per round on the shared cells below 0.97x u9p's rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer floors per set.

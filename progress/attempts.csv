@@ -593,3 +593,4 @@ z0z,2026-11-06 02:57,u9p,"u9p + FORM_KEEP (z0y's site guard, no FORM_FILL) + END
 z1a,2026-11-06 03:00,u9p,"u9p + FORM_PACK: ring rats with the centre taken step to a free ring tile fewer outside tiles touch, so joiners can reach the free tiles","pending: mechanism zfk4 on the four fk3 games (refusals < 268, kings >= 5)"
 z1b,2026-11-06 03:02,z0z,z0z + END_PULL_R2 10000: from END_KING r1850 babies join the endgame formation from any distance,pending: mechanism games ~/diag26b/lk vs u9p
 z1c,2026-11-06 03:06,u9p,u9p + FORM_RING_FROM 400: from r400 a ring site beside the king when no mine or back spot is clear (the corner king on clouds never named a site),"pending: mechanism games ~/diag26b/rf (clouds A, evileye A/B vs u9p)"
+z1d,2026-11-06 03:09,u9p,u9p + FORM_NET100_COOP -200: a looser formation income test during cooperation (the game ends when the cats die),"pending: mechanism games ~/diag26b/cp (peaceinourtime, TheHeist, both seats vs u6h)"
