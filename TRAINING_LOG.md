@@ -6323,3 +6323,9 @@
   - z1q stays next on the replica after z0k.
 - 06:52: **Opening event stream vs each opponent** (scratch openscan.py over the 145 cached replica games, medians us/them; ECONOMY §1.3 from the re-read). We spawn more by r50 (22-32 to their 15-22) and by r100 (28-35 to 19-30). Our first pickup comes 3-7 rounds later than Finals', Icarus', YokoOno's and waxmango's, and we pick less by r100: Finals 280 to 500, YokoOno 240 to 380, Merlin 260 to 380, spsquared 280 to 320. Transfer by r150 is close (215-431 to 215-385). This matches the 04:35 finding (more babies, fewer picks per baby-round: the early rushers), whose family is closed. No new lever.
 - 06:52: **Cells every cached build loses** (scratch cellscan.py over the 145 dumped replica games; builds u7p, z0g, z0k, z0q). 39 cells were lost in all 3-7 of their games. 35 of them are king kills after a war opened at r3-52, and 4 are points losses: cheesebottles A vs Merlin, FreeTheCheese A vs Merlin (half), superioristhmus A/B vs spsquared (30.5k to 45.5-47.7k transfer). Their transfer gaps are mostly small next to the deaths. tiny A/B vs waxmango: we out-transfer 451 to 334 and still lose by r169-182. thunderdome vs Varun and Merlin: war from r3. The fixed losses are war combat, not economy, apart from Merlin's farms and superioristhmus.
+- 06:53: **superioristhmus vs spsquared** (6 dumped points losses, war from r87-96; points by the engine formula): we lost 0.393-0.485. The two terms that decide it:
+  - Kings: 2-3 to their 3-4.
+  - Transfer: 29-33k to 43-50k.
+  - Our banks ended at 4.2-11.8k to their 1.0-11.0k. Our babies sat at the 40 cap to their 47-76.
+  - One more king would flip z0g A (0.460 to 0.51).
+  - This is z1r's target (RICH2_BABIES 80; replica order sets 1, 2, 3, 4; superioristhmus is in set 1), and the formation work (z1a, z1c) after it.
