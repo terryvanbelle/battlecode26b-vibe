@@ -1,0 +1,26 @@
+name=z2x
+source=bots/z2w
+source_sha=1c84822ebb6f
+commit=bb012ea
+created=2026-11-06 11:48 PST
+
+z2x = z1z (the incumbent, accepted 11:46) + the exact ledger + the endgame-king bundle, in its full form:
+- CASH + CASH_END 1880 (rescue formation; endgame second king for a lone king), hooks closed with G.settle;
+- RICH_LATE 750: two kings and 600 banked name a third king's site while Econ.surplus(3) >= 3000 (z2k passed zd147
+  at 1050);
+- RICH_MORE 750: three or four kings name one more while Econ.surplus(kings + 1) >= 3000 (the fifth king);
+- RICH_GAP 40 from r600, after any king formed at our site (also when it reaches the cap): the next site may open 40
+  rounds later, not 210;
+- RICH_FIX (z2m: joiner fill/shift, the king off its own site, drop/ban/retry): sites opened with 2+ kings always,
+  1-king sites from r600 (RICH_FIX_KINGS 1, RICH_FIX_FROM 600, via G.fixOn).
+Built from z2w (z2u + RICH_FIX_KINGS 1) with z2v's deltas applied by hand (the King hunk's context differed) and the
+r600 floor. Every addition sits in a ledger hook (javap-checked K), so a game replays z1z's until a switch acts.
+Evidence: z2u replays z1z exactly until its first act (superioristhmus A to r1880, keepout A to r1050). z2w: z1z's
+second-king formations on superioristhmus A fail at r800 and r1000 (1 king, 20k banked, until r1974); with the fixes
+the second king forms at r837 and five by r1149, won 72-27 (z1z 62-37). But z2w also took keepout A's r131
+income-path second king and drifted from 5 kings, 70-29 to 4 kings, 61-38: hence the r600 floor. On u6x, z2v (the
+same RICH_LATE/MORE 750 + gap) formed 5 kings by r868 on superioristhmus A (72-27) and by r895 on keepout A (71-28).
+Checks (VM ~/diag26b/zx): superioristhmus A/B, keepout A, cheesefarm A vs araid; keepout A replays z2u's game until
+about r750; no king lost, no starve damage, no overrun.
+Falsifiers: screen zd151 vs zd136 (z1z) with the s6 gates (t > -1.5, picks z > -2, transfer >= 0.97, no overrun or
+exception); replica: standard block rules against z1z's own block matches, plus the 0.9x transfer floor per block.

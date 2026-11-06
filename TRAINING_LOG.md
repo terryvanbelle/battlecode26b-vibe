@@ -6607,3 +6607,12 @@
   - attempts set, tools/progress-refresh.sh (all steps ok), progress/ committed.
   - **The incumbent is z1z.** Screens now compare against zd136 (z1z's control), and the replica follow-up is the z1z-based bundle (z2u line: z2w, checks running).
   - The field_report runs added 32 dumps (416 MB) to build/dumpcache and the VM fell to 1.8 GB. I removed those (chmod first: the cache is read-only) and gzipped the finished chains' big tsv files (wp 751 to 161 MB, cq2, fz, sk, tn, av, zq, zs, zo): 2.9 GB free.
+- 11:48: **z2w's checks** (~/diag26b/zw, vs araid):
+  - superioristhmus A: 2nd king at r837 (z2u r1881), then r1057, r1104, r1149; won 72-27 (z1z/z2u 62-37).
+  - superioristhmus B: kings at r820, r1036, r1082, r1133; won 74-25.
+  - **keepout A diverged from z2u at r131**: RICH_FIX now covered the income-path 2nd king (z1z forms it at r134). It ended on 4 kings, 61-38 (z2u 5 kings, 70-29).
+  - No king lost, no overrun or exception on our side.
+- 11:48: **z2x** = z2w + a r600 floor on 1-king sites (RICH_FIX_FROM, via G.fixOn) + z2v's deltas (RICH_LATE/RICH_MORE 750, the gap from r600 incl. the cap branch). The King hunk was applied by hand: its context differed from z2w's.
+  - **zd149 (z2p, u6x line) aborted** 6 games in: z1z's acceptance made it moot.
+  - **zd151 = z2x vs zd136** (z1z's control) is now playing; zd150 is now z2u vs zd136.
+  - Checks running (~/diag26b/zx). The replica waits on them (about 15 minutes).
