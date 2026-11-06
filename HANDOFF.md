@@ -96,7 +96,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 03:30 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 04:20 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). Candidates
   descend from u9p = u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18), each one
   switch screened against u9p's zd61. **z0q = u9p + RAW_TRAPS** is on the replica (submission 236): block 1 (set 3,
@@ -105,9 +105,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   11549-11677`; transfer floor 4,133 (rows: rsync the 16 match dirs to VM ~/diag26b/rp, `field_report.py games
   --dir ~/diag26b/rp --ids IDS > ~/diag26b/z0qb2.jsonl`, then `research/audits/blockcheck.py
   $HOME/diag26b/z0qb2.jsonl,$HOME/diag26b/twin_s1.jsonl IDS 12771-12813`; set-3 twin rows are rp_games.jsonl).
-  Next on the replica: **z0w** (z0q + CAT_HUSH) if it passes screen zd115, else **z0r** (u9p + CAT_HUSH; passed
-  zd110). Held after passing screens: z0d (STAB_LAY), z0e (END_CAT 1450).
-- Screening (VM queue runs/screenq.txt): zd115 z0w (running from 03:25), **zd119 z1a, zd121 z1c, zd120 z1e**,
+  Next on the replica: **z0r** (u9p + CAT_HUSH; passed zd110). z0w (z0q + CAT_HUSH) was dropped at zd115 (raw traps
+  97 vs bar 100). Held after passing screens: z0d (STAB_LAY), z0e (END_CAT 1450).
+- Cat-bite cheese (04:00-04:20): a bite with c cheese does 10 + ceil(sqrt c), so c = 2 is 1 damage a unit. The bank
+  sits at 900-1,100 through cooperation games and 900-2,000 at war while the cats live, with u9p's BUDGET rule keeping
+  nearly every cat bite at 0. z1h (attackers dump their load) was inert and z1i (cooperation, 2 a bite) failed its
+  cat-damage bar. **z1j** (cooperation, 5 a bite at bank 600+) and **z1k** (war, 2 a bite at bank 800+) have mechanism
+  chains on the VM (~/diag26b/ci, ~/diag26b/wk; per-bite damage = summary catDmgBite / bitesCat: actions.tsv bite rows
+  carry a lethal flag, not the cheese); screens zd125 and zd126 have their cells made.
+- Screening (VM queue runs/screenq.txt): **zd119 z1a** (running from 04:15), **zd121 z1c, zd120 z1e**,
   zd112 z0t (z0q + RAW_ANY), zd113 z0u (MINE_BURN 50), zd114 z0v (RAW_RAID_HALF 1), zd107 z0p (FACE_REACH), zd108 z0o
   (BURY), then the old sweep. zd122 (z1g) waits on its mechanism games. Each candidate's falsifiers are in its
   bots/NAME/SNAPSHOT. Screen transfer gates from z0q on are per round on the shared cells (inline script in
