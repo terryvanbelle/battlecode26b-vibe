@@ -6672,3 +6672,15 @@
   - **z3a = z2x + CASH_KINGS 1**: the rescue runs only for a lone king, which was its design target. The CASH_END endgame king is lone-king already. Falsifiers in bots/z3a/SNAPSHOT.
   - Checks in ~/diag26b/za: starvation B, plus fullofsecrets A/B against z2x's.
   - z2x is on the replica with this flaw. If z2x's block 1 does not reject, z3a, which contains z2x, can take its slot from block 2.
+- 12:28: **z2x REJECTED at replica set-3 block 1** (#240, 18116-18127 and 18136-18139, `paired 17946-17961 IDS`): 48 cells, 45 alike, D 3 (+1 −2), net −1, t −0.58 (block 1 rejects at t ≤ 0). The ledger held: every cell its mechanisms left alone replayed z1z's game.
+  - Gained corridorofdoomanddespair B vs Varun. A lone-king second king formed at r1906 (CASH_END) and won at r2000.
+  - Lost rose A vs spsquared. CASH formed a second king at r970 and a third at r981. The bank went from 953 to 583 at r1000 and to 0 by r1150, and all three kings starved by r1252. z1z (17946), on one king, sat at 85-165 banked while its carriers were stuck (x flat at 900 from r800). They delivered at r1100-1200 (x 1,240 to 1,960). z1z then formed END_KING's second king at r1915 and won.
+  - Lost minimaze A vs Xzibit. The one-king RICH_FIX (from r600) formed a second king at r825 with 500 banked, at war (backstab r143). It took 7 of 20 babies, the bank was 0 by r950, and both kings starved at r1113-1114. z1z (17954) kept one king, 8-10 babies and ~200 banked, and won.
+  - Both losses are formations the economy could not feed, the same class as zd151's araid starvation B.
+  - Dumps (VM build/dumpcache): 1eb630… (18116), 5f8015… (18124), 1bb74e… (18123); z1z's 2ff4f1… (17946), 1576c9… (17954).
+- 12:28: **z3b submitted** (#241) = z3a + RICH_FIX_KINGS 2, i.e. z2x + CASH_KINGS 1 + RICH_FIX_KINGS 2.
+  - It keeps CASH_END's lone-king endgame king (the corridor gain), RICH_LATE/RICH_MORE/RICH_GAP, and the fixes for two-king sites.
+  - It drops the two starving formations: CASH with two kings and one-king rich-site fixes.
+  - Falsifiers in bots/z3b/SNAPSHOT: minimaze A must replay z1z's win, and corridor B must stay a win.
+  - Set-3 block 1 queued (18150-18153 sent, 12 in the drain queue); waiter build/wait_z3bb1.sh (IDs > 18149).
+  - Screen **zd154** (z3b vs zd136) is at the head of the queue. zd153 (z3a) is dropped from the queue (superseded). Local checks in VM ~/diag26b/zb (vs araid: starvation B, superioristhmus A, keepout A).

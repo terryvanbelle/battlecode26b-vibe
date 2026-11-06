@@ -96,13 +96,17 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 11:46 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 12:28 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **z1z** (accepted 2026-11-06 11:46 PST over u6x; replica blocks 1-4 pooled D 46, net +14, t 2.06; u9p + SEEK_IDLE
   20/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Screen control: **zd136** (z1z). Before it: u6x (control zc6).
-- **Replica: idle until the next submission.** The follow-up is the z1z-based endgame-king bundle: **z2u** (z1z +
-  ledger + z2r's bundle, built by patching the ledgered-u6x -> z2r diff onto ledgered z1z with no fuzz; validated) and
-  **z2w** (z2u + RICH_FIX_KINGS 1: z1z's second-king formations fail on superioristhmus). Set-4 twin rows:
-  ~/diag26b/twin_s4.jsonl.
+- **Replica: z3b (#241) on set-3 block 1** (18150-18153 sent, 12 in the drain queue; waiter build/wait_z3bb1.sh, IDs
+  > 18149). Score: `contest.py fetch --new --pages 3`, then `paired 17946-17961 IDS` (z1z's set-3 block; block 1
+  rejects at t <= 0). Transfer floor: z1z's rows ~/diag26b/z1zb1.jsonl.
+  - z3b = z2x + CASH_KINGS 1 + RICH_FIX_KINGS 2. z2x (z1z + ledger + the endgame-king bundle) was rejected at block 1
+    (45 of 48 cells alike, D 3, t -0.58): its two losses were formations that starved the bank (rose A: CASH second
+    and third kings; minimaze A: a one-king RICH_FIX second king at r825 at war). Falsifiers in bots/z3b/SNAPSHOT.
+  - Screen **zd154** (z3b vs zd136) heads runs/screenq.txt; zd152 (z2y = z2x + CAT_HUSH) is finishing. If z3b fails,
+    CAT_HUSH is rebuilt on z1z under tools/ledger.py.
 - **Exact silence:** **tools/ledger.py bots/NAME** applies the exact ledger to a u6x-family bot; its docstring has the
   engine's counting model and the hook recipe. A hook whose acting path is costly closes with **G.settle(cd, cb, K)**
   (K = 18 + base-absent instructions after it): crediting an acting hook made left() overstate the budget and z2j
