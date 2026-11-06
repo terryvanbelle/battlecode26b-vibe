@@ -1,0 +1,16 @@
+name=z3h
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=e5c3099
+created=2026-11-06 13:23 PST
+
+z3h = z1z + tools/ledger.py + CAT_HUSH (z2y's hook unchanged: Baby.report, K 11, Baby.catNear; HUSH_D2 36), without
+the endgame-king bundle. That bundle was closed at replica block 1: z2x and z3b each netted <= 0 on the same 48 cells,
+because the gain and the loss came from the same formations (kings the bank could not feed). CAT_HUSH: a baby does not
+squeak while a cat can hear it, since a cat in attack mode turns toward the first squeak it hears each turn. It passed
+zd152 on z2x (t +0.57, picks z +2.41) and zd155 on z3b. z3c (z3b + CAT_HUSH, #242) is on replica block 1 now.
+
+Falsifiers, registered before any z3h game:
+1. Screen zd158 vs zd136 (z1z's control) on the s6 gates. Cells where the hush never fires must replay zd136's game.
+2. Local checks vs araid (~/diag26b/zh): no overruns or exceptions; keepout A and starvation B are no worse than z1z's.
+3. Replica: block rules (TRAINING_ALGORITHM s4), scored against z1z's set-3 block 17946-17961.

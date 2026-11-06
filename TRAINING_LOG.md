@@ -6717,3 +6717,7 @@
   - **The endgame-king bundle is closed at block 1.** z2x and z3b each netted ≤ 0 on the same 48 cells. Its gain (corridor B) and its loss (rose A) come from the same formations: they build kings the bank cannot feed. z3d and z3e carry the bundle; they stay as screens, but neither goes to the replica on this base.
   - **z3c (#242, = z3b + CAT_HUSH) submitted 13:20** so the replica does not sit idle. Set-3 block 1 is queued; waiter build/wait_z3cb1.sh (IDs > 18210). CAT_HUSH acts in nearly every game, so this block tests CAT_HUSH. Rose A should repeat unless the hush changes that game first.
   - Next on this base: CAT_HUSH and FORM_WAR_FROM on plain z1z under the ledger, without the bundle (z3g = z1z + ledger + FORM_WAR_FROM is built; its local checks vs araid are mixed: keepout A won with 31,655 transferred against z1z's 33,282; starvation B lost at r1335, where z1z won at r2000).
+- 13:27: **z3h = z1z + ledger + CAT_HUSH** and **z3g = z1z + ledger + FORM_WAR_FROM 300**. These are the two single switches that passed screens on the bundle's base, now on plain z1z. Falsifiers are in their SNAPSHOTs.
+  - Screens **zd158** (z3h) and **zd159** (z3g) are at the head of the queue, behind the running zd157 (z3e).
+  - zd156 (z3d, bundle plus one-king fixes) moves to the queue's tail, since its base is closed.
+  - z3h's local checks vs araid run in VM ~/diag26b/zh: keepout A, starvation B, and evileye B (z2y's gain there) alongside z1z's evileye B.

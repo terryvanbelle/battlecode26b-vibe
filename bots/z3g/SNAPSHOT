@@ -1,0 +1,17 @@
+name=z3g
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=e5c3099
+created=2026-11-06 13:23 PST
+
+z3g = z1z + tools/ledger.py + FORM_WAR_FROM 300 (z3e's hook at the head of King.formation, K 11), without the
+endgame-king bundle. At war, there is no formation site before r300, and an open site is dropped. Among z1z's replica
+games at war that were still running at r250: 2 won and 12 lost with a second king formed by then; 51 won and 42 lost
+without one (~/diag26b/z1zb*.jsonl). z0k (u9p, with bytecodes drifting in every cell) pooled D 27, net +5, t 0.96 over
+three blocks. Local checks vs araid (~/diag26b/zg) are mixed. keepout A: won with 31,655 transferred (z1z 33,282).
+starvation B: lost at r1335 (z1z won at r2000); the hook acts at r128-131, where z1z's babies joined a site at r130.
+
+Falsifiers, registered before the screen:
+1. Screen zd159 vs zd136 on the s6 gates; the cells that differ must not net below 0.
+2. No war second king before r300 in any screen game.
+3. Replica: block rules.
