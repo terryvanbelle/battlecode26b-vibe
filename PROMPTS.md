@@ -118,3 +118,11 @@ I notice our replica ratings have been exactly 1561 for the past couple of days.
 ## 25. 2026-11-03 11:07 PST
 
 Do BT ratings also need to be updated?
+
+## 26. 2026-11-05 10:43 PST
+
+Please continue
+
+## 27. 2026-11-05 17:28 PST
+
+Never, ever ask me for my permission to try something like this.  Never, ever stop trying new ideas
