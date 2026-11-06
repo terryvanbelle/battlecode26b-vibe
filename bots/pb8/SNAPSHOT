@@ -1,6 +1,0 @@
-name=pb8
-source=bots/ratbot
-source_sha=5bb128b37d04
-commit=8dc4575
-created=2026-11-01 00:11 PDT
-change=u4e + DIG_COST 1 (probe)
