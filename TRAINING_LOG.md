@@ -6806,3 +6806,7 @@
   - Set-3 block 1 is queued: 15323-15326 sent, 12 in the drain queue; waiter build/wait_z3qb1.sh (IDs > 18330).
   - zd164 (z3p) is running as a concurrent gate. If it fails s6, z3q is withdrawn.
   - Block-1 expectation from the ledger: only the 8 early-war-formation cells and corridorofdoom B can differ from z1z's games.
+- 15:13: **Lost r2000 games and the endgame levers** (z1z's 192 replica rows).
+  - Of the 8 lost r2000 games, two are lone king against lone king, where CASH_END's second king would flip the kings' share: corridorofdoom B vs Varun (44-55) and learn_your_lesson A vs waxmango (48-51, 952 banked). rose B vs YokoOno was lost 49-50 with kings 2-1, on cat damage: 750 to 2,290, which is 0.3 of the war points.
+  - Mid-game king kills (r300-1500, 34 cached losses, scratch kingend.py) are 23 starvations, 7 bites, 3 throw hits and 1 scratch. KING_MINE is on; KING_FORAGE, the reserve doctrines and HUNGRY have been tried.
+- 15:13: **z3r = z1z + ledger + END_CAT 1850.** This is z0c's endgame cat errand: from r1850 at war, unloaded babies of every role go for the nearest cat. z0c (u9p, from r1650) pooled D 19, net +5, t 1.15 over two replica blocks, with cat share 0.658 to 0.584. It was rejected only by the transfer floor (0.86 of the twin per round). Starting 200 rounds later bounds the transfer cost near 7.5% of a full game. Ledgered hook (K 11); Debug.WHY gains 'e'. Falsifiers are in bots/z3r/SNAPSHOT. Local checks (~/diag26b/cr, 17 games: 4 for exactness and r2000 war games vs araid/abrk, with z1z) are running.

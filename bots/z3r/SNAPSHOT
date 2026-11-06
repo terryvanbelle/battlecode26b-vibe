@@ -1,0 +1,19 @@
+name=z3r
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=fcef373
+created=2026-11-06 15:13 PST
+
+z3r = z1z + tools/ledger.py + END_CAT 1850 (z0c's Baby.endCat, ported; ledgered hook after CAT_DEFEND, K 11; Debug.WHY
+gains 'e' at the end so the move tag stays valid). From r1850 at war, a baby of any role with raw under DELIVER_AT,
+no rat carried, no threatened king and no enemy rat within dist2 8 walks to the nearest seen or known cat; the bite
+step bites it. At war the r2000 points are 0.5 kings, 0.3 cat damage and 0.2 transfer shares. z0c (u9p + END_CAT
+1650) pooled D 19, net +5, t 1.15 over two replica blocks (cat share 0.658 to 0.584) and was rejected only by the
+transfer floor: set 1 at 0.86 of the twin per round, floor 0.9. From r1850 the errand covers 7.5% of a full game.
+
+Falsifiers, registered before any z3r game:
+1. Local exactness: games that end before r1850 replay z1z's game (replay_eq vs ~/diag26b/cy dumps).
+2. Local r2000 war games vs araid/abrk (~/diag26b/cr, with z1z): our cat damage must rise in most of them, our
+   transfer must stay at 0.9 or more of z1z's in each, and no z1z win may turn into a loss.
+3. Screen vs zd136 on the s6 gates.
+4. Replica: block rules, including the transfer floor (~/diag26b/z1zb1.jsonl).
