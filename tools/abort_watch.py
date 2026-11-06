@@ -3,13 +3,15 @@
 
   abort_watch.py GATES.tsv [--every 60]
 
-GATES.tsv: one line per run, `RUN CTRL_RUN CTRL_BOT CAND_BOT MIN_WINS` (whitespace separated). The gate counts the
-candidate's wins on the cells it shares with the control run (opponent, map, side). While a run is in progress
-(results.jsonl present, no DONE), once its losses on those cells exceed shared - MIN_WINS it cannot pass: the arena
-process for that run (cmdline starting `python3 -I tools/arena.py matrix runs/RUN/cells.tsv`) and its game children
-are killed, and runs/RUN/ABORTED records why. The sequence script then touches DONE and goes on to the next run.
+GATES.tsv: one line per run, `RUN CTRL_RUN CTRL_BOT CAND_BOT GATE` (whitespace separated), on the cells the run
+shares with the control run (opponent, map, side). GATE is MIN_WINS (an integer: the candidate needs that many wins)
+or t:T (TRAINING_ALGORITHM s6: reject at paired t <= T on per-cell win/loss, d = cand - ctrl in {-1, 0, +1}). While a
+run is in progress (results.jsonl present, no DONE), once the gate cannot be met even if every remaining shared cell
+goes its way (a win, so +1 where the control lost, 0 where it won), the arena process for that run (cmdline starting
+`python3 -I tools/arena.py matrix runs/RUN/cells.tsv`) and its game children are killed, and runs/RUN/ABORTED
+records why. The sequence script then touches DONE and goes on to the next run.
 Exits when every gated run has DONE."""
-import json, os, signal, subprocess, sys, time
+import json, math, os, signal, subprocess, sys, time
 
 
 def load(path, me):
@@ -73,6 +75,21 @@ def stop(run, why):
     print(time.strftime('%H:%M:%S'), run, why, flush=True)
 
 
+def paired_t(x):
+    n = len(x)
+    D = sum(1 for v in x if v)
+    if n < 2 or D == 0:
+        return 0.0
+    m = sum(x) / n
+    var = (D - n * m * m) / (n - 1)
+    return m / math.sqrt(var / n) if var > 0 else (math.inf if m > 0 else -math.inf)
+
+
+def best_t(shared, ctrl, got):
+    """The paired t over every shared cell when each cell not yet played comes out a win."""
+    return paired_t([(int(got[k]) if k in got else 1) - int(ctrl[k]) for k in shared])
+
+
 def main():
     gates = [l.split() for l in open(sys.argv[1]) if l.strip() and not l.startswith('#')]
     every = int(sys.argv[sys.argv.index('--every') + 1]) if '--every' in sys.argv else 60
@@ -85,11 +102,17 @@ def main():
             pending += 1
             if os.path.exists(d + '/ABORTED') or not os.path.exists(d + '/results.jsonl'):
                 continue
-            shared = cells(d + '/cells.tsv', bot) & set(load('runs/%s/results.jsonl' % crun, cbot))
+            ctrl = load('runs/%s/results.jsonl' % crun, cbot)
+            shared = cells(d + '/cells.tsv', bot) & set(ctrl)
             got = load(d + '/results.jsonl', bot)
             lost = sum(1 for k in shared if k in got and not got[k])
             won = sum(1 for k in shared if got.get(k))
-            if lost > len(shared) - int(need):
+            if need.startswith('t:'):
+                bt = best_t(shared, ctrl, got)
+                if bt <= float(need[2:]):
+                    stop(run, 'gate unreachable: best final paired t %+.2f <= %s after %d of %d shared cells (%d won)'
+                         % (bt, need[2:], sum(1 for k in shared if k in got), len(shared), won))
+            elif lost > len(shared) - int(need):
                 stop(run, 'gate unreachable: %d lost of %d shared cells after %d games (%d won), needs %s wins'
                      % (lost, len(shared), len(got), won, need))
         if not pending:

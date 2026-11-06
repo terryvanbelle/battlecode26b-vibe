@@ -1,0 +1,6 @@
+name=u4t
+source=bots/ratbot
+source_sha=fd6f6be09cf5
+commit=d79e8f3
+created=2026-11-01 00:42 PDT
+change=u4e + CAT_REACH 30: a rat on a cat branch whose walk to the cat stalls 30 turns or is a known detour (Flow.detour) leaves cats alone for 100 rounds
