@@ -1,0 +1,16 @@
+name=z1x
+source=bots/z1v
+source_sha=c056c110a21f
+commit=fded848
+created=2026-11-06 06:27 PST
+
+z1x = z1v + CAT_SEEK_DIG (new switch; CAT_SEEK_STALL 150). z1v's seekers walk as tunnelers: no Flow or BitFlow, dirt straight ahead dug at once (digToward), the bug walk digs the first dirt in its sweep (Nav.bugDig, as u1r's BUG_DIG but only for seekers), and the walk gives up after 150 turns without getting closer (z1v: 30). Everything else is z1v (CAT_SEEK 3, floor 60, rest 100). Registered 2026-11-06 06:27 PST, before any z1x game.
+Evidence:
+- z1v failed its mechanism bar (VM ~/diag26b/sk): summed peace cat damage 5,545 to u9p's 10,022 in the 5 games with 300+ peace rounds; averystrangespace seat A 0 in every game, whichever bot sat there.
+- zsk2 (z1w's debug copy, BitFlow seekers, averystrangespace A): seekers never nearer the centre than Chebyshev 14 before r1000; BitFlow's field was still building at r600 (wave 20-50, seeker not reached).
+- u9p mirror on averystrangespace (sk): neither side picked anything past its own mine until r880 while 7,440 cheese piled up on the map; B got out first and took the cat damage (0 to 5,552).
+- Replay of Nav's greedy step plus digging bug walk on the map (scratch tunsim.py): from the king's spawn tiles to within Chebyshev 3 of the centre in 310-426 turns, 55-73 digs (275-365 cheese); the cheapest route is 140 turns, 31 digs. Stash 34-40 turns, trapped 38-42, ratsareants 40-47, streetsofnewyork 33-37, superioristhmus 21-56. Longest stretch without getting closer: 65 (one hand) and 132 (the other) turns.
+Falsifiers:
+- Mechanism chain tn (VM ~/diag26b/tn; z1x vs u9p on averystrangespace, both seats, seeds 0-1): z1x's seat-A peace cat damage must be above 0 in at least one of the two seat-A games, and some z1x baby must stand within Chebyshev 6 of the centre before r600 in every z1x game (in the u9p mirror none did before r880); otherwise the tunnel does not work (dropped). Any exception or overrun rejects.
+- Screen (s6 cells vs u9p zd61): paired t <= -1.5; per-round picks z <= -2; transfer per round on shared cells below 0.97x u9p's; any overrun or exception.
+- Replica: the standard block rules, sets 2, 3, 1, then 4 (set 2 holds two averystrangespace cells), with the transfer floors. In the block's averystrangespace games z1x's peace cat damage must be above zero wherever the twin's was zero, or it is inert there.
