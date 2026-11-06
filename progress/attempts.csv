@@ -541,3 +541,18 @@ u9q,2026-11-05 17:32,u6x,"u9p + RETREAT_HP 0 (u7d's switch; near-misses stacked,
 u9r,2026-11-05 17:32,u6x,u9p + THROW_ADAPT (u7i's code; near-misses stacked),screen zd63 queued
 u9s,2026-11-05 17:32,u6x,u9p + SEEK_CROWD 3 (u8q's; near-misses stacked),screen zd64 queued
 u9t,2026-11-05 17:32,u6x,u9p + THROW_ADAPT + SEEK_CROWD 3 (u9r + u9s),screen zd65 queued
+v0a,2026-11-05 17:41,u9p,u9p + KING_DODGE (capability sweep on u9p),screen zd66 queued
+v0b,2026-11-05 17:41,u9p,u9p + YIELD_KING (capability sweep on u9p),screen zd67 queued
+v0c,2026-11-05 17:41,u9p,u9p + KING_STRICT (capability sweep on u9p),screen zd68 queued
+v0p,2026-11-05 17:41,u9p,u9p + BITE_GUARD (capability sweep on u9p),screen zd69 queued
+v0e,2026-11-05 17:41,u9p,u9p + BITE_CARRIER (capability sweep on u9p),screen zd70 queued
+v0f,2026-11-05 17:41,u9p,u9p + RESCUE (capability sweep on u9p),screen zd71 queued
+v0g,2026-11-05 17:41,u9p,u9p + GRAB_MICRO (capability sweep on u9p),screen zd72 queued
+v0h,2026-11-05 17:41,u9p,u9p + THROW_CHECK (capability sweep on u9p),screen zd73 queued
+v0i,2026-11-05 17:41,u9p,u9p + KING_FORAGE (capability sweep on u9p),screen zd74 queued
+v0j,2026-11-05 17:41,u9p,u9p + FACE_REACH (capability sweep on u9p),screen zd75 queued
+v0k,2026-11-05 17:41,u9p,u9p + CAT_BLIND (capability sweep on u9p),screen zd76 queued
+v0l,2026-11-05 17:41,u9p,u9p + MINE_ANY (capability sweep on u9p),screen zd77 queued
+v0m,2026-11-05 17:41,u9p,u9p + GATHER_STILL (capability sweep on u9p),screen zd78 queued
+v0n,2026-11-05 17:41,u9p,u9p + BUG_DIG (capability sweep on u9p),screen zd79 queued
+v0o,2026-11-05 17:41,u9p,u9p + SEEK_FRONTIER (capability sweep on u9p),screen zd80 queued

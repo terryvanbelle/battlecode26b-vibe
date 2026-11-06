@@ -6081,3 +6081,8 @@
   - u9s = u9p + SEEK_CROWD 3 (u8q: block 1 D 5, +4 −1, t 1.34).
   - u9t = u9p + THROW_ADAPT + SEEK_CROWD 3.
   - Screens zd62-zd65 run one after another at 3 jobs each (runs/seq_zd62.sh on the VM). The falsifiers are in each SNAPSHOT: u9p's (the basics gate, the replica transfer floor, the block rules).
+- 17:41: **Capability sweep on u9p** (§6 step 2, rerun on the current base): 15 switches that are off in u9p and have not been tried since u6x became the base, each switched on alone in a copy of u9p (Cfg.java differs by that one line). They were picked for where we lose: king survival, the rat war, the economy.
+  - v0a KING_DODGE, v0b YIELD_KING, v0c KING_STRICT, v0p BITE_GUARD, v0e BITE_CARRIER, v0f RESCUE, v0g GRAB_MICRO, v0h THROW_CHECK, v0i KING_FORAGE, v0j FACE_REACH, v0k CAT_BLIND, v0l MINE_ANY, v0m GATHER_STILL, v0n BUG_DIG, v0o SEEK_FRONTIER.
+  - Screens zd66-zd80 (runs/seq_zd66.sh on the VM) start when zd62-zd65 finish, one at a time at 3 jobs, about 17 minutes each, so the sweep runs about 4.5 hours while the replica plays.
+  - Pre-registered (each SNAPSHOT): scored against u9p's own screen zd61 (38 wins of 44 cells). Any overrun or exception, picks/100 below 33.8, D 0, or wins below 37 rejects. The passer with the most wins goes to the replica.
+  - Slip, caught at once: bots/v0d already existed (an October snapshot), so the BITE_GUARD copy is v0p. The sed on the old v0d matched nothing (that snapshot has no BITE_GUARD), and git shows it unchanged.

@@ -1,0 +1,8 @@
+name=v0j
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=4739a01
+created=2026-11-05 17:36 PST
+
+v0j = u9p + FACE_REACH (capability sweep on u9p, 2026-11-05: the switch has not been tried since u6x became the base). Registered 2026-11-05 17:41 PST.
+Falsifiers: screen zd75 vs u9p's zd61 (38 wins of 44 cells, picks/100 34.21): any overrun or exception, picks/100 below 33.8, D 0 vs zd61, or wins below 37 rejects; a passer with the most wins goes to the replica with u9p's replica falsifiers (transfer floor, block rules).
