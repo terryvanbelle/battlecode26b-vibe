@@ -6390,3 +6390,10 @@
   - The Stash, cheesefarm and keepout cells carry 10-14 cheese a round each, so they weigh most in the pooled transfer ratio.
   - On wins it cuts both ways. u9p lost araid arrows B, evileye B, starvation A and B, and DefaultSmall A, and most candidates won those (+9, +9, +12, +6, +10). u9p won abrk arrows A, where half the candidates lost (−10 of 20).
   - So the wins t-test sees roughly symmetric noise, while the transfer ratio and per-round picks lean against every candidate. zd138 (the salted twin) measures the size of that lean.
+- 08:03: **wallsofparadis vs Finals: we work one corridor mine, they work the four inside the rings** (replica dumps 18e2d9de g1 and 1d86d4db g1; scratch wpmine.py and an inline grid of decision codes).
+  - The map: a dirt-gated outer octagon (the bottom edge at y=7 is dirt from x 19 to 39), an inner octagon with dirt diagonals, and a centre box. There are two mines a side in the outer corridor, (30,3) and (4,54) for A. The four mines (21,37), (27,28), (32,31) and (38,22) are inside the rings.
+  - Finals picks 280-320 every 200 rounds at each inner mine from r0-200, plus its own corridor mine and often ours.
+  - We picked only at (30,3): 400-460 every 200 rounds, and nothing at (4,54).
+  - In r100-399 every one of our M and W turns was in the bottom corridor (y 0-7, x 4-35). Finals' rats filled the octagon.
+  - Our rushers crossed the octagon in r0-100 (866 rat-turns inside), so the rings are passable for us.
+  - Locally vs araid (war at r131), u9p does work (21,37) and (27,28) (wpmine.py on ~/diag26b/wp). So on the replica the inner mines are held by Finals' force, not closed by dirt. That makes this a contest problem, and the contest families are closed. No candidate.
