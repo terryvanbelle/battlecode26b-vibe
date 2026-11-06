@@ -1,0 +1,13 @@
+name=z1w
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=4c2213a
+created=2026-11-06 06:12 PST
+
+z1w = z1v + CAT_SEEK_BFLOW, i.e. u9p + CAT_SEEK 3 with the seek walk on BitFlow's distance field. Every baby keeps BitFlow's wall and dirt rows (BF_MARK); only a seeker's walk to the last known cat or the centre uses the field (Nav.bflow set around that one goTo), and BitFlow.work runs at a seeker's turn end. Registered 2026-11-06 06:12 PST, before any z1w game.
+Evidence (z1v's own mechanism games, before its verdict): on averystrangespace z1v's seat A did 0 peace cat damage in 1,243 peace rounds (u9p in B 5,862), as u9p's mirror seat A did (0 to 5,552). zsk (z1v + indicators, ~/diag26b/skd): 6 seekers walked (Q) 100-190 turns per 100 rounds but paced the corridor at (15-22, 4) and (9-10, 19), never nearer than Chebyshev 14 to the centre; Flow's A* toward (29,29) never finished (fl=1:0). BitFlow was written for 60x60 band mazes where Flow's searches never finish (Cfg.BFLOW doc).
+Falsifiers:
+- Mechanism (VM ~/diag26b/sw, z1w vs u9p on averystrangespace, both seats, seed 0; scratch skcheck.py): z1w's seat-A peace cat damage must be above 0, or z1w is dropped as inert. Any exception or overrun drops it.
+- Then mechanism chain sk2 on the sk maps (rose, TheHeist, clockwisdom, both seats): summed peace cat damage in games with 300+ peace rounds must exceed the u9p side's in the same games.
+- Screen zd134 vs u9p zd61 (s6): t <= -1.5; picks z <= -2 per rat-turn or per round; transfer per round below 0.97x; any overrun or exception.
+- Replica: the standard block rules (sets 3, 1, 2, then 4) with the transfer floors; in the block's averystrangespace games, peace cat damage above zero wherever the twin's was zero.
