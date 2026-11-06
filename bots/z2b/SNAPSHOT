@@ -1,0 +1,19 @@
+name=z2b
+source=bots/u9p
+source_sha=40d9e3e3b63b
+commit=4398376
+created=2026-11-06 07:55 PST
+
+z2b = u9p + HAND_FLIP (a salted twin of u9p; a reference, not a candidate). Every G.hand tie goes the other way, still
+mirror-consistent, so z2b plays u9p's design with different games wherever a tie matters.
+Purpose: re-anchor the local screen control. Every s6 screen pairs a candidate with u9p's own games in zd61, and u9p's
+line was selected on these cells. Across the 23 screens zd89-zd136 the per-cell z of picks per round vs zd61 averages
+about -0.95 and the transfer z about -1.1 (scratch sweep2.py), and five candidates were rejected on the 0.97 transfer
+gate or the z <= -2 picks gate (z0s, z1a, z1c, z1s, z1t). If the salted twin also scores well below zd61 on these
+measures, the gates read divergence as cost.
+Registered before any z2b game. Screen zd138 vs zd61 with the same cells. Reading:
+- z2b's per-round picks z and transfer ratio vs zd61 give the null for a perturbation that should cost nothing.
+- If z2b's per-round picks z <= -1 or its transfer ratio <= 0.98, I propose re-scoring candidates against the pooled
+  control (zd61 + zd138, per cell the mean of the two) and log which past rejections would flip. Gates are not changed
+  retroactively by this alone: any revived candidate is re-screened or carries the re-anchored numbers in its SNAPSHOT.
+- If z2b sits near zero (|z| < 1, ratio 0.98-1.02), the gates stand and the negative drift is real cost.

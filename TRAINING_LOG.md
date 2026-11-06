@@ -6378,3 +6378,10 @@
   - u9p in the same games: 13 bursts, 6 formed, 7 failed, 10 kings at r1190.
   - Failed bursts are 2 against a bar of 3.5 (half of u9p's). Kings at r1190 were never below u9p's in any game (4/4/4/3 vs 2/2/3/3). 0 exceptions and 0 overruns on either side.
   - The 16 wp cells (chain2) are still playing, and screen zd137 is running.
+- 07:56: **Is the screen control biased? z2b registered** (u9p + HAND_FLIP, a salted twin; reference only). Every s6 screen pairs the candidate with u9p's own games in zd61. u9p's line was selected on these cells, and the replica showed the same winner's curse on crowning draws (u6x, 2026-11-03).
+  - scratch sweep2.py adds a per-cell z and a cell-bootstrap 90% interval for transfer per round.
+  - Over the 23 screens zd89-zd136, the picks-per-round z averages about −0.95 and the transfer z about −1.1. Only the three economy switches (z1q, z1r, z1z) are positive.
+  - Five rejections rest on those gates: z0s (transfer 0.950, interval 0.907-0.994), z1a (0.965), z1c (0.949), z1s (0.933) and z1t (picks z −2.98).
+  - Screen zd138 (z2b vs zd61, the same 48 cells) is at the head of screenq, before zd132.
+  - Reading rules are in bots/z2b/SNAPSHOT. If z2b scores picks z ≤ −1 or transfer ≤ 0.98, I re-score past screens against the pooled control (zd61 + zd138).
+- 07:56: **zd132 (z1u, CAT_LAY_MAX 5) was never played.** It fell out of runs/screenq.txt when I reordered the queue at 06:56. It is queued again after zd138.
