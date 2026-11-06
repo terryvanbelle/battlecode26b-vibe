@@ -116,10 +116,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - **z2i** = u6x + RICH2_BABIES 80 (ledgered): identical to u6x until r706, its first possible act. Screen **zd145**
     queued next.
   - **z2j** = z2h + CASH_END 1880 (endgame second king through CASH's formation; kings are 0.5 of war points at
-    r2000). Mechanism games in ~/diag26b/ce (DONE marker); falsifiers in its SNAPSHOT. If they pass, screen it vs zc6.
-- **Replica order after z1z:** the ledgered CASH line: z2j if its mechanism games and screen pass, else z2h if its
-  screen passes (a bundle with z2i's RICH2 if that passes too: under the ledger only the cells where a switch acts
-  move); else z2c (passed zd139: t +1.00, picks z +2.26,
+    r2000). Mechanism games passed (4 of 4 second kings, 4 wins; evileye A flipped). Screen **zd146** playing.
+  - **z2k** = u6x + RICH_LATE 1050 (new: from r1050 to the r1150 cut, two kings and 600 banked name a third king's
+    site while Econ.surplus(3) >= 3000). Validated on cheesefarm A (identical to r1056, third king by r1080, 55-44
+    where u6x lost 49-50). Screen **zd147** queued next.
+  - **z2l** = z2j + RICH_LATE: the bundle. It replays z2k on cheesefarm and z2j on evileye exactly, so it needs no
+    screen of its own (only a cell where both switches act would). Replica candidate after z1z if zd146 and zd147 pass.
+  - zd144: z2h identical to zc6 in 44 of 44 cells (CASH never acts there).
+- **Replica order after z1z:** z2l if zd146 and zd147 pass (else whichever of z2j/z2k passes; z2i's RICH2 can join
+  the bundle if zd145 passes: under the ledger only the cells where a switch acts move); else z2c (passed zd139: t +1.00, picks z +2.26,
   transfer 1.016). Then u9t, z0r (CAT_HUSH). Submit: `contest.py submit bots/NAME -m TEXT`, `bash
   build/block_v4sN.sh`, `git checkout research/panel/`.
 - **CASH (rescue formation; bots/z2e/SNAPSHOT):** when the bank is 60-249, a carrier group 5+ from any king with
