@@ -96,24 +96,25 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 01:55 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 02:45 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **u6x** (accepted 2026-11-03 09:21 PST over u6a; pooled 93 cells D 5, net +5, t +2.24). Candidates
   descend from u9p = u6x + CAT_LAY + CAT_RING + TRAP_SHARE false (rejected at block 3, pooled t 1.18), each one
-  switch screened against u9p's zd61. **z0g = u9p + PEACE_FROM 100** is on the replica (#235): block 1 (set 3,
-  17426-17441) D 10, net +4, t 1.26; block 2 (set 1, 17442-17457) D 11, net +1; pooled D 21, net +5, t 1.09 (bar 1);
-  transfer 4,359 / 4,269 (floors 3,968 / 4,133); 0 openings at r100+. Set-2 block 3 queued after match 17457 (16 in
-  the drain queue), waiter build/wait_z0gb3.sh; score with `paired 12838-12899 IDS --crown 11678-11702`, then
-  `research/audits/blockcheck.py $HOME/diag26b/z0gb3.jsonl,$HOME/diag26b/twin_s2.jsonl IDS 12838-12899` on the VM
-  (twin_s2.jsonl is built; set-1 twin rows are twin_s1.jsonl; use $HOME, not ~, inside the path list); block 3
-  rejects at pooled t <= 1.5, accepts at t >= 2 with D >= 4; set-2 transfer floor = 0.9x the twin's xUs there.
-  Next on the replica: **z0q** (u9p + RAW_TRAPS; passed screen zd109: t -0.70, picks z -1.58, transfer per round
-  0.9725x, 141 raw traps, 137 fired). Held after passing screens: z0d (STAB_LAY, picks z -1.90), z0e (END_CAT 1450).
-- Screening (VM queue runs/screenq.txt): zd110 z0r (CAT_HUSH), zd111 z0s (RAW_RAID: attackers' raw traps at
-  enemy-half mine sites), zd112 z0t (z0q + RAW_ANY: raw traps for every role), zd107 z0p (FACE_REACH), zd108 z0o
-  (BURY), zd98/zd97 z0h (FORM_RICH_BANK 1500; zd98 is a mechanism run: `research/audits/mech_cmp.py
-  runs/zd98/results.jsonl z0h runs/zd96/results.jsonl u9p`), then the old sweep. Each candidate's falsifiers are in
-  its bots/NAME/SNAPSHOT. Screen transfer gates from z0q on are per round on the shared cells. If z0s and z0q/z0t
-  pass, a combined raw-trap build is the next step.
+  switch screened against u9p's zd61. z0g (PEACE_FROM 100) was rejected after block 3 (pooled D 30, net +4, t 0.73).
+  **z0q = u9p + RAW_TRAPS** is on the replica (submission 236): set-3 block 1 queued after match 17486 (16 in the
+  drain queue), waiter build/wait_z0qb1.sh; score with `paired 13248-13291 IDS --crown 12130-12163`; block 1 rejects
+  at t <= 0; set-3 transfer floor 3,968 (field_report xUs per game, rows on the VM). Twin rows for set 3 are in the
+  z0g block-1 era files on the VM (~/diag26b; set 1 twin_s1.jsonl, set 2 twin_s2.jsonl).
+  Next on the replica: **z0w** (z0q + CAT_HUSH) if it passes screen zd115, else **z0r** (u9p + CAT_HUSH; passed
+  zd110: t +0.37, picks z +0.38, transfer per round 0.977x). Held after passing screens: z0d (STAB_LAY), z0e (END_CAT 1450).
+- Screening (VM queue runs/screenq.txt): zd97 z0h (FORM_RICH_BANK 1500, running), zd115 z0w, zd112 z0t (z0q +
+  RAW_ANY), zd113 z0u (MINE_BURN 50), zd114 z0v (RAW_RAID_HALF 1: z0s's trap at our own frontier mines), zd107 z0p
+  (FACE_REACH), zd108 z0o (BURY), zd98 (z0h's mechanism run: `research/audits/mech_cmp.py runs/zd98/results.jsonl
+  z0h runs/zd96/results.jsonl u9p`), then the old sweep. Each candidate's falsifiers are in its bots/NAME/SNAPSHOT.
+  Screen transfer gates from z0q on are per round on the shared cells (inline script in TRAINING_LOG 02:12).
+- Open lead (02:40): our formation attempts in points games fail with 7+ of our babies on the site and a 3k+ bank
+  (z0g's replica games: 12 of 51 attempts); bots/zfk (debug copy of u9p, not a candidate) logs the engine's refusal
+  in the indicator (FK=fails+reason/holds+centre occupant); games in VM ~/diag26b/fk. One more king at r2000 flips
+  17 of 38 war points losses.
 - Replica scoring (twin-anchored; pass explicit match IDS, others' matches sit in the ranges):
   set 3 `contest.py paired 13248-13291 IDS --crown 12130-12163`; set 1 `paired 12771-12813 IDS --crown 11549-11677`;
   set 2 `paired 12838-12899 IDS --crown 11678-11702`; set 4 `paired 16848-16863 IDS` (u6x reference, 28 of 48).
@@ -122,7 +123,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   ($4=="vibe26b"||$7=="vibe26b")'`, then `contest.py fetch --new --pages 8`. Transfer floor (u9p family): field_report
   xUs per game >= 0.9x the twin (set 3: 3,968; set 1: 4,133): rsync the 16 match dirs to the VM's ~/diag26b/rp/
   and run `tools/field_report.py games --ids LO-HI --csv` there (never locally: the laptop disk filled at 100%).
-- Closed 2026-11-06: z0j (LAY_MAX: mechanism), z0k (FORM_WAR_FROM 300: picks z -3.26), z0l (SIEGE_STAY 20:
+- Closed 2026-11-06: z0g (PEACE_FROM 100: block 3), z0s (RAW_RAID: transfer 0.950), z0j (LAY_MAX: mechanism), z0k (FORM_WAR_FROM 300: picks z -3.26), z0l (SIEGE_STAY 20:
   transfer gate 0.952), z0m (RETREAT_HP 20: wins gate), z0n (END_CAT without gatherers: transfer 0.946). Closed 2026-11-05/06 on the u9p base: u9q (RETREAT_HP 0: transfer floor), w0b and z0b (inert), w0c (kings
   falsifier after block 2; its replica games replayed u9p's), z0a (RETREAT_CARRY: transfer gate), z0f (END_CAT +
   STAB_LAY: picks z -2.46). The replica is deterministic: a switch that never fires replays its parent's games.
