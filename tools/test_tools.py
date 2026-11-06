@@ -235,6 +235,10 @@ with tempfile.TemporaryDirectory() as d:
           and rows[1]['outcome'] == 'adopted', f"attempts rows {rows}")
     md = at.render(rows, {'s1b': {'pts.top6.3m': 23.71, 'kd.top6.3m': 1.234}}, {})
     check('| s1b |' in md and '| 23.7 |' in md and '| 1.23 |' in md and 'adopted |' in md, "attempts render")
+hits = at.find(['form_', 'king'], [{'codename': 'z1', 'date': 'd', 'description': 'u9p + FORM_FILL', 'outcome': 'REJECTED at zd1 king count'},
+                                  {'codename': 'z2', 'date': 'd', 'description': 'u9p + FORM_OFF', 'outcome': 'pending: screen'},
+                                  {'codename': 'z3', 'date': 'd', 'description': 'king trap', 'outcome': ''}])
+check([(h[0], h[2]) for h in hits] == [('z1', 'REJECTED')], f"attempts find {hits}")
 mst = load('milestones')
 with tempfile.TemporaryDirectory() as d:
     os.makedirs(os.path.join(d, 'bots', 's9a'))

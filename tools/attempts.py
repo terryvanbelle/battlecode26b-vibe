@@ -6,6 +6,9 @@
                                          edit with `set`) and fill in missing dates of listed ones
   attempts.py set CODENAME FIELD=VALUE [FIELD=VALUE ...]
   attempts.py render                     write progress/ATTEMPTS.md
+  attempts.py find TERM [TERM ...]       every attempt whose description or outcome matches all the TERMs (regex,
+                                         any case): codename, date, verdict, the description; grep this before
+                                         designing a candidate (a context summary drops same-day attempts)
 
 attempts.csv columns: codename,date (PDT),base,description,outcome. The rendered table adds, per attempt, its
 gauntlet metrics from research/progress.tsv and its Bradley-Terry rating from progress/games.csv (tools/elo.py).
@@ -111,6 +114,24 @@ def set_fields(name, pairs, path=CSV):
     raise SystemExit(f'no attempt {name}')
 
 
+VERDICT = re.compile(r'\b(ACCEPTED|accepted|adopted|REJECTED|rejected|DROPPED|dropped|WITHDRAWN|withdrawn|REVIVED|'
+                     r'PASSED|passed|parked|superseded|inert|neutral|pending|not run)\b')
+
+
+def find(terms, rows):
+    """Rows whose description or outcome matches every regex in terms (any case), as (codename, date, verdict,
+    description): the verdict is the outcome's first verdict word, else its first 40 characters."""
+    pats = [re.compile(t, re.I) for t in terms]
+    out = []
+    for r in rows:
+        text = r.get('description', '') + ' ' + r.get('outcome', '')
+        if all(p.search(text) for p in pats):
+            m = VERDICT.search(r.get('outcome', ''))
+            out.append((r['codename'], r.get('date', ''), m.group(1).upper() if m else r.get('outcome', '')[:40],
+                        r.get('description', '')))
+    return out
+
+
 def metrics(tsv=os.path.join(REPO, 'research', 'progress.tsv')):
     out = {}
     if os.path.exists(tsv):
@@ -191,11 +212,17 @@ def main(argv=None):
     sub.add_parser('init')
     p = sub.add_parser('set'); p.add_argument('codename'); p.add_argument('pairs', nargs='+')
     p = sub.add_parser('render'); p.add_argument('--out', default=os.path.join(REPO, 'progress', 'ATTEMPTS.md'))
+    p = sub.add_parser('find'); p.add_argument('terms', nargs='+'); p.add_argument('--width', type=int, default=160)
     a = ap.parse_args(argv)
     if a.cmd == 'init':
         print(f'{init()} attempts added -> {CSV}')
     elif a.cmd == 'set':
         set_fields(a.codename, a.pairs)
+    elif a.cmd == 'find':
+        hits = find(a.terms, read())
+        for name, date, verdict, desc in hits:
+            print(f'{name:6} {date[:16]:16} {verdict:10} {desc[:a.width]}')
+        print(f'{len(hits)} attempts match {a.terms}')
     else:
         rows = read()
         open(a.out, 'w').write(render(rows, metrics(), ratings(), MS.read()))
