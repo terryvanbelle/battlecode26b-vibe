@@ -1,0 +1,25 @@
+name=z3q
+source=bots/z3p
+source_sha=see z3p
+commit=96c9c2f
+created=2026-11-06 15:05 PST
+
+z3q = z3p + z3g's hook = z1z + tools/ledger.py + FORM_WAR_FROM 300 + CASH_END 1880, the two gated formation switches
+together (built by hand: tools/bundle.sh failed one King.java hunk at formation()'s head, where z3g's hook and
+z3b's RICH_GAP branch meet; the hook goes first, as in z3g).
+- FORM_WAR_FROM 300 (z3g; passed zd159): no formation site at war before r300. z1z's 192 replica games: a second king
+  formed at war before r300 won 6, lost 20 (r300+: 28-4; no second king at war: 60-49). Set-3 block 1 has 8 such
+  cells (z1z lost 7: keepout B, Stash A, DefaultMedium A/B, FreeTheCheese A/B and cheesebottles B vs Merlin; won
+  FreeTheCheese B vs waxmango).
+- CASH_END 1880 (z3p; local checks passed): from r1880 a lone king's babies form a second king that the bank keeps
+  alive to r2000. Gained corridorofdoom B vs Varun for z2x and z3b.
+The two act in disjoint situations (war before r300; a lone king after r1880), so each replica cell that differs from
+z1z's game can be traced to the switch that acted there.
+
+Falsifiers, registered before any z3q game:
+1. Local: z3q replays z3g's game where CASH_END does not act (DefaultSmall B vs araid, DefaultSmall A vs abrk,
+   cheesefarm A vs araid from ~/diag26b/zg2) and z3p's where FORM_WAR_FROM does not act (learn_your_lesson B vs
+   araid, corridorofdoom B vs abrk from ~/diag26b/cp).
+2. Screen: zd164 (z3p) and zd159 (z3g) on the s6 gates; z3q itself is not re-screened if both pass and falsifier 1
+   holds.
+3. Replica: block rules against z1z's set-3 block 17946-17961; flips outside the 9 named cells falsify the ledger.
