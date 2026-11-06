@@ -1,0 +1,8 @@
+name=z0y
+source=bots/z0x
+source_sha=dc9ce666f1d0
+commit=39d3d24
+created=2026-11-06 02:43 PST
+
+z0y = z0x (u9p + FORM_FILL) + FORM_KEEP: no king step (closer/step; the cat dodge untouched) puts the king's 3x3 on the open formation site's 3x3 unless it leaves the site, every king reading the site from the array; and the first king drops a site whose 3x3 it sees off the map, impassable or under a cat or a king, naming the next after FORM_KEEP_WAIT 5 rounds instead of FORM_TTL + FORM_RETRY. Evidence: zfk vs u6h on superioristhmus (A): the ring site (50,56) was named, our king walked to its home mine (48,56), its body covered (49,57) and the centre rat was refused "cats or rat kings" until the site timed out; fk3 split (same seat, seed 0): zfk refusals rats 104 + king/cat 10, kings 2 (u6h 3); zfk2 rats 74 + king/cat 55, kings 1 (u6h 3). Registered 2026-11-06 02:46 PST, before any z0y game.
+Falsifiers: mechanism (zfk3 = z0y + zfk2's indicator + SV, the king's site drops; ~/diag26b/fk3, the same four maps and seats vs u6h: superioristhmus A, where_are_you A, minimaze B, cheesebottles B): king/cat refusals summed not below 0.5x zfk2's drops FORM_KEEP as inert; all refusals summed not below 0.5x zfk's drops z0y; kings formed summed below zfk's drops it. Screen zd117 vs u9p's zd61 (s6): paired t <= −1.5 rejects; picks/100 per-cell paired z <= −2 rejects; any overrun or exception rejects; transfer per round on the shared cells below 0.97x u9p's rejects; kingsFormed below u9p's 31 rejects. Replica: the standard block rules on sets 3, 1, 2, then 4; transfer below 0.9x the twin's per set (set 3: 3,968; set 1: 4,133) rejects in that block; kings alive at r2000 in the block's points games not above the twin's rejects.
