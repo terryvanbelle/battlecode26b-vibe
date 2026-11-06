@@ -1,0 +1,7 @@
+name=v1a
+source=bots/u9q
+source_sha=baaa1dbedba3
+commit=1218421
+created=2026-11-05 19:01 PST
+reason=u9q + GRAB_SAFE (new switch, Baby.tryCarry + grabExposed): skip a grab (not a rescue of one of ours) while another free enemy baby within Chebyshev 2 is healthier than us (it may grab the carrier from the front: HEALTH_GRAB_THRESHOLD 0) or reaches in one step a tile next to us outside our 90-degree cone (5 of the 8; blind tiles read from Sym memory). Evidence: u9q vs waxmango on tiny (16937 g2, battle_report): 26 of our 67 grabs ended with our carrier grabbed (39%; theirs 18 of 108, 17%); we lost the rat war 46 to 25 with more rats.
+falsifiers=screen vs zd62 (u9q: 40 of 44): wins below 39 rejects (abort_watch gate); the basics gate (any overrun or exception, picks/100 below 33.8, D 0); our rat deaths (deathsRat) on the shared cells not below u9q's rejects (the mechanism is fewer of our rats lost in the grab war); on the replica the standard block rules on sets 3, 1, 2, 4 and the transfer floor (0.9x the twin).

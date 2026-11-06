@@ -563,3 +563,4 @@ w0d,2026-11-05 17:45,u9p,u9p + FORM_RICH_MAX 5 + FORM_LATE,screen zd84 queued
 x0a,2026-11-05 18:04,u9q,u9q + FORT_R 4 (fighters hold a ring by the king at war),screen zd85 queued
 x0b,2026-11-05 18:04,u9q,u9q + FORT_R 6,screen zd86 queued
 y0a,2026-11-05 18:09,u9q,u9q + u8f's field-dose reactive rat traps (TRAP_ADJ cap 25 floor 300 spawn first),screen zd87 queued
+v1a,2026-11-05 19:03,u9q,"u9q + GRAB_SAFE (new switch; Baby.tryCarry + grabExposed): skip a grab (not a rescue) while another free enemy baby within Chebyshev 2 is healthier than us or can step onto a tile next to us outside our 90-degree cone. Evidence: u9q vs waxmango tiny 16937 g2, 26 of our 67 grabs ended with our carrier grabbed (theirs 18 of 108). Falsifiers: screen zd88 vs zd62 wins below 39; basics gate; our rat deaths on shared cells not below u9q's; replica block rules + transfer floor",screen zd88 queued (after zd87)
