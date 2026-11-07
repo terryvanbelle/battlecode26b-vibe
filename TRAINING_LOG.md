@@ -7424,3 +7424,4 @@
   - Our babies held at 33 from r200 to r1000. They made about 23 pickups per 200 rounds to the opponent's 56-105, and none of them left the quadrant round our king at (3,3).
   - The opponent picked 9,845 in its own quadrant, 5,515 in the off corner at (6,55) and 3,550 in ours. We picked 5,910 in ours and 830 elsewhere, and nothing in the off corner on our side at (53,4).
   - The engine spawns mine pairs together (GameWorld.spawnCheese), so that corner fed as much as (6,55). Dirt bands seal both off corners (MapCensus), and the opponent dug 120-140 tiles per 200 rounds early on to our 23-49.
+- 10:07: **zd242 (z7z s7) vs zd205: n 48, D 5, net -1, t -0.44.** Picks z +1.61, transfer per round 1.026x, pick amount 1.013x, 0 overruns. The s7 gates pass. All 48 games are identical to z7x's zd238 (winner, rounds and both transfers), so the coop-only delivery never fires on the s7 cells. The screen tests the ledger, not the change. zd243 (s6) is running.
