@@ -7437,3 +7437,10 @@
   - On averystrangespace the cheapest route out costs 30-31 dirt tiles. The routes to the centre, to the HOR and ROT king spots and to 4 of the 6 mines all start through the band at (15,4), (16,3), (17,2).
   - The live symmetry mask was 7 at r200, 3 at r400 and 1 at r600. Each attacker walks to its nearest live king spot (rushTarget), and the nearest spot changes as it moves. So 5 attackers dug 5 band tiles at r15-24 toward (53-55,3), then by r110 turned up the left column toward (4,56). All 12 were still inside at r800.
   - The rush-target and symmetry lines have been tried before (RUSH_STICK, RUSH_BAN, SYM_KING_GAP, CHIRAL_SYM, SYM_FILL, SYM_RELAY), none kept, so this is a lead, not a candidate.
+- 10:23: **The keepout overruns are z7x's.** Rerun ~/diag26b/ov243 (keepout B vs araid, seed 0, dumps): z7x and z7z play the same game (xfer 29,418, picks 32,985), and each overran 3 times. z8b (xfer 29,533) had 0 overruns.
+  - z7x's peaks: rats 13767, 11864 and 12523 at (4-5, 31-36) at r1883-1885, 17,415-17,577 bytecodes. That is the late-game crowd that CASH_READ_LEFT (z7u) bounds.
+  - The engine is deterministic and zd239 plays that cell, so z7x will fail s6 on overruns. By the 09:01 rule its block is void.
+  - z7x's 8 unsent block-2 rows are dropped from the drain queue. The 8 already sent (from request 16217) still play z7x, and they are for the record only.
+- 10:23: **z8b goes to the replica as #263** (block 1 on set 2: `bash build/block_v4s2.sh`, hourly limit, 16 queued). Its screens run alongside, zd246 (s7) started 18:23 UTC and zd247 (s6) is next, under the same rule: if either fails its gates, the block is void.
+  - zd243 (z7z s6) was stopped by hand at n 26 (D 0, t 0.00; runs/zd243/ABORTED). zd239 (z7x s6) stays queued after z8b's screens, to put the overruns on record.
+  - z8b's missed rose A vs agtr clause (transfer 3,873 vs 4,229) came in a game won at r872 instead of r1042. Per round that is 4.44 against 4.06. This reading is after the fact, and the clause stays recorded as missed.
