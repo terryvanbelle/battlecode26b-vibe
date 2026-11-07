@@ -1,0 +1,7 @@
+name=z6z
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=95a0196c
+created=2026-11-07 03:20 PST
+purpose=z3x + THREAT_WALL (new switch): a king does not count an enemy rat toward its alert's threat when the straight line between them crosses a wall closed on both sides of the line (Baby.kingWalled, Chebyshev 3+ from the king's centre). Diagnosis (local z3x vs agrab, Stash seat A, seed 0; ~/diag26b/sa): enemy gatherers working our mine (14,18) stood at y 21, beyond the pocket's wall row at y 22 and within dist2 18 of our king at (12,24). The king raised a threat, so every gatherer within DEFEND_D2 100 held in war() inside the pocket: 1,681 G-in-war() turns in r100-300, transfer 180 from r100 to r400 against their 600 to 3,970, and lost at r972. s7 loses Stash A to agrab, agtr and atrap3. Only threatenedKing() reads the threat count. The hook is ledgered with G.settle (K 18), so cells where no in-range enemy is walled replay z3x's.
+falsifiers=1. Mechanism games ~/diag26b/tw (z6z and z3x; seed 0, both seats): Stash vs agrab, agtr and atrap3, plus corridorofdoomanddespair, minimaze, cheesebottles, EscapeTheNight and pipes vs araid and abrk. It is rejected if Stash A vs agrab still has transfer at r400 of 500 or less, if the summed Stash transfer is not above z3x's, or if it wins fewer of the 32 cells than z3x - 1. 2. Screens s6 (zd172's gates) and s7 (t > -1.5 vs zd205). 3. The replica block rules.
