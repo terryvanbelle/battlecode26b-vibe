@@ -7396,7 +7396,7 @@
   - Clockwisdom vs araid: transferAmt was 1,120 on A and 760 on B, against z7x's 420 and 320, so both at least doubled. Attackers transferred 1,040 on A but only 440 on B, short of the pre-registered 1,000 on B. That clause is missed and is recorded as such. I am continuing to the screens because the outcome clauses passed.
   - Where the flips came from (transfers by role tag, rolepick.py): attackers went from 20 to 770 on fos A vs abrk, 20 to 1,267 on fos A vs araid and 0 to 2,445 on rose B. Gatherers' transfers rose as well (1,030 to 2,380; 840 to 4,267; 860 to 2,810), once the bank kept the spawns going.
   - Twin zdchk replays z7x's cw A exactly (xfer 420, picks 10,690), so falsifier 1 holds.
-  - Summed transferAmt fell from 58,904 to 58,320, mostly because EscapeTheNight A ended at r770 (a win) instead of r2000.
+  - Summed transferAmt fell from 58,904 to 58,180, mostly because EscapeTheNight A ended at r770 (a win) instead of r2000.
   - Its screens zd242 (s7) and zd243 (s6) are at the head of the queue; zd242 started 17:43 UTC.
 - 09:45: **zd238 (z7x s7) vs zd205: n 48, D 5, net -1, t -0.44.** Picks z +1.61, transfer per round 1.026x, pick amount 1.013x, 0 overruns on our side. The s7 gates pass. zd239 (z7x s6) is queued after z7z's screens.
 - 09:45: **z7x's replica block** (19527-19533 vs set 2): 21 cells, all alike.
