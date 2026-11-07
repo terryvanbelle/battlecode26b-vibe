@@ -7462,3 +7462,41 @@
   - **z9b** (z9a with PICK_FLOOR 300, registered 10:54) caps only loads the size of death drops. Its chain ~/diag26b/cq23 runs cq19's 13 games, with z9a's falsifiers.
 - 10:57: **TRIP_HALF does not fix clockwisdom** (probe zth = z8b + TRIP_HALF 8, ~/diag26b/cq22). cw A vs araid was lost (starved at r1017, transfer 175; z8b won with 1,120). cw A vs abrk was lost, as z8b lost it (240 to 517). cw B vs abrk was won, as z8b won it, with 680 to 2,035. cw B vs araid was won (1,400 to 760). Clockwisdom is a starvation race at 100-2,000 transfer a game, and the replica games are the same (z3x 55 and 90 vs Xzibit's 1,960 and 1,800).
 - 10:57: **Early overspending on canyoudig** (replica 18745, z3x A vs Xzibit, starved at r299). In r1-25 we spawned 23, dug 19 and laid 11 cat traps, to their 18, 12 and 6. The bank stood at 1,545 to 1,850 at r25 and 315 to 805 at r100. Transfer was 285 to 455 by the end. The spending doctrine is a closed family (CORE_BABIES u5t, LEAN_DEBT u8i/u8j/u8k, INCOME_TRUST z7j), so this is recorded, not acted on.
+- 11:24: **z9b is DROPPED at falsifier 1** (~/diag26b/cq23; 12 of 13 played, rose A vs agtr killed unplayed). It lost fullofsecrets A vs abrk (r545, picks 4,260, transfer 1,025) and rose A vs araid (starved at r1908, picks 10,200, transfer 5,274). The twin zpk (z8b exactly) won both: r1652 with 16,620 picked and 5,414 delivered, and r2000 with 22,110 and 11,837. A 300 cap still halves the hauls on those maps, so the PICK_TRIP partial-pickup line closes.
+- 11:24: **Mine coverage by half** (scratch minehalf.py over z3x's set-2/4 replica games; a mine is ours when nearer our king's start).
+  - Per game, our half: we pick 3,029 and they pick 2,244 in 27 losses, against 6,342 and 702 in 69 wins. Their half: we pick 898 and they pick 5,772 in losses, against 1,123 and 5,434 in wins.
+  - 36 of 112 home mines in losses were never within Chebyshev 4 of our rats, and the enemy took 813 a game there (wins: 65 of 262, 107 a game).
+  - The losses are geometry, not theft:
+    - Clockwisdom's spiral (10:49) makes "our" mines theirs by path.
+    - RUN's (37,48) sits behind a 5-dirt gate (0-1 BFS from our king), and Merlin took 4,760 there.
+    - Ratsareants' (17,15), (13,20) and (6,18) lie on dirt-free paths of 118-136 steps through the dirt maze. Varun reached them at r206, r326 and r907 and took 2,220, 1,760 and 380.
+  - Exploration (SCOUT_*, MINE_EXPLORE, SWEEP, SCOUT_FRONTIER), MINE_ANY and MINE_MIRROR are all closed, so this is recorded, not acted on.
+- 11:24: **24 of z3x's 27 set-2/4 losses are king kills; in about half the king starved** (starveDmg 336-600, often with no enemy king kill).
+  - fullofsecrets A vs Merlin (18752) shows the pattern:
+    - We picked 6,170 and delivered 280. The king sits in a pocket sealed by walls and dirt, and carriers outside held about 2,000 raw.
+    - The bank fell from 2,488 to 1 by r640, and the king starved at r682.
+    - Merlin also held its cheese (9,159 raw at r680), but banked 1,120 then. It spawned 23 to our 33, and 3 to our 11 after r200.
+  - The held-cheese class is closed (z6f/z6g CASH, z7p, z7r and z7v HUNGRY, all dropped today), as are the spending reserves (RESERVE_ROUNDS u6e/u9i, LEAN_DEBT u8i-u8k).
+  - Engine note (RobotControllerImpl.assertCanActLocation): the transfer range is distance plus vision cone, with no wall occlusion, so a carrier within dist2 9 of a king tile delivers through a wall. On fullofsecrets the through-wall tiles lie in another sealed pocket.
+- 11:24: **averyfineline vs Finals: we lose a starvation race we were winning** (scratch kingrace.py and racecut.py).
+  - Both seats end in king kills, at r127 (A) and r113 (B). Finals' bank was 0 from r115 (A) and r95 (B), with their king at 480 and 336 HP, starving. About 40 more rounds of our king's life would flip both cells.
+  - In A we had 14 babies at our king to their 4 at r65 and 8 to their 16 by r95.
+  - Finals laid 41 rat traps each game, and 38 and 41 fired on us (1,790 and 1,980 trap damage, 13 deaths each). We laid none. The trap families are closed (39 attempts).
+- 11:24: **The wounded lone king lingers** (scratch heirscan.py and heirwin.py over every dumpcache replica game; 287 distinct games after removing seed-identical replays).
+  - Trigger: a lone king at 150 health or less, with 8+ babies and 100+ global cheese. It fires in 22 of 127 losses and 3 of 160 wins. In 16 of the 22 losses our king lived 20+ more rounds.
+    - arrows A vs Varun (18785): the king was at 150 or less from r501 and 4 HP by r1380, and died at r1508 to one enemy rat. We had 20 babies and 434-784 banked over r1380-1505, while Varun's king starved from r1470.
+    - thunderdome A vs Varun: 150 or less from r320 to r436, with 21 babies and 975 banked.
+  - Locally, z8b as B vs agrab fires on arrows at r1327 (lost r1861) and on evileye at r1095 (lost r1571).
+  - No attempt ever formed a second king because the first was wounded. KING_FLEE u6v moved the king; FORM, CASH and END_KING form for income, rescue or the endgame.
+- 11:24: **z9c registered: z8b + HEIR** (new switch, one ledgered branch at the top of King.formation, K 20 with G.settle).
+  - The wounded lone king names END_KING's site: ringSite, a clear 3x3 off its body away from the enemy start, else pickFormSite. There is no round, income or FORM_WAR_FROM gate.
+  - It keeps the site open and names it again after FORM_TTL without a king. Babies join through formKing, and the new king takes their health (up to 600).
+  - Twin zhr (HEIR_BABIES 1000000) never acts. Hashes: z9c 83f261539dff, zhr 8d32430d530c.
+  - Falsifiers:
+    1. zhr replays z8b exactly on the cq24 twin cells.
+    2. z9c forms an heir on arrows B or evileye B vs agrab and wins at least one of them.
+    3. z9c wins all 13 cq19 games, with transfer at least 0.97x 84,793.
+    4. The s7/s6 gates.
+    5. The replica rules.
+  - Chain ~/diag26b/cq24 (21 games) started 19:22 UTC.
+- 11:24: **z8b replica block 1 (#263, set 2) partial:** 12 of 16 matches in (19563-19574): 36 cells, 33 alike, D 3 (+clockwisdom B vs Varun; -Hike B vs YokoOno, -clouds A vs Varun), net -1, t -0.58. Icarus and Merlin (4 matches) are still queued.
