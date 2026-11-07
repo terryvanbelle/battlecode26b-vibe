@@ -1,0 +1,7 @@
+name=z6k
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=76b06370
+created=2026-11-07 01:46 PST
+purpose=z3x + FORM_NET100 200 (one Cfg constant; u0t's dose, which reached the replica only inside the u0z bundle): a second king forms only while 75% of the measured income beats both kings' upkeep by 2 a round (trusted rate100 - 400 >= 200). where_are_you vs abrk A seed 1 (~/diag26b/cq3d/wy_z5n_s1, wy_z6i_s1): z5n's king reported inc 415 at r700 (trusted 311, so net -89 against two kings' 400, which passes the incumbent's -100), formed king 2 at r741, and both builds then spent r950-1300 with two kings on a bank of 0-250. u0t's local diag (ng1 vs s9s, 20 cells) was +5 -3, with where_are_you A and B among the gains
+falsifiers=(1) mechanism: chain ~/diag26b/cs3, z3x vs z6k on where_are_you seeds 0-3 (araid/abrk, both seats, 16 cells each). z6k must form fewer second kings on where_are_you and lose no more cells than it gains there; (2) screen vs zd172 on the s6 gates, where it must not lose a cell in which z3x's second king formed and lived to the end; (3) replica rules

@@ -7111,3 +7111,11 @@
   - z5n lost one king around r1300 and its last king recovered to win on points. z6i kept both and lost both by r1447.
   - cq6 final (72 games): z5n, z6h and z6i won 14 cells each, and z6i matches z6h on every cell. CASH_BABIES 12 changed no result.
   - **A lead from this:** on where_are_you both builds spend 350 rounds with two kings the income cannot feed. A second king that starves takes the bank down with it.
+- 01:47: **z6k = z3x + FORM_NET100 200** (bots/z6k/SNAPSHOT; compiled on the VM, 21141150d752). A second king forms only while 75% of the measured income beats both kings' upkeep by 2 a round: trusted rate100 - 200 x (kings + 1) >= 200, about 8 a round measured.
+  - Why: the incumbent's -100 passes a king the income cannot feed. On where_are_you (abrk A, seed 1) z5n's king had inc 415 at r700, trusted 311 against two kings' 400, a net of -89. King 2 formed at r741, and both builds then spent 350 rounds with two kings on a bank of 0-250.
+  - Prior evidence: u0t (the same dose on u0n) was +5 -3 over 20 local cells against s9s, with where_are_you A and B among the gains. It reached the replica only inside the u0z economy bundle (#116, D 2, net 0) and was never tested alone.
+  - Screen **zd204** is next after zd200. Mechanism chain **~/diag26b/cs3** (z3x vs z6k on where_are_you, seeds 0-3, both opponents and seats) runs after cs2.
+  - Falsifiers:
+    1. z6k forms fewer second kings on where_are_you and loses no more cells there than it gains.
+    2. The s6 gates, losing no screen cell where z3x's second king formed and lived to the end.
+    3. The replica rules.
