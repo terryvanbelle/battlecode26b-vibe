@@ -7105,3 +7105,9 @@
   - That is 1 cell, under the pre-registered 3-cell bar, so the single-seed verdict does not stand and **z6j is reinstated**: resubmitted as #253, with its 12 saved set-3 rows back in research/panel/queue.tsv.
   - Counted honestly over seeds 0-3, z6i's rescue changed 4 of 16 where_are_you cells and lost all 4. The harm is conditional and rare, but it is real. The replica's where_are_you cells (vs Finals, both seats, on set 3) test it directly, since its games are deterministic per build.
   - cs2 (fullofsecrets and rose, seeds 1-2, 32 games) now tests whether the line's seed-0 gains replicate.
+- 01:46: **The seed-1 where_are_you flip is chaos, not a rescue cost** (dumps ~/diag26b/cq3d/wy_z6i_s1 and wy_z5n_s1, abrk A, seed 1).
+  - z6i named one site, (24,15) at r523-530, a leader and three joiners, with no formation. The games split at r524, when the leader's neighbour 11286 walks to the site.
+  - The banks match to r650, and both builds form a second king by r750. From r950 to r1300 both hold two kings on an almost empty bank. z5n's is the lower of the two (37 and 1 at r1000-1050, against z6i's 188 and 168).
+  - z5n lost one king around r1300 and its last king recovered to win on points. z6i kept both and lost both by r1447.
+  - cq6 final (72 games): z5n, z6h and z6i won 14 cells each, and z6i matches z6h on every cell. CASH_BABIES 12 changed no result.
+  - **A lead from this:** on where_are_you both builds spend 350 rounds with two kings the income cannot feed. A second king that starves takes the bank down with it.
