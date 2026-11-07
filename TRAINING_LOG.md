@@ -7101,3 +7101,7 @@
 - 01:13: **z3x resubmitted** (#252), so the replica's ranked games play the incumbent while z6j's block is withdrawn (precedent: u6x's #230). The 4 z6j matches already sent were created under #251 and play z6j. If the seed chains reinstate z6j, it is resubmitted with its saved rows.
 - 01:24: **z6j PASSED screen zd203** (vs zd172): n 44, D 3 (+araid evileye B, +araid starvation B; -abrk evileye A), net +1, t +0.57. Picks/100 32.29 vs 32.54 (per-cell z +0.06); pick amount per round 1.026x (z +0.25); transfer 1.039x; 0 overruns.
   - Its replica block stays withdrawn until the seed chains (cs1, cs2) settle the CASH mechanism question.
+- 01:40: **Seed chain cs1** (z5n vs z6i on where_are_you, seeds 1-3, araid/abrk, both seats; scratch seedpair.py): 12 cells, 1 flip (abrk A s1 to z5n: z6i lost at r1447 with 5,982 transferred against 13,527). The other 11 cells are alike, and 10 of them are the same game round for round (the rescue never fired).
+  - That is 1 cell, under the pre-registered 3-cell bar, so the single-seed verdict does not stand and **z6j is reinstated**: resubmitted as #253, with its 12 saved set-3 rows back in research/panel/queue.tsv.
+  - Counted honestly over seeds 0-3, z6i's rescue changed 4 of 16 where_are_you cells and lost all 4. The harm is conditional and rare, but it is real. The replica's where_are_you cells (vs Finals, both seats, on set 3) test it directly, since its games are deterministic per build.
+  - cs2 (fullofsecrets and rose, seeds 1-2, 32 games) now tests whether the line's seed-0 gains replicate.
