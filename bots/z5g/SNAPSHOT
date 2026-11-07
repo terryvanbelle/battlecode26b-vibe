@@ -1,0 +1,10 @@
+name=z5g
+source=bots/zl0
+source_sha=c585a2762c96
+commit=b8534bcf
+created=2026-11-06 22:08 PST
+
+z5g = zl0 + RISK_TTL 40 (new switch; Cfg.RISK_TTL, TrapRisk.TTL = Cfg.RISK_TTL; constant-folded, so no bytecode
+change). TrapRisk marks an enemy baby's three front tiles and avoids every tile within Chebyshev 1 of a live mark;
+the marks lived 150 rounds. With RISK_TTL 40 they live 40. The switch bot for z5h (z3x + RISK_TTL); see
+bots/z5h/SNAPSHOT for the evidence and the falsifiers.

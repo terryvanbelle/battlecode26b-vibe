@@ -1,0 +1,26 @@
+name=z5h
+source=bots/zl0
+source_sha=c585a2762c96
+commit=b8534bcf
+created=2026-11-06 22:09 PST
+
+z5h = z3x + RISK_TTL 40 (tools/bundle.sh z5h zl0 z3x z5g; new switch, constant-folded, no bytecode change). TrapRisk
+marks every seen enemy baby's three front tiles, and a baby's step avoids tiles within Chebyshev 1 of a live mark
+while no enemy is within dist2 20 and Nav.stall < 8. The marks lived 150 rounds; now 40. The TTL was never varied
+(attempts.csv: TRAP_RISK only ablated whole, u3p, and gated by map area, u3s).
+
+Evidence (scratch trapage.py over z3x's 144 cached reference-block games, sets 3/1/2): of the 4,995 enemy rat traps
+our rats set off, 67% fired within 2 rounds of the lay, 85% within 10, 89% within 20, 93% within 40, 97.8% within 150.
+Stash B vs YokoOno (18683 g0; scratch roomshare.py, engshare.py): in r40-300, 94% of our rat turns were inside the
+walled home pocket (YokoOno's: 10-25% inside its own), and 44% of all our rat turns were inside with no enemy within
+dist2 20, where the mask steers. Our middle-band (y 8-21) rat-rounds in r1-300: 408 of 6,888 (as A in 18682 g0: 1,938
+of 6,229). Locally vs araid as B the share inside falls to 0.13-0.20 by r150. Whether stale marks are what holds the
+rats in is not shown; z1m-z1p (flow), u5x (SYM_FILL) and z3v (WALL_HOLD) targeted the same pocket by other routes.
+
+Falsifiers, registered before any z5h game:
+1. Screen zd188 (vs zd172) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+2. Replica: the block rules plus the transfer floor (0.9x) against z3x's same-set block.
+3. Replica cost side: our rat deaths to enemy rat traps per game over the block must not exceed 1.15x z3x's on the
+   same set (deathtally.py). Benefit side, on blocks that hold YokoOno Stash B: our middle-band rat-rounds in r1-300
+   must exceed z3x's 408. Either failing drops it.
