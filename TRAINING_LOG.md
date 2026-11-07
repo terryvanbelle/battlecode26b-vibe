@@ -7401,3 +7401,16 @@
 - 09:45: **zd238 (z7x s7) vs zd205: n 48, D 5, net -1, t -0.44.** Picks z +1.61, transfer per round 1.026x, pick amount 1.013x, 0 overruns on our side. The s7 gates pass. zd239 (z7x s6) is queued after z7z's screens.
 - 09:45: **z7x's replica block** (19527-19533 vs set 2): 21 cells, all alike.
 - 09:45: **VM disk** was 2.1 GB. Pruned 29 replica replays older than 36 h and deleted old diagnosis dirs (~/diag26b rz, rz2, rz3, sa, tw, cq7, cq11). It is now 2.9 GB.
+- 09:49: **z8a registered: a bundle of z7z, z7u and z7o** (bots/z8a/SNAPSHOT). z7z is the coop attacker delivery on z7x's trail. z7u is the SWAP_LOADED loaded swap plus CASH_READ_LEFT. z7o is LOAD_FLEE. Each change is ledgered on z3x.
+  - Replica blocks run at 16 matches an hour, so one bundle block replaces three.
+  - It was built by applying z7u's and z7o's diffs against z3x to z7z. One Cfg hunk was placed by hand. It compiles on the VM (hash c498d3b6ab74).
+  - Chain ~/diag26b/cq18 (seed 0, 2 at a time beside the screens) covers cq14's 11 games, where z8a must lose no cell z7z won. It adds:
+    - arrows A vs abrk: 0 overruns, the z7u cell;
+    - averystrangespace A vs araid: fewer cat deaths than z7z, the z7o cell;
+    - rose A vs agtr: transfer at least z7z's, the z7m stem cell.
+  - Queue: zd242 (z7z s7, running), zd243 (z7z s6), zd239 (z7x s6), zd244/zd245 (z8a s7/s6), then zd241, zd236/zd237 and the ablations. The component screens stay as a fallback. If cq18 fails, zd244/zd245 come off the queue.
+- 09:49: **z7x's replica losses so far are wars** (field_report, 19529-19533). They are the same 4 cells z3x lost in its block:
+  - dirtpassageway A vs AdamTan12_Finals: kings destroyed r1209, 99 of our babies killed by enemies;
+  - streetsofnewyork B vs YokoOno: r917, 50 killed;
+  - ratsareants A vs Varun: r806, 70 killed;
+  - averystrangespace A vs YokoOno: points 44-55 at r2000, transfer 4,665 to 14,155.

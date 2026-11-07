@@ -1,0 +1,7 @@
+name=z8a
+source=bots/z7z
+source_sha=1b67390cb033
+commit=9bc910eb
+created=2026-11-07 09:49 PST
+purpose=bundle of three changes, each on z3x and each ledgered: z7z (z7x's trail and per-trip reset + ATK_DELIVER 100 with ATK_DELIVER_COOP: in cooperation an attacker with 100+ raw delivers before attack()), z7u (z7m's SWAP_LOADED 30 / SWAP_HOME 10 loaded swap past empty allies near home + CASH_READ_LEFT 6000) and z7o (LOAD_FLEE 50: loaded fighters and attackers keep GATHER_CAT_DIST from a cat in view). Built by applying z7u's and z7o's diffs against z3x to z7z (one Cfg hunk placed by hand). Replica blocks take an hour each at 16 matches an hour, so one bundle block replaces three. Its own screens replace z7u's s7 (zd241) and z7o's (zd236, zd237). Component records: z7z 11/11 on cq14's games (z7x 8/11); z7u s6 passes (zd240, t +1.00, 0 overruns); z7o's falsifiers 1-2 held (averystrangespace A vs araid 15 cat deaths to z3x's 17).
+falsifiers=(1) bundle chain ~/diag26b/cq18 (seed 0): on cq14's 11 games z8a loses no cell z7z won (z7z won all 11); on arrows A vs abrk z8a has 0 overruns; on averystrangespace A vs araid our cat deaths are fewer than z7z's in the same cell; on rose A vs agtr z8a's transferAmt is at least z7z's; (2) the s7 and s6 gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules, block 1 after z7x's block
