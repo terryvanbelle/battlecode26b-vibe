@@ -1,0 +1,23 @@
+name=z4h
+source=bots/z4g
+source_sha=c585a2762c96
+commit=e378f2b
+created=2026-11-06 19:47 PST
+
+z4h = z4g + SIDE_ANY (Cfg.SIDE_ANY; Baby.sideLook). z4g turns only toward a side holding a never-seen probe tile; z4h
+also glances when neither side does, alternating left and right by glance (a tie in never-seen probes also
+alternates; z4g sent ties left). So every walking turn that leaves the turn unused, carries no rat, has no cat in
+view, is not a rusher's, and comes 20+ rounds after the last enemy rat was seen ends facing sideways. The next step
+turns back first, so a walk glances every other step.
+
+Why: cheese spawns on tiles already seen. On rift (~/diag26b/sl, araid both seats, r1-200), z4g's never-seen probes
+turned the rat on 4.2-4.4% of steps (z1z 0%). They left the side-only share of our half's cheese tile-episodes at 13.7%
+and 16.8%, against z1z's 12.9% and 11.2%, and the seen share at 72.6% and 70.4% against 73.4% and 78.4%.
+
+Falsifiers, registered before any z4h game:
+1. Screen zd180 (vs zd136) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+2. Mechanism (~/diag26b/sl2: the sl cells, z4h only, against z1z's sl games; conemiss.py r1-200). The side-only share
+   of home cheese tile-episodes must fall by at least half against z1z's, and the seen share must rise by 2+ points.
+   Summed pickups by r200 must rise, and z4h must not win fewer of the 20 cells than z1z. Any one failing drops it.
+3. Replica: the block rules, plus the transfer floor against the twin.
