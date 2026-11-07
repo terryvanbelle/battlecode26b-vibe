@@ -246,7 +246,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Replica scoring (twin-anchored; pass explicit match IDS, others' matches sit in the ranges):
   set 3 `contest.py paired 13248-13291 IDS --crown 12130-12163`; set 1 `paired 12771-12813 IDS --crown 11549-11677`;
   set 2 `paired 12838-12899 IDS --crown 11678-11702`; set 4 `paired 16848-16863 IDS` (u6x reference, 28 of 48).
-  Order: sets 3, 1, 2, 4. Block scripts `build/block_v4sN.sh` (they touch research/panel/*.json: `git checkout
+  Order (u6x reign): sets 3, 1, 2, 4; z3x reign: see Block order in State. Block scripts `build/block_v4sN.sh` (they touch research/panel/*.json: `git checkout
   research/panel/` after). IDS: `contest.py matches --pages 8 | awk '$1>LAST && $2=="OK!" && $3=="unranked" &&
   ($4=="vibe26b"||$7=="vibe26b")'`, then `contest.py fetch --new --pages 8`. Transfer floor (u9p family): field_report
   xUs per game >= 0.9x the twin (set 3: 3,968; set 1: 4,133): rsync the 16 match dirs to the VM's ~/diag26b/rp/
