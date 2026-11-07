@@ -1,0 +1,7 @@
+name=z7v
+source=bots/z7t
+source_sha=686bedb6c025
+commit=d8f81596
+created=2026-11-07 08:43 PST
+purpose=z7t + HUNGRY 300 (existing switch, one Cfg constant): while global cheese is under 300 every rat carrying cheese, attackers included, delivers before fighting or running errands, and z7t's trail now gets carriers home. On fullofsecrets A vs araid (local cq10) z7t's gatherers delivered 840 and fighters 440, but its attackers picked 8,360 and delivered 20 while the team starved at r1074. z7r (HUNGRY 300 on z3x) did not move fullofsecrets because its carriers could not reach the pocketed king.
+falsifiers=(1) mechanism (chain ~/diag26b/cq12, seed 0, against z7t's cq10 and z3x's cq7/sa/rz): over fullofsecrets vs araid/abrk (both seats), clockwisdom A/B and mincemeat A vs araid, z7v wins at least 1 cell more than z7t, or attackers deliver at least 1,000 in fos A vs araid, and loses no cell z7t wins; (2) the s7 and s6 gates; (3) the replica rules
