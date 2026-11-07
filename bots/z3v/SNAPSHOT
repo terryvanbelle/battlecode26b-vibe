@@ -1,0 +1,29 @@
+name=z3v
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=16b57a9
+created=2026-11-06 16:50 PST
+
+z3v = z1z + ledger + WALL_HOLD (new switch; Cfg.WALL_HOLD, Baby.behindWall). Babies stop holding against an enemy
+behind a wall. faceEnemy passes over an enemy at Chebyshev 2 with no open tile beside both rats (FACE_REACH's reach1
+test). war() neither holds a standoff against nor walks round to a nearest enemy at Chebyshev 3-4 whose straight tile
+line crosses a known wall tile flanked across the line by wall, dirt or the map edge (Chebyshev 2: reach1). The
+exceptions are prey and king-guard targets (hunting) and an enemy at our threatened king. The rat goes on with its
+errand. Both hooks are ledgered (G.settle, K 20).
+
+Evidence (replica dumps, 73 cached games; scratch walled2.py): of 138k held 'w'/'f' baby turns (tag w or f, position
+unchanged), 68k faced a nearest enemy rat whose walk (8-way BFS, walls blocked) is 6+ tiles longer than Chebyshev.
+39k of them are 'f' at Chebyshev 2 with a detour of 16+. As a share of all our baby turns: corridorofdoom vs Varun 15%,
+minimaze vs Xzibit 8%, EscapeTheNight vs waxmango 8%, Stash vs YokoOno 8%, cheesebottles vs nzjt 6%. On Stash seat B
+(z3q 18345 g1), our fighters stand on the pocket floor (13-15, 4-6) facing YokoOno's middle across the wall row,
+and 310 of our 6,752 rat-rounds in r1-300 were in the middle, against 1,672 as seat A.
+FACE_REACH alone (u4n, block 1 D 3, t -0.58; z0p's pipes mechanism held) left war() to take up the same hold as 'w'.
+
+Falsifiers, registered before any z3v game:
+1. Screen zd170 (vs zd136) on the s6 gates: t <= -1.5, picks z <= -2, transfer per round < 0.97x, any overrun.
+2. Mechanism (~/diag26b/wh: corridorofdoomanddespair, minimaze, cheesebottles, EscapeTheNight and pipes vs araid
+   and abrk, both seats, against z1z's games in the same cells): held w/f turns facing an enemy with a detour of 6+
+   (walled2.py) must fall by at least half. z3v must not win fewer of the 20 cells than z1z, and its summed transfer
+   must be at least 0.95x z1z's. Any one failing drops it.
+3. Replica: block rules plus the transfer floor against the twin. On set 3 (Stash vs YokoOno, seat B), our rat-rounds
+   in the middle band (y 8-21) over r1-300 must rise above z1z's 310, or the mechanism did not transfer there.
