@@ -96,7 +96,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 23:03 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 23:38 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen control: **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
@@ -107,24 +107,23 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   18722-18725, 18736-18739, 18745-18748, 18750-18753 (z3xr2.jsonl). IDs also in /dev/shm/z3x_ids.txt, z3x_ids2.txt,
   z3x_ids3.txt. Set 4 = 18760-18763, 18783-18786, 18797-18800, 18810-18813 (done at 22:30; IDs in
   /dev/shm/z3x_ids4.txt; replays in VM ~/diag26b/rp and /dev/shm/rp, match.json in bc26b-galaxy-replays; twin rows
-  ~/diag26b/z3xs4.jsonl). Next: submit the candidate (`tools/galaxy26/contest.py submit bots/NAME -m TEXT`), then
-  `bash build/block_v4s3.sh` (set 3 first), `git checkout research/panel/v4-setN.json`.
-- **Candidates (all z3x bundles):** z5a = z3x + THROW_SAFE (passed zd183; cleared for the replica). z5c = z3x +
-  THROW_ADAPT (passed zd185, D 5 net -1, not submitted). z5d = both: REJECTED at zd186, 84 overruns, all in araid
-  arrows B (42 per copy). The replay (~/diag26b/ov5d/d) puts them at r1880-2000: 30 rats packed within 5 of the king
-  after the CASH_END recall, no second king; z5a's game on that cell formed 2 kings and stayed under the limit. z3x's
-  144 cached replica games show no over-limit turn after round 1 (~/diag26b/ovcensus.py PKG), so the crowd overrun is
-  latent, not a field problem. z5j (z5d + RISK_TTL) withdrawn with it.
-- **Trap-age line (RISK_TTL):** TrapRisk.TTL 150 -> 40 (z5g switch on zl0). z5h = z3x + RISK_TTL 40 **passed zd188**
-  (D 3, net +1, t +0.57, 0 overruns). z5k = z5a + RISK_TTL 40 (**zd191**, playing), z5i = RISK_TTL 15 dose arm
-  (**zd189**). Falsifiers in each SNAPSHOT (z5h's #3: trap deaths/game <= 1.15x the twin's, YokoOno Stash B
-  middle-band rat-rounds r1-300 > 408).
-- **Symmetry line (22:49):** z5m = z3x + SYM_KING_SEEN (switch z5l): the round-1 king rules out each live symmetry
-  whose twin of its start it senses with no enemy robot near it (21 of 98 replica game-sides have such a twin).
-  Screen **zd192** queued after zd189; mechanism games ~/diag26b/sk (scratch skcheck.py prints the king's sym= by
-  round; keepout: z5m mask 5 from r1, z3x 7 until r50-100).
-- **Next replica candidate:** z5k if zd191 passes, else z5a. Queue after zd192 reaches the closed lines (zd141,
-  zd132): add a new candidate before zd192 finishes.
+  ~/diag26b/z3xs4.jsonl). Submit: `tools/galaxy26/contest.py submit bots/NAME -m TEXT`, then
+  `bash build/block_v4sN.sh` (set 3 first, then 1, 2, 4), `git checkout research/panel/v4-setN.json`.
+- **On the replica: z5a** (#249, submitted 23:18) = z3x + THROW_SAFE (passed zd183). Set-3 block queued at 23:18 (12 sent,
+  Icarus and Merlin, 4 matches, in the drain queue). Score it against ~/diag26b/z3xb1.jsonl. Also run
+  `~/diag26b/ovcensus.py z5a` on its dumps: THROW_SAFE's tryThrow costs about 5,300 a turn (see 23:38).
+- **Overrun cause found (23:26):** after the r1880 CASH_END recall, cashTick read every squeak of the last 5 rounds,
+  costing 3-9k a turn for each of about 30 crowded rats. **CASH_READ** (z5n) reads rounds r-2..r and skips copies of
+  the best site: same picks, exact until r1880, 0 overruns (~/diag26b/ov5n vs ov5k).
+- **Screen queue:** zd193 = **z5n** (z5k + CASH_READ = z3x + THROW_SAFE + RISK_TTL 40 + CASH_READ; running), then
+  zd194 = **z5o** (z5n + THROW_ADAPT; exact merge, overrun check passed in ~/diag26b/ov5o), then the closed lines
+  (zd141, zd132): add a new candidate before zd194 finishes (about 01:30).
+- **Next replica candidate after z5a:** z5o if zd194 passes; else z5n if zd193 passes. RISK_TTL dose: 40 (z5h, zd188)
+  and 15 (z5i, zd189) both pass; the bundles carry 40.
+- **Rejected tonight:** z5k (zd191: D 3, net +3, t +1.77, but 6 crowd overruns; CASH_READ fixes them), z5m
+  (SYM_KING_SEEN; mechanism falsifier: lost streetsofnewyork A, which z3x won; zd192 pulled), z5d (overruns).
+- Engine: no third king after r1200 (MAX_NUMBER_OF_RAT_KINGS_AFTER_CUTOFF 2, RAT_KING_CUTOFF_ROUND 1200), so a
+  2-king points loss cannot be flipped by an endgame king. Messages live 5 rounds (MESSAGE_ROUND_DURATION).
 - Dropped tonight: z5f, z3w (WALL_HOLD, do not revive), z4f, z4g, z4h. Closed diagnoses with no candidate: starvation
   with cheese held (ATK_DELIVER, HUNGRY, DRY; CASH needs a bank >= 50), reactive baby traps (11 attempts), seat shift,
   fewer babies (u5t), RISK_FRESH/RISK_ADAPT.
