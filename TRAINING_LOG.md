@@ -7707,3 +7707,24 @@
   - fullofsecrets B vs araid: 26 grabs and 23 wriggles. The ferries circle at Chebyshev 5-10 from the king's sealed pocket, and one 320-raw ally was taken 9 times between r548 and r708 without getting closer. The helpers' time came out of gathering.
   - zd262 partial (40 of 48 s7 cells vs z9f's zd254): 27 wins each, no flips, 26 ally grabs, transfer per round 0.98x. On ordinary maps the ferry barely acts. zd262 and zd263 were pulled.
   - Verdict: on the held-cheese maps the loss is the route home (spiral, sealed pocket), not the carry speed. The ferry line closes unless a route fix comes first. The route fixes TRAIL, TRAIL_BUG, BFLOW and FLOW_FIRST are closed.
+- 15:43: **z9e passes replica block 1** (set 2: 19813-19816, 19824-19831, 19835-19838 vs 18722-18725, 18736-18739, 18745-18748, 18750-18753): 48 cells, 43 alike, D 5 (+YokoOno streetsofnewyork B, +Varun clockwisdom B, +Merlin fullofsecrets B; -Icarus TheHeist A, -Varun clouds B), net +1, t 0.45. Block 2 (set 4, `build/block_v4s4.sh`) is in research/panel/queue.tsv: the hourly limit refused all 16, and drain-loop.sh sends them.
+- 15:43: **Knifefight vs Merlin is a seat split, parked.** z3x loses it 9 of 9 as A and wins 9 of 9 as B. Merlin's king walks NW on round 1 from either seat, so it does not mirror its own move. As A it walks into us and is swarmed; as B it walks away. That is the only seat-split cell on knifefight. One cell cannot pass the acceptance rule.
+  - Chain cq38 (z3x vs agrab, araid, abrk, agtr, arush, agaim and agrw, both seats, seed 0): z3x won all 7 as A and lost as B to agrw, agtr and araid. That is the reverse of the replica split, so there is no local stand-in.
+- 15:43: **Rose A vs spsquared (points loss, 38-61):** one king against one, and our transfer share was 21.9%. As B we won 50-49 with two kings to their one. Recorded under the closed points-loss line (one king short, and poor).
+- 15:43: **King damage and Merlin's throws** (scratch kingdmg.py and throwsrc.py, VM dumpcache): 220 of the 229 throw hits on our king against Merlin are our own rats, grabbed and thrown back. Every counter on record has been tried (rescue, king bite, THROW_ADAPT, THROW_SAFE). The king moves once every 4 rounds and cannot dodge.
+- 15:43: **Enemy rat traps, the largest one-sided loss line, closed for now** (scratch trapcen.py, trapwhy.py, flankval.py, trapnone.py, richtrap.py; VM dumpcache).
+  - Opponents lay 28-81 rat traps a game: Finals 81, Icarus 61, Varun 59, spsquared 50, Xzibit 47 and YokoOno 28; Merlin and collegejunior lay about 4. About 95% fire on us, 7,293 of about 9,400 within 4 rounds of the lay. We lose 9.5-13 rats a game to them, and they lose 0.1-0.2 to ours (we lay none).
+  - Engine (engsrc RobotControllerImpl.processTrapsAtLocation, InternalRobot.getDropped/hitGround/hitTarget, GameWorld.triggerTrap):
+    - A trap fires on any enemy rat that enters a tile within r² 2 of it: by a move, a drop, a throw landing or a throw hit.
+    - It deals 50 damage and sets a 30-turn move cooldown; the victim can still act.
+    - Placement checks only our own team's traps, so canPlaceRatTrap leaks nothing about enemy traps.
+    - RobotInfo carries the enemy's raw cheese, not its cooldowns, so a fresh lay cannot be seen.
+  - Victims' moves (tag, share of fires against share of all our turns):
+    - flank (k) 5.2% vs 0.2%, about 22x; kF 3.5% vs 0.2%.
+    - aimCarry (T) 6.3% vs 0.5%, about 12x; TF 3.4% vs 0.3%.
+    - faceEnemy fighter (fF) 8.4% vs 1.0%; war (w) 8.0% vs 1.4%.
+  - The trades still pay. 43% of flank turns end in a grab that turn or the next, and only 4.3% fire a trap. On aimCarry turns, 20.4% grab and 22.8% throw against 2.4% fired.
+  - The 31.7% of fires with no decodable tag are mostly kills: in 2,621 of 2,978 the victim dies that round, mostly from 50 HP after an earlier trap (1,226). The previous turn's code is spread out (wF, fF, a, M, f, C, T).
+  - Avoidance is closed on record: RISK_FRESH (t0b), RISK_IN_FIGHT, RISK_GATHER (s5u, s8g, u9n), FACE_HOLD (u4x: fires -8%) and RISK_TTL. So is laying traps: s-series, u0q, u3d, u4m, u5o, u9j and z0q (RAW_TRAPS, rejected at block 3).
+  - The re-read's untried lead was bank-scaled laying ("spend idle resources", research/prior/REREAD_2026-11-06.md). On the 243 z3x-era replica games (match 18600 on), our bank is under 1,000 in 83% of rounds in losses (74% in wins). Only 4% of the fires in losses (157 of 4,005) come while we hold 2,000 or more, 140 of them against spsquared. A rich-bank trap would act almost only in games we win, so the lead closes.
+- 15:43: **The persistent array is never allocated by the engine**, so it cannot carry state between games.
