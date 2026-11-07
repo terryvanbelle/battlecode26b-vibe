@@ -7119,3 +7119,5 @@
     1. z6k forms fewer second kings on where_are_you and loses no more cells there than it gains.
     2. The s6 gates, losing no screen cell where z3x's second king formed and lived to the end.
     3. The replica rules.
+- 01:48: **VM disk** was at 2.1 GB. Pruned the screen replays of closed lines: zd178 (z4f), zd179 (z4g), zd181 (z4i), zd182 (z3w), zd183 (z5a), zd185 (z5c), zd186 (z5d), zd189 (z5i), zd191 (z5k). Their results.jsonl and logs are kept, and zd188 (z5h) and zd193 (z5n) keep their replays for RISK_TTL. 2.6 GB free.
+- 01:48: **z6j's set-3 block is fully sent** (19038-19053; the drain sent all 12 rows at 01:40). It is scored with `paired --dir /dev/shm/rp /dev/shm/kd/z3x_s3.txt 19038-19053` once all 16 matches are in.
