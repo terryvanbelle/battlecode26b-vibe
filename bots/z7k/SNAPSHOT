@@ -1,0 +1,7 @@
+name=z7k
+source=bots/z7i
+source_sha=dbea4a9368a0
+commit=c4c0b931
+created=2026-11-07 06:51 PST
+purpose=z3x + BITE_BOOST 5 / BITE_BOOST_DMG 3 / BITE_BOOST_FLOOR 600 (z7i) + INCOME_TRUST 100 (z7j): the pair. z7i's bite boost raised kills per bite 33% on zd227 but cut spawns 5% through Econ, which counts the bite cheese as lost income; z7j trusts the full measured income. Built from z7i by hand (bundle.sh refuses a changed Cfg line); the only diff from z7i is the INCOME_TRUST line and its comment
+falsifiers=(1) mechanism: over the s7 and s6 screens (vs zd205 and zd172), summed spawns at least z3x's (z7i alone: -5%), and kills per 100 bites on enemy babies at least +20% over z3x on the DefaultMedium, tiny and Stash cells; (2) the s7 and s6 gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules. It is screened only if z7i and z7j both pass their screens
