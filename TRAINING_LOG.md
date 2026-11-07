@@ -7518,3 +7518,16 @@
     2. The s7 and s6 gates (zd250 vs zd205, zd251 vs zd172, both at the head of the screen queue).
     3. The replica rules.
   - Block 1 (set 2, `bash build/block_v4s2.sh`) is sent: 16 requests, 16291-16306. If falsifier 1 or 2 fails, the block is void and z9d is rejected.
+- 11:47: **cq25 holds z9d's falsifier 1**: 0 overruns on keepout B and A vs araid and arrows A vs abrk, all three won (keepout B at r2000, transfer 29,358). zd239 (z7x s6, for the record) vs zd172: n 44, D 1 (-abrk evileye B, lost r1896), net -1, t -1.00, 4 overruns, so z7x fails s6 on overruns as expected.
+- 11:47: **Own-rat ammo on z3x's replica losses** (scratch kthrow.py, sets 2 and 4, 27 losses): our kings took 4,756 from bites and 3,172 from enemy throws of our own rats. 2,680 of the 3,172 came in five Merlin losses, each a king kill: cheesefarm A 500 and B 580, knifefight A 600, DefaultLarge A 420 and B 580.
+  - Traced hits (scratch ammotrace.py, 18812 g0 and 18752 g0): our thrown rats had 4-58 health and stood 2-5 from our king when 90-100 health Merlin rats grabbed them. Their health fell 100, 58 or 46, 16 or 4, hit by hit, and each throw also costs the thrown rat 42.
+  - Also closed, no candidate:
+    - A thrown rat's hit never triggers a backstab (GameWorld.backstab is called only on an enemy grab, a bite on a non-cat and a rat-trap trigger), so we could throw our own rats during cooperation. But cooperation ends at a median r32 (scratch stabs.py, 244 games; the opponent breaks it in 161 of 220), too soon to reach a king.
+    - MOAT (u2b, -2 on the replica) and disintegrate (u9l) are closed.
+- 11:47: **Stable both-seat losses across every build on the replica** (scratch poormaps.py over all of /dev/shm/rp): canyoudig vs Xzibit 0/14, averyfineline vs Finals and Icarus 0/22, starvation vs Xzibit 0/10, whatsthecatdoin vs Merlin 0/16, DefaultMedium vs Varun and collegejunior 0/26, wallsofparadis vs Finals 0/18, Stash vs YokoOno 3/26.
+  - On canyoudig (2 mines, about 1.7 cheese a round each side, under a king's upkeep of 2), Xzibit out-picks us 1,100 to 570 (econ_report 18745 g1). Both sides spend about 2,000 on spawns. Our babies go from 20 at r60 to 0 at r280 while Xzibit keeps 8-12 harvesting. So holding the bank alone would not flip it.
+- 11:47: **z9e registered** (z9d + THROW_ADAPT; bots/z9e/SNAPSHOT; d05e49d26971), applied as the exact zl0-to-z5b diff (hunk offsets 0 and +29). u7i (THROW_ADAPT on u6x) pooled t +2.14 over two replica blocks and fell only to its Merlin falsifier. z5c (THROW_ADAPT on z3x) passed s6 and never went to the replica alone.
+  - Falsifiers:
+    1. Chain ~/diag26b/cq26 (agrab, arrows B and evileye B): z9e's own-rat throw hits on our kings at most 0.75x z9d's.
+    2. The s7 and s6 gates (zd252 and zd253, queued after zd251).
+    3. On the replica: our-rat throw hits on our kings vs Merlin and collegejunior at most half of z3x's reference, and two lost YokoOno or Varun cells that the reference won drop it.

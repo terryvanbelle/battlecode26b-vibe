@@ -1,0 +1,7 @@
+name=z9e
+source=bots/z9d
+source_sha=079f1aba8a7f
+commit=e2a97ed1
+created=2026-11-07 11:46 PST
+purpose=z9d + THROW_ADAPT (z5b's ledgered switch, exact patch of the zl0->z5b diff, hunks at offsets 0 and +29): once a baby has seen an enemy rat carrying one of ours it never retreats to our king again. On z3x's set 2/4 replica losses (scratch kthrow.py, 27 games) our kings took 3,172 damage from enemy throws of our own rats, 2,680 of it in five Merlin losses (cheesefarm A 500 and B 580, knifefight A 600, DefaultLarge A 420 and B 580), each a king kill; the thrown rats were wounded (4-58 health) and 2-5 from our king when grabbed by 90-100 health Merlin rats (scratch ammotrace.py). u7i (THROW_ADAPT on u6x) pooled t +2.14 over two replica blocks before its Merlin falsifier (5.3 throw hits a game, bar < 4); z5c (on z3x) passed s6 (zd185 t -0.44, picks z +1.96, transfer 1.051x) and was never on the replica alone.
+falsifiers=(1) chain ~/diag26b/cq26 (seed 0): on arrows B and evileye B vs agrab, z9e's enemy throw hits on our kings with our own rats (summed over both games) are at most 0.75x z9d's in the same cells; (2) s7 and s6 gates (zd252 vs zd205, zd253 vs zd172); (3) replica: the block rules, plus in its block games vs nzjt_TheComplexMerlin and thewaxmango_collegejunior our-rat throw hits on our kings at most half of z3x's reference games per game (kthrow.py), and two cells vs YokoOno or Varun that the reference won and z9e lost drop it (u7i's failure mode)
