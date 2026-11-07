@@ -1,0 +1,7 @@
+name=z7p
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=1e244453
+created=2026-11-07 08:08 PST
+purpose=z3x + CASH_KINGS 1 + CASH_BABIES 12 (existing switches from the z6f-z6j CASH line, without THROW_SAFE, THROW_ADAPT, RISK_TTL 40 or CASH_READ): CASH's mid-game rescue formation for a lone king (bank 60-250, 12+ babies by the rat cost: the heaviest of 3+ loaded babies 5+ from every king names a clear 3x3 at itself; the promotion banks the formers' raw). Starvation is 42 of our king deaths in z3x's 64 replica king-kill losses; in 9 of those (clockwisdom x5, fullofsecrets x4) our babies held 1,700-5,190 raw as the king starved. The line's local gain replicated over seeds (cs2, fullofsecrets and rose, +5 -1), and z6j was rejected on set 3, which holds none of the target maps; the targets are on set 2 (fullofsecrets vs Merlin A/B, clockwisdom vs Varun B) and set 4 (clockwisdom vs Xzibit A/B). CASH_READ is left out so the CASH_END endgame plays exactly as z3x's.
+falsifiers=(1) mechanism (chain ~/diag26b/cq7, seed 0): over fullofsecrets vs araid and abrk (both seats, z3x alongside), clockwisdom A/B vs araid (z3x lost both: sa) and rose A vs araid, z7p wins at least 2 more cells than z3x and forms a rescue king in the starving games; (2) the s7 and s6 gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules, block 1 on set 2
