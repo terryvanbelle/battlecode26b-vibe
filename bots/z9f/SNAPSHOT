@@ -1,0 +1,7 @@
+name=z9f
+source=bots/z9e + the z3x->z7g diff (exact merge)
+source_sha=d224af05d1f3
+commit=601db40b
+created=2026-11-07 12:09 PST
+purpose=z9e (z3x + TRAIL (z7x) + CASH_READ_LEFT 6000 + THROW_ADAPT) + z7g's five switches: RICH_FIX one-king with RICH_FIX_BANK 1500 and RICH2_BANK 3300 (z6y), THREAT_WALL + THREAT_WALL_REACH 5 (z6z/z7d), SLOT_HANDOFF (z7a), FORM_DEFEND + FORM_DEFEND_AGE 25 (z7b/z7f). Built as bots/z9e + the z3x->z7g diff with packages renamed (patch -F0; Baby offsets +3/+11/+24, Cfg hunk 3 appended before the last brace by hand); every file's diff from z9e matches z3x->z7g line for line. z7g passed s7 zd223 (D 4 +4 -0, t +2.07: Stash A vs agtr, atrap3 and agrab, cheesefarm B vs agtr) and s6 zd224, and pooled D 3 (+2 -1), t 0.58 on replica sets 2 and 4 (rejected at block 2). A bundle so the replica sees TRAIL, THROW_ADAPT and z7g's switches in one build: single ledgered switches flip 0-2 cells a block.
+falsifiers=registered 12:10 PST while chain cq27 had started but no game had finished. (1) chain ~/diag26b/cq27 (seed 0): z9f wins at least 3 of Stash A vs agtr, Stash A vs agrab, cheesefarm B vs agtr (z7g won all three in zd223; z9d lost all three in zd250) and arrows B vs agrab (z9e won it in cq26; z9d lost it); (2) the s7 and s6 gates (screens zd254 vs zd205, zd255 vs zd172: t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules (block 1 on set 2 rejects at t <= 0; block 2 on set 4 pooled needs t >= 2 and D >= 4)
