@@ -1,0 +1,18 @@
+name=z5j
+source=bots/zl0
+source_sha=c585a2762c96
+commit=24fbb77a
+created=2026-11-06 22:25 PST
+
+z5j = z3x + THROW_SAFE + THROW_ADAPT + RISK_TTL 40 (tools/bundle.sh z5j zl0 z3x z4i z5b z5g): z5d plus z5h's switch.
+Its sorted sources differ from z5d's by RISK_TTL's lines only. The replica plays one block per ~4 hours (16
+matches at the hourly limit), so the three switches that pass their screens share one replica slot. The evidence is
+in bots/z5a, z5c, z5d and z5h's SNAPSHOTs.
+
+Falsifiers, registered before any z5j game:
+1. Screen zd190 (vs zd172) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun. z5j goes to the replica only if zd186 (z5d) and zd188 (z5h) also pass; if zd188
+   fails, z5d goes instead, and if zd186 fails, z5a.
+2. Replica: the block rules plus the transfer floor (0.9x) against z3x's same-set block; z5d's falsifier 3 (kinghits
+   and kthrown against the twin, the YokoOno/Varun cells) and z5h's falsifier 3 (trap deaths per game at most 1.15x
+   the twin's; YokoOno Stash B middle-band rat-rounds above 408). Any one failing drops it.
