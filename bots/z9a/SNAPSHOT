@@ -1,0 +1,7 @@
+name=z9a
+source=bots/z8b
+source_sha=f732fc947093
+commit=
+created=2026-11-07 10:35 PST
+purpose=z8b + PICK_TRIP 50, PICK_FLOOR 60 (new switch: partial pickup with pickUpCheese(loc, amount), never used by any earlier attempt; CARRY_MAX and ATK_CARRY skipped whole piles). A baby takes only the part of a pile that keeps its load at or under the load whose walk home (Chebyshev steps to within transfer reach of the nearest king, D (1 + load/100) move turns) takes 50 turns, and never under 60: about 900 at 5 steps, 400 at 10, 150 at 20, 60 from 30. The rest stays on the tile. Target: big single pickups (death drops) that are never delivered. z3x's set 2/4 replica games (bigpick.py, 96 games): pickups of 300-699 were delivered by their rat in 31% (wins) / 0% (losses), 700+ never (9 of 9 died first), under 100 in 79% / 69%. cq19: fos A abrk attacker 10182 took 1,558 at r784; fighter 11580 took 2,218 at r1019. Each check sits in a ledger hook (K 20, the ATK_DELIVER hook's form); twin zpk (PICK_TRIP 1000000) never acts.
+falsifiers=(1) twin zpk replays z8b exactly on cq19's 13 games (chain ~/diag26b/cq20, seed 0: same winner, rounds, xfer and pick in every game); (2) mechanism on cq20: z9a wins all 13 (z8b won 13 of 13 in cq19), its total xfer is at least 0.97x z8b's 84,793, and its xfer on the six clockwisdom / fullofsecrets games is at least z8b's 20,012; (3) the s7 and s6 gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (4) the replica rules

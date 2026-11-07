@@ -7444,3 +7444,12 @@
 - 10:23: **z8b goes to the replica as #263** (block 1 on set 2: `bash build/block_v4s2.sh`, hourly limit, 16 queued). Its screens run alongside, zd246 (s7) started 18:23 UTC and zd247 (s6) is next, under the same rule: if either fails its gates, the block is void.
   - zd243 (z7z s6) was stopped by hand at n 26 (D 0, t 0.00; runs/zd243/ABORTED). zd239 (z7x s6) stays queued after z8b's screens, to put the overruns on record.
   - z8b's missed rose A vs agtr clause (transfer 3,873 vs 4,229) came in a game won at r872 instead of r1042. Per round that is 4.44 against 4.06. This reading is after the fact, and the clause stays recorded as missed.
+- 10:35: **Big pickups are not delivered** (scratch bigpick.py over z3x's set 2/4 replica games, 96 in the dump cache: each single pickup by our babies and its rat's next event).
+  - Pickups under 100: delivered by the same rat in 79.3% (wins, n 23,810, mean 36.7 rounds to it) and 68.5% (losses, n 4,774).
+  - 100-299: 56.0% (n 232, 100.9 rounds) and 21.2% (n 52).
+  - 300-699: 30.8% (n 26, 232.6 rounds) and 0% (n 15; 10 died first, 5 held at the end).
+  - 700+: never. 8 of 8 in wins and 1 in losses; all 8 in the wins died first.
+  - Mines spawn 20 at a time, so piles this size are drops of the dead. A unit carried adds 1% to every cooldown, so a rat that takes 1,000 moves and bites at a eleventh of the rate, in the fight where the pile fell. In cq19 (z8b, fos A vs abrk) attacker 10182 took 1,558 at r784 and fighter 11580 took 2,218 at r1019.
+- 10:35: **z9a registered: z8b + PICK_TRIP 50, PICK_FLOOR 60** (new switch; bots/z9a/SNAPSHOT; eda33d37f13d). It uses the engine's partial pickup, pickUpCheese(loc, amount), which no earlier attempt used; CARRY_MAX (s3l, u6s, u6t, u6w) and ATK_CARRY (t0l, u2n, u5z) skipped whole piles and cut delivery.
+  - A baby takes only the part of a pile that keeps its load at or under the load whose walk home takes 50 move turns, D (1 + load/100) with D the Chebyshev steps to within transfer reach of the nearest king. The cap is never under 60, so a far gatherer still reaches DELIVER_AT 30. About 900 at 5 steps, 400 at 10, 150 at 20, 60 from 30. The rest of the pile stays on its tile.
+  - Each check sits in a ledger hook (K 20, the ATK_DELIVER hook's form). Twin zpk (PICK_TRIP 1000000) never acts and must replay z8b exactly on cq19's 13 games. z9a must win all 13 (z8b did), with total transfer at least 0.97x z8b's 84,793 and at least z8b's 20,012 on the six clockwisdom and fullofsecrets games. Chain ~/diag26b/cq20 started 18:35 UTC, 2 at a time at nice 19.
