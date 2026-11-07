@@ -1,0 +1,16 @@
+name=z5i
+source=bots/z5h
+source_sha=27538571b5bf
+commit=ef136284
+created=2026-11-06 22:13 PST
+
+z5i = z5h with RISK_TTL 15: z5h's dose arm (z3x + RISK_TTL 15). Of the 4,995 enemy rat traps z3x's rats set off in its
+three reference blocks, 85% fired within 10 rounds of the lay and 89% within 20 (bots/z5h/SNAPSHOT has the rest of
+the evidence). Constant-folded: z5i differs from z5h by the one Cfg value.
+
+Falsifiers, registered before any z5i game:
+1. Screen zd189 (vs zd172) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+2. Dose: if zd188 (z5h) fails its gates and zd189 passes, z5i does not go to the replica alone: the line needs both
+   screens to agree in sign on net (or both pass) before either is submitted.
+3. Replica (if it goes in z5h's place): z5h's falsifiers 2 and 3, with z5i's numbers.
