@@ -7074,3 +7074,10 @@
 - 00:41: **z6j = z6i with RISK_TTL back to 150** (bots/z6j/SNAPSHOT; compiled on the VM, 96e43e614c46), i.e. z3x + THROW_SAFE + CASH_READ + CASH_KINGS 1 + CASH_BABIES 12. It is the CASH line's replica candidate without RISK_TTL 40, which is the suspected source of z5n's three set-3 losses. THROW_SAFE stays, being inert on the replica (z5a, 48 of 48 alike).
   - Screen **zd203** (z6j vs zd172) is at the queue head, after zd201. zd202 (z6h, on z5n's base) follows it.
   - z6j's CASH mechanism is z6i's, and chain cq6 tests it.
+- 00:53: **z5n REJECTED at replica block 1** (#250; set 3, 19022-19037; `paired --dir /dev/shm/rp /dev/shm/kd/z3x_s3.txt 19022-19037`): 48 cells, 44 alike, D 4 (+YokoOno Stash A; -Icarus mincemeat A, -Xzibit minimaze A, -spsquared rose A), net -2, t -1.00, and block 1 rejects at t <= 0. The two Merlin matches lost all six games, as z3x's did.
+  - mincemeat vs Icarus A: z3x won at r689 by killing their king (2,534 transferred to 1,284). z5n's king starved at r316 with the bank at 1 (525 to 545). The games diverge at r129.
+- 00:53: **z6f PASSED screen zd201** (vs zd172): n 44, D 5 (+abrk bed A, +araid evileye B; -abrk bed B, -araid bed B, -araid tiny B), net -1, t -0.44. Picks/100 33.79 vs 32.54 (per-cell z +2.17); pick amount per round 1.053x (z -0.09); transfer 1.054x; 0 overruns.
+  - The losses are THROW_ADAPT's, as with z5o. z6f is not the candidate: z6j carries its CASH switch without THROW_ADAPT or RISK_TTL.
+- 00:53: **z6j submitted** (#251) with its set-3 block (4 sent, 12 in the drain queue), so the replica is not left idle after z5n's reject.
+  - Its screen zd203 started at 00:52, and chain cq6 tests its CASH mechanism through z6i. Either one failing withdraws the block.
+  - Truce timing is not a lead. averyfineline vs Icarus is lost at r222 in both builds after our RUSH_BREAK attacker bit at r16, but the area is closed: u6o (no RUSH_BREAK) was neutral over two blocks, and PEACE was rejected at block 3 (u3z).
