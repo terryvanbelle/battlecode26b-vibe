@@ -1,0 +1,22 @@
+name=z4d
+source=bots/z3z
+source_sha=bbf8f3b9345b
+commit=9c193d3
+created=2026-11-06 18:55 PST
+
+z4d = z3z + RUSH_FROM 8 (was 4; RUSH_TO 16). The rush index is the cost step at birth (live babies, newborn included,
+rounded down to 4), so z3z's first 3 babies gather and babies 4-15 rush, and through r300 every replacement born with
+4-15 alive rushes. z4d: the first 7 babies gather, 8-15 rush (8 rushers, not 12), and a replacement born with fewer
+than 8 alive gathers. RUSH_FROM was never tuned (attempts find RUSH_FROM: 0 rows); RUSH_TO 12 (u0o, 8 rushers taken
+off the end) and 20 were rejected, and this takes them off the front instead.
+
+Evidence (replica dumps, 89 cached games, scratch pickeff.py): cheese picked per baby-round in r1-200, ours/theirs:
+Finals 0.23/0.49, Icarus 0.19/0.29, Hugo 0.19/0.33, Varun 0.29/0.41, Merlin 0.24/0.41, spsquared 0.24/0.26,
+waxmango 0.27/0.28, while we field more babies (17-23 a round to their 13-17). 64 of z1z's 80 losses on the four twin
+sets end before r1000.
+
+Falsifiers, registered before any z4d game:
+1. Screen zd176 vs zd136 on the s6 gates (t <= -1.5, picks z <= -2, transfer per round < 0.97x, any overrun drops it).
+2. Mechanism, on zd176 against zd174 (z3z, same cells): pick amount per round must rise (ppr.py z > 0), or fewer
+   rushers did not buy picks. King-kill wins before r300 must not fall by more than 2.
+3. Replica: block rules plus the transfer floor against the twin.

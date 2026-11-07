@@ -1,0 +1,15 @@
+name=z4e
+source=bots/z3z
+source_sha=bbf8f3b9345b
+commit=9c193d3
+created=2026-11-06 18:55 PST
+
+z4e = z3z + RUSH_FROM 8 + RUSH_TO 20 (z4d's front shift keeping the rush near its size): the first 7 babies gather,
+babies 8 up to the cap (MAX_BABIES 18, so 8-17) rush: 10 rushers, not 12, and they leave after the gatherers. Through
+r300 a replacement born with fewer than 8 alive gathers. Evidence as bots/z4d/SNAPSHOT.
+
+Falsifiers, registered before any z4e game:
+1. Screen zd177 vs zd136 on the s6 gates.
+2. Mechanism, on zd177 against zd174 (z3z): pick amount per round must rise (ppr.py z > 0); king-kill wins before r300
+   must not fall by more than 2.
+3. Replica: block rules plus the transfer floor against the twin.

@@ -689,3 +689,5 @@ zl0,,,,debug copy of z1z for the mine-discovery read (not a candidate)
 zmd,,,,debug copy (ml= mine-list trace) for the mine-discovery read (not a candidate)
 zsk,,,"06:12: **z1v's seekers never reach the cats; z1w registered.** In chain sk so far, on averystrangespace z1v's seat A did 0 peace cat damage over 1,243 peace rounds, against u9p's 5,862 in seat B. u9p's own mirror show...",
 zsk2,,,"06:19: **z1r passes screen zd129** (u9p + RICH2_BABIES 80) vs u9p zd61: n 44, D 1, net −1, t −1.00. Per-round pickAmt ratio 1.015 (z +2.21); the per-rat-turn picks, 30.35 vs 34.30, are exempt by its SNAPSHOT because t...",
+z4d,2026-11-06 18:55,z3z,"z3z + RUSH_FROM 8 (never tuned): the first 7 babies, and replacements born with fewer than 8 alive, gather; 8 rushers (8-15), not 12. Replica r1-200 picks per baby-round are about half the top opponents' (Finals 0.23/0.49, Merlin 0.24/0.41)",pending: screen zd176 (vs zd136; mechanism vs zd174)
+z4e,2026-11-06 18:55,z3z,"z3z + RUSH_FROM 8 + RUSH_TO 20: the first 7 babies gather, 8 up to the cap rush (10 rushers, not 12)",pending: screen zd177 (vs zd136; mechanism vs zd174)
