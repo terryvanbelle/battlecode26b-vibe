@@ -96,29 +96,25 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 06:34 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (06:34):**
-  - **z7g on the replica**: #258 = z3x + z6y (RICH_FIX one-king, RICH_FIX_BANK 1500, RICH2_BANK 3300) + z7d
-    THREAT_WALL_REACH 5 + z7a SLOT_HANDOFF + z7f (FORM_DEFEND + FORM_DEFEND_AGE 25). Both screens passed (zd223 s7
-    D 4 +4 t +2.07; zd224 s6 D 0, picks z +1.52, 0 overruns).
-    - Block 1 (set 2; 19225-19228, 19283-19294): 47 of 48 alike, D 1 (+1 Varun ratsareants A), t 1.00.
-    - Block 2 (set 4) queued 06:31: 8 sent (19308-19315), 8 in research/panel/queue.tsv (drain, ~4 an hour).
-      Score `paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 NEWIDS`, and pooled with
-      block 1. Block 2 rejects at t <= 1; accept at pooled t >= 2 with D >= 4.
-  - **z7i BITE_BOOST** (5 cheese for +3 on a baby bite while 600 stay banked): zd227 (s7) passed narrowly; kills per
-    bite +33%, but spawns fell 5% (4,454 to 4,219) because Econ counts baby spending as lost income (Econ.surplus
-    blocks spawns past CORE_BABIES 18). zd228 (s6) queued; falsifier 1 on its DefaultMedium/tiny/Stash cells.
-  - **z7j INCOME_TRUST 100** (z3x + trust the income measure fully, to undo that coupling): zd229 (s7), zd230 (s6)
-    queued. Falsifier 1: spawns +3% over both screens, no more starved kings. If z7i and z7j both pass, bundle them.
-  - **KING_BOOST** z6u/z6v: zd207 (z6u s7) playing, then zd208-210. They carry the same Econ coupling at a smaller
-    dose; read their spawn counts.
-  - Queue (VM runs/screenq.txt): zd207 now, zd208, zd228, zd229, zd209, zd230, zd210, then the ablations zd195-199.
-  - **Dropped this morning:** z7h KILL_KHP (the local rush cells are r59-r65 seat races); z6y as a single.
-  - **bed seat-B losses** are a cat race decided by the backstab rule (the backstabber can never lay cat traps); a
-    switch for it would be a one-map switch, not built.
-  - **Stable losses on sets 1 and 3**: only 4 cells are lost by both z3x and the twin while won in the other seat, so
-    the in-band pool is the twin-flipped cells. The loss census is in the 05:28-05:50 log entries.
-  - VM disk 3.5 GB free (06:33: pruned 1,268 replica replays older than 36 h, /root/bc26-replays-pruned-20261107-0640.txt).
+## State (2026-11-07 07:59 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (07:59):**
+  - **z6u on the replica**: #259 = z3x + KING_BOOST_K 7 / FLOOR 500 (both screens neutral). Block 1 (set 2) has 12
+    of 16 in (19366-19369, 19381-19388): 36 cells alike, D 0. The Icarus and Merlin rows are to come; block 1 rejects
+    at t <= 0, so it is likely out. Score `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753
+    19366-19369,19381-19388,NEW`. The next replica candidate is whichever of z7m and z7j passes both screens first.
+  - **z7m SWAP_LOADED** (z3x + z7l: a baby carrying 30+ within Chebyshev 10 of our king carries an empty ally past;
+    rose A stem jam). Falsifiers 1-2 held. Screens zd234 (s7, playing) and zd235 (s6, next).
+  - **z7j INCOME_TRUST 100** passed s7 (zd229: t +0.33, spawns +3.3%, xfer 1.037x). s6 zd230 follows zd235.
+  - **z7o LOAD_FLEE 50** (z3x + z7n: loaded fighters and attackers flee a cat in view, as gatherers do). Mechanism
+    and ledger games in VM ~/diag26b/rz4 (base z3x games in ~/diag26b/sa and rz3/eq3_z3x). Screens zd236, zd237
+    after zd230. Control cat deaths per 1000 rat-turns: zd205 1.037, zd172 1.184.
+  - Queue (VM runs/screenq.txt): zd234 now, zd235, zd230, zd236, zd237, zd209/zd210 (z6v, KING_BOOST dose arm),
+    zd233 (z5i requeued), the ablations zd195-199.
+  - **Closed this morning:** z7g (rejected at replica block 2), z7i BITE_BOOST (s6 t -1.77), z7k (dropped),
+    formation census, held-at-end cheese, the araid sweep (07:59 entry), the in-band set 2/4 losses (07:43 entry).
+  - **bots/zl0 is the ledgered z1z, not z3x**; z3x's FORM_WAR_FROM changes formation timing, so pair a switch's
+    mechanism games against z3x only after bundling it (`bundle.sh CAND zl0 z3x SWITCH`).
+  - VM disk 2.6 GB free (07:50).
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
