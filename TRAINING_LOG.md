@@ -7002,3 +7002,19 @@
 - 23:37: **z5i (z3x + RISK_TTL 15) PASSED screen zd189** (vs zd172): n 44, D 2 (+araid evileye B, +araid starvation B), net +2, t +1.43. Picks/100 per-cell z +1.65; pick amount per round 1.011x (z +1.15); transfer per round 1.019x; 0 overruns. Both doses pass with the same sign (z5h's 40: net +1, t +0.57, picks z -0.45, transfer 1.061x), so z5i's falsifier 2 holds. Against z5h directly: D 3, net +1. The bundles keep 40 (registered first, in z5n and z5o); 15 is the alternative if the 40 bundle fails on the replica.
 - 23:33: **z5o = z5n + THROW_ADAPT** (bots/z5o/SNAPSHOT; compiled on the VM, eb748885b4af). It was built with `bash tools/bundle.sh z5o zl0 z3x z4i z5b z5g`, whose sources equal the withdrawn z5j's, plus z5n's CASH_READ hunk (no fuzz). z5o's diff from z5n equals z5j's diff from z5k (same sorted diff), so the merge is exact. THROW_ADAPT left the bundles only because z5d overran in the CASH_END crowd, which CASH_READ removes. Against nzjt, 6 of z3x's 12 king-death losses in sets 3/1/2 were throwHit kills (kingkill.py), and thewaxmango's tiny and DefaultMedium kills are throwHit too. The screen's bots do not grab our retreaters, so the gain can show only on the replica. Overrun check ~/diag26b/ov5o is running; screen **zd194** is queued after zd193. Queue: zd193 (z5n, now), zd194 (z5o), then the closed lines.
 - 23:38: **z5o falsifier 1 passes** (~/diag26b/ov5o, araid vs z5o on arrows, seed 0). 0 overruns where z5d had 42, and it won at r2000 with 2 kings (picks 12,412, transfer 11,243). Its max rat turn is 17,048. The turns at 16,000+ (658, against z5d's 894) are mid-game, r650-1500, and their hottest segment is stage 20-21 (pickUp, then tryThrow after a move while carrying) at about 5,300: THROW_SAFE's flight grid, gated at THROW_BC 7,000 left. That is the next latent budget risk, so z5a's replica blocks get the ovcensus.py check.
+- 23:46: **Ablation sweep 11-06** (the cadence's ablation was overdue: none since the 11-04 sweep u8z-u9g, 25+ attempts ago). The five ablated bots are z3x with one never-ablated switch from the z1z bundle turned off, one Cfg line each, compiled on the VM:
+
+  | Bot | Switch removed | Screen |
+  |---|---|---|
+  | z6a | SEEK_IDLE 20 -> 0 (IDLE_SHIFT and FIGHT_SHIFT act only through its idle test, so they go too) | zd195 |
+  | z6b | FIGHT_SHIFT | zd196 |
+  | z6c | CAT_RING | zd197 |
+  | z6d | CAT_LAY | zd198 |
+  | z6e | RICH2_BABIES 80 -> 0 | zd199 |
+
+  They are queued after zd194, ahead of the closed lines. Falsifiers (each SNAPSHOT):
+  1. The s6 gates vs zd172. Failing means the component pays locally and stays.
+  2. If one passes, its cells identical to zd172 are counted. All identical means it is inert locally, and only a replica block can decide.
+  3. A passing ablation goes to the replica only if its flips net +1 or more, then faces the block rules against z3x's reference blocks.
+
+  Probes that gave no candidate (scratch kcount.py over z3x's 192 reference games, sets 3/1/2/4): the opponent formed a second king in 24 of our 71 losses (median r491), and we did in 16 (median r559). In wins it was 11 of 121 for them and 47 for us (median r919, mostly END_KING). An earlier second king at war is the closed FORM_WAR_FROM finding (2-12 with one by r250), so nothing is built from this.

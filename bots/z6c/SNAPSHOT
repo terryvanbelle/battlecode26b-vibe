@@ -1,0 +1,7 @@
+name=z6c
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=14317489
+created=2026-11-06 23:45 PST
+purpose=ablation sweep 11-06 (TRAINING_ALGORITHM cadence: none since the 11-04 u8z-u9g sweep, 25+ attempts ago): z3x without one component of the z1z bundle that was never ablated. Change: CAT_RING true -> false; one Cfg line, nothing else.
+falsifiers=(1) screen vs zd172 (z3x) on the s6 gates (t <= -1.5, picks z <= -2, ppr z <= -2, transfer < 0.97x, any overrun): failing means the component pays locally and stays; (2) if it passes, cells identical to zd172 are counted: all identical = inert locally, verdict only from a replica block; (3) a passing ablation goes to the replica only if its flips net >= +1 (removal must gain, not just tie), then the block rules apply against z3x's reference blocks.
