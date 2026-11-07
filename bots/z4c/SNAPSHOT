@@ -1,0 +1,17 @@
+name=z4c
+source=bots/z3y
+source_sha=b06bf6849ca7
+commit=99f9ba4
+created=2026-11-06 18:38 PST
+
+z4c = z3y with SEAT_SHIFT 2: as team A the king skips its spawns in rounds 1-2. It is a parity control on the local screen,
+not a replica candidate. Seat-B games replay z1z's. zd173 (z3y vs zd136) flipped 6 seat-A cells against the archetypes:
+gained abrk bed and araid DefaultMedium; lost abrk DefaultSmall, abrk canyoudig, araid evileye and araid
+learn_your_lesson. Readings: (parity) what matters is the lag mod 2, so a two-round shift plays like no shift; (after)
+what matters is our i-th baby acting after theirs, so two rounds play like one; (perturbation) any shift scrambles the
+cell.
+
+Falsifiers, registered before any z4c game (screen zd175 vs zd136 and zd173):
+1. Parity: on the 6 cells, z4c matches z1z's result on 5+. After: z4c matches z3y's on 5+. Neither: the flips are
+   perturbation, and SEAT_SHIFT's local effect is noise that the replica (z3z, falsifier 3) must show is not.
+2. The s6 gates hold (as for any screen), and every seat-B cell replays zd136.
