@@ -96,23 +96,27 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 03:57 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (03:57):** candidates on z3x, each one switch, each with a diagnosed s7 or replica mechanism:
-  - z6y (RICH_FIX one-king + RICH2_BANK 3300; #255 set 1 done: 48 cells, 47 alike, D +1 superioristhmus A, its
-    target).
-  - z6z THREAT_WALL (Stash A: 5/6 vs 2/6).
-  - z7a SLOT_HANDOFF (cheesefarm B vs agtr).
-  - z7b FORM_DEFEND (evileye A vs agtr: the king lives to r1300, still lost).
-  - Screens, s7 first: zd216 (z6y s6, playing), then zd217/219/221 (s7) and zd218/220/222 (s6). zd215 (z6y s7) is D 0.
-  - Mechanism chains in ~/diag26b: tw2 (z6z maze maps), sh (z7a), fd (z7b, 64 games). Score with `chainsum.py DIR`.
-  - The twin z6t (#256) is playing its set-1 block (from 19130). Then score z6y twin-anchored:
-    `paired --dir /dev/shm/rp TWIN 19090-19101,19126-19129 --crown $(z3x_ids2)`.
-  - Next: a bundle (`bash tools/bundle.sh`) of the switches that pass, sent to control sets 2 and 4.
-  - rk1 (big maps, z3x vs z6y) is 24/24 cells alike. z6y's transfer is up 5-10% on superioristhmus. clockwisdom is
-    lost 3/4 by starvation, a closed line.
+## State (2026-11-07 05:58 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (05:58):**
+  - **z7g on the replica**: #258, block 1 on control set 2. It is the bundle z3x + z6y (RICH_FIX one-king, RICH_FIX_BANK
+    1500, RICH2_BANK 3300) + z7d THREAT_WALL_REACH 5 + z7a SLOT_HANDOFF + z7f (FORM_DEFEND + FORM_DEFEND_AGE 25).
+    - 19225-19228 played (12 cells alike with z3x). The rest of the 16 rows drain from research/panel/queue.tsv
+      at about 4 an hour.
+    - Score with `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 NEWIDS`; reject at t <= 0.
+  - **z7g screens**: zd223 (s7) passed (D 4 +4, t +2.07, transfer 1.041x, 0 overruns). zd224 (s6 vs zd172) is
+    playing; failing it withdraws #258.
+  - **z7i BITE_BOOST** (5 cheese for +3 on a bite of an enemy baby while 600 stay banked): screens zd227 (s7, next)
+    and zd228 (s6, after zd208). Falsifier 1 reads kills per 100 bites on their DefaultMedium, tiny and Stash cells.
+    If it acts, the dose arm is BITE_BOOST 17 (+5: 7 bites a kill).
+  - **KING_BOOST** z6u/z6v: screens zd207-210 follow zd227.
+  - **Dropped this morning:**
+    - z7h KILL_KHP. Falsifier 1: the local rush cells are r59-r65 seat races, not a wounded king left alone.
+    - z6y as a single (block 2 D 0; it is in the bundle).
+  - **Stable losses on sets 1 and 3**: only 4 cells are lost by both z3x and the twin while won in the other seat, so
+    the in-band pool is the twin-flipped cells. The loss census is in the 05:28-05:50 log entries.
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
-  LAST_FLOOR 20. Screen control: **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
+  LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
   scr_eq, ovr). New switches: build on bots/zl0 (ledgered z1z, scratch, untracked; `tools/snapshot.sh NEW bots/zl0`),
   then `bash tools/bundle.sh NAME zl0 z3x SWITCH...` (not executable) to put them on the incumbent (exact merges; check the Cfg by eye).
 - **Replica references for z3x candidates:** set 3 = 18613-18620, 18623-18626, 18653-18656 (twin rows
