@@ -1,0 +1,19 @@
+name=z3t
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=234e017
+created=2026-11-06 16:00 PST
+
+z3t = z1z + tools/ledger.py + LAST_FLOOR 20 (new switch; ledgered hook in King.spawn, K 11). With 3 or fewer live
+babies (the baby cost at its base 10) every spawn floor drops to 20, so a king without income spends its upkeep
+reserve on rats rather than starving on it. Under 8 babies z1z keeps LOW_FLOOR 100 plus the cost.
+Evidence: replica dumps (lowstand.py), 27 games with 10+ rounds of <= 2 babies and >= 20 banked: 25 lost, the bank
+then 22-104. z3q's set-3 block 1: 13 of its 21 king-kill losses ended with the bank at 0-1. averyfineline vs Icarus
+(18352 A): 2 rats and 100 banked at r120, no spawn after r111, the king starved at r257 (Icarus had 4-9 rats).
+u6u (LOW_FLOOR 30 under 8 babies, u6a) went D 3 (+2 -1) at its screen and was dropped on starved kings 6 to 3.
+
+Falsifiers, registered before any z3t game:
+1. Screen zd167 (vs zd136) on the s6 gates: t <= -1.5, picks z <= -2, transfer per round < 0.97x, any overrun.
+2. Mechanism: in the screen cells that differ from z1z's, a z3t king that starved (or died) after a last-stand
+   spawn where z1z's king lived to r2000 or won counts against it; more such cells than cells gained drops it.
+3. Replica: block rules against the twin, flips outside cells where we fell to <= 3 babies falsify the ledger.
