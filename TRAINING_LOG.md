@@ -7092,3 +7092,9 @@
   - Our rat deaths in losses: 1,898, of which 748 were throws (561 on landing, 187 by throw hits), 346 enemy rat traps, 284 bites and 448 cats. In wins: 1,537, of which 233 were throws.
   - Enemy traps killed 504 of ours and ours killed 0 of theirs, since z3x lays no rat traps. That area is closed (about 15 attempts: s9a, t0c, u0q, u4m, u5o, u8f, z0q and others).
   - tiny vs collegejunior A: 43 of our 57 deaths were throws. Our bank fell from 2,488 to 290 by r100 on 23 babies, against their 1,633 on 10. The grab war is closed too (GRAB_MICRO, GRAB_SAFE), and the engine has no healing at all (HEALTH_GRAB_THRESHOLD 0), so a hurt rat can be grabbed by any fresher enemy from any side.
+- 01:11: **z6i's where_are_you araid A loss is not the failed-site pathology** (dump ~/diag26b/cq3d/wy_z6i, which reproduces cq6: starved r1129, 2,965 to 3,360).
+  - z6i named one rescue site, at r452-459: (16,15), a leader holding 441 raw and three joiners. Nothing followed.
+  - The game stayed peaceful: all of our 54 deaths and their 33 were to cats. Our bank drifted from 980 at r100 to 0 at r1000.
+  - A 7-round episode with four rats flipped the result. That points to where_are_you being chaotic at seed 0, not to a CASH harm, and the same doubt applies to the line's seed-0 gains.
+  - **Seed check:** chain ~/diag26b/cs1 plays z5n vs z6i on where_are_you, seeds 1-3, araid/abrk, both seats (24 games; scratch chain4.sh). Then ~/diag26b/cs2 plays fullofsecrets and rose on seeds 1-2 (32 games).
+  - Falsifier for the chaos reading: if z5n beats z6i on where_are_you over seeds 1-3 by 3 or more cells, the harm is real, and the withdrawal of z6j's block stands for that reason too. If not, the cq3-cq6 cells are one-seed noise in both directions, and a single-seed chain is the wrong falsifier on these maps.
