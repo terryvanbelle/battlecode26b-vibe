@@ -96,7 +96,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 00:29 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-07 01:12 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen control: **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
@@ -109,26 +109,30 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   /dev/shm/z3x_ids4.txt; replays in VM ~/diag26b/rp and /dev/shm/rp, match.json in bc26b-galaxy-replays; twin rows
   ~/diag26b/z3xs4.jsonl). Submit: `tools/galaxy26/contest.py submit bots/NAME -m TEXT`, then
   `bash build/block_v4sN.sh` (set 3 first, then 1, 2, 4), `git checkout research/panel/v4-setN.json`.
-- **On the replica: z5n** (#250, submitted 00:13) = z3x + THROW_SAFE + RISK_TTL 40 + CASH_READ (passed zd193: D 3,
-  net +3, t +1.77, every z3x screen loss gained, 0 overruns). Set-3 block: 4 sent, 12 in the drain queue (drain-loop.sh
-  sends about 4 an hour). Score with `contest.py fetch --out /dev/shm/rp IDS`, then `contest.py paired --dir /dev/shm/rp
-  /dev/shm/kd/z3x_s3.txt IDS` (z3x's set-3 block as the reference file), the transfer floor via field_report on the VM.
-- **z5a REJECTED at block 1** (00:13; 18869-18884): 48 of 48 cells alike with z3x's set-3 block, t 0. THROW_SAFE
-  changed no result on set 3.
+- **Replica now:** z6j (#251) = z3x + THROW_SAFE + CASH_READ + CASH_KINGS 1 + CASH_BABIES 12, submitted 00:52 and
+  **withdrawn 01:01** under its falsifier 1 (through z6i: cq6 where_are_you 0/4 vs z5n 3/4). Its 4 sent set-3 matches
+  (Finals, spsquared, both seats; after 19037) still play. 12 unsent rows saved in /dev/shm/kd/z6j_queue.tsv: to
+  reinstate, append them to research/panel/queue.tsv (drain-loop.sh, laptop pid 1065185, sends about 4 an hour).
+- **z5n REJECTED at block 1** (00:53; #250, 19022-19037 vs z3x set 3): D 4 (+YokoOno Stash A; -Icarus mincemeat A,
+  -Xzibit minimaze A, -spsquared rose A), net -2, t -1.00. The three losses diverge from z3x's at plain rat moves
+  (RISK_TTL suspected; firstdec.py/dumpof.py in ~/diag26b). z5a (THROW_SAFE) was 48/48 alike: replica games are
+  deterministic per build, so a block measures only the cells a build's code path changes.
 - **CASH_READ (23:26):** after the r1880 CASH_END recall, cashTick read every squeak of the last 5 rounds (3-9k a
   turn for about 30 crowded rats); z5n reads r-2..r and skips copies of the best site: exact to r1880, 0 overruns.
-- **Mid-game rescue (CASH_KINGS 1), the live line:** z6f = z5o + CASH_KINGS 1 won 10 of cq3's 16 mechanism cells
-  (clockwisdom, fullofsecrets, rose, Stash vs araid/abrk) to z5o's 7 (+3 -0), starvations 7 to 9 (~/diag26b/cq3).
-  Clockwisdom is out of its reach (single couriers, 1-3 of ours within 8; cq3d/cwA). fullofsecrets araid A missed on
-  the leader rule (cone vision: the heaviest rarely sees 2 others): **z6g = z6f + CASH_N 2** (chain ~/diag26b/cq5).
-  **z6h = z5n + CASH_KINGS 1** (no THROW_ADAPT) is the one-switch follow-up to z5n (chain cq6 after cq4).
-- **Screen queue:** zd201 = z6f (running from 00:27), zd202 = z6h, zd200 = calibration (z5n vs the nine unused
-  archetypes on tiny/DefaultMedium/Stash/evileye, 72 cells: pick the 25-75% opponents for the next screen version;
-  the araid/abrk screen is saturated, z5n 44/44), zd195-zd199 = ablations of z3x (z6a SEEK_IDLE, z6b FIGHT_SHIFT,
-  z6c CAT_RING, z6d CAT_LAY, z6e RICH2_BABIES), then the closed lines (zd141, zd132). Chain cq4 (z6f vs z5o on
-  Nofreecheese, uneasy_alliance, where_are_you, Hike) is running.
-- **Next replica candidate:** z6h if zd202 and cq6 pass (z5n + one switch); z6f's screen decides whether THROW_ADAPT
-  rides along. z5o passed zd194 at net -2 (THROW_ADAPT's local cost: bed B, tiny B, evileye B).
+- **Mid-game rescue (CASH_KINGS 1), the live line, open question = chaos:** single-seed chains say +3 -3. Gains
+  (seed 0): fullofsecrets abrk B, rose abrk A, rose araid A (cq3, cq6). Losses: where_are_you 3 cells (z6f, z6h, z6i
+  all 0/4 vs z5n/z5o 3/4). z6i (CASH_BABIES 12) stopped z6f's seven failed sites, yet still lost: one 7-round
+  rescue at r452 flipped the game (cq3d/wy_z6i). **Seed chains decide it:** ~/diag26b/cs1 (z5n vs z6i,
+  where_are_you, seeds 1-3, 24 games) then cs2 (fullofsecrets + rose, seeds 1-2, 32 games); chain4.sh, chainsum.py.
+  If where_are_you on seeds 1-3 is not 3+ cells to z5n, reinstate z6j's block. z6g (CASH_N 2) and z6h dropped.
+- **Screen queue:** zd203 = z6j (from 00:52), then zd200 = calibration (z5n vs the nine unused archetypes on
+  tiny/DefaultMedium/Stash/evileye, 72 cells: pick the 25-75% opponents for the next screen version; the araid/abrk
+  screen is saturated, z5n 44/44), zd195-zd199 = ablations of z3x (z6a SEEK_IDLE, z6b FIGHT_SHIFT, z6c CAT_RING,
+  z6d CAT_LAY, z6e RICH2_BABIES), then the closed lines (zd141, zd132, ...). zd201 (z6f) passed: net -1, its losses
+  THROW_ADAPT's (as z5o's zd194, net -2).
+- **z3x set-3 death census (01:01):** of 23 losses 20 are king kills (13 hit, 7 starved after the army was gone);
+  throws killed 39% of our rats in losses (15% in wins); enemy rat traps killed 504 of ours, ours 0 (z3x lays none;
+  trap laying is closed, about 15 attempts). Scratch kdeath.py and deathcause.py in ~/diag26b.
 - **Rejected tonight:** z5k (zd191: D 3, net +3, t +1.77, but 6 crowd overruns; CASH_READ fixes them), z5m
   (SYM_KING_SEEN; mechanism falsifier: lost streetsofnewyork A, which z3x won; zd192 pulled), z5d (overruns).
 - Engine: no third king after r1200 (MAX_NUMBER_OF_RAT_KINGS_AFTER_CUTOFF 2, RAT_KING_CUTOFF_ROUND 1200), so a
