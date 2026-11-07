@@ -7127,3 +7127,10 @@
   - Scoring on set 3 is then `paired TWIN_IDS CAND_IDS --crown 18613-18620,18623-18626,18653-18656`: a candidate game that repeats the crowning game scores 0, and the rest pair with the twin. z5n's block (19022-19037) and z6j's (19038-19053) will be rescored that way.
   - **New block order for z3x candidates:** control sets 2 and 4 first (references 18722-18753 and 18760-18813, played after the acceptance), then sets 3 and 1 once twin-anchored. z6j's block 2 goes to set 2.
   - Ranked games play z6t until z6j is resubmitted. It is the incumbent's play with ties flipped.
+- 01:54: **zd200 calibration done** (z5n vs nine archetypes on tiny, DefaultMedium, Stash and evileye, both seats, seed 0; 72 cells). z5n's wins by opponent:
+  - In band (25-75%): agrab 2/8, atrap3 3/8, agtr 4/8.
+  - Saturated: agaim 7/8, agrw 7/8, atrap 7/8, atrap2 7/8, agcap 8/8, arush 8/8.
+  - **The s6 screen is saturated:** z3x wins 45 of its 48 cells (araid 30/32, abrk 15/16). Its win t can only flip 3 losses, so s6 tells candidates apart almost only through its picks and ppr numbers.
+  - **Screen s7** = z3x vs agrab, agtr and atrap3 on DefaultMedium, Stash, evileye, tiny, bed, starvation, cheesefarm and arrows, both seats, seed 0: 48 cells. Maps were fixed before any z3x game was played. The in-band opponents are the grab, trap and throw archetypes, which matches the replica death census (throws 39% of our deaths in losses, traps 504 to 0).
+  - zd205 = z3x on s7 (control) and zd206 = z6k on s7 are at the head of the screen queue, behind zd204.
+  - **s7 gate:** paired win t on the 48 cells against zd205 must be > -1.5 (rejected at t <= -1.5), and s7 net >= +3 marks a lead. A candidate screens on s6 and s7 both; the s6 gates stand.
