@@ -7557,3 +7557,19 @@
   - It pays only for a wounded rat that would die anyway, which is too small a dose. Not built.
   - Enemy-rat ammo is different: it takes a biter out of action, which is why our CARRY_AIM throws enemy rats and Merlin throws ours.
 - 12:46: **Chain ~/diag26b/cq29: z9f vs z9d on the s7 cells at seed 1** (zd254's 48 cells, 96 games, scratch chainsn.sh: no dumps). This is a second sample of z9f's s7 edge (zd254 at seed 0: net +2, picks z +2.09) while z9d's replica block 2 plays. It informs whether z9f goes to the replica after z9d. It is not a gate.
+- 12:53: **Rose: our near-centre home mine is never found** (scratch pickmine.py and minesee.py over z3x's set-4 rose games vs YokoOno, VM dumpcache).
+  - Rose is 60x32 with VERTICAL symmetry. Each king sits in a walled pocket whose one exit is a 1-wide stem north to (7,10) (A) or (52,10) (B).
+  - As A (18783 g1, lost on points at r2000): no rat of ours came within Chebyshev 4 of (24,8) all game (0 rat-turns). We knew its twin (35,8) and picked 310 there.
+  - YokoOno took 9,175 from its own (35,8), and its picks ran 20,245 to our 6,550. Our babies sat at 20 for 1,500 rounds while the bank fell from 1,700 to 55.
+  - As B (18784 g1, won on points): no rat of ours came within Chebyshev 4 of (35,8). We worked the enemy's (24,8) instead (173 rat-turns from r380; 1,575 picked).
+  - Each mine spawned 207-281 times, so neither is empty.
+- 12:53: **zmm registered = z9f + MINE_MIRROR** (bots/zmm/SNAPSHOT; 4ba9d212de35).
+  - MINE_MIRROR is the existing switch: with one symmetry left, the king lists the our-half twin of every listed mine (owner rule #14: mirror map knowledge). Its King hook is now ledgered (K 18, G.settle). zmt (untracked) is its never-acting twin.
+  - History: u5j (MINE_MIRROR on u4s) was rejected at replica block 1 on set 1 (D 2: +collegejunior clockwisdom B, -Varun knifefight A; net 0). It never played set 4, where rose vs YokoOno is.
+  - Falsifiers (registered 12:53, after chain cq30 started, before any game finished):
+    1. Chain ~/diag26b/cq30 (seed 0, rose A and B vs agtr, araid and agrab):
+       - zmt replays z9f exactly vs agtr in both seats.
+       - zmm spends 300+ rat-turns within Chebyshev 4 of our near-centre mine in at least 4 of the 6 cells where z9f spends under 50.
+       - Over the 6 cells, zmm's summed transfer is at least 1.05x z9f's, and it loses no cell that z9f wins.
+    2. The s7 and s6 gates.
+    3. The replica rules.

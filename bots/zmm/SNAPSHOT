@@ -1,0 +1,7 @@
+name=zmm
+source=bots/z9f + MINE_MIRROR true, hook ledgered (K 18)
+source_sha=89eb6bf4cac0
+commit=91f8909f
+created=2026-11-07 12:53 PST
+purpose=z9f + MINE_MIRROR (existing switch, s4e; owner rule #14: mirror map knowledge): with one symmetry left the king lists the our-half twin of every listed mine. Rose (60x32, VERTICAL; our king in a walled pocket whose one exit is a 1-wide stem): in z3x's set-4 games vs YokoOno no rat of ours came within Chebyshev 4 of our near-centre mine in either seat (A: (24,8), 0 rat-turns all game; B: (35,8)), while we knew its twin (A picked 310 at (35,8)) and YokoOno took 9,175 from its own (35,8) in 18783 g1, which we lost on points (picks 6,550 to 20,245). u5j (MINE_MIRROR on u4s) was rejected at replica block 1 on set 1 (D 2, +1 -1, net 0) and never played set 4.
+falsifiers=(1) chain ~/diag26b/cq30 (seed 0, rose A and B vs agtr, araid, agrab): twin zmt replays z9f exactly on rose A and B vs agtr; zmm spends at least 300 rat-turns within Chebyshev 4 of our near-centre mine in at least 4 of the 6 cells where z9f spends under 50, and zmm's summed transfer over the 6 cells is at least 1.05x z9f's, with no cell z9f wins lost; (2) the s7 and s6 gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules. Registered 12:53, after cq30 started and before any game finished.
