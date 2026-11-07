@@ -1,0 +1,7 @@
+name=z7b
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=2d4a4286
+created=2026-11-07 03:42 PST
+purpose=z3x + FORM_DEFEND (new switch): at war, a baby whose king is threatened (threatenedKing(): the king's alert counts an enemy rat within dist2 18 and the baby is within DEFEND_D2 100 of it) skips formKing() and goes on to the fight branches (war() defends the king). Diagnosis (local z3x vs agtr, evileye seat A, seed 0; ~/diag26b/ev): a second-king site at (1,18) in the map corner opened at r740. From r744 one to three agtr attackers bit our king at (5,14) from 458 hp to 0 by r795, while 16 of our 20 babies (agtr had 8) stood in formKing ('K'): six inside the 3x3, and the far three tiles were unreachable past them. FORM_SAFE (u7m, rejected) stopped the king naming a site while threatened; this one leaves the site's babies free to fight and keeps the site. The hook is ledgered (K 11), so games without a threatened king during a formation replay z3x's.
+falsifiers=1. Mechanism: evileye A vs agtr (seed 0) is not lost at r795 with 16 babies in 'K', and the king lives past r800. Mechanism games ~/diag26b/fd (z7b and z3x vs araid, abrk, agtr and agrab on evileye, DefaultMedium, keepout and clouds, both seats, seed 0): rejected if z7b wins fewer cells than z3x, or forms fewer kings in total than z3x - 2. 2. Screens s6 (zd172's gates) and s7 (t > -1.5 vs zd205). 3. The replica block rules.
