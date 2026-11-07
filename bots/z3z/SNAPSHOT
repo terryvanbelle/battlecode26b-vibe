@@ -1,0 +1,17 @@
+name=z3z
+source=bots/zl0
+source_sha=c585a2762c96
+commit=732e075
+created=2026-11-06 17:58 PST
+
+z3z = z3s + LAST_FLOOR + SEAT_SHIFT (tools/bundle.sh z3z zl0 z3s z3t z3y; compiled on the VM) = z3x + SEAT_SHIFT 1.
+Every switch that passed its screen and mechanism checks: FORM_WAR_FROM 300, CASH_END 1880, END_CAT 1850 (z3s),
+LAST_FLOOR 20 (z3t), SEAT_SHIFT 1 (z3y: falsifier 1 held on 40 games in ~/diag26b/ss; screen zd173 pending).
+
+Falsifiers, registered before any z3z game:
+1. Screen zd174 (vs zd136) on the s6 gates: t <= -1.5, picks z <= -2, transfer per round < 0.97x, any overrun.
+   Every seat-B cell of zd174 must replay z3x's zd172 game (SEAT_SHIFT acts only as A); a difference is a bundling bug.
+2. If z3y fails zd173, z3z is withdrawn before the replica.
+3. Replica: block rules plus the transfer floor against the twin. Of the four seat-A cells z1z lost and won as B
+   (set 3: YokoOno 5t4rv4t10n_1337 and externalsustenance; set 1: AdamTan12_Finals DefaultSmall and tiny), at least two
+   must become wins, or SEAT_SHIFT did not transfer.
