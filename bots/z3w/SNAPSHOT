@@ -15,3 +15,16 @@ Falsifiers, registered before any z3w game:
 2. Screen zd171 (vs zd136) on the s6 gates (t <= -1.5, picks z <= -2, transfer per round < 0.97x, any overrun), and
    every zd171 cell where z3v's zd170 game equals zd136's must equal zd169's (z3s) game (the merge is exact there).
 3. Replica: block rules plus the transfer floor against the twin.
+
+Re-registration, 2026-11-06 20:26 PST (revived; source unchanged, sha 6971f9d0253e over the sorted *.java). z3w is z3x
+(on the replica, #248) + WALL_HOLD. Its old falsifier 1 failed: z3v won 18 of the 20 wh maze cells to z1z's 19 (one
+49-50 points game with equal transfer), and z3v's screen zd170 was net -1 too. That stands as evidence against a win
+effect. The revival tests the bundle on the bars that decide a replica slot, given the mechanism's size (walled holds
+8% of z1z's, transfer 1.42x on the maze cells). Falsifiers, registered before any z3w game:
+1. Screen zd182 (vs zd136) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+2. Exactness: every zd182 cell where z3v's zd170 game equals zd136's must equal z3x's zd172 game.
+3. Against zd172 (z3x): on the cells where zd182 differs from zd172, net flips must not fall below -1, and transfer
+   per round must be at least 1.00x.
+4. Replica, only if z3x is rejected or accepted first: block rules plus the transfer floor against the twin, and on
+   Stash B vs YokoOno, middle-band rat-rounds r1-300 above the 310 of z3q's 18345 g1.

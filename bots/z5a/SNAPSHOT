@@ -1,0 +1,20 @@
+name=z5a
+source=bots/zl0
+source_sha=c585a2762c96
+commit=e5ffb0d
+created=2026-11-06 20:34 PST
+
+z5a = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 + LAST_FLOOR 20 + THROW_SAFE: tools/bundle.sh z5a
+zl0 z3x z4i. It is z3x (on the replica, #248) plus z4i's THROW_SAFE, which passed screen zd181 (n 44, D 4, net -2,
+t -1.00; picks z -0.04; pick amount z -0.71; transfer per round 1.031x; 0 overruns). The merge is exact: z5a's sorted
+sources differ from z3x's only by THROW_SAFE's lines (Baby.gridKings, the two ledgered tryThrow hooks, Cfg). It is
+for the replica slot after z3x, since ledgered single switches flip one or two cells a block.
+
+Falsifiers, registered before any z5a game:
+1. Screen zd183 (vs zd136) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+2. Exactness: every zd183 cell where z4i's zd181 game equals zd136's must equal z3x's zd172 game, and every cell
+   where zd172 equals zd136 must equal zd181. A cell that breaks this is a merge fault to explain before the replica.
+3. Replica (after z3x is decided): the block rules plus the transfer floor against the twin. THROW_SAFE's mechanism:
+   our throws' hits on our own king in z5a's block games (kinghits.py) at most a third of the twin's in the same
+   blocks.
