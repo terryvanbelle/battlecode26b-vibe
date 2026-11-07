@@ -1,0 +1,7 @@
+name=z7r
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=167cc6f5
+created=2026-11-07 08:11 PST
+purpose=z3x + HUNGRY 300 (existing switch, one Cfg constant; the check already runs in z3x, so z7r plays z3x's game exactly until a carrier first goes home on it): while global cheese is under 300 every rat carrying cheese, attackers included, delivers before fighting or running errands. u5a (u4e + HUNGRY 300) passed its screen (t +2.53) and replica blocks 1-2 (pooled D 8, +6 -2, t +1.41) and fell at block 3; it was never re-tried on the incumbents since (u4s, u6x, z1z, z3x). z3x's replica king-kill losses: 42 of 64 are starvations; on fullofsecrets vs araid as A (local, seed 0) six attackers held 3,450 raw at r550 marching on the enemy king while the bank fell from 270 to 1, with one transfer from r400 to r650
+falsifiers=(1) mechanism (chain ~/diag26b/cq8, seed 0, against z3x's games in cq7 and sa): over fullofsecrets vs araid/abrk (both seats), clockwisdom A/B and mincemeat A vs araid, z7r wins at least 2 cells more than z3x or delivers at least 1.5x in the starving games, with mv=H turns present; (2) the s7 and s6 gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules, block 1 on set 2
