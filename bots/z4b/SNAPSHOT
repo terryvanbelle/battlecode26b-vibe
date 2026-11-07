@@ -1,0 +1,18 @@
+name=z4b
+source=bots/z4a
+source_sha=28e937994f6b
+commit=4d43b1c
+created=2026-11-06 18:10 PST
+
+z4b = z4a with SEAT_SHIFT_B 2: as team B the king skips its spawns in rounds 1-2. It is a control for the parity reading
+of the seat effect, not a candidate. Replica pairs (paired matches, seats swapped, ids >= 10000) show strong per-map seat
+effects. A-only/B-only wins: clouds 34/0, peaceinourtime 32/1, Stash 28/0, corridorofdoom 15/0, bed 12/4 against
+fullofsecrets 0/28, DefaultSmall 2/23, uneruesansfin 3/23, uneasy_alliance 0/19, tiny 1/18, knifefight 2/16. King-to-king
+Chebyshev parity does not separate them (most are odd on both sides). Two readings: (parity) the seat decides who has
+to step into reach first, and a delay of one round flips it, while two rounds restore it; (perturbation) any spawn
+change scrambles a self-play game, so the flips seen with z4a are noise.
+
+Falsifiers for the parity reading, registered before any z4b game (games ~/diag26b/sb and ~/diag26b/sc, seeds 0-2):
+1. On the maps where z1z self-play seat A wins 2+ of 3, z4a as B must win 2+ of 3 on most of them, and z4b as B on
+   fewer of them than z4a. If z4b flips as many maps as z4a, the reading is perturbation.
+2. On the maps where z1z self-play seat B wins 2+ of 3, z3y as A (one-round delay) must win 2+ of 3 on most of them.
