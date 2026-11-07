@@ -7620,3 +7620,23 @@
   - Screens zd256 and zd257 are out of the queue.
   - Chain cq34 (z9g vs z9f on Stash and fullofsecrets, both seats vs agtr, araid and abrk) still runs after cq33, as a diagnostic: those are the other maps where loaded rats move away from home more than toward it.
   - Replica carrier census (scratch cwcarry.py, 448 games): carrier moves that lengthen the path home, per move that shortens it, are 1.86 on clockwisdom, 1.78 on TheHeist (15 of 15 won), 1.38 on Stash (0 of 11), 1.24 on fullofsecrets (0 of 9), and 0.05-1.13 on the other 51 maps.
+- 14:05: **z9h = z9f + EXPLORE_CENTER_FROM 100000** (one Cfg value; s3c's centre-first rule turned off).
+  - With no mine known, explore() now ranks its 12 unseen samples by Chebyshev distance from the rat, as it already does once a mine is known.
+  - Why:
+    - keepout A vs araid (z9d, cq25): our king (44,23) has mines 7 and 10 away, out of its sight. At r30 our rats stood round the centre (18-32, 18-28). The king listed (47,30) at r60, and rats reached it from r100.
+    - On the replica, Finals reach the twin mines at r8 and r6; we reach ours at r172 and r98 (18615).
+    - On clockwisdom B the centre is the spiral core (cq33).
+  - Risk: s3c (the rule's origin, from Excavation) screened +0.4. s3q's three-feature ablation (DEFEND, MINE_SPREAD and EXPLORE_CENTER together) cost -4.3.
+  - Falsifiers (registered 14:05, before any game finished):
+    1. Chain ~/diag26b/cq35 (seed 0, z9h and z9f paired), keepout A and B vs araid, abrk and agtr: our first rat within Chebyshev 2 of a mine comes at least 30 rounds earlier, averaged over the 6 games, and summed transfer by r400 is at least 1.2x z9f's.
+    2. On Excavation A/B vs araid and abrk, and fullofsecrets A/B vs araid: z9h loses no game z9f won, and total transfer is at least 0.9x z9f's.
+    3. The s7 (zd258) and s6 (zd259) gates.
+    4. The replica rules.
+  - Screens zd258 and zd259 are at the front of the queue. cq35 also plays clockwisdom B vs agtr and araid for z9h; cq33 has z9f's games there.
+  - Chain cq34 (the z9g diagnostic) was stopped part-way: z9g is closed.
+- 14:07: **z9f passes replica block 1** (set 2: 48 cells, 43 alike; D 5, gained 4, lost 1, net +3, t 1.34).
+  - Gained: Finals dirtpassageway A, YokoOno streetsofnewyork B, Varun clockwisdom B, Merlin fullofsecrets B.
+  - Lost: Varun clouds B, an economic race (z3x won at r1298; z9f starved at r1398).
+  - Block 2 (set 4) is queued: 4 sent, and 12 wait on the hourly limit.
+- 14:07: **zd253 (z9e s6) passes** (vs zd172: n 44, D 6, net 0, t 0.00; picks/100 34.09 vs 32.54, z +2.02; transfer per round 0.999x; 0 overruns). z9e rides in z9f, so this is a record only.
+- VM disk: pruned 45 replica replays older than 36 h, and the game dumps of the closed chains cq19, cq34, ov243 and rz4 (their logs are kept). 2.2 GB free.

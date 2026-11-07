@@ -1,0 +1,7 @@
+name=z9h
+source=bots/z9f
+source_sha=1145577a3c0f
+commit=693e56b7
+created=2026-11-07 14:02 PST
+purpose=z9f with EXPLORE_CENTER_FROM 100000 (one Cfg value; s3c's rule off): with no mine known, explore() ranks its 12 unseen samples by Chebyshev distance from the rat, as it does once a mine is known, instead of by closeness to the map centre. keepout A vs araid (z9d, cq25): our king (44,23) has mines 7 and 10 away, out of its sight; at r30 our rats stood around the centre (18-32, 18-28), the king listed (47,30) at r60 and rats reached it from r100. On the replica, Finals reach the twin mines at r8 and r6 and we reach ours at r172 and r98 (18615). clockwisdom B (z9g, cq33): the centre is the spiral core, and the king's list stayed empty until r750. Risk: s3c was neutral (+0.4) and s3q's three-feature ablation (DEFEND, MINE_SPREAD, EXPLORE_CENTER) cost -4.3, so the rule may earn its keep on Excavation-like maps.
+falsifiers=(1) chain ~/diag26b/cq35 (seed 0, z9h and z9f paired): on keepout A and B vs araid/abrk/agtr, our first rat within Chebyshev 2 of a mine comes at least 30 rounds earlier, averaged over the 6 games, and summed transfer by r400 is at least 1.2x z9f's; (2) on Excavation A/B vs araid/abrk and fullofsecrets A/B vs araid, z9h loses no game z9f won, and total transfer is at least 0.9x; (3) the s7 (zd258) and s6 (zd259) gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (4) the replica rules
