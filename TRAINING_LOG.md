@@ -7500,3 +7500,21 @@
     5. The replica rules.
   - Chain ~/diag26b/cq24 (21 games) started 19:22 UTC.
 - 11:24: **z8b replica block 1 (#263, set 2) partial:** 12 of 16 matches in (19563-19574): 36 cells, 33 alike, D 3 (+clockwisdom B vs Varun; -Hike B vs YokoOno, -clouds A vs Varun), net -1, t -0.58. Icarus and Merlin (4 matches) are still queued.
+- 11:37: **z9c DROPPED at falsifier 2** (~/diag26b/cq24, seed 0; scratch heirdiag.py). On both target cells the heir formed and agrab's thrown rats killed it where it stood.
+  - evileye B: the heir formed at r1127 with 554 health, near our first king (13,1 to 8,3). The babies fell from 12 to 5. The first king died at r1400-1425 and the heir died at r1514; z8b and zhr lost at r1571.
+  - arrows B: the heir formed at r1365 with 416 health at (28,25), five tiles from our first king. The babies fell from 19 to 11. The heir died by r1700 and the first king, at 10 health, died at r1711; z8b lost at r1861.
+  - The second body gave agrab's throwers a second target and cost 7-15 fighters, so the game ended sooner both times. cq24 was stopped there (pids by hand), and zhr is dropped with it.
+- 11:37: **zd247 (z8b s6) vs zd172 passes**: n 44, D 1 (+abrk bed A), net +1, t +1.00; picks/100 30.92 vs 32.54 (per-cell z -0.83); transfer on the shared cells 350,330 vs 321,366; 0 overruns, 0 exceptions.
+- 11:37: **z8b REJECTED at replica block 1** (#263, set 2: 19563-19574, 19603-19606 vs z3x's 18722-18725, 18736-18739, 18745-18748, 18750-18753): 48 cells, 44 alike, D 4 (+Varun clockwisdom B; -Icarus TheHeist A, -YokoOno Hike B, -Varun clouds A), net -2, t -1.00.
+- 11:37: **Throw ammo** (scratch ammo.py, 244 distinct replica games in the dump cache).
+  - Every enemy throw that hits our king uses one of our own grabbed rats. In losses that is 3.7 hits a game for 141 damage, against 0.4 hits and 13 damage in wins. The enemy never throws its own rats at our king.
+  - Enemies grab 92 of our rats a game in losses and throw 71 of them, 3.4 rounds after the grab on average. Those throws hit our other rats 25.6 times for 886 damage (wins: 74 grabs, 55 throws, 13.2 hits, 436 damage).
+  - A grabbed rat runs its turn and could disintegrate, but that was priced and dropped as u9l (11-05 16:27, and again on 11-06): destroying a carried rat clears its carrier from the robot grid. Recorded only.
+- 11:37: **Merlin's band** (scratch oppband.py, z3x sets 2 and 4): Merlin 4/12, Varun and Xzibit 8/12, Finals, YokoOno and Icarus 9/12, collegejunior 10/12, spsquared 12/12. Most losses come in both seats of one map (canyoudig, clockwisdom, averyfineline, mercifullattice, Nofreecheese, cheesefarm, fullofsecrets, DefaultLarge, ratsareants). In both cheesefarm games vs Merlin the king dies to throws: 12 hits for 500 in A at r457, with the cheese gone from r439.
+- 11:37: **z9d registered and on the replica as #264** (z7x + CASH_READ_LEFT 6000; bots/z9d/SNAPSHOT; 11a95548cf06). It is z7x's delivery trail alone, with z7u's two-line budget read in cashTick, the overrun fix z8b carries.
+  - z7x's block 1 (#262) passed (D 2, +2, t 1.41) and was void only because its s6 screen overran 3 times on keepout B vs araid at r1883-1885. z8b, the trail plus ATK_DELIVER, SWAP_LOADED and the fix, lost 3 cells and gained 1.
+  - Falsifiers:
+    1. Chain ~/diag26b/cq25: 0 overruns on keepout A and B vs araid and on arrows A vs abrk, and keepout B gives z7x's result.
+    2. The s7 and s6 gates (zd250 vs zd205, zd251 vs zd172, both at the head of the screen queue).
+    3. The replica rules.
+  - Block 1 (set 2, `bash build/block_v4s2.sh`) is sent: 16 requests, 16291-16306. If falsifier 1 or 2 fails, the block is void and z9d is rejected.

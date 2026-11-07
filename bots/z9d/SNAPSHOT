@@ -1,0 +1,7 @@
+name=z9d
+source=bots/z7x
+source_sha=b9e4b6b06e8a
+commit=62ebb3a5
+created=2026-11-07 11:36 PST
+purpose=z7x + CASH_READ_LEFT 6000 (z7u's two-line budget read in Baby.cashTick, the overrun fix z8b carries): z7x's delivery trail (TRAIL, TRAIL_GAP 12, TRAIL_STALL 20, per-trip reset) without z8b's ATK_DELIVER or SWAP_LOADED. z7x's replica block 1 (#262, set 2) passed (48 cells, 46 alike, D 2: +Varun clockwisdom B, +Merlin fullofsecrets B, t 1.41) and was void only because its s6 screen overran 3 times on keepout B vs araid (r1883-1885, CASH_END's crowd); z8b (#263), the trail plus three more switches, was rejected at block 1 (D 4, +1 -3, t -1.00), with the clockwisdom gain kept and fullofsecrets B lost.
+falsifiers=(1) chain ~/diag26b/cq25 (seed 0): 0 overruns on keepout B and A vs araid and arrows A vs abrk (z7x overran 3 times on keepout B), and keepout B replays z7x's result; (2) s7 vs zd205 and s6 vs zd172 gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules (block 1 rejects at t <= 0; block 2 pooled needs t >= 2 and D >= 4). The replica block runs alongside the screens: if (1) or (2) fails, the block is void and z9d is rejected
