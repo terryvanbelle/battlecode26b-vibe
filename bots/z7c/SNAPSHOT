@@ -1,0 +1,7 @@
+name=z7c
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=d773f79c
+created=2026-11-07 04:02 PST
+purpose=bundle of z3x's four single-switch candidates: z6y (RICH_FIX one-king with RICH_FIX_BANK 1500, RICH2_BANK 3300; G.fixOn's bank term), z6z THREAT_WALL, z7a SLOT_HANDOFF, z7b FORM_DEFEND (tools/bundle.sh z7c z3x z6z z7a z7b, then z6y's Cfg regions and G.fixOn by hand; Cfg = z6y's with the three switches appended). Each switch acts on its own code path: RICH_FIX on rich one-king sites, THREAT_WALL on the king alert, SLOT_HANDOFF after the slot-0 king dies, FORM_DEFEND on formKing at war.
+falsifiers=(1) its s6 screen (vs zd172) stands in for the three single s6 screens zd218/zd220/zd222: the s6 gates (t > -1.5, picks/100 z > -2, 0 overruns), and a failure sends the single screens back into the queue to find the switch; (2) s7 (vs zd205): t > -1.5, and it must not win fewer cells than the best single switch's s7 run minus 1; (3) replica: control sets 2 and 4 first (block 1 rejects at t <= 0), then the crowning sets twin-anchored.
