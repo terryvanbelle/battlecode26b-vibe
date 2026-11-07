@@ -7158,3 +7158,19 @@
   - Local check vs araid seed 0: superioristhmus A forms kings at r837 and r1123 (z3x: r1881) and wins 68-31 (z3x 62-37); B forms at r820 and r1036 (z3x: r832 only) and wins 70-29 (66-33). minimaze A, keepout A and starvation B match z3x's results. keepout A still holds one king until r1853, which is the bank pin.
   - Falsifier 1 holds. Screens queued: zd211 (s7) and zd212 (s6), after zd210.
 - 02:33: **z6x = z3x + RICH2_BANK 3300** and **z6y = z6w + RICH2_BANK 3300** (577533e458c5, e376fa54f819). With the pinned bank above 3,000, rich() holds while the 80 cap spends. Local checks (rf1: superioristhmus A/B, minimaze A, keepout A, starvation B, cheesefarm A/B, plus cheesefarm for z3x and z6w) are playing. Falsifier 1: a rich king before r1150 that the base lacks, and no base win lost.
+- 02:46: **Local rich-king checks** (vs araid, seed 0, ~/diag26b/rf1; points, kings at end, rounds each king count was first reached):
+
+  | cell | z3x | z6w (RICH_FIX) | z6x (RICH2_BANK 3300) | z6y (both) |
+  |---|---|---|---|---|
+  | superioristhmus A | W 62-37, 2 (r1881) | W 68-31, 3 (r837, r1123) | W 70-29, 4 (r858, r1032, r1062) | W 70-29, 4 (r608, r820, r1053) |
+  | superioristhmus B | W 66-33, 2 (r832) | W 70-29, 3 (r820, r1036) | W 70-29, 3 (r869, r1032) | W 73-26, 4 (r606, r818, r1026) |
+  | keepout A | W 53-46, 2 (r1853) | = z3x | W 57-42, 3 (r687, r1114) | W 61-38, 4 (r679, r890, r1126) |
+  | minimaze A | W 75-24 | = | = | = |
+  | starvation B | L r1335 | = | = | = |
+  | cheesefarm A | W r906 | = | = | = |
+  | cheesefarm B | W r1171 | = | W r1161 | W r1161 |
+
+  - Falsifier 1 holds for all three: each forms rich kings before r1150 that z3x does not, and no z3x win is lost.
+  - z6y gets the most kings, the earliest, so it screens first: zd215 (s7), zd216 (s6). z6x's s7 screen zd213 was already playing, and its s6 screen zd214 follows z6y's. z6w's own screens (zd211, zd212) were dropped, since z6y and z6x between them cover it.
+  - **zd205, z3x's s7 control, is done: 27 of 48** (agrab 12/16, agtr 9/16, atrap3 6/16). s7 sits in band, unlike s6 (45/48).
+  - The other r2000 points losses in z3x's replica sets are low-bank games (ptsloss.py): RUN A and FreeTheCheese B vs Merlin at 2-2 kings with even cat damage, lost on transfer (8.5k to 16.4k, 13.0k to 23.8k). keepout A/B vs Finals were lost on kings, and averystrangespace A and rose A vs YokoOno on transfer and cat damage. Only superioristhmus A is a rich-bank loss.
