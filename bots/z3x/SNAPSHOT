@@ -1,0 +1,17 @@
+name=z3x
+source=bots/zl0
+source_sha=c585a2762c96
+commit=4cb0b65
+created=2026-11-06 17:37 PST
+
+z3x = z3s + LAST_FLOOR (tools/bundle.sh z3x zl0 z3s z3t): z3w without WALL_HOLD, which z3v's falsifier 2 dropped
+(~/diag26b/wh: 18 of 20 maze cells won against z1z's 19). z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT
+1850 + LAST_FLOOR. For the replica slot after z3s: z3q's block 2 showed that a ledgered switch flips one or two cells
+a block, so the bundle collects the switches that have passed. LAST_FLOOR (z3t) passed zd167 inert (the local
+archetypes never leave our king with 3 or fewer babies); only the replica can test it.
+
+Falsifiers, registered before any z3x game:
+1. Screen zd172 (vs zd136) on the s6 gates: t <= -1.5, picks z <= -2, transfer per round < 0.97x, any overrun.
+   Every zd172 cell must equal z3s's zd169 game (zd167 found LAST_FLOOR inert locally); a differing cell is a merge
+   fault to explain before the replica.
+2. Replica: block rules plus the transfer floor against the twin.
