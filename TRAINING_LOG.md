@@ -7081,3 +7081,14 @@
 - 00:53: **z6j submitted** (#251) with its set-3 block (4 sent, 12 in the drain queue), so the replica is not left idle after z5n's reject.
   - Its screen zd203 started at 00:52, and chain cq6 tests its CASH mechanism through z6i. Either one failing withdraws the block.
   - Truce timing is not a lead. averyfineline vs Icarus is lost at r222 in both builds after our RUSH_BREAK attacker bit at r16, but the area is closed: u6o (no RUSH_BREAK) was neutral over two blocks, and PEACE was rejected at block 3 (u3z).
+- 01:01: **z6i FAILS falsifier 1** (chain ~/diag26b/cq6, first 32 games: fullofsecrets, rose, where_are_you vs araid/abrk, both seats, seed 0). It lost all four where_are_you cells, as z6h did, where z5n won three (abrk B, araid A, araid B), so CASH_BABIES 12 did not remove the harm.
+  - z6i's where_are_you araid A ended sooner than z6h's: starved at r1129 with 2,965 transferred, against z6h's r1499 and 3,725. The rescue still runs with 12 or more babies.
+  - Against z5n, z6h so far gains fullofsecrets abrk B, rose abrk A and rose araid A, and loses where_are_you abrk B, araid A and araid B: +3 -3. z6i matches z6h on fullofsecrets and rose (rose abrk A is still to play).
+  - **z6j's set-3 block is withdrawn** under its pre-registered falsifier 1 (z6j shares the CASH code). Its 12 unsent rows left research/panel/queue.tsv (copy in /dev/shm/kd/z6j_queue.tsv). The 4 matches already sent (Finals and spsquared, both seats) will play.
+  - zd202 (z6h) left the screen queue: its base z5n is rejected, and z6h's screen answers nothing z6j's does not. zd200 (calibration) is next after zd203.
+  - Dump ~/diag26b/cq3d/wy_z6i (z6i vs araid on where_are_you, seed 0) is running, to find what the rescue does there with 12+ babies.
+- 01:01: **z3x's set-3 reference games: deaths and king losses** (48 games; scratch kdeath.py and deathcause.py on the VM dumps).
+  - Our 23 losses: 20 ended with our king destroyed, 13 of them killed and 7 starved. Every starvation started after the army was gone (0-7 babies, no raw carried): wallsofparadis A/B vs Finals, Stash A/B vs YokoOno, averyfineline A/B vs Icarus, whatsthecatdoin B vs Merlin.
+  - Our rat deaths in losses: 1,898, of which 748 were throws (561 on landing, 187 by throw hits), 346 enemy rat traps, 284 bites and 448 cats. In wins: 1,537, of which 233 were throws.
+  - Enemy traps killed 504 of ours and ours killed 0 of theirs, since z3x lays no rat traps. That area is closed (about 15 attempts: s9a, t0c, u0q, u4m, u5o, u8f, z0q and others).
+  - tiny vs collegejunior A: 43 of our 57 deaths were throws. Our bank fell from 2,488 to 290 by r100 on 23 babies, against their 1,633 on 10. The grab war is closed too (GRAB_MICRO, GRAB_SAFE), and the engine has no healing at all (HEALTH_GRAB_THRESHOLD 0), so a hurt rat can be grabbed by any fresher enemy from any side.
