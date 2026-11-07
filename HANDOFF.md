@@ -96,25 +96,23 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 07:59 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (07:59):**
-  - **z6u on the replica**: #259 = z3x + KING_BOOST_K 7 / FLOOR 500 (both screens neutral). Block 1 (set 2) has 12
-    of 16 in (19366-19369, 19381-19388): 36 cells alike, D 0. The Icarus and Merlin rows are to come; block 1 rejects
-    at t <= 0, so it is likely out. Score `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753
-    19366-19369,19381-19388,NEW`. The next replica candidate is whichever of z7m and z7j passes both screens first.
-  - **z7m SWAP_LOADED** (z3x + z7l: a baby carrying 30+ within Chebyshev 10 of our king carries an empty ally past;
-    rose A stem jam). Falsifiers 1-2 held. Screens zd234 (s7, playing) and zd235 (s6, next).
-  - **z7j INCOME_TRUST 100** passed s7 (zd229: t +0.33, spawns +3.3%, xfer 1.037x). s6 zd230 follows zd235.
-  - **z7o LOAD_FLEE 50** (z3x + z7n: loaded fighters and attackers flee a cat in view, as gatherers do). Mechanism
-    and ledger games in VM ~/diag26b/rz4 (base z3x games in ~/diag26b/sa and rz3/eq3_z3x). Screens zd236, zd237
-    after zd230. Control cat deaths per 1000 rat-turns: zd205 1.037, zd172 1.184.
-  - Queue (VM runs/screenq.txt): zd234 now, zd235, zd230, zd236, zd237, zd209/zd210 (z6v, KING_BOOST dose arm),
-    zd233 (z5i requeued), the ablations zd195-199.
-  - **Closed this morning:** z7g (rejected at replica block 2), z7i BITE_BOOST (s6 t -1.77), z7k (dropped),
-    formation census, held-at-end cheese, the araid sweep (07:59 entry), the in-band set 2/4 losses (07:43 entry).
-  - **bots/zl0 is the ledgered z1z, not z3x**; z3x's FORM_WAR_FROM changes formation timing, so pair a switch's
-    mechanism games against z3x only after bundling it (`bundle.sh CAND zl0 z3x SWITCH`).
-  - VM disk 2.6 GB free (07:50).
+## State (2026-11-07 11:47 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (11:47):**
+  - **z9d on the replica as #264** (z7x's delivery trail + CASH_READ_LEFT 6000, z8b's overrun fix). Block 1 (set 2) was sent
+    at 11:37, all 16 requests. Score with `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 NEW`
+    after `fetch --out /dev/shm/rp $(seq A B)`. Block 1 rejects at t <= 0. If it passes, run block 2 on set 4
+    (`bash build/block_v4s4.sh`, then `git checkout research/panel/`) and pool. Its falsifier 1 (cq25: 0 overruns on keepout and
+    arrows) holds. Screens zd250 (s7, playing) and zd251 (s6, next). If either fails, the block is void.
+  - **z9e = z9d + THROW_ADAPT** is the next replica candidate. Falsifier 1 is chain ~/diag26b/cq26 (agrab arrows B and
+    evileye B, z9e vs z9d; own-rat throw hits on our kings at most 0.75x, scratch ammowho.py/kthrow.py). Screens zd252
+    and zd253 follow zd251. Merlin's five set-2/4 king kills are throws of our own rats (2,680 king damage), and u7i
+    (THROW_ADAPT on u6x) pooled t +2.14 on the replica.
+  - Screen queue after those: zd241 (z7u s7), zd236/zd237 (z7o LOAD_FLEE), the ablations zd195-199 (z6a-z6e).
+  - **Closed today:** z8b (rejected at block 1, D 4 +1 -3), z9a/z9b (PICK_TRIP), z9c (HEIR: the heir is thrown to
+    death in place), zth (TRIP_HALF probe). Also closed without a candidate: coverage by half, held-cheese starvation,
+    cooperation throws (cooperation ends at a median r32), the disintegrate and MOAT lines, and the canyoudig scarcity
+    race. Stable both-seat losses are listed in TRAINING_LOG 11:47.
+  - VM disk 2.5 GB free after pruning 50 replays and the cq20/cq23/cq24 dumps.
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
