@@ -7056,3 +7056,12 @@
   - Queue: zd201, zd202, zd200 (calibration), zd195-zd199 (ablations), then the closed lines.
 - 00:29: **z6g (z6f + CASH_N 2) DROPPED by falsifier 1** (~/diag26b/cq5, cq3's 16 cells, seed 0). It won the same 10 cells as z6f, and it had to win one more. fullofsecrets araid A is still lost at r670 with no site named, so the leader rule is not what blocks that rescue. The game's dump (cq3d/fsA) shows nothing more: the ind string carries no CASH state. Elsewhere z6g formed no king on clockwisdom abrk B (z6f formed one and still lost), and won fullofsecrets abrk B with 7,245 transferred (z6f 19,163).
 - 00:29: **Chain cq4 (z6f vs z5o; Nofreecheese, uneasy_alliance, where_are_you, Hike), first 18 games.** Nofreecheese and uneasy_alliance replay z5o exactly: 8 of 8 alike, all won. **where_are_you araid A was lost** (starved at r1499, 3,725 transferred, no king formed) where z5o won on points with a second king formed and 9,769 transferred. This is the first harm seen from the rescue. Both games are being replayed with dumps (~/diag26b/cq3d/wy_z6f, wy_z5o, seed 0).
+- 00:37: **Why z6f loses where_are_you araid A** (dump ~/diag26b/cq3d/wy_z6f against z5o's, seed 0; scratch firstdec.py, cashwhy.py).
+  - z6f named seven rescue sites from r452 to r1274, each with only 7-8 babies alive. A formation needs 7 of ours in the 3x3, so none formed. Each site pulled the babies off work for up to 50 rounds.
+  - The king starved at r1499. z5o rebuilt to 40 babies, made its CASH_END king at r1881, and won on points. A cat raid hit both builds.
+  - **z6i = z6h + CASH_BABIES 12** (bots/z6i/SNAPSHOT; compiled on the VM, bec39266166b). The mid-game rescue runs only when the rat cost implies at least 12 live babies ((cost - 10) / 10 * 4). CASH_END is not gated.
+  - Mechanism chain ~/diag26b/cq6 now plays z6h, z5n and z6i on clockwisdom, fullofsecrets, rose, Stash, where_are_you and Hike vs araid/abrk, both seats, seed 0, after cq4 (3 games at a time).
+  - Falsifiers:
+    1. z6i keeps z6h's gains over z5n, wins where_are_you araid A if z5n does, and loses no cell z5n won.
+    2. Screen vs zd172 on the s6 gates.
+    3. The replica rules, as for z6f.

@@ -1,0 +1,7 @@
+name=z6i
+source=bots/z6h
+source_sha=95e546813dfb
+commit=80b6a874
+created=2026-11-07 00:34 PST
+purpose=z6h + CASH_BABIES 12 (new switch, Baby.cashOk): CASH's mid-game rescue runs only with at least 12 live babies (rat-cost lower bound); CASH_END unchanged. z6f's one mechanism harm (cq4, where_are_you araid A, ~/diag26b/cq3d/wy_z6f vs wy_z5o): with 7-8 babies alive from r460, it named seven rescue sites (r452-r1274) near (16,15), 9 from the king. None formed, since a formation takes 7 of ours in the 3x3, and each held the babies off work for up to 50 rounds (bank 0-300, 8 babies from r1000). The king starved at r1499, where z5o rebuilt to 40 babies and won on points with its r1881 CASH_END king.
+falsifiers=(1) mechanism chain ~/diag26b/cq6 (clockwisdom, fullofsecrets, rose, Stash, where_are_you, Hike vs araid and abrk, both seats, seed 0) against z6h and z5n's cq6 games: z6i keeps z6h's gains over z5n, wins where_are_you araid A if z5n does, and loses no cell that z5n won; (2) screen vs zd172 on the s6 gates; (3) replica rules as z6f.
