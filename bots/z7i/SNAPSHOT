@@ -1,0 +1,7 @@
+name=z7i
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=27eeade7
+created=2026-11-07 05:55 PST
+purpose=z3x + BITE_BOOST 5 / BITE_BOOST_DMG 3 / BITE_BOOST_FLOOR 600 (new switch, Baby.boostCheese, ledgered K 9): a bite on an enemy baby that finishCheese does not make a kill spends 5 cheese for +3 damage (13: a full rat dies in 8 bites, not 10) while 600 stay banked, and only when 13s kill the target in fewer bites than 10s. The engine adds ceil(sqrt(c)) and takes c from the biter's load first, then the bank. Over z3x's four replica sets (192 games; scratch bitebank.py) we bit enemy babies 9,814 times at war, all at the plain 10, 5,505 of them with 600+ banked (1,968 of 4,032 in the 71 losses). In the local rush races z3x loses as seat B (DefaultMedium vs atrap3 and agrab r59, tiny vs atrap3 r65) the bank held 767-897 at our king's death. Kill-speed is the mechanism; u9h (BITE_EDGE 2) was dropped unregistered on grab parity, a different one
+falsifiers=(1) mechanism, on the screens' DefaultMedium, tiny and Stash cells (zd227 vs zd205: atrap3, agrab, agtr; zd228 vs zd172: araid; both seats, 24 cells, results.jsonl killsRat and bitesRat): summed over the games, our rat kills per 100 bites on babies must rise 10% or more, and z7i must not lose more of those cells than z3x; (2) the s7 and s6 gates vs zd205 and zd172 (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules
