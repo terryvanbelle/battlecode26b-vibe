@@ -96,27 +96,31 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 19:03 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 19:45 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **z1z** (accepted 2026-11-06 11:46 PST over u6x; replica blocks 1-4 pooled D 46, net +14, t 2.06; u9p + SEEK_IDLE
   20/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Screen control: **zd136** (z1z). Ledgered z1z for new switches: bots/zl0
   (scratch, untracked; `cp -r bots/zl0 bots/NEW`, sed the package; it is already ledgered, do not rerun ledger.py).
-- **Replica: z3z (#246)** = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 + LAST_FLOOR + SEAT_SHIFT 1.
-  z3s (#245) was REJECTED at block 2 (94 cells, D 1, t 1.00). z3z block 1 (set 3, IDs > 18534; waiter
-  build/wait_z3zb1.sh): 12 of 16 in (18542-18545, 18548-18551, 18553-18556), D 6, net -2, t -0.82; Icarus and Merlin
-  (18583-18586) still queued. Score: `contest.py fetch --out /dev/shm/rp IDS` (laptop disk full: tmpfs; refs staged in
-  /dev/shm/rp), `contest.py paired --dir /dev/shm/rp 17946-17961 IDS` (block 1 rejects at t <= 0). Pass: block 2
-  `build/block_v4s1.sh`, then `git checkout research/panel/`. Transfer floor: rsync replays to VM ~/diag26b/rp,
-  `tools/field_report.py games --dir ~/diag26b/rp --ids IDS > ~/diag26b/NAME.jsonl`, `python3 blockcheck.py
-  CAND.jsonl,TWIN.jsonl CAND_IDS TWIN_IDS` (twin rows z1zb1..b4.jsonl). zd174 passed (D 5, t +0.44; B cells = zd172).
-- **If z3z is rejected:** submit **z3x** (= z3z without SEAT_SHIFT; zd172 passed) so the replica is not idle, then
-  **z4d/z4e** once their screens pass.
-- **Rush index line (new, 18:56):** the rush role comes from the cost step at birth (live babies, newborn included, down
-  to a multiple of 4): z1z's first 3 babies gather, 4-15 rush, and through r300 every replacement born with 4-15 alive
-  rushes. Replica r1-200: our non-rushers pick 0.21-0.34 per baby-round to the opponents' 0.29-0.50, rushers
-  0.07-0.18, and 600-3,150 cheese lies unpicked on the map by r100-200 (scratch rolepick.py, mapchz.py, pickeff.py in
-  VM ~/diag26b). **z4d** = z3z + RUSH_FROM 8 (screen **zd176**, running), **z4e** = z3z + RUSH_FROM 8 + RUSH_TO 20
-  (**zd177** next). Falsifiers in their SNAPSHOTs (pick amount per round vs zd174 must rise). z1z's 29 rush king-kill
-  wins before r300 (knifefight, sunandmoon, clouds, tiny) are the risk.
+- **Replica: z3x (#248)** = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 + LAST_FLOOR (z3z without
+  SEAT_SHIFT; zd172 passed). Block 1 on set 3 (IDs > 18601; waiter build/wait_z3xb1.sh; drain had 4 of 16 still queued at
+  19:43). Score: `contest.py fetch --out /dev/shm/rp IDS`, `contest.py paired --dir /dev/shm/rp 17946-17961 IDS` (block 1
+  rejects at t <= 0). Pass: block 2 `build/block_v4s1.sh`, then `git checkout research/panel/`. Transfer floor: rsync
+  replays to VM ~/diag26b/rp, `tools/field_report.py games --dir ~/diag26b/rp --ids IDS > ~/diag26b/NAME.jsonl`,
+  `python3 blockcheck.py CAND.jsonl,TWIN.jsonl CAND_IDS TWIN_IDS` (twin rows z1zb1..b4.jsonl).
+- Rejected today on the replica: z3z (block 1 D 6, net -2, t -0.82), z3s, z3q, z2x, z3b, z3c, z3j. Ledgered switches flip
+  one or two cells a block, so candidates are bundles of passed switches.
+- **Rush index line, all but closed:** z4d (RUSH_FROM 8) failed picks/100 z -2.11; z4e (8 + RUSH_TO 20) had 8 overruns
+  (zd177; else D 7 t +0.37, transfer per round 1.081x). On the replica z4d's gatherers had more turns but picked level:
+  our worked mines are saturated. z4f (RUSH_FROM 12) is screen **zd178** (queued after zd179), the last dose.
+- **Discovery line (new, 19:38):** never-picked home mines are never seen (minesight.py; 20+ from our start 173 of 320
+  unpicked, 167 never within Chebyshev 4 of one of our rats). Of our half's cheese tile-episodes r1-200, 6.1% came
+  within dist2 20 only outside the baby cone (conemiss.py). **z4g** = zl0 + SIDE_LOOK 2000 (end a walking turn facing
+  90 degrees to the side with more never-seen probes; the next step turns back free): screen **zd179** (running),
+  mechanism games ~/diag26b/sl (40, z4g and z1z; score with `python3 ~/diag26b/conemiss.py DC 200 BOT` per bot, dumps
+  symlinked as in whtab.sh). The dump's dir column is the flatbuffer order (0 centre, 1 W, 2 SW, 3 S, 4 SE, 5 E, 6 NE,
+  7 N, 8 NW), not the Direction enum's.
+- Laptop disk is full (8-14 MB free; the session transcript grows ~1 MB per few turns). Scratch lives in /dev/shm
+  (/dev/shm/sp_moved holds this session's moved scratch dirs). `git config gc.auto 0` was set at 19:45 (auto-gc left
+  7 MB garbage packs on the full disk); re-enable once there is room.
 - **Seat line, closed 19:01:** the engine's one asymmetry is turn order, but SEAT_SHIFT is a perturbation, not parity
   (~/diag26b/sc: z4a gives the flipped seat result in 23 of 45 seed pairs, z4b z1z's own in 18 of 30). Self-play
   mirrors break at r21 on peaceinourtime from orientation-dependent bytecode cost. knifefight: seat A won 15 of 15.
