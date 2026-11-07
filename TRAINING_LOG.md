@@ -7377,3 +7377,8 @@
 - 09:22: **Correction:** replica matches 19521-19526 were z5i's last rows (pkg z5i), not z7x's. z7x's block starts at 19527.
 - 09:22: **VM disk** was 1.9 GB. Pruned 40 replica replays older than 36 h and deleted the chains of superseded or dropped bots (~/diag26b cq8, cq9, cq10, cq12, cq13). It is now 2.5 GB.
 - 09:23: **zd240 (z7u s6) vs zd172: n 44, D 1 (+1), net +1, t +1.00.** Picks z -0.75, transfer per round 1.050x, pick amount 1.030x, **0 overruns** (z7m had 2 in zd235). The s6 gates pass, so the overrun fix holds. Its s7 screen, zd241, is queued after zd238 and zd239 (z7x).
+- 09:29: **z7y (TRAIL_HEAVY) is DROPPED at falsifier 2.** On cq14's 11 games (cq16, seed 0) it won 6 to z7x's 8.
+  - Lost: clockwisdom B (starved r780; z7x won at r1010) and fullofsecrets B vs abrk (starved r1270; z7x won at r2000).
+  - Summed transferAmt was 36,316 against 58,904, mostly EscapeTheNight A, which ended at r752 instead of r2000.
+  - Twin zhchk replays z7x's fos B vs abrk exactly (xfer 4,190, picks 12,765), so the change is TRAIL_HEAVY's.
+  - The clockwisdom B pair splits by r300 (one gatherer at 140 raw against 260). z7y's attackers then held 1,560-4,820 from r450 while its bank emptied (0 at r750). Walking a heavy carrier home along its trail is not the cure; its 65-tile trail on fos B would take 780 rounds at 12 a move.
