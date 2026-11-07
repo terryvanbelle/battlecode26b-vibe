@@ -290,10 +290,10 @@ public final class Cfg {
      *  babies, and a baby beside one of those tiles that cannot see it (5 of a baby's 8 neighbours lie outside its 90°
      *  cone; the king sees all round) turns to it and bites, before and after its move. Only an action and a turn
      *  change; no baby walks anywhere new (GUARD_KING_R and KING_EYES moved defenders and were rejected). Replica dumps
-     *  (kguard.py, 73 cached matches): 11,811 rounds an enemy baby touched our king; one of ours stood beside it in
-     *  7,909 and bit it in 244. Of the 10,398 adjacent baby-turns that ended with the action unused, 7,869 had the biter
-     *  behind or beside them. thunderdome A vs Varun (18346): 2-4 biters took our king from 354 to 0 in r230-436 while
-     *  14-24 of ours stood within Chebyshev 4. */
+     *  (kguard2.py, positions as of each robot's turn, carried enemies excluded): a baby of ours stood beside a free
+     *  enemy baby on our king's ring 2,022 times and bit it 168 times; 348 of those turns ended blind with the action and
+     *  turn unused (253 more blind with the turn used), at most 31 a game (corridorofdoom A vs Varun; thunderdome A 12,
+     *  where 2-4 biters took our king from 354 to 0 in r230-436 with 14-24 of ours within Chebyshev 4). */
     public static final boolean KING_CALL = true;
     /** Carrier guard: at war a baby within Chebyshev GUARD_CARRY_REACH of our king goes first (as RESCUE does) for
      *  the visible enemy baby nearest it holding one of ours within Chebyshev GUARD_CARRY_R of the king's centre:
