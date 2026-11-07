@@ -1,0 +1,7 @@
+name=z7h
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=0b45dd60
+created=2026-11-07 05:38 PST
+purpose=z3x + KILL_KHP 150 (new switch, Baby.pressKill/killSee/killSqueak, King.killNote): at war a rat that sees an enemy king with 150 health or less presses it (walks to it and bites, any role, load or health, ahead of retreat and fights) within dist2 144 for 8 rounds, and squeaks it to a king in earshot, which posts it in the shared enemy-king slot that every rat reads. Replica 18684 DefaultMedium A vs Varun: their king sat at 142 health from r150 to r210 and 88-108 to r267, 7-10 tiles from ours, while our 6-11 rats fought round our king, which died at r267. KING_PRESS (any king, healthy rats only) was rejected five times; this one fires only on a wounded king. All hooks are ledgered.
+falsifiers=1 (mechanism, ~/diag26b/kp, seed 0): of the two local cells where z3x left the enemy king at 150 or less and lost (DefaultMedium B vs atrap3, 84 left at r59; tiny B vs atrap3, 126 left at r65), z7h must win one; Stash A vs agtr, evileye B vs araid and DefaultMedium A vs agtr must replay z3x exactly where the switch does not fire. 2: s7 (vs zd205) t > -1.5 and s6 (vs zd172) t > -1.5, 0 overruns.
