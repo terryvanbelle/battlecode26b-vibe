@@ -1,0 +1,7 @@
+name=z9b
+source=bots/z9a
+source_sha=eda33d37f13d
+commit=
+created=2026-11-07 10:54 PST
+purpose=z9a with PICK_FLOOR 300 (was 60): partial pickup caps only loads the size of death drops. The cap is max(300, 100 x 50 / D - 100) with D the Chebyshev steps to within transfer reach of the nearest king, so it binds only beyond about 12 steps and above 300 raw. z9a's 60 floor cut rose's routine hauls: in z8b's rose B vs araid (cq19) 219 of 605 pickups ended the turn at 150+ raw, and z9a picked 14,758 to z8b's 20,050 and delivered 7,065 to 13,642 (rose A 8,005 to 11,837). Same ledger hooks as z9a; twin zpk (never acting) replayed z8b exactly on all 13 cq19 games.
+falsifiers=(1) chain ~/diag26b/cq23 (cq19's 13 games, seed 0): z9b wins all 13 (z8b won 13 of 13), its total xfer is at least 0.97x z8b's 84,793, and its xfer on the six clockwisdom / fullofsecrets games is at least z8b's 20,012; (2) the s7 and s6 gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules
