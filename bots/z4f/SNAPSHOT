@@ -19,7 +19,7 @@ Falsifiers, registered before any z4f game:
    must not fall by more than 3.
 3. Replica: block rules plus the transfer floor against the twin.
 
-Correction (19:31, after registration, falsifiers unchanged): whereleft.py summed the cheesespawn row's tile total
+Correction (19:25, after registration, falsifiers unchanged): whereleft.py summed the cheesespawn row's tile total
 (column 7, which includes cheese already lying there) and counted death drops as spawns. With mine-spawn increments
 (column 13) the shares are: of the cheese spawned on our half by r200 we picked 23-64% and 23-61% was never picked
 (Hugo 61%, waxmango 46%, Finals 44%, spsquared 41%, Icarus 40%, Merlin 39%, Varun 23%); opponents leave 31-54% of
