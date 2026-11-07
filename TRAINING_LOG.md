@@ -7542,3 +7542,4 @@
     1. Chain ~/diag26b/cq27, seed 0: z9f wins at least 3 of Stash A vs agtr, Stash A vs agrab, cheesefarm B vs agtr (z7g won all three in zd223; z9d lost all three in zd250) and arrows B vs agrab (z9e won it in cq26; z9d lost it).
     2. The s7 and s6 gates: screens zd254 vs zd205 and zd255 vs zd172, queued after zd253.
     3. The replica rules.
+- 12:11: **z9d passes replica block 1** (#264, set 2, 19619-19634; `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 19619-19634`): 48 cells, 46 alike, D 2 (+Varun clockwisdom B, +Merlin fullofsecrets B), net +2, t 1.41 (block 1 rejects at t <= 0). Block 2 on set 4 queued (`bash build/block_v4s4.sh`: hourly limit, all 16 rows in the drain queue). Pooled it needs D >= 4 and t >= 2, so +2 -0 more on set 4. s6 zd251 is still playing, and a failed s6 voids the block.
