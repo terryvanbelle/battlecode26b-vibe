@@ -1,0 +1,7 @@
+name=z7f
+source=bots/z7b
+source_sha=2ebc1ba13d44
+commit=30824c21
+created=2026-11-07 05:08 PST
+purpose=z7b + FORM_DEFEND_AGE 25 (new constant): FORM_DEFEND skips formKing for a threatened king only once the rat has known the open site 25 rounds (Baby.siteAge). fd chain: z7b won evileye araid B (r1466; z3x lost r1748) but lost DefaultMedium araid B at r456. There z3x's insurance king formed at r325 and won at r2000, while z7b broke the site at r306 (dumps ~/diag26b/fdd).
+falsifiers=(1) DefaultMedium B vs araid is won, as z3x won it, and evileye A vs agtr lasts past r795; (2) the fd cells (evileye, DefaultMedium, keepout, clouds vs araid, abrk, agtr, agrab): no fewer wins than z7b's; (3) screens.

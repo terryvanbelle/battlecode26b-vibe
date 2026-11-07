@@ -1,0 +1,7 @@
+name=z7g
+source=bots/z7e
+source_sha=3fa84d85117d
+commit=30824c21
+created=2026-11-07 05:13 PST
+purpose=z7e with z7f's FORM_DEFEND_AGE 25 (Baby.siteAge and its Cfg constant ported by hand) = z3x + z6y + z7d (THREAT_WALL_REACH) + z7a SLOT_HANDOFF + z7f (FORM_DEFEND on stalled sites). z7f passed its falsifier 1 (DefaultMedium B vs araid replays z3x's r2000 win; evileye A vs agtr lasts to r1187).
+falsifiers=as z7e's: zd224 s6 (vs zd172) for the single s6 screens; zd223 s7 (vs zd205) t > -1.5 and no fewer wins than the best single switch's s7 minus 1; replica control sets 2 and 4 first.
