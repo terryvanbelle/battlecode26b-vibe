@@ -7318,3 +7318,19 @@
   - **zd235 (z7m s6)** is at 42 of 48: n 38, D 1, net +1. z7m goes to the replica when it completes.
 - 08:34: **zd235 (z7m s6) vs zd172: n 44, D 1 (+abrk bed A, won r130 where z3x lost r302), net +1, t +1.00.** Picks per-cell z -0.75; transfer per round 1.051x; pick amount per round 1.030x. **But our side overran 2 turns in abrk arrows A** (maxBcRat 17,506 against the 17,500 limit), and z3x had 0 overruns in zd172. The gate is 0 overruns, so z7m does not pass as it stands. The cell is replaying with dumps for both bots (~/diag26b/ov7m) to find the hook that pushed the turn over.
   - **z5i is on the replica as #260** (z3x + RISK_TTL 15; s6 zd189 net +2, t +1.43; never on the replica alone), with block 1 on set 2: 19511-19526, all 16 queued. The replica would otherwise have sat idle behind z7m's overrun. Its s7 screen zd233 moves to the front of the queue, behind zd230 (z7j s6, playing). If zd233 fails, the block is withdrawn.
+- 08:41: **z7s missed fullofsecrets, and z7t fixes the reason** (cq9, seed 0).
+  - z7s lost all 4 fullofsecrets cells, as z3x did, with transfer 280/380/230/325 against 180/390/330/330. Falsifier 1 fails on its target.
+  - Off target: clockwisdom A won r957 (z3x lost r880), and rose A won on points (z3x starved r1285). Rose B and EscapeTheNight A/B were won as z3x won them, so s5d's jam did not come back.
+  - The ledger pair (arrows vs agrab) equals z3x's to r904. The divergence at r905 is rat 11331 (60 cheese, stalled at Chebyshev 8-10 since r870) taking a trail step where z3x followed its flow path.
+  - **Why fos did not move:** gatherer 11964 walked its trail back east from the wall (r217-r226) and stopped at (20,33), the mine where it had picked up its cheese.
+    - At r151-153 it used 16,023-16,078 bytecodes there, under recordEnd's 1,500 floor, so those records were skipped while it moved.
+    - The next record saw a jump and began a new chain at the mine. The walk home ended at the false start, and goTo took it back to the wall.
+  - **z7t** records at the start of the turn in a ledgered hook (K 9, O(1) with the generation stamps). Only the arrays' allocation stays at the end of the turn.
+    - Mechanism chain ~/diag26b/cq10 runs the same cells.
+    - It also runs a never-acting twin (ztchk, TRAIL_STALL 100000, not committed) on arrows vs agrab and fullofsecrets A, which must replay z3x exactly.
+- 08:41: **z7m's two overruns are z3x's cashTick in a crowd** (~/diag26b/ov7m, arrows A vs abrk replayed for z7m and z3x; they diverge at r1270).
+  - At r1888-1892 z7m's rats crowded the CASH_END site at (3,4). Their costliest stage was cashTick plus report(), at 8,470-10,202 bytecodes, because every rat in the crowd squeaks the site each turn and the loop reads every squeak.
+  - Two turns overran, between marks 8 and 9 (OVS 809) and in Flow.work (OVS 999). z7m had 8 rat turns over 17,000 in that game, and z3x 1 (max 17,170). z5k's 6 overruns were in the same kind of cell.
+  - **z7u = z7m + CASH_READ_LEFT 6000** stops the squeak loop under 6,000 bytecodes left, using END_KING_CROWD's ledgered read. Checks are in ~/diag26b/cq11:
+    - the twin zuchk (floor 1) must replay z7m's arrows vs agrab exactly;
+    - z7u must play arrows A vs abrk with 0 overruns.
