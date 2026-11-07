@@ -1,0 +1,27 @@
+name=z5m
+source=bots/zl0
+source_sha=c585a2762c96
+commit=34275f2d
+created=2026-11-06 22:48 PST
+
+z5m = z3x + SYM_KING_SEEN (tools/bundle.sh z5m zl0 z3x z5l; its sorted sources differ from z3x's by the switch's lines
+only). On round 1 the first king rules out each live symmetry whose twin of its start it can sense with no enemy robot
+within dist2 8 of it: the enemy king starts on the true twin, and Sym otherwise eliminates only by walls and mines.
+
+Evidence (z3x's 144 cached replica games, 98 distinct game-sides; scratch twin1.py): on 21 game-sides a wrong twin of
+our start lies within the king's dist2 25 at round 1 (keepout, dirtpassageway, FreeTheCheese, Stash, cheesebottles,
+streetsofnewyork, corridorofdoomanddespair and uneasy_alliance in both seats; thunderdome A and B, knifefight A and B,
+tiny B). firstSym() (ROT, then HOR, then VER) drives homeHalf() and the mirror targets, so a near wrong twin that
+outlives ROT moves half the map off our half. In z3x's losses the opponent took 528 cheese a game from our half by
+r300 (141 in wins; scratch pickall.py), 448 of it in the half's outer two depth bands (pickband.py). Of 89 such mines
+(100+ taken by r300), we never picked from 26 all game (stolen.py), keepout's (28,47) and (21,47) among them.
+
+Falsifiers, registered before any z5m game:
+1. Screen zd192 (vs zd172) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+2. Mechanism (~/diag26b/sk: keepout, dirtpassageway, FreeTheCheese, Stash, cheesebottles, streetsofnewyork vs araid,
+   both seats, z5m and z3x, seed 0, 24 games). On every game-side, z5m's king mask at round 2 must hold the true
+   symmetry and must lack the near wrong twin; z3x's mask must still hold that twin (else the switch is inert there).
+   z5m must not win fewer of the 12 cells than z3x, and our summed pickups by r300 must not fall. Any one failing
+   drops it.
+3. Replica: the block rules, plus the transfer floor (0.9x) against z3x's same-set block.

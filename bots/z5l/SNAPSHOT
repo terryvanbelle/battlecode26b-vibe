@@ -1,0 +1,9 @@
+name=z5l
+source=bots/zl0
+source_sha=c585a2762c96
+commit=34275f2d
+created=2026-11-06 22:47 PST
+
+z5l = zl0 (ledgered z1z) + SYM_KING_SEEN (new switch; Cfg.SYM_KING_SEEN, King.kingSeen): switch bot for z5m, not a
+candidate. On round 1 the first king rules out each live symmetry whose twin of its start it can sense
+(canSenseLocation) with no enemy robot within dist2 8 of that twin. The hook is ledgered (G.settle, K 18).
