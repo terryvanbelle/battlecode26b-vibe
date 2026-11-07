@@ -1,0 +1,26 @@
+name=z5f
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=72b47204
+created=2026-11-06 21:21 PST
+
+z5f = z3x (the incumbent) + SYM_RELAY with the hook before report() (z5e had it after). z5e's first mechanism games
+(~/diag26b/sy, araid FreeTheCheese A and B) replayed z3x's attacker and rat masks r1-400 exactly: away from the kings
+report() gossips an unreported mine almost every turn (GOSSIP_ALWAYS), so z5e's squeak was the turn's second and the
+engine refused it. Here the relay squeaks first, every SYM_GOSSIP_EVERY (3) rounds while the rat's mask is sharper
+than the shared one, an ally is within d2 16 and no seen cat can hear; report()'s squeak that turn is refused (no
+side effects in z3x: BURN, KING_PRESS, TRAP_SHARE and TRIP_HALF are off), so a mine's gossip waits a turn. The merge
+of heard SQ_SYM masks and the ledger hook (K 18) are z5e's. Evidence: bots/z5e/SNAPSHOT (rushers resolve the
+symmetry hundreds of rounds before the king on FreeTheCheese, rift and clockwisdom, and never come home to tell it).
+On FreeTheCheese the ROT and HOR enemy spots are adjacent ((29,3), (30,3)), so the rushers' target barely depends on
+it there; rift (HOR and VER spots 51 tiles from the true one) and clockwisdom (dirt corners) are the cases that
+matter.
+
+Falsifiers, registered before any z5f game:
+1. Mechanism (~/diag26b/sy2: FreeTheCheese, clockwisdom, rift, TheHeist and DefaultMedium vs araid and abrk, both
+   seats, seed 0; z3x's games from ~/diag26b/sy; symres3.py). On the four slow maps, the share of attacker turns in
+   r1-400 whose mask is not unique must fall by at least a third against z3x's, and z5f must not win fewer of those
+   16 games than z3x. DefaultMedium (resolved by r48) must keep z3x's four results.
+2. Screen zd187 (vs zd172) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+3. Replica: the block rules plus the transfer floor against the twin.
