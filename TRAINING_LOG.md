@@ -7030,7 +7030,7 @@
   - Calibration run **zd200** is queued after zd194, ahead of the ablations. It plays z5n against the nine archetypes the screen does not use (agaim, agcap, agrab, agrw, agtr, arush, atrap, atrap2, atrap3) on tiny, DefaultMedium, Stash and evileye, both seats, seed 0: 72 cells, all compiled on the VM.
   - Opponents z5n beats 25-75% of the time join the next screen version, which will be its own series. Until then the s6 gates stand.
 - 00:11: **z6f passes falsifier 1** (mechanism chain ~/diag26b/cq3 vs z5o: clockwisdom, fullofsecrets, rose and Stash vs araid and abrk, both seats, seed 0; chainsum.py).
-  - Results: z6f won 8 of 16 cells to z5o's 5 (+3, -0) and had 7 king starvations (in 6 games) to z5o's 9.
+  - Results: z6f won 10 of 16 cells to z5o's 7 (+3, -0; corrected 00:29, the first count left out the 8 Stash games) and had 7 king starvations (in 6 games) to z5o's 9.
     - fullofsecrets abrk B: won on points at r2000 with 19,163 transferred to 8,409; z5o starved at r627.
     - rose araid A: won at r1350 with 2,540 transferred; z5o starved at r1285.
     - rose abrk A: won at r1897 with 9,359; z5o starved at r1012.
@@ -7054,3 +7054,5 @@
   - **z6h = z5n + CASH_KINGS 1** (bots/z6h/SNAPSHOT; compiled on the VM, 43963043de87) puts z6f's rescue on z5n, without THROW_ADAPT. If z5n continues on the replica, it is the one-switch follow-up.
   - Screen **zd202** is queued after zd201 (z6f, running now). Mechanism chain ~/diag26b/cq6 (z6h vs z5n on cq3's 16 cells) starts when cq4 finishes.
   - Queue: zd201, zd202, zd200 (calibration), zd195-zd199 (ablations), then the closed lines.
+- 00:29: **z6g (z6f + CASH_N 2) DROPPED by falsifier 1** (~/diag26b/cq5, cq3's 16 cells, seed 0). It won the same 10 cells as z6f, and it had to win one more. fullofsecrets araid A is still lost at r670 with no site named, so the leader rule is not what blocks that rescue. The game's dump (cq3d/fsA) shows nothing more: the ind string carries no CASH state. Elsewhere z6g formed no king on clockwisdom abrk B (z6f formed one and still lost), and won fullofsecrets abrk B with 7,245 transferred (z6f 19,163).
+- 00:29: **Chain cq4 (z6f vs z5o; Nofreecheese, uneasy_alliance, where_are_you, Hike), first 18 games.** Nofreecheese and uneasy_alliance replay z5o exactly: 8 of 8 alike, all won. **where_are_you araid A was lost** (starved at r1499, 3,725 transferred, no king formed) where z5o won on points with a second king formed and 9,769 transferred. This is the first harm seen from the rescue. Both games are being replayed with dumps (~/diag26b/cq3d/wy_z6f, wy_z5o, seed 0).

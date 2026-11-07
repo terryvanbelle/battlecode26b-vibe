@@ -96,7 +96,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 00:30 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-07 00:29 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen control: **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
@@ -117,8 +117,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   changed no result on set 3.
 - **CASH_READ (23:26):** after the r1880 CASH_END recall, cashTick read every squeak of the last 5 rounds (3-9k a
   turn for about 30 crowded rats); z5n reads r-2..r and skips copies of the best site: exact to r1880, 0 overruns.
-- **Mid-game rescue (CASH_KINGS 1), the live line:** z6f = z5o + CASH_KINGS 1 won 8 of cq3's 16 mechanism cells
-  (clockwisdom, fullofsecrets, rose, Stash vs araid/abrk) to z5o's 5 (+3 -0), starvations 7 to 9 (~/diag26b/cq3).
+- **Mid-game rescue (CASH_KINGS 1), the live line:** z6f = z5o + CASH_KINGS 1 won 10 of cq3's 16 mechanism cells
+  (clockwisdom, fullofsecrets, rose, Stash vs araid/abrk) to z5o's 7 (+3 -0), starvations 7 to 9 (~/diag26b/cq3).
   Clockwisdom is out of its reach (single couriers, 1-3 of ours within 8; cq3d/cwA). fullofsecrets araid A missed on
   the leader rule (cone vision: the heaviest rarely sees 2 others): **z6g = z6f + CASH_N 2** (chain ~/diag26b/cq5).
   **z6h = z5n + CASH_KINGS 1** (no THROW_ADAPT) is the one-switch follow-up to z5n (chain cq6 after cq4).
