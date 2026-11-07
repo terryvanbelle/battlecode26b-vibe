@@ -1,0 +1,16 @@
+name=z5k
+source=bots/zl0
+source_sha=c585a2762c96
+commit=64abbfe4
+created=2026-11-06 22:30 PST
+
+z5k = z3x + THROW_SAFE + RISK_TTL 40 (tools/bundle.sh z5k zl0 z3x z4i z5g): z5a plus z5h's switch. Its sorted sources
+differ from z5a's by RISK_TTL's lines only. It replaces z5j, which cannot go: z5d (the THROW_SAFE + THROW_ADAPT
+pair) overran 42 times in each copy of araid arrows B at zd186. The replica plays one block per ~4 hours, so the
+two switches share one slot if both screens pass.
+
+Falsifiers, registered before any z5k game:
+1. Screen zd191 (vs zd172) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun. z5k goes to the replica only if zd188 (z5h) also passes; otherwise z5a goes.
+2. Replica: the block rules plus the transfer floor (0.9x) against z3x's same-set block, and z5h's falsifier 3 (trap
+   deaths per game at most 1.15x the twin's; YokoOno Stash B middle-band rat-rounds above 408). Either failing drops it.
