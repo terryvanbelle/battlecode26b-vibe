@@ -7041,3 +7041,11 @@
 - 00:14: **z5n submitted** (#250, z3x + THROW_SAFE + RISK_TTL 40 + CASH_READ; passed zd193, net +3). Its set-3 block is queued: 4 sent, 12 in the drain queue.
   - z5n goes now because it is the candidate that has passed its screen. z5o (zd194, now) and z6f (zd201, next) are still screening, and the replica is not left idle.
   - If z6f passes zd201, it is the next candidate. It contains z5o, and its target maps are on sets 1 and 2 (clockwisdom vs collegejunior and Varun, fullofsecrets vs spsquared and Merlin).
+- 00:14: **Why z6f's rescue misses fullofsecrets** (dump ~/diag26b/cq3d/fsA, z6f vs araid A, seed 0, which reproduces cq3's game; scratch cashwhy.py).
+  - From r490 to r580 the bank fell from 245 to 60 while 4-6 attackers stood within Chebyshev 4 of one another around (23,23), holding 260-580 raw each (1,000-2,200 together, the king at (2,32)). No rescue site was named.
+  - The leader rule asks for CASH_N - 1 = 2 more of ours in view within Chebyshev 4, and for none of them to be heavier. With a cone of vision, the heaviest (580 at (20,21)) had one ally within 4, and the next heaviest stands down when it sees it.
+  - **z6g = z6f + CASH_N 2** (bots/z6g/SNAPSHOT; compiled on the VM, efda6542970f) is the dose arm. Mechanism chain ~/diag26b/cq5 is on cq3's 16 cells.
+  - Falsifiers:
+    1. It keeps z6f's three gains, wins at least one more cell, and loses no cell z5o won.
+    2. Screen vs zd172 on the s6 gates, with kings formed at most 1.5x zd201's.
+    3. The replica rules.
