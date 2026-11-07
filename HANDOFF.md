@@ -96,35 +96,44 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 21:02 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 22:35 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen control: **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
-  scr_eq). New switches: build on bots/zl0 (ledgered z1z, scratch, untracked; `cp -r bots/zl0 bots/NEW`, sed the
-  package), then `tools/bundle.sh NAME zl0 z3x NEW` to put them on the incumbent (exact merges; check the Cfg by eye).
-- **Replica references for z3x candidates:** set 3 = z3x block 1 (18613-18620, 18623-18626, 18653-18656), set 1 = z3x
-  block 2 (18665-18668, 18682-18685, 18691-18694, 18697-18700); IDs also in /dev/shm/z3x_ids.txt, z3x_ids2.txt. Twin
-  field_report rows: ~/diag26b/z3xb2.jsonl (set 1); set 3's rows are z3x's block-1 jsonl in ~/diag26b. **z3x's set-2
-  reference block is queued** (21:00, block_v4s2.sh with z3x active; IDs > 18700), so the replica plays while the throw
-  screens run. Set 4 next if no candidate is ready. Then a candidate: submit it, block_v4s3.sh (set 3) first.
-- **Screen queue (VM runs/screenq.txt):** zd182 z3w (playing; z3x + WALL_HOLD, revived), **zd183 z5a** (z3x + THROW_SAFE),
-  **zd185 z5c** (z3x + THROW_ADAPT; replaces z5b's zd184, pulled), **zd186 z5d** (z3x + THROW_SAFE + THROW_ADAPT), then
-  the closed lines (zd141, zd132: never let the queue reach them). The next replica candidate is z5d if zd183, zd185 and
-  zd186 all pass, else whichever single switch passed (z3w included if zd182 passes its falsifiers).
+  scr_eq, ovr). New switches: build on bots/zl0 (ledgered z1z, scratch, untracked; `tools/snapshot.sh NEW bots/zl0`),
+  then `tools/bundle.sh NAME zl0 z3x SWITCH...` to put them on the incumbent (exact merges; check the Cfg by eye).
+- **Replica references for z3x candidates:** set 3 = 18613-18620, 18623-18626, 18653-18656 (twin rows
+  ~/diag26b/z3xb1.jsonl); set 1 = 18665-18668, 18682-18685, 18691-18694, 18697-18700 (z3xb2.jsonl); set 2 =
+  18722-18725, 18736-18739, 18745-18748, 18750-18753 (z3xr2.jsonl). IDs also in /dev/shm/z3x_ids.txt, z3x_ids2.txt,
+  z3x_ids3.txt. **Set 4 is playing** (18760-18763 and 18783-18786 done at 22:30, 8 queued; done about 00:10). Do not
+  submit before it finishes: a new build holds the old build's queued matches. When it is done: fetch, twin rows, then
+  submit the candidate and run block_v4s3.sh (set 3) first.
+- **Candidates (all z3x bundles):** z5a = z3x + THROW_SAFE (passed zd183; cleared for the replica). z5c = z3x +
+  THROW_ADAPT (passed zd185, D 5 net -1, not submitted). z5d = both: REJECTED at zd186, 84 overruns, all in araid
+  arrows B (42 per copy). The replay (~/diag26b/ov5d/d) puts them at r1880-2000: 30 rats packed within 5 of the king
+  after the CASH_END recall, no second king; z5a's game on that cell formed 2 kings and stayed under the limit. z3x's
+  144 cached replica games show no over-limit turn after round 1 (~/diag26b/ovcensus.py PKG), so the crowd overrun is
+  latent, not a field problem. z5j (z5d + RISK_TTL) withdrawn with it.
+- **Trap-age line (RISK_TTL):** TrapRisk.TTL 150 -> 40 (z5g switch on zl0). z5h = z3x + RISK_TTL 40 (screen **zd188**,
+  playing), z5k = z5a + RISK_TTL 40 (**zd191**), z5i = RISK_TTL 15 dose arm (**zd189**). Falsifiers in each SNAPSHOT
+  (z5h's #3: trap deaths/game <= 1.15x the twin's, YokoOno Stash B middle-band rat-rounds r1-300 > 408).
+- **Next replica candidate:** z5k if zd188 and zd191 both pass, else z5a. Screen queue after zd189 reaches the closed
+  lines (zd141, zd132): add a new candidate before zd189 finishes (about 00:00).
+- Dropped tonight: z5f, z3w (WALL_HOLD, do not revive), z4f, z4g, z4h. Closed diagnoses with no candidate: starvation
+  with cheese held (ATK_DELIVER, HUNGRY, DRY; CASH needs a bank >= 50), reactive baby traps (11 attempts), seat shift,
+  fewer babies (u5t), RISK_FRESH/RISK_ADAPT.
 - **Throw line (20:05-20:50):** enemy thrown-rat hits on our kings always throw our own rats, grabbed blind-side 3-5 from
   the king (wounded retreaters), 90% by thewaxmango and nzjt (kthrown.py, kgrab.py, kgrab2.py, kdis.py in ~/diag26b).
-  z4i THROW_SAFE passed zd181 (our own throws into our king). THROW_ADAPT (u7i: no retreat after seeing an enemy carrier
-  of ours) pooled t +2.14 over two blocks on u6x before its Merlin falsifier. The next replica bundle should take whichever
-  of WALL_HOLD, THROW_SAFE, THROW_ADAPT pass their screens. Disintegrate-on-carry is not usable: destroying a carried rat
-  clears its carrier from the engine's robot grid (GameWorld.destroyRobot).
+  Disintegrate-on-carry is not usable: destroying a carried rat clears its carrier from the engine's robot grid
+  (GameWorld.destroyRobot).
 - Rejected today on the replica: z3z (block 1 D 6, net -2, t -0.82), z3s, z3q, z2x, z3b, z3c, z3j. Closed lines today:
   discovery (z4g, z4h: a side glance replaces the forward cone), the rush index (z4d, z4e, z4f: zd178 picks z -2.11), seat
   (z3y/z4a), grab-war (GRAB_SAFE), king-biter (KING_CALL), DRY.
-- **Laptop disk:** repacked at 20:45. 7,311 loose objects (265 MB) went to a 26.8 MB pack, built in /dev/shm and prune-packed
+- **Laptop disk:** about 210 MB free at 22:35; write scratch to /dev/shm. Repacked at 20:45. 7,311 loose objects (265 MB) went to a 26.8 MB pack, built in /dev/shm and prune-packed
   through a temporary alternate (`.git/objects/info/alternates` is now empty). 239 MB free. `git config gc.auto 0` stays set:
   a plain gc needs room for the whole new pack. Repeat the recipe when loose objects pile up again (TRAINING_LOG has it).
   Scratch lives in /dev/shm (/dev/shm/sp_moved; scratchpad dirs are symlinks there).
-- VM disk: 3.0 GB free after pruning sb, sc and ss dumps at 20:20. Keep it at 2 GB or more.
+- VM disk: 3.1 GB free at 22:35 (pruned at 22:26). Keep it at 2 GB or more.
 - **Seat line, closed 19:01:** the engine's one asymmetry is turn order, but SEAT_SHIFT is a perturbation, not parity
   (~/diag26b/sc: z4a gives the flipped seat result in 23 of 45 seed pairs, z4b z1z's own in 18 of 30). Self-play
   mirrors break at r21 on peaceinourtime from orientation-dependent bytecode cost. knifefight: seat A won 15 of 15.
