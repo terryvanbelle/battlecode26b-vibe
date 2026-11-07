@@ -1,0 +1,7 @@
+name=z9i
+source=bots/z9f
+source_sha=1145577a3c0f
+commit=f9e1bba5
+created=2026-11-07 14:19 PST
+purpose=z9f + LOAD_FLEE 50 (z7n's ledgered switch, the exact z3x-to-z7o diff: one Baby hunk at offset +3 and the Cfg constant): a fighter or attacker carrying 50+ raw cheese keeps GATHER_CAT_DIST from a cat in view, as gatherers already do. A pounce destroys the rats under the landing with their cheese; z3x as A on averystrangespace vs araid lost 6,335 cheese in 17 cat kills, and z7o there lost 15 rats to cats and delivered 5,320 to 3,375. z7o held its falsifiers on z3x (08:02) and rode only in z8a, which fell to one chaotic points game; it was never screened, so its z3x screens zd236/zd237 give way to this one on z9f.
+falsifiers=(1) chain ~/diag26b/cq36 (seed 0, z9i and z9f paired): on averystrangespace A and B vs araid, z9i's cat deaths summed are below z9f's and its summed transfer is at least z9f's; (2) ledger: arrows B vs agrab replays z9f's game until the first loaded flee (turns state columns); (3) the s7 (zd260) and s6 (zd261) gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns), and over both screens cat deaths per 1000 rat-turns at least 5% below z9f's zd254/zd255; (4) the replica rules

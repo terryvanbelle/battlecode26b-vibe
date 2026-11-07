@@ -7640,3 +7640,23 @@
   - Block 2 (set 4) is queued: 4 sent, and 12 wait on the hourly limit.
 - 14:07: **zd253 (z9e s6) passes** (vs zd172: n 44, D 6, net 0, t 0.00; picks/100 34.09 vs 32.54, z +2.02; transfer per round 0.999x; 0 overruns). z9e rides in z9f, so this is a record only.
 - VM disk: pruned 45 replica replays older than 36 h, and the game dumps of the closed chains cq19, cq34, ov243 and rz4 (their logs are kept). 2.2 GB free.
+- 14:19: **Chain cq29 done** (z9f vs z9d on zd254's 48 s7 cells at seed 1, no dumps; a sample, not a gate): 29 wins each of 48; transfer 254,551 to 216,521 (1.18x).
+- 14:19: **cq35, first 6 keepout games (seed 0)**. z9h's first rat within Chebyshev 2 of a mine comes at r23 in all four of its games. z9f is at r38 (A vs araid) and r91 (B vs araid).
+  - Transfer by r400 is not higher: vs araid z9h 4,337 to 4,771 as A and 4,220 to 4,441 as B. The first mine is (47,30), 7 from the king, so the early economy is not discovery-bound here. Falsifier 1 also needs 1.2x by r400, so it looks lost; the z9f abrk/agtr games are still playing.
+  - I missed u8p (NOMINE_HOME, 11-04: a gatherer with no mine scouts our half instead of the centre; replica pooled net +1, t 0.22) because I searched only EXPLORE_CENTER. z9h is the same direction by another rule.
+- 14:19: **Why keepout vs Finals is lost** (replica 18615, z3x as A, lost on points; econ_report).
+  - Finals picked 40,705 to our 16,440. 11,180 of theirs came from our-side mines: (28,47) 4,780 from r34, (46,42) 2,880 from r160, and (47,30) 2,080.
+  - We worked three home mines and overstaffed them: (46,13) took 8,235 of our rat-rounds for 4,060 (mean wait 2.1 rounds), against 3,943 of Finals' at (2,30) for 4,760.
+  - Our rats did not go north of y 38 between r200 and r550 (scratch northvis.py): 33 baby-rounds there in r0-200, then none until r550. So (46,42) was first worked at r554, and (28,47) never.
+  - Locally vs araid, z9f and z9h work all six home mines (first pickups r38-209).
+  - Points at war (GameWorld.setWinnerIfMorePoints) weigh 0.5 king share, 0.3 cat-damage share and 0.2 transfer share. Kings formed before r1200 are never destroyed by the cap, but after r1200 only 2 may stand (GameConstants: MAX_NUMBER_OF_RAT_KINGS 5, RAT_KING_CUTOFF_ROUND 1200). Finals ended with 5. The king-count line is closed (s3x, s5x, t0m, w0a, w0b, z0h, z2q), so this is recorded only.
+- 14:19: **averyfineline vs Finals (18762/18763) is a scarcity race**: both banks fall from 2,500 to about 250 by r100 on spawns. Finals' bank is 0 from r119 (their king at 480). We are down to 4 babies to their 7-9 at our king, which dies at r127 and r113 to 58 and 56 bites. Spending and defence families are closed; recorded only.
+- 14:19: **z9i = z9f + LOAD_FLEE 50** (z7n's ledgered switch, the exact z3x-to-z7o diff: one Baby hunk at offset +3; bots/z9i/SNAPSHOT; c7de564f1543).
+  - A fighter or attacker carrying 50+ raw keeps GATHER_CAT_DIST from a cat in view, as gatherers do.
+  - z7o held its falsifiers on z3x at 08:02 and rode only in z8a, which fell to one chaotic points game. It was never screened, so z7o's z3x screens zd236/zd237 give way to z9i's zd260 (s7) and zd261 (s6).
+  - Falsifiers (registered 14:19, before any game):
+    1. Chain ~/diag26b/cq36 (seed 0, z9i and z9f paired, starts when cq35 ends): on averystrangespace A and B vs araid, z9i's summed cat deaths are below z9f's and its summed transfer is at least z9f's.
+    2. Ledger: arrows B vs agrab replays z9f's game until the first loaded flee.
+    3. The s7 and s6 gates, and over both screens cat deaths per 1000 rat-turns at least 5% below z9f's zd254/zd255.
+    4. The replica rules.
+- 14:19: Laptop disk was at 28 MB free: king_report and econ_report had dumped three replays into build/dumpcache (46 MB). I moved those three (made this session) to /dev/shm/dumpcache. Laptop report runs now use BC_DUMPCACHE=/dev/shm/dumpcache.
