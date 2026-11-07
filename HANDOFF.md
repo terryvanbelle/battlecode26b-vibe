@@ -96,18 +96,23 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 11:47 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (11:47):**
-  - **z9d on the replica as #264** (z7x's delivery trail + CASH_READ_LEFT 6000, z8b's overrun fix). Block 1 (set 2) was sent
-    at 11:37, all 16 requests. Score with `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 NEW`
-    after `fetch --out /dev/shm/rp $(seq A B)`. Block 1 rejects at t <= 0. If it passes, run block 2 on set 4
-    (`bash build/block_v4s4.sh`, then `git checkout research/panel/`) and pool. Its falsifier 1 (cq25: 0 overruns on keepout and
-    arrows) holds. Screens zd250 (s7, playing) and zd251 (s6, next). If either fails, the block is void.
-  - **z9e = z9d + THROW_ADAPT** is the next replica candidate. Falsifier 1 is chain ~/diag26b/cq26 (agrab arrows B and
-    evileye B, z9e vs z9d; own-rat throw hits on our kings at most 0.75x, scratch ammowho.py/kthrow.py). Screens zd252
-    and zd253 follow zd251. Merlin's five set-2/4 king kills are throws of our own rats (2,680 king damage), and u7i
-    (THROW_ADAPT on u6x) pooled t +2.14 on the replica.
-  - Screen queue after those: zd241 (z7u s7), zd236/zd237 (z7o LOAD_FLEE), the ablations zd195-199 (z6a-z6e).
+## State (2026-11-07 12:46 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (12:46):**
+  - **z9d on the replica as #264** (z7x's delivery trail + CASH_READ_LEFT 6000, z8b's overrun fix). It passed s7 (zd250),
+    s6 (zd251) and block 1 (set 2, 19619-19634: D 2, +2 -0, t 1.41).
+    - Block 2 (set 4) is 19662-19665 plus 19684-19695. 4 are done with all 12 cells alike, and the drain queue is empty.
+    - When all 16 are done: `fetch --out /dev/shm/rp ...`, then `paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 19662-19665,19684-19695`, then pool with block 1.
+    - Pooled it needs D >= 4 and t >= 2. On a pass: accept z9d (attempts set, progress-refresh, commit progress/) and make it the screen control.
+  - **z9f = z9e + z7g's five switches** (RICH_FIX one-king, THREAT_WALL_REACH 5, SLOT_HANDOFF, FORM_DEFEND_AGE 25) is
+    the next replica candidate.
+    - Falsifier 1 (cq27) held 3/4.
+    - s7 zd254 passed (net +2, picks z +2.09, transfer per round 1.050x). s6 zd255 is playing; score it with `bash tools/score_screen.sh zd255 z9f zd172 z3x`.
+    - On a pass: `contest.py submit bots/z9f`, then `bash build/block_v4s2.sh`, then `git checkout research/panel/`, after z9d's block 2.
+    - Chain ~/diag26b/cq29 (scratch chainsn.sh, no dumps) replays z9f vs z9d on the s7 cells at seed 1 as a second sample. Summarise with `wl.py`.
+  - z9e (z9d + THROW_ADAPT) is in z9f. Its screens zd252/zd253 are next in the queue, then zd241 (z7u s7), zd236/zd237
+    (z7o LOAD_FLEE) and the ablations zd195-199 (z6a-z6e).
+  - Closed since 11:47: Nofreecheese king-walking, newborn grabs, LOW_BABIES and friendly throws (cooldowns: about 8
+    rat-turns per 46 king damage). cq28 shows the evileye B screen losses are chaos.
   - **Closed today:** z8b (rejected at block 1, D 4 +1 -3), z9a/z9b (PICK_TRIP), z9c (HEIR: the heir is thrown to
     death in place), zth (TRIP_HALF probe). Also closed without a candidate: coverage by half, held-cheese starvation,
     cooperation throws (cooperation ends at a median r32), the disintegrate and MOAT lines, and the canyoudig scarcity
