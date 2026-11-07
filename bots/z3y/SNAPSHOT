@@ -1,0 +1,30 @@
+name=z3y
+source=bots/zl0
+source_sha=c585a2762c96
+commit=878eb0f
+created=2026-11-06 17:45 PST
+
+z3y = z1z + ledger + SEAT_SHIFT 1 (new switch; King.java, ledgered hook K 20 at the spawn call). As team A the king
+skips its spawn in round 1. The engine runs robots in spawn order (ObjectInfo.dynamicBodyExecOrder; babies spawned
+in a round act from the next), and A's king acts before B's. With both kings spawning every round, B's i-th baby
+then acts right after A's i-th. One round late, our i-th baby acts after theirs instead. As team B nothing changes,
+so B games replay z1z's exactly.
+
+Evidence (replica dumps; scratch throwseat.py, naporder.py): seat B won 5t4rv4t10n_1337 and externalsustenance vs
+YokoOno whichever bot held it (z1z and all 5 candidates before it lost both as A and won both as B). Thrown-rat
+deaths (ours/theirs): 5t4rv4t10n as A 111/57 over 3 games (0 won), as B 54/132 (3 won); externalsustenance as A 84/60
+(0 won), as B 42/57 (3 won). Over all 219 cached games the seats don't differ. Grabs land after the victim's turn in
+the round 56-59% of the time, 70-73% for YokoOno on these two maps. On starvation maps few rats respawn, so the
+opening order holds. That a second-mover edge decides these cells is a hypothesis; this is its test.
+
+Falsifiers, registered before any z3y game:
+1. Mechanism (~/diag26b/ss, seeds 0-2): z1z vs z1z self-play and z3y (A) vs z1z (B) on 5t4rv4t10n_1337,
+   externalsustenance, ultimatestarvation and starvation; plus z3y and z1z as A vs araid and abrk on the same 4
+   maps, seed 0. (a) The turn order must flip: in the z3y self-play games, A's babies must act after B's
+   equal-index babies (spawn rank) in most rounds of r2-100. (b) Over the 12 self-play pairs, z3y as A must win more
+   than z1z as A. (c) Over the 8 archetype cells, z3y must not win fewer than z1z. (a) failing means the shift does
+   not do what it claims; (b) or (c) failing drops it.
+2. Screen zd173 (vs zd136) on the s6 gates: t <= -1.5, picks z <= -2, transfer per round < 0.97x, any overrun. Every
+   B cell must replay z1z's zd136 game.
+3. Replica: block rules plus the transfer floor; on set 3, YokoOno 5t4rv4t10n_1337 A or externalsustenance A must
+   flip to a win, or the mechanism did not transfer.
