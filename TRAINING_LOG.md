@@ -7608,3 +7608,15 @@
     4. The s7 and s6 gates.
     5. The replica rules.
   - Screens zd256 (s7) and zd257 (s6) are at the front of the queue.
+- 13:52: **z9g DROPPED at falsifier 2** (chain ~/diag26b/cq33, seed 0).
+  - On clockwisdom's 8 cells z9g transferred 1,980, the same as z9f's 1,980; the bar was 2x.
+    - Seat A rose: vs agtr and agrab 500 each to 100. vs abrk 260 to 80, won where z9f starved at r840. vs araid 360 to 420.
+    - Seat B fell: vs agtr and agrab 80 each to 320. vs abrk 120 to 320. vs araid 80, starved at r700 where z9f won.
+  - Falsifier 1 held: twin ztb replays z9f exactly on every state column (only the bytecode column differs) on rose A, clockwisdom A and averystrangespace A vs agtr.
+  - Why seat B gains nothing: the king's mine list stays empty until r750.
+    - With no mine known, explore() ranks its targets by closeness to the map centre (EXPLORE_CENTER_FROM 0). On clockwisdom the centre is the spiral's core.
+    - So gatherers walked toward (19-35, 23-33) for 700 rounds. B's path-near mines (56,27) and (56,33) are on the far half by d², and nobody saw them until r700.
+    - Meanwhile 11 of our 20 rats were attackers holding 140-1,310 raw each, and attackers never deliver.
+  - Screens zd256 and zd257 are out of the queue.
+  - Chain cq34 (z9g vs z9f on Stash and fullofsecrets, both seats vs agtr, araid and abrk) still runs after cq33, as a diagnostic: those are the other maps where loaded rats move away from home more than toward it.
+  - Replica carrier census (scratch cwcarry.py, 448 games): carrier moves that lengthen the path home, per move that shortens it, are 1.86 on clockwisdom, 1.78 on TheHeist (15 of 15 won), 1.38 on Stash (0 of 11), 1.24 on fullofsecrets (0 of 9), and 0.05-1.13 on the other 51 maps.
