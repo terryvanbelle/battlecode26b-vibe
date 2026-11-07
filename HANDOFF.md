@@ -96,24 +96,30 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 14:53 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 16:53 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **z1z** (accepted 2026-11-06 11:46 PST over u6x; replica blocks 1-4 pooled D 46, net +14, t 2.06; u9p + SEEK_IDLE
-  20/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Screen control: **zd136** (z1z). Ledgered z1z for tools/bundle.sh: bots/zl0
-  (scratch, untracked: `cp -r bots/z1z bots/zl0`, sed the package, `python3 tools/ledger.py bots/zl0`).
-- **Replica: z3j (#243, z1z + ledger + CAT_HUSH + FORM_WAR_FROM 300) on set-3 block 1** (submitted 14:16; 12 of 16 in
-  (18281-18299), Icarus and Merlin in the drain queue; waiter build/wait_z3jb1.sh, IDs > 18269). Partial (14:43): 36
-  cells, D 8 (+2 -6), net -4, t -1.41, the same flips as z3c (z3b + CAT_HUSH, rejected): **CAT_HUSH loses on the replica**
-  though it passed zd158/zd160 locally. Score: `contest.py fetch --new --pages 3`, `paired 17946-17961 IDS` (block 1
-  rejects at t <= 0).
-- **Replica order next:** **z3g** (z1z + ledger + FORM_WAR_FROM 300 alone; zd159 passed, t +0.00). z1z's 192 replica
-  games: second king formed at war before r300 won 6, lost 20 (r300+: 28-4; no second king at war: 60-49); z0k (same
-  switch on u9p) pooled net +5 over three blocks. Then **z3p** (z1z + ledger + CASH_END 1880 alone: the endgame second
-  king that gained corridorofdoom B for z2x and z3b) if its local checks (~/diag26b/cp) hold, then z3k if zd161 passes.
-- Screens: **zd161** (z3k = z1z + ledger + DRY) running; the rest of runs/screenq.txt (zd150, zd145, zd141, zd132, ...)
-  is on closed lines. Dropped today at local checks: z3l (DRY_HOLD), z3m (z3j + DRY), z3n (CAT_YIELD).
-- Closed today on the replica: z2x, z3b (endgame-king bundle with mid-game CASH/RICH: formations that starve the bank),
-  z3c (CAT_HUSH). Closed locally: DRY variants beyond z3k, CAT_YIELD (bite damage on rats does not rise), early cat
-  traps (no loss signal), nap timing (no gap to the field).
+  20/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Screen control: **zd136** (z1z). Ledgered z1z for new switches: bots/zl0
+  (scratch, untracked; `cp -r bots/zl0 bots/NEW`, sed the package; it is already ledgered, do not rerun ledger.py).
+- **Replica: z3s (#245, submitted 16:36) on set-3 block 1** = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT
+  1850. 2 sent (15385-15386), 14 in the drain queue; waiter build/wait_z3sb1.sh (IDs > 18502). Score `contest.py fetch
+  --new --pages 3`, `paired 17946-17961 IDS` (block 1 rejects at t <= 0); then block 2 on set 1 (`build/block_v4s1.sh`,
+  `paired 17962-17977 IDS`, rejects at pooled t <= 1); `git checkout research/panel/` after each block script.
+  Transfer floor: rsync the IDs to VM ~/diag26b/rp, `tools/field_report.py games --dir ~/diag26b/rp --ids IDS >
+  ~/diag26b/NAME.jsonl`, `python3 blockcheck.py CAND.jsonl,TWIN.jsonl CAND_IDS TWIN_IDS` (twin rows z1zb1..b4.jsonl).
+- Rejected today on the replica: z2x, z3b, z3c (CAT_HUSH), z3j, **z3q** (block 2: 48 of 48 alike; pooled D 1, t 1.00).
+  Ledgered switches flip one or two cells a block, so the accept bar (pooled t >= 2, D >= 4) needs bundles: each
+  candidate after z3s should carry every switch that has passed its screen and mechanism checks.
+- Passed, not submitted alone: z3p (CASH_END, in z3q/z3s), z3r (END_CAT, in z3s), z3t (LAST_FLOOR 20: zd167 inert).
+  Dropped: z3u (KING_CALL; falsifier 2, 8 blind ring bites vs a bar of 24).
+- **Lead: z3v = z1z + ledger + WALL_HOLD** (16:50; bots/z3v/SNAPSHOT). Replica dumps: 68k of 138k held w/f baby turns
+  faced an enemy behind a wall (detour 6+; corridorofdoom vs Varun 15% of our baby turns, minimaze 8%, Stash 8%).
+  Screen **zd170** queued behind **zd169** (z3s's combined screen); mechanism games ~/diag26b/wh (40 games, 5 maze
+  maps vs araid/abrk, both seats, z1z controls; table: `python3 ~/diag26b/walled2.py DIR z3v` style, US = package).
+  If both pass, the next replica candidate is z3s + LAST_FLOOR + WALL_HOLD.
+- Other census results (16:50-16:53, scratch stillcen.py): 'd' still turns (8% of baby turns) are cheese-weight
+  movement cooldown, not decisions; 'M' (3.7%) and 'a' (2.6%) stalls are real blocks (rose, TheHeist, minimaze;
+  attackers on Stash push at the wall toward the mirror king spot).
+- Screen queue after zd170 is on closed lines (zd141, zd132, ...): add a candidate before zd170 finishes.
 - **Exact silence:** **tools/ledger.py bots/NAME** applies the exact ledger to a u6x-family bot; its docstring has the
   engine's counting model and the hook recipe. A hook whose acting path is costly closes with **G.settle(cd, cb, K)**
   (K = 18 + base-absent instructions after it): crediting an acting hook made left() overstate the budget and z2j
