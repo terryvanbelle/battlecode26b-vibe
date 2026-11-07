@@ -7669,3 +7669,27 @@
   - Pooled with block 1: 74 cells, D 6 (+5 -1), net +4, t 1.63. 19773-19774 (collegejunior) are playing, and Icarus and Merlin wait on the hourly limit.
 - 14:29: **Weak enemy kings** (scratch weakking.py: enemy kings at 100 HP or less for 50+ rounds, all replica dumps on the laptop): 7 of 510 games are losses with such a king, about 4 distinct cells. The dose is too low for a finishing-blow candidate.
   - Clouds B vs Varun: in our win (18739) Varun's king sat at 38 HP from r625 to r1298, then starved; in z9f's loss (19727) our king starved at r1398. Recorded only.
+- 14:56: **z9i DROPPED at falsifiers 1 and 3** (registered 14:19).
+  - Falsifier 1 (cq36, seed 0): summed transfer on averystrangespace vs araid was 7,804 to z9f's 9,017. As A it delivered more (4,956 to 4,675, both r2000). As B it won sooner (r1268 vs r1620) but delivered less a round (2.25 to 2.68). Arrows A vs araid and B vs agrab replay z9f exactly.
+  - Falsifier 3: on zd260 against z9f's zd254 (48 shared s7 cells), both win 29. Transfer per round is 0.918x, and cat deaths per 1000 rat-turns are 1.163 to 1.056 (+10%; the bar was -5%). Against zd205, zd260 scores n 48, D 16, net +2, t +0.50, picks z +1.86, 0 overruns. zd261 was pulled.
+  - The LOAD_FLEE line (z7n, z7o, z9i) closes.
+- 14:56: **Held cheese while the king starves** (scratch heldcen.py and ferrycen.py over the VM dumpcache: 510 replica games of all builds).
+  - 28 of 220 losses have 20+ rounds where our bank is under 100 while our babies hold 500+ raw; 38 of 290 wins do.
+    - The losses are clockwisdom (both seats vs Varun, Xzibit and collegejunior), fullofsecrets (both seats vs Merlin and spsquared; 2,000-4,300 raw held), rose A (YokoOno, spsquared), minimaze A (Xzibit) and cheesebottles B (Merlin).
+  - z9f's clockwisdom A loss to Xzibit (19771, scratch held.py): our babies held 980 raw at r300, 4,020 at r600 and 5,080 at r900, while the king starved at r1080 (cheese out r1020). One rat held 1,180 at Chebyshev 10 from the king at r400, and another 2,900 at r900.
+  - Varun's clouds B and ratsareants wins over z9f (19727) are scarcity: never more than 180 raw held.
+  - Loaded rats (300+ raw, Chebyshev 5+ from the king) have an empty ally (under 30) within Chebyshev 3 in 627 of 3,441 10-round samples in losses (18%), and in 6,690 of 25,593 in wins (26%).
+  - Engine:
+    - A rat's move and action cooldowns are multiplied by 1 + 0.01 x its OWN raw cheese, and carrying adds nothing, because the 1.5 multiplier is cast to int (InternalRobot.addMovementCooldownTurns).
+    - Allies can always be grabbed (in the cone, adjacent; RobotControllerImpl.assertCanCarryRat). A carried rat cannot act, and wriggles free after 10 turns onto the tile ahead of its own facing.
+    - So an empty carrier moves a 1,000-raw ally 11 times faster than the ally walks. The 10-31 20:22 carry-load census logged a ferry as an idea and did not build it, because losses then carried light loads.
+- 14:56: **z9j = z9f + FERRY 200** (new switch; bots/z9j/SNAPSHOT; d8843c0866c6).
+  - The helper is an empty non-attacker (under 20 raw) with no enemy within dist2 20. When it sees an ally within Chebyshev 3 holding 200+ raw at Chebyshev 6+ from its nearest king, it walks beside it and grabs it, then walks to the king (Nav.goTo).
+  - It sets the ally down in transfer reach, on a free tile from which the king lies within 45 degrees of the ally's facing, because a heavy rat may not be movement-ready to turn. After a wriggle it takes the same ally again, until the ally stands in transfer reach.
+  - Ledgered: K 20 with G.settle around the moveDecision hook, and 11 in the two ally-carry branches, which otherwise drop a Nav swap's ally as before.
+  - Falsifiers (registered 14:54, before any z9j game):
+    1. Chain ~/diag26b/cq37 (seed 0, z9j and z9f paired: clockwisdom A/B vs araid, abrk and agtr; fullofsecrets A/B vs araid and abrk; rose A/B vs araid). z9j makes 20+ ferry grabs over the 12 games, and its summed transfer is at least 1.15x z9f's over the 12 and 1.3x over the 6 clockwisdom games.
+    2. In the same chain, z9j wins at least as many of the 12 as z9f.
+    3. The s7 (zd262) and s6 (zd263) gates.
+    4. The replica rules.
+  - zd262 started at 14:55. It preempted zd195 (a z3x ablation filler), whose 9 finished cells resume after zd263.
