@@ -1,0 +1,26 @@
+name=z4i
+source=bots/zl0
+source_sha=c585a2762c96
+commit=01bb719
+created=2026-11-06 20:05 PST
+
+z4i = z1z + ledger (bots/zl0) + THROW_SAFE (new switch; Cfg.THROW_SAFE; Baby.gridKings, tryThrow). tryThrow puts our
+kings from the king channel (Comms.kings, their 3x3 bodies) on the flight grid, so a flight through an unseen king of
+ours scores as an own hit (-damage, as for a seen one). And it does not throw while the best flight scores below zero:
+the carry goes on (it ends by MAX_CARRY_DURATION 10) instead of THROW_HOLD's round-6 release of any flight. Both hooks
+are ledgered (G.settle, K 18 and 20). THROW_CHECK (u1k, neutral on u0m) did more (a king hit scored 3x, holds until
+THROW_LATE, a re-check after the turn) and is not ledgered.
+
+Evidence (replica dumps, 89 cached, deduplicated by game; scratch ownhit.py, kinghits.py): our thrown rats hit our own
+king 49 times; 22 of the 29 with a known carry length were thrown on carry round 6, and the king's centre was outside
+the thrower's cone in 22 of 29. Over the cache, our throws dealt our own king 3,648 damage (theirs dealt theirs 888),
+140-194 a game on thunderdome vs Varun, a cell lost in both seats. Locally it is rare (z1z's 20 games in
+~/diag26b/sl: 2 hits, 48 damage), so the mechanism is read on the replica.
+
+Falsifiers, registered before any z4i game:
+1. Screen zd181 (vs zd136) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+2. Replica: the block rules plus the transfer floor against the twin. Mechanism: our throws' hits on our own king in
+   the candidate's block games (kinghits.py) must be at most a third of the twin's in the same blocks. Any cell it
+   flips must hold a twin game with an own-king hit or a carry held past round 6; a flip elsewhere comes from the
+   ledger's drift, and two such flips the wrong way drop it.
