@@ -109,7 +109,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   /dev/shm/z3x_ids4.txt; replays in VM ~/diag26b/rp and /dev/shm/rp, match.json in bc26b-galaxy-replays; twin rows
   ~/diag26b/z3xs4.jsonl). Submit: `tools/galaxy26/contest.py submit bots/NAME -m TEXT`, then
   `bash build/block_v4sN.sh` (set 3 first, then 1, 2, 4), `git checkout research/panel/v4-setN.json`.
-- **Replica now:** z6j (#251) = z3x + THROW_SAFE + CASH_READ + CASH_KINGS 1 + CASH_BABIES 12, submitted 00:52 and
+- **Replica now:** z3x resubmitted (#252, 01:13) so ranked games play the incumbent. z6j (#251) = z3x + THROW_SAFE + CASH_READ + CASH_KINGS 1 + CASH_BABIES 12, submitted 00:52 and
   **withdrawn 01:01** under its falsifier 1 (through z6i: cq6 where_are_you 0/4 vs z5n 3/4). Its 4 sent set-3 matches
   (Finals, spsquared, both seats; after 19037) still play. 12 unsent rows saved in /dev/shm/kd/z6j_queue.tsv: to
   reinstate, append them to research/panel/queue.tsv (drain-loop.sh, laptop pid 1065185, sends about 4 an hour).
