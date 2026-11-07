@@ -7018,3 +7018,10 @@
   3. A passing ablation goes to the replica only if its flips net +1 or more, then faces the block rules against z3x's reference blocks.
 
   Probes that gave no candidate (scratch kcount.py over z3x's 192 reference games, sets 3/1/2/4): the opponent formed a second king in 24 of our 71 losses (median r491), and we did in 16 (median r559). In wins it was 11 of 121 for them and 47 for us (median r919, mostly END_KING). An earlier second king at war is the closed FORM_WAR_FROM finding (2-12 with one by r250), so nothing is built from this.
+- 23:50: **z6f = z5o + CASH_KINGS 1** (bots/z6f/SNAPSHOT; compiled on the VM, 7309c6e1bc61). The change is one Cfg line, and it turns CASH's mid-game rescue formation back on for a lone king.
+  - Target: the seven held-cheese starvation losses in z3x's reference blocks (22:20 entry). They are clockwisdom vs collegejunior A/B and Varun B, and fullofsecrets vs spsquared A/B and Merlin A/B. Kingkill confirms clockwisdom A/B and Nofreecheese B vs collegejunior as starvations, the bank falling by about 2 a round from about 1,600 at r100.
+  - Why it is untested: mid-game CASH (z2e/z2g, 7 of 8 mechanism wins to u9p's 2 in cq2) reached the replica only inside the z2x/z3b endgame-king bundles. Those ran on set 3, which has none of the target maps, and their rose A loss was a RICH_MORE third king stacked on CASH's second. RICH_MORE and the rest are off here. CASH_READ (in z5o) removed cashTick's crowd overruns.
+  - Falsifiers:
+    1. Mechanism chain ~/diag26b/cq3 (clockwisdom, fullofsecrets, rose, Stash vs araid and abrk, both seats, seed 0, z6f and z5o; 32 games, 2 at a time at nice 19): at least 2 more cells won, fewer king starvations, and no cell where a CASH king forms and every king then starves sooner than z5o's.
+    2. Screen vs zd172 on the s6 gates.
+    3. Replica block rules plus the transfer floor, with sets 2 and 1 (the target maps) first.

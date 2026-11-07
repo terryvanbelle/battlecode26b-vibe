@@ -1,0 +1,7 @@
+name=z6f
+source=bots/z5o
+source_sha=50f35a5d548f
+commit=6bddfdf9
+created=2026-11-06 23:49 PST
+purpose=z5o + CASH_KINGS 1 (existing switch, one Cfg line): CASH's mid-game rescue formation runs while the team has one king. While the bank is under CASH_BANK 250 (and at least 60), the heaviest of 3+ loaded babies within Chebyshev 4, 5+ from every king, holding 250+ raw between them, names a clear 3x3 at itself. The promotion banks every former's raw. Target: z3x's starvation losses with the cheese held, not delivered (clockwisdom vs collegejunior A/B and Varun B, fullofsecrets vs spsquared A/B and Merlin A/B: 13-19 babies holding 870-4,563 raw, none within dist2 20 of the king, the king starving at r600-980). Mid-game CASH reached the replica only inside the z2x/z3b endgame-king bundles, on set 3, which has none of these maps. Its rose A loss there came from a RICH_MORE third king on top of CASH's second, and both are off here. On z1z it passed screen zd143 (z2g) and won 7 of 8 mechanism games (cq2) to u9p's 2. CASH_READ (in z5o) removed the crowd overruns in cashTick's squeak loop.
+falsifiers=(1) mechanism chain ~/diag26b/cq3 vs z5o (clockwisdom, fullofsecrets, rose and Stash vs araid and abrk, both seats, seed 0): z6f wins at least 2 more of the 16 cells than z5o, has fewer king starvations, and no cell where a CASH king forms and every king then starves earlier than z5o's did; (2) screen vs zd172 on the s6 gates; (3) replica block rules plus the 0.9x transfer floor, with the set-2 and set-1 blocks (clockwisdom, fullofsecrets) first.
