@@ -7301,3 +7301,8 @@
   - *arrows vs araid, seat A*: 74 cat deaths to 74.
   - *Ledger*: arrows vs agrab replays z3x's game exactly (48,198 turns, every hot= equal; the switch never acts there). averystrangespace A is equal to r1389 (46,142 turns). There the first divergence is attacker 12950, carrying 520, which flees cat 3 at Chebyshev 2 (mv=c) where z3x stepped toward it (mv=g). z7o's non-gatherers took 119 mv=c turns in that game to z3x's 0.
   - Screens zd236 (s7) and zd237 (s6) follow zd230.
+- 08:06: **zd234 (z7m SWAP_LOADED, s7) vs zd205: n 48, D 3 (+2 -1), net +1, t +0.57**; picks/100 33.55 vs 33.93 (per-cell z -1.02); transfer per round 1.026x; pick amount per round 1.015x; 0 overruns.
+  - Gains: agtr cheesefarm B (won r1022, where z3x lost r1245) and atrap3 starvation A (won r1358, where z3x lost r1362). Loss: agrab evileye B (lost r1831, where z3x won on points).
+  - 175 ally carries over the 48 cells (z3x 0). Cat deaths 941 to 948; spawns 4,436 to 4,454.
+  - s7 passes. **zd235 (s6) is playing.**
+  - **King deaths in z3x's 64 replica king-kill losses** (scratch kdeath.py over the dump cache, sets 1-4): starvation 42, bites 17, thrown rats 13, cat scratches 2 (some games lose two kings). The starvations are the economy lines: clockwisdom (heavy-load crawl), fullofsecrets (the CASH line, z6f-z6j), Stash B and wallsofparadis. 7 of the 71 losses are on points.
