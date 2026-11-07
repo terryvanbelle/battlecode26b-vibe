@@ -1,0 +1,7 @@
+name=z6h
+source=bots/z5n
+source_sha=e57daf866320
+commit=4634026e
+created=2026-11-07 00:28 PST
+purpose=z5n + CASH_KINGS 1 (z6f's switch on z5n, without THROW_ADAPT; one Cfg line). z5n is on the replica (#250) and passed zd193 at net +3. z5o (z5n + THROW_ADAPT) passed zd194 at net -2, losing bed B, evileye B and tiny B again, so the rescue goes onto the base with no local cost. Mechanism: z6f won 3 more of cq3's 16 cells than z5o (fullofsecrets abrk B, rose araid A, rose abrk A), with fewer starvations.
+falsifiers=(1) mechanism chain ~/diag26b/cq6 vs z5n (cq3's 16 cells, seed 0): at least 2 more cells won, fewer king starvations, no CASH-formed cell starving sooner; (2) screen vs zd172 and vs zd193 (z5n) on the s6 gates; (3) replica block rules plus the transfer floor against z5n's blocks where they exist, else z3x's.

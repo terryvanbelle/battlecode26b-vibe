@@ -7049,3 +7049,8 @@
     1. It keeps z6f's three gains, wins at least one more cell, and loses no cell z5o won.
     2. Screen vs zd172 on the s6 gates, with kings formed at most 1.5x zd201's.
     3. The replica rules.
+- 00:28: **z5o (z5n + THROW_ADAPT) PASSED screen zd194** (vs zd172): n 44, D 6, net -2, t -0.81. It gained abrk bed A and araid evileye B, and lost abrk bed B, abrk evileye B, araid bed B and araid tiny B. Picks/100 33.84 vs 32.54 (per-cell z +2.22); pick amount per round 1.059x (z -0.09); transfer per round 1.059x; 0 overruns.
+  - The losses are THROW_ADAPT's local cost again (z5c, z5d: bed B and tiny B). Its gains can only come from field grabbers, and z5a's 48/48-alike set-3 block shows how little the throw switches moved there. z5n (net +3) stays the replica candidate.
+  - **z6h = z5n + CASH_KINGS 1** (bots/z6h/SNAPSHOT; compiled on the VM, 43963043de87) puts z6f's rescue on z5n, without THROW_ADAPT. If z5n continues on the replica, it is the one-switch follow-up.
+  - Screen **zd202** is queued after zd201 (z6f, running now). Mechanism chain ~/diag26b/cq6 (z6h vs z5n on cq3's 16 cells) starts when cq4 finishes.
+  - Queue: zd201, zd202, zd200 (calibration), zd195-zd199 (ablations), then the closed lines.
