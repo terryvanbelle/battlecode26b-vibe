@@ -1,0 +1,24 @@
+name=z5o
+source=bots/zl0
+source_sha=c585a2762c96
+commit=c80bdd1b
+created=2026-11-06 23:32 PST
+
+z5o = z5n + THROW_ADAPT = z3x + THROW_SAFE + THROW_ADAPT + RISK_TTL 40 + CASH_READ. Built with `bash tools/bundle.sh
+z5o zl0 z3x z4i z5b z5g`, whose sources equal the withdrawn z5j's, plus z5n's CASH_READ hunk (z5k -> z5n, patched with no
+fuzz). Its sources differ from z5n's by exactly the lines z5j has beyond z5k (THROW_ADAPT; same sorted diff, md5
+aa95f05e). THROW_ADAPT passed alone (z5c, zd185: D 5, net -1, t -0.44, picks z +1.96, ppr 1.058x, transfer 1.051x, 0
+overruns). It left the bundles only because z5d (with THROW_SAFE) overran 42 times in each copy of araid arrows B.
+Those are the CASH_END crowd turns that CASH_READ removes (z5n, ~/diag26b/ov5n). Target: our own rats thrown into
+our kings. In z3x's set 3/1/2 blocks against nzjt, 6 of its 12 king-death losses were throwHit kills, as were
+thewaxmango's tiny and DefaultMedium kills in both seats. The screen's araid and abrk do not grab our retreaters,
+so only the replica can show the gain.
+
+Falsifiers, registered before any z5o game:
+1. Mechanism: araid vs z5o on arrows, seed 0, dumped (~/diag26b/ov5o): 0 overruns (z5d had 42 there).
+2. Screen zd194 vs zd172 on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer per
+   round < 0.97x, any overrun.
+3. Replica: the block rules plus the transfer floor (0.9x) against the twin. z5c's mechanism rule also applies: in the
+   block games against thewaxmango and nzjt, enemy hits on our kings with our thrown rats (kthrown.py, deduplicated)
+   are at most half the twin's per game. A cell against YokoOno or Varun that the twin won and z5o lost counts against
+   it; two drop it.
