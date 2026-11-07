@@ -1,0 +1,7 @@
+name=z6j
+source=bots/z6i
+source_sha=2756b4f5f598
+commit=190f9eab
+created=2026-11-07 00:41 PST
+purpose=z6i with RISK_TTL back to 150 (one Cfg constant; TrapRisk.TTL constant-folds to z3x's) = z3x + THROW_SAFE + CASH_READ + CASH_KINGS 1 + CASH_BABIES 12. The replica candidate for the CASH line without RISK_TTL 40: z5n's set-3 block (19022-19035, provisional net -2) lost rose vs spsquared A, minimaze vs Xzibit A and mincemeat vs Icarus A, each diverging from z3x's game at an ordinary rat move with no CASH squeak in play; z5a (z3x + THROW_SAFE) was 48/48 alike on the same set
+falsifiers=(1) z6i's mechanism chain ~/diag26b/cq6 (z6j shares the CASH code; RISK_TTL is off the CASH path); (2) screen vs zd172 on the s6 gates; (3) replica: set 3 first, where it must not lose the three cells z5n lost (rose spsquared A, minimaze Xzibit A, mincemeat Icarus A) unless z3x also lost them
