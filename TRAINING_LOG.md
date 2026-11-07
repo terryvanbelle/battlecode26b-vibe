@@ -7376,3 +7376,4 @@
   - The mechanism chain is ~/diag26b/cq16 (cq14's 11 games, with z7x as control).
 - 09:22: **Correction:** replica matches 19521-19526 were z5i's last rows (pkg z5i), not z7x's. z7x's block starts at 19527.
 - 09:22: **VM disk** was 1.9 GB. Pruned 40 replica replays older than 36 h and deleted the chains of superseded or dropped bots (~/diag26b cq8, cq9, cq10, cq12, cq13). It is now 2.5 GB.
+- 09:23: **zd240 (z7u s6) vs zd172: n 44, D 1 (+1), net +1, t +1.00.** Picks z -0.75, transfer per round 1.050x, pick amount 1.030x, **0 overruns** (z7m had 2 in zd235). The s6 gates pass, so the overrun fix holds. Its s7 screen, zd241, is queued after zd238 and zd239 (z7x).
