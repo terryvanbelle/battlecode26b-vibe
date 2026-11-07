@@ -1,0 +1,7 @@
+name=z6w
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=d49351b1
+created=2026-11-07 02:19 PST
+purpose=z3x + RICH_FIX true + RICH_FIX_KINGS 1 + RICH_FIX_BANK 1500 (z3d's one-king rich-site fixes, never tried on a base without the endgame-king bundle): the first king keeps out of Chebyshev 5 of the open site, a site with a king's body in its 3x3 is dropped at once, a timed-out rich site is banned and the next opens 20 rounds later, joiners step onto any free tile of the 3x3; for one-king sites only from r600 while 1500+ is banked (minimaze A starved at 500 in z2x). z3x lost superioristhmus A and B to spsquared (18665/18666) holding one king with 2.9-4k banked from r791 / r502 until r1896 / r1881 (scratch richmiss.py); A was 47.9-52.1 at 2-3 kings and a third flips it. All calls sit in ledger hooks, so games replay z3x's until a fix acts
+falsifiers=(1) local vs araid seed 0: superioristhmus A and B must form a second king before r1150 where z3x does not, and not lose; minimaze A, keepout A and starvation B must not lose where z3x wins; (2) the s6 and s7 gates (vs zd172 and zd205); (3) the replica rules

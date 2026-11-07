@@ -1,0 +1,7 @@
+name=z6y
+source=bots/z6w
+source_sha=cd2691e512df
+commit=d49351b1
+created=2026-11-07 02:32 PST
+purpose=z6w (one-king RICH_FIX from r600 while 1500+ banked) + RICH2_BANK 3300 (z6x): RICH2's 80 cap spent every cheese over 3000, so the bank sat at 2,876-3,001 from r700 to r1300 (keepout A vs araid seed 0, ~/diag26b/rf1) and FORM_RICH_BANK 3000 held on few rounds; a rich site named then was closed at the next dip (with two kings the cap branch drops it while rich() is false). z3x held one king with 11k banked until r1853 on keepout A and until r1881/r1896 on superioristhmus (replica 18665/18666 vs spsquared, both lost; A flips with a third king). With 3300 the pinned bank stays over 3000, so rich() holds. Games replay the base until the bank first reaches 3000 with 40+ babies
+falsifiers=(1) local vs araid seed 0 (~/diag26b/rf1): keepout A or superioristhmus A/B must form a rich king (second or third) before r1150 that the base does not, and no cell the base wins may be lost; (2) the s6 and s7 gates (vs zd172 and zd205); (3) the replica rules
