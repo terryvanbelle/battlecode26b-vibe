@@ -7362,3 +7362,17 @@
   - **But z7j fails falsifier 1.** Its summed spawns had to rise 3% over the two screens. s7 rose 3.3% (4,602 against 4,454), but s6 fell 4.7% (4,814 against 5,051), -0.9% together. **z7j is REJECTED** on mechanism.
   - I had submitted it (#261) before running the spawn check. Its 16 rows were still held by the hourly limit, so I withdrew them unsent.
 - 09:01: **z7x is on the replica as #262** (block 1 on set 2; 16 rows queued behind the hourly limit). It runs alongside its screens zd238 (s7) and zd239 (s6), the z5i pattern, so the replica does not sit idle. **Rule, set before any result:** if either screen fails its gates, the block is void and z7x is rejected.
+- 09:22: **Why fos A still starves under z7x** (local cq14, seed 0, scratch heldmap.py / heavy.py / rtrack.py in ~/diag26b).
+  - Our attackers hold the cheese. Vs araid, 10-12 attackers carried 300-900 raw each from r250, 15-29 tiles from our king, on the mid-map mines round (24,26). Their total peaked at 4,800 (r850) while the bank fell from 1,800 to 1. A carried unit adds 1% to every cooldown (engine CHEESE_COOLDOWN_PENALTY), so these rats moved and bit at a quarter to a tenth of the normal rate.
+  - Under HUNGRY 300 (z7v, cq12, game since deleted), the same attackers turned home at r600 (mv=H) and never arrived. Attacker 11391 (740-1,340 raw) walked a stale flow path to (6,17), then Nav took it down the x=6 column, on the far side of the x=5 wall, to (6,22) by r910.
+  - CASH's rescue (z7p, cq7, fos A vs abrk) named a site at (7,26) at r600. 252 rat-turns went to reaching it, but only 3 rats got there; the rest were sealed in the pocket. The engine needs 7 allied babies in the 3x3 to become a king.
+- 09:22: **The trail allocates on time.** Debug copy ztn (z7x plus the chain length in the indicator) replays z7x's fos games exactly (A vs araid xfer 1,300; B vs abrk xfer 4,190). All 47 and 36 babies have a chain from their first or second round, at most 2 tiles from the spawn tile. The spawn turn costs about 14,850 bytecodes with or without it, since Flow.work fills the rest of the turn.
+- 09:22: **The trail misses heavy carriers.** The move decision (Baby line 192) runs only on movement-ready rounds, so homeLeg sees a carrier with R raw once every 1-1.8 x (1 + R/100) rounds.
+  - z7x counts the stall in those turns: TRAIL_STALL 20 is 80 rounds at 300 raw and 220 at 1,000.
+  - It also resets the trip on any gap over TRAIL_GAP 12, which happens at every call from about 1,100 raw.
+  - In fos B vs abrk (a z7x win), fighters 13028 and 12963 held 1,135 and 1,220 raw from r1289 and r1280 to the end, outside the pocket wall. 13028 spent 711 rounds on 12 tiles of (30-33, 12-18), 675 of its turns in deliver(), at chain positions 60-68 of a trail that leads home.
+- 09:22: **z7y registered** (z7x + TRAIL_HEAVY, new switch; design and falsifiers in bots/z7y/SNAPSHOT). The gap allowance becomes 12 + 2 x (R/100), and each stalled call adds min(gap, 1 + 2 x (R/100)). Under 100 raw both match z7x.
+  - Twin zhchk (TRAIL_HEAVY false) must replay z7x's fos B vs abrk.
+  - The mechanism chain is ~/diag26b/cq16 (cq14's 11 games, with z7x as control).
+- 09:22: **Correction:** replica matches 19521-19526 were z5i's last rows (pkg z5i), not z7x's. z7x's block starts at 19527.
+- 09:22: **VM disk** was 1.9 GB. Pruned 40 replica replays older than 36 h and deleted the chains of superseded or dropped bots (~/diag26b cq8, cq9, cq10, cq12, cq13). It is now 2.5 GB.
