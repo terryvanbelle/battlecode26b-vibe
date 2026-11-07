@@ -1,0 +1,20 @@
+name=z4f
+source=bots/z4d
+source_sha=3e345e944faf
+commit=4e3eb6a
+created=2026-11-06 19:05 PST
+
+z4f = z3z + RUSH_FROM 12 (z4d with the front moved further): the first 11 babies gather, 12-15 rush (4 rushers, not
+12), and through r300 a replacement born with fewer than 12 alive gathers. The dose point of the rush-index line:
+z3z 3 gatherers first / 12 rushers, z4e 7 / 10, z4d 7 / 8, z4f 11 / 4.
+
+Evidence beyond bots/z4d/SNAPSHOT (scratch whereleft.py, 89 cached replica games, r1-200): of the cheese spawned on
+our half (nearer our king's start), we picked 16-55% and 32-74% was never picked by anyone (Hugo 74%, Merlin 60%,
+Finals 53%); the opponents leave 40-69% of theirs. Our non-rushers pick 0.28 per turn and spend 24% of their turns
+walking to a mine ('M') and 12% waiting at one ('W'); 'C' (to a seen pile) turns pick 74% of their cheese.
+
+Falsifiers, registered before any z4f game:
+1. Screen zd178 vs zd136 on the s6 gates.
+2. Mechanism, on zd178 against zd174 (z3z): pick amount per round must rise (ppr.py z > 0); king-kill wins before r300
+   must not fall by more than 3.
+3. Replica: block rules plus the transfer floor against the twin.
