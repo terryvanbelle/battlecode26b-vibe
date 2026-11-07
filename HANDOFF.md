@@ -96,23 +96,28 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 15:01 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (15:01):**
-  - **z9e on the replica as #266** (15:01; z3x + TRAIL + CASH_READ_LEFT 6000 + THROW_ADAPT, passed s7 zd252 and s6 zd253).
-    Block 1 (set 2, `build/block_v4s2.sh`): 4 sent (16485-16488), 12 queued. Score with `python3 tools/galaxy26/contest.py paired
-    --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`; block 1 rejects at t <= 0, then set 4
-    (`build/block_v4s4.sh`, refs 18760-18763,18783-18786,18797-18800,18810-18813).
-  - **z9f REJECTED at block 2** (15:01): set 4 D 4 (+1 -3), pooled 90 cells D 9 (+5 -4), net +1, t 0.33.
-  - Screen queue: zd195 (resumed 15:10), zd196-199 (z3x ablations, filler). No candidate is screening.
-  - **Closed today:** z9j (FERRY: cq37 transfer 0.65x, wins 5 vs 9; the route home, not the carry speed, is the loss), z9i (LOAD_FLEE: cq36 transfer 0.87x, zd260 cat-death rate +10%), z9f (block 2), z9h (EXPLORE_CENTER_FROM: cq35 transfer by r400 1.03x vs the 1.2x bar, lost Excavation A vs
-    araid), z8b (rejected at block 1, D 4 +1 -3), z9a/z9b (PICK_TRIP), z9c (HEIR: the heir is thrown to
-    death in place), zth (TRIP_HALF probe), z9d (block 2, t 0.58), zmm (MINE_MIRROR inert), z9g (TRAIL_BUG: clockwisdom
-    transfer equal to z9f's). Also closed without a candidate: coverage by half, held-cheese starvation,
-    cooperation throws (cooperation ends at a median r32), the disintegrate and MOAT lines, the canyoudig scarcity
-    race, rose B starvation (our own seat asymmetry), averystrangespace A (sealed pocket, about 31 dirt), the
-    points losses (one king short and poor), keepout vs Finals and averyfineline vs Finals (TRAINING_LOG 14:19).
-    Stable both-seat losses are listed in TRAINING_LOG 11:47.
-  - VM disk 2.2 GB free after pruning 17 replays and cq35's game dumps at 14:29.
+## State (2026-11-07 15:59 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (15:59):**
+  - **z9e on the replica as #266** (z3x + TRAIL + CASH_READ_LEFT 6000 + THROW_ADAPT). Block 1 (set 2) passed at
+    15:43: 48 cells, D 5 (+3 -2), net +1, t 0.45. Block 2 (set 4, `build/block_v4s4.sh`) sent 19862-19865
+    (12 cells, all alike), and 12 rows wait in research/panel/queue.tsv for drain-loop.sh (laptop pid 1065185). Score with
+    `python3 tools/galaxy26/contest.py paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 BLOCK2`
+    and pool it with block 1 (19813-19816,19824-19831,19835-19838 vs the set-2 refs): t <= 1 rejects; t >= 2 with D >= 4 accepts.
+  - **z9k = z3x + CAT_MUTE 6** (registered 15:56; bots/z9k/SNAPSHOT). Our squeaks steer attacking cats onto our own
+    rats: 87% of cat attacks after our squeak hit us (TRAINING_LOG 15:56). Falsifiers: chain ~/diag26b/cq39 (48 games,
+    started 15:56; score with `python3 ~/diag26b/cq39score.py ~/diag26b/cq39` on the VM: after-ours attacks on us <= 0.4x,
+    all attacks on us <= 0.85x, transfer >= 0.97x, wins >= z3x), s7 zd264 (running since 15:56) and s6 zd265 (next).
+    Screen with `bash tools/score_screen.sh zd264 z9k zd205 z3x` and `zd265 z9k zd172 z3x`. If z9e is accepted first,
+    rebase CAT_MUTE onto it (`bash tools/bundle.sh NEW zl0 z9e zcm`; bots/zcm holds the switch on zl0, untracked).
+  - Screen queue after zd265: zd197 (21 of 48 cells done, preempted), zd198, zd199 (z3x ablations, filler).
+  - **Closed today:** the enemy rat-trap line (TRAINING_LOG 15:43: avoidance and laying are both tried out, and a rich-bank
+    trap acts only in wins), the knifefight Merlin seat split (cq38: no local stand-in), z9j (FERRY), z9i (LOAD_FLEE),
+    z9f (block 2), z9h (EXPLORE_CENTER_FROM), z8b, z9a/z9b (PICK_TRIP), z9c (HEIR), zth, z9d (block 2), zmm, z9g. Also
+    closed without a candidate: coverage by half, held-cheese starvation, cooperation throws, disintegrate and MOAT,
+    the canyoudig scarcity race, rose B starvation, averystrangespace A, the points losses, keepout and averyfineline
+    vs Finals. Stable both-seat losses are listed in TRAINING_LOG 11:47; 29 z3x-era losses end before r450, and by
+    r150 we lose 40.2 babies to their 26.7, spread over every cause (scratch earlyk.py and earlydeath.py).
+  - VM disk 2.5 GB free (15:58).
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
