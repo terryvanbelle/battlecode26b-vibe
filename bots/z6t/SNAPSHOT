@@ -1,0 +1,7 @@
+name=z6t
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=89725d38
+created=2026-11-07 01:50 PST
+purpose=salted twin of the incumbent z3x (HAND_FLIP: every G.hand tie goes the other way; reference, not a candidate), to re-anchor z3x's crowning sets per TRAINING_ALGORITHM ("an accepting block is a biased reference"): set 3 (z3x's block 1, 18613-18656) and set 1 (block 2, 18665-18700). Candidates on those sets score `paired TWIN CAND --crown CROWN`. z5n's set-3 block lost Icarus mincemeat A, one of z3x's two crowning gains on set 3
+falsifiers=(none: a reference build). Sanity: compiles, and plays a local game without exceptions or overruns
