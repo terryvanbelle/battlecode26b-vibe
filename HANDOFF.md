@@ -96,7 +96,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 01:12 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-07 03:57 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (03:57):** candidates on z3x, each one switch, each with a diagnosed s7 or replica mechanism:
+  - z6y (RICH_FIX one-king + RICH2_BANK 3300; #255 set 1 done: 48 cells, 47 alike, D +1 superioristhmus A, its
+    target).
+  - z6z THREAT_WALL (Stash A: 5/6 vs 2/6).
+  - z7a SLOT_HANDOFF (cheesefarm B vs agtr).
+  - z7b FORM_DEFEND (evileye A vs agtr: the king lives to r1300, still lost).
+  - Screens, s7 first: zd216 (z6y s6, playing), then zd217/219/221 (s7) and zd218/220/222 (s6). zd215 (z6y s7) is D 0.
+  - Mechanism chains in ~/diag26b: tw2 (z6z maze maps), sh (z7a), fd (z7b, 64 games). Score with `chainsum.py DIR`.
+  - The twin z6t (#256) is playing its set-1 block (from 19130). Then score z6y twin-anchored:
+    `paired --dir /dev/shm/rp TWIN 19090-19101,19126-19129 --crown $(z3x_ids2)`.
+  - Next: a bundle (`bash tools/bundle.sh`) of the switches that pass, sent to control sets 2 and 4.
+  - rk1 (big maps, z3x vs z6y) is 24/24 cells alike. z6y's transfer is up 5-10% on superioristhmus. clockwisdom is
+    lost 3/4 by starvation, a closed line.
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen control: **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
