@@ -7573,3 +7573,7 @@
        - Over the 6 cells, zmm's summed transfer is at least 1.05x z9f's, and it loses no cell that z9f wins.
     2. The s7 and s6 gates.
     3. The replica rules.
+- 12:58: **MINE_MIRROR's dose in z3x's set-2/4 games** (scratch minecen.py, 96 games). It flags a home mine (nearer our king's start than theirs) when we spent under 20 rat-turns within Chebyshev 4 of it while working its twin 50+.
+  - 23 such mines in 15 games: clockwisdom 5 of 6 games (2-5 home mines each), rose both seats, averystrangespace B, learn_your_lesson B, fullofsecrets A, RUN A and B, DefaultLarge A (lost at r187, out of reach).
+  - The losses it touches are rose A vs YokoOno (points), clockwisdom A and B (18797, 18798, 18739; king kills at r905-980) and fullofsecrets A (18752, r682).
+  - u4f's local diag already saw the switch list fullofsecrets A's (4,5). u5j's one replica gain was clockwisdom B vs collegejunior.
