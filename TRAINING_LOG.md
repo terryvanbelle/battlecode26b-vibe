@@ -7693,3 +7693,11 @@
     3. The s7 (zd262) and s6 (zd263) gates.
     4. The replica rules.
   - zd262 started at 14:55. It preempted zd195 (a z3x ablation filler), whose 9 finished cells resume after zd263.
+- 15:01: **z9f REJECTED at replica block 2** (#265; set 4: 19756-19763, 19771-19774 and 19790-19793; `paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 19756-19763,19771-19774,19790-19793`).
+  - Block 2 alone: 48 cells, 44 alike, D 4 (gained Varun arrows A; lost Icarus mincemeat A, Merlin RUN B and Merlin sunandmoon A), net -2, t -1.00.
+  - Pooled with block 1: 90 cells, 81 alike, D 9 (+5 -4), net +1, t 0.33, at or below the reject line of 1.
+  - Over both blocks it gained Finals dirtpassageway A, YokoOno streetsofnewyork B, Varun clockwisdom B and arrows A, and Merlin fullofsecrets B. It lost Varun clouds B, Icarus mincemeat A, and Merlin RUN B and sunandmoon A. Meow B vs YokoOno (the risk cell) and Xzibit's six cells matched set 4.
+  - Like z7g (Merlin RUN, a chaos pair) and z9d, the bundle's flips cancel. The incumbent stays z3x.
+- 15:01: **z9e on the replica as #266** (z3x + TRAIL + CASH_READ_LEFT 6000 + THROW_ADAPT; it passed s7 zd252 and s6 zd253, and was never on the replica alone).
+  - Block 1 on set 2 (`bash build/block_v4s2.sh`): 4 sent (16485-16488), 12 queued. Score it against 18722-18725, 18736-18739, 18745-18748 and 18750-18753.
+  - z9d (TRAIL + CASH_READ_LEFT) gained Varun clockwisdom B and Merlin fullofsecrets B in its set-2 block, then lost Meow B vs YokoOno in set 4. THROW_ADAPT targets Merlin's throws of our own rats (u7i pooled t +2.14 on u6x before its Merlin falsifier).

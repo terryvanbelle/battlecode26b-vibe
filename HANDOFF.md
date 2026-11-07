@@ -96,22 +96,19 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 14:29 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (14:29):**
-  - **z9f on the replica as #265** (z9e + z7g's five switches: RICH_FIX one-king, THREAT_WALL_REACH 5, SLOT_HANDOFF,
-    FORM_DEFEND_AGE 25). It passed s7 (zd254: net +2, picks z +2.09, transfer per round 1.050x) and s6 (zd255: net 0).
-    - **Block 1 passed** (19707-19710, 19724-19727, 19738-19745 vs set 2: D 5, +4 -1, net +3, t 1.34).
-    - Block 2 (set 4, `build/block_v4s4.sh`): 19756-19763 and 19771-19772 are in, 19773-19774 (collegejunior) are
-      playing, and 4 more (Icarus, Merlin) wait on the hourly limit. Pooled so far: 74 cells, D 6 (+5 -1), net +4, t 1.63.
-    - When all 16 are done: fetch them, then `python3 tools/galaxy26/contest.py paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753,18760-18763,18783-18786,18797-18800,18810-18813 19707-19710,19724-19727,19738-19745,19756-19763,19771-19774,BLOCK2REST`.
-      After block 2, pooled t <= 1 rejects, and t >= 2 with D >= 4 accepts; otherwise block 3.
-  - **z9i = z9f + LOAD_FLEE 50** (registered 14:19; z7o rebased): loaded fighters and attackers keep out of cat reach.
-    - Falsifier chain ~/diag26b/cq36 (10 games: averystrangespace A/B vs araid, arrows B vs agrab, mincemeat A and
-      arrows A vs araid, z9i and z9f) is running. Summarise with `python3 ~/diag26b/wl.py ~/diag26b/cq36/*.log`.
-    - Screens zd260 (s7, playing) and zd261 (s6, next). Score with `bash tools/score_screen.sh zd260 z9i zd205 z3x` and
-      `zd261 z9i zd172 z3x`; falsifier 3 also wants cat deaths per 1000 rat-turns 5% below zd254/zd255.
-  - Screen queue after them: ablations zd195-199.
-  - **Closed today:** z9h (EXPLORE_CENTER_FROM: cq35 transfer by r400 1.03x vs the 1.2x bar, lost Excavation A vs
+## State (2026-11-07 15:01 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (15:01):**
+  - **z9e on the replica as #266** (15:01; z3x + TRAIL + CASH_READ_LEFT 6000 + THROW_ADAPT, passed s7 zd252 and s6 zd253).
+    Block 1 (set 2, `build/block_v4s2.sh`): 4 sent (16485-16488), 12 queued. Score with `python3 tools/galaxy26/contest.py paired
+    --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`; block 1 rejects at t <= 0, then set 4
+    (`build/block_v4s4.sh`, refs 18760-18763,18783-18786,18797-18800,18810-18813).
+  - **z9f REJECTED at block 2** (15:01): set 4 D 4 (+1 -3), pooled 90 cells D 9 (+5 -4), net +1, t 0.33.
+  - **z9j = z9f + FERRY 200** (registered 14:54): an empty rat carries a loaded ally home (carrying adds no cooldown, and
+    the load slowdown is the carried rat's own). Falsifier chain ~/diag26b/cq37 (24 games; `python3 ~/diag26b/ferrycount.py
+    z9j ~/diag26b/cq37/*_z9j` counts ferry grabs) and screens zd262 (s7, playing) and zd263 (s6) are running. Early: 0-3
+    grabs a game on clockwisdom; 26 on fullofsecrets B, where the king's pocket is sealed and the ferries wriggle out.
+  - Screen queue after them: zd195 (resumes, 9 cells done), zd196-199 (z3x ablations, filler).
+  - **Closed today:** z9i (LOAD_FLEE: cq36 transfer 0.87x, zd260 cat-death rate +10%), z9f (block 2), z9h (EXPLORE_CENTER_FROM: cq35 transfer by r400 1.03x vs the 1.2x bar, lost Excavation A vs
     araid), z8b (rejected at block 1, D 4 +1 -3), z9a/z9b (PICK_TRIP), z9c (HEIR: the heir is thrown to
     death in place), zth (TRIP_HALF probe), z9d (block 2, t 0.58), zmm (MINE_MIRROR inert), z9g (TRAIL_BUG: clockwisdom
     transfer equal to z9f's). Also closed without a candidate: coverage by half, held-cheese starvation,
