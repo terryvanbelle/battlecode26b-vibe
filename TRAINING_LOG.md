@@ -7295,3 +7295,9 @@
     2. vs agrab on arrows z7o replays z3x's game until its first loaded flee;
     3. the gates.
     The six mechanism and ledger games are running in ~/diag26b/rz4 (averystrangespace both seats, mincemeat A and arrows A vs araid, arrows both seats vs agrab). Screens **zd236 (s7)** and **zd237 (s6)** follow zd230.
+- 08:02: **z7o (LOAD_FLEE 50): falsifiers 1 and 2 hold** (~/diag26b/rz4 against z3x's games in sa and rz3, seed 0).
+  - *averystrangespace vs araid*: as A, 15 cat deaths to z3x's 17 and 5,320 delivered to 3,375. As B, 25 to 28, but 4,986 delivered to 6,229. Both won.
+  - *mincemeat A vs araid*: won at r472, where z3x's king starved at r497. It delivered 1,801 to 1,174, with the same 41 cat deaths. This is one chaotic game. z3x's victims there held 17 cheese each on average (713 over 41), so LOAD_FLEE is not the mechanism; that map is a starvation race in which both banks fell under 100 by r425.
+  - *arrows vs araid, seat A*: 74 cat deaths to 74.
+  - *Ledger*: arrows vs agrab replays z3x's game exactly (48,198 turns, every hot= equal; the switch never acts there). averystrangespace A is equal to r1389 (46,142 turns). There the first divergence is attacker 12950, carrying 520, which flees cat 3 at Chebyshev 2 (mv=c) where z3x stepped toward it (mv=g). z7o's non-gatherers took 119 mv=c turns in that game to z3x's 0.
+  - Screens zd236 (s7) and zd237 (s6) follow zd230.
