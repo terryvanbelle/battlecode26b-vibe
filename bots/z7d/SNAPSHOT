@@ -1,0 +1,7 @@
+name=z7d
+source=bots/z6z
+source_sha=bbe1ec69246f
+commit=b3e70936
+created=2026-11-07 04:41 PST
+purpose=z6z + THREAT_WALL_REACH 5 (new constant): THREAT_WALL clears a king's alert only when no in-range enemy can walk to a tile next to the king's 3x3 within 5 steps (King.wallReach: bitboard BFS over the 13x13 round the king, tiles not known as wall or dirt; under 6000 bytecodes left it keeps the threat). zd217 (z6z s7, partial 30 cells) gained Stash A vs agrab and agtr but lost evileye A vs agrab, B vs agrab and B vs agtr, all won by z3x: the eye is a wall-and-dirt blob a rat walks round in a few steps.
+falsifiers=(1) mechanism set ~/diag26b/wr (z7d on Stash and evileye vs agrab, agtr, atrap3, both seats, seed 0; 12 games): rejected unless it keeps at least 2 of z6z's 3 Stash gains (A vs agrab, agtr, atrap3) and wins at least 2 of the 3 evileye cells z6z lost (A agrab, B agrab, B agtr); (2) s7 and s6 screens as z6z's, 0 overruns; (3) then it replaces z6z in the bundle z7c.
