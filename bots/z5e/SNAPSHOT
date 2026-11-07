@@ -1,0 +1,29 @@
+name=z5e
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=bfc52993
+created=2026-11-06 21:13 PST
+
+z5e = z3x (the incumbent) + SYM_RELAY (new switch, ledgered; Cfg.SYM_RELAY; Baby.symRelay, one hook after report()
+with K 18). A rat merges the symmetry masks squeaked last round (SQ_SYM) into its own, and every SYM_GOSSIP_EVERY (3)
+rounds squeaks its mask when it is sharper than the shared one, an ally is within d2 16 and no seen cat can hear it.
+It runs after report(), so it never takes report()'s squeak (the engine allows one a turn and refuses the second).
+A king that hears it merges it (King's SQ_SYM case) and writes the shared mask.
+
+Evidence (local dumps with indicators, scratch symres.py and symres2.py in ~/diag26b; z1z and z3x vs araid and abrk,
+seed 0): the king's mask stays ambiguous for most of the game on FreeTheCheese (unique at r584-1807), rift
+(r826-841), clockwisdom (r484, r712 or never) and TheHeist (never), while 4-20 of our rats each knew it long before
+(the first at r88-162 on FreeTheCheese, r138-157 on clockwisdom, r300-487 on rift). The rushers that cross the
+midline see the twins and resolve it, then never come home to tell it, and the 12 rushers each walk to the nearest
+live mirror spot: on clockwisdom the HOR spot (56,49) or (2,9) lies in a dirt corner they cannot reach. Rats tell the
+king only within d2 16 (report()), and the s4k arm with SYM_GOSSIP (2026-10-28) was never scored. Panel cells on
+those maps: clockwisdom (sets 1, 2, 4), FreeTheCheese (set 3, twice), TheHeist (sets 1, 2, 3), rift (set 3).
+
+Falsifiers, registered before any z5e game:
+1. Mechanism (~/diag26b/sy: FreeTheCheese, clockwisdom, rift, TheHeist and DefaultMedium vs araid and abrk, both
+   seats, z5e and z3x, seed 0; symres3.py). On the four slow maps, the share of attacker turns in r1-400 whose mask
+   is not unique must fall by at least a third, and z5e must not win fewer of those 16 games than z3x. DefaultMedium
+   (resolved by r48) must keep z3x's four results.
+2. Screen zd187 (vs zd172) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+3. Replica: the block rules plus the transfer floor against the twin.
