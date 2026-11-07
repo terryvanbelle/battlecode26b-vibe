@@ -7213,3 +7213,8 @@
   - Each switch acts on its own code path: rich one-king sites, the king alert, the slot-0 handoff after a king dies, and formKing at war.
   - **Screens:** zd223 (s7) runs after the three single s7 screens. zd224 (s6) stands in for the single s6 screens zd218, zd220 and zd222, which leave the queue. s6 is saturated (z3x 45/48) and only catches harm, so one bundle s6 screen saves about 2 VM hours. If zd224 fails, the single screens come back to find the switch.
   - Hook checks (~/diag26b/zc) are playing: evileye A vs agtr, cheesefarm B vs agtr and Stash A vs agrab, one target cell per switch.
+- 04:20: **zd216 (z6y, s6) passes** against zd172: n 44, D 0, net 0, t 0.00. Picks/100 were 33.15 to 32.54 (per-cell z +0.96), pick amount per round 0.995x (z -0.93), with 0 overruns and 0 exceptions. z6y has now passed both screens (zd215 s7 D 0), and on the replica its set-1 block waits on z6t's twin.
+- 04:20: **z7c's hook checks** (~/diag26b/zc, seed 0) act like their single switches:
+  - evileye A vs agtr is lost at r1840 (z3x r795, z7b r1300).
+  - cheesefarm B vs agtr is won on points at r2000 (z3x lost r1245; 26,529 transferred to 17,928).
+  - Stash A vs agrab is won at r589, as z6z won it.
