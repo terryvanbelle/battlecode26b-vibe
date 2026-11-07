@@ -1,0 +1,7 @@
+name=z7e
+source=bots/z7c
+source_sha=394b168848d3
+commit=07a1e628
+created=2026-11-07 05:00 PST
+purpose=z7c with z7d's THREAT_WALL_REACH 5 (King.wallReach and its Cfg constant ported by hand): the bundle z3x + z6y (RICH_FIX one-king, RICH_FIX_BANK 1500, RICH2_BANK 3300) + z7d (THREAT_WALL with the walk-round test) + z7a SLOT_HANDOFF + z7b FORM_DEFEND. z7d passed its falsifier 1 (~/diag26b/wr: Stash 5 of 6 as z6z, evileye 3 of 4 replaying z3x), z6z alone lost three evileye cells on s7.
+falsifiers=(1) its s6 screen zd224 (vs zd172) stands in for the single s6 screens: the s6 gates (t > -1.5, picks/100 z > -2, 0 overruns); a failure brings the single screens back to find the switch; (2) s7 zd223 (vs zd205): t > -1.5 and no fewer wins than the best single switch's s7 run minus 1; (3) replica: control sets 2 and 4 first (block 1 rejects at t <= 0), then the crowning sets twin-anchored.
