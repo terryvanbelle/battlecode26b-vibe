@@ -18,3 +18,10 @@ Falsifiers, registered before any z4f game:
 2. Mechanism, on zd178 against zd174 (z3z): pick amount per round must rise (ppr.py z > 0); king-kill wins before r300
    must not fall by more than 3.
 3. Replica: block rules plus the transfer floor against the twin.
+
+Correction (19:31, after registration, falsifiers unchanged): whereleft.py summed the cheesespawn row's tile total
+(column 7, which includes cheese already lying there) and counted death drops as spawns. With mine-spawn increments
+(column 13) the shares are: of the cheese spawned on our half by r200 we picked 23-64% and 23-61% was never picked
+(Hugo 61%, waxmango 46%, Finals 44%, spsquared 41%, Icarus 40%, Merlin 39%, Varun 23%); opponents leave 31-54% of
+theirs. By distance from our start (mineleft.py): 0-7 we pick 67% (they 71% of theirs), 8-13 51% (56%), 14-19 57%
+(65%), 20+ 21% (28%); 61% of our mines 20+ away are never picked by r200.
