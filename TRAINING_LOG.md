@@ -7588,3 +7588,23 @@
   - Only attackers resolve to VER (sym=4, from r400), and they never come home to share it, because SYM_GOSSIP is off and SQ_SYM is squeaked only near a king.
   - The king's list holds only home-half mines: (2,7), (24,24), (24,16), and (24,8) by r1000. Their twins are all on the enemy half.
   - Rose B is lost to starvation against both agtr and araid: picks are 7,415 and 7,360, against 11,435 and 12,522 as A. Attackers hold 300-840 raw with dl=0 while the bank reaches 0. The attacker-hoard family (ATK_CARRY, ATK_DELIVER, HUNGRY, DRY, PICK_TRIP) is closed.
+- 13:36: **zd252 (z9e s7) passes** (vs zd205: n 48, D 20, net 0, t 0.00; picks/100 36.38 vs 33.93, z +1.69; transfer per round 0.989x; 0 overruns). z9e rides in z9f, so this is a record only. zd253 (s6) is playing.
+- 13:36: **Clockwisdom: carriers take the wrong side of the spiral's wall, and the engine's load slowdown freezes them** (z9f's cwA vs agtr dump, ~/diag26b/cq32; scratch pathtrace.py and trailsim.py).
+  - Engine: every move's cooldown is multiplied by 1 + 0.01 x the cheese carried (GameConstants.CHEESE_COOLDOWN_PENALTY), so a rat holding 1,000 raw moves about once in 11 turns.
+  - Carrier 12535 turned to deliver at r150 at (5,25) with 40 raw. It was 59 steps from our king (56,9) by path, and its own trail home was 65 tiles.
+  - The wall at x 6 blocked the greedy step east. Nav's bug walk followed it north, into the spiral.
+  - By path distance it then went 59 → 103 (r240) → 126 (r390) → 137 (r720), picking up cheese on the way: 1,180 raw at r390, 1,780 at r720. Our transfer all game was 100.
+  - TRAIL never fired. Its stall count needs 20 delivery turns without getting Chebyshev-closer, and the spiral walk keeps getting closer until r390. After that, each move takes more than TRAIL_GAP's 12 rounds.
+  - trailsim.py replays Trail's loop-free chain from the dump positions at each trip start. On clockwisdom 10 of 24 trip starts have a trail within 1.5x Chebyshev of the king; the fired trails total 469 tiles against 420 by path.
+  - Elsewhere the same test passes on 25% of trip starts on arrows (trail 1.19x the path) and 1-15% on rose, fullofsecrets, EscapeTheNight and averystrangespace.
+- 13:36: **z9g = z9f + TRAIL_BUG 15** (new switch, ledgered inside homeLeg's settle).
+  - Rule: a delivery whose Nav walk toward the king has started a bug walk walks the trail home at once, if the trail starts within 6 of the king and is at most 1.5x the rat's Chebyshev distance to it.
+  - Gating on the bug walk keeps it off open ground: there the greedy walk is not blocked and nothing changes.
+  - Twin ztb (TRAIL_BUG_END -1) runs the check and never acts.
+  - Falsifiers (registered 13:36, before any game finished):
+    1. Chain ~/diag26b/cq33 (seed 0): ztb replays z9f exactly on rose A vs agtr, clockwisdom A vs agtr and averystrangespace A vs agtr.
+    2. On clockwisdom's 8 cells (A and B vs agtr, agrab, araid, abrk), z9g's summed transfer is at least 2x z9f's, and z9g loses no cell z9f won.
+    3. On rose A/B vs agtr and araid and averystrangespace A/B vs agtr, z9g's summed transfer is at least 0.9x z9f's, and it loses at most one cell z9f won.
+    4. The s7 and s6 gates.
+    5. The replica rules.
+  - Screens zd256 (s7) and zd257 (s6) are at the front of the queue.

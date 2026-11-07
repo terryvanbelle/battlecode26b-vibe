@@ -1,0 +1,6 @@
+name=ztb
+source=bots/z9f
+source_sha=1145577a3c0f
+commit=a263493b
+created=2026-11-07 13:34 PST
+purpose=twin of z9g (TRAIL_BUG 15 with TRAIL_BUG_END -1: the check runs, never acts); must replay z9f exactly
