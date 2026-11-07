@@ -1,0 +1,6 @@
+name=z7n
+source=bots/zl0
+source_sha=c585a2762c96
+commit=fbfed3ec
+created=2026-11-07 07:49 PST
+purpose=switch bot: zl0 + LOAD_FLEE 50 (loaded fighters and attackers flee a cat in view within GATHER_CAT_DIST, as gatherers do; ledgered with G.settle K 20); the candidate is z7o = zl0 + z3x + z7n
