@@ -7660,3 +7660,12 @@
     3. The s7 and s6 gates, and over both screens cat deaths per 1000 rat-turns at least 5% below z9f's zd254/zd255.
     4. The replica rules.
 - 14:19: Laptop disk was at 28 MB free: king_report and econ_report had dumped three replays into build/dumpcache (46 MB). I moved those three (made this session) to /dev/shm/dumpcache. Laptop report runs now use BC_DUMPCACHE=/dev/shm/dumpcache.
+- 14:29: **z9h DROPPED at falsifiers 1 and 2** (cq35, seed 0, paired with z9f).
+  - Falsifier 1: the first rat within Chebyshev 2 of a mine came much earlier (mean r23 vs r65.7 over the six keepout games), but summed transfer by r400 was 26,891 to 26,049 (1.03x, bar 1.2x). On keepout the first mine is 7 from the king either way, so earlier discovery buys little.
+  - Falsifier 2: z9h lost Excavation A vs araid at r339, a game z9f won at r511; Excavation transfer 7,775 to 8,540 (0.91x).
+  - Its clockwisdom B games were won (agtr r640, araid r702), and it won all six keepout games, as z9f did. Screens zd258 and zd259 were pulled, and cq35's dumps pruned.
+- 14:29: **zd241 (z7u s7, closed line) scored for the record:** n 48, D 3, net +1, t +0.57, picks z -1.03, transfer 246,304 to 236,276, 0 overruns.
+- 14:29: **z9f block 2 so far** (19756-19763, 19771-19772 vs set 4): 26 cells, D 1 (+Varun arrows A), net +1. Meow B vs YokoOno, the risk cell, was won. Xzibit's six cells match set 4's.
+  - Pooled with block 1: 74 cells, D 6 (+5 -1), net +4, t 1.63. 19773-19774 (collegejunior) are playing, and Icarus and Merlin wait on the hourly limit.
+- 14:29: **Weak enemy kings** (scratch weakking.py: enemy kings at 100 HP or less for 50+ rounds, all replica dumps on the laptop): 7 of 510 games are losses with such a king, about 4 distinct cells. The dose is too low for a finishing-blow candidate.
+  - Clouds B vs Varun: in our win (18739) Varun's king sat at 38 HP from r625 to r1298, then starved; in z9f's loss (19727) our king starved at r1398. Recorded only.
