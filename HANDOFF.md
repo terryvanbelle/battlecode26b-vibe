@@ -96,28 +96,29 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 13:37 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (13:37):**
+## State (2026-11-07 14:07 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (14:07):**
   - **z9f on the replica as #265** (z9e + z7g's five switches: RICH_FIX one-king, THREAT_WALL_REACH 5, SLOT_HANDOFF,
     FORM_DEFEND_AGE 25). It passed s7 (zd254: net +2, picks z +2.09, transfer per round 1.050x) and s6 (zd255: net 0).
-    - Block 1 (set 2) was queued 13:05: 19707-19710 are done; the drain loop sends the other 12 under the hourly limit.
-    - When all 16 are done: `fetch --out /dev/shm/rp IDS`, then `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 IDS`. Block 1 rejects at t <= 0.
-    - On a pass: `bash build/block_v4s4.sh` (set 4), then `git checkout research/panel/`. Risk cell: Meow B vs YokoOno (z9d lost it in block 2).
-  - **z9d REJECTED at block 2** (pooled D 3, net +1, t 0.58). **zmm DROPPED** (MINE_MIRROR inert on rose).
-  - **z9g = z9f + TRAIL_BUG 15** (registered 13:36): a delivery whose Nav walk starts following a wall walks the
-    rat's own trail home when the trail is at most 1.5x its Chebyshev distance to the king. It targets clockwisdom,
-    where carriers take the wrong side of the spiral's wall and walk 137 steps out (transfer 100 a game).
-    - Falsifier chain ~/diag26b/cq33 (21 games, twin ztb) is running. Summarise with `python3 ~/diag26b/wl.py ~/diag26b/cq33/*.log`.
-    - Screens zd256 (s7) and zd257 (s6) are at the front of the queue. Score with `bash tools/score_screen.sh zd256 z9g zd205 z3x` and `zd257 z9g zd172 z3x`.
-  - Screen queue after them: zd253 (z9e s6, playing), zd241 (z7u s7), zd236/zd237 (z7o LOAD_FLEE), ablations zd195-199.
-  - zd252 (z9e s7) passed: net 0, picks z +1.69, transfer per round 0.989x.
-  - Chain ~/diag26b/cq29 (z9f vs z9d at seed 1, no dumps) is nearly done. z9d is closed, so it is only a sample of z9f.
+    - **Block 1 passed** (19707-19710, 19724-19727, 19738-19745 vs set 2: D 5, +4 -1, net +3, t 1.34).
+    - Block 2 (set 4, `build/block_v4s4.sh`) was queued 14:07: 4 sent, and the drain loop sends the other 12 under the hourly limit.
+    - When all 16 are done: fetch them, then `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753,18760-18763,18783-18786,18797-18800,18810-18813 BLOCK1,BLOCK2`.
+      After block 2, pooled t <= 1 rejects, and t >= 2 with D >= 4 accepts; otherwise block 3. Risk cell: Meow B vs YokoOno (z9d lost it in block 2).
+  - **z9h = z9f + EXPLORE_CENTER_FROM 100000** (registered 14:05): with no mine known, explore() ranks its samples
+    by distance from the rat, not by closeness to the map centre. It targets keepout (Finals reach near mines at r6-8,
+    we reach ours at r98-172) and clockwisdom B (the centre is the spiral core).
+    - Falsifier chain ~/diag26b/cq35 (26 games, z9h and z9f paired on keepout, Excavation and fullofsecrets, plus z9h on clockwisdom B) is running.
+      Summarise with `python3 ~/diag26b/wl.py ~/diag26b/cq35/*.log`.
+    - Screens zd258 (s7) and zd259 (s6) are next in the queue, after zd241. Score with `bash tools/score_screen.sh zd258 z9h zd205 z3x` and `zd259 z9h zd172 z3x`.
+  - Screen queue after them: zd236/zd237 (z7o LOAD_FLEE), ablations zd195-199.
+  - zd252 and zd253 (z9e s7 and s6) both passed; z9e rides in z9f.
   - **Closed today:** z8b (rejected at block 1, D 4 +1 -3), z9a/z9b (PICK_TRIP), z9c (HEIR: the heir is thrown to
-    death in place), zth (TRIP_HALF probe), z9d, zmm. Also closed without a candidate: coverage by half, held-cheese starvation,
+    death in place), zth (TRIP_HALF probe), z9d (block 2, t 0.58), zmm (MINE_MIRROR inert), z9g (TRAIL_BUG: clockwisdom
+    transfer equal to z9f's). Also closed without a candidate: coverage by half, held-cheese starvation,
     cooperation throws (cooperation ends at a median r32), the disintegrate and MOAT lines, the canyoudig scarcity
     race, rose B starvation (our own seat asymmetry), averystrangespace A (sealed pocket, about 31 dirt), and the
     points losses (one king short and poor). Stable both-seat losses are listed in TRAINING_LOG 11:47.
-  - VM disk 2.2 GB free after pruning 119 replays at 13:27.
+  - VM disk 2.2 GB free after pruning 45 replays and the dumps of closed chains at 14:06.
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
