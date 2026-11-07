@@ -7577,3 +7577,14 @@
   - 23 such mines in 15 games: clockwisdom 5 of 6 games (2-5 home mines each), rose both seats, averystrangespace B, learn_your_lesson B, fullofsecrets A, RUN A and B, DefaultLarge A (lost at r187, out of reach).
   - The losses it touches are rose A vs YokoOno (points), clockwisdom A and B (18797, 18798, 18739; king kills at r905-980) and fullofsecrets A (18752, r682).
   - u4f's local diag already saw the switch list fullofsecrets A's (4,5). u5j's one replica gain was clockwisdom B vs collegejunior.
+- 13:05: **z9d REJECTED at replica block 2** (set 4: 19662-19665 and 19684-19695; `paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 19662-19665,19684-19695`).
+  - 48 cells, 47 alike, D 1 (+0 -1), t -1.00. The lost cell is Meow B vs YokoOno, which z7x's set-4 rows also lost.
+  - Pooled with block 1 (D 2, +2 -0): D 3, net +1, t 0.58, below the reject line of 1.
+- 13:05: **z9f passes s6** (zd255 vs zd172: n 44, D 6 +3 -3, net 0, t 0.00; picks z +1.92; transfer per round 1.005x; 0 overruns).
+  - With s7 (zd254) passed, **z9f is on the replica as #265**. Block 1 (set 2) was queued at 13:05: four requests were sent and 12 wait in the drain queue.
+  - z9f contains z9d. It may lose Meow B vs YokoOno in block 2 as z7x and z9d did.
+- 13:05: **zmm DROPPED (inert).** In cq30 it replays z9f exactly on rose: A vs agtr, araid and agrab W at r1007, r1590 and r1007; B vs agtr L at r1110; B vs araid L at r1180. Transfer and picks are identical.
+  - Why: the king's Sym mask stays ROT+VER (sym=5) all game, so MINE_MIRROR's unique-mask gate never opens.
+  - Only attackers resolve to VER (sym=4, from r400), and they never come home to share it, because SYM_GOSSIP is off and SQ_SYM is squeaked only near a king.
+  - The king's list holds only home-half mines: (2,7), (24,24), (24,16), and (24,8) by r1000. Their twins are all on the enemy half.
+  - Rose B is lost to starvation against both agtr and araid: picks are 7,415 and 7,360, against 11,435 and 12,522 as A. Attackers hold 300-840 raw with dl=0 while the bank reaches 0. The attacker-hoard family (ATK_CARRY, ATK_DELIVER, HUNGRY, DRY, PICK_TRIP) is closed.
