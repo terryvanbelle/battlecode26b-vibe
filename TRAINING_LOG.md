@@ -7382,3 +7382,13 @@
   - Summed transferAmt was 36,316 against 58,904, mostly EscapeTheNight A, which ended at r752 instead of r2000.
   - Twin zhchk replays z7x's fos B vs abrk exactly (xfer 4,190, picks 12,765), so the change is TRAIL_HEAVY's.
   - The clockwisdom B pair splits by r300 (one gatherer at 140 raw against 260). z7y's attackers then held 1,560-4,820 from r450 while its bank emptied (0 at r750). Walking a heavy carrier home along its trail is not the cure; its 65-tile trail on fos B would take 780 rounds at 12 a move.
+- 09:32: **Clockwisdom starves on the attackers' hoard, in cooperation.** z7x's cw A vs araid stayed in cooperation to the end.
+  - Attackers picked 8,690 of our 10,690 and transferred 340. By r1000 eleven held 8,170 at Chebyshev ~32 from our king, with 142 banked. Gatherers picked 1,920 and transferred 60.
+  - In cooperation the attack branch still marches every attacker to the enemy king's mirror spot, picking up cheese on the way, and nothing there brings the load home. Loaded turns tally 2,408 mv=a and 873 mv=g.
+  - On the replica (sets 2/4, z3x), clockwisdom was lost in 3 of 4 cells, each a starvation in cooperation: no backstab, 0 of our babies killed by enemies, transfer 55-260 to their 1,800-3,425.
+- 09:32: **z7z registered** (z7x + ATK_DELIVER 100 + new ATK_DELIVER_COOP; bots/z7z/SNAPSHOT). In cooperation only, an attacker with 100+ raw delivers through deliver() and the trail before attack(). At war it plays as z7x.
+  - The hook is ledgered (G.settle, K 20). Twin zdchk (ATK_DELIVER 100000) must replay z7x's cw A.
+  - Earlier attacker deliveries (u3g/u4q at 50, u6j at 200) applied at war too and came before the trail.
+  - Its chain is ~/diag26b/cq17, with clockwisdom first.
+- 09:32: **Screen queue trimmed.** After zd199 it ran on to 21 stale screens of closed lines on old bases (zd141 z2e, zd132 z1u, zd112-114, zd107/108, zd70-80, zd85/86, zd156). They are off the queue (copy in runs/screenq.bak-0930 on the VM). Live order: zd238 (z7x s7, 18/48), zd239, zd241 (z7u s7), zd236/zd237 (z7o), zd195-199 (z6a-z6e ablations).
+- 09:32: **z7x's replica block** so far (19527-19530 vs set 2): 12 cells, all alike.
