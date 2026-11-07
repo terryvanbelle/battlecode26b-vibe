@@ -96,24 +96,29 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 05:58 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (05:58):**
-  - **z7g on the replica**: #258, block 1 on control set 2. It is the bundle z3x + z6y (RICH_FIX one-king, RICH_FIX_BANK
-    1500, RICH2_BANK 3300) + z7d THREAT_WALL_REACH 5 + z7a SLOT_HANDOFF + z7f (FORM_DEFEND + FORM_DEFEND_AGE 25).
-    - 19225-19228 played (12 cells alike with z3x). The rest of the 16 rows drain from research/panel/queue.tsv
-      at about 4 an hour.
-    - Score with `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 NEWIDS`; reject at t <= 0.
-  - **z7g screens**: zd223 (s7) passed (D 4 +4, t +2.07, transfer 1.041x, 0 overruns). zd224 (s6 vs zd172) is
-    playing; failing it withdraws #258.
-  - **z7i BITE_BOOST** (5 cheese for +3 on a bite of an enemy baby while 600 stay banked): screens zd227 (s7, next)
-    and zd228 (s6, after zd208). Falsifier 1 reads kills per 100 bites on their DefaultMedium, tiny and Stash cells.
-    If it acts, the dose arm is BITE_BOOST 17 (+5: 7 bites a kill).
-  - **KING_BOOST** z6u/z6v: screens zd207-210 follow zd227.
-  - **Dropped this morning:**
-    - z7h KILL_KHP. Falsifier 1: the local rush cells are r59-r65 seat races, not a wounded king left alone.
-    - z6y as a single (block 2 D 0; it is in the bundle).
+## State (2026-11-07 06:34 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (06:34):**
+  - **z7g on the replica**: #258 = z3x + z6y (RICH_FIX one-king, RICH_FIX_BANK 1500, RICH2_BANK 3300) + z7d
+    THREAT_WALL_REACH 5 + z7a SLOT_HANDOFF + z7f (FORM_DEFEND + FORM_DEFEND_AGE 25). Both screens passed (zd223 s7
+    D 4 +4 t +2.07; zd224 s6 D 0, picks z +1.52, 0 overruns).
+    - Block 1 (set 2; 19225-19228, 19283-19294): 47 of 48 alike, D 1 (+1 Varun ratsareants A), t 1.00.
+    - Block 2 (set 4) queued 06:31: 8 sent (19308-19315), 8 in research/panel/queue.tsv (drain, ~4 an hour).
+      Score `paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 NEWIDS`, and pooled with
+      block 1. Block 2 rejects at t <= 1; accept at pooled t >= 2 with D >= 4.
+  - **z7i BITE_BOOST** (5 cheese for +3 on a baby bite while 600 stay banked): zd227 (s7) passed narrowly; kills per
+    bite +33%, but spawns fell 5% (4,454 to 4,219) because Econ counts baby spending as lost income (Econ.surplus
+    blocks spawns past CORE_BABIES 18). zd228 (s6) queued; falsifier 1 on its DefaultMedium/tiny/Stash cells.
+  - **z7j INCOME_TRUST 100** (z3x + trust the income measure fully, to undo that coupling): zd229 (s7), zd230 (s6)
+    queued. Falsifier 1: spawns +3% over both screens, no more starved kings. If z7i and z7j both pass, bundle them.
+  - **KING_BOOST** z6u/z6v: zd207 (z6u s7) playing, then zd208-210. They carry the same Econ coupling at a smaller
+    dose; read their spawn counts.
+  - Queue (VM runs/screenq.txt): zd207 now, zd208, zd228, zd229, zd209, zd230, zd210, then the ablations zd195-199.
+  - **Dropped this morning:** z7h KILL_KHP (the local rush cells are r59-r65 seat races); z6y as a single.
+  - **bed seat-B losses** are a cat race decided by the backstab rule (the backstabber can never lay cat traps); a
+    switch for it would be a one-map switch, not built.
   - **Stable losses on sets 1 and 3**: only 4 cells are lost by both z3x and the twin while won in the other seat, so
     the in-band pool is the twin-flipped cells. The loss census is in the 05:28-05:50 log entries.
+  - VM disk 3.5 GB free (06:33: pruned 1,268 replica replays older than 36 h, /root/bc26-replays-pruned-20261107-0640.txt).
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
