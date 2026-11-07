@@ -7334,3 +7334,5 @@
   - **z7u = z7m + CASH_READ_LEFT 6000** stops the squeak loop under 6,000 bytecodes left, using END_KING_CROWD's ledgered read. Checks are in ~/diag26b/cq11:
     - the twin zuchk (floor 1) must replay z7m's arrows vs agrab exactly;
     - z7u must play arrows A vs abrk with 0 overruns.
+- 08:42: **z7t's ledger is exact.** The never-acting twin ztchk (TRAIL_STALL 100000) replays z3x with no divergence on arrows vs agrab (2,000 rounds, against rz3/eq3_z3x) and on fullofsecrets A vs araid (702 rounds, against cq7). **First z7t games on fullofsecrets** (cq10): transfer 1,300 / 1,825 / 1,630 against z3x's 180 / 390 / 330 (A vs araid, A vs abrk, B vs araid). B vs araid is won at r977 (z3x lost r635). The A games still starve, but later: r1074 and r1356 against r702 and r812.
+  - **VM disk** was at 1.9 GB. I pruned the 152 replica replays older than 36 h (194 MB; list /root/bc26-replays-pruned-20261107-0845.txt) and 327 of our .bc26 files in ~/diag26b older than 12 h (556 MB; their tsv dumps are kept). 2.6 GB free.
