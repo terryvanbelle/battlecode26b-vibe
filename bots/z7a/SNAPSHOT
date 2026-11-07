@@ -1,0 +1,7 @@
+name=z7a
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=8446199a
+created=2026-11-07 03:32 PST
+purpose=z3x + SLOT_HANDOFF (new switch): only the king in shared-array slot 0 runs formation() (END_KING and the rich sites too), and a king keeps the slot it claimed on its first turn, so once our first king dies a surviving formed king never forms again. With SLOT_HANDOFF, a king in a higher slot takes slot 0 when slot 0's heartbeat is 5 rounds stale and clears its old slot. Diagnosis (local z3x vs agtr, cheesefarm seat B, seed 0; ~/diag26b/cf): the first king died at r628, and the king formed at r317 held slot 1 for 617 rounds with 39 babies to their 7-14, income 10-20 a round and 1,000-2,200 banked, named no site, sat at 28 hp from r1093 and died to a thrown-rat hit at r1245 (we led transfer 16,088 to 10,437). The hook is ledgered with G.settle (K 18), so a game where slot 0's king lives replays z3x's.
+falsifiers=1. Mechanism: in cheesefarm B vs agtr (seed 0) z7a forms a king after r628, and the cell is not lost before r1245. Mechanism games ~/diag26b/sh: z7a and z3x on the maps where the replica scan (slotlost.py) finds a dead first king with a survivor, vs araid, abrk and agtr, both seats, seed 0; z7a is rejected if it wins fewer cells than z3x, or if a game where it hands off loses a king it would not have formed (a king death within 100 rounds of a post-handoff formation in a cell z3x won). 2. Screens s6 (zd172's gates) and s7 (t > -1.5 vs zd205). 3. The replica block rules.
