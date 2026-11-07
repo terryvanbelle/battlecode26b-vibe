@@ -7099,3 +7099,5 @@
   - **Seed check:** chain ~/diag26b/cs1 plays z5n vs z6i on where_are_you, seeds 1-3, araid/abrk, both seats (24 games; scratch chain4.sh). Then ~/diag26b/cs2 plays fullofsecrets and rose on seeds 1-2 (32 games).
   - Falsifier for the chaos reading: if z5n beats z6i on where_are_you over seeds 1-3 by 3 or more cells, the harm is real, and the withdrawal of z6j's block stands for that reason too. If not, the cq3-cq6 cells are one-seed noise in both directions, and a single-seed chain is the wrong falsifier on these maps.
 - 01:13: **z3x resubmitted** (#252), so the replica's ranked games play the incumbent while z6j's block is withdrawn (precedent: u6x's #230). The 4 z6j matches already sent were created under #251 and play z6j. If the seed chains reinstate z6j, it is resubmitted with its saved rows.
+- 01:25: **z6j PASSED screen zd203** (vs zd172): n 44, D 3 (+araid evileye B, +araid starvation B; -abrk evileye A), net +1, t +0.57. Picks/100 32.29 vs 32.54 (per-cell z +0.06); pick amount per round 1.026x (z +0.25); transfer 1.039x; 0 overruns.
+  - Its replica block stays withdrawn until the seed chains (cs1, cs2) settle the CASH mechanism question.
