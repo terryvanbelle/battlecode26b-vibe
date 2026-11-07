@@ -1,0 +1,30 @@
+name=z9k
+source=bots/zl0
+source_sha=c585a2762c96
+commit=ec2c97bc
+created=2026-11-07 15:53 PST
+
+z9k = z3x + CAT_MUTE 6 (new switch; bots/zcm on zl0, bundled with tools/bundle.sh z9k zl0 z3x zcm): a baby makes no
+squeak (Baby.report) while the cat it saw in the last 6 rounds may hear it (d2 16 to a tile of the cat's 2x2, less one
+tile for every two rounds since the sighting). Ledgered (K 20 with G.settle, the cashTick hook's shape).
+
+Evidence:
+- Engine: squeaks reach every cat with a tile within d2 16 (GameWorld.squeak), and an attacking cat (8 turns at each
+  waypoint) turns to the source of the oldest squeak it holds from the last 5 rounds, then targets a rat in its
+  180-degree cone (InternalRobot, cat ATTACK).
+- Census (scratch catsq.py, 196 z3x-era replica games): when the front squeak a cat held was ours, 87% of its attacks
+  hit our rats (1,134 of 1,306 scratches, 432 of 498 pounce kills); when it was theirs, 19-24%; with none, 53-59%.
+  Opponents squeak 8.5x as often as we do, and cats heard 158,932 of their squeaks to 37,722 of ours.
+- 75% of our cat-heard squeaks came from a rat that had the cat in its vision cone within the 6 rounds before
+  (scratch catsee.py, 40 games), so the rat's own sighting covers most of the dose.
+
+Registered 2026-11-07 15:56 PST, before any z9k game.
+
+Falsifiers:
+1. Chain ~/diag26b/cq39 (seed 0, z9k and z3x paired: t_minus_five_minutes, rose, attack_on_cat, Hike, clockwisdom and
+   cheesebottles, both seats, vs araid and agrab; the six maps with the most cat attacks on us after our own squeak):
+   cat attacks on our rats after our own squeak at most 0.4x z3x's, all cat attacks on our rats at most 0.85x, and
+   summed transfer at least 0.97x (muted mine news must not cost harvest).
+2. In the same chain, z9k wins at least as many games as z3x.
+3. The s7 (zd264 vs zd205) and s6 (zd265 vs zd172) gates.
+4. The replica rules.

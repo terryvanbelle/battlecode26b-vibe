@@ -7728,3 +7728,26 @@
   - Avoidance is closed on record: RISK_FRESH (t0b), RISK_IN_FIGHT, RISK_GATHER (s5u, s8g, u9n), FACE_HOLD (u4x: fires -8%) and RISK_TTL. So is laying traps: s-series, u0q, u3d, u4m, u5o, u9j and z0q (RAW_TRAPS, rejected at block 3).
   - The re-read's untried lead was bank-scaled laying ("spend idle resources", research/prior/REREAD_2026-11-06.md). On the 243 z3x-era replica games (match 18600 on), our bank is under 1,000 in 83% of rounds in losses (74% in wins). Only 4% of the fires in losses (157 of 4,005) come while we hold 2,000 or more, 140 of them against spsquared. A rich-bank trap would act almost only in games we win, so the lead closes.
 - 15:43: **The persistent array is never allocated by the engine**, so it cannot carry state between games.
+- 15:56: **Our squeaks steer cats onto our own rats** (scratch catsq.py, catsee.py and catsqmap.py over the VM dumpcache, 196 z3x-era replica games).
+  - Engine: a squeak reaches every cat with a tile within d2 16 of the squeaker (GameWorld.squeak; cats hear both teams). Messages live 5 rounds (MESSAGE_ROUND_DURATION). A cat in ATTACK mode (8 turns at each waypoint) takes the oldest message it holds, turns toward its source, and targets a rat in its 180-degree, d2-17 cone, scratching or pouncing (InternalRobot, cat ATTACK). In EXPLORE mode it ignores squeaks.
+  - I replayed each cat's queue from the squeak and cat-turn rows and read the front message at each cat attack on a rat:
+
+    | front squeak | scratches on us / them | pounce kills on us / them | share on us |
+    |---|---|---|---|
+    | ours | 1,134 / 172 | 432 / 66 | 87% |
+    | theirs | 696 / 3,032 | 382 / 1,188 | 19-24% |
+    | none | 3,744 / 3,354 | 1,986 / 1,400 | 53-59% |
+
+  - Opponents squeak 8.5x as often as we do (1.33M to 156k), and cats heard 158,932 of their squeaks to 37,722 of ours. Their chatter already pulls cats onto them; ours pulls cats onto us about 8 times a game.
+  - 75% of our cat-heard squeaks (4,985 of 6,626, 40 games) came from a rat that had the cat in its 90-degree cone within the 6 rounds before.
+  - The most such attacks on us: t_minus_five_minutes 134, rose 128, attack_on_cat 100, Hike 84, clockwisdom 76, cheesebottles 74, FreeTheCheese 73, fullofsecrets 63.
+  - No cat-steering mechanism is in the ledger (attempts find: lure, squeak, bait, mute).
+- 15:56: **z9k = z3x + CAT_MUTE 6** (new switch on bots/zcm, a zl0 snapshot; `bash tools/bundle.sh z9k zl0 z3x zcm`; bots/z9k/SNAPSHOT; compiled on the VM as z9k-a1f2cc7d467f).
+  - A baby makes no squeak (Baby.report returns at once) while the cat it saw in the last 6 rounds may hear it: d2 16 to a tile of the cat's 2x2, less one tile for every two rounds since the sighting (a cat moves every second round).
+  - It is ledgered with K 20 and G.settle, the same instruction shape as the cashTick hook, so games replay z3x's until the first muted squeak. The diff from z3x is the hook, catMute() and the Cfg constant only.
+  - Falsifiers (registered 15:56, before any z9k game):
+    1. Chain ~/diag26b/cq39 (seed 0, z9k and z3x paired, on t_minus_five_minutes, rose, attack_on_cat, Hike, clockwisdom and cheesebottles, both seats, vs araid and agrab; 48 games). Cat attacks on our rats after our own squeak must fall to at most 0.4x z3x's, all cat attacks on our rats to at most 0.85x, and summed transfer must stay at least 0.97x.
+    2. In the same chain, z9k wins at least as many games as z3x.
+    3. The s7 (zd264 vs zd205) and s6 (zd265 vs zd172) gates.
+    4. The replica rules.
+  - zd264 started at 15:56, preempting the zd197 filler, whose 21 finished cells resume after zd265. cq39 started at 15:56 in the chain slot.
