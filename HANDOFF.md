@@ -96,28 +96,35 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 18:13 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 19:03 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **z1z** (accepted 2026-11-06 11:46 PST over u6x; replica blocks 1-4 pooled D 46, net +14, t 2.06; u9p + SEEK_IDLE
   20/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Screen control: **zd136** (z1z). Ledgered z1z for new switches: bots/zl0
   (scratch, untracked; `cp -r bots/zl0 bots/NEW`, sed the package; it is already ledgered, do not rerun ledger.py).
-- **Replica: z3s (#245)** = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850. Block 1 (set 3, 18503-18518)
-  passed: 47 of 48 alike, D 1, t 1.00. **Block 2 (set 1, IDs > 18518)** is in; waiter build/wait_z3sb2.sh. Score: the
-  laptop disk is full, so fetch into tmpfs, `contest.py fetch --out /dev/shm/rp IDS` (ref and block-1 match.json are
-  staged in /dev/shm/rp), then `contest.py paired --dir /dev/shm/rp 17946-17977 18503-18518 IDS` (pooled; block 2 rejects
-  at t <= 1). Then block 3 (`build/block_v4s2.sh`) and `git checkout research/panel/`. Transfer floor: rsync the replays
-  to VM ~/diag26b/rp, `tools/field_report.py games --dir ~/diag26b/rp --ids IDS > ~/diag26b/NAME.jsonl`,
-  `python3 blockcheck.py CAND.jsonl,TWIN.jsonl CAND_IDS TWIN_IDS` (twin rows z1zb1..b4.jsonl).
-- **Laptop disk full** (30 GB volume; ~25 MB free). The old session scratchpad is archived on the VM
-  (~/laptop-archive/claude-session-08e8e48d.tar.gz); deleting the local copy was denied, so the owner frees space.
-- **Next replica candidate: z3z = z3s + LAST_FLOOR + SEAT_SHIFT** (screen **zd174** queued; seat-B cells must replay
-  zd172) if z3y passes **zd173** (running); otherwise **z3x = z3s + LAST_FLOOR** (zd172 passed: D 2, t 0.00, xfer 1.005x;
-  5 cells differ from zd169 by LAST_FLOOR's own effect).
-- **Seat line (new):** the engine mirrors cat and sensing scan order by chirality, so its one asymmetry is turn order (A
-  acts first; robots run in spawn order). Replica paired matches show large per-map seat effects (A-only/B-only:
-  clouds 34/0, peaceinourtime 32/1, Stash 28/0; fullofsecrets 0/28, DefaultSmall 2/23, tiny 1/18). z3y (A skips the
-  round-1 spawn) passed its mechanism falsifier. z4a (B skips round 1) and z4b (B skips rounds 1-2, a control:
-  parity vs perturbation) are in mechanism games ~/diag26b/sb (77) and ~/diag26b/sc (84, after sb). If parity holds,
-  build a round-1 predictor for the delay per map.
+- **Replica: z3z (#246)** = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 + LAST_FLOOR + SEAT_SHIFT 1.
+  z3s (#245) was REJECTED at block 2 (94 cells, D 1, t 1.00). z3z block 1 (set 3, IDs > 18534; waiter
+  build/wait_z3zb1.sh): 12 of 16 in (18542-18545, 18548-18551, 18553-18556), D 6, net -2, t -0.82; Icarus and Merlin
+  (18583-18586) still queued. Score: `contest.py fetch --out /dev/shm/rp IDS` (laptop disk full: tmpfs; refs staged in
+  /dev/shm/rp), `contest.py paired --dir /dev/shm/rp 17946-17961 IDS` (block 1 rejects at t <= 0). Pass: block 2
+  `build/block_v4s1.sh`, then `git checkout research/panel/`. Transfer floor: rsync replays to VM ~/diag26b/rp,
+  `tools/field_report.py games --dir ~/diag26b/rp --ids IDS > ~/diag26b/NAME.jsonl`, `python3 blockcheck.py
+  CAND.jsonl,TWIN.jsonl CAND_IDS TWIN_IDS` (twin rows z1zb1..b4.jsonl). zd174 passed (D 5, t +0.44; B cells = zd172).
+- **If z3z is rejected:** submit **z3x** (= z3z without SEAT_SHIFT; zd172 passed) so the replica is not idle, then
+  **z4d/z4e** once their screens pass.
+- **Rush index line (new, 18:56):** the rush role comes from the cost step at birth (live babies, newborn included, down
+  to a multiple of 4): z1z's first 3 babies gather, 4-15 rush, and through r300 every replacement born with 4-15 alive
+  rushes. Replica r1-200: our non-rushers pick 0.21-0.34 per baby-round to the opponents' 0.29-0.50, rushers
+  0.07-0.18, and 600-3,150 cheese lies unpicked on the map by r100-200 (scratch rolepick.py, mapchz.py, pickeff.py in
+  VM ~/diag26b). **z4d** = z3z + RUSH_FROM 8 (screen **zd176**, running), **z4e** = z3z + RUSH_FROM 8 + RUSH_TO 20
+  (**zd177** next). Falsifiers in their SNAPSHOTs (pick amount per round vs zd174 must rise). z1z's 29 rush king-kill
+  wins before r300 (knifefight, sunandmoon, clouds, tiny) are the risk.
+- **Seat line, closed 19:01:** the engine's one asymmetry is turn order, but SEAT_SHIFT is a perturbation, not parity
+  (~/diag26b/sc: z4a gives the flipped seat result in 23 of 45 seed pairs, z4b z1z's own in 18 of 30). Self-play
+  mirrors break at r21 on peaceinourtime from orientation-dependent bytecode cost. knifefight: seat A won 15 of 15.
+- **Grab war, closed again 18:56:** our carriers with an enemy within Chebyshev 2 are retaken 19-31% of the time, all
+  before the first legal throw (grab + 2), so THROW_HOLD cannot help; GRAB_SAFE (u6b, u6c, v1a) is rejected.
+- ~/diag26b scoring scripts (screen_t.py, scr_eq, xpr, ppr, ovr) take bare package names (z3x, not bots/z3x); with
+  the prefix they score seat-B cells only.
+- VM disk: pruned closed mechanism dumps (wh, dry, cr, cp, cs; logs kept) at 18:45: 3.4 GB free.
 - Dropped today: z3u (KING_CALL), z3v (WALL_HOLD: wins 18 vs 19 on the maze cells). Rejected on the replica: z2x, z3b,
   z3c, z3j, z3q. Ledgered switches flip one or two cells a block, so candidates are bundles of passed switches.
 - ~/diag26b scoring scripts (scr_eq, xpr, ppr, ovr) take bare package names (z3x, not bots/z3x).
