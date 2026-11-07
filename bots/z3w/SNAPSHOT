@@ -1,0 +1,17 @@
+name=z3w
+source=bots/zl0
+source_sha=c585a2762c96
+commit=5764e57
+created=2026-11-06 16:55 PST
+
+z3w = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 + LAST_FLOOR 20 + WALL_HOLD: tools/bundle.sh z3w
+zl0 z3s z3t z3v (each candidate's diff against the ledgered z1z, applied strictly; Cfg lines appended). The bundle is
+for the replica slot after z3s, since ledgered single switches flip one or two cells a block. z3s's three switches,
+z3t's LAST_FLOOR and z3v's WALL_HOLD act in different states, so a cell that differs from z3s's game can only be a
+LAST_FLOOR (3 or fewer babies) or WALL_HOLD (an enemy behind a wall) cell.
+
+Falsifiers, registered before any z3w game:
+1. z3v must pass its own falsifiers 1-2 (zd170, ~/diag26b/wh); otherwise z3w is rebuilt without WALL_HOLD.
+2. Screen zd171 (vs zd136) on the s6 gates (t <= -1.5, picks z <= -2, transfer per round < 0.97x, any overrun), and
+   every zd171 cell where z3v's zd170 game equals zd136's must equal zd169's (z3s) game (the merge is exact there).
+3. Replica: block rules plus the transfer floor against the twin.
