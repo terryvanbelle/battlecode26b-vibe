@@ -7342,3 +7342,10 @@
   - **Rose B vs araid starved at r1047, where z3x won.** That fails the no-loss clause of falsifier 1. The game diverges at r106. The king never moves (45,2-3), but from r300 the bank drains (595 at r400 against 895) while raw held rises (915 against 605).
   - **Suspected cause:** homeLeg's count (best distance, stall and homing) carried over any gap of up to TRAIL_GAP 12 rounds. On rose the mine is close to the king, so a carrier was back delivering inside 12 rounds. It inherited the last trip's best Chebyshev (1-2, at the king), counted every turn as a stall, and walked the trail into the king's crowd after 20 turns. u4o (the same carry-over, unledgered) lost rose A/B on the replica.
   - **z7x = z7t + a per-trip reset** (homeLeg starts afresh once Baby.delivered has changed). Its chain ~/diag26b/cq14 runs rose B first. On the fos A attackers (8,360 picked, 20 delivered), **z7v** (z7t + HUNGRY 300) is in cq12.
+- 08:51: **The overrun fix for z7m is z7u; z7w is dropped.**
+  - z7w (the count capped before the loop at 50 bytecodes a squeak) never bound. It replayed z7m's arrows A vs abrk exactly for 2,000 rounds, with the same 2 overruns.
+  - **Neither twin's divergence is a ledger flaw.** z3x runs cashTick inside its CASH ledger hook (Baby line 176, `G.settle(cd0, cb0, 20)`), which credits a cost of 300 or less and nothing above it. Any change to cashTick's cost therefore flips that credit on the turns that cost close to 300, and that can happen only while CASH is active.
+    - zuchk (z7u's read with floor 1) leaves z7m at r1886, and zwchk at r1923, both late in CASH_END.
+    - zuchk and z7u agree until r1892, where z7u's floor first binds.
+  - z7u's floor works on the cost: 0 overruns on arrows A vs abrk, peak 16,262 against z7m's 17,506.
+  - **Screen queue:** zd240 (z7u s6) runs first, since s6 is the gate z7m failed and the replica drains z5i's block within the hour. Then zd233 (z5i s7), zd238/zd239 (moved from z7t to z7x, since z7t fails its no-loss clause), zd241 (z7u s7), and zd236/zd237 (z7o).
