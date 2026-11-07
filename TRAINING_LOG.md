@@ -7357,3 +7357,8 @@
     - It lost fos B vs abrk (r1584), which z7t won.
     - It won mincemeat A (r720), as z7r did, and fos B vs araid lasted to r2000 (transfer 5,475).
     - With the trail in place, HUNGRY moves cheese but does not turn the fos A starvations.
+- 09:01: **z5i is REJECTED at replica block 1** (#260, set 2, 19511-19526): 48 cells, 46 alike, D 2 (both lost: run_away10 on clouds, A and B), net -2, t -1.41.
+- 09:01: **zd230 (z7j s6) vs zd172: n 44, D 4 (+2 -2), net 0, t 0.00.** Picks z +0.30, transfer per round 1.047x, 0 overruns. The gates pass.
+  - **But z7j fails falsifier 1.** Its summed spawns had to rise 3% over the two screens. s7 rose 3.3% (4,602 against 4,454), but s6 fell 4.7% (4,814 against 5,051), -0.9% together. **z7j is REJECTED** on mechanism.
+  - I had submitted it (#261) before running the spawn check. Its 16 rows were still held by the hourly limit, so I withdrew them unsent.
+- 09:01: **z7x is on the replica as #262** (block 1 on set 2; 16 rows queued behind the hourly limit). It runs alongside its screens zd238 (s7) and zd239 (s6), the z5i pattern, so the replica does not sit idle. **Rule, set before any result:** if either screen fails its gates, the block is void and z7x is rejected.
