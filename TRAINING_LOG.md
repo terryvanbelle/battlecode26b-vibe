@@ -7029,3 +7029,11 @@
 - 00:02: **The local screen is saturated**, and §5 says to version the panel. z3x lost 3 of zd172's 44 cells and z5n lost none, so the araid/abrk screen can no longer tell candidates apart upward. It still catches losses, which is what the ablation screens zd195-zd199 need.
   - Calibration run **zd200** is queued after zd194, ahead of the ablations. It plays z5n against the nine archetypes the screen does not use (agaim, agcap, agrab, agrw, agtr, arush, atrap, atrap2, atrap3) on tiny, DefaultMedium, Stash and evileye, both seats, seed 0: 72 cells, all compiled on the VM.
   - Opponents z5n beats 25-75% of the time join the next screen version, which will be its own series. Until then the s6 gates stand.
+- 00:11: **z6f passes falsifier 1** (mechanism chain ~/diag26b/cq3 vs z5o: clockwisdom, fullofsecrets, rose and Stash vs araid and abrk, both seats, seed 0; chainsum.py).
+  - Results: z6f won 8 of 16 cells to z5o's 5 (+3, -0) and had 7 king starvations (in 6 games) to z5o's 9.
+    - fullofsecrets abrk B: won on points at r2000 with 19,163 transferred to 8,409; z5o starved at r627.
+    - rose araid A: won at r1350 with 2,540 transferred; z5o starved at r1285.
+    - rose abrk A: won at r1897 with 9,359; z5o starved at r1012.
+  - The only cell where a CASH king formed and every king starved is clockwisdom abrk B. It ended at r946 against z5o's r922, so not sooner. All 8 Stash and rose-B games replay z5o exactly. fullofsecrets abrk A and araid A ended 10-12 rounds sooner with no formation.
+  - **Clockwisdom is out of CASH's reach** (dump ~/diag26b/cq3d/cwA, scratch cashwhy.py and cashpull.py). From r580 the bank fell from 580 to 0 by r820, while 19 babies held 4,000-6,300 raw. It was in single couriers of 900-2,260 each, with only 1-3 of ours within Chebyshev 8 of any of them, never the 7 a formation takes. That loss stays a delivery-navigation one.
+  - zd201 (z6f vs zd172) is queued at the head, after zd194, so its verdict lands when z5a's block ends.
