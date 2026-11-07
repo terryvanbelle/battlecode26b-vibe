@@ -1,0 +1,28 @@
+name=z4g
+source=bots/zl0
+source_sha=c585a2762c96
+commit=75ec9bd
+created=2026-11-06 19:37 PST
+
+z4g = z1z + ledger (bots/zl0) + SIDE_LOOK 2000 (new switch; Cfg.SIDE_LOOK, SIDE_QUIET 20; Baby.sideLook). Up to round
+2000, a baby that stepped this turn with its turn unused ends the turn facing 90 degrees left or right. It must carry
+no rat, have no cat in view, not be a rusher, and have seen no enemy rat within 20 rounds. It faces whichever side has
+more never-seen probe tiles (2 and 3 steps out, and 3 out one to either side); with none on either side it does not
+turn. sense2 then reads that cone, and the next step turns back first (Nav.step), so the walk costs no movement:
+turning has its own cooldown of 10, and a forward step costs 10. The hook is ledgered (G.settle, K 18).
+
+Evidence (replica dumps, 89 cached games, r1-200; scratch conemiss.py with the dump's direction order 0 centre,
+1 W, 2 SW, 3 S, 4 SE, 5 E, 6 NE, 7 N, 8 NW): of 20,452 cheese tile-episodes on our half, 51.8% were seen by a baby's
+cone or a king, 6.1% came within a baby's dist2 20 only outside its 90-degree cone (28k cheese lying at first reach,
+about 318 a game), and 42.1% never came within reach. Home mines (minesight.py): every never-picked home mine was also
+never seen by r200; 20+ from our start, 173 of 320 were never picked. GLANCE_MEM (s4g, u5g) used the free turn to face
+back at war; nothing in the record uses it to look sideways while walking.
+
+Falsifiers, registered before any z4g game:
+1. Screen zd179 (vs zd136) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+2. Mechanism (~/diag26b/sl: rift, thunderdome, FreeTheCheese, TheHeist and DefaultMedium vs araid and abrk, both
+   seats, z4g and z1z, 40 games; conemiss.py over r1-200 per bot). The side-only share of home cheese tile-episodes
+   must fall by at least half (6.1% on the replica), and the seen share must rise by at least 2 points. Summed pickups
+   by r200 must rise, and z4g must not win fewer of the 20 cells than z1z. Any one failing drops it.
+3. Replica: the block rules, plus the transfer floor against the twin.
