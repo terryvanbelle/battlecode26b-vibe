@@ -1,0 +1,24 @@
+name=z3u
+source=bots/z1z
+source_sha=4c8e1bf08a36
+commit=f413013
+created=2026-11-06 16:15 PST
+
+z3u = z1z + tools/ledger.py + KING_CALL (new switch; ledgered hooks in King.turn and twice in Baby.turn, G.settle
+K 18). At war a king squeaks (SQ_RING) its centre and a 16-bit mask of the ring tiles at Chebyshev 2 that hold enemy
+babies (touching its 3x3 body, so able to bite it). A baby with its action and turn ready, within Chebyshev 3 of a
+king, that stands beside one of those tiles but cannot see it turns to it and bites. Babies only turn and bite: no
+movement changes (GUARD_KING_R, rejected 4 times, and KING_EYES u7q moved defenders).
+Evidence (scratch kguard.py over the 73 cached replica matches): 11,811 rounds an enemy baby touched our king; one of
+ours stood beside it in 7,909 of them and bit it in 244. Of the 10,398 adjacent baby-turns that ended with the action
+unused, 7,869 had the biter outside the 90-degree cone (4,171 with the turn still ready). thunderdome A vs Varun
+(18346 g2): 2-4 biters took our king from 354 to 0 in r230-436 while 14-24 of ours stood within Chebyshev 4, the bank
+at 930-990.
+
+Falsifiers, registered before any z3u game:
+1. Screen zd168 (vs zd136) on the s6 gates: t <= -1.5, picks z <= -2, transfer per round < 0.97x, any overrun.
+2. Mechanism: in z3u's screen and check games, KING_CALL bites (bites by our babies on enemies they could not see at
+   the turn's start, at ring tiles) must be at least 3x z1z's adjacent bites on king-biters in the same cells; and in
+   games where both lose the king, z3u's king must not die earlier on average. Fewer, or an earlier death, drops it.
+3. Replica: block rules against the twin; on set 3, enemy bite rounds on our king that pass with a baby of ours
+   adjacent and unbitten must fall by half against z3q's block (kguard.py), or the mechanism did not transfer.
