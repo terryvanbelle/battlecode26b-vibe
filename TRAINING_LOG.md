@@ -7065,3 +7065,9 @@
     1. z6i keeps z6h's gains over z5n, wins where_are_you araid A if z5n does, and loses no cell z5n won.
     2. Screen vs zd172 on the s6 gates.
     3. The replica rules, as for z6f.
+- 00:40: **Chain cq4 finished** (z6f vs z5o: Nofreecheese, uneasy_alliance, where_are_you, Hike vs araid/abrk, both seats, seed 0; chainsum.py).
+  - Hike, Nofreecheese and uneasy_alliance came out 12 of 12 alike, all won.
+  - **where_are_you went to z5o 3-0:** z6f lost all four cells; z5o lost only abrk A. No CASH king formed in any of z6f's four games. All four ended sooner than z5o's (r1252-r1591 against r1199-r2000), one of them by starvation.
+  - Over cq3 and cq4 (32 cells), z6f is +3 -3, net 0. The mid-game rescue helps where loaded babies cluster (fullofsecrets abrk B, rose) and harms where it names sites it cannot fill. z6i (CASH_BABIES 12) targets that; chain cq6 now runs where_are_you first.
+- 00:40: **z5n's set-3 block, provisional** (14 of 16 matches, 19022-19035): 42 cells, 38 alike, D 4 (+YokoOno Stash A; -Icarus mincemeat A, -Xzibit minimaze A, -spsquared rose A), net -2, t -1.00. The two Merlin matches are running.
+  - The three lost games diverge from z3x's (18613, 18623, 18653; dumped on the VM, scratch firstdec.py and dumpof.py) at an ordinary rat move: r564 on rose, r401 on minimaze, r129 on mincemeat. No CASH squeak was in play (empty ind strings), so RISK_TTL 40, not CASH_READ, is the likely source. With D 4, a 1-3 split is within noise, but block 1 rejects at t <= 0.
