@@ -1,0 +1,20 @@
+name=z4a
+source=bots/z3y
+source_sha=b06bf6849ca7
+commit=362141e
+created=2026-11-06 18:01 PST
+
+z4a = z3y with SEAT_SHIFT 0 and SEAT_SHIFT_B 1 (new switch): as team B the king skips its round-1 spawn, so each of
+our babies starts a round behind its opposite number (b_i is spawned with a_{i+1} and acts just after it). A games
+replay z1z's. Reading tested: the seat effect is the parity of the approach (equal speeds from mirrored spawns, so who
+has to step into reach first is fixed by map distance and spawn timing), so a one-round delay as B should flip the
+cells that seat B loses and seat A wins. On set 1 z1z won t_minus_five_minutes (Varun) and peaceinourtime (nzjt) as A
+and lost both as B. Ledgered like z3y (G.settle K 20).
+
+Falsifiers, registered before any z4a game (mechanism games in ~/diag26b/sb):
+1. In z1z (A) vs z4a (B), seeds 0-2 on t_minus_five_minutes, peaceinourtime, corridorofdoomanddespair, DefaultSmall,
+   tiny, 5t4rv4t10n_1337, externalsustenance, ultimatestarvation and starvation (27 games), seat B must win more
+   games than seat B in z1z self-play on the same 27 map-seeds.
+2. On t_minus_five_minutes and peaceinourtime (6 games), z4a as B must win more than z1z as B.
+3. As B against araid and abrk on the first five maps (10 cells), z4a must not win fewer than z1z.
+4. Turn check (turnorder.py): our first spawn is at r2 as B.
