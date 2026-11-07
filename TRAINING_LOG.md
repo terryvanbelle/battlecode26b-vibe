@@ -7701,3 +7701,9 @@
 - 15:01: **z9e on the replica as #266** (z3x + TRAIL + CASH_READ_LEFT 6000 + THROW_ADAPT; it passed s7 zd252 and s6 zd253, and was never on the replica alone).
   - Block 1 on set 2 (`bash build/block_v4s2.sh`): 4 sent (16485-16488), 12 queued. Score it against 18722-18725, 18736-18739, 18745-18748 and 18750-18753.
   - z9d (TRAIL + CASH_READ_LEFT) gained Varun clockwisdom B and Merlin fullofsecrets B in its set-2 block, then lost Meow B vs YokoOno in set 4. THROW_ADAPT targets Merlin's throws of our own rats (u7i pooled t +2.14 on u6x before its Merlin falsifier).
+- 15:11: **z9j DROPPED at falsifiers 1 and 2** (cq37, seed 0, paired with z9f; scratch ferrycount.py and ferrytrace.py).
+  - The switch acts: 54 ferry grabs over the 12 games. But summed transfer was 13,717 to z9f's 21,093 (0.65x; the bar was 1.15x). On all 6 clockwisdom games transfer equals z9f's exactly (80, 100, 420, 320, 320, 320), so no ferried rat reached transfer reach.
+  - Wins were 5 to 9. z9j lost clockwisdom B vs abrk and agtr (starved at r1035 and r1037) and fullofsecrets B vs abrk (r645) and araid (r952), all of which z9f won.
+  - fullofsecrets B vs araid: 26 grabs and 23 wriggles. The ferries circle at Chebyshev 5-10 from the king's sealed pocket, and one 320-raw ally was taken 9 times between r548 and r708 without getting closer. The helpers' time came out of gathering.
+  - zd262 partial (40 of 48 s7 cells vs z9f's zd254): 27 wins each, no flips, 26 ally grabs, transfer per round 0.98x. On ordinary maps the ferry barely acts. zd262 and zd263 were pulled.
+  - Verdict: on the held-cheese maps the loss is the route home (spiral, sealed pocket), not the carry speed. The ferry line closes unless a route fix comes first. The route fixes TRAIL, TRAIL_BUG, BFLOW and FLOW_FIRST are closed.

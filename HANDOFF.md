@@ -103,12 +103,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`; block 1 rejects at t <= 0, then set 4
     (`build/block_v4s4.sh`, refs 18760-18763,18783-18786,18797-18800,18810-18813).
   - **z9f REJECTED at block 2** (15:01): set 4 D 4 (+1 -3), pooled 90 cells D 9 (+5 -4), net +1, t 0.33.
-  - **z9j = z9f + FERRY 200** (registered 14:54): an empty rat carries a loaded ally home (carrying adds no cooldown, and
-    the load slowdown is the carried rat's own). Falsifier chain ~/diag26b/cq37 (24 games; `python3 ~/diag26b/ferrycount.py
-    z9j ~/diag26b/cq37/*_z9j` counts ferry grabs) and screens zd262 (s7, playing) and zd263 (s6) are running. Early: 0-3
-    grabs a game on clockwisdom; 26 on fullofsecrets B, where the king's pocket is sealed and the ferries wriggle out.
-  - Screen queue after them: zd195 (resumes, 9 cells done), zd196-199 (z3x ablations, filler).
-  - **Closed today:** z9i (LOAD_FLEE: cq36 transfer 0.87x, zd260 cat-death rate +10%), z9f (block 2), z9h (EXPLORE_CENTER_FROM: cq35 transfer by r400 1.03x vs the 1.2x bar, lost Excavation A vs
+  - Screen queue: zd195 (resumed 15:10), zd196-199 (z3x ablations, filler). No candidate is screening.
+  - **Closed today:** z9j (FERRY: cq37 transfer 0.65x, wins 5 vs 9; the route home, not the carry speed, is the loss), z9i (LOAD_FLEE: cq36 transfer 0.87x, zd260 cat-death rate +10%), z9f (block 2), z9h (EXPLORE_CENTER_FROM: cq35 transfer by r400 1.03x vs the 1.2x bar, lost Excavation A vs
     araid), z8b (rejected at block 1, D 4 +1 -3), z9a/z9b (PICK_TRIP), z9c (HEIR: the heir is thrown to
     death in place), zth (TRIP_HALF probe), z9d (block 2, t 0.58), zmm (MINE_MIRROR inert), z9g (TRAIL_BUG: clockwisdom
     transfer equal to z9f's). Also closed without a candidate: coverage by half, held-cheese starvation,
