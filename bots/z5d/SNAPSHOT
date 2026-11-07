@@ -1,0 +1,20 @@
+name=z5d
+source=bots/zl0
+source_sha=c585a2762c96
+commit=83365f27
+created=2026-11-06 20:58 PST
+
+z5d = z3x (the incumbent) + THROW_SAFE (z4i) + THROW_ADAPT (z5b): tools/bundle.sh z5d zl0 z3x z4i z5b. The two throw
+switches act on different rats: THROW_SAFE stops our throws whose landing or hit tile lies on our own king; THROW_ADAPT
+stops wounded babies walking home once an enemy carrier of ours has been seen. The merge is exact: z5d's sources
+differ from z5a's (z3x + THROW_SAFE) only by THROW_ADAPT's lines. For the replica slot after z3x's reference blocks,
+since ledgered single switches flip one or two cells a block.
+
+Falsifiers, registered before any z5d game:
+1. Screen zd186 (vs zd172) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun. z5d goes to the replica only if zd183 (z5a) and zd185 (z5c) also pass theirs.
+2. Exactness: every zd186 cell where zd185 equals zd172 must equal zd183, and every cell where zd183 equals zd172 must
+   equal zd185. A cell that breaks this is an interaction to explain before the replica.
+3. Replica: the block rules plus the transfer floor against the twin, with both mechanisms: our throws' hits on our
+   own king (kinghits.py) at most a third of the twin's, and enemy own-rat hits on our kings vs thewaxmango and nzjt
+   (kthrown.py) at most half the twin's per game. Two YokoOno or Varun cells won by the twin and lost by z5d drop it.

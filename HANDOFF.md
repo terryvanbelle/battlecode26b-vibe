@@ -96,19 +96,21 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 20:45 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- Incumbent: **z1z** (accepted 2026-11-06 11:46 PST over u6x; replica blocks 1-4 pooled D 46, net +14, t 2.06; u9p + SEEK_IDLE
-  20/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Screen control: **zd136** (z1z). Ledgered z1z for new switches: bots/zl0
-  (scratch, untracked; `cp -r bots/zl0 bots/NEW`, sed the package; it is already ledgered, do not rerun ledger.py).
-- **Replica: z3x (#248)** = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 + LAST_FLOOR. Block 1 (set 3)
-  passed: D 2, net +2, t 1.41; transfer 1.09x the twin's. **Block 2 (set 1)** is going out through the drain (IDs > 18656;
-  waiter build/wait_z3xb2.sh, task output in the session tasks dir). Score: `contest.py fetch --out /dev/shm/rp IDS`, then
-  `contest.py paired --dir /dev/shm/rp 17946-17961,17962-17977 IDS1,IDS2` pooled (rejects at t <= 1); transfer floor
-  against z1zb2.jsonl (field_report on VM ~/diag26b/rp, blockcheck.py). Continue: block 3 `build/block_v4s2.sh`, then
-  `git checkout research/panel/v4-set2.json`.
-- **Screen queue (VM runs/screenq.txt):** zd178 z4f (running; RUSH_FROM 12, the rush index line's last dose), **zd182 z3w**
-  (z3x + WALL_HOLD, revived with a re-registration in its SNAPSHOT), **zd183 z5a** (z3x + THROW_SAFE, exact bundle),
-  **zd184 z5b** (zl0 + THROW_ADAPT, ledgered), then the closed lines (zd141, zd132: never let the queue reach them).
+## State (2026-11-06 21:02 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
+  t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
+  LAST_FLOOR 20. Screen control: **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
+  scr_eq). New switches: build on bots/zl0 (ledgered z1z, scratch, untracked; `cp -r bots/zl0 bots/NEW`, sed the
+  package), then `tools/bundle.sh NAME zl0 z3x NEW` to put them on the incumbent (exact merges; check the Cfg by eye).
+- **Replica references for z3x candidates:** set 3 = z3x block 1 (18613-18620, 18623-18626, 18653-18656), set 1 = z3x
+  block 2 (18665-18668, 18682-18685, 18691-18694, 18697-18700); IDs also in /dev/shm/z3x_ids.txt, z3x_ids2.txt. Twin
+  field_report rows: ~/diag26b/z3xb2.jsonl (set 1); set 3's rows are z3x's block-1 jsonl in ~/diag26b. **z3x's set-2
+  reference block is queued** (21:00, block_v4s2.sh with z3x active; IDs > 18700), so the replica plays while the throw
+  screens run. Set 4 next if no candidate is ready. Then a candidate: submit it, block_v4s3.sh (set 3) first.
+- **Screen queue (VM runs/screenq.txt):** zd182 z3w (playing; z3x + WALL_HOLD, revived), **zd183 z5a** (z3x + THROW_SAFE),
+  **zd185 z5c** (z3x + THROW_ADAPT; replaces z5b's zd184, pulled), **zd186 z5d** (z3x + THROW_SAFE + THROW_ADAPT), then
+  the closed lines (zd141, zd132: never let the queue reach them). The next replica candidate is z5d if zd183, zd185 and
+  zd186 all pass, else whichever single switch passed (z3w included if zd182 passes its falsifiers).
 - **Throw line (20:05-20:50):** enemy thrown-rat hits on our kings always throw our own rats, grabbed blind-side 3-5 from
   the king (wounded retreaters), 90% by thewaxmango and nzjt (kthrown.py, kgrab.py, kgrab2.py, kdis.py in ~/diag26b).
   z4i THROW_SAFE passed zd181 (our own throws into our king). THROW_ADAPT (u7i: no retreat after seeing an enemy carrier
@@ -116,7 +118,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   of WALL_HOLD, THROW_SAFE, THROW_ADAPT pass their screens. Disintegrate-on-carry is not usable: destroying a carried rat
   clears its carrier from the engine's robot grid (GameWorld.destroyRobot).
 - Rejected today on the replica: z3z (block 1 D 6, net -2, t -0.82), z3s, z3q, z2x, z3b, z3c, z3j. Closed lines today:
-  discovery (z4g, z4h: a side glance replaces the forward cone), the rush index (z4d, z4e; z4f is the last dose), seat
+  discovery (z4g, z4h: a side glance replaces the forward cone), the rush index (z4d, z4e, z4f: zd178 picks z -2.11), seat
   (z3y/z4a), grab-war (GRAB_SAFE), king-biter (KING_CALL), DRY.
 - **Laptop disk:** repacked at 20:45. 7,311 loose objects (265 MB) went to a 26.8 MB pack, built in /dev/shm and prune-packed
   through a temporary alternate (`.git/objects/info/alternates` is now empty). 239 MB free. `git config gc.auto 0` stays set:

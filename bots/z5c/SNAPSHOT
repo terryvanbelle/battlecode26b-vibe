@@ -1,0 +1,21 @@
+name=z5c
+source=bots/zl0
+source_sha=c585a2762c96
+commit=83365f27
+created=2026-11-06 20:58 PST
+
+z5c = z3x (the incumbent, accepted 20:49) + THROW_ADAPT: tools/bundle.sh z5c zl0 z3x z5b. It is z5b's switch rebased
+onto the incumbent, and replaces z5b's screen zd184 (pulled before it started). The merge is exact: z5c's sources
+differ from z3x's only by THROW_ADAPT's lines (Baby.throwSeen, sawThrower, the two ledgered hooks; Cfg). The
+evidence is z5b's (bots/z5b/SNAPSHOT): all 567 enemy thrown-rat hits on our kings threw our own rats, and carriers
+within Chebyshev 4 of our kings did 80% of that damage, mostly thewaxmango's and nzjt's grabs of our wounded babies
+walking home.
+
+Falsifiers, registered before any z5c game:
+1. Screen zd185 (vs zd172, z3x's control on the same cells) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2,
+   ppr per-round z <= -2, transfer per round < 0.97x, any overrun.
+2. Every zd185 cell that differs from zd172 must have an enemy carrier of our rat in a baby's view before the first
+   differing round (the switch is silent until then); a cell that breaks this is a merge fault.
+3. Replica: the block rules plus the transfer floor against the twin. Mechanism: in the block games against
+   thewaxmango and nzjt, enemy hits on our kings with our thrown rats (kthrown.py, deduplicated) at most half the
+   twin's per game. A cell against YokoOno or Varun that the twin won and z5c lost counts against it; two drop it.
