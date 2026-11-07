@@ -910,8 +910,8 @@ public final class Cfg {
      *  king at r825 with 500 banked took 7 of 20 babies at war, the bank was 0 by r950 and both kings starved at r1114;
      *  z1z (17954) kept one king, 8-10 babies and ~200 banked, and won.
      *  z6w: 1, with RICH_FIX_BANK (z3d's pair, never tried alone). z3x held one king with 2,900-3,000 banked from r791
-     *  on superioristhmus A (18665) and 3-4k from r502 on B (18666), its second king came at r1896 / r1881, and lost
-     *  both to spsquared on points; a third king flips A (47.9-52.1 to 52.9). */
+     *  on superioristhmus A (18665) and 3-4k from r502 on B (18666), its second king came at r1896 / r1881; A was lost
+     *  to spsquared on points (B won); a third king flips A (47.9-52.1 to 52.9). */
     public static final int RICH_FIX_KINGS = 1;
     /** One-king sites get the fixes only while global cheese is at least this (z3d; minimaze A starved at 500). */
     public static final int RICH_FIX_BANK = 1500;
