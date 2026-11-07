@@ -7306,3 +7306,11 @@
   - 175 ally carries over the 48 cells (z3x 0). Cat deaths 941 to 948; spawns 4,436 to 4,454.
   - s7 passes. **zd235 (s6) is playing.**
   - **King deaths in z3x's 64 replica king-kill losses** (scratch kdeath.py over the dump cache, sets 1-4): starvation 42, bites 17, thrown rats 13, cat scratches 2 (some games lose two kings). The starvations are the economy lines: clockwisdom (heavy-load crawl), fullofsecrets (the CASH line, z6f-z6j), Stash B and wallsofparadis. 7 of the 71 losses are on points.
+- 08:19: **z7p and z7r are DROPPED at falsifier 1.** Each flipped one cell where two were needed (seed 0, chains ~/diag26b/cq7 and cq8, z3x's games in cq7 and sa).
+  - **z7p (CASH_KINGS 1 + CASH_BABIES 12)** won rose A vs araid on points at r1350, where z3x starved at r1285. fullofsecrets vs araid and abrk stayed lost in both seats, and so did clockwisdom A/B. The rescue king formed only in fos B vs abrk, which still starved, at r1206 instead of r627.
+  - **z7r (HUNGRY 300)** won mincemeat A vs araid at r720, with transfer 3,026 to z3x's 1,174. fullofsecrets and clockwisdom were unchanged. Delivery in the starving fos games was 180/370/330/330 against z3x's 180/390/330/330, so 1.0x where the bar was 1.5x.
+  - **Why neither reaches fullofsecrets A:** it is a navigation failure, and both switches act after the rat is already stuck.
+    - Gatherer 11964 in cq7/fos_A_araid_z3x oscillated at (6-9, 27-32) on mv=d from r160 to r700, carrying 40-350 raw. Our king sat at (1-3, 32) in a pocket sealed by walls at x=7 and y=29. The only way in was the top passage the rat had used on the way out.
+    - Its nt= stall counter stayed at 0-3. The roaming king keeps changing goTo's target, and NAV_SAME_R 0 resets the stall on every change, so Flow is never asked.
+    - Attackers hoarded 6,020 picked against 20 delivered in the same game.
+  - **Next: z7s = z3x + a ledgered TRAIL with a long stall trigger.** The rat walks home along its recorded spawn chain once delivery has stalled 20 turns, counting stall against the nearest-king distance rather than goTo's target. u4o (TRAIL + TRAIL_GAP 12) played replica D 13 before the ledger existed.
