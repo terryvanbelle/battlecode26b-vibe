@@ -1,0 +1,28 @@
+name=z5b
+source=bots/zl0
+source_sha=c585a2762c96
+commit=d70edc0a
+created=2026-11-06 20:44 PST
+
+z5b = z1z + ledger (bots/zl0) + THROW_ADAPT (u7i's doctrine, ledgered; Cfg.THROW_ADAPT; Baby.throwSeen, sawThrower,
+retreat). Once a baby has seen an enemy rat carrying one of ours, it never retreats to our king again (RETREAT_HP 40
+otherwise sends a baby at 40 hp or less near enemies home). Hooks: after the sense loop (K 18) and at the head of
+retreat() (K 20 with its if).
+
+Evidence (build/dumpcache, 105 replica matches, 315 games; scratch kthrown.py, kgrab.py, kgrab2.py, kdis.py): all 567
+enemy thrown-rat hits on our kings threw one of our rats (20,609 damage), 300 point-blank (42 to the king, 42 to the
+rat). Of 604 traced grabs, the victim stood Chebyshev 3-5 from the hit king's centre in 454. None had the grabber in
+its 90-degree cone, though chance would put about 37% there. 458 victims were weaker than the grabber, and in 57% the
+grabber had been in the victim's cone a turn earlier: wounded rats walking home turn their backs on it. Carriers within
+Chebyshev 4 of our kings made 80% of the king damage (18,605), 90% of it by thewaxmango (8,717) and nzjt (7,996). u7i
+(THROW_ADAPT on u6x) pooled D 14, net +8, t +2.14 over two replica blocks. It was rejected on its registered Merlin
+falsifier (throw hits 5.3 a game, bar < 4). u9r (on u9p, unledgered) failed the old absolute picks bar at zd63.
+
+Falsifiers, registered before any z5b game:
+1. Screen zd184 (vs zd136) on the s6 gates: t <= -1.5, picks/100 per-cell z <= -2, ppr per-round z <= -2, transfer
+   per round < 0.97x, any overrun.
+2. Replica (bundled onto the incumbent line after z3x is decided): the block rules plus the transfer floor against
+   the twin. Mechanism: in the candidate's block games against thewaxmango and nzjt, enemy hits on our kings with
+   our thrown rats (kthrown.py, deduplicated) must be at most half the twin's per game in the same blocks. u7i's
+   failure mode must not recur: a cell against YokoOno or Varun that the twin won and the candidate lost counts
+   against it, and two such cells drop it.

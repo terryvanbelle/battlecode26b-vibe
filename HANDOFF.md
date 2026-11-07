@@ -96,31 +96,33 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-06 19:45 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-06 20:45 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - Incumbent: **z1z** (accepted 2026-11-06 11:46 PST over u6x; replica blocks 1-4 pooled D 46, net +14, t 2.06; u9p + SEEK_IDLE
   20/IDLE_SHIFT/FIGHT_SHIFT + RICH2_BABIES 80). Screen control: **zd136** (z1z). Ledgered z1z for new switches: bots/zl0
   (scratch, untracked; `cp -r bots/zl0 bots/NEW`, sed the package; it is already ledgered, do not rerun ledger.py).
-- **Replica: z3x (#248)** = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 + LAST_FLOOR (z3z without
-  SEAT_SHIFT; zd172 passed). Block 1 on set 3 (IDs > 18601; waiter build/wait_z3xb1.sh; drain had 4 of 16 still queued at
-  19:43). Score: `contest.py fetch --out /dev/shm/rp IDS`, `contest.py paired --dir /dev/shm/rp 17946-17961 IDS` (block 1
-  rejects at t <= 0). Pass: block 2 `build/block_v4s1.sh`, then `git checkout research/panel/`. Transfer floor: rsync
-  replays to VM ~/diag26b/rp, `tools/field_report.py games --dir ~/diag26b/rp --ids IDS > ~/diag26b/NAME.jsonl`,
-  `python3 blockcheck.py CAND.jsonl,TWIN.jsonl CAND_IDS TWIN_IDS` (twin rows z1zb1..b4.jsonl).
-- Rejected today on the replica: z3z (block 1 D 6, net -2, t -0.82), z3s, z3q, z2x, z3b, z3c, z3j. Ledgered switches flip
-  one or two cells a block, so candidates are bundles of passed switches.
-- **Rush index line, all but closed:** z4d (RUSH_FROM 8) failed picks/100 z -2.11; z4e (8 + RUSH_TO 20) had 8 overruns
-  (zd177; else D 7 t +0.37, transfer per round 1.081x). On the replica z4d's gatherers had more turns but picked level:
-  our worked mines are saturated. z4f (RUSH_FROM 12) is screen **zd178** (queued after zd179), the last dose.
-- **Discovery line (new, 19:38):** never-picked home mines are never seen (minesight.py; 20+ from our start 173 of 320
-  unpicked, 167 never within Chebyshev 4 of one of our rats). Of our half's cheese tile-episodes r1-200, 6.1% came
-  within dist2 20 only outside the baby cone (conemiss.py). **z4g** = zl0 + SIDE_LOOK 2000 (end a walking turn facing
-  90 degrees to the side with more never-seen probes; the next step turns back free): screen **zd179** (running),
-  mechanism games ~/diag26b/sl (40, z4g and z1z; score with `python3 ~/diag26b/conemiss.py DC 200 BOT` per bot, dumps
-  symlinked as in whtab.sh). The dump's dir column is the flatbuffer order (0 centre, 1 W, 2 SW, 3 S, 4 SE, 5 E, 6 NE,
-  7 N, 8 NW), not the Direction enum's.
-- Laptop disk is full (8-14 MB free; the session transcript grows ~1 MB per few turns). Scratch lives in /dev/shm
-  (/dev/shm/sp_moved holds this session's moved scratch dirs). `git config gc.auto 0` was set at 19:45 (auto-gc left
-  7 MB garbage packs on the full disk); re-enable once there is room.
+- **Replica: z3x (#248)** = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 + LAST_FLOOR. Block 1 (set 3)
+  passed: D 2, net +2, t 1.41; transfer 1.09x the twin's. **Block 2 (set 1)** is going out through the drain (IDs > 18656;
+  waiter build/wait_z3xb2.sh, task output in the session tasks dir). Score: `contest.py fetch --out /dev/shm/rp IDS`, then
+  `contest.py paired --dir /dev/shm/rp 17946-17961,17962-17977 IDS1,IDS2` pooled (rejects at t <= 1); transfer floor
+  against z1zb2.jsonl (field_report on VM ~/diag26b/rp, blockcheck.py). Continue: block 3 `build/block_v4s2.sh`, then
+  `git checkout research/panel/v4-set2.json`.
+- **Screen queue (VM runs/screenq.txt):** zd178 z4f (running; RUSH_FROM 12, the rush index line's last dose), **zd182 z3w**
+  (z3x + WALL_HOLD, revived with a re-registration in its SNAPSHOT), **zd183 z5a** (z3x + THROW_SAFE, exact bundle),
+  **zd184 z5b** (zl0 + THROW_ADAPT, ledgered), then the closed lines (zd141, zd132: never let the queue reach them).
+- **Throw line (20:05-20:50):** enemy thrown-rat hits on our kings always throw our own rats, grabbed blind-side 3-5 from
+  the king (wounded retreaters), 90% by thewaxmango and nzjt (kthrown.py, kgrab.py, kgrab2.py, kdis.py in ~/diag26b).
+  z4i THROW_SAFE passed zd181 (our own throws into our king). THROW_ADAPT (u7i: no retreat after seeing an enemy carrier
+  of ours) pooled t +2.14 over two blocks on u6x before its Merlin falsifier. The next replica bundle should take whichever
+  of WALL_HOLD, THROW_SAFE, THROW_ADAPT pass their screens. Disintegrate-on-carry is not usable: destroying a carried rat
+  clears its carrier from the engine's robot grid (GameWorld.destroyRobot).
+- Rejected today on the replica: z3z (block 1 D 6, net -2, t -0.82), z3s, z3q, z2x, z3b, z3c, z3j. Closed lines today:
+  discovery (z4g, z4h: a side glance replaces the forward cone), the rush index (z4d, z4e; z4f is the last dose), seat
+  (z3y/z4a), grab-war (GRAB_SAFE), king-biter (KING_CALL), DRY.
+- **Laptop disk:** repacked at 20:45. 7,311 loose objects (265 MB) went to a 26.8 MB pack, built in /dev/shm and prune-packed
+  through a temporary alternate (`.git/objects/info/alternates` is now empty). 239 MB free. `git config gc.auto 0` stays set:
+  a plain gc needs room for the whole new pack. Repeat the recipe when loose objects pile up again (TRAINING_LOG has it).
+  Scratch lives in /dev/shm (/dev/shm/sp_moved; scratchpad dirs are symlinks there).
+- VM disk: 3.0 GB free after pruning sb, sc and ss dumps at 20:20. Keep it at 2 GB or more.
 - **Seat line, closed 19:01:** the engine's one asymmetry is turn order, but SEAT_SHIFT is a perturbation, not parity
   (~/diag26b/sc: z4a gives the flipped seat result in 23 of 45 seed pairs, z4b z1z's own in 18 of 30). Self-play
   mirrors break at r21 on peaceinourtime from orientation-dependent bytecode cost. knifefight: seat A won 15 of 15.
