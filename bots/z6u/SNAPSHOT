@@ -1,0 +1,7 @@
+name=z6u
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=15575f0f
+created=2026-11-07 02:08 PST
+purpose=z3x + KING_BOOST_K 7 / KING_BOOST_FLOOR 500 (new switch, Baby.kingCheese): a baby's bite on an enemy king spends 49 cheese for +7 damage (17, 1.7x) while 500 stay banked. z3x bit kings with no cheese (finishCheese boosts only rat kills). Over z3x's four replica sets (192 games; scratch kbite.py) our first king bite came with 900-1,800 banked in most games; superioristhmus A was lost on points with the enemy king at 6 hp after 15 bites, uneasy_alliance A with it at 20. The rat-bite path is z3x's instruction for instruction (only the ternary's king branch changed), so games replay z3x's until a baby bites a king
+falsifiers=(1) mechanism: over the s6 and s7 screens (vs zd172 and zd205), in cells both builds win by a king kill, z6u's enemy king must not die later in more cells than it dies sooner, and no cell won by z3x is lost in a game where z6u spent on king bites; (2) the s6 and s7 gates; (3) the replica rules

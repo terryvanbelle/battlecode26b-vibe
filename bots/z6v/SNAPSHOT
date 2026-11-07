@@ -1,0 +1,7 @@
+name=z6v
+source=bots/z3x
+source_sha=ba2c9debca98
+commit=15575f0f
+created=2026-11-07 02:09 PST
+purpose=z3x + KING_BOOST_K 10 / KING_BOOST_FLOOR 300 (z6u's dose arm): a king bite spends 100 cheese for +10 (20, 2x) while 300 stay banked
+falsifiers=as z6u's, with z6u's screens as the other arm: (1) mechanism as z6u's (vs zd172 and zd205); (2) the s6 and s7 gates; (3) the replica rules
