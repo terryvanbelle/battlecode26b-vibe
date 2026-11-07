@@ -1,0 +1,7 @@
+name=z7j
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=58e9f435
+created=2026-11-07 06:30 PST
+purpose=z3x + INCOME_TRUST 100 (from 75; one Cfg constant, never tuned): Econ.surplus() projects the bank to r2000 at the full measured income, not 75% of it, so the spawn test (beyond CORE_BABIES and outside the war floor), the posted BUDGET and the formation income test (FORM_NET100) all loosen. The measure already nets out every robot's bank spending (Econ: rise in the bank plus upkeep, clamped at 0 per king turn), so it reads low. z7i (BITE_BOOST) cut it further: spawns fell 5% over zd227 (4,454 to 4,219), and each of the 6 s7 cells it lost (evileye A and B, tiny A twice, cheesefarm B) had fewer spawns than z3x's game. z7j tests the other side of that dose, and it can be paired with z7i
+falsifiers=(1) mechanism: over the s7 and s6 screens (vs zd205 and zd172), z7j's summed spawns must rise 3% or more, with no more kings starved (summary kingDeaths starve) than z3x; (2) the s7 and s6 gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules
