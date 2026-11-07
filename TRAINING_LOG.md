@@ -7314,3 +7314,5 @@
     - Its nt= stall counter stayed at 0-3. The roaming king keeps changing goTo's target, and NAV_SAME_R 0 resets the stall on every change, so Flow is never asked.
     - Attackers hoarded 6,020 picked against 20 delivered in the same game.
   - **Next: z7s = z3x + a ledgered TRAIL with a long stall trigger.** The rat walks home along its recorded spawn chain once delivery has stalled 20 turns, counting stall against the nearest-king distance rather than goTo's target. u4o (TRAIL + TRAIL_GAP 12) played replica D 13 before the ledger existed.
+- 08:25: **z6u is REJECTED at replica block 1** (#259, set 2: 19366-19369, 19381-19388 and 19507-19510, against z3x's 18722-18725, 18736-18739, 18745-18748, 18750-18753). All 48 cells are alike: D 0, t 0.00, and block 1 rejects at t ≤ 0. KING_BOOST_K 7 changed no result, as both screens had said (s7 zd207 D 4 net 0; s6 zd208 D 0). z6v (its dose arm, zd209/zd210) comes off the screen queue.
+  - **zd235 (z7m s6)** is at 42 of 48: n 38, D 1, net +1. z7m goes to the replica when it completes.
