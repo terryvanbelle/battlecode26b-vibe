@@ -7414,3 +7414,13 @@
   - streetsofnewyork B vs YokoOno: r917, 50 killed;
   - ratsareants A vs Varun: r806, 70 killed;
   - averystrangespace A vs YokoOno: points 44-55 at r2000, transfer 4,665 to 14,155.
+- 09:58: **z8a is DROPPED at falsifier 1.** On cq18 it lost fullofsecrets A vs abrk on points at r348, where z7z won at r1652. Both cats were dead by then. Cat damage was 4,000 each, transfer 400 to 570, and king score 6,441 to 12,781.
+  - The games part at r173 on a LOAD_FLEE step: attacker 11862, holding 70 raw, fled a cat (mv=c) where z7z's attacker marched (mv=a).
+  - Its other 9 cq14 cells so far are won, as z7z won them.
+- 09:58: **z8b registered: z7z + z7u** (z8a without LOAD_FLEE; bots/z8b/SNAPSHOT; f732fc947093). Chain ~/diag26b/cq19 runs cq14's 11 games plus arrows A vs abrk (0 overruns) and rose A vs agtr (transfer at least z7z's, from cq18).
+  - Queue: zd243 (z7z s6), zd239 (z7x s6), zd246/zd247 (z8b s7/s6), zd241 (z7u s7), zd236/zd237 (z7o), then the ablations.
+- 09:58: **zd242 (z7z s7) at n 28: D 3, net -3, t -1.80.** All three cells are z7x's own games from zd238, the same rounds and transfer. z7z replays z7x there, since no coop delivery fires. They are arrows B vs agrab (r1861), evileye B vs agrab (r1571) and evileye B vs agtr (r1796), each a z3x win on points. zd238 ended at t -0.44 over 48.
+- 09:58: **Why averystrangespace A vs YokoOno is lost on points** (replica 19531 game 1, dump cache; transfer 4,665 to 14,155):
+  - Our babies held at 33 from r200 to r1000. They made about 23 pickups per 200 rounds to the opponent's 56-105, and none of them left the quadrant round our king at (3,3).
+  - The opponent picked 9,845 in its own quadrant, 5,515 in the off corner at (6,55) and 3,550 in ours. We picked 5,910 in ours and 830 elsewhere, and nothing in the off corner on our side at (53,4).
+  - The engine spawns mine pairs together (GameWorld.spawnCheese), so that corner fed as much as (6,55). Dirt bands seal both off corners (MapCensus), and the opponent dug 120-140 tiles per 200 rounds early on to our 23-49.

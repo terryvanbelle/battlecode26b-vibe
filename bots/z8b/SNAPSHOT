@@ -1,0 +1,7 @@
+name=z8b
+source=bots/z7z
+source_sha=1b67390cb033
+commit=96e26d07
+created=2026-11-07 09:58 PST
+purpose=bundle of two changes, each ledgered on z3x: z7z (z7x's trail and per-trip reset + ATK_DELIVER 100 with ATK_DELIVER_COOP) and z7u (z7m's SWAP_LOADED 30 / SWAP_HOME 10 loaded swap past empty allies near home + CASH_READ_LEFT 6000). It is z8a without z7o's LOAD_FLEE, which lost z8a fullofsecrets A vs abrk on points at r348 (z7z won at r1652): the games part at r173 on a LOAD_FLEE step (mv=c, an attacker with 70 raw) and the cats die sooner. Built by applying z7u's diff against z3x to z7z (all hunks clean). One replica block for two candidates; its screens replace z7u's s7 (zd241) at the head of the queue.
+falsifiers=(1) bundle chain ~/diag26b/cq19 (seed 0): on cq14's 11 games z8b loses no cell z7z won (z7z won all 11, cq17); on arrows A vs abrk z8b has 0 overruns; on rose A vs agtr z8b's transferAmt is at least z7z's (cq18); (2) the s7 and s6 gates (t > -1.5, picks z > -2, transfer per round >= 0.97x, 0 overruns); (3) the replica rules, block 1 after z7x's block
