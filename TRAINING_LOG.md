@@ -7349,3 +7349,11 @@
     - zuchk and z7u agree until r1892, where z7u's floor first binds.
   - z7u's floor works on the cost: 0 overruns on arrows A vs abrk, peak 16,262 against z7m's 17,506.
   - **Screen queue:** zd240 (z7u s6) runs first, since s6 is the gate z7m failed and the replica drains z5i's block within the hour. Then zd233 (z5i s7), zd238/zd239 (moved from z7t to z7x, since z7t fails its no-loss clause), zd241 (z7u s7), and zd236/zd237 (z7o).
+- 08:55: **z7x (the per-trip reset) equals z7t on fullofsecrets and clockwisdom, game for game.**
+  - Still lost: rose B (r1180; z7t r1047). Won: rose A (r1590).
+  - **The rose pair is a mirror swap.** Rose is VERTICAL-symmetric, so its seats are mirror images, and z3x lost A (r1285) while winning B. z7t and z7x win A and lose B, so the pair nets 0 for both.
+  - Falsifier 1's no-loss clause fails on rose B as written, and a single-seed no-loss check on a cell that flips between mirror seats was a poor clause. **z7x goes to the screens flagged** on its +4 target cells (fos B vs araid and abrk, clockwisdom A and B): zd238 (s7) and zd239 (s6). The 48-cell screens are the no-harm test.
+  - **z7v (z7t + HUNGRY 300) is dropped.**
+    - It lost fos B vs abrk (r1584), which z7t won.
+    - It won mincemeat A (r720), as z7r did, and fos B vs araid lasted to r2000 (transfer 5,475).
+    - With the trail in place, HUNGRY moves cheese but does not turn the fos A starvations.
