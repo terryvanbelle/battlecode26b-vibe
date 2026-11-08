@@ -8502,3 +8502,8 @@
 - 13:12: **zdr registered (zdq's dose arm: LATE_STRIKE 1 from r1400); chain cq113 (seed 38) and screens zd366/zd367 queued**
   - Rationale: zdq's 14 late king bites over 12 cells killed no king. zdr strikes with every fighter, 200 rounds earlier. It reaches the replica only if zdq's block 1 passes, or if zdq drops for too weak a mechanism.
   - Dig lead closed (scratch digspend.py, diglow.py): digs by r200 average 35.7 in losses and 27.5 in wins. Digs made while our bank is under 300 average 5.3 and 5.0, so the 60-cheese dig floor (DIG_MIN_CHEESE, never tuned) is not what starves kings. The heaviest diggers (ratsareants 155 digs by r200, streetsofnewyork 142) still held a 350-960 bank at r200.
+- 13:23: **zdp REJECTED at replica block 1; zdq passes s6 zd365 and goes to the replica (#299, set 2)**
+  - zdp, #298 on set 4 (21148-21151 and 21179-21190, against zdb's 20817-20824, 20842-20845 and 20848-20851): 48 cells, 47 alike, D 1 (lost collegejunior cheesebottles A), net -1, t -1.00. Replays are in VM ~/diag26b/rp/zdp_b1s4_1330.tgz.
+  - The last three single-switch blocks (zdk, zdo, zdp) each left 47 of 48 cells alike, or nearly so, and lost the one that moved. The field outcome barely moves with mid-game king switches.
+  - zdq s6 zd365 vs zd345: n 44, D 0, t 0.00; transfer per round 1.011x; 0 overruns, 0 exceptions. Falsifiers 1-2 hold.
+  - zdq submitted as #299, block 1 on set 2 against 20984-20999. One match was sent; 12 wait in the drain queue (hourly limit).
