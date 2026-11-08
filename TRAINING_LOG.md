@@ -8566,3 +8566,6 @@
     2. Seed-2 screens zd375 (s7) and zd377 (s6) against new zdb controls zd374 and zd376, with a 0.95x transfer bar.
     3. Replica: set 4, then set 2.
   - The seed-2 controls are the zd343/zd345 cells with seed 2. They give later re-registrations fresh screen data. Queue: zd371 (zdt s6, playing), zd374, zd375, zd376, zd377.
+- 14:56: **zdt passes its s6 screen zd371, so falsifier 2 holds in full**
+  - Result vs zdb's zd345 (seed 1): n 44, D 1 (+abrk DefaultSmall A, W r505 where zdb lost at r481), net +1, t +1.00; transfer per round 7.523 to 7.425 (1.013x); picks per-cell z -0.31; 0 zdt overruns (abrk 6, araid 17).
+  - zdt goes to the replica when zdq's block 1 ends (2 Xzibit matches still out), block 1 on set 3.
