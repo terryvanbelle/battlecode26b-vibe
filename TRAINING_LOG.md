@@ -8292,3 +8292,6 @@
   - Points losses (scratch ptsparts.py): 7 of z3x's cached r2000 games are points losses. An extra king would flip 6 of the 7, but the mid-game extra-king line is closed (z2x and z3b starved the bank).
   - Not built: a RICH_LATE gate. In its census (scratch latecen.py) it fires in 10 of 68 cached r2000 games, all of them wins.
   - VM disk: removed the .bc26 files in cq82, cq84 and cq86-cq88, and in runs zd240 and zd241 (z7u, rejected) and zd199 (the z6e ablation). 2.2 GB free.
+- 07:41: **zdb passes its s7 screen** (zd343 vs z3x's zd342, seed 1; score_screen.sh, xpr.py, flips.py)
+  - Wins 31 to 30 over 48 cells; flips +2 -1 (gained bed A vs agtr and bed B vs atrap3; lost evileye A vs agtr, r762 where z3x won on points at r2000). Overruns 0 and exceptions 0. Transfer per round 5.953 to 5.888 (1.011x, bar 0.97). No reject fired.
+  - zd344 (z3x s6 control) is running and zd345 (zdb s6) is next. Then zda's zd340 and zd341.
