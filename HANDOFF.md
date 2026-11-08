@@ -96,8 +96,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 22:12 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (22:12):**
+## State (2026-11-07 22:10 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (22:10):**
   - **Delivery line (open).** Rose A vs araid: our base is sealed; attackers see the centre mines from r256, but only
     gatherers and scouts courier, so the king listed (2,7) alone all game in z3x's games. Clockwisdom: couriers never
     find the way home through the spiral (and under ROT (2,25) counts as enemy-half). Scratch: /dev/shm/kd/bfs.py,
