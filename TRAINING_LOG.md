@@ -8326,3 +8326,7 @@
   - z6x (z3x + RICH2_BANK 3300, PENDING since 11-07 02:32): its s7 zd213 had finished unscored. vs zd205: 48 shared, wins 27 to 27, no flips, transfer per round 0.997x, 0 overruns. zd214 (s6) never ran. Parked as inert.
   - Replica: zdb's block 2 (set 2) has been sent (requests 17344-17359) with 8 block-1 rows still out. VM disk was 1.5 GB: pruned 135 replica replays older than 36 h, deleted cq100's replays and gzipped its tsvs: 2.2 GB.
   - Chain cq101 is running; queue zd341 (running), zd348, zd349, zd350, zd351.
+- 08:49: **zda passes its s7 screen** (zd340 vs z3x's zd205, seed 0, the control its SNAPSHOT names; score_screen.sh, xpr.py)
+  - n 48, D 9 (+5 -4), net +1, t +0.33; picks/100 32.84 to 33.93 (per-cell z -1.26); transfer per round 1.016x; 0 overruns, 0 exceptions. Gained agrab Stash A and bed B, agtr DefaultMedium A and bed B, atrap3 evileye B; lost agrab evileye A, agtr Stash B and evileye B, atrap3 arrows A.
+  - First scored against zd342 by mistake: score_screen.sh and xpr.py pair cells by opponent, map and seat, not seed, so a seed-1 control pairs with a seed-0 run without complaint (that pairing gave t -0.47 and 0.953x). zda's screens are seed 0 (zd205, zd172); zdb's, zdd's and zde's are seed 1 (zd342, zd344), checked.
+  - zd341 (zda s6 vs zd172) is at 14 of 48.
