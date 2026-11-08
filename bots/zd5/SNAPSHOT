@@ -1,0 +1,14 @@
+name=zd5
+source=bots/zc9
+source_sha=3fc07187378e
+commit=ae167092
+created=2026-11-08 05:22 PST
+
+zd5 = z3x + CAT_FRONT 8 (new switch, zfr's: `zfr` is a zl0 snapshot with the switch; its Baby.java hunks applied to a zc9 snapshot with RUSH_FROM put back to 4) + CASH_READ_LEFT 6000. Cfg.java and Baby.java are the only files that differ from z3x: the CAT_FRONT line and Baby.catFront (ledgered, G.settle K 20), CASH_READ_LEFT and z7u's budget read in cashTick's squeak loop.
+Lever: a gatherer flees a cat in view within GATHER_CAT_DIST (dist2 20 from its 2x2 centre) only when the cat can sense it now or after one 45-degree turn of its ATTACK sweep (the 180-degree cone about its facing or about the facing rotated toward its chirality, from the centre), or when within dist2 8 of the centre. Engine (InternalRobot): an exploring cat follows its waypoints and attacks only what blocks its next footprint; an attacking cat targets rats it senses (vision 17, 180 degrees), pounces up to dist2 13 from its centre, and rotates 45 degrees a turn when it finds nothing to do. A gatherer behind a cat keeps working instead of running.
+Evidence: local z3x games (cq80-cq88, indicator mv codes), the 'c' (cat flee) share of gatherer turns is 0.7% overall but 11.1% on 5t4rv4t10n, 10.5% mincemeat, 7.8% canyoudig (Xzibit A/B are set-2 anchor losses), 4.1% whatsthecatdoin, 3.8% averyfineline. Replica starved losses: gatherers lost 25 rats / 4,922 cheese to cats, only 1,470 of it on rats that had seen the cat (TRAINING_LOG 2026-11-01, u4e field games), so the flee is rarely what saves them.
+Registered 2026-11-08 05:23 PST, before any zd5 game.
+Falsifiers:
+  1. Chain ~/diag26b/cq91 (fresh seed 21, after cq90; 5t4rv4t10n, mincemeat, canyoudig, whatsthecatdoin; both seats vs agtr and araid; zd5 and z3x, 32 games). Any overrun or exception drops it. Mechanism (scratch gcflee.py: gatherer turns with mv=c, and our rats killed by cats, team 0 killer): zd5's 'c' share of gatherer turns over the chain must be at most 0.7x z3x's, else it is inert and dropped; zd5's rats killed by cats per 1000 gatherer turns above 1.3x z3x's drops it. zd5 winning fewer of the 16 games than z3x, or losing 2 or more cells z3x won, drops it.
+  2. Screens s7 (zd330 vs z3x's zd205) and s6 (zd331 vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  3. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.

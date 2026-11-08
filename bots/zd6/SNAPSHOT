@@ -1,0 +1,14 @@
+name=zd6
+source=bots/zc9
+source_sha=3fc07187378e
+commit=ae167092
+created=2026-11-08 05:31 PST
+
+zd6 = z3x + EXPLORE_LOCAL 2 (new switch, zxl's: zxl is a zl0 snapshot with the switch; the same Baby/Cfg lines applied to a zc9 snapshot with RUSH_FROM put back to 4) + CASH_READ_LEFT 6000. Cfg.java and Baby.java are the only files that differ from z3x: the EXPLORE_LOCAL line, Baby.localExplorer and its use in explore(), CASH_READ_LEFT and z7u's budget read in cashTick's squeak loop.
+Lever: while the team knows no mine, explore() sends every explorer toward the map centre (EXPLORE_CENTER_FROM 0, s3c). With EXPLORE_LOCAL 2, the half of the explorers whose slot hash (slot >>> 8) is even rank their 12 unseen samples by Chebyshev distance from themselves instead, as every explorer does once a mine is known; the other half still head for the centre.
+Evidence: local z3x dumps (cq70-cq90, scratch knownm.py, our kings' ml= lists): on clockwisdom the king knows 0 mines at r300 in all 6 games (both seats vs agrab, agtr, araid), and z3x lost all 6. Our two nearest mines, (56,27) and (56,33), lie 18 and 24 tiles up the open outer corridor from our king (56,9). In cq88 A vs agrab our rats walked west along the bottom (mean x 43 at r0-50, 22 at r300-350), no rat on the right corridor passed y 18 before r400, and the king's income was 0 at r100 and r300. Varun clockwisdom B is a set-2 anchor loss. z9h (EXPLORE_CENTER_FROM 100000: every explorer local) won both its clockwisdom B games (cq35) and found the first mine at r23 against r65.7 on keepout, but lost Excavation A vs araid (transfer 0.91x), where centre-first digging pays (s3c: Excavation digs r0-24, 31 vs 8).
+Registered 2026-11-08 05:31 PST, before any zd6 game.
+Falsifiers:
+  1. Chain ~/diag26b/cq92 (fresh seed 22, after cq91; clockwisdom and Excavation, both seats vs agtr and araid; zd6 and z3x, 16 games). Any overrun or exception drops it. Mechanism (scratch knownm.py, and rounds.tsv cumulative transfer): on clockwisdom zd6's king must list at least one mine by r300 in at least 3 of its 4 games, and zd6's clockwisdom transfer summed at r600 must be at least 1.3x z3x's; else it is inert and dropped. On Excavation, zd6 losing a game z3x won, or Excavation transfer summed at game end under 0.9x z3x's, drops it. zd6 winning fewer of its 8 games than z3x drops it.
+  2. Screens s7 (zd332 vs z3x's zd205) and s6 (zd333 vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  3. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
