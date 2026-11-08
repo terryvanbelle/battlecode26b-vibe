@@ -1,0 +1,14 @@
+name=zd8
+source=bots/zc9
+source_sha=3fc07187378e
+commit=8a3208a2
+created=2026-11-08 05:55 PST
+
+zd8 = z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 (new switch; King.spawn, ledgered K 9) + CASH_READ_LEFT 6000. Snapshot of zc9 with RUSH_FROM put back to 4; Cfg.java (CORE_SMALL, CASH_READ_LEFT) and King.java (the core-count hook) plus Baby.java (z7u's budget read in cashTick's squeak loop) are the only files that differ from z3x.
+Lever: up to CORE_BABIES (18) babies the king spawns whatever its income while CORE_FLOOR (300) plus the price remain; past that a peacetime spawn must pass Econ.surplus(). On maps of 441 tiles or fewer (UncomfortablyClose, averyfineline, bed, canyoudig, evileye, gridlock, t_minus_five_minutes, tiny, whereisthecheese, 5t4rv4t10n_1337) the core count is 12. War spawns with enemies in the king's sight (WAR_FLOOR, the RICH cap) are unchanged. Side effect: replacement spawns take spawn index 8-11, so before r300 they are rushers (RUSH_FROM 4, RUSH_TO 16), where at 18 they took 16-19 (gatherers and fighters).
+Evidence: replica canyoudig vs Xzibit, 8 z3x-line games, all lost at r288-339 (both z3x games: king starved). 19-20 babies at r50 to their 15-16; bank at r100 305-410 to 800-895; z3x's spawns by r100 cost 1550-1870 at about 40 each to their 1280-1360 at 32; deaths even (49-53 to 56-58 by r300). From r100 our bank sits under CORE_FLOOR + price, and the army falls to 0-2 by r300 while theirs holds 8-12. The same shape on other small maps: tiny vs collegejunior (bank at r100 290-330 to 1466-1633, lost both seats), averyfineline vs Icarus (lost both seats, 0 babies at r150). u5t (u4s + CORE_BABIES 12 on every map) went net -1 on the replica; 5 of its 6 lost cells were on maps of 900+ tiles (t_minus_five_minutes B the other), and it gained tiny A vs Finals; locally it gained canyoudig B twice. This is that lever confined to the maps where its gains were.
+Registered 2026-11-08 05:55 PST, before any zd8 game.
+Falsifiers:
+  1. Chain ~/diag26b/cq94 (seed 23, fresh): zd8 and z3x on canyoudig, averyfineline, whereisthecheese and 5t4rv4t10n_1337, both seats vs agtr and araid (16 games each). Any overrun or exception drops it. Mechanism (rounds.tsv): zd8's bank at r100, summed over its 16 games, must be at least z3x's plus 150 a game (2400); else it is inert and dropped. zd8 winning fewer of its 16 games than z3x drops it.
+  2. Screens s7 (zd336 vs z3x's zd205) and s6 (zd337 vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  3. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
