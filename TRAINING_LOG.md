@@ -7906,3 +7906,13 @@
   - Summed transfer was 0.94x z3x's (1.1x needed), and a win was lost.
   - Screen zd286 was stopped at 12 of 48, and zd287 was pulled. za4's 16 queued replica rows were removed unsent (saved in /dev/shm/kd/za4_queue.tsv). za3's 16 sent matches (#275) still play.
   - za5's screens zd288 (s7, vs zd205; running) and zd289 (s6, vs zd172) took the slot. Its falsifier 1 (cq61) is running.
+- 20:41: **za5 dropped by its mechanism criterion but won all 8 games; the same switch is re-registered as za6 under a harvest hypothesis, judged on fresh maps only.**
+  - cq61 (za5 vs araid and agtr, both seats): the king's sym= was true by r400 in only 2 of 8 games (ratsareants vs araid at r203 and r164; 5 needed). On rose it stayed ROT|VER all game. So the registered mechanism, that union scouting resolves the mask, is false.
+  - The outcome criteria passed. za5 won 8 of 8 where z3x won 6 (the registration misstated z3x's count as 4):
+    - rose A vs araid won by king kill at r1659 with 8,823 transferred; z3x lost at r1285 with 1,420.
+    - rose A vs agtr won at r887; z3x lost at r937.
+    - rose B and the four ratsareants games were won by both.
+  - **za6 = za5's sources** (snapshot; identical code; za6-a2b13cf147d8), with a new hypothesis registered at 20:40. Scouts and seekers walk the part of our true half that firstSym() gives away, and they pick and report its mines and cheese while the mask may stay ambiguous.
+    - Falsifier 1 is chain **cq63** on fresh maps, picked from the ekeval ambiguity census and not from any za5 game: FreeTheCheese, TheHeist, corridorofdoomanddespair, clouds, knifefight, streetsofnewyork, uneasy_alliance and keepout, A and B vs araid. z3x's controls are cq62's c* games and zd172's keepout cells. Bars: at least 2 more wins than z3x, transfer at least 1.1x, at most 1 game lost that z3x wins.
+    - Falsifier 2 is the s7/s6 gates on za5's screens zd288/zd289 (identical code; registered before any look at them). Falsifier 3 is the replica rules.
+  - Replica: za6 submitted as **#277**, block 1 on set 2 (16 rows queued behind za3's 16 sent matches).

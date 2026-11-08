@@ -1,0 +1,22 @@
+name=za6
+source=bots/za5
+source_sha=51d9a5a42809
+commit=622202dc
+created=2026-11-07 20:40 PST
+recipe=bash tools/snapshot.sh za6 bots/za5 (identical sources: z3x + SCOUT_SYM)
+idea=za5's code under a new hypothesis, tested only on games not used to form it. za5 was dropped by its mechanism
+  criterion: on cq61 the king's mask was true by r400 in 2 of 8 games (5 needed), and on rose it stayed ROT|VER all
+  game. Yet za5 won all 8 cq61 games where z3x won 6 (the registration misstated z3x's count as 4): rose A vs araid
+  at r1659 (transfer 8,823; z3x lost at r1285 with 1,420), rose A vs agtr at r887 (z3x lost at r937), and the four
+  ratsareants games.
+  New hypothesis (harvest, not resolution): with SCOUT_SYM, scouts and seekers walk the part of our true half that
+  firstSym() gives away (rose's top centre round mine (24,24); ratsareants' west), see its mines and cheese, and
+  pick and report them, while the mask itself may stay ambiguous. It acts only while two or more symmetries are live.
+falsifiers (registered 2026-11-07 20:40 PST, before any za6 game and before any look at za5's screens zd288/zd289):
+  1. Chain ~/diag26b/cq63 (seed 0), fresh maps: za6 seat A and B vs araid on FreeTheCheese, TheHeist,
+     corridorofdoomanddespair, clouds, knifefight, streetsofnewyork, uneasy_alliance and keepout (16 games; z3x's
+     controls are cq62's c* games and zd172's keepout cells). za6 wins at least 2 more of the 16 than z3x, its summed
+     transfer is at least 1.1x z3x's, and it loses at most 1 game that z3x wins.
+  2. The s7 and s6 gates on zd288 (vs zd205) and zd289 (vs zd172), za5's screens of the identical code:
+     t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
