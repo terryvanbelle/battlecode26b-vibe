@@ -1,0 +1,26 @@
+name=z9z
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=9a18ae14
+created=2026-11-07 19:20 PST
+recipe=bash tools/bundle.sh z9y zl0 z3x zkg (zkg = zkf with the walk fixes), then bash tools/bundle.sh z9z z3x z9y z7u:
+  z9w with KING_FACE's walk fixed
+idea=z9w's KING_FACE (see bots/z9w/SNAPSHOT) with three walk fixes from cq52 fullofsecrets A-araid. (1) z9w walked
+  with King.step, whose distance-keeping sidesteps swung the king (3,32)-(3,33)-(3,32) at r74-94 round babies standing
+  next to the face tile; z9z takes only strictly closer steps (King.closer). (2) z9w renewed the freeze only while the
+  king stood exactly on the face tile; it reached (4,33), next to it, at r102, so the freeze from r63 lapsed at r363,
+  after a cat pounce at r307 moved the king off to (3,33). z9z renews the freeze while it has a face tile at all.
+  (3) z9w dropped the tile after 8 blocked movement-ready turns; z9z waits KING_FACE_WAIT 40, then keeps its own
+  tile as the face tile if it is next to the old one, else drops it.
+ledger=as z9w (the renewal test still sits inside futile()'s K 20 settle; G.cheb on give-up runs once a freeze)
+falsifiers (registered 2026-11-07 19:21 PST; chain cq53 started at 19:21 PST, before this was written, and no cq53
+  result was read before it):
+  1. Chain ~/diag26b/cq53 (seed 0, cq52's 13 games). Fullofsecrets:
+     - the king walks (km=v) and then holds km=w until the game ends, apart from cat dodges, in at least 6 of 8 games;
+     - fullofsecrets wins at least z9w's 7 of 8;
+     - summed fullofsecrets transfer per round played at least 1.3x z9v's (51,910 over 12,132 rounds = 4.28 in cq51)
+       and at least z9w's (51,910 over 10,011 = 5.19 in cq52).
+     The 5 rose and evileye games are all won.
+     (The per-round measure replaces z9w's summed transfer: z9w's fosA-abrk won at r313 with 1,098 transfer.)
+  2. The s7 (zd280 vs zd205) and s6 (zd281 vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).

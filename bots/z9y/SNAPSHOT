@@ -1,0 +1,7 @@
+name=z9y
+source=bots/zl0
+source_sha=c585a2762c96
+commit=9a18ae14
+created=2026-11-07 19:20 PST
+recipe=bash tools/snapshot.sh zkg bots/zkf (zkf = zfz + KING_FACE 3, z9w's switch bot), KING_FACE walk fixes in zkg, then
+  bash tools/bundle.sh z9y zl0 z3x zkg: z3x + KING_FUTILE + the fixed KING_FACE; component of z9z
