@@ -1,0 +1,6 @@
+name=zet
+source=bots/zl0
+source_sha=c585a2762c96
+commit=e8b6f91b
+created=2026-11-07 21:23 PST
+reason=switch bot (not a candidate): zl0 + EXPLORE_TTL 40 (new switch, ledgered G.settle K 20): exploreHome drops a target chased for more than 40 rounds and samples another.

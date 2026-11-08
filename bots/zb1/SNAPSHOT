@@ -1,0 +1,15 @@
+name=zb1
+source=bots/zl0
+source_sha=c585a2762c96
+commit=e8b6f91b
+created=2026-11-07 21:23 PST
+recipe=bash tools/bundle.sh zb1 zl0 z3x zet (z3x + EXPLORE_TTL 40, new switch on zl0 = bots/zet)
+idea=basics repair, exploration. exploreHome keeps a target until it is within Chebyshev 2, seen, or Nav.stall > 20,
+  and a bug walk around a maze keeps resetting the stall. On rose A (cq58 z3x vs araid) the only two scouts held (6,19)
+  for r3-r131 and (23,20) for r21-r99 inside the rose maze; our rats spent 256 of ~9,000 rat-turns by r400 at x >= 20,
+  none in sight of (24,8), and the king's mine list was (2,7) alone for 1000 rounds while three home mines sit in the
+  open centre at x = 24. Across 11 z3x games 0-67% of scout turns went to targets held over 30 turns (scoutrun.py).
+  EXPLORE_TTL: a target chased for more than 40 rounds is dropped and another sampled. Ledgered (G.settle K 20).
+falsifier1=(registered 21:24 PST) chain ~/diag26b/cq70, 12 cells: rose A/B vs araid and agtr; FreeTheCheese, streetsofnewyork, clouds, corridorofdoomanddespair A/B vs araid. Controls: z3x in cq58 (rose) and cq62 c* (z3x won 9 of the 12: lost rose A twice and clouds B). Mechanism: in both rose A games the king's mine list holds a centre mine (x = 24) by r400 (z3x: none in 1000 rounds). Results: zb1 wins at least 9 of 12, loses at most 1 cell z3x won, summed transfer at least 0.97x z3x's.
+falsifier2=screens zd294 (s7, vs zd205) and zd295 (s6, vs zd172): t <= -1.5 rejects, any overrun, transfer per round under 0.97x.
+falsifier3=the replica rules (block 1 on set 2, t <= 0 rejects).
