@@ -1,0 +1,14 @@
+name=zdo
+source=bots/zdl
+source_sha=fd923a22e787
+commit=e9f4cace
+created=2026-11-08 10:49 PST
+description: zdl's sources re-registered (zdb + KING_FAR 1600/60 + KING_FAR_MIRROR; zdj = zdb + KING_FAR dropped 10:41 on its r250 mechanism clause and Hike identity, zdl dropped 10:45 on Hike identity). New hypothesis, formed on cq106 and judged only on fresh games: on maps with no home mine within dist2 400 of the king's start (census in400 0: Nofreecheese, ultimatestarvation, uneruesansfin, wallsofparadis, whatsthecatdoin), the king walks to a far home-half mine by about r600 and transfer at r600 rises. uneruesansfin is left out: its king stalls at (22,57), Chebyshev 10 short of (32,49), from r450 (km=z3). On maps with a home mine inside dist2 400 the far pick acts only until that mine is listed (Hike), with no expected sign.
+falsifiers (registered 10:50, before any zdo game):
+ 1. Chain ~/diag26b/cq110 (fresh seed 35, after cq109): zdo and zdb on wallsofparadis, whatsthecatdoin, Nofreecheese and ultimatestarvation (the target cells), plus jail and clouds (far nearest mine inside dist2 400: do-no-harm cells), both seats vs agtr and araid; 24 cells each.
+    Mechanism (~/diag26b/farchk6.py DIR 600 zdo): zdo's king centre within Chebyshev 5 of a mine at r600 (or its last turn before) in 11 or more of the 16 target cells; fewer drops it. (cq106, zdj: 11 of 12 on the first three maps; zdb 0 of 12.)
+    Outcome on the 16 target cells: summed transfer at r600 (or game end) under 1.15x zdb's, fewer wins than zdb, or 2 or more lost cells drops it.
+    Do-no-harm on the 8 jail/clouds cells: more cells lost than gained, or summed transfer at r600 under 0.95x zdb's, drops it.
+    Any zdo overrun or exception drops it.
+ 2. Screens on seed 1 (queued if 1 holds): s7 vs zdb's zd343 and s6 vs zd345; paired t <= -1.5, any overrun, or transfer per round under 0.97x rejects.
+ 3. Replica: against the incumbent's own games as anchors, set 3 first (wallsofparadis, whatsthecatdoin and uneruesansfin are there), then set 4; standard rules. If zdk is accepted first, zdo is ported onto zdk under its own registration before any replica block.
