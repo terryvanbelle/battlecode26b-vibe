@@ -96,52 +96,43 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 09:11 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (09:11):**
-  - **zdb ACCEPTED 09:05** over z3x (#293: pooled 96 cells, D 4 (+4 -0), t 2.00; transfer per round 0.999x / 1.002x
-    the twin). It is the incumbent: new candidates build on bots/zdb. Screen controls for zdb candidates: s7 **zd343**,
-    s6 **zd345** (seed 1). Replica anchors for zdb candidates: set 2 = 20984-20999 (twin rows ~/diag26b/zdbb2.jsonl),
-    set 4 = 20817-20824, 20842-20845, 20848-20851 (zdbb1.jsonl). Sets 1 and 3 need a zdb twin block first.
-  - **Replica: zdf** (#294; zdb + SPAWN_FLOOR 100 = zda's lever ported; zdf-a6caada7fe75). Block 1 on set 2: requests
-    17360-17363 sent, 12 rows in the drain queue. Score `contest.py paired --dir /dev/shm/rp 20984-20999 IDS`;
-    rejects at t <= 0; block 2 on set 4 (`bash build/block_v4s4.sh`) rejects at pooled t <= 1; transfer per round under
-    0.95x the twin (field_report rows + blockcheck.py on the VM, match.json must sit beside each replay). Falsifier 1:
-    chain cq102 PASSED 09:28 (wins 16 to 15, 0 starvation rounds, 0 overruns). Block 1: 21000-21003 back, 12 alike.
-  - Pending z3x-based candidate (zdd) test their lever against z3x's controls; if they pass, port them to zdb.
-  - **zdh** (zdb + DELIVER_FAR = zde's hold; registered 09:27; zdh-b82bc9beb744): chain cq104 (seed 30; waiter pid
-    2734065 starts it when cq103 ends): tripsc.py zdh/zdb 300 (far20 <= 0.6x, amt >= 1.0x, wins, under 2 lost cells).
-    Screens zd354 / zd355 vs zd343 / zd345.
-  - **zdg** (zdb + KMINE_SKIP 2; registered 09:14; zdg-3303e5ce38fa): chain cq103 (seed 29; waiter pid 2708479 starts it
-    when cq102 ends): `python3 ~/diag26b/kmine.py zdg 300 ~/diag26b/cq103` and the same for zdb (near-held rat turns
-    <= 0.6x, picks by r300 >= 1.0x, wins not fewer, under 2 lost cells, no overruns). Screens zd352 / zd353 vs zd343 / zd345.
-  - zde DROPPED 09:21 (cq101: lost attack_on_cat B in both games z3x won; mechanism held, 0.28x far trips, 1.011x amt).
-  - zda passed every local falsifier (s6 zd341 vs zd172: t +1.77, D 3) and was ported as zdf. Score each screen against
-    the control its SNAPSHOT names: score_screen/xpr pair cells by seat and map, not seed.
-  - **zdd** (z3x + RUSH_FROM 12 + CASH_READ_LEFT 6000; registered 08:04): screens zd348 / zd349 vs zd342 / zd344;
-    pooled picks per game round (ppr.py sums) under 1.01x drops it.
-  - Screen queue: zd348 (running), zd349, zd352, zd353, zd354, zd355 (about 35 min each; to about 20:50 UTC). Add more first.
-  - Chain order: cq103 (zdg, running) -> cq104 (zdh). Next fresh seed: 31.
-  - Closed since 08:05: zdc (POCKET_DIG; cq100 digs 1.25x vs a 2x bar), z6x parked (s7 zd213 inert: wins 27-27,
-    0.997x). Field censuses at 08:47 in TRAINING_LOG (backstab timing: no split; theft at war 530 vs 144 by r300;
-    pickers 36% vs 49%; replacement rushers = RUSH_UNTIL, closed).
-  - Closed this morning: z9u (replica block 1: 48 alike, t 0.00), zd7 (EXPLORE_CENTER_FROM 40; cq93 mechanism 5 of 8,
-    transfer 0.42x), zd6 (EXPLORE_LOCAL), zd5 (CAT_FRONT). The explore-start line is closed on clockwisdom and jail.
-  - Closed tonight: z7u (replica block 1 t -1.41), zd4 (MINE_RR; s7 transfer 0.952x; s6 zd329 later t +1.77, record
-    only), zd2/zd3 (DEFEND_D2 doses), zc8, zd1, zc9, zc6, zc5, zc7, zc4, zc3, zc2, zb7-zb9, zc1.
-  - **Open leads:** (1) [taken up as zdc, 08:00] sealed-pocket dig-out on averystrangespace (only 253 tiles and 1 mine reachable without dirt;
-    centre mine never listed; YokoOno digs 348 tiles). DIG_COST 2 (u4u) and CAT_SEEK_DIG (z1x) were global and failed the
-    transfer gates, so gate it (e.g. on the king knowing <= 1 mine at r150+). (2) Known-mine census (scratch knownm.py over
-    cq70-cq90): TheHeist 1 of 18 mines listed through r300 (lost 4 of 6), rose 1 of 8, jail, uneruesansfin.
-  - **The r1880 crowd overrun** is z3x's: cashTick reads every squeak in the CASH_END recall crowd. It shows only
-    locally (agrab/araid/atrap3 cells); z3x's 192 field games in the VM dumpcache have no rat turn over 17,500 past
-    round 1 (scratch fov.py). Put CASH_READ_LEFT 6000 (z7u's line) in any new candidate that screens locally.
-  - Field picture (VM dumpcache, 212 dumps): z3x is 7-17 vs Merlin, 14-21 vs the rest (scratch oppz.py). Merlin
-    transfers about 2x ours in every loss; 63 cells were lost by every build (solid.py), nearly all king kills after
-    a backstab before r52. 14 opponent-map pairs split by seat (seatsplit.py; 9 won as B), under every symmetry.
+## State (2026-11-08 09:57 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (09:57):**
+  - **Incumbent zdb** (accepted 09:05 over z3x: #293, pooled 96 cells, D 4 (+4 -0), t 2.00). New candidates build on
+    bots/zdb (`BC_JDK=$SP/nojdk TMPDIR=/dev/shm bash tools/snapshot.sh NEW bots/zdb`, switch lines by python replace
+    with asserts). Screen controls: s7 **zd343**, s6 **zd345** (seed 1). Replica anchors: set 2 = 20984-20999 (twin rows
+    ~/diag26b/zdbb2.jsonl), set 4 = 20817-20824, 20842-20845, 20848-20851 (zdbb1.jsonl).
+  - **Replica: zdb twin block on set 3** (#295, sent 09:56; 21016-21019 sent, 12 in the drain queue). When it is in,
+    its rows are the set-3 anchors (fetch, move replays + match.json to VM ~/diag26b/rp, `field_report.py games --ids
+    ... --dir ~/diag26b/rp > ~/diag26b/zdbb3.jsonl`). zdj's block 1 is on set 3 against it.
+  - **zdj** (zdb + KING_FAR: no listed mine within dist2 400 of the start -> from r60 the king walks to the nearest
+    home-half mine within 1600; acts only on Nofreecheese, uneruesansfin, wallsofparadis, whatsthecatdoin): chain
+    ~/diag26b/cq106 (seed 31, 38 games, P 2, running). Score: king within Chebyshev 1 of a mine at r250 in 12+ of 16
+    (kpos-style turns.tsv read), transfer at r600 >= 1.15x zdb, wins not fewer, <= 1 lost cell; identity cells
+    (arrows A / evileye B vs araid seed 29 = cq103's zdb games; Hike A/B seed 31 vs zdb twins) must match exactly.
+    Screens zd356 (s7, must be D 0) and zd357 (s6). Replica: set 3 vs the zdb twin, then set 4.
+  - **zdk** (zdb + RUSH_FROM_BIG 12: 4 rushers on maps over 441 tiles): falsifier 1 = zdd's s6 zd349's large-map cells
+    (`python3 ~/diag26b/celldiff.py zd344 z3x zd349 zdd`, run in the repo dir: more lost than gained drops it);
+    chain cq107 (seed 32; waiter cq107run.sh starts it when cq104 ends): wins not fewer than zdb's on 12 cells, < 2 lost,
+    tiny B identity vs cq98's zdb games. Replica sets 2 then 4.
+  - **zdh** (zdb + DELIVER_FAR): chain cq104 (seed 30, running): `tripsc.py zdh 300 ~/diag26b/cq104` vs zdb (far20 <=
+    0.6x, amt >= 1.0x, wins, under 2 lost cells). Screens zd354 / zd355.
+  - **zdd** (z3x + RUSH_FROM 12): s6 zd349 running vs zd344; pooled ppr clause (>= 1.01x) over zd348 + zd349.
+  - Dropped/rejected this hour: zdf (replica block 1, t -1.73: lost clouds A/B, learn_your_lesson B), zdg (cq103:
+    inert 0.83x, 2 lost cells), zdi (cq105: lost tiny B x2), zde.
+  - Screen queue: zd349 (running), zd354, zd355, zd356, zd357 (about 50 min each now; load ~21). Add more first.
+  - Chains: cq104 (zdh) and cq106 (zdj) running; cq107 (zdk) waits on cq104. Next fresh seed: 33.
+  - zdb's lost cells on sets 2 and 4 (23 of 96; /dev/shm/rp/*/match.json): seat-split ones are arrows A vs Varun,
+    averystrangespace A and rose A vs YokoOno (points), clockwisdom B vs Varun, dirtpassageway A vs Finals, knifefight A
+    vs Merlin (r107; Merlin's own king walk is asymmetric: as B it retreats to a wall pocket at (14,17), as A it walks
+    into our rats and dies at r22), mincemeat B vs Icarus, RUN A vs Merlin (points), streetsofnewyork B vs YokoOno.
+    Points at r2000 (war): 0.5 king share, 0.3 cat damage share, 0.2 transfer share; RUN A was 2-2 kings at 8.5k vs
+    16.4k transfer (one more king flips it, but the bank sat at 300-500 through r1200).
   - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail. Closed king-defence
     families: AMMO_AWAY, RETREAT_HP, GLANCE_MEM, RESCUE, BITE_CARRIER/BITE_GUARD, KING_BITE_CARRIER, KING_BITE_MAX,
-    GUARD_KING_R, KING_FLEE, KING_PRESS, GRAB_MICRO (zc6's GRAB_MICRO_L is the live variant), THIEF_LOAD.
-  - VM disk 2.2 GB (05:34). Laptop ~80 MB free; /dev/shm ~80 MB free.
+    GUARD_KING_R, KING_FLEE, KING_PRESS, GRAB_MICRO (zc6's GRAB_MICRO_L is the live variant), THIEF_LOAD. King walking:
+    KING_PATH (u1y), KING_FORAGE (zc3, inert), KING_FAR (zdj, pending).
+  - VM disk 2.1 GB (09:55). Laptop ~23 MB free; /dev/shm ~79 MB free.
 - Incumbent until 09:05 11-08 (now zdb, above): **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
