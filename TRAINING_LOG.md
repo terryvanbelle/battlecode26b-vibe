@@ -8277,3 +8277,8 @@
       - Matched-round picks per cell (mpick.py) at z <= -2 drop it. This replaces s6's whole-game ppr gate.
     - Falsifier 2: screens on seed 1, with new z3x controls: s7 zd343 vs zd342 and s6 zd345 vs zd344. These rejects stand: t <= -1.5, any overrun, transfer per round under 0.97x. They are queued after zd339, ahead of zda's zd340 and zd341.
     - Falsifier 3: the replica on new matches. zdb was submitted as #293 at 06:46, because the replica was idle; block 1 on set 4 has 16 rows queued, and block 2 is on set 2. A failed falsifier 1 or 2 voids the blocks.
+- 06:55: **zd9 (SPAWN_FLOOR 200) DROPPED at falsifier 1's mechanism clause (cq96)**
+  - cq96 (seed 24; zd9 and z3x on evileye, arrows, clouds and dirtpassageway, both seats vs agtr and araid; scratch babmean.py): zd9's mean live babies over r100-500, summed over 16 games, was 268.6 to z3x's 257.3, under the bar of 273.3 (z3x + 16), so the lever is inert by the registered rule. Wins 14 to 14; 0 overruns.
+  - Where it acts: evileye (summed 59.8 to 47.4; gained B vs agtr, lost A vs araid) and arrows B vs agtr (19.7 to 18.2). On clouds and dirtpassageway both builds hold 16-22 babies through r100-500, where the cap binds and the floor rarely does.
+  - zd338 (s7) was stopped at 14:54 UTC. zd339 (s6) started before it left the queue and was stopped at 14:55. zd342 (z3x seed-1 s7 control for zdb) started at 14:55.
+  - zda (SPAWN_FLOOR 100) is still open: cq97 has been playing since cq96 ended, under the same clauses.
