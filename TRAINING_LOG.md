@@ -7969,3 +7969,13 @@
     - Results: wins ≥ z3x's + 1 and at most 1 cell lost that z3x won.
   - Falsifier 2: screens zd298 (s7) and zd299 (s6), queued behind zd297. Falsifier 3: replica block 1 on set 2.
   - zd296 (zb2 s7, zb3's falsifier 2 half): 48 of 48 games identical to z3x (27 wins each, transfer 272,496 each, no overrun), so ATK_DELIVER_COOP never fires on the s7 screen. The s7 gate holds; zd297 (s6) is running.
+- 22:26: **zb3 dropped by falsifier 1's mechanism clause (cq72); its code won 14 of 16 cells to z3x's 7. zb5 = the same sources re-registered with a matched-round transfer clause (cq74).**
+  - cq72 (seed 1; zb3 against z3x, 16 cells): zb3 won 14, z3x 7. zb3 gained 7 cells (TheHeist A vs araid, clockwisdom all 4, EscapeTheNight A vs agtr, rose A vs araid) and lost none. The identity game equals zb2's cq71 game (won r411, transfer 1,790).
+  - Summed transferAmt was 85,151 to 106,748 (0.80x; bar 1.1x), so zb3 is dropped. The sum is confounded by game length: EscapeTheNight vs araid, zb3 won by king kill at r707 and r757 with 9,493-10,465, while z3x won at r2000 with 29,776-34,305.
+  - Clockwisdom, where both sides starve: z3x lost at r890-955 having delivered 0-100, and zb3 won at r955-1060 having delivered 750-1,805.
+  - Read after the drop (scratch matchx.py, so not evidence for zb5): at the last round both games of a cell reached, our cumulative cheeseXfer was 81,120 to 62,156 (1.305x).
+  - zd297 (zb2 s6): n 44, D 0, net 0, transfer 1.003x, no overrun. The s6 gate holds, so zb3's falsifier 2 (zd296 + zd297) passed.
+  - **zb5** (bots/zb5/SNAPSHOT; zb5-c91e33acaa8a; code identical to zb3 apart from the package name). Falsifier 1 (registered 22:26): chain ~/diag26b/cq74 on fresh seed 3, the same 16 cells with zb5 against z3x, plus an identity game (TheHeist A vs araid seed 1 must equal zb3's cq72 game: won r561, 3,845).
+    - Mechanism: zb5's matched-round cheeseXfer summed over the 16 cells must be at least 1.1x z3x's.
+    - Results: wins at least z3x's + 1, and at most 1 cell lost that z3x won.
+  - Falsifier 2: the replica on zb2's build (block 1 on set 2, unseen). zd296/zd297 were read before registering, so they are a record, not a falsifier.

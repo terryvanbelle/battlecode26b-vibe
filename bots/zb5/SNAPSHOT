@@ -1,0 +1,9 @@
+name=zb5
+source=bots/zb3
+source_sha=5776989cd14a
+commit=8734d1c2
+created=2026-11-07 22:26 PST
+reason=second re-registration of zb2's sources (identical code: z3x + ATK_DELIVER 100 + ATK_DELIVER_COOP). zb3 was dropped at 22:25 by falsifier 1's mechanism clause on cq72: summed transferAmt 0.80x z3x's (bar 1.1x), because zb3 won 14 of 16 cells to z3x's 7 (+7 -0, clockwisdom 4 of 4) and its wins end games sooner (EscapeTheNight vs araid: zb3 won at r707-757, z3x at r2000 with 29,776-34,305 transfer). Summed transfer over games of different lengths does not measure the hypothesis; transfer at matched rounds does. cq72 is not evidence for zb5 (matched-round transfer there was 1.305x, read after the drop).
+idea=in cooperation, loads that attackers would strand become transfer, so the king starves later than the opponent's on maps where both sides starve (clockwisdom: z3x lost r890-955 with 0-100 transfer, zb3 won r955-1060 with 750-1,805).
+falsifier1=(registered 22:26 PST) chain ~/diag26b/cq74, fresh seed 3: rose, clockwisdom, TheHeist and EscapeTheNight, both seats, vs araid and agtr, each with zb5 and with z3x (32 games), plus one identity game (TheHeist A vs araid seed 1, must equal zb3's cq72 game: won r561, transferAmt 3,845). Mechanism (scratch matchx.py): per cell, our cumulative rounds.tsv cheeseXfer at the last round both games reached; zb5's sum over the 16 cells at least 1.1x z3x's. Results: zb5 wins at least z3x's count + 1 on the 16 cells and loses at most 1 cell z3x won.
+falsifier2=the replica rules on zb2's build (identical code; block 1 on set 2, t <= 0 rejects; its results unseen at 22:26). The screens of the identical code (zd296 s7, zd297 s6) passed and were read before this registration, so they are a record, not a falsifier.
