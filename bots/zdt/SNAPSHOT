@@ -1,0 +1,21 @@
+name=zdt
+source=bots/zdb
+source_sha=638afd6102f7
+commit=4fdae2bd
+created=2026-11-08 13:53 PST
+falsifiers (registered 2026-11-08 13:53 PST, before any zdt game):
+  zdt = zdb + LOW_BABIES 12 (from 8; an existing constant, never tuned): with fewer than 12 live babies (the rat-cost
+  step) every spawn floor (CORE_FLOOR, WAR_FLOOR, SPAWN_FLOOR, 300 each) drops to LOW_FLOOR 100. Field (zdb's cached
+  replica losses, kingdie.py, starvew.py): 20 of 37 king-kill losses are starvation; in mercifullattice A and B vs
+  Icarus, wallsofparadis B vs Finals, Nofreecheese B vs collegejunior, ratsareants A vs Varun and Stash A vs YokoOno
+  the bank held near the 300 floor for 100-200 rounds while our babies fell to 8-12 and theirs held 17-36. No twin:
+  the change is one constant (bipush 8 to bipush 12, same cost).
+  1. Chain ~/diag26b/cq115 (seed 40, after cq114): zdt and zdb on mercifullattice, wallsofparadis, Nofreecheese and
+     ratsareants, both seats vs agrab and araid (32 games). Any zdt overrun or exception drops it. Do-no-harm: zdt
+     wins no fewer cells than zdb and loses at most 1 cell zdb won. Mechanism (spawn rows against the previous
+     round's babies and bank): zdt makes at least 8 spawns, summed over its 16 games, with babies in [8, 12) and the
+     bank under the spawn price + 300, and more than zdb's; and zdt's king starvation deaths are no more than zdb's.
+  2. Screens on seed 1: s7 runs/zd370 vs zd343 and s6 runs/zd371 vs zd345 (t <= -1.5, an overrun, or transfer
+     per round under 0.97x rejects).
+  3. Replica after zdq and zds, block 1 on set 3 (21016-21023, 21036-21043), then set 2 (20984-20999); the usual
+     rules (block 1 rejects at t <= 0, pooled t <= 1 after block 2, accept at t >= 2 with D >= 4).

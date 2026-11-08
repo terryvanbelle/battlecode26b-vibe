@@ -8519,3 +8519,10 @@
   - Transfer per round on the shared cells was 0.969x: the strikers stop delivering. The clause is binding, so zdr closes.
   - Chain cq113 was stopped at 25 of 48 games and zd367 at its start; cq114 (zds) now runs.
   - Reading: a strong late strike wins points games locally at a transfer cost of about 3%. zdq (half the dose, from r1600) is the live test on the replica (#299, 4 of 16 in, 21205-21208 all won). A re-registered strong dose would need its gate set before fresh games, e.g. transfer per round over rounds 1-1400 only.
+- 13:54: **zdt (zdb + LOW_BABIES 12) registered; chain cq115 (seed 40) and screens zd370/zd371 queued**
+  - Field starvation census (zdb's cached replica losses; scratch kingdie.py, starvew.py): of 37 king-kill losses, 20 starve, 10 throwHit, 7 bite.
+  - In the starving games the bank sat near the 300 floors for 100-200 rounds while our babies fell to 8-12 and theirs held 17-36. Examples: mercifullattice A vs Icarus 297-327 banked with 8-11 babies over r656-836; Nofreecheese B vs collegejunior 313-322 with 17 to 12 babies over r707-807; wallsofparadis B vs Finals 297-303 with 16-15 over r551-651.
+  - The clockwisdom losses (Xzibit A and B, Varun B) are a separate mode: still in cooperation, with 2,000-4,500 raw held undelivered (the closed hoard family).
+  - zdt = zdb + LOW_BABIES 12 (from 8; never tuned): under 12 live babies every spawn floor drops to LOW_FLOOR 100. SPAWN_FLOOR 100 on every spawn (zdf) lost replica block 1; this cut binds only a thinned army. bots/zdt/SNAPSHOT, zdt-e141a3f087c7.
+  - Falsifiers: (1) cq115: zdt and zdb on mercifullattice, wallsofparadis, Nofreecheese and ratsareants, both seats vs agrab and araid; no overrun or exception, wins no fewer than zdb, at most 1 lost cell; at least 8 spawns with babies in [8, 12) and the bank under price + 300, more than zdb, and no more king starvation deaths. (2) Screens zd370 (s7) and zd371 (s6). (3) Replica after zdq and zds, set 3 then set 2.
+  - Also seen: the enemy breaks the truce in 92 of zdb's 144 field games (we do in 39), at a mean of r124.
