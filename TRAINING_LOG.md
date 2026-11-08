@@ -8196,3 +8196,10 @@
     - Falsifiers in bots/zd5/SNAPSHOT (05:23): chain cq91 (seed 21; 5t4rv4t10n, mincemeat, canyoudig, whatsthecatdoin, both seats vs agtr and araid). Mechanism (scratch gcflee.py): zd5's 'c' share at most 0.7x z3x's, and cat kills per 1000 gatherer turns at most 1.3x. Then screens zd330/zd331 and the replica rules.
   - Slots: s7 zd330 (zd5) has run since 13:32 UTC, and zd331, zd332, zd333 are queued. cq91 is running, and cq92 starts when it ends (VM after2.sh). z9u #291 block 1 is in the drain.
   - zd329 (zd4 s6, after the rejection; record only): n 44, D 3 (+abrk bed A, araid evileye B, araid starvation B), net +3, t +1.77, transfer per round 1.037x, 0 overruns.
+- 05:41: **zd5 (z3x + CAT_FRONT 8) DROPPED at falsifier 1 (chain cq91)**
+  - Mechanism (scratch gcflee.py): the cat-flee (mv=c) share of gatherer turns was 4.354% vs z3x's 5.022%, 0.87x against the 0.7x bar, so the switch is too inert. Cat kills per 1000 gatherer turns were 7.82 vs 6.83 (1.14x, under the 1.3x bar).
+  - Results (fedpick.py): 11 wins of 12 to z3x's 12, lost canyoudig A vs agtr (r301; z3x won at r233), 0 overruns, 0 exceptions.
+  - The 8 5t4rv4t10n games never ran: the spec said 5t4rv4t10n, and the map is 5t4rv4t10n_1337. Even with no flee turns at all there, the pooled ratio would stay near 0.84x, so the verdict stands.
+  - Per map, the flee share fell 6.74% to 5.95% on canyoudig, 10.71% to 7.59% on mincemeat, and 2.99% to 2.60% on whatsthecatdoin. Most flee turns are from cats that can sense the gatherer.
+  - s7 zd330 was stopped after 8 minutes and zd331 was taken off the queue. zd332 (zd6 s7) has run since 13:40 UTC, and cq92 (zd6's chain) has started.
+  - Field check (VM dumpcache, z3x): clockwisdom was lost 5 of 6 (Xzibit A/B, collegejunior A/B, Varun B), so zd6's lever has the field weight. TheHeist was won 6 of 6 and rose 7 of 8, so the known-mine census there is local only.
