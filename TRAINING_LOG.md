@@ -7777,3 +7777,5 @@
   - cq40 at 18 z9l and 16 z3x games: per 1000 rounds, after-ours 0.38x and all 0.88x (bars 0.4 and 0.85); summed transfer 0.981x.
   - Block 1 (set 2, `build/block_v4s2.sh`) sent 8 matches (spsquared, Finals, YokoOno and Varun, both seats); 8 wait for drain-loop.sh.
   - cq39score.py now globs every seed (`*_s*`); it read only seed 0 before, so cq40 scored empty at first.
+- 16:53: **z9l passes s7** (zd266 vs zd205, `bash tools/score_screen.sh zd266 z9l zd205 z3x`): n 48, D 14 (+9 -5), net +4, t +1.07, 31 wins to 27. Transfer 303,896 to 272,496; picks/100 33.28 vs 33.93 (z +0.83); 0 overruns. The last 4 cells added +arrows B and -cheesefarm B vs atrap3 (points). zd267 (s6) plays next.
+  - The four losses repeat z9k's (evileye A and B and starvation A vs agrab, evileye B vs agtr). Chain ~/diag26b/cq41 (seeds 0-1, z9l and z3x on those four cells, 16 games) starts when cq40 ends (waiter ~/diag26b/after40.sh), to find what the mute costs there: a muted rat drops every squeak, the enemy-king relay (SQ_EKING) and the cat report to our king (SQ_CAT) included.
