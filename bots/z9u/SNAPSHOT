@@ -1,0 +1,17 @@
+name=z9u
+source=bots/zl0
+source_sha=c585a2762c96
+commit=79afcbc8
+created=2026-11-07 18:29 PST
+recipe=bash tools/bundle.sh z9u zl0 z3x zfz (zfz = zfy + the KING_ROAM floor; zfy = z9s's switch; scratch, untracked)
+idea=z9s with runs counted only beyond Chebyshev KING_ROAM + 1 (5) of the home mine (King.futile: dm <= KING_ROAM + 1
+  or dm > KING_FUTILE_R ends the run). Within that radius the king's moves are its pile walks round the mine
+  (KING_ROAM 4), not a wall. z9s froze on evileye A vs agrab at r565 at (8,18), 2 from mine (9,16), and lost at r1475
+  where z3x won at r874 (zd272 at n 17, D 1; reproduced in ~/diag26b/cq49). z9n never froze there (zd270 D 0). The
+  fullofsecrets freezes sit 6 from the mine and are kept; rose's 12 stays out.
+ledger=as z9n (K 20 with G.settle; KING_ROAM + 1 is a compile-time constant, so the test costs what z9s's did)
+falsifiers (registered 2026-11-07 18:30 PST, before any z9u game):
+  1. Chain ~/diag26b/cq50 (seed 0): evileye A vs agrab equals z3x's game (cq49); the 8 fullofsecrets games and rose A/B
+     vs araid equal z9s's cq47 games, except where z9s froze within 5 of its mine; fullofsecrets >= 5 of 8 won.
+  2. The s7 (zd274 vs zd205) and s6 (zd275 vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).

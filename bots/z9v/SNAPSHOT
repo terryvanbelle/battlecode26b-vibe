@@ -1,0 +1,19 @@
+name=z9v
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=79afcbc8
+created=2026-11-07 18:32 PST
+recipe=bash tools/bundle.sh z9v z3x z9u z7u (z9u's King.futile freeze + z7u's SWAP_LOADED 30 / SWAP_HOME 10 and CASH_READ_LEFT 6000, each against z3x)
+idea=two pocket-delivery repairs in one build, since the replica moves only the cells a build's code changes and z9u can
+  flip at most the two Merlin fullofsecrets cells of set 2. z9u: the king stops its walks for 300 rounds after 8 moves in a
+  3x3 box 6-7 from its home mine (fullofsecrets: z9s won 6 of 8 in cq47, z3x 0). z7u (= z7m + CASH_READ_LEFT): a loaded baby
+  near our king carries an empty ally blocking its step past (rose's stem jam; z7m won rose A vs agtr and araid where z3x
+  starved, both B games too; s7 zd234 net +1, s6 zd240 net +1 with 0 overruns once CASH_READ_LEFT bounded cashTick). cq48
+  probe z9t (ungated freeze + SWAP_LOADED) won rose A and B vs araid and agtr. z7u went to the replica only inside z8b
+  (with TRAIL and ATK_DELIVER_COOP; rejected at block 1, -TheHeist A, -Hike B, -clouds A, +clockwisdom B).
+ledger=z9u's hook (K 20) and z7u's hooks (Nav.goTo and Flow.follow K 9, cashTick's read), each as in its own build
+falsifiers (registered 2026-11-07 18:33 PST, chain cq51 started, no game finished):
+  1. Chain ~/diag26b/cq51 (seed 0, 13 games): rose A and B vs araid and agtr all won (z3x lost A vs araid and agtr);
+     fullofsecrets >= 5 of 8 won (z9s 6, z3x 0); evileye A vs agrab won (z3x won r874; z9s lost).
+  2. The s7 (zd276 vs zd205) and s6 (zd277 vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
