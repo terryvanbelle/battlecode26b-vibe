@@ -1,0 +1,11 @@
+name=zdl
+source=bots/zdj
+source_sha=9a0e1d6fc1b9
+commit=23c454ac
+created=2026-11-08 10:13 PST
+description=zdj + KING_FAR_MIRROR (new switch, King.farPick only, inside zdj's K 9 ledger hook): with one symmetry left, each listed mine's twin counts in KING_FAR's near test (a twin within dist2 400 of the start ends the far walk) and in its far pick. Nothing is added to the mine list (MINE_MIRROR, which lists twins for the gatherers, was rejected: u5j, zmm). cq106 Nofreecheese B vs araid (zdj): the king knew 1-2 mines from r80, all on the enemy half, had one symmetry left from r160, and took (23,38), the twin of (36,21), only at r400.
+falsifiers (registered 10:14, before any zdl game):
+ 1. Chain ~/diag26b/cq108 (fresh seed 33, after cq106): zdl and zdb on Nofreecheese, wallsofparadis, whatsthecatdoin and uneruesansfin, both seats vs agtr and araid (16 cells each). Mechanism: zdl's king stands within Chebyshev 2 of a mine at r300 in at least 12 of 16. Summed cheeseXfer at r600 (earlier end counts at its end) at least 1.15x zdb's. zdl wins at least as many of the 16 as zdb and loses at most 1 cell zdb won. Any overrun or exception in a zdl game its zdb twin lacks drops it.
+ 2. Identity (same chain, run first): arrows A and evileye B vs araid at seed 29 replay cq103's zdb games, and Hike A and B vs araid at seed 31 replay cq106's zdb games (winner, rounds, transfer). Any difference drops zdl.
+ 3. Screens: s7 vs zd343 (must be D 0) and s6 vs zd345 under the standard gates, queued if 1 and 2 hold (zdj's zd356/zd357 cover the same cells; zdl's run only if zdj's are not decisive).
+ 4. Replica as zdj's: block 1 on set 3 against zdb's twin block (#295), block 2 on set 4 against zdb's anchors; standard rules.
