@@ -8394,3 +8394,6 @@
     1. zdd's s6 zd349: more large-map cells lost than gained drops it.
     2. Chain cq107 (fresh seed 32, waits for cq104): DefaultMedium, Stash and cheesefarm, both seats vs agtr and atrap3. It drops on fewer wins than zdb, 2+ lost cells or any overrun, and tiny B vs abrk and araid must replay cq98's zdb games.
     3. Replica vs zdb's anchors (sets 2 and 4).
+- 09:56: **zdf REJECTED at replica block 1; zdb's set-3 twin block sent (#295)**
+  - zdf (zdb + SPAWN_FLOOR 100, #294) on set 2 (21000-21015) against zdb's 20984-20999, `paired --partial` with 45 of 48 cells in: D 3, all lost (clouds A and B vs Varun, learn_your_lesson B vs collegejunior), net -3, t -1.73. The 3 cells still out (21013, Icarus B) cannot lift t above 0, so block 1's t <= 0 rule rejects it now. zdf's replays and match.json are on the VM in ~/diag26b/rp (21000-21003 were moved earlier).
+  - zdb was resubmitted as #295, and its set-3 block was queued with build/block_v4s3.sh: 21016-21019 sent, 12 queued for the drain. This gives zdj's block 1 (the far maps are in set 3) and later candidates' third blocks their zdb anchors. None of the pending candidates has cleared its local falsifiers yet: zdh's cq104 is at 3 of 32, zdj's cq106 at 6 of 38, and zdk's cq107 waits on cq104.
