@@ -1,0 +1,24 @@
+name=zdp
+source=bots/zdb
+source_sha=638afd6102f7
+commit=43171727
+created=2026-11-08 11:32 PST
+falsifiers (registered 2026-11-08 11:33 PST, before any zdp game):
+  zdp = zdb + HEIR (z9c's switch, ported; HEIR_HP 150, HEIR_BABIES 8, HEIR_CHEESE 100): a lone king at 150 health or
+  less with 8+ babies and 100+ global cheese names a second-king site (ringSite, else pickFormSite) and keeps it open.
+  z9c (on z8b) was dropped only by a local clause against agrab; it never played the replica. Field evidence: zdb's
+  anchor losses are 37 king kills of 43, nearly all with one king of ours; the trigger fires in 10 of the 43 and in 4
+  of 101 wins (scratch heir.py over the VM dumpcache). Twin switch bot zhe (HEIR_BABIES 1000000: the test runs every
+  turn, never fires).
+  1. Chain ~/diag26b/cq111 (seed 36): zhe, zdp and zdb on arrows, thunderdome and cheesebottles, both seats vs agrab
+     and araid (36 games). zhe must replay zdb in every cell (winner, rounds, cheese transfer); any difference drops
+     zdp (the ledger is not exact). Any zdp overrun or exception drops it.
+  2. Screens on seed 1: s7 runs/zd360 vs zdb's zd343 and s6 runs/zd361 vs zdb's zd345. Paired t <= -1.5 in either
+     rejects; any zdp overrun or exception rejects; transfer per round on the shared cells under 0.97x the
+     control's rejects (xpr.py).
+  3. Replica, block 1 on set 4 against zdb's anchors (20817-20824, 20842-20845, 20848-20851; holds arrows A vs Varun,
+     where zdb's king sat at 4 HP from r1300 with 19 babies), the usual rules (t <= 0 after block 1 rejects; block 2
+     on set 3; accept at pooled t >= 2 with D >= 4). Mechanism: if no zdp replica game of blocks 1-2 shows a second
+     king formed after our lone king fell to 150 health or less, zdp is dropped as inert, whatever its t.
+  Order: block 1 may start once clause 1 holds, while the screens of clause 2 still play; a screen rejection closes
+  zdp whatever the replica shows.
