@@ -1,0 +1,14 @@
+name=zc6
+source=bots/zl0
+source_sha=c585a2762c96
+commit=f23ef922
+created=2026-11-08 02:21 PST
+
+zc6 = z3x + GRAB_MICRO_L (GrabMicro.java, an existing switch never on z3x, now under the ledger with a budget test: switch bot bots/zgl = zl0 + three ledgered hooks + two Cfg lines; bundle.sh zc6 zl0 z3x zgl; Baby.java and Cfg.java are the only files that differ from z3x). When hostile and not rescuing, a baby with 12000+ real bytecodes left runs GrabMicro.act. It scores staying and each one-step tile with each facing by a grab there, a bite (more when it ends the victim's health edge or kills) and minus 25 for each enemy that could step next to it into its blind spot (anywhere next to it when that enemy is healthier). It takes the best option when that beats standing by 10, else it marks the clearly worse steps as avoided. A turn the micro leaves under BC_BAIL (3500) ends there.
+Evidence (2026-11-08): in z3x's field dumps of the 103 games whose war opened before r50 (55 won), the enemy grabs our rats 77.3 times a game before r300 in losses and 56.1 in wins. Of those, 48.9 vs 32.8 are on a victim weaker than the grabber, legal from any side (scratch napkind.py), and our throw-landing deaths are 18.6 vs 12.1 (wardeath.py). GRAB_MICRO is the one existing switch that scores the health-edge threat. On u9p (v0g, s6 zd72) it went D 10 (+6 -4), net +2, t +0.63 but was rejected for 545 overruns. Probe gm2 (z3x + GRAB_MICRO, no budget test) put the micro's cost at median 2.6-4.6k, max 10.8k over 1181 calls, with 87% of calls starting at 12000+ left. On the three screen cells it shared with z3x it won bed A vs abrk at r219 (z3x lost at r302) and DefaultSmall A/B vs araid at r255 and r409/r296 (z3x r302 and r440).
+Registered 2026-11-08 02:21 PST, before any zc6 game.
+Falsifiers:
+  1. Safety chain ~/diag26b/gm3 (seed 0): DefaultSmall A and B vs araid, bed A vs abrk, thunderdome B, knifefight A and B vs agrab. Any overrun or exception on zc6's side drops it.
+  2. Screens s7 zd316 (vs z3x's zd205) and s6 zd317 (vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  3. Mechanism, pooled over both screens' shared cells: zc6's killsRat / deathsByEnemy at or below z3x's drops it (the micro does not improve the exchange); fewer than 10 shared cells differing from z3x's (winner, rounds or transferAmt) drops it as inert.
+  4. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
