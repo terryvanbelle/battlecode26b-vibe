@@ -7979,3 +7979,16 @@
     - Mechanism: zb5's matched-round cheeseXfer summed over the 16 cells must be at least 1.1x z3x's.
     - Results: wins at least z3x's + 1, and at most 1 cell lost that z3x won.
   - Falsifier 2: the replica on zb2's build (block 1 on set 2, unseen). zd296/zd297 were read before registering, so they are a record, not a falsifier.
+- 22:48: **zb4 dropped by falsifier 1's mechanism clause (cq73); zb6 = ATK_NEWS + a walk limit registered (cq75). Two leads closed.**
+  - cq73 (seed 2; scratch zb4score.py): zb4 won 11 of 16 cells to z3x's 7 and lost none. Gains: rose B vs agtr and vs araid, EscapeTheNight B vs agtr, clockwisdom A vs araid. Both rose A kings first listed a mine with x ≥ 20 at r633, against a bar of r500, so zb4 is dropped. Every zb4 game had why-'n' turns, so the identity clause was vacuous.
+  - On clockwisdom zb4's attackers spent 1,285-4,016 turns on news, walking home through the spiral; the 10-turn limit counted only turns in earshot. Transfer there was unchanged (40 vs 40 in the gained cell).
+  - **zb6** (bots/zb6/SNAPSHOT; zb6-3789d4ae9e63; switch bot zan2): ATK_NEWS plus ATK_NEWS_TTL 100. An attacker gives up a mine's news after 100 turns on it, walking and holding together, then carries no news for 100 rounds.
+  - zb6 falsifier 1 (registered 22:48): chain ~/diag26b/cq75 on fresh seed 4. Maps: rose, clockwisdom, and two maps new to the switch (fullofsecrets, FreeTheCheese), both seats, vs araid and agtr (32 games).
+    - Mechanism: our king's listed-mine count at min(r500, the last round both games reached), summed over the cells, must be at least 1.15x z3x's.
+    - Results: wins ≥ z3x's + 1, at most 1 cell lost.
+    - Screens zd300/zd301 replace zd299 in runs/screenq.txt. zd298 (zb4) finishes as a record.
+  - Closed lead, coop cat share: in cooperation the game ends at the last cat's death, scored 50 cat damage / 30 kings / 20 transfer.
+    - On TheHeist each side kills the cat in its own base, ours by r122-158. The other cat then takes 10-11 damage a round until r282-577, so a few bites on it would flip the local 49-50 losses.
+    - In the field only 21 of z3x's 192 replica games stay in cooperation to the end. 6 end at the last cat, all won, and the 7 coop losses are king kills, so there is little to flip.
+  - Closed lead, seat B on tiny and DefaultMedium (screens): z3x as A wins and as B loses every one of 6 local games (~/diag26b/sb1), r43-67. agtr and agrab are built on our code, so these are mirror rushes that move order decides. In the field both seats are lost there (waxmango, Varun), so it is not a seat lever.
+  - VM disk fell to 1.2 GB with three chains running. Removed the .bc26 files and gzipped the tsvs of cq71, cq72, cq73s, sb1 and the finished cq73/cq74 games: 2.2 GB.

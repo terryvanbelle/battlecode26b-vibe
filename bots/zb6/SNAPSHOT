@@ -1,0 +1,10 @@
+name=zb6
+source=bots/zl0
+source_sha=c585a2762c96
+commit=a1db3edf
+created=2026-11-07 22:47 PST
+reason=ATK_NEWS (zb4's switch, ported in zan2) plus a new ATK_NEWS_TTL 100: an attacker gives up one mine's news after 100 turns on it, walking and holding together (then carries no news for 100 rounds). zb4 was dropped at 22:47 by its mechanism clause (cq73: rose A kings listed a mine with x >= 20 at r633, bar r500); its results clause held (11 of 16 cells to z3x's 7, +4 -0). On clockwisdom its attackers spent 1,285-4,016 turns walking home through the spiral, because zb4's 10-turn limit counted only turns in earshot. cq73 is not evidence for zb6.
+idea=babies know mines the king never lists (newsgap scan over z3x's chain games: rose A king 1 mine at r500 to the best baby's 6, clockwisdom 0 to 11, fullofsecrets 7 to 8, FreeTheCheese A 4 to 7), and only gatherers and scouts courier. Attackers carry the news in cooperation.
+falsifier1=(registered 22:48 PST) chain ~/diag26b/cq75, fresh seed 4 and two maps new to this switch: rose, clockwisdom, fullofsecrets and FreeTheCheese, both seats, vs araid and agtr, each with zb6 and with z3x (32 games). Mechanism: per cell, our king's listed-mine count (turns.tsv ml=, the longest list any of our kings shows that round) at round min(500, the last round both games reached); zb6's sum over the 16 cells at least 1.15x z3x's. Results: zb6 wins at least z3x's count + 1 on the 16 cells and loses at most 1 cell z3x won.
+falsifier2=screens s7 zd300 and s6 zd301: the s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier3=the replica, block 1 on set 2 (t <= 0 rejects).
