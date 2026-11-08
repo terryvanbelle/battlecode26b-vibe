@@ -8483,3 +8483,8 @@
     - DefaultMedium vs collegejunior: our king loses 320 to 41 hp in r230-290 to thrown rats.
     - Merlin, DefaultLarge A: we spend the bank 1,900 to 885 by r40 (31 babies), then lose 27 rats in r50-100 to throw landings and cat crushes.
     - Early throws (ethrow.py, r120) average 22.7 a game for Merlin, but also 21.8 for YokoOno, whom we beat 12-6. Throw counts do not separate the rush losses.
+- 12:28: **zdo REJECTED at replica block 1; zdp goes to the replica (#298, set 4)**
+  - zdo, #297 on set 3 (21111-21122 and 21138-21141, against zdb's 21016-21023 and 21036-21043): 48 cells, 47 alike, D 1 (lost Xzibit uneruesansfin A), net -1, t -1.00. Block 1 rejects at t <= 0.
+  - Merlin won whatsthecatdoin from both seats again; the king-near-a-mine walk changed no field result there. Replays are in VM ~/diag26b/rp/zdo_b1s3_1228.tgz.
+  - zdo's screens zd362 and zd363 are taken off the queue, so the queue now holds zd364 and zd365 (zdq).
+  - zdp submitted as #298, block 1 on set 4. All 16 matches are in the drain queue (hourly limit).
