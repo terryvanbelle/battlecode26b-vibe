@@ -129,7 +129,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail. Closed king-defence
     families: AMMO_AWAY, RETREAT_HP, GLANCE_MEM, RESCUE, BITE_CARRIER/BITE_GUARD, KING_BITE_CARRIER, KING_BITE_MAX,
     GUARD_KING_R, KING_FLEE, KING_PRESS, GRAB_MICRO (zc6's GRAB_MICRO_L is the live variant), THIEF_LOAD. King walking:
-    KING_PATH (u1y), KING_FORAGE (zc3, inert), KING_FAR (zdj, pending).
+    KING_PATH (u1y), KING_FORAGE (zc3, inert), KING_FAR (zdj, zdl dropped; zdo re-registered, pending).
   - VM disk 2.1 GB (09:55). Laptop ~23 MB free; /dev/shm ~79 MB free.
 - Incumbent until 09:05 11-08 (now zdb, above): **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
