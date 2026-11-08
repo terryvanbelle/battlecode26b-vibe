@@ -8330,3 +8330,6 @@
   - n 48, D 9 (+5 -4), net +1, t +0.33; picks/100 32.84 to 33.93 (per-cell z -1.26); transfer per round 1.016x; 0 overruns, 0 exceptions. Gained agrab Stash A and bed B, agtr DefaultMedium A and bed B, atrap3 evileye B; lost agrab evileye A, agtr Stash B and evileye B, atrap3 arrows A.
   - First scored against zd342 by mistake: score_screen.sh and xpr.py pair cells by opponent, map and seat, not seed, so a seed-1 control pairs with a seed-0 run without complaint (that pairing gave t -0.47 and 0.953x). zda's screens are seed 0 (zd205, zd172); zdb's, zdd's and zde's are seed 1 (zd342, zd344), checked.
   - zd341 (zda s6 vs zd172) is at 14 of 48.
+- 08:51: **zdb replica block 2 (set 2) partial: 33 cells, 31 alike, D 2 (+2 -0), net +2, t +1.41**
+  - Rows 20984-20993 and 20995 (paired vs set 2's anchors 18722-18725, 18736-18739, 18745-18748, 18750-18753). Gained Xzibit canyoudig A and B (a 400-tile map, where CORE_SMALL acts). Block 2's rows came back before block 1's last 8 (Finals averyfineline and TSPAARK evileye pairs on set 4).
+  - Pooled with block 1's 24 alike cells: 57 cells, D 2, net +2, t +1.41. Accept needs t >= 2 with D >= 4. Out: block 1's 8 rows, block 2's 20994 and 20996-20999 (Icarus, Merlin, waxmango). Replays moved to VM ~/diag26b/rp.
