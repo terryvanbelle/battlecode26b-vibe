@@ -96,25 +96,25 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 04:22 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (04:22):**
-  - **Replica: z7u** (z3x + SWAP_LOADED 30 / SWAP_HOME 10 + CASH_READ_LEFT 6000; registered 2026-11-07 08:40, every
-    local falsifier held: rz3 mechanism and ledger, s6 zd240 t +1.00, s7 zd241 t +0.57 and xpr 1.026x) is #290, block 1
-    on set 2 (requests 17101-17104 sent at 04:21, 12 queued for the drain). Score with `contest.py paired --dir
-    /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 IDS` once all 16 are in (fetch with space-separated
-    ids, tar to VM ~/diag26b/rp, rm local replays). Block 1 rejects at t <= 0.
-  - **Chain: zd2 / zd3** (z3x + DEFEND_D2 36 / 225 + CASH_READ_LEFT 6000; dose arms of the never-tuned defence radius;
-    zd2-ce534ba3603f, zd3-dc704ae543ae), registered 04:16. Chain ~/diag26b/cq87 (seed 17; DefaultMedium,
-    uneasy_alliance, thunderdome, tiny vs agrab/araid, both seats, 48 games; chains.sh pid 2201830) started 12:17 UTC.
-    Score with fedpick.py (each arm vs z3x: fewer wins or 2+ lost cells drops it; any overrun drops it) and
-    `python3 ~/diag26b/mvloc.py 300 ~/diag26b/cq87` adapted per bot (mechanism: gatherer 'Gw' share must move 20%+
-    the intended way). Screens zd324 (zd2 s7, running since 12:19 UTC), zd325 (zd3 s7), zd326 (zd2 s6), zd327 (zd3 s6).
-  - Next fresh chain seed: 18.
-  - Closed tonight: zc8 (RAW_TRAPS; replica block 1 47 of 48 alike, D 1, t -1.00), zd1 (reactive KING_TRAPS; cq86
-    lost 2 cells though 118 of 141 traps fired), zc9 (RUSH_FROM 12; cq85 lost 2 cells), zc6 (GRAB_MICRO_L; rejected at replica block 1, t 0.00, flipped knifefight A vs Merlin), zc5
-    (superseded by zc9), zc7 (CAT_FEED; cq83 lost 2 cells and overran 13 times at r1882-1885 on Meow B vs araid, though
-    fed kills were 53 to 3), zc4 (RAW_TRAPS; 4 overruns, z3x's own cashTick in the r1880 CASH_END crowd), zc3
-    (KING_FORAGE), zc2 (SEEK_FRONTIER), zb7-zb9, zc1.
+## State (2026-11-08 05:34 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (05:34):**
+  - **Replica: z9u** (z3x + KING_FUTILE 8/300, R 7; `bundle.sh z9u zl0 z3x zfz`; no CASH_READ_LEFT) is #291, block 1 on
+    set 2 (16 rows in the drain from 05:02). Score with `contest.py paired --dir /dev/shm/rp
+    18722-18725,18736-18739,18745-18748,18750-18753 IDS` once all 16 are in (fetch with space-separated ids, tar to VM
+    ~/diag26b/rp, rm local replays). Block 1 rejects at t <= 0; pooled t <= 1 after block 2 rejects; t >= 2 with D >= 4 accepts.
+  - **zd5** (z3x + CAT_FRONT 8 + CASH_READ_LEFT; zd5-61c023b30112): chain ~/diag26b/cq91 (seed 21, 32 games, running),
+    score with `python3 ~/diag26b/gcflee.py ~/diag26b/cq91 zd5 z3x` (c share <= 0.7x, cat kills/1000 G <= 1.3x) and
+    fedpick.py; screens zd330 (s7, running since 13:32 UTC) and zd331 (s6).
+  - **zd6** (z3x + EXPLORE_LOCAL 2 + CASH_READ_LEFT; zd6-00d0153490e9): chain ~/diag26b/cq92 (seed 22, 16 games) starts when
+    cq91 ends (VM after2.sh pid 2331810). Score with `python3 ~/diag26b/knownm.py zd6 ~/diag26b/cq92` (and z3x),
+    rounds.tsv transfer at r600 on clockwisdom (>= 1.3x) and Excavation totals (>= 0.9x, no lost win); screens zd332, zd333.
+  - Next fresh chain seed: 23.
+  - Closed tonight: z7u (replica block 1 t -1.41), zd4 (MINE_RR; s7 transfer 0.952x; s6 zd329 later t +1.77, record
+    only), zd2/zd3 (DEFEND_D2 doses), zc8, zd1, zc9, zc6, zc5, zc7, zc4, zc3, zc2, zb7-zb9, zc1.
+  - **Open leads:** (1) sealed-pocket dig-out on averystrangespace (only 253 tiles and 1 mine reachable without dirt;
+    centre mine never listed; YokoOno digs 348 tiles). DIG_COST 2 (u4u) and CAT_SEEK_DIG (z1x) were global and failed the
+    transfer gates, so gate it (e.g. on the king knowing <= 1 mine at r150+). (2) Known-mine census (scratch knownm.py over
+    cq70-cq90): TheHeist 1 of 18 mines listed through r300 (lost 4 of 6), rose 1 of 8, jail, uneruesansfin.
   - **The r1880 crowd overrun** is z3x's: cashTick reads every squeak in the CASH_END recall crowd. It shows only
     locally (agrab/araid/atrap3 cells); z3x's 192 field games in the VM dumpcache have no rat turn over 17,500 past
     round 1 (scratch fov.py). Put CASH_READ_LEFT 6000 (z7u's line) in any new candidate that screens locally.
@@ -124,7 +124,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail. Closed king-defence
     families: AMMO_AWAY, RETREAT_HP, GLANCE_MEM, RESCUE, BITE_CARRIER/BITE_GUARD, KING_BITE_CARRIER, KING_BITE_MAX,
     GUARD_KING_R, KING_FLEE, KING_PRESS, GRAB_MICRO (zc6's GRAB_MICRO_L is the live variant), THIEF_LOAD.
-  - VM disk 2.8 GB (00:10, after deleting cq75-cq77's replays). Laptop ~168 MB free; /dev/shm ~70 MB free.
+  - VM disk 2.2 GB (05:34). Laptop ~80 MB free; /dev/shm ~80 MB free.
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
