@@ -7835,3 +7835,7 @@
   - **z9v** = bundle.sh z9v z3x z9u z7u: z9u's freeze plus z7u's SWAP_LOADED 30 / SWAP_HOME 10 and CASH_READ_LEFT 6000. z7u reached the replica only inside z8b. The census (18:25) leaves z9u two possible set-2 cells, and z7u's target, rose A vs YokoOno, is a set-4 loss.
   - z9v's falsifiers (SNAPSHOT, 18:33): chain cq51 must win rose A/B vs araid and agtr, >= 5 of 8 fullofsecrets games and evileye A vs agrab; then the s7 zd276 / s6 zd277 gates and the replica rules.
   - z9s's 12 sent matches play out. The z9s and z9u queue rows were removed unsent, and z9v's 16 rows are queued, Merlin first. Screen queue: zd276 (running), zd277, zd274 (resumes at 10), zd275.
+- 18:50: **z9v holds falsifier 1 (cq51, 13 games).** Rose A and B vs araid and agtr all won (z3x lost A vs araid r1285 and A vs agtr r937). fullofsecrets won 6 of 8 (A 4 of 4; B won vs araid and agtr, lost vs abrk r1275 and agrab r1407; z3x 0 of 8, z9s 6 of 8 with the same two B losses). Evileye A vs agrab won at r874, equal to z3x's game.
+  - cq50 (z9u, for the record) finished: rose B vs araid and dirtpassageway B vs araid equal z3x's games; evileye A vs agrab equals z3x's (W r874). The KING_ROAM + 1 floor removes z9s's evileye freeze and keeps all 8 fos games.
+  - Next: the s7 screen zd276 (29 of 48 cells) and s6 zd277. z9v's 16 replica rows wait on the hourly limit.
+  - VM disk was 1.7 GB: pruned 39 replica replays older than 36 h, deleted .bc26 files in cq47-cq50 and gzipped turns.tsv in cq45-cq47 (cqs2.py reads only summaries there). Now 2.4 GB.
