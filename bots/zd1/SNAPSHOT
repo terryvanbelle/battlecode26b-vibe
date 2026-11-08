@@ -1,0 +1,15 @@
+name=zd1
+source=bots/zc9
+source_sha=3fc07187378e
+commit=8670d550
+created=2026-11-08 03:46 PST
+
+zd1 = z3x + KING_TRAPS (reactive only: FORT_TRAPS 0, KING_TRAP_DIST2 13) + CASH_READ_LEFT 6000. Snapshot of zc9 with RUSH_FROM put back to 4, so Cfg.java and Baby.java are the only files that differ from z3x: four Cfg lines (KING_TRAPS false to true, KING_TRAP_DIST2 20 to 13, FORT_TRAPS 10 to 0, CASH_READ_LEFT) and z7u's budget read in cashTick's squeak loop (zc8's and zc9's overrun fix).
+Lever: at war a king whose action is still free after spawn() and bite() lays a rat trap (20 cheese, floor RAT_TRAP_MIN_CHEESE 200, cap TRAP_CAP 10 live) on the ring tile (Chebyshev 2) nearest the nearest enemy baby within dist2 13, so at most one step from it. No pre-laid traps toward the centre.
+Evidence: t0c (s9s + KING_TRAPS with FORT_TRAPS 10 and dist2 20; rejected 2026-10-30, replica net -1, t -0.45) laid 8.8 king traps a game in kt1 and 1.6 fired; most were the pre-lays toward the map centre. Never tried on z3x or without the pre-lays. z3x lays no rat trap of any kind. Field (scratch ktrapop.py, z3x's 192 field games in the VM dumpcache): at war our king has its action ready with an enemy baby at dist2 9-20 and none in bite reach in 85.2 king-rounds a lost game (42.6 a won game), and enemy bites on our kings are 17.4 a lost game (3.9 a won one). averyfineline B vs Finals (18763 g1): from r88, 3 to 5 enemy rats bit our king each round (538 HP at r90, dead r113). RAW_TRAPS's adjacent lays hit 96 of 97 on zd312, so a trap one step from an enemy fires.
+Registered 2026-11-08 03:47 PST, before any zd1 game.
+Falsifiers:
+  1. Chain ~/diag26b/cq86 (fresh seed 16; averyfineline, tiny, DefaultLarge, closeup: none in chains cq72-cq85; both seats vs agrab and araid; zd1 and z3x, 32 games). Any zd1 overrun or exception drops it. zd1's pooled ratTraps (its side of each chain log's last JSON line; z3x lays none) under 16 drops it as inert, and its ratTrapHits under 0.5x its ratTraps drops it (t0c's failure). zd1 winning fewer games than z3x, or losing 2 or more cells z3x won (fedpick.py), drops it.
+  2. Screens s7 zd322 (vs z3x's zd205) and s6 zd323 (vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  3. Mechanism, pooled over both screens: ratTraps under 40 drops it as inert; ratTrapHits under 0.5x ratTraps drops it.
+  4. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
