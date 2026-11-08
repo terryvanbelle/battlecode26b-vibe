@@ -1,0 +1,19 @@
+name=zdr
+source=bots/zdq
+source_sha=826b0f00d24e
+commit=30d165a1
+created=2026-11-08 13:12 PST
+falsifiers (registered 2026-11-08 13:12 PST, before any zdr game):
+  zdr = zdq with LATE_STRIKE 1 / LATE_STRIKE_FROM 1400 (from 2 / 1600): zdq's dose arm, every fighter turns attacker
+  from r1400 once cooperation is over. Same hook and ledger as zdq (Baby.java identical but for the package), so
+  zdq's twin result (zhq replays zdb in 16 of 16 cq112 cells) covers it. In cq112 zdq bit enemy kings 14 times after
+  r1600 over 12 late cells and moved no result; this arm asks whether a larger, earlier strike kills kings.
+  1. Chain ~/diag26b/cq113 (seed 38): zdr, zdq and zdb on RUN, FreeTheCheese, arrows and cheesebottles, both seats vs
+     agrab and araid (48 games). Any zdr overrun or exception drops it. Do-no-harm: zdr wins no fewer cells than zdb
+     and loses at most 1 cell zdb won. Mechanism: our rats' bites on enemy kings from r1400 summed over the cells
+     must exceed zdq's from r1400 in the same chain.
+  2. Screens on seed 1: s7 runs/zd366 vs zdb's zd343 and s6 runs/zd367 vs zdb's zd345. Paired t <= -1.5 in either
+     rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x rejects.
+  3. Replica only if zdq's block 1 passes (t > 0) or zdq is dropped for too weak a mechanism; then block 1 on set 3
+     against zdb's anchors (21016-21023, 21036-21043), the usual rules, and the same inert clause as zdq (no bite on
+     an enemy king after r1400 in blocks 1-2 drops it).

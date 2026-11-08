@@ -8499,3 +8499,6 @@
   - s7 zd364 vs zd343: n 48, D 1 (+agrab evileye B, W r2000 where zdb lost at r1786), net +1, t +1.00; transfer per round 0.988x; 0 overruns. s6 zd365 is playing.
   - Scratch twinchk.py (VM ~/diag26b): per-cell twin, candidate and base results, plus late king bites.
   - Replica: zdq goes after zdp's #298 block (4 of 16 in; 21148-21151 all won).
+- 13:12: **zdr registered (zdq's dose arm: LATE_STRIKE 1 from r1400); chain cq113 (seed 38) and screens zd366/zd367 queued**
+  - Rationale: zdq's 14 late king bites over 12 cells killed no king. zdr strikes with every fighter, 200 rounds earlier. It reaches the replica only if zdq's block 1 passes, or if zdq drops for too weak a mechanism.
+  - Dig lead closed (scratch digspend.py, diglow.py): digs by r200 average 35.7 in losses and 27.5 in wins. Digs made while our bank is under 300 average 5.3 and 5.0, so the 60-cheese dig floor (DIG_MIN_CHEESE, never tuned) is not what starves kings. The heaviest diggers (ratsareants 155 digs by r200, streetsofnewyork 142) still held a 350-960 bank at r200.
