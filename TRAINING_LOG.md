@@ -8574,3 +8574,11 @@
   - The inert clause (a late king bite in blocks 1-2) is moot after the rejection and was not read. Replays are in VM ~/diag26b/rp/zdq_b1s2_1508.tgz.
   - Tool note: the Xzibit pair of a block can carry lower ids than the rest (here 21236-21237). `contest.py matches` lists only the newest 10, so use `--pages 2`.
   - zdt submitted as #300 (zdb + LOW_BABIES 12). Block 1 is on set 3 against zdb's 21016-21023 and 21036-21043; all 16 requests went out (17661-17676).
+- 15:12: **Field trap census, and zdw (zdb + the reactive trap set with a 900 floor) registered; chain cq118 (seed 43), screens zd378/zd379**
+  - zdb's 144 cached replica games (scratch trapwhere.py, bdeath.py): we lay 0 rat traps. The field lays 5,629 (39 a game), and our rats set off 5,285 of them (50 damage and a stun each; 1,256 while carrying).
+  - Where they fire: 58% within Chebyshev 5-14 of our king, 32% before r200. AdamTan12's two bots account for 2,103 over 36 games. No enemy baby died to a trap of ours.
+  - Our babies dead to enemy traps per game: 17.3 in force losses, 11.4 in starvation losses, 9.1 in wins.
+  - The trap line's history: u4m/u5o/u8f (reactive baby traps) fired and killed (u5o: 20.2 traps and 7.9 enemy rats a game on far maps) but stayed near t 0 on the replica. u8f starved 17 of its 25 king-kill losses, and u9j's reserve fix was dropped untested with its base.
+  - zdw = zdb + BABY_RAT_TRAPS, TRAP_ADJ, TRAP_CAP 25, TRAP_SPAWN_FIRST and RAT_TRAP_MIN_CHEESE 900 (raw + global). Traps spend only near the RICH tier's 1000 band, e.g. thunderdome A vs Varun, where the bank sat at 870-985 over r100-425 before our king was bitten to death at r436. Existing switches only. bots/zdw/SNAPSHOT, zdw-cfc5a9d98b54.
+  - Falsifiers: (1) cq118: zdw and zdb on thunderdome, arrows, cheesebottles and DefaultMedium, both seats vs agrab and araid. Do-no-harm as usual; enemy rats must set off at least 3 of zdw's traps a game, with no more king starvation than zdb. (2) Screens zd378/zd379 (seed 1). (3) Replica set 4, then set 2; inert under 3 traps a game in block 1.
+  - Queue: zd374 (zdb seed-2 s7 control, playing), zd375, zd376, zd377 (zdv), zd378, zd379 (zdw). Chains: cq117 (zdv) running, cq118 next. Replica: zdt #300 block 1 on set 3.

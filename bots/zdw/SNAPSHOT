@@ -1,0 +1,21 @@
+name=zdw
+source=bots/zdb
+source_sha=638afd6102f7
+commit=59b5151a
+created=2026-11-08 15:12 PST
+falsifiers (registered 2026-11-08 15:12 PST, before any zdw game):
+  zdw = zdb + the reactive baby rat trap set at field dose (BABY_RAT_TRAPS, TRAP_ADJ, TRAP_CAP 25, TRAP_SPAWN_FIRST;
+  u8f's set) with RAT_TRAP_MIN_CHEESE 900 (from 200; raw + global): traps only while we hold about the RICH tier's
+  1000 band. Existing switches only, no new code. Field (zdb's 144 cached replica games, scratch trapwhere.py): we
+  lay 0 rat traps; the field lays 5,629 (39 a game) and our rats set off 5,285 (58% within Chebyshev 5-14 of our
+  king, 32% before r200). u8f (300 floor) killed enemy rats but 17 of its 25 king-kill losses starved; u9j's reserve
+  fix was dropped untested with its base. No twin (the change switches existing code on).
+  1. Chain ~/diag26b/cq118 (seed 43, after cq117): zdw and zdb on thunderdome, arrows, cheesebottles and
+     DefaultMedium, both seats vs agrab and araid (32 games). Any zdw overrun or exception drops it. Do-no-harm: zdw
+     wins no fewer cells than zdb and loses at most 1 cell zdb won. Mechanism: enemy rats set off zdw's rat traps
+     (trigger rows of the enemy team on rat traps) at least 3 times a game over its 16 games; and zdw's king
+     starvation deaths are no more than zdb's.
+  2. Screens on seed 1: s7 runs/zd378 vs zd343 and s6 runs/zd379 vs zd345 (t <= -1.5, an overrun, or transfer
+     per round under 0.97x rejects).
+  3. Replica after zdt (and zdv), block 1 on set 4, then set 2; the usual rules. Inert if zdw lays fewer than 3 rat
+     traps a game over block 1.
