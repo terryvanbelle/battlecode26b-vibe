@@ -8387,3 +8387,10 @@
     2. Identity: arrows A, evileye B and Hike A/B vs araid must replay zdb exactly.
     3. Screens: s7 zd356 (no far map, must be D 0) and s6 zd357.
     4. Replica: block 1 on set 3 against a zdb twin block, block 2 on set 4.
+- 09:51: **zdk = zdb + RUSH_FROM_BIG 12 registered** (zdk-29e70ec0229d; bots/zdk/SNAPSHOT)
+  - zdd's s7 flips split by map area (scratch celldiff.py, zd348 vs zd342). On maps over 441 tiles they were +7 -1: DefaultMedium A and B vs atrap3, A vs agtr, B vs agrab; Stash A vs agtr and atrap3; cheesefarm A vs atrap3; lost Stash A vs agrab. On maps of 441 tiles or fewer they were +4 -3, losing tiny A vs agrab, tiny B vs atrap3 and evileye A vs agtr. zdi lost tiny B twice in cq105.
+  - zdk keeps zdb's 12 rushers at 441 tiles or fewer and sends 4 (spawn index 12-15) on larger maps. The split was chosen on zd348, so only fresh data judges it.
+  - Falsifiers (09:51, before any zdk game and before any zd349 result was read; 22 of 48 were in):
+    1. zdd's s6 zd349: more large-map cells lost than gained drops it.
+    2. Chain cq107 (fresh seed 32, waits for cq104): DefaultMedium, Stash and cheesefarm, both seats vs agtr and atrap3. It drops on fewer wins than zdb, 2+ lost cells or any overrun, and tiny B vs abrk and araid must replay cq98's zdb games.
+    3. Replica vs zdb's anchors (sets 2 and 4).
