@@ -7900,3 +7900,9 @@
     - Falsifiers (SNAPSHOT, 20:31): (1) chain cq61, za5 on rose and ratsareants (A/B vs araid and agtr): king true by r400 in 5 of 8, at least 2 more wins than z3x's 4 of 8; 4 guard maps. (2) The s7/s6 gates. (3) The replica rules.
   - Probe chain **cq62** (30 games vs araid, both seats): zsh (HOR forced) on FreeTheCheese, TheHeist and corridorofdoom; zsv (VER forced) on clouds, knifefight, streetsofnewyork, uneasy_alliance and keepout; z3x controls alongside (keepout's are zd172's). It measures what knowing the symmetry would buy on each map.
   - VM disk: cq57-cq59 replays removed and tables gzipped (375 to 46 MB); 2.5 GB free.
+- 20:34: **za4 dropped by falsifier 2** (chain cq60, ratsareants vs araid and agtr).
+  - The king's mask was HOR by r250 in 3 of 4 games (r109, r164, r169), which passes. B vs araid never fired and equals z3x's game (r1879).
+  - But B vs agtr was lost at r511, with both our kings killed by thrown rats and 2,955 delivered. z3x won it at r910 with two kings and 5,649. A vs araid won at r313 (z3x r261) and A vs agtr at r271 (z3x r285).
+  - Summed transfer was 0.94x z3x's (1.1x needed), and a win was lost.
+  - Screen zd286 was stopped at 12 of 48, and zd287 was pulled. za4's 16 queued replica rows were removed unsent (saved in /dev/shm/kd/za4_queue.tsv). za3's 16 sent matches (#275) still play.
+  - za5's screens zd288 (s7, vs zd205; running) and zd289 (s6, vs zd172) took the slot. Its falsifier 1 (cq61) is running.
