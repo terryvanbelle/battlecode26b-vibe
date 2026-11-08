@@ -1,0 +1,10 @@
+name=zb9
+source=bots/zb8
+source_sha=59fbac34061d
+commit=22fe31bc
+created=2026-11-08 00:07 PST
+reason=zb8's sources re-registered (z3x + MAX_BABIES_WAR 30): zb8 was dropped at falsifier 1 because its mechanism clause summed spawns over whole games, and zb8 won sooner (cq77: dirtpassageway A vs agrab r814 against z3x's r1699), so spawned came out 1.002x (bar 1.03x) while results held (13 wins to 12, +1, 0 lost). Precedent: zb5 re-registered zb2's sources with a matched-round clause. Judged only on fresh data.
+idea=as zb8: field siege cap (capbind.py): 3,500 of 12,339 lost-game king-rounds at war with an enemy baby in the king's sight had 20+ babies and a bank in [cost + 300, 1000), where the 18 cap blocks a spawn (51 a lost game, 28 a won game).
+falsifier1=(registered 00:08 PST, before any zb9 game) chain ~/diag26b/cq78, fresh seed 8: keepout, Stash, RUN and DefaultMedium, both seats, vs agrab and araid, each with zb9 and with z3x (32 games). Mechanism: our spawns (actions.tsv spawn rows of our team) at rounds up to each pair's last common round, summed over the 16 pairs, at least 1.03x z3x's. Results: zb9 wins at least z3x's count and loses at most 1 cell z3x won.
+falsifier2=screens s7 zd304 (vs zd205) and s6 zd305 (vs zd172), played by bots/zb8 (identical sources; queued at 23:37, not scored or inspected before this registration): the s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier3=the replica, block 1 on set 2 played by #285 (the zb8 build, identical sources; none of its games played at registration; t <= 0 rejects); block rules after that.
