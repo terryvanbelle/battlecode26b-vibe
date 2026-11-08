@@ -1,0 +1,35 @@
+name=za3
+source=bots/z3x
+source_sha=c585a2762c96
+commit=bc7cdc73
+created=2026-11-07 20:16 PST
+recipe=snapshot zek from zl0 + EK_SYM (new switch), then bash tools/bundle.sh za3 zl0 z3x zek: z3x + EK_SYM 150
+idea=EK_SYM (new switch; Baby.ekSym after the sense loop, Baby.ekCourier before stallCat/attack in moveDecision): up
+  to r150, a baby that sees an enemy king within Chebyshev 6 of exactly one live symmetry's mirror of ref(), with
+  every other live mirror at least 16 away, keeps only that symmetry (Sym.merge). The settling baby with the lowest ID
+  of the allied babies it sees within dist2 20 of that king walks to our nearest king for up to 150 rounds, until the
+  shared mask is as sharp as its own (report() squeaks SQ_SYM within dist2 16 of a king; the king merges and
+  publishes Comms.SYM, which every baby merges each turn).
+  Mechanism: Sym eliminates only by walls and mines whose twins have been seen, and the twins of what our rats see lie
+  on halves nobody visits. ratsareants (HOR, 55x50; kings (50,45)/(50,4)): z3x's mask stayed 7 then ROT|HOR all game
+  (cq57, sym= indicators), firstSym() gave ROT, and homeHalf put our western mines (6,31), (13,29), (17,34) on the
+  enemy side; we never worked them, and Varun took them in 23 of 24 replica losses there. The rushers stand at the
+  HOR spot (50,4) by r30 and see the king there; the ROT and VER spots are 46 away.
+  Probes (diagnostics, not candidates; chain cq58): zsh = z3x with Sym.mask initialised to HOR, zsv = VER. rose A vs
+  araid (VER; mask ROT|VER per zmm): z3x lost at r1285 (picked 7,940, transferred 1,420), zsv won on points (picked
+  17,561, transferred 6,189). ratsareants B vs araid: z3x won at r1879, zsh at r496.
+  Earlier symmetry work this is not: SYM_KING_GAP/HOME_START (s8t, u1f), HOME_ALL_SYM (u0h), SYM_RELAY (z5e/z5f:
+  rat-to-rat gossip of wall evidence; the king resolved sooner, the attackers did not), SYM_KING_SEEN (z5m: round-1
+  empty twin), CHIRAL_SYM (u4z), MINE_MIRROR (s4e/u5j/zmm). None used the enemy king's position as evidence or walked
+  the news home.
+ledger=both hooks are wrapped (K 18 after the sense loop, K 20 before stallCat), so za3 replays z3x exactly until an
+  enemy king is seen while the mask is ambiguous
+falsifiers (registered 2026-11-07 20:17 PST, before any za3 game):
+  1. Chain ~/diag26b/cq59 (seed 0).
+     - Mechanism: za3 on ratsareants and rose, seats A and B, vs araid and agtr (8 games; z3x's are cq57 and cq58).
+       The king's sym= is the true symmetry (2 on ratsareants, 4 on rose) by r200 in at least 6 of the 8, and za3
+       wins at least 1 more of the 8 than z3x, with summed transfer at least 1.2x z3x's.
+     - Guard: za3 and z3x seat A vs araid on DefaultMedium, wallsofparadis, Nofreecheese and whatsthecatdoin. za3
+       loses none that z3x wins.
+  2. The s7 (vs zd205) and s6 (vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
