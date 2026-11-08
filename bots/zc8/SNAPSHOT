@@ -1,0 +1,17 @@
+name=zc8
+source=bots/zl0
+source_sha=c585a2762c96
+commit=82a8d571
+created=2026-11-08 03:04 PST
+
+zc8 = z3x + RAW_TRAPS + CASH_READ_LEFT 6000: zc4 with the overrun fix (bundle.sh zc8 zl0 z3x zrw, then z7u's one-line budget read in cashTick's squeak loop and its Cfg line, by hand: zl0 has no cashTick). Baby.java and Cfg.java are the only files that differ from z3x: the rawTrap hook after tryCarry (G.settle K 18), rawTrap(), and the cashTick break.
+Reason: zc4 was rejected at falsifier 1 for 4 overruns, all in one zd312 cell (zc4 A vs atrap3, evileye, seed 0; maxBcRat 17,503). The debug rerun (~/diag26b/ov4) puts them in z3x's own cashTick during the r1880 CASH_END recall crowd (rat 13481, r1884-1891, stage 6 to 7 costing 11k; no trap laid that turn), the cost z7u's CASH_READ_LEFT capped. The trap lever itself fired: zd312 pooled 97 rat traps over 48 zc4 games with 96 hits (agrab 34/33, agtr 29/29, atrap3 34/34).
+This is a re-registration of the RAW_TRAPS lever, so it is judged only on fresh data: zc4's zd312 cells replay here up to the first cashTick break, so s7 is a reject-only safety check, never evidence for acceptance.
+Registered 2026-11-08 03:06 PST, before any zc8 game.
+Falsifiers:
+  1. The ov4 cell rerun (~/diag26b/ov8: zc8 A vs atrap3, evileye, seed 0): any overrun or exception drops it.
+  2. Chain ~/diag26b/cq84 (seed 14; knifefight, canyoudig, UncomfortablyClose, cheesefarm; both seats vs agrab and araid; zc8 and z3x, 32 games): any zc8 overrun or exception drops it; zc8's ratTraps under 16 pooled (one a game) drops it as inert; its ratTrapHits under 0.7x its ratTraps drops it; zc8 winning fewer games than z3x, or losing 2 or more cells z3x won, drops it.
+  3. Screen s6 zd320 (vs z3x's zd172), the fresh screen: paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); per-round picks z <= -2 rejects (ppr.py); ratTraps under 40 pooled drops it as inert.
+  4. Screen s7 zd321 (vs z3x's zd205), reject-only: any overrun or exception rejects; paired t <= -1.5 rejects. A pass here counts for nothing.
+  5. Ledger: an s6 cell where zc8 laid no rat trap and broke no cashTick read that does not replay z3x's control cell (same winner, rounds and transferAmt; scr_eq.py) drops it as a ledger fault; a cell with no trap that differs is checked for a cashTick break before it counts.
+  6. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
