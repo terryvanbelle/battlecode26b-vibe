@@ -1,0 +1,6 @@
+name=zad
+source=bots/zl0
+source_sha=c585a2762c96
+commit=c35249e3
+created=2026-11-07 21:27 PST
+reason=switch bot (not a candidate): zl0 + ATK_DELIVER 100 + ATK_DELIVER_COOP (z7z's switch ported off z7x's trail; hook ledgered G.settle K 20): during cooperation an attacker carrying 100+ raw delivers before attacking.

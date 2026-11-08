@@ -1,0 +1,11 @@
+name=zb2
+source=bots/zl0
+source_sha=c585a2762c96
+commit=c35249e3
+created=2026-11-07 21:27 PST
+reason=z3x + ATK_DELIVER 100 + ATK_DELIVER_COOP (z7z's switch alone, off z7x's trail; hook ledgered G.settle K 20): during cooperation an attacker carrying 100+ raw delivers before attacking.
+recipe=bots/zad = zl0 + the switch; tools/bundle.sh zb2 zl0 z3x zad refused zad's Cfg (a changed line), so zb2's Cfg and Baby hunks were merged by hand (diff vs z3x: the hook, atkHome's clause, two Cfg lines).
+idea=z7z (on z7x) won 11 of cq14's 11 to z7x's 8, flipping three cooperation starvations, and reached the replica only inside z8b (rejected at block 1 with SWAP_LOADED and the trail). New evidence (cq62 cTheHeist-A, z3x vs araid): the last cat died at r411 in cooperation and we lost on points 49-50 with transfer 860 to 895, while five attackers stalled at the y=19 wall held 1,380 of our 1,500 raw (720, 360, 160, 80, 60). In seat B the same hoard was delivered between r400 and r450 and z3x won 3,475 to 1,235.
+falsifier1=(registered 21:28 PST) chain ~/diag26b/cq71: cq14's 11 cells (rose, fullofsecrets vs araid and abrk, clockwisdom, EscapeTheNight, both seats; arrows vs agrab) plus TheHeist A/B vs araid, each with zb2 and with z3x (26 games). Mechanism: clockwisdom A+B summed transferAmt at least 2x z3x's, and on TheHeist A our raw held at the game's end under 500 (z3x 1,500). Results: zb2 wins at least z3x's count on the 13 cells and loses at most 1 cell z3x won.
+falsifier2=screens s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier3=the replica rules (block 1 on set 2, t <= 0 rejects).
