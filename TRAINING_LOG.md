@@ -7793,7 +7793,6 @@
   - Replica dumps (scratch bitebank2.py, matches from 18600): a lost game has 215 of our bites (126 before r300, 122 at a bank of 400 or more), a won game 325 (225). Bites rarely kill directly: z3x vs araid on mincemeat had 3 bite kills in 130 bites. A paid bite pays off by wounding, so throws, traps and grabs (which need us to be healthier) finish the rat.
   - The hook is ledgered in biteEnemies (K 20 with G.settle). Falsifiers are in the SNAPSHOT, registered at 17:13 before any game: chain ~/diag26b/cq43 (seed 0, 48 games; scratch cq43score.py) must show kills by our bites per bite at least 1.12x z3x's, mean damage per bite at least 11.5, transfer at least 0.95x and wins at least z3x's; then the s7 zd268 and s6 zd269 gates and the replica rules.
   - zd268 preempted the zd198 filler (3 cells done; it resumes after zd269). cq43 started at 17:14, after a first start that read no spec was cleared.
-
 - 17:21: **z9m on the replica as #268** so the replica is not idle while its screens run (precedent: z9l at 16:50). Block 1 (set 2) sent 12 matches (20014-20025); 4 rows wait in research/panel/queue.tsv. Any failed falsifier withdraws it (drop those rows).
   - cq43 at 11 of 48 games: kills by our bites per bite 0.68x z3x's (bar 1.12x); mean damage per bite 10.89 vs 9.96 (bar 11.5).
   - On mincemeat z9m makes far fewer bites than z3x: 45/76, 46/61, 27/78 and 39/69 a game. Not a cooldown effect: the engine charges the same action cooldown for `attack(loc, cheese)` as for `attack(loc)` (RobotControllerImpl.attack).
