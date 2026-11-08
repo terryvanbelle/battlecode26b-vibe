@@ -8053,7 +8053,7 @@
   - zc3 = z3x + KING_FORAGE (existing switch; u0s, never on the replica alone). On the local starvation maps (rose, fullofsecrets, EscapeTheNight) z3x's king has a home mine, so the branch would not fire there; its chain uses maps where the king starts without one.
   - Falsifiers (bots/zc2/SNAPSHOT and bots/zc3/SNAPSHOT, registered 01:00 before any game):
     1. zc2: chain ~/diag26b/cq80, fresh seed 10 (wallsofparadis, jail, pipes, streetsofnewyork, both seats, vs agrab and araid). Matched-round picked (scratch mrpick.py) at least 1.05x z3x's; wins at least z3x's; at most 1 cell lost.
-    2. zc3: chain ~/diag26b/cq81, fresh seed 11, after cq80 (uneruesansfin, where_are_you, Hike, Nofreecheese, both seats, vs agtr and araid). Matched-round king pickups at least 1.2x z3x's and 500 more; wins at least z3x's; at most 1 cell lost.
+    2. zc3: chain ~/diag26b/cq81, fresh seed 11, after cq80 (uneruesansfin, where_are_you, Hike, Nofreecheese, both seats, vs agtr and araid). Matched-round king pickups (kingPickup rows; wording fixed 01:03, before any zc3 game) at least 1.2x z3x's and 500 more; wins at least z3x's; at most 1 cell lost.
     3. Screens: zc2 s7 zd308 and s6 zd309; zc3 s7 zd310 and s6 zd311.
     4. Replica block 1 on set 2: zc2 is #286 (12 queued); zc3 follows when zc2's block is in.
   - VM disk 2.0 GB to 2.8 GB: cq78/cq79 replays deleted and tsvs gzipped, 120 replica replays over 36 h pruned.

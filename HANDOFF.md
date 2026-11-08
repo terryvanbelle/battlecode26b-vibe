@@ -103,7 +103,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     pipes, streetsofnewyork x both seats x agrab/araid; started 01:00) and ~/diag26b/cq81 (zc3, seed 11; uneruesansfin,
     where_are_you, Hike, Nofreecheese x both seats x agtr/araid; started by after2.sh when cq80's chains.sh, pid
     1894297, exits). Score zc2 with `python3 ~/diag26b/mrpick.py ~/diag26b/cq80 zc2 z3x` (matched-round picked >=
-    1.05x); zc3 needs matched-round KING pickups (pickup rows of type KING) >= 1.2x and +500. Both: wins >= z3x's,
+    1.05x); zc3 needs matched-round king pickups (kingPickup rows, column b) >= 1.2x and +500. Both: wins >= z3x's,
     <= 1 cell lost. Screens zd308/zd309 (zc2 s7/s6) and zd310/zd311 (zc3) queued on worker 1138096 (score from the
     laptop: `bash tools/score_screen.sh zd308 zc2 zd205 z3x`, s6 with zd172). Replica: zc2 is #286, block 1 on set 2
     queued (12 rows); submit zc3 and run block_v4s2.sh once zc2's block is sent.
