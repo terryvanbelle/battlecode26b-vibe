@@ -8492,3 +8492,10 @@
   - Result: n 44, D 2, net 0, t 0.00; transfer per round 0.987x; 0 overruns, 0 exceptions.
   - Flips: +araid starvation B (W r2000 where zdb lost at r800) and -araid tiny A (L r67; zdb W r82).
   - The replica block on set 4 (#298) is in the drain queue. The screen queue moves on to zdq's zd364.
+- 13:10: **zdq passes falsifier 1 (cq112, seed 37) and its s7 screen (zd364)**
+  - Twin: zhq (LATE_STRIKE_FROM 1000000) replays zdb in all 16 cells (winner, rounds and final transfer equal). 0 overruns and 0 exceptions in the 48 games.
+  - Do-no-harm: zdq won 14 cells to zdb's 14 and lost none that zdb won. Both lost rose B vs agrab and vs araid (r962).
+  - Mechanism: our rats bit enemy kings 14 times from r1600 (zdb 0), over the 12 cells that reached r1600 for each build. Final transfer moved -1,270 to +440 by cell, e.g. FreeTheCheese A vs araid 22,458 to 23,728.
+  - s7 zd364 vs zd343: n 48, D 1 (+agrab evileye B, W r2000 where zdb lost at r1786), net +1, t +1.00; transfer per round 0.988x; 0 overruns. s6 zd365 is playing.
+  - Scratch twinchk.py (VM ~/diag26b): per-cell twin, candidate and base results, plus late king bites.
+  - Replica: zdq goes after zdp's #298 block (4 of 16 in; 21148-21151 all won).
