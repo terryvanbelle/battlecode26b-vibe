@@ -1,0 +1,19 @@
+name=z9s
+source=bots/zl0
+source_sha=c585a2762c96
+commit=37744760
+created=2026-11-07 18:14 PST
+recipe=bash tools/bundle.sh z9s zl0 z3x zfy (zfy = zfv + KING_FUTILE_R 7; zfv = z9p's switch; scratch, untracked)
+idea=z9p (KING_FUTILE 8 / HOLD 300 with z9p's run rule: stand-still turns do not end a run, a turn within Chebyshev 1
+  of the home mine does) gated like z9r: runs count only while the home mine is within Chebyshev KING_FUTILE_R 7.
+  cq46 (z9p, seed 0): fullofsecrets 6 of 8 won (all four A, B vs agtr and araid; z9n 3, z3x 0), every freeze at
+  Chebyshev 6 from mine (2,26) or its twin until a late (3,35) one at 9 (fosA-abrk r1940). Rose froze 12 from the mine
+  in both seats (A (14,2)/(2,7), B (45,2)/(57,7)): A won (z3x lost r1285), B lost r1065 (z3x won r2000). The gate gives
+  both back to z3x's games. z9q (z9p + HUNGRY 300) lost fos B vs abrk and araid, which z9p won or z9n won: HUNGRY dropped.
+ledger=as z9n (K 20 with G.settle); games replay z3x's until the first freeze
+falsifiers (registered 2026-11-07 18:15 PST, before any z9s game):
+  1. Chain ~/diag26b/cq47 (seed 0, 12 games): rose A and B vs araid and rose B vs abrk equal z3x's games (no km=w);
+     fullofsecrets >= 5 of 8 won (z9p 6, z3x 0), and each fullofsecrets game z9p played without a freeze over 7 away
+     equals z9p's game.
+  2. The s7 (zd272 vs zd205) and s6 (zd273 vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
