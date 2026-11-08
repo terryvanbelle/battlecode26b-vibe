@@ -8461,3 +8461,11 @@
   - Queue: zd359 (zdk s6, playing), zd360, zd361.
 - 11:48: **zdk passes falsifier 4's s6 screen zd359** (vs zdb's zd345, seed 1): n 44, D 2 (+abrk DefaultSmall A, +araid starvation B), net +2, t +1.43; picks/100 31.32 to 32.96 (per-cell z -0.20); transfer per round 7.560 to 7.425 (1.018x); 0 overruns, 0 exceptions. All 16 cells on maps of 441 tiles or fewer replay zdb's games (winner, rounds, both transfers). Only replica block 1 binds now (14 of 16 matches played).
   - Tool note: screen_t.py, xpr.py and celldiff.py take bare bot names (zdk, zdb); with `bots/` prefixes they pair the wrong side and print n 22.
+- 11:52: **zdk REJECTED at replica block 1** (#296, set 2: 21048-21051, 21065-21068, 21079-21082, 21090-21093 vs zdb's 20984-20999): 48 cells, 40 alike, D 8 (+1 -7), net -6, t -2.12; block 1 rejects at t <= 0.
+  - Gained ratsareants A vs Varun. Lost Xzibit sunandmoon B, YokoOno Hike B, averystrangespace B and streetsofnewyork A, Varun clouds A and B, collegejunior learn_your_lesson A.
+  - The opening rush is the field lever: 4 rushers lose the rush-kill and king-wound games against YokoOno and Varun that 12 win. Locally zdk was +7 -1 (zd358), +2 (zd359) and 9-4 (cq107). With u0o (8 rushers, net -7) and u1o (16, net -3) the rush count is closed at 12 on every map size. Replays in VM ~/diag26b/rp/zdk_b1b_1155.tgz (21079-21093) and earlier tars.
+- 11:52: **zdo passes falsifier 1 (cq110, seed 35) and goes to the replica (#297, set 3)**
+  - Mechanism (farchk6.py, r600 or the last turn): king centre within Chebyshev 5 of a mine in 11 of the 16 target cells, at the bar. Nofreecheese 4/4 (Cheb 1 each), wallsofparadis 4/4, whatsthecatdoin 3/4 (B vs agtr ended r518 at Cheb 16), ultimatestarvation 0/4 (all four ended r157-312 at Cheb 8). zdb: 0 of 16.
+  - Outcome on the target cells: transfer at r600 41,329 to 28,084 (1.47x); wins 14 to 14; lost 1 cell (ultimatestarvation B vs agtr, zdb W r270, zdo L r157), gained 1 (whatsthecatdoin A vs agtr, W r1490 where zdb lost r722).
+  - Do-no-harm: all 8 jail/clouds cells replay zdb's games (results and transfer equal). 0 overruns and 0 exceptions in 24 zdo games.
+  - Submitted as #297 with block 1 on set 3 (8 sent, 8 queued); anchors 21016-21023 + 21036-21043. The screens zd362 (s7) and zd363 (s6) are queued behind zdp's and bind whatever the replica shows.
