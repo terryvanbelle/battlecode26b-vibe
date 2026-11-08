@@ -8532,3 +8532,8 @@
   - Mechanism (scratch chcat.py, die rows to r600): our rats killed by cats 179 to zdb's 180 (pounce 90 to 100, crush 59 to 51, scratch 30 to 29). It is under zdb's as registered, but one kill is no signal, so the cat-yield reading is unproven; the averyfineline gains are the evidence.
   - zds: 0 overruns and 0 exceptions in 16 games (agrab 6 and araid 10 overruns).
   - Next: screens zd368 (playing) and zd369, then the replica after zdq (#299, 8 of 16 in).
+- 14:09: **zds REJECTED at its s7 screen zd368** (vs zdb's zd343, seed 1)
+  - Result: n 48, D 3, all lost, net -3, t -1.77; the bar rejects at t <= -1.5. Transfer per round 5.441 to 5.953 (0.914x), also under the 0.97x bar. 0 zds overruns (agrab 1, agtr 1).
+  - Lost cells, all vs agtr from seat B: DefaultMedium (L r292; zdb W r186), bed (L r212; zdb W r152), cheesefarm (L r418; zdb W r2000).
+  - Reading: rats that stop defending a cat at the king to fight enemy babies gain local fights on averyfineline but lose king races to agtr, and gather less. The CAT_YIELD line closes on zdb.
+  - zd369 (s6) was stopped at its start and taken off the queue. zd370 (zdt s7) now plays, zd371 queued. The replica slot after zdq goes to zdt if cq115 passes.
