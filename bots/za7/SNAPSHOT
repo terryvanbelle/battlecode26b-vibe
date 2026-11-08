@@ -1,0 +1,24 @@
+name=za7
+source=bots/za6
+source_sha=a2b13cf147d8
+commit=2e8561d7
+created=2026-11-07 20:43 PST
+recipe=bash tools/snapshot.sh za7 bots/za6, then SYM_MINELIST = true in Cfg.java: z3x + SCOUT_SYM + SYM_MINELIST
+idea=SYM_MINELIST (existing switch from s4k, 2026-10-28; only ever queued inside the s4k bundle and never scored): the
+  team's mine list is symmetry evidence. A listed mine whose s-twin a rat has seen without a mine rules out s (unseen
+  twins are marked and checked on first sight), and the king also rules out s when a listed mine's s-twin would sit
+  closer than the engine's mine spacing (d2 25) to another listed mine.
+  Why now: Sym memory is per robot, so a symmetry falls only when one rat has seen both twins itself. On rose za5's
+  scouts walk our top centre (SCOUT_SYM) while the gatherers working (35,8) are other rats, and the king's mask
+  stayed ROT|VER all game in cq61. With the list as evidence, (35,8) listed plus a scout seeing (24,23) empty rules
+  out ROT, and the king rules it out itself once (24,24) is listed next to (35,8)'s ROT twin (24,23). The VER-forced
+  probe zsv (cq58) shows what a resolved mask buys on rose.
+falsifiers (registered 2026-11-07 20:43 PST, before any za7 game):
+  1. Chain ~/diag26b/cq64 (seed 0): za7 on rose and ratsareants, A and B vs araid and agtr (8 games; za5's are cq61,
+     z3x's cq57/cq58). The king's sym= is the true symmetry (4 rose, 2 ratsareants) by r400 in at least 5 of 8
+     (za5: 2), and za7 loses none of the 8 (za5 won all 8).
+  2. Fresh maps (run only after 1 passes): chain cq65 = cq63's 16 cells with za7. za7 wins no fewer than za6 there,
+     and its summed transfer is at least 0.97x za6's.
+  3. The s7 and s6 gates (screens to be queued after zd288/zd289): t <= -1.5, overruns, transfer per round under
+     0.97x.
+  4. The replica rules.
