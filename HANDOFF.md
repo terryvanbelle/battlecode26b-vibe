@@ -108,6 +108,11 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     laptop: `bash tools/score_screen.sh zd308 zc2 zd205 z3x`, s6 with zd172). Replica: zc2 is #286, block 1 on set 2
     queued (12 rows); submit zc3 and run block_v4s2.sh once zc2's block is sent.
   - zb9 dropped (matched-round spawns 0.996x), zc1 withdrawn: MAX_BABIES_WAR closed (zb8, zb9, zc1).
+  - **zc4** (z3x + RAW_TRAPS, z0q's switch ported: switch bot bots/zrw on zl0, ledgered G.settle K 18; zc4-b265bbe617be)
+    and **zc5** (z3x + RUSH_FROM 12, one Cfg line; zc5-708e26d29627), registered 01:37 and 01:41. Screens zd312/zd313
+    (zc4) and zd314/zd315 (zc5) queued after zc3's zd310/zd311. zc4 mechanism: pooled ratTraps >= 92 and ratTrapHits
+    >= 0.7x ratTraps; no-trap cells must replay z3x's (ledger). zc5 mechanism: pooled pick amount per round >= 1.01x.
+    zd308 (zc2 s7) passed (t +0.33, transfer per round 0.993x). Replica order after zc2: zc3, then zc4/zc5 as they pass.
   - **Clockwisdom** (z3x 1-5 in the field, transfer 0-260 to their 1,480-3,425): a spiral where the nearest mines by
     path ((2,25) at 59 steps from A (56,9)) lie on the far Euclidean half; rushers stick on the bottom strip and
     gatherers explore toward the spiral core. Probed before (zth, z9h, u6f, z5f); recorded in the 01:01 log entry.
