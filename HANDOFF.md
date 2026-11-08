@@ -96,28 +96,29 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 16:50 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (16:50):**
-  - **z9l on the replica as #267** (z3x + CAT_MUTE 6 + CAT_MUTE_HEAR; bots/z9l/SNAPSHOT). Block 1 (set 2,
-    `build/block_v4s2.sh`) sent 8 at 16:50; 8 rows wait in research/panel/queue.tsv for drain-loop.sh (laptop pid 1065185).
-    Score with `python3 tools/galaxy26/contest.py paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`
+## State (2026-11-07 17:52 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (17:52):**
+  - **z9n on the replica as #269** (z3x + KING_FUTILE 8 / KING_FUTILE_HOLD 300; bots/z9n/SNAPSHOT; recipe
+    `bash tools/bundle.sh z9n zl0 z3x zfu`). The king stops its pile and mine walks for 300 rounds after 8 moves inside
+    one 3x3 box (mineWhy 'w' in km=), so carriers outside a walled pocket get a still delivery target (fullofsecrets:
+    cq44, z3x lost all 8). Block 1 (set 2, `build/block_v4s2.sh`) is 16 rows in research/panel/queue.tsv for
+    drain-loop.sh (laptop pid 1065185; the hourly limit sent none at 17:50). Score with
+    `python3 tools/galaxy26/contest.py paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`
     (block 1 rejects at t <= 0), then set 4 (`build/block_v4s4.sh`, refs 18760-18763,18783-18786,18797-18800,18810-18813).
-  - z9l's falsifiers still run (registered 16:24, TRAINING_LOG): chain ~/diag26b/cq40 (`python3 ~/diag26b/cq39score.py
-    ~/diag26b/cq40 z9l z3x` on the VM; per 1000 rounds after-ours <= 0.4x, all <= 0.85x; summed transfer >= 0.97x; wins >=
-    z3x), s7 zd266 (`bash tools/score_screen.sh zd266 z9l zd205 z3x`, net +4 at 44/48) and s6 zd267 (`... zd267 z9l zd172 z3x`).
-    Any failure withdraws z9l from the replica (drop its queue.tsv rows).
-  - Our squeaks steer attacking cats onto our own rats (TRAINING_LOG 15:56). z9k (CAT_MUTE alone) dropped at 16:26: all
-    cat attacks 0.94x summed (bar 0.85; 0.80x per 1000 rounds), and a muted rat skipped report()'s gossip reads.
-  - **z9e REJECTED 16:47** (block 2 D 3, net -1, t -0.58; pooled 90 cells D 8, net 0, t 0.00).
-  - Screen queue after zd267: zd197 (21 of 48 cells done, preempted), zd198, zd199 (z3x ablations, filler).
-  - **Closed today:** the enemy rat-trap line (TRAINING_LOG 15:43: avoidance and laying are both tried out, and a rich-bank
-    trap acts only in wins), the knifefight Merlin seat split (cq38: no local stand-in), z9j (FERRY), z9i (LOAD_FLEE),
-    z9f (block 2), z9h (EXPLORE_CENTER_FROM), z8b, z9a/z9b (PICK_TRIP), z9c (HEIR), zth, z9d (block 2), zmm, z9g. Also
-    closed without a candidate: coverage by half, held-cheese starvation, cooperation throws, disintegrate and MOAT,
-    the canyoudig scarcity race, rose B starvation, averystrangespace A, the points losses, keepout and averyfineline
-    vs Finals. Stable both-seat losses are listed in TRAINING_LOG 11:47; 29 z3x-era losses end before r450, and by
-    r150 we lose 40.2 babies to their 26.7, spread over every cause (scratch earlyk.py and earlydeath.py).
-  - VM disk 2.4 GB free (16:45; replay prune plus cq39 tsv files deleted).
+  - z9n's falsifiers (SNAPSHOT, registered 17:49): chain ~/diag26b/cq45 (24 games: z9n on fullofsecrets x8 against
+    cq44's z3x games, need >= 2 wins and >= 3x transfer; rose/clockwisdom/dirtpassageway paired with z3x, no game lost
+    that z3x wins; games without km=w must equal z3x's), s7 zd270 (`bash tools/score_screen.sh zd270 z9n zd205 z3x`) and
+    s6 zd271 (`... zd271 z9n zd172 z3x`). Any failure withdraws z9n from the replica (drop its queue.tsv rows).
+  - Screen queue: zd270, zd271 after filler zd199 (z3x ablation, running).
+  - **Closed today:** z9m (PAID_BITE, a repeat of z7i's BITE_BOOST; the paid baby bite line), z9l and z9k (CAT_MUTE,
+    a repeat of the CAT_HUSH squeak line), the enemy rat-trap line, the knifefight Merlin seat split, z9j (FERRY), z9i
+    (LOAD_FLEE), z9f, z9h, z8b, z9a/z9b, z9c, zth, z9d, zmm, z9g, z9e. Also closed without a candidate: coverage by half,
+    held-cheese starvation, cooperation throws, disintegrate and MOAT, the canyoudig scarcity race, rose B starvation,
+    averystrangespace A, the points losses, keepout and averyfineline vs Finals. Cat-bite cheese (z1h-z1k) displaces
+    trap damage. Stable both-seat losses are listed in TRAINING_LOG 11:47.
+  - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail (rows are oldest
+    first); z9k/z9l and z9m were repeats found too late.
+  - VM disk 2.5 GB free (17:40).
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
