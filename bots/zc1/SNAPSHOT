@@ -1,0 +1,10 @@
+name=zc1
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=ede7f6e0
+created=2026-11-08 00:12 PST
+reason=z3x + MAX_BABIES_WAR 40 (from 18; existing constant): zb9's dose arm. At war, with enemies in the king's sight and the bank at least cost + WAR_FLOOR, the baby cap is 40 (the RICH_BABIES level, without its 1000 bank).
+idea=field siege cap (capbind.py, as zb8/zb9) and army size during theft (theft.py): when they pick our half's cheese with none of ours within Chebyshev 4, in losses we have 14.8 babies alive to their 24.3 (in wins 19.1 to 20.6).
+falsifier1=(registered 00:13 PST, before any zc1 game) chain ~/diag26b/cq79, fresh seed 9, started when cq78 ends: dirtpassageway, thunderdome, cheesebottles and DefaultMedium, both seats, vs agrab and araid, each with zc1 and with z3x (32 games). Mechanism: our spawns up to each pair's last common round, summed over the 16 pairs, at least 1.05x z3x's. Results: zc1 wins at least z3x's count and loses at most 1 cell z3x won.
+falsifier2=screens s7 zd306 (vs zd205) and s6 zd307 (vs zd172): the s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier3=the replica, block 1 on set 2 (t <= 0 rejects), after zb9's block; block rules after that.

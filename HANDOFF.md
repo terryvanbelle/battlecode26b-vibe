@@ -96,25 +96,31 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 23:28 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (23:28):**
-  - **zb7** (bots/zb7 = z3x + THROW_CHECK, one Cfg line; zb7-b0633f4a0667). Falsifier 1: chain ~/diag26b/cq76 (seed 5,
-    32 games: arrows, evileye, dirtpassageway, thunderdome x both seats x agrab/araid x zb7/z3x). Our friendlyDmg over
-    zb7's 16 games <= 0.5x z3x's (void if z3x's < 300), throws >= 0.85x, wins >= z3x's, <= 1 cell lost. Score from the
-    NAME.log JSON lines (field friendlyDmg, throws in the A/B dicts). Falsifier 2: screens zd302 (s7, `bash
-    tools/score_screen.sh zd302 zb7 zd205 z3x`) and zd303 (s6, `... zd303 zb7 zd172 z3x`). Falsifier 3: replica #282,
-    block 1 on set 2 (drain "active build zb7"); score with `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`.
-  - **Field loss study (23:23 log entry):** our kings die to enemy throws of our own rats (237 throws, 9,045 hp in 64
-    losses; Merlin, waxmango) and bites; our own throws hit our king 33 times. Merlin out-delivers us 2x from r150
-    and grabs 92 to our 34. Closed families on this axis: AMMO_AWAY (u1v), RETREAT_HP (u7d-z0m), GLANCE (u5i),
-    RESCUE (u6g), BITE_CARRIER/BITE_GUARD (s4i), KING_BITE_CARRIER (u7b), GRAB_MICRO (overruns). The 11-05 capability
-    sweep (v0a-v0o) never ran: those switches are untested on z3x. Scratch: /dev/shm/kd/kingdmg.py, grabs.py,
-    ffire.py, grabwar.py, bitedmg.py, econ.py, flip.py (copied to VM ~/diag26b; run on build/dumpcache with PKG z3x).
-  - Dropped tonight: zb6 (ATK_NEWS_TTL), zb5/zb3/zb2 (ATK_DELIVER_COOP: coop-only, inert in the field), zb4,
-    zb1, za9, za6/za5, za3/za4, za1/za2, z9v.
+## State (2026-11-08 00:15 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (00:15):**
+  - **zb9** (bots/zb9 = zb8's sources = z3x + MAX_BABIES_WAR 30, one Cfg line; zb9-868247cab6d0), re-registered after
+    zb8 failed a whole-game spawn clause (game-length confound; results 13-12, +1 -0). Falsifier 1: chain
+    ~/diag26b/cq78 (seed 8; keepout, Stash, RUN, DefaultMedium x both seats x agrab/araid x zb9/z3x, started 00:08).
+    Score: `python3 ~/diag26b/mrspawn.py ~/diag26b/cq78 zb9 z3x` on the VM (matched-round spawns >= 1.03x, wins >=
+    z3x's, <= 1 cell lost). Falsifier 2: zd304 (s7, bots/zb8) PASSED (n 48, D 11, net -1, t -0.30, 0 overruns,
+    transfer per rat-turn 1.003x); zd305 (s6, bots/zb8) running: `bash tools/score_screen.sh zd305 zb8 zd172 z3x`
+    (from the laptop). Falsifier 3: replica #285 (the zb8 build; 16 rows in research/panel/queue.tsv, drain "active
+    build zb8"); score with `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`.
+  - **zc1** (bots/zc1 = z3x + MAX_BABIES_WAR 40; zc1-238244270fef), zb9's dose arm. Falsifier 1: chain ~/diag26b/cq79
+    (seed 9; dirtpassageway, thunderdome, cheesebottles, DefaultMedium), started by ~/diag26b/after2.sh when cq78's
+    chains.sh (pid 1810677) exits; matched-round spawns >= 1.05x. Screens zd306 (s7) and zd307 (s6) queued after
+    zd305. Replica after zb9's block (submit, then block_v4s2.sh; the drain sends only the latest submission's rows:
+    submitting a new build holds the old one's unsent rows, as zb8's #283 did to zb7 at 23:39).
+  - **Field studies (00:08 log entry):** starvation in 42 of 68 losses (starveloss.py); in losses they work 2.35 of
+    our half's mines (1.05 in wins) and 76% of their our-half picks happen with none of ours within 4 (theft.py),
+    while we have 14.8 babies alive to their 24.3; wallsofparadis vs Finals: we work 1 mine, they dig into all 4
+    inner ones (minework.py). Scratch in /dev/shm/kd and VM ~/diag26b: capbind.py, starveloss.py, minegap.py,
+    theft.py, minework.py, kingbite.py, chainscore.py, mrspawn.py.
+  - Dropped tonight: zb8 (spawn clause), zb7 (THROW_CHECK, friendly fire 0.581x), zb6, zb5/zb3/zb2, zb4, zb1, za9,
+    za6/za5, za3/za4, za1/za2, z9v. Closed king-defence families: AMMO_AWAY, RETREAT_HP, GLANCE_MEM, RESCUE,
+    BITE_CARRIER/BITE_GUARD, KING_BITE_CARRIER, KING_BITE_MAX, GUARD_KING_R, KING_FLEE, KING_PRESS, GRAB_MICRO.
   - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail.
-  - VM disk 2.5 GB (23:26, after deleting replays of 14 rejected screens and pruning 70 replica replays). Laptop ~168 MB
-    free; /dev/shm ~81 MB free (scratch /dev/shm/kd).
+  - VM disk 2.8 GB (00:10, after deleting cq75-cq77's replays). Laptop ~168 MB free; /dev/shm ~70 MB free.
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
