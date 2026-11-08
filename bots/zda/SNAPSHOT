@@ -1,0 +1,14 @@
+name=zda
+source=bots/zd9
+source_sha=68c2162ef56f
+commit=4bd7e1f5
+created=2026-11-08 06:32 PST
+
+zda = z3x + SPAWN_FLOOR 100 (from 300) + CASH_READ_LEFT 6000: zd9's dose arm. Snapshot of zd9 with one Cfg line changed (200 -> 100); Cfg.java and Baby.java (z7u's budget read) are the only files that differ from z3x.
+Lever: as zd9's (bots/zd9/SNAPSHOT): the floor binds only the spawns the income test passes; boot spawns keep CORE_FLOOR 300, war spawns WAR_FLOOR 300, and under LOW_BABIES 8 every floor is already LOW_FLOOR 100. The arm adds the 'f' stops with the bank in [price + 100, price + 200).
+Evidence: every king turn of z3x's local chains cq92, cq93 and cq95 (rounds 50-1500, under 18 babies; scratch swhy.py) has 781 'f' stops, 612 with the bank in [price + 200, price + 300) and 142 in [price + 100, price + 200); and 631 's' stops (the income test fails), 319 of them in the 200 band.
+Registered 2026-11-08 06:33 PST, before any zda game.
+Falsifiers:
+  1. Chain ~/diag26b/cq97 (seed 24): zda on cq96's 16 cells (evileye, arrows, clouds, dirtpassageway, both seats vs agtr and araid), scored against cq96's z3x games (same seed and cells; z3x is deterministic). Any zda overrun or exception drops it. Mechanism (rounds.tsv, our babies column): zda's mean live babies over the rounds 100-500 each game reached, summed over its 16 games, must be at least z3x's sum + 16; else it is inert and dropped. zda winning fewer of its 16 games than z3x drops it.
+  2. Screens s7 (zd340 vs z3x's zd205) and s6 (zd341 vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  3. Replica, against z3x's set anchors (after zd8 and zd9 are decided): block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
