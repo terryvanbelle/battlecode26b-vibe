@@ -8549,3 +8549,8 @@
   - Result: n 48, D 3 (+1 -2), net -1, t -0.57; transfer per round 0.995x; picks per-cell z -1.56; 0 zdt overruns (agrab 1, agtr 1).
   - Flips: +agtr tiny A (W r79; zdb L r70), -atrap3 bed B (L r239; zdb W r353), -atrap3 starvation B (L r1054; zdb W r1679, though one of zdb's kings starved there).
   - Stash A vs agtr and vs atrap3, zdb's two local starvation losses, are unchanged. s6 zd371 is playing; cq115 is 18 of 32 in.
+- 14:33: **zdt passes falsifier 1 (cq115, seed 40)**
+  - Outcome: zdt and zdb both won all 16 cells (mercifullattice, wallsofparadis, Nofreecheese and ratsareants, both seats vs agrab and araid). The 12 r2000 cells end alike; ratsareants ended r685 / r424 / r380 / r898 to zdb's r862 / r380 / r374 / r956.
+  - Mechanism (scratch lowspawn.py 8 12): 92 low-band spawns (babies in [8, 12), bank under price + 300) to zdb's 0, all on ratsareants (6, 19, 11, 56). King starvation deaths 0 to 0, so "no more than zdb" holds.
+  - zdt: 0 overruns and 0 exceptions (araid 52, agrab 2).
+  - Next: s6 zd371 (playing), then the replica after zdq. cq116 (zdu) now runs.
