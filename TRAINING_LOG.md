@@ -8469,3 +8469,7 @@
   - Outcome on the target cells: transfer at r600 41,329 to 28,084 (1.47x); wins 14 to 14; lost 1 cell (ultimatestarvation B vs agtr, zdb W r270, zdo L r157), gained 1 (whatsthecatdoin A vs agtr, W r1490 where zdb lost r722).
   - Do-no-harm: all 8 jail/clouds cells replay zdb's games (results and transfer equal). 0 overruns and 0 exceptions in 24 zdo games.
   - Submitted as #297 with block 1 on set 3 (8 sent, 8 queued); anchors 21016-21023 + 21036-21043. The screens zd362 (s7) and zd363 (s6) are queued behind zdp's and bind whatever the replica shows.
+- 12:08: **zdp passes falsifier 1 (cq111, seed 36); its replica block waits for zdo's #297**
+  - Twin: zhe (HEIR_BABIES 1000000) replays zdb in all 12 cells (winner, rounds and final transfer equal), on arrows, thunderdome and cheesebottles, both seats vs agrab and araid.
+  - zdp: 0 overruns and 0 exceptions in 12 games. Outcome is not a clause, but it lost arrows A vs agrab (L r1825, transfer 9,323; zdb W r2000, 10,403). thunderdome B vs araid ended r39 to zdb's r42, lost by both. The other 10 cells are equal.
+  - Next: replica block 1 on set 4 once zdo's set-3 block leaves the slot. Screens zd360 (playing) and zd361 still bind.
