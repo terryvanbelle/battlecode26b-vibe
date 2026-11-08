@@ -96,27 +96,23 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 20:42 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (20:42):**
-  - **Symmetry line (open).** Sym eliminates a symmetry only when a wall or mine and its twin have both been seen.
-    On non-ROT maps where ROT stays live, firstSym() gives ROT, and homeHalf() hands part of our true half to the
-    enemy. Census (~/diag26b/ekeval_all.txt): HOR FreeTheCheese, TheHeist, corridorofdoom; VER rose, keepout, tiny,
-    knifefight, clouds, uneasy_alliance, streetsofnewyork; plus ratsareants (HOR). The probes zsh/zsv (Sym.mask
-    forced to HOR/VER; diagnostics only) flipped rose A vs araid (cq58). Chain cq62 measures the probes on the other
-    maps against z3x (c* games).
-  - **za6 on the replica as #277** (= za5's sources = z3x + SCOUT_SYM, `bash tools/bundle.sh za5 zl0 z3x zsc`). While
-    two or more symmetries are live, exploreHome (scouts, seekers) also takes never-seen tiles that are home under any
-    live symmetry. za5 won 8 of 8 in cq61 (z3x 6), but the king's mask resolved in only 2, so za5 was dropped by its
-    mechanism criterion. za6 re-registers the switch under a harvest hypothesis on fresh maps (bots/za6/SNAPSHOT):
-    chain ~/diag26b/cq63 (8 maps x 2 seats vs araid, against cq62's c* games and zd172's keepout cells); screens
-    zd288 (s7; `bash tools/score_screen.sh zd288 za5 zd205 z3x`) and zd289 (s6; `... zd289 za5 zd172 z3x`). Block 1 is
-    16 rows in research/panel/queue.tsv behind za3's 16 sent matches (#275, a near-twin of z3x). Score with
-    `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`.
-  - Dropped tonight: za3/za4 (EK_SYM: an enemy-king sighting settles the symmetry, and a courier walks it home. za3
-    never fired; za4 lost ratsareants B vs agtr; offline 27 firings, 0 wrong, ~3% reach), za1/za2 (KING_FACE_N),
-    z9v (replica block 1).
+## State (2026-11-07 22:12 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (22:12):**
+  - **Delivery line (open).** Rose A vs araid: our base is sealed; attackers see the centre mines from r256, but only
+    gatherers and scouts courier, so the king listed (2,7) alone all game in z3x's games. Clockwisdom: couriers never
+    find the way home through the spiral (and under ROT (2,25) counts as enemy-half). Scratch: /dev/shm/kd/bfs.py,
+    newsgap.py, firstml.py, cutscan2.py (copied to VM ~/diag26b).
+  - **zb3** (bots/zb3; = zb2's code = z3x + ATK_DELIVER 100 + ATK_DELIVER_COOP; transfer hypothesis). Falsifier 1:
+    chain ~/diag26b/cq72 (seed 1, 33 games). Falsifier 2: zd296 (s7, identical to z3x on 48/48: pass) and zd297 (s6,
+    `bash tools/score_screen.sh zd297 zb2 zd172 z3x`). Falsifier 3: replica on zb2's build (#280; drain "active build
+    zb2", 12 rows queued); block 1 on set 2, score with `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`.
+  - **zb4** (bots/zb4; z3x + ATK_NEWS, switch bot bots/zan): in cooperation attackers carry unlisted home-half mines
+    to the nearest king. Falsifier 1: chain ~/diag26b/cq73 (seed 2, 32 games; mechanism clause on rose A ml= and
+    identity of no-'n' games). Screens zd298 (s7) and zd299 (s6) queued behind zd297. Not yet on the replica.
+  - Dropped tonight: zb2 (mechanism clause), zb1 (EXPLORE_TTL), za9 (SYM_PROBE), za6/za5 (SCOUT_SYM), za3/za4,
+    za1/za2, z9v.
   - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail.
-  - VM disk 2.5 GB (20:33). Laptop ~37 MB free: scratch to /dev/shm/kd, repacked loose objects 20:36.
+  - VM disk 2.1 GB (22:00, after pruning 42 replays). Laptop ~168 MB free; /dev/shm ~81 MB free (scratch /dev/shm/kd).
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
