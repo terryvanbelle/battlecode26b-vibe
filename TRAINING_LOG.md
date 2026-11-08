@@ -8526,3 +8526,9 @@
   - zdt = zdb + LOW_BABIES 12 (from 8; never tuned): under 12 live babies every spawn floor drops to LOW_FLOOR 100. SPAWN_FLOOR 100 on every spawn (zdf) lost replica block 1; this cut binds only a thinned army. bots/zdt/SNAPSHOT, zdt-e141a3f087c7.
   - Falsifiers: (1) cq115: zdt and zdb on mercifullattice, wallsofparadis, Nofreecheese and ratsareants, both seats vs agrab and araid; no overrun or exception, wins no fewer than zdb, at most 1 lost cell; at least 8 spawns with babies in [8, 12) and the bank under price + 300, more than zdb, and no more king starvation deaths. (2) Screens zd370 (s7) and zd371 (s6). (3) Replica after zdq and zds, set 3 then set 2.
   - Also seen: the enemy breaks the truce in 92 of zdb's 144 field games (we do in 39), at a mean of r124.
+- 14:05: **zds passes falsifier 1 (cq114, seed 39), the mechanism clause by one kill**
+  - Twin: zhs (CAT_YIELD_FROM 1000000) replays zdb in all 16 cells (winner, rounds and final transfer equal), on tiny, DefaultMedium, averyfineline and DefaultSmall, both seats vs agrab and araid.
+  - Outcome: zds won 13 cells to zdb's 11 and lost none that zdb won. Gained averyfineline A vs agrab (W r299; zdb L r255) and averyfineline B vs agrab (W r224; zdb L r217).
+  - Mechanism (scratch chcat.py, die rows to r600): our rats killed by cats 179 to zdb's 180 (pounce 90 to 100, crush 59 to 51, scratch 30 to 29). It is under zdb's as registered, but one kill is no signal, so the cat-yield reading is unproven; the averyfineline gains are the evidence.
+  - zds: 0 overruns and 0 exceptions in 16 games (agrab 6 and araid 10 overruns).
+  - Next: screens zd368 (playing) and zd369, then the replica after zdq (#299, 8 of 16 in).
