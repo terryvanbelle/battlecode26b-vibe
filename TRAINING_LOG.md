@@ -8119,3 +8119,9 @@
 - 03:07: **zc7 DROPPED at falsifier 1** (chain ~/diag26b/cq83, seed 13; scratch fedpick.py, 14 of 16 pairs in). zc7 lost 2 cells z3x won (bar: at most 1): 5t4rv4t10n_1337 A vs agrab (L r250, z3x W r313) and sunandmoon A vs araid (L r656, z3x W r949). Gained none; wins 11 to 13 with the 2 Meow araid pairs still running.
   - The mechanism clause held easily: 53 fed kills to z3x's 3 (bar: 2x and 8 more), 0 overruns, 0 exceptions. Feeding fires, but the lost cells show fewer kills from the throws it replaces: 5t4rv4t10n A agrab killsRat 19 vs 30 and deathsByEnemy 37 vs 27, with 40 throws vs 63.
   - Screens zd318/zd319 pulled from the queue unplayed. Queue now zd317, zd320, zd314, zd315, zd321.
+- 03:15: **zc8 falsifier 1 holds; zc7 also overran** (both on the VM).
+  - ov8 (zc8 A vs atrap3, evileye, seed 0, the cell where zc4 overran 4 times): 0 overruns, 0 exceptions, worst rat turn 16,302 bytecodes (zc4: 17,503). zc8 lost it on points at r2000, as zc4 did; 1 trap laid.
+  - cq83's Meow B vs araid game: zc7 overran 13 times at r1882-1885 (worst 17,598), the same CASH_END crowd turns, so zc7 also fails falsifier 1's overrun clause.
+  - In the field the crowd overrun does not show: z3x's 192 field games in the VM dumpcache have no rat turn over 17,500 bytecodes past round 1 (scratch fov.py). CASH_READ_LEFT is a local-screen repair, so it should go into every new z3x candidate.
+  - Field tallies (VM dumpcache; scratch oppz.py, seatsplit.py): z3x is 7-17 vs Merlin and 14-21 vs each other set opponent. Merlin's transfer is about 2x ours in every loss and about even in the 7 wins. 14 opponent-map pairs split by seat (9 won as B), under all three symmetries.
+  - HANDOFF's state block rewritten for 03:14.

@@ -96,38 +96,33 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 01:01 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (01:01):**
-  - **zc2** (bots/zc2 = z3x + SEEK_FRONTIER, one Cfg line; zc2-36c765e978e4) and **zc3** (bots/zc3 = z3x + KING_FORAGE;
-    zc3-9000524b2fdb), registered 01:00. Falsifier 1: chains ~/diag26b/cq80 (zc2, seed 10; wallsofparadis, jail,
-    pipes, streetsofnewyork x both seats x agrab/araid; started 01:00) and ~/diag26b/cq81 (zc3, seed 11; uneruesansfin,
-    where_are_you, Hike, Nofreecheese x both seats x agtr/araid; started by after2.sh when cq80's chains.sh, pid
-    1894297, exits). Score zc2 with `python3 ~/diag26b/mrpick.py ~/diag26b/cq80 zc2 z3x` (matched-round picked >=
-    1.05x); zc3 needs matched-round king pickups (kingPickup rows, column b) >= 1.2x and +500. Both: wins >= z3x's,
-    <= 1 cell lost. Screens zd308/zd309 (zc2 s7/s6) and zd310/zd311 (zc3) queued on worker 1138096 (score from the
-    laptop: `bash tools/score_screen.sh zd308 zc2 zd205 z3x`, s6 with zd172). Replica: zc2 is #286, block 1 on set 2
-    queued (12 rows); submit zc3 and run block_v4s2.sh once zc2's block is sent.
-  - zb9 dropped (matched-round spawns 0.996x), zc1 withdrawn: MAX_BABIES_WAR closed (zb8, zb9, zc1).
-  - **zc4** (z3x + RAW_TRAPS, z0q's switch ported: switch bot bots/zrw on zl0, ledgered G.settle K 18; zc4-b265bbe617be)
-    and **zc5** (z3x + RUSH_FROM 12, one Cfg line; zc5-708e26d29627), registered 01:37 and 01:41. Screens zd312/zd313
-    (zc4) and zd314/zd315 (zc5) queued after zc3's zd310/zd311. zc4 mechanism: pooled ratTraps >= 92 and ratTrapHits
-    >= 0.7x ratTraps; no-trap cells must replay z3x's (ledger). zc5 mechanism: pooled pick amount per round >= 1.01x.
-    zd308 (zc2 s7) passed (t +0.33, transfer per round 0.993x), but **zc2 was DROPPED 01:49** at cq80 (matched-round
-    picked 0.955x, bar 1.05x). **zc3 is on the replica as #287** (01:50; block 1 on set 2, 4 sent + 12 queued); then
-    zc4/zc5 as they pass. cq81 (zc3's chain) runs; gzip its finished-game tsvs as they land (each chain is ~700 MB raw).
-  - **Clockwisdom** (z3x 1-5 in the field, transfer 0-260 to their 1,480-3,425): a spiral where the nearest mines by
-    path ((2,25) at 59 steps from A (56,9)) lie on the far Euclidean half; rushers stick on the bottom strip and
-    gatherers explore toward the spiral core. Probed before (zth, z9h, u6f, z5f); recorded in the 01:01 log entry.
-  - Next fresh chain seed: 12.
-  - **Field studies (00:08 log entry):** starvation in 42 of 68 losses (starveloss.py); in losses they work 2.35 of
-    our half's mines (1.05 in wins) and 76% of their our-half picks happen with none of ours within 4 (theft.py),
-    while we have 14.8 babies alive to their 24.3; wallsofparadis vs Finals: we work 1 mine, they dig into all 4
-    inner ones (minework.py). Scratch in /dev/shm/kd and VM ~/diag26b: capbind.py, starveloss.py, minegap.py,
-    theft.py, minework.py, kingbite.py, chainscore.py, mrspawn.py.
-  - Dropped tonight: zb9 (matched-round spawns), zc1 (withdrawn), zb8 (spawn clause), zb7 (THROW_CHECK, friendly fire 0.581x), zb6, zb5/zb3/zb2, zb4, zb1, za9,
-    za6/za5, za3/za4, za1/za2, z9v. Closed king-defence families: AMMO_AWAY, RETREAT_HP, GLANCE_MEM, RESCUE,
-    BITE_CARRIER/BITE_GUARD, KING_BITE_CARRIER, KING_BITE_MAX, GUARD_KING_R, KING_FLEE, KING_PRESS, GRAB_MICRO.
-  - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail.
+## State (2026-11-08 03:14 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (03:14):**
+  - **zc6** (z3x + GRAB_MICRO_L; zc6) is on the replica as #288: set-2 block 1 (requests after 20547; 10 played at
+    03:14, Icarus and Merlin still queued for the drain). Its falsifiers 1 and 5 (chains gm3, cq82) held. Screens zd316
+    (s7, running) and zd317 (s6) are queued; mechanism clauses: pooled killsRat and deathsByEnemy vs z3x's, and at least
+    10 shared cells differing. Score block 1 with `contest.py paired --dir /dev/shm/rp 18722-18725,18736-18739,
+    18745-18748,18750-18753 IDS` once all 16 are in (fetch, tar to VM ~/diag26b/rp, rm local replays, packages from
+    dumpcache meta).
+  - **zc8** (z3x + RAW_TRAPS + CASH_READ_LEFT 6000; zc8-f5939776e452), registered 03:06: zc4 with z7u's overrun fix.
+    Falsifier 1 (ov8, the ov4 cell) HELD: 0 overruns, maxBcRat 16,302. Chain ~/diag26b/cq84 (seed 14; knifefight,
+    canyoudig, UncomfortablyClose, cheesefarm vs agrab/araid) starts when cq83's chains.sh (pid 2058126) exits; score
+    ratTraps, ratTrapHits and overruns from each chain log's last JSON line, and wins and lost cells with fedpick.py. Screens zd320 (s6, binding) and zd321 (s7, reject-only).
+  - **zc5** (z3x + RUSH_FROM 12): screens zd314/zd315 queued; mechanism: pick amount per round >= 1.01x.
+  - Queue order: zd316 (running), zd317, zd320, zd314, zd315, zd321 (about 23 min each).
+  - Closed tonight: zc7 (CAT_FEED; cq83 lost 2 cells and overran 13 times at r1882-1885 on Meow B vs araid, though fed
+    kills were 53 to 3), zc4 (RAW_TRAPS; 4 overruns, z3x's own cashTick in the r1880 CASH_END crowd), zc3
+    (KING_FORAGE), zc2 (SEEK_FRONTIER), zb7-zb9, zc1.
+  - **The r1880 crowd overrun** is z3x's: cashTick reads every squeak in the CASH_END recall crowd. It shows only
+    locally (agrab/araid/atrap3 cells); z3x's 192 field games in the VM dumpcache have no rat turn over 17,500 past
+    round 1 (scratch fov.py). Put CASH_READ_LEFT 6000 (z7u's line) in any new candidate that screens locally.
+  - Field picture (VM dumpcache, 212 dumps): z3x is 7-17 vs Merlin, 14-21 vs the rest (scratch oppz.py). Merlin
+    transfers about 2x ours in every loss; 63 cells were lost by every build (solid.py), nearly all king kills after
+    a backstab before r52. 14 opponent-map pairs split by seat (seatsplit.py; 9 won as B), under every symmetry.
+  - Next fresh chain seed: 15.
+  - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail. Closed king-defence
+    families: AMMO_AWAY, RETREAT_HP, GLANCE_MEM, RESCUE, BITE_CARRIER/BITE_GUARD, KING_BITE_CARRIER, KING_BITE_MAX,
+    GUARD_KING_R, KING_FLEE, KING_PRESS, GRAB_MICRO (zc6's GRAB_MICRO_L is the live variant), THIEF_LOAD.
   - VM disk 2.8 GB (00:10, after deleting cq75-cq77's replays). Laptop ~168 MB free; /dev/shm ~70 MB free.
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
