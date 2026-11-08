@@ -1,0 +1,20 @@
+name=zdy
+source=bots/zdw
+source_sha=215f2e08e39a
+commit=c86b7393
+created=2026-11-08 15:58 PST
+falsifiers (registered 2026-11-08 15:58 PST, before any zdy game):
+  zdy = zdw's sources re-registered (package rename only), judged on fresh data only. zdw was rejected at s7 screen
+  zd378 on transfer per round, 0.929x pooled. That pooled figure mixes game lengths: income per round rises through a
+  game, so a cell the candidate ends sooner scores lower per round. Split by length ratio (cand/ctrl rounds): 21 cells
+  within 0.8-1.25x give 0.992x, 13 cells zdw ended sooner 0.880x, 14 it ran longer 1.162x. So zdy's economy bar is read on
+  the length-matched cells; the pooled figure is reported too but does not reject alone.
+  1. Chain ~/diag26b/cq120 (seed 45): zdy and zdb on thunderdome, arrows, cheesebottles and DefaultMedium, both seats
+     vs agrab and araid (32 games). Any zdy overrun or exception drops it. Do-no-harm: zdy wins no fewer cells than
+     zdb and loses at most 1 cell zdb won. Mechanism: enemy rats set off zdy's rat traps at least 3 times a game over
+     its 16 games, and zdy's king starvation deaths are no more than zdb's.
+  2. Screens on seed 2 (fresh): s7 runs/zd382 vs zd374 and s6 runs/zd383 vs zd376. Rejects: t <= -1.5, any zdy
+     overrun, or transfer per round under 0.97x on the cells whose length ratio is within 0.8-1.25x (if fewer than 12
+     such cells in a screen, the pooled figure under 0.97x rejects instead).
+  3. Replica block 1 on set 4, then set 2; the usual rules. Inert if zdy lays fewer than 3 rat traps a game over
+     block 1.

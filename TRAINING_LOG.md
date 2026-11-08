@@ -8613,3 +8613,13 @@
     3. Replica set 4, then set 2.
   - zdx is compiled as zdx-6116a20c3f16. It was submitted as #302 (16 rows queued for the drain) alongside the chain and screens so the replica does not idle; a fail at 1 or 2 withdraws it.
   - VM disk: pruned 121 replica replays and removed the closed chain dirs cq111-cq117. Free space went from 1.6 to 2.7 GB.
+- 15:58: **The screen transfer bar is confounded by game length; zdy (zdw re-registered) queued on fresh seeds**
+  - Income per round climbs through a game, so pooled transfer per round penalises a candidate that ends games sooner. zdw at zd378, split by length ratio (cand/ctrl rounds):
+    - 21 cells within 0.8-1.25x: 0.992x.
+    - 13 cells zdw ended sooner: 0.880x.
+    - 14 cells it ran longer: 1.162x.
+  - zdw's rejection stands. zdy has the same sources, judged only on fresh data (bots/zdy/SNAPSHOT, 15:58, before any zdy game):
+    1. Chain cq120 (seed 45), queued behind cq119: the cq118 cells for zdy and zdb, with the same clauses as zdw's falsifier 1.
+    2. Seed-2 screens zd382 (s7 vs zd374) and zd383 (s6 vs zd376). The transfer bar is read on the length-matched cells (≥ 12 needed, else pooled); t ≤ −1.5 and overruns as usual.
+    3. Replica set 4, then set 2.
+  - Trap-dodging check before designing (scratch trapage.py, zdb's 144 field games): of 5,285 enemy rat-trap hits on our rats, 3,578 were on traps 0-2 rounds old and 99.7% of those were engaged (an enemy baby within dist2 20). That is the zone RISK_ADAPT covers, but dodging has lost five times (log 10-30, u0u: hits 1250 vs 1129). Not rebuilt.
