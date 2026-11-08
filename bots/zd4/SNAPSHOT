@@ -1,0 +1,14 @@
+name=zd4
+source=bots/zc9
+source_sha=3fc07187378e
+commit=fd4e34e1
+created=2026-11-08 04:42 PST
+
+zd4 = z3x + MINE_RR (existing switch, s9b's, one Cfg line; off since its block-1 t 0.00 on s7d, 2026-10-29) + CASH_READ_LEFT 6000. Snapshot of zc9 with RUSH_FROM put back to 4, so Cfg.java and Baby.java are the only files that differ from z3x: the MINE_RR line, CASH_READ_LEFT, and z7u's budget read in cashTick's squeak loop.
+Lever: the king squeaks each newborn's place in its role's spawn order with its start (SQ_START), and a gatherer works home mine n % m of the m known home mines sorted by distance from that start, instead of its birth-seed hash mod m. With about as many gatherers as known mines a hash leaves about a third of the mines unworked and doubles up others; the round-robin covers every known mine before any mine gets a second rat.
+Evidence (replica, VM dumpcache, z3x, games of 300+ rounds; scratch minework.py and twinwork.py): about half of our home-half mines get under 100 baby-turns before r300 (126 of 252 in losses, 176 of 360 in wins) and give us 6-8% of their spawn, while a mine with about one baby on it gives 67-80% and one with about six gives 88-95%. In losses, 0.78 home mines a game are cold for us while the opponent works their twin (we pick 42 there by r300, they pick 413 at the twins): about half of the 746-cheese pick gap by r300. Of those, about two thirds by cheese (245 a game) were mines we had already seen, many early (Stash r33-72, uneasy_alliance r34-47, fullofsecrets r5, peaceinourtime r96-107; scratch twinwork.py SIGHT=1).
+Registered 2026-11-08 04:42 PST, before any zd4 game.
+Falsifiers:
+  1. Chain ~/diag26b/cq89 (fresh seed 19; Stash, uneasy_alliance, keepout, wallsofparadis; both seats vs agtr and atrap3; zd4 and z3x, 32 games). Any overrun or exception drops it. Mechanism, over the specs where both bots' games last 300+ rounds (scratch localmine.py): the number of (game, home mine) pairs where we picked at least 25% of the mine's spawn before r300 must be at least 10% higher for zd4 than for z3x, and zd4's own picks at home mines before r300 summed over those specs must not be lower than z3x's; else zd4 is inert and dropped. zd4 winning fewer of the 16 games than z3x, or losing 2 or more cells z3x won, drops it.
+  2. Screens s7 (vs z3x's zd205) and s6 (vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  3. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
