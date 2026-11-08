@@ -8488,3 +8488,7 @@
   - Merlin won whatsthecatdoin from both seats again; the king-near-a-mine walk changed no field result there. Replays are in VM ~/diag26b/rp/zdo_b1s3_1228.tgz.
   - zdo's screens zd362 and zd363 are taken off the queue, so the queue now holds zd364 and zd365 (zdq).
   - zdp submitted as #298, block 1 on set 4. All 16 matches are in the drain queue (hourly limit).
+- 12:33: **zdp passes s6 zd361 (vs zd345), so falsifier 2 holds in full**
+  - Result: n 44, D 2, net 0, t 0.00; transfer per round 0.987x; 0 overruns, 0 exceptions.
+  - Flips: +araid starvation B (W r2000 where zdb lost at r800) and -araid tiny A (L r67; zdb W r82).
+  - The replica block on set 4 (#298) is in the drain queue. The screen queue moves on to zdq's zd364.
