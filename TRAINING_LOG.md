@@ -8582,3 +8582,8 @@
   - zdw = zdb + BABY_RAT_TRAPS, TRAP_ADJ, TRAP_CAP 25, TRAP_SPAWN_FIRST and RAT_TRAP_MIN_CHEESE 900 (raw + global). Traps spend only near the RICH tier's 1000 band, e.g. thunderdome A vs Varun, where the bank sat at 870-985 over r100-425 before our king was bitten to death at r436. Existing switches only. bots/zdw/SNAPSHOT, zdw-cfc5a9d98b54.
   - Falsifiers: (1) cq118: zdw and zdb on thunderdome, arrows, cheesebottles and DefaultMedium, both seats vs agrab and araid. Do-no-harm as usual; enemy rats must set off at least 3 of zdw's traps a game, with no more king starvation than zdb. (2) Screens zd378/zd379 (seed 1). (3) Replica set 4, then set 2; inert under 3 traps a game in block 1.
   - Queue: zd374 (zdb seed-2 s7 control, playing), zd375, zd376, zd377 (zdv), zd378, zd379 (zdw). Chains: cq117 (zdv) running, cq118 next. Replica: zdt #300 block 1 on set 3.
+- 15:28: **zdv DROPPED at falsifier 1 (cq117, seed 42): the strike barely reaches enemy kings on these maps**
+  - Mechanism (twinchk.py, R0 1400): our bites on enemy kings from r1400 were 8 to zdb's 0, short of the registered +10.
+  - Outcome: wins 14 to 14 and no cell flipped. The four r2000 points losses (FreeTheCheese, averystrangespace, keepout and rose, all B vs atrap3) stay lost, and final transfer moved -2,679 to +873 by cell. 0 overruns, 0 exceptions.
+  - With zdq's 48-of-48 replica block, the late-strike line closes. zd375 was stopped at its start and zd377 taken off the queue.
+  - The seed-2 zdb control zd374 (s7, 48 games) is complete; zd376 (s6) now plays. Both are kept as fresh-data controls for later re-registrations.
