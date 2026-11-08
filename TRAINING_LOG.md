@@ -8233,5 +8233,5 @@
   - The explore-start line (zd6 by rat, zd7 by time) is closed on clockwisdom and jail.
 - 06:03: **zd8 passes falsifier 1 (cq94) and goes to the replica as #292**
   - cq94 (seed 23; scratch bankat.py): zd8's bank at r100 summed over its 16 games was 17,940 to z3x's 7,180 (bar: z3x + 2,400). It won 15 of 16 to z3x's 13, gaining averyfineline B and canyoudig B vs agtr and losing none (both lost whereisthecheese A vs agtr). 0 overruns, 0 exceptions.
-  - The core count binds as designed: 11-13 babies at r100 in 12 of the 16 games, where z3x held 15-20. In the other four (5t4rv4t10n A agtr, canyoudig A araid, whereisthecheese A and B agtr) war spawns took it to 19-20.
+  - The core count binds as designed: 11-13 babies at r100 in 12 of the 16 games, where z3x held 15-20 in 14 of its 16 (8 in both canyoudig games vs agtr). In the other four (5t4rv4t10n A agtr, canyoudig A araid, whereisthecheese A and B agtr) zd8 held 19-20, from spawns past the core count (war or the income test).
   - The replica was idle after z9u, so zd8 went on before its screens: #292, block 1 on set 2, matches 20750-20753 sent and 12 queued for the drain. Screens zd336 (s7, running since 14:00 UTC) and zd337 (s6) still bind; a failed screen voids the block.
