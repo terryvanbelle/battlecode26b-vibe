@@ -1,0 +1,18 @@
+name=z9r
+source=bots/zl0
+source_sha=c585a2762c96
+commit=d68fd29f
+created=2026-11-07 18:04 PST
+recipe=bash tools/bundle.sh z9r zl0 z3x zfx (zfx = zfu + KING_FUTILE_R 7; scratch, untracked)
+idea=z9n (KING_FUTILE 8 / HOLD 300, z9n's run rule) gated to a near home mine: runs count only while the king's home
+  mine is within Chebyshev KING_FUTILE_R 7 (King.futile's first test). z9n failed its falsifier 2 on rose B vs araid
+  (cq45): frozen at (45,2) with mine (57,7) 12 away, its carriers took Flow paths into the one-tile corridor x=50 and
+  delivered 620 to z3x's 5,014 through the same giver tile (49,2), 0.022 transfers a round to z3x's 0.05-0.056. KING_STRICT
+  (u4v) and DELIVER_ANCHOR (u4k) lost rose on the replica too. On fullofsecrets the mine is 6 away behind the pocket
+  wall and the way round is 39 steps, so z9n's freezes there (2 fos B wins in cq45 so far, 12.7x transfer) are kept.
+ledger=as z9n (K 20 with G.settle); games replay z3x's until the first freeze (cq45: rose A vs araid and abrk EQUAL)
+falsifiers (registered 2026-11-07 18:05 PST, before any z9r game):
+  1. Chain ~/diag26b/cq47 (seed 0): rose B vs araid and abrk, and fullofsecrets A/B vs abrk, as z9r. Rose B vs araid
+     equals z3x's game (no freeze, so no km=w); the fullofsecrets games equal z9n's cq45 games (same freezes).
+  2. The s7 (zd272 vs zd205) and s6 (zd273 vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
