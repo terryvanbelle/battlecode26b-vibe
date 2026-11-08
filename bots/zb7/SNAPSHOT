@@ -1,0 +1,10 @@
+name=zb7
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=0c5baf65
+created=2026-11-07 23:20 PST
+reason=z3x + THROW_CHECK (existing switch, Baby.throwChecked; never on the replica: u1k neutral locally on u0m, v0h's sweep screen never ran). Throws count our kings out of sight (the king channel) as flight blockers, a hit on our king scores 3x a rat's, a carrier whose best flight hits one of ours holds until THROW_LATE 8, and the flight is re-checked after the turn.
+idea=field friendly fire (scratch ffire.py over z3x's cached replica dumps): our throws hit our own robots 288 times in 71 lost games (33 on our king; about 9,175 hp) and 411 times in 121 won games (30 on our king), against 2,222 hits on enemies in the losses. In thunderdome vs Varun our own throws took 194 (A) and 140 (B) of our king's 600 hp; mercifullattice B vs Icarus 118, streetsofnewyork B vs Xzibit 98.
+falsifier1=(registered 23:22 PST, before any zb7 game) chain ~/diag26b/cq76, fresh seed 5: arrows, evileye, dirtpassageway and thunderdome, both seats, vs agrab and araid, each with zb7 and with z3x (32 games). Mechanism: our friendlyDmg summed over zb7's 16 games at most 0.5x z3x's (z3x's must be at least 300, else the chain is void and reruns on seed 6), and our throws summed at least 0.85x z3x's. Results: zb7 wins at least z3x's count and loses at most 1 cell z3x won.
+falsifier2=screens s7 zd302 (vs zd205) and s6 zd303 (vs zd172): the s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier3=the replica, block 1 on set 2 (t <= 0 rejects); block rules after that.
