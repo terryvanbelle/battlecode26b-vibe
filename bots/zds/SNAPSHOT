@@ -1,0 +1,21 @@
+name=zds
+source=bots/zdb
+source_sha=638afd6102f7
+commit=e706fe29
+created=2026-11-08 13:26 PST
+falsifiers (registered 2026-11-08 13:27 PST, before any zds game):
+  zds = zdb + CAT_YIELD (z3n's switch on z1z, ported unchanged but for a CAT_YIELD_FROM round gate, 0 here; ledger as
+  z3n, K 11): at war, CAT_DEFEND (a cat within dist2 36 of our king draws every rat that sees it, the first move branch,
+  before retreat and war()) gives way when the rat sees an enemy baby within dist2 20 or our king's alert says enemy
+  rats are on it. z3n was dropped by a local mechanism clause (cy: fired in 5 of 16, +1 -1, bite damage up in 2 of 5)
+  and never played the replica. Field (zdb anchors): small-map losses vs collegejunior lost 7-15 rats to cats by r600
+  to their 1-5 (catkill2.py) while thrown rats killed our king. Twin switch bot zhs (CAT_YIELD_FROM 1000000).
+  1. Chain ~/diag26b/cq114 (seed 39, after cq113): zhs, zds and zdb on tiny, DefaultMedium, averyfineline and
+     DefaultSmall, both seats vs agrab and araid (48 games). zhs must replay zdb in every cell (winner, rounds,
+     transfer); any zds overrun or exception drops it. Do-no-harm: zds wins no fewer cells than zdb and loses at most
+     1 cell zdb won. Mechanism: our rats killed by cats (die rows crush/pounce/scratch) by r600, summed over the
+     cells, fall below zdb's.
+  2. Screens on seed 1: s7 runs/zd368 vs zd343 and s6 runs/zd369 vs zd345 (t <= -1.5, an overrun, or transfer
+     per round under 0.97x rejects).
+  3. Replica after zdq (and zdr if it goes), block 1 on set 4 (20817-20824, 20842-20845, 20848-20851), then set 3;
+     the usual rules.

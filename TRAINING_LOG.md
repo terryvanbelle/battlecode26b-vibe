@@ -8507,3 +8507,9 @@
   - The last three single-switch blocks (zdk, zdo, zdp) each left 47 of 48 cells alike, or nearly so, and lost the one that moved. The field outcome barely moves with mid-game king switches.
   - zdq s6 zd365 vs zd345: n 44, D 0, t 0.00; transfer per round 1.011x; 0 overruns, 0 exceptions. Falsifiers 1-2 hold.
   - zdq submitted as #299, block 1 on set 2 against 20984-20999. One match was sent; 12 wait in the drain queue (hourly limit).
+- 13:27: **zds registered (zdb + CAT_YIELD, z3n's switch, never on the replica); chain cq114 (seed 39) queued after cq113; screens zd368/zd369 queued**
+  - Cat kills (scratch catkills.py, catkill2.py; r600): cats kill 14-15 of our rats a game, wins and losses alike. Against collegejunior they kill 28.2 of ours to 4.9 of theirs, mostly in won cat-damage games (t_minus_five_minutes 80 and 71).
+  - In the small-map losses to collegejunior, cats killed 7-15 of ours to 1-5 of theirs (tiny A 14 by r142, DefaultMedium A 15 by r308, with 4,040 cat damage) while thrown rats killed our king.
+  - CAT_DEFEND is the first move branch for every rat, attackers included, ahead of retreat and war(). CAT_YIELD gives way to enemy rats at war. z3n tried it on z1z and was dropped locally (fired in 5 of 16, +1 -1).
+  - Engine: a pounce moves the cat's 2x2 up to dist2 13 and kills everything under it. From the cat's centre that reaches dist2 18.5, just inside GATHER_CAT_DIST 20.
+  - Against Merlin (ekbite.py): our rats bite its kings 0-2 times in most games, and Merlin's rats bite ours 0 times in all 18 games. Its king kills come from throws and starvation.
