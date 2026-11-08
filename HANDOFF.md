@@ -96,29 +96,29 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 08:05 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (08:05):**
-  - **Replica: zdb** (#293; zd8's code re-registered: z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000;
-    zdb-0c69409ceaad). Block 1 on set 4: 8 of 16 rows back (20842-20845, 20848-20851; 24 cells, all alike, D 0; replays
-    in VM ~/diag26b/rp). The Finals averyfineline and TSPAARK evileye pairs are still out (zd8 gained Finals averyfineline
-    A/B there). Score with `contest.py paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 IDS`;
-    block 2 is set 2 (`bash build/block_v4s2.sh`, then `git checkout research/panel/v4-set2.json`). Block 1 rejects at
-    t <= 0, pooled t <= 1 after block 2; accept at t >= 2 with D >= 4.
-  - zdb passed falsifier 1 (cq98) and its s7 screen (zd343 vs zd342: wins 31 to 30, flips +2 -1, xfer/round 1.011x,
-    0 overruns). zd345 (s6, vs zd344) is running: `score_screen.sh zd345 zdb zd344 z3x`, `xpr.py zd344 z3x zd345 zdb`.
-  - **zda** (z3x + SPAWN_FLOOR 100 + CASH_READ_LEFT 6000) passed falsifier 1 (cq97); screens zd340 (s7) and zd341 (s6)
-    vs zd342/zd344 are queued.
-  - **zdc** (z3x + POCKET_DIG + CASH_READ_LEFT 6000; registered 08:00): from r200 on 1,500+ tile maps, a rat reading at
-    most 1 listed mine prices dirt at 2 in Flow (G.digCost, latched). Chain ~/diag26b/cq100 (seed 27, 32 games, P 3) is
-    running; score with `python3 ~/diag26b/digs.py zdc z3x ~/diag26b/cq100` (digs on the 12 averystrangespace/rose/
-    TheHeist cells >= 2x, wins >= z3x's, transfer >= 0.9x over the 16, no overruns). Then screens zd346 (s7) / zd347 (s6).
-    Ledger lesson: a field written in a hook must live in an already-initialised class (G), or the class's static
-    initialiser runs inside the ledger window and is credited.
-  - **zdd** (zc9's sources re-registered: z3x + RUSH_FROM 12 + CASH_READ_LEFT 6000; registered 08:04): screens zd348 (s7)
-    / zd349 (s6) vs zd342 / zd344; pooled picks per game round (ppr.py sums) under 1.01x drops it.
-  - Screen queue: zd345 (running from 15:55 UTC), zd340, zd341, zd346, zd347, zd348, zd349 (about 35 min each while
-    cq100 runs; to about 20:00 UTC).
-  - Next fresh chain seed: 28.
+## State (2026-11-08 08:49 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (08:49):**
+  - **Replica: zdb** (#293; z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000; zdb-0c69409ceaad). Block 1
+    (set 4): 8 of 16 rows back (20842-20845, 20848-20851; 24 cells, all alike, D 0; replays in VM ~/diag26b/rp); the
+    Finals averyfineline and TSPAARK evileye pairs are still out. Block 2 (set 2) is already sent (requests 17344-17359;
+    pull it if block 1 rejects). Score with `contest.py paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 IDS`
+    (set 2 anchors 18722-18725,18736-18739,18745-18748,18750-18753). Block 1 rejects at t <= 0, pooled t <= 1 after
+    block 2; accept at t >= 2 with D >= 4. zdb passed both screens (zd343, zd345) and cq98.
+  - **zde** (z3x + DELIVER_FAR + CASH_READ_LEFT 6000; registered 08:47; zde-f46567647839): a far part load (10-29 raw,
+    no pile in sight, nearest king 9+ away, load under 30 rounds old, bank 200+, no enemy in view at war) stays at the
+    mine. Chain ~/diag26b/cq101 (seed 28, 32 games, P 3) is running: score with
+    `python3 ~/diag26b/tripsc.py zde 300 ~/diag26b/cq101` and the same for z3x (far20 <= 0.6x, amt >= 1.0x, wins not
+    fewer, under 2 lost cells, no overruns). Then screens zd350 (s7 vs zd342) and zd351 (s6 vs zd344).
+  - **zda** (z3x + SPAWN_FLOOR 100 + CASH_READ_LEFT 6000) passed cq97 and its s7 zd340 **vs zd205** (seed 0: t +0.33,
+    1.016x). zd341 (s6, seed 0) runs now: score vs **zd172**, not zd344 (score_screen/xpr pair cells by seat and map,
+    not seed, so the wrong control pairs silently).
+  - **zdd** (z3x + RUSH_FROM 12 + CASH_READ_LEFT 6000; registered 08:04): screens zd348 / zd349 vs zd342 / zd344;
+    pooled picks per game round (ppr.py sums) under 1.01x drops it.
+  - Screen queue: zd341 (running), zd348, zd349, zd350, zd351 (about 35 min each; to about 20:00 UTC). Add more first.
+  - Next fresh chain seed: 29.
+  - Closed since 08:05: zdc (POCKET_DIG; cq100 digs 1.25x vs a 2x bar), z6x parked (s7 zd213 inert: wins 27-27,
+    0.997x). Field censuses at 08:47 in TRAINING_LOG (backstab timing: no split; theft at war 530 vs 144 by r300;
+    pickers 36% vs 49%; replacement rushers = RUSH_UNTIL, closed).
   - Closed this morning: z9u (replica block 1: 48 alike, t 0.00), zd7 (EXPLORE_CENTER_FROM 40; cq93 mechanism 5 of 8,
     transfer 0.42x), zd6 (EXPLORE_LOCAL), zd5 (CAT_FRONT). The explore-start line is closed on clockwisdom and jail.
   - Closed tonight: z7u (replica block 1 t -1.41), zd4 (MINE_RR; s7 transfer 0.952x; s6 zd329 later t +1.77, record
