@@ -1,0 +1,22 @@
+name=zdv
+source=bots/zdr
+source_sha=d8850b7692d1
+commit=f277a112
+created=2026-11-08 14:45 PST
+falsifiers (registered 2026-11-08 14:45 PST, before any zdv game; judged only on fresh data):
+  zdv = zdr's sources re-registered unchanged (zdb + LATE_STRIKE 1 / LATE_STRIKE_FROM 1400: from r1400 at war every
+  fighter turns attacker). zdr was rejected at s7 zd366 (seed 1) by the screen transfer clause alone (0.969x against
+  the 0.97x bar) while its outcome was D 4, all gained, t +2.07 (agrab evileye A and B, atrap3 arrows B and cheesefarm
+  B, the last two r2000 points games). The transfer drop is the switch's designed cost: strikers stop delivering from
+  r1400, and war points weigh transfer 0.2 against kings 0.5. zdb's six field points losses (keepout A and B vs
+  Finals, rose A and averystrangespace A vs YokoOno, RUN A and FreeTheCheese B vs Merlin) are its target. zdq (half
+  the dose from r1600, #299) was 42 of 42 cells alike on the replica so far, so the half dose does not move the
+  field. Nothing seen on seed 1 counts here.
+  1. Chain ~/diag26b/cq117 (seed 42): zdv and zdb on keepout, rose, averystrangespace, RUN and FreeTheCheese, both
+     seats vs agrab and atrap3 (40 games). Any zdv overrun or exception drops it. Do-no-harm: zdv wins no fewer
+     cells than zdb and loses at most 1 cell zdb won. Mechanism: our rats' bites on enemy kings from r1400, summed
+     (twinchk.py with R0 1400), exceed zdb's by at least 10.
+  2. Screens on seed 2 against fresh zdb controls on seed 2 (zd374 s7, zd376 s6, the zd343/zd345 cells with seed 2):
+     s7 runs/zd375 and s6 runs/zd377. t <= -1.5, an overrun, or transfer per round under 0.95x rejects (the bar is
+     set below seed 1's 0.969x for the designed cost; seed 2 is fresh data).
+  3. Replica after zdq and zdt, block 1 on set 4 (holds keepout A and B vs Finals), then set 2; the usual rules.

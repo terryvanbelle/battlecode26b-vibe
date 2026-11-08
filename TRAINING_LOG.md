@@ -8558,3 +8558,11 @@
   - Mechanism (lowspawn.py 8 16): 66 low-band spawns to zdb's 9, so the floor cut acts. But king starvation deaths were 6 to zdb's 5, and the clause needed fewer.
   - Outcome: wins 5 to 5. Gained starvation A vs atrap3 (W r738; zdb L r750). Lost starvation B vs agtr (L r760 with 2 kings starved; zdb W r1131). Stash A and B vs atrap3 were lost by both builds (zdu r708 and r592, zdb r1062 and r634). 0 overruns, 0 exceptions.
   - Reading: spending the 300 reserve on rats with 12-16 babies alive can starve the king sooner: the new rats do not repay their price before the bank runs out. zdt's narrower band (under 12) stays live; zd372/zd373 are off the queue.
+- 14:45: **zdv (zdr's sources re-registered) and fresh seed-2 zdb screen controls; chain cq117 (seed 42)**
+  - zdq on the replica (#299, block 1 on set 2): 14 of 16 matches in (21205-21208, 21217-21220, 21238-21243). `paired --partial` against 20984-20999: 42 cells, 42 alike, t 0.00. The two Xzibit matches are still out, and block 1 rejects at t <= 0. The half-dose late strike does not move the field.
+  - zdv = zdr's code unchanged (zdb + LATE_STRIKE 1 from r1400), judged only on fresh data. zdr fell to the s7 transfer clause alone (0.969x) with D 4, all gained, t +2.07 on seed 1, and the transfer drop is the strike's designed cost. bots/zdv/SNAPSHOT, zdv-2e63585a6b44.
+  - Falsifiers:
+    1. cq117 (seed 42): zdv and zdb on keepout, rose, averystrangespace, RUN and FreeTheCheese (the maps of zdb's six field points losses), both seats vs agrab and atrap3. Do-no-harm as usual. Late king bites from r1400 must exceed zdb's by at least 10.
+    2. Seed-2 screens zd375 (s7) and zd377 (s6) against new zdb controls zd374 and zd376, with a 0.95x transfer bar.
+    3. Replica: set 4, then set 2.
+  - The seed-2 controls are the zd343/zd345 cells with seed 2. They give later re-registrations fresh screen data. Queue: zd371 (zdt s6, playing), zd374, zd375, zd376, zd377.
