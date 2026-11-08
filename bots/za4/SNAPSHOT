@@ -1,0 +1,26 @@
+name=za4
+source=bots/z3x
+source_sha=c585a2762c96
+commit=0b72bb33
+created=2026-11-07 20:27 PST
+recipe=snapshot zek2 from zek, relative test, then bash tools/bundle.sh za4 zl0 z3x zek2: z3x + EK_SYM 300 / NEAR 12 / GAP 16
+idea=EK_SYM v2 (za3's switch with the test relaxed): up to r300, a baby that sees an enemy king within Chebyshev 12 of
+  one live symmetry's mirror of ref(), with every other live mirror at least 16 farther from that king, keeps only
+  that symmetry; the settler with the lowest ID among the allied babies it sees within dist2 20 of the king walks home
+  (at most 150 rounds) until the shared mask is as sharp as its own (report() squeaks SQ_SYM within dist2 16 of a king).
+  Why v2: za3 (within 6 of one spot and 16 from the rest, by r150) never fired on ratsareants. Our first rats reach
+  the enemy king at r83-87 (cq59), when it has walked to (48-49,12-15) towards its home mine (50,19): 8-11 from the
+  HOR spot (50,4), 45 from the ROT and VER spots. Offline (scratch ekeval.py on cq57/cq59 dumps) the v2 test fires
+  on 6 of 8 ratsareants game-sides at r101-163, all on the true symmetry, while the king's mask was still ambiguous
+  (it resolved at r169-846 or never). It cannot act on rose: no rat comes within 4 of the enemy king by r300 there.
+  Mechanism and earlier work as in bots/za3/SNAPSHOT (ratsareants western mines; probes zsh/zsv in cq58).
+ledger=as za3 (K 18 after the sense loop, K 20 before stallCat): za4 replays z3x until the test fires
+falsifiers (registered 2026-11-07 20:27 PST, before any za4 game):
+  1. Offline: ~/diag26b/ekeval_all.txt (ekeval.py 12 16 300 over every dumped game on the VM, ~500 games, running):
+     of the game-sides where the test fires, at most 1 in 50 picks a symmetry other than the map's.
+  2. Chain ~/diag26b/cq60 (seed 0). za4 on ratsareants A/B vs araid and agtr (z3x's are cq57): the king's sym= is HOR
+     by r250 in at least 3 of 4; summed transfer at least 1.1x z3x's 4 games; no game lost that z3x won. Guard: za4
+     seat A vs araid on DefaultMedium, wallsofparadis, Nofreecheese and whatsthecatdoin (z3x's are in cq59) loses
+     none that z3x wins.
+  3. The s7 (zd286 vs zd205) and s6 (zd287 vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  4. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
