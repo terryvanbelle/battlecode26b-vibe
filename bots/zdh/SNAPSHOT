@@ -1,0 +1,14 @@
+name=zdh
+source=bots/zdb
+source_sha=638afd6102f7
+commit=6e17dd98
+created=2026-11-08 09:27 PST
+
+zdh = zdb + DELIVER_FAR 9 / DELIVER_FAR_WAIT 30 / DELIVER_FAR_BANK 200: zde's lever on the new incumbent. Baby.java is zde's (its hold and farHold; ledger K 11 as zde's) and Cfg.java is zdb's plus zde's DELIVER_FAR line; King.java is zdb's (CORE_SMALL). With DELIVER_FAR 99, zde's code replayed z3x's games exactly (zdesil, ~/diag26b/sil4: cheesefarm 813 rounds, DefaultLarge 682 rounds).
+Lever: a gatherer with a part load (10-29 raw) and no pile in sight holds it at its mine while the nearest king is 9 or more away (Chebyshev), the load is under 30 rounds old, the bank holds 200 and, at war, no enemy is in view.
+Evidence: zde's cq101 (seed 28, vs z3x): far single-pile trips by r300 23 to 81 (0.28x), transfer amount by r300 19,892 to 19,679 (1.011x), wins 13 to 13. zde was dropped there by its 2-cell clause (attack_on_cat B vs agrab and araid lost, attack_on_cat A gained). In the lost B game the raw that piled up at war sat in 2 attackers (947 at r400; the hoard mode), not in held loads. zdh is judged only on fresh games.
+Registered 2026-11-08 09:27 PST, before any zdh game.
+Falsifiers:
+  1. Chain ~/diag26b/cq104 (seed 30, fresh; maps not in the recent chains: superioristhmus, cheeseguardians, where_are_you, ratsareants; 60x60 or 55x50 with 12-20 mines), zdh and zdb, both seats vs agrab and araid, 16 games each; it runs after cq103. Any zdh overrun or exception drops it. Mechanism (tripsc.py BOT 300): zdh's far single-pile trips by r300, summed over its 16 games, above 0.6x zdb's drops it as inert; its transfer amount by r300 under 1.0x zdb's drops it. zdh winning fewer of its 16 games than zdb, or losing 2 or more cells zdb won, drops it.
+  2. Screens on seed 1: s7 zd354 vs zdb's zd343 and s6 zd355 vs zdb's zd345. Paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x the control's rejects (xpr.py).
+  3. Replica, against zdb's own games as anchors: block 1 on set 2 (20984-20999) rejects at t <= 0, block 2 on set 4 (20817-20824, 20842-20845, 20848-20851) at pooled t <= 1; accept at pooled t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
