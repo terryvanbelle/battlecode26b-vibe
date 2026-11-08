@@ -8353,3 +8353,9 @@
   - Falsifier 1: chain cq103 (seed 29, fresh; zdg and zdb on evileye, arrows, dirtpassageway and DefaultMedium, both seats vs agtr and araid; it starts when cq102 ends). It drops on: near-held rat turns above 0.6x zdb's (inert), picks by r300 under 1.0x, fewer wins, 2 or more lost cells, any overrun or exception.
   - Falsifier 2: screens zd352 (s7 vs zd343) and zd353 (s6 vs zd345), both seed 1, queued.
   - Next fresh chain seed: 30.
+- 09:21: **zde DROPPED at falsifier 1 (cq101): it lost 2 cells z3x won**
+  - tripsc.py by r300, zde vs z3x over 16 games each: far single-pile trips 23 to 81 (0.28x, bar 0.6x); transfer amount 19,892 to 19,679 (1.011x, bar 1.0x). The mechanism held.
+  - Wins 13 to 13. zde gained attack_on_cat A vs agrab and vs araid and lost attack_on_cat B vs agrab (r779) and vs araid (r617), both king kills. The clause drops on 2 or more cells z3x won, so zde goes. 0 overruns.
+  - In both lost games our carried raw cheese piled up after the r151-157 backstab: 202 at r250 to 1,007 at r400 vs agrab; 314 at r300 to 1,284 at r600 vs araid. z3x carried 25-35 at the same rounds. The bank stayed near 950 in both builds.
+  - The hold stays on at war whenever no enemy is in view, and the load clock never restarts while a rat keeps any cheese. A peace-only hold would act only until about r161 in the field (the coop-only lesson), so no re-registration for now.
+  - Screens zd350 and zd351 were pulled from the queue unplayed. Queue: zd348 (zdd s7, running), zd349, zd352, zd353. cq102 (zdf) started when cq101 ended.

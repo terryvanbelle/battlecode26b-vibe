@@ -108,21 +108,17 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     0.95x the twin (field_report rows + blockcheck.py on the VM, match.json must sit beside each replay). Falsifier 1:
     chain cq102 (waiter pid 2704343 starts it when cq101 ends): wins >= 15, starvation rounds (bank < 2) <= 20, no
     overruns; babmean.py zdf zdb cq102 cq98.
-  - Pending z3x-based candidates (zdd, zde) test their lever against z3x's controls; if they pass, port them to zdb.
+  - Pending z3x-based candidate (zdd) test their lever against z3x's controls; if they pass, port them to zdb.
   - **zdg** (zdb + KMINE_SKIP 2; registered 09:14; zdg-3303e5ce38fa): chain cq103 (seed 29; waiter pid 2708479 starts it
     when cq102 ends): `python3 ~/diag26b/kmine.py zdg 300 ~/diag26b/cq103` and the same for zdb (near-held rat turns
     <= 0.6x, picks by r300 >= 1.0x, wins not fewer, under 2 lost cells, no overruns). Screens zd352 / zd353 vs zd343 / zd345.
-  - **zde** (z3x + DELIVER_FAR + CASH_READ_LEFT 6000; registered 08:47; zde-f46567647839): a far part load (10-29 raw,
-    no pile in sight, nearest king 9+ away, load under 30 rounds old, bank 200+, no enemy in view at war) stays at the
-    mine. Chain ~/diag26b/cq101 (seed 28, 32 games, P 3) is running: score with
-    `python3 ~/diag26b/tripsc.py zde 300 ~/diag26b/cq101` and the same for z3x (far20 <= 0.6x, amt >= 1.0x, wins not
-    fewer, under 2 lost cells, no overruns). Then screens zd350 (s7 vs zd342) and zd351 (s6 vs zd344).
+  - zde DROPPED 09:21 (cq101: lost attack_on_cat B in both games z3x won; mechanism held, 0.28x far trips, 1.011x amt).
   - zda passed every local falsifier (s6 zd341 vs zd172: t +1.77, D 3) and was ported as zdf. Score each screen against
     the control its SNAPSHOT names: score_screen/xpr pair cells by seat and map, not seed.
   - **zdd** (z3x + RUSH_FROM 12 + CASH_READ_LEFT 6000; registered 08:04): screens zd348 / zd349 vs zd342 / zd344;
     pooled picks per game round (ppr.py sums) under 1.01x drops it.
-  - Screen queue: zd348 (running), zd349, zd350, zd351, zd352, zd353 (about 35 min each; to about 20:30 UTC). Add more first.
-  - Next fresh chain seed: 30. Chain order: cq101 (zde) -> cq102 (zdf) -> cq103 (zdg).
+  - Screen queue: zd348 (running), zd349, zd352, zd353 (about 35 min each; to about 19:40 UTC). Add more first.
+  - Next fresh chain seed: 30. Chain order: cq102 (zdf, running) -> cq103 (zdg).
   - Closed since 08:05: zdc (POCKET_DIG; cq100 digs 1.25x vs a 2x bar), z6x parked (s7 zd213 inert: wins 27-27,
     0.997x). Field censuses at 08:47 in TRAINING_LOG (backstab timing: no split; theft at war 530 vs 144 by r300;
     pickers 36% vs 49%; replacement rushers = RUSH_UNTIL, closed).
