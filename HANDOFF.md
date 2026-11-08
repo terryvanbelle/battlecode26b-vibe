@@ -96,26 +96,23 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 06:48 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (06:48):**
+## State (2026-11-08 07:20 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (07:20):**
   - **Replica: zdb** (#293; zd8's code re-registered: z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000;
-    zdb-0c69409ceaad). Block 1 on set 4: 16 rows in the drain from 06:46. Score with `contest.py paired --dir
-    /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 IDS`; block 2 is set 2 (`bash build/block_v4s2.sh`).
-    Block 1 rejects at t <= 0, pooled t <= 1 after block 2; accept at t >= 2 with D >= 4. zd8's own replica games
-    (void after its s6 drop) gained Xzibit canyoudig A/B on set 2 and Finals averyfineline A/B in set 4's first 4
-    matches; replica results repeat for identical code, so expect those.
-  - zdb's local falsifiers, fresh data: chain ~/diag26b/cq98 (seed 25; bed/canyoudig/evileye/tiny x A/B x abrk/araid;
-    wins >= z3x, matched-round picks z > -2 by scratch mpick.py `python3 mpick.py zdb z3x cq98` in ~/diag26b) and
-    seed-1 screens zd343 (s7) vs control zd342 (z3x) and zd345 (s6) vs control zd344: `score_screen.sh zd343 zdb zd342
-    z3x`, `xpr.py zd342 z3x zd343 zdb`. The whole-game ppr gate does not apply to zdb (replaced, see its SNAPSHOT).
-  - **zd9** (z3x + SPAWN_FLOOR 200 + CASH_READ_LEFT 6000): chain ~/diag26b/cq96 (seed 24, running; mechanism: mean
-    babies r100-500 summed >= z3x + 16; scratch needs writing), screens zd338 (s7, running since 14:41 UTC) and zd339.
-    **zda** (SPAWN_FLOOR 100, zd9's dose arm): chain cq97 (after cq96, vs cq96's z3x games), screens zd340/zd341.
-  - Screen queue: zd339, zd342, zd343, zd344, zd345, zd340, zd341 (to about 17:40 UTC).
-  - Next fresh chain seed: 26.
+    zdb-0c69409ceaad). Block 1 on set 4: 16 rows in the drain from 06:46 (none sent by 07:20). Score with `contest.py
+    paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 IDS`; block 2 is set 2 (`bash
+    build/block_v4s2.sh`). Block 1 rejects at t <= 0, pooled t <= 1 after block 2; accept at t >= 2 with D >= 4. zd8's
+    own replica games (void after its s6 drop) gained Xzibit canyoudig A/B on set 2 and Finals averyfineline A/B in set
+    4's first 4 matches; replica results repeat for identical code, so expect those.
+  - zdb passed falsifier 1 (cq98, 07:20). Still binding: seed-1 screens zd343 (s7, running from 15:16 UTC) vs control
+    zd342 (z3x, done) and zd345 (s6) vs control zd344: `score_screen.sh zd343 zdb zd342 z3x`, `xpr.py zd342 z3x zd343
+    zdb`. The whole-game ppr gate does not apply to zdb (replaced, see its SNAPSHOT).
+  - **zda** (z3x + SPAWN_FLOOR 100 + CASH_READ_LEFT 6000) passed falsifier 1 (cq97, 07:20); screens zd340 (s7) and
+    zd341 (s6) still bind. zd9 (SPAWN_FLOOR 200) dropped at 06:55 (cq96 mechanism).
+  - Screen queue: zd343 (running), zd344, zd345, zd340, zd341 (to about 17:05 UTC). The chain slot is free.
+  - Next fresh chain seed: 27.
   - Closed this morning: z9u (replica block 1: 48 alike, t 0.00), zd7 (EXPLORE_CENTER_FROM 40; cq93 mechanism 5 of 8,
     transfer 0.42x), zd6 (EXPLORE_LOCAL), zd5 (CAT_FRONT). The explore-start line is closed on clockwisdom and jail.
-  - Next fresh chain seed: 24.
   - Closed tonight: z7u (replica block 1 t -1.41), zd4 (MINE_RR; s7 transfer 0.952x; s6 zd329 later t +1.77, record
     only), zd2/zd3 (DEFEND_D2 doses), zc8, zd1, zc9, zc6, zc5, zc7, zc4, zc3, zc2, zb7-zb9, zc1.
   - **Open leads:** (1) sealed-pocket dig-out on averystrangespace (only 253 tiles and 1 mine reachable without dirt;

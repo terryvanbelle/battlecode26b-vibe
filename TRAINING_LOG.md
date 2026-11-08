@@ -8282,3 +8282,13 @@
   - Where it acts: evileye (summed 59.8 to 47.4; gained B vs agtr, lost A vs araid) and arrows B vs agtr (19.7 to 18.2). On clouds and dirtpassageway both builds hold 16-22 babies through r100-500, where the cap binds and the floor rarely does.
   - zd338 (s7) was stopped at 14:54 UTC. zd339 (s6) started before it left the queue and was stopped at 14:55. zd342 (z3x seed-1 s7 control for zdb) started at 14:55.
   - zda (SPAWN_FLOOR 100) is still open: cq97 has been playing since cq96 ended, under the same clauses.
+- 07:20: **zdb and zda both pass falsifier 1; tiny loses to grabbers on seed 26 from either seat; field king deaths are mostly starvation**
+  - zdb, cq98 (seed 25; bed, canyoudig, evileye and tiny, both seats vs abrk and araid; 16 games for each build): wins 15 to 15, zdb overruns 0 and exceptions 0. Matched-round picks (mpick.py) 37,944 to 40,892 (0.928x), per-cell z -0.88, above the -2 bar. Mean babies over r100-500, summed, 151.1 to 135.0 (not a zdb clause). zdb goes on to its screens zd343 (s7, running) and zd345 (s6).
+  - zda, cq97 (cq96's 16 cells, seed 24, vs cq96's z3x games; babmean.py): mean babies over r100-500 summed 277.6 to z3x's 257.3, over the bar of 273.3; wins 14 to 14; zda overruns 0 and exceptions 0. The lever acts on evileye (B vs agtr 18.4 to 10.0) and arrows (B vs araid 15.6 to 12.1). zda goes on to its screens zd340 (s7) and zd341 (s6).
+  - cq99 (seed 26, tiny only; z3x vs agrab, agtr and atrap3, both seats, plus z3x mirror): z3x lost all 6 games vs the three grabbers by r43-77, as A and as B (RATKING_DESTROYED each time). The mirror ended at r61 on MORE_CHEESE. So the tiny loss is not a seat effect. As A vs agrab the king's spawn stop was 'c' (cap) from r33 to r52 with the bank at 640-900: the cap fell from 40 to 18 when the bank dropped under 1,000, and our king went from 570 to 8 HP.
+  - Field king deaths (scratch kingdie.py, z3x's cached replica losses): 36 starve, 15 bite, 12 throwHit, 1 scratch.
+    - The hoard family (clockwisdom 5, fullofsecrets 4): attackers (mv=a) carry thousands of raw cheese and never deliver. HUNGRY, ATK_DELIVER and RUSH_LIFE are closed lines.
+    - The early-overspend family is on small maps, which zdb covers in part.
+  - Points losses (scratch ptsparts.py): 7 of z3x's cached r2000 games are points losses. An extra king would flip 6 of the 7, but the mid-game extra-king line is closed (z2x and z3b starved the bank).
+  - Not built: a RICH_LATE gate. In its census (scratch latecen.py) it fires in 10 of 68 cached r2000 games, all of them wins.
+  - VM disk: removed the .bc26 files in cq82, cq84 and cq86-cq88, and in runs zd240 and zd241 (z7u, rejected) and zd199 (the z6e ablation). 2.2 GB free.
