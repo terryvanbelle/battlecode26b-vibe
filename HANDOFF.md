@@ -96,8 +96,22 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 13:13 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (13:13):**
+## State (2026-11-08 14:11 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (14:11):**
+  - Incumbent still **zdb**. Closed since 13:13: zdp REJECTED (replica block 1 t -1.00), zdr REJECTED (s7 zd366
+    transfer 0.969x), zds REJECTED (s7 zd368 t -1.77, transfer 0.914x).
+  - **Replica: zdq** (#299, zdb + LATE_STRIKE 2 from r1600) block 1 on set 2 (anchors 20984-20999): 8+ of 16 in
+    (21205-21208, 21217-21220 all won; more from 21241), rest in the drain queue. Judge at block end with
+    `paired --dir /dev/shm/rp 20984-20999 IDS` (t <= 0 rejects). Inert clause: a bite by our rats on an enemy king
+    after r1600 in some block 1-2 game. Block 2 on set 3 (block_v4s3.sh) if it passes.
+  - **zdt** (zdb + LOW_BABIES 12; bots/zdt/SNAPSHOT): chain **cq115** (seed 40, running, 32 games; mechanism: spawns
+    with babies in [8, 12) and bank under price + 300, from spawn rows vs the previous round's rounds.tsv), s7
+    **zd370 playing**, s6 zd371 queued. Next on the replica after zdq if cq115 holds; block 1 on set 3, then set 2.
+  - Next fresh seed: 41. Scratch (VM ~/diag26b): chcat.py DIR R BOT... (cat kills to round R + causes), starvew.py PKG
+    (economy windows before field starvation deaths), kform.py PKG MAP (bank/babies/kings every 25 rounds), kbite.py
+    PKG (king bites). Field census (zdbb*.jsonl, `bsBy`): the enemy breaks the truce in 92 of 144 games.
+  - Chain logs: the per-bot overruns are in the last JSON line of DIR/*.log under j['A'] / j['B'] (names j['a'], j['b']).
+- **Earlier (13:13):**
   - Incumbent still **zdb** (controls s7 zd343, s6 zd345; anchors below). Closed since 11:22: zdk REJECTED (replica
     block 1 t -2.12), zdo REJECTED (#297 block 1 on set 3, D 1, t -1.00; replays VM ~/diag26b/rp/zdo_b1s3_1228.tgz).
   - **Replica: zdp** (#298, zdb + HEIR) block 1 on set 4 (anchors 20817-20824, 20842-20845, 20848-20851): 21148-21151
