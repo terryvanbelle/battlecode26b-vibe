@@ -96,8 +96,22 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 14:11 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (14:11):**
+## State (2026-11-08 15:55 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (15:55):**
+  - Incumbent still **zdb**. Closed since 14:11: zdq REJECTED (replica block 1, 48/48 alike), zdu and zdv DROPPED
+    (cq116 starvation, cq117 late bites; the late-strike line is closed), zdt REJECTED (#300 block 1 on set 3,
+    t -1.63; replays VM ~/diag26b/rp/zdt_b1s3_1547.tgz), zdw REJECTED (s7 zd378 transfer 0.929x after passing
+    cq118 with 12 wins to 10; the cost is in games shorter than r1500, 0.867x).
+  - **zdx** (zdw + TRAP_OPEN_TO 150 / TRAP_OPEN_FLOOR 1500; bots/zdx/SNAPSHOT): chain **cq119** (seed 44, running;
+    score with `python3 chtraps.py zdx cq119`, `python3 earlytr.py zdx 150 cq119`, `python3 twinchk.py cq119 zdb zdx
+    zdb` in ~/diag26b), screens zd380 (s7) / zd381 (s6) queued behind zd376, **replica #302** block 1 on set 4 in the
+    drain queue (judge with `paired --dir /dev/shm/rp 20817-20824,20842-20845,20848-20851 IDS`; zdw's 4 sent #301
+    matches play first and do not count). A fail at 1 or 2 withdraws it (pull its rows from research/panel/queue.tsv).
+  - zd376 (seed-2 s6 zdb control) is replaying after dying at start; zd374 (seed-2 s7) is complete.
+  - Next fresh seed: 45. New scratch (VM ~/diag26b): chtraps.py BOT DIR (per game laid/hitThem/hitUs/theirs/starve),
+    earlytr.py BOT R DIR (traps by round R, bank at R), trapwhere.py, bdeath.py, throwcmp.py, lowspawn.py.
+  - Tool note: contest.py lives at tools/galaxy26/contest.py.
+- **Earlier (14:11):**
   - Incumbent still **zdb**. Closed since 13:13: zdp REJECTED (replica block 1 t -1.00), zdr REJECTED (s7 zd366
     transfer 0.969x), zds REJECTED (s7 zd368 t -1.77, transfer 0.914x).
   - **Replica: zdq** (#299, zdb + LATE_STRIKE 2 from r1600) block 1 on set 2 (anchors 20984-20999): 8+ of 16 in
