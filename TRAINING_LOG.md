@@ -8333,3 +8333,23 @@
 - 08:51: **zdb replica block 2 (set 2) partial: 33 cells, 31 alike, D 2 (+2 -0), net +2, t +1.41**
   - Rows 20984-20993 and 20995 (paired vs set 2's anchors 18722-18725, 18736-18739, 18745-18748, 18750-18753). Gained Xzibit canyoudig A and B (a 400-tile map, where CORE_SMALL acts). Block 2's rows came back before block 1's last 8 (Finals averyfineline and TSPAARK evileye pairs on set 4).
   - Pooled with block 1's 24 alike cells: 57 cells, D 2, net +2, t +1.41. Accept needs t >= 2 with D >= 4. Out: block 1's 8 rows, block 2's 20994 and 20996-20999 (Icarus, Merlin, waxmango). Replays moved to VM ~/diag26b/rp.
+- 09:05: **zdb ACCEPTED over z3x** (#293; z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000)
+  - Block 1 (set 4) was never short: its other 8 rows ran at 20817-20824 (TSPAARK, Finals, YokoOno, Varun pairs; package zdb in every replay), below the ids the 08:21 and 08:51 entries searched. The outbox and the VM spool were empty.
+  - Block 1, 20817-20824, 20842-20845, 20848-20851 vs set 4's anchors: 48 cells, 46 alike, D 2 (+AdamTan12_Finals averyfineline A and B), net +2, t 1.41.
+  - Block 2, 20984-20999 vs set 2's anchors: 48 cells, 46 alike, D 2 (+HugoIngelsson_Xzibit canyoudig A and B), net +2, t 1.41.
+  - Pooled: 96 cells, 92 alike, D 4 (+4 -0), net +4, t 2.00, the accept bar (t >= 2 with D >= 4). z3x was accepted on the same figures.
+  - Transfer per round (field_report rows ~/diag26b/zdbb1.jsonl and zdbb2.jsonl vs z3xs4.jsonl and z3xr2.jsonl): 5.026 to 5.030 (0.999x) and 6.275 to 6.260 (1.002x), over the 0.95x floor. Won 38 to 36 and 35 to 33; king-kill wins 23 to 21 and 25 to 23 (blockcheck.py).
+  - New controls: s7 zd343 and s6 zd345 (seed 1). Replica anchors for zdb candidates: set 2 = 20984-20999, set 4 = 20817-20824, 20842-20845, 20848-20851 (twin rows zdbb2.jsonl, zdbb1.jsonl). Sets 1 and 3 have no zdb games yet.
+- 09:08: **zda passes s6; its lever is ported to zdb as zdf and submitted (#294)**
+  - zda s6 zd341 vs zd172 (seed 0): n 44, D 3 (+3 -0), net +3, t +1.77; picks/100 31.93 to 32.54 (z -1.68); per-round picks 0.983x, per-cell z +0.23 (gate z <= -2); transfer per round 1.004x; 0 overruns, 0 exceptions, 0 bad exits. With s7 zd340 (t +0.33, 1.016x) and cq97, zda passes falsifiers 1 and 2.
+  - zda lacks zdb's CORE_SMALL, so zdf = zdb + SPAWN_FLOOR 100 (Cfg.java the only file that differs from zdb; zdf-a6caada7fe75). Registered 09:08 in bots/zdf/SNAPSHOT before any zdf game.
+  - Falsifier 1: chain ~/diag26b/cq102 (seed 25, cq98's 16 small-map cells vs cq98's zdb games; it starts when cq101 ends). It drops on overruns or exceptions, fewer wins than zdb's 15, or more than 20 king-starvation rounds (bank under 2). Read before setting the bar: zdb 0 and z3x 58 on these cells.
+  - Falsifier 2: replica vs zdb's own anchors. Block 1 on set 2 rejects at t <= 0, block 2 on set 4 at pooled t <= 1. Transfer per round under 0.95x the twin's in a block rejects.
+  - Submitted as #294. Block 1: requests 17360-17363 sent, 12 rows queued for the drain.
+  - VM disk was 1.9 GB. Deleted the replays of four closed screens (zd188 z5h, zd217 z6z, zd219 z7a, zd221 z7f) and gzipped the VM's rotated syslog (428 MB to 39 MB): 2.3 GB.
+- 09:14: **zdg = zdb + KMINE_SKIP 2 registered** (bots/zdg/SNAPSHOT; zdg-3303e5ce38fa)
+  - Census before the bar (scratch kmine.py on z3x's cq96, 16 games, by r300): 23.9% of our rat turns sit within Chebyshev 4 of a mine one of our kings holds (evileye 46-61%, arrows and dirtpassageway 16-29%, clouds 0). Rats pick 5,535 at those mines and the king 2,880, against 20,532 picked by rats at every other mine.
+  - The switch is already in the base (off). Gatherers drop king-held mines from their pick while 2 or more home mines are known. Aim: the far home mines that the 08:47 census found about 30% harvested.
+  - Falsifier 1: chain cq103 (seed 29, fresh; zdg and zdb on evileye, arrows, dirtpassageway and DefaultMedium, both seats vs agtr and araid; it starts when cq102 ends). It drops on: near-held rat turns above 0.6x zdb's (inert), picks by r300 under 1.0x, fewer wins, 2 or more lost cells, any overrun or exception.
+  - Falsifier 2: screens zd352 (s7 vs zd343) and zd353 (s6 vs zd345), both seed 1, queued.
+  - Next fresh chain seed: 30.

@@ -96,26 +96,33 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 08:49 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (08:49):**
-  - **Replica: zdb** (#293; z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000; zdb-0c69409ceaad). Block 1
-    (set 4): 8 of 16 rows back (20842-20845, 20848-20851; 24 cells, all alike, D 0; replays in VM ~/diag26b/rp); the
-    Finals averyfineline and TSPAARK evileye pairs are still out. Block 2 (set 2) is already sent (requests 17344-17359;
-    pull it if block 1 rejects). Score with `contest.py paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 IDS`
-    (set 2 anchors 18722-18725,18736-18739,18745-18748,18750-18753). Block 1 rejects at t <= 0, pooled t <= 1 after
-    block 2; accept at t >= 2 with D >= 4. zdb passed both screens (zd343, zd345) and cq98.
+## State (2026-11-08 09:11 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (09:11):**
+  - **zdb ACCEPTED 09:05** over z3x (#293: pooled 96 cells, D 4 (+4 -0), t 2.00; transfer per round 0.999x / 1.002x
+    the twin). It is the incumbent: new candidates build on bots/zdb. Screen controls for zdb candidates: s7 **zd343**,
+    s6 **zd345** (seed 1). Replica anchors for zdb candidates: set 2 = 20984-20999 (twin rows ~/diag26b/zdbb2.jsonl),
+    set 4 = 20817-20824, 20842-20845, 20848-20851 (zdbb1.jsonl). Sets 1 and 3 need a zdb twin block first.
+  - **Replica: zdf** (#294; zdb + SPAWN_FLOOR 100 = zda's lever ported; zdf-a6caada7fe75). Block 1 on set 2: requests
+    17360-17363 sent, 12 rows in the drain queue. Score `contest.py paired --dir /dev/shm/rp 20984-20999 IDS`;
+    rejects at t <= 0; block 2 on set 4 (`bash build/block_v4s4.sh`) rejects at pooled t <= 1; transfer per round under
+    0.95x the twin (field_report rows + blockcheck.py on the VM, match.json must sit beside each replay). Falsifier 1:
+    chain cq102 (waiter pid 2704343 starts it when cq101 ends): wins >= 15, starvation rounds (bank < 2) <= 20, no
+    overruns; babmean.py zdf zdb cq102 cq98.
+  - Pending z3x-based candidates (zdd, zde) test their lever against z3x's controls; if they pass, port them to zdb.
+  - **zdg** (zdb + KMINE_SKIP 2; registered 09:14; zdg-3303e5ce38fa): chain cq103 (seed 29; waiter pid 2708479 starts it
+    when cq102 ends): `python3 ~/diag26b/kmine.py zdg 300 ~/diag26b/cq103` and the same for zdb (near-held rat turns
+    <= 0.6x, picks by r300 >= 1.0x, wins not fewer, under 2 lost cells, no overruns). Screens zd352 / zd353 vs zd343 / zd345.
   - **zde** (z3x + DELIVER_FAR + CASH_READ_LEFT 6000; registered 08:47; zde-f46567647839): a far part load (10-29 raw,
     no pile in sight, nearest king 9+ away, load under 30 rounds old, bank 200+, no enemy in view at war) stays at the
     mine. Chain ~/diag26b/cq101 (seed 28, 32 games, P 3) is running: score with
     `python3 ~/diag26b/tripsc.py zde 300 ~/diag26b/cq101` and the same for z3x (far20 <= 0.6x, amt >= 1.0x, wins not
     fewer, under 2 lost cells, no overruns). Then screens zd350 (s7 vs zd342) and zd351 (s6 vs zd344).
-  - **zda** (z3x + SPAWN_FLOOR 100 + CASH_READ_LEFT 6000) passed cq97 and its s7 zd340 **vs zd205** (seed 0: t +0.33,
-    1.016x). zd341 (s6, seed 0) runs now: score vs **zd172**, not zd344 (score_screen/xpr pair cells by seat and map,
-    not seed, so the wrong control pairs silently).
+  - zda passed every local falsifier (s6 zd341 vs zd172: t +1.77, D 3) and was ported as zdf. Score each screen against
+    the control its SNAPSHOT names: score_screen/xpr pair cells by seat and map, not seed.
   - **zdd** (z3x + RUSH_FROM 12 + CASH_READ_LEFT 6000; registered 08:04): screens zd348 / zd349 vs zd342 / zd344;
     pooled picks per game round (ppr.py sums) under 1.01x drops it.
-  - Screen queue: zd341 (running), zd348, zd349, zd350, zd351 (about 35 min each; to about 20:00 UTC). Add more first.
-  - Next fresh chain seed: 29.
+  - Screen queue: zd348 (running), zd349, zd350, zd351, zd352, zd353 (about 35 min each; to about 20:30 UTC). Add more first.
+  - Next fresh chain seed: 30. Chain order: cq101 (zde) -> cq102 (zdf) -> cq103 (zdg).
   - Closed since 08:05: zdc (POCKET_DIG; cq100 digs 1.25x vs a 2x bar), z6x parked (s7 zd213 inert: wins 27-27,
     0.997x). Field censuses at 08:47 in TRAINING_LOG (backstab timing: no split; theft at war 530 vs 144 by r300;
     pickers 36% vs 49%; replacement rushers = RUSH_UNTIL, closed).
@@ -137,7 +144,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     families: AMMO_AWAY, RETREAT_HP, GLANCE_MEM, RESCUE, BITE_CARRIER/BITE_GUARD, KING_BITE_CARRIER, KING_BITE_MAX,
     GUARD_KING_R, KING_FLEE, KING_PRESS, GRAB_MICRO (zc6's GRAB_MICRO_L is the live variant), THIEF_LOAD.
   - VM disk 2.2 GB (05:34). Laptop ~80 MB free; /dev/shm ~80 MB free.
-- Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
+- Incumbent until 09:05 11-08 (now zdb, above): **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
   scr_eq, ovr). New switches: build on bots/zl0 (ledgered z1z, scratch, untracked; `tools/snapshot.sh NEW bots/zl0`),

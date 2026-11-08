@@ -1,0 +1,13 @@
+name=zdf
+source=bots/zdb
+source_sha=638afd6102f7
+commit=95b2ec98
+created=2026-11-08 09:08 PST
+
+zdf = zdb + SPAWN_FLOOR 100 (from 300): zda's lever on the new incumbent. zdb was accepted at 09:05 over z3x; zda (z3x + SPAWN_FLOOR 100 + CASH_READ_LEFT 6000) lacks zdb's CORE_SMALL 12 / CORE_SMALL_AREA 441. Snapshot of zdb with zda's SPAWN_FLOOR line (and its comment) put in; Cfg.java is the only file that differs from zdb. On maps over 441 tiles zdf runs zda's code; on maps of 441 tiles or fewer both levers act.
+Lever: as zda's (bots/zda/SNAPSHOT): the floor binds only the spawns the income test passes. On small maps CORE_SMALL ends boot spawning at 12 babies, so past 12 the income-test spawns that this floor binds start earlier there.
+Evidence (zda, judged on its own registration): cq97 (seed 24, vs cq96's z3x games): mean babies over r100-500 summed 277.6 to 257.3 (bar 273.3), wins 14 to 14, 0 overruns; s7 zd340 vs zd205: n 48, D 9 (+5 -4), net +1, t +0.33, transfer per round 1.016x; s6 zd341 vs zd172: n 44, D 3 (+3 -0), net +3, t +1.77, transfer per round 1.004x, per-round picks (ppr.py) 0.983x with per-cell z +0.23, 0 overruns and 0 exceptions. zda's local games are design evidence for zdf; zdf is judged only on the games below.
+Registered 2026-11-08 09:08 PST, before any zdf game.
+Falsifiers:
+  1. Chain ~/diag26b/cq102 (seed 25): zdf on cq98's 16 cells (bed, canyoudig, evileye, tiny; both seats vs abrk and araid), against cq98's zdb games (same seed and cells; zdb is deterministic). It runs after cq101. This chain checks the interaction on small maps; zda's mechanism on large maps is already shown (cq97). Any zdf overrun or exception drops it. zdf winning fewer of its 16 games than zdb (15) drops it. King starvation (rounds.tsv: rounds with our bank under 2, summed over the 16 games): zdb has 0 and z3x 58 on these cells; more than 20 for zdf drops it. Reported, not a gate: mean live babies over r100-500 summed (babmean.py; zdb 151.1, from the 12 games that reach r100).
+  2. Replica, against zdb's own games as anchors: block 1 on set 2 (anchors 20984-20999) rejects at t <= 0; block 2 on set 4 (anchors 20817-20824, 20842-20845, 20848-20851) rejects at pooled t <= 1; block 3, if pooled t after block 2 is over 1 and under 2, on set 3 against a zdb twin block played beside it, rejects at pooled t <= 1.5. Accept at pooled t >= 2 with D >= 4. Transfer per round below 0.95x the twin's in a block rejects (field_report rows; blockcheck.py). A failed falsifier 1 voids the blocks.

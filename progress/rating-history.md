@@ -1,6 +1,6 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-07 01:01 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-08 09:15 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
 
@@ -12,7 +12,7 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 - M4 2026-10-28 08:50 PDT: method: benchmark games only on the replica; local games are self-play
 - M5 2026-10-31 07:46 PDT: panel: v4 (8 opponents u2g beats 25-75%)
 
-363 rated matches; latest rating 1,604 (2026-11-06 22:42 PDT).
+413 rated matches; latest rating 1,606 (2026-11-08 08:00 PDT).
 
 | Submission | Build | Uploaded (PDT) | Accepted | Rating at upload | Rated matches since |
 |---:|---|---|---|---:|---:|
@@ -205,6 +205,49 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 | #246 | z3z | 2026-11-06 18:25 | yes | 1,591 | 0 |
 | #247 | z4d | 2026-11-06 19:11 | yes | 1,591 | 0 |
 | #248 | z3x | 2026-11-06 19:22 | yes | 1,591 | 6 |
-| #249 | z5a | 2026-11-06 23:18 | yes | 1,604 | 0 |
-| #250 | z5n | 2026-11-07 00:13 | yes | 1,604 | 0 |
-| #251 | z6j | 2026-11-07 00:53 | yes | 1,604 | 0 |
+| #249 | z5a | 2026-11-06 23:18 | yes | 1,604 | 4 |
+| #250 | z5n | 2026-11-07 00:13 | yes | 1,613 | 0 |
+| #251 | z6j | 2026-11-07 00:53 | yes | 1,613 | 0 |
+| #252 | z3x | 2026-11-07 01:12 | yes | 1,613 | 0 |
+| #253 | z6j | 2026-11-07 01:39 | yes | 1,613 | 0 |
+| #254 | z6t | 2026-11-07 01:51 | yes | 1,613 | 1 |
+| #255 | z6y | 2026-11-07 03:01 | yes | 1,624 | 0 |
+| #256 | z6t | 2026-11-07 03:42 | yes | 1,624 | 1 |
+| #257 | z6y | 2026-11-07 05:02 | yes | 1,620 | 0 |
+| #258 | z7g | 2026-11-07 05:27 | yes | 1,620 | 4 |
+| #259 | z6u | 2026-11-07 07:21 | yes | 1,602 | 4 |
+| #260 | z5i | 2026-11-07 08:33 | yes | 1,630 | 0 |
+| #261 | z7j | 2026-11-07 09:00 | yes | 1,630 | 0 |
+| #262 | z7x | 2026-11-07 09:01 | yes | 1,630 | 0 |
+| #263 | z8b | 2026-11-07 10:22 | yes | 1,630 | 2 |
+| #264 | z9d | 2026-11-07 11:37 | yes | 1,621 | 1 |
+| #265 | z9f | 2026-11-07 13:06 | yes | 1,632 | 2 |
+| #266 | z9e | 2026-11-07 14:58 | yes | 1,623 | 8 |
+| #267 | z9l | 2026-11-07 16:49 | yes | 1,618 | 0 |
+| #268 | z9m | 2026-11-07 17:21 | yes | 1,618 | 0 |
+| #269 | z9n | 2026-11-07 17:49 | yes | 1,618 | 0 |
+| #270 | z9r | 2026-11-07 18:06 | yes | 1,618 | 0 |
+| #271 | z9s | 2026-11-07 18:15 | yes | 1,618 | 0 |
+| #272 | z9u | 2026-11-07 18:30 | yes | 1,618 | 0 |
+| #273 | z9v | 2026-11-07 18:34 | yes | 1,618 | 1 |
+| #274 | za2 | 2026-11-07 19:43 | yes | 1,621 | 0 |
+| #275 | za3 | 2026-11-07 20:19 | yes | 1,621 | 0 |
+| #276 | za4 | 2026-11-07 20:28 | yes | 1,621 | 0 |
+| #277 | za6 | 2026-11-07 20:41 | yes | 1,621 | 0 |
+| #278 | za9 | 2026-11-07 21:14 | yes | 1,621 | 0 |
+| #279 | zb1 | 2026-11-07 21:25 | yes | 1,621 | 0 |
+| #280 | zb2 | 2026-11-07 21:30 | yes | 1,621 | 3 |
+| #281 | zb6 | 2026-11-07 23:06 | yes | 1,600 | 0 |
+| #282 | zb7 | 2026-11-07 23:22 | yes | 1,600 | 0 |
+| #283 | zb8 | 2026-11-07 23:38 | yes | 1,600 | 0 |
+| #284 | zb7 | 2026-11-07 23:39 | yes | 1,600 | 0 |
+| #285 | zb8 | 2026-11-07 23:47 | yes | 1,600 | 6 |
+| #286 | zc2 | 2026-11-08 01:01 | yes | 1,614 | 0 |
+| #287 | zc3 | 2026-11-08 01:49 | yes | 1,614 | 0 |
+| #288 | zc6 | 2026-11-08 02:35 | yes | 1,614 | 2 |
+| #289 | zc8 | 2026-11-08 03:26 | yes | 1,619 | 1 |
+| #290 | z7u | 2026-11-08 04:20 | yes | 1,621 | 3 |
+| #291 | z9u | 2026-11-08 05:02 | yes | 1,615 | 0 |
+| #292 | zd8 | 2026-11-08 06:03 | yes | 1,615 | 0 |
+| #293 | zdb | 2026-11-08 06:46 | yes | 1,615 | 7 |
+| #294 | zdf | 2026-11-08 09:10 | yes | 1,606 | 0 |
