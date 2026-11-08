@@ -1,0 +1,10 @@
+name=zdn
+source=bots/zdk
+source_sha=e90fd1a6cfcd
+commit=3980e6c7
+created=2026-11-08 10:47 PST
+description: zdb + RUSH_FROM_BIG 16 (zdk's switch at RUSH_TO: no opening rushers on maps over 441 tiles; zdb's 12 rushers on smaller maps). Dose arm of zdk (12: 4 rushers), which won cq107 9 of 12 to zdb's 4.
+falsifiers (registered 10:47, before any zdn game):
+ 1. Chain ~/diag26b/cq109 (fresh seed 34): zdn, zdk and zdb on externalsustenance (no reachable mine, kings in one walled box: the rush decides), thunderdome (kings 8 apart), keepout and DefaultLarge, both seats vs agtr and araid (16 cells each). zdn winning fewer of its 16 than zdk or than zdb, or losing 2 or more cells zdk won, drops it. Summed transfer at r600 (or game end) under 1.0x zdk's drops it. Any zdn overrun or exception drops it.
+ 2. Screens on seed 1: s7 vs zdb's zd343 and s6 vs zd345, paired t <= -1.5, any overrun, or transfer per round under 0.97x rejects; cells on maps of 441 tiles or fewer must replay zdb's games.
+ 3. Replica: if zdk is accepted, against zdk's own games as anchors (set 2 then set 4); otherwise against zdb's anchors. Block 1 rejects at t <= 0, block 2 at pooled t <= 1; accept at pooled t >= 2 with D >= 4.
