@@ -96,26 +96,34 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 07:20 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (07:20):**
+## State (2026-11-08 08:05 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (08:05):**
   - **Replica: zdb** (#293; zd8's code re-registered: z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000;
-    zdb-0c69409ceaad). Block 1 on set 4: 16 rows in the drain from 06:46 (none sent by 07:20). Score with `contest.py
-    paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 IDS`; block 2 is set 2 (`bash
-    build/block_v4s2.sh`). Block 1 rejects at t <= 0, pooled t <= 1 after block 2; accept at t >= 2 with D >= 4. zd8's
-    own replica games (void after its s6 drop) gained Xzibit canyoudig A/B on set 2 and Finals averyfineline A/B in set
-    4's first 4 matches; replica results repeat for identical code, so expect those.
-  - zdb passed falsifier 1 (cq98, 07:20). Still binding: seed-1 screens zd343 (s7, running from 15:16 UTC) vs control
-    zd342 (z3x, done) and zd345 (s6) vs control zd344: `score_screen.sh zd343 zdb zd342 z3x`, `xpr.py zd342 z3x zd343
-    zdb`. The whole-game ppr gate does not apply to zdb (replaced, see its SNAPSHOT).
-  - **zda** (z3x + SPAWN_FLOOR 100 + CASH_READ_LEFT 6000) passed falsifier 1 (cq97, 07:20); screens zd340 (s7) and
-    zd341 (s6) still bind. zd9 (SPAWN_FLOOR 200) dropped at 06:55 (cq96 mechanism).
-  - Screen queue: zd343 (running), zd344, zd345, zd340, zd341 (to about 17:05 UTC). The chain slot is free.
-  - Next fresh chain seed: 27.
+    zdb-0c69409ceaad). Block 1 on set 4: 8 of 16 rows back (20842-20845, 20848-20851; 24 cells, all alike, D 0; replays
+    in VM ~/diag26b/rp). The Finals averyfineline and TSPAARK evileye pairs are still out (zd8 gained Finals averyfineline
+    A/B there). Score with `contest.py paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 IDS`;
+    block 2 is set 2 (`bash build/block_v4s2.sh`, then `git checkout research/panel/v4-set2.json`). Block 1 rejects at
+    t <= 0, pooled t <= 1 after block 2; accept at t >= 2 with D >= 4.
+  - zdb passed falsifier 1 (cq98) and its s7 screen (zd343 vs zd342: wins 31 to 30, flips +2 -1, xfer/round 1.011x,
+    0 overruns). zd345 (s6, vs zd344) is running: `score_screen.sh zd345 zdb zd344 z3x`, `xpr.py zd344 z3x zd345 zdb`.
+  - **zda** (z3x + SPAWN_FLOOR 100 + CASH_READ_LEFT 6000) passed falsifier 1 (cq97); screens zd340 (s7) and zd341 (s6)
+    vs zd342/zd344 are queued.
+  - **zdc** (z3x + POCKET_DIG + CASH_READ_LEFT 6000; registered 08:00): from r200 on 1,500+ tile maps, a rat reading at
+    most 1 listed mine prices dirt at 2 in Flow (G.digCost, latched). Chain ~/diag26b/cq100 (seed 27, 32 games, P 3) is
+    running; score with `python3 ~/diag26b/digs.py zdc z3x ~/diag26b/cq100` (digs on the 12 averystrangespace/rose/
+    TheHeist cells >= 2x, wins >= z3x's, transfer >= 0.9x over the 16, no overruns). Then screens zd346 (s7) / zd347 (s6).
+    Ledger lesson: a field written in a hook must live in an already-initialised class (G), or the class's static
+    initialiser runs inside the ledger window and is credited.
+  - **zdd** (zc9's sources re-registered: z3x + RUSH_FROM 12 + CASH_READ_LEFT 6000; registered 08:04): screens zd348 (s7)
+    / zd349 (s6) vs zd342 / zd344; pooled picks per game round (ppr.py sums) under 1.01x drops it.
+  - Screen queue: zd345 (running from 15:55 UTC), zd340, zd341, zd346, zd347, zd348, zd349 (about 35 min each while
+    cq100 runs; to about 20:00 UTC).
+  - Next fresh chain seed: 28.
   - Closed this morning: z9u (replica block 1: 48 alike, t 0.00), zd7 (EXPLORE_CENTER_FROM 40; cq93 mechanism 5 of 8,
     transfer 0.42x), zd6 (EXPLORE_LOCAL), zd5 (CAT_FRONT). The explore-start line is closed on clockwisdom and jail.
   - Closed tonight: z7u (replica block 1 t -1.41), zd4 (MINE_RR; s7 transfer 0.952x; s6 zd329 later t +1.77, record
     only), zd2/zd3 (DEFEND_D2 doses), zc8, zd1, zc9, zc6, zc5, zc7, zc4, zc3, zc2, zb7-zb9, zc1.
-  - **Open leads:** (1) sealed-pocket dig-out on averystrangespace (only 253 tiles and 1 mine reachable without dirt;
+  - **Open leads:** (1) [taken up as zdc, 08:00] sealed-pocket dig-out on averystrangespace (only 253 tiles and 1 mine reachable without dirt;
     centre mine never listed; YokoOno digs 348 tiles). DIG_COST 2 (u4u) and CAT_SEEK_DIG (z1x) were global and failed the
     transfer gates, so gate it (e.g. on the king knowing <= 1 mine at r150+). (2) Known-mine census (scratch knownm.py over
     cq70-cq90): TheHeist 1 of 18 mines listed through r300 (lost 4 of 6), rose 1 of 8, jail, uneruesansfin.
