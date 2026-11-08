@@ -8541,3 +8541,7 @@
   - zdt's 12 leaves alone the starving games where the bank sat at the 300 floor with 12-16 babies. Example: wallsofparadis B vs Finals, 297-303 banked with 16-15 babies over r551-651, then 7 babies and 118 at r731.
   - cq116 plays zdu on cq115's 16 cells with cq115's seed 40 and scores against cq115's zdb games. It starts when cq115 ends. Clauses as zdt's, with the band [8, 16). bots/zdu/SNAPSHOT, zdu-6d3fef4e0190.
   - Queue: zd370 (zdt s7, playing), zd371, zd372, zd373.
+- 14:13: **zdu's falsifier 1 amended before any zdu game: cq116 moves to the maps where zdb starves locally**
+  - cq115's first 9 games (scratch lowspawn.py LO HI BOT DIR) show no king starvation and no low-band spawn for zdt or zdb: on mercifullattice and wallsofparadis vs agrab/araid both play to r2000 with 17-25k transfer. zdt's mechanism clause may well come out inert; it stands as registered.
+  - zdb's only local starvations in its screens: zd343 Stash A vs agtr (r845) and vs atrap3 (r601), and starvation B vs atrap3 (r1679).
+  - cq116 (seed 41): zdu and zdb on Stash and starvation, both seats vs agtr and atrap3 (16 games). Mechanism: at least 4 low-band spawns ([8, 16)) and more than zdb, and fewer starvation deaths than zdb (void if zdb starves in none).

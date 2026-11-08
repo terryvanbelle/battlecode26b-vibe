@@ -8,11 +8,13 @@ falsifiers (registered 2026-11-08 14:12 PST, before any zdu game):
   floor (CORE_FLOOR, WAR_FLOOR, SPAWN_FLOOR, 300 each) drops to LOW_FLOOR 100. It covers the starving games whose bank
   sat at the 300 floor with 12-16 babies (wallsofparadis B vs Finals, Nofreecheese B vs collegejunior), which zdt
   leaves alone. No twin (one constant).
-  1. Chain ~/diag26b/cq116 (after cq115): zdu on cq115's 16 cells with cq115's seed 40 (mercifullattice,
-     wallsofparadis, Nofreecheese, ratsareants, both seats vs agrab and araid), scored against cq115's zdb games.
-     Any zdu overrun or exception drops it. Do-no-harm: zdu wins no fewer cells than zdb and loses at most 1 cell zdb
-     won. Mechanism: zdu makes at least 8 spawns over its 16 games with babies in [8, 16) and the bank under the
-     spawn price + 300, and more than zdb; and its king starvation deaths are no more than zdb's.
+  1. (amended 14:13 PST, before any zdu game: cq115's first 9 games showed no starvation and no low spawn for zdt
+     or zdb on its maps vs agrab/araid, and zdb's only local starvations in zd343/zd345 are Stash A vs agtr and vs
+     atrap3 and starvation B vs atrap3.) Chain ~/diag26b/cq116 (seed 41, after cq115): zdu and zdb on Stash and
+     starvation, both seats vs agtr and atrap3 (16 games). Any zdu overrun or exception drops it. Do-no-harm: zdu
+     wins no fewer cells than zdb and loses at most 1 cell zdb won. Mechanism: zdu makes at least 4 spawns over its
+     8 games with babies in [8, 16) and the bank under the spawn price + 300, and more than zdb; and its king
+     starvation deaths are fewer than zdb's (if zdb starves in none, this half is void and only the spawn half binds).
   2. Screens on seed 1: s7 runs/zd372 vs zd343 and s6 runs/zd373 vs zd345 (t <= -1.5, an overrun, or transfer
      per round under 0.97x rejects).
   3. Replica after zdq and zdt (whichever of zdt and zdu passes 1-2 with the higher s7 t goes first), block 1 on
