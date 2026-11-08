@@ -1,0 +1,24 @@
+name=z9w
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=0e10419b
+created=2026-11-07 19:09 PST
+recipe=bash tools/bundle.sh z9x zl0 z3x zkf (zkf = zfz + KING_FACE 3, a zl0 switch bot), then bash tools/bundle.sh z9w z3x z9x z7u: z9v + KING_FACE
+idea=KING_FACE (new switch, King.faceWork): when a KING_FUTILE freeze starts, the king scores the tiles within Chebyshev 3
+  whose 3x3 it has seen open by the transfer-zone tiles (dist2 9 of the 3x3) that are not known wall or dirt and lie
+  across a known wall or dirt tile, walks to the best one if it beats its own tile, and renews the freeze while it stands
+  there. Replica 20037 g1 (z9s, fullofsecrets A vs Merlin, lost on points at r2000): our transfer 4,951 to Merlin's
+  14,058. Merlin's king stood at its pocket's east corner (33-35, 9-11) and its givers at (30-31, 12-13), outside the
+  pocket wall; every one of our givers stood inside the pocket, round a king at (1-3,32). facesim.py (scratch) picks
+  (4,32) for A from any of (1-3,32) and (35,12) for B (the rotation): its zone keeps the strip under the south wall and
+  adds (8,31)-(8,32), the open side's wall face 10 steps from mine (18,30). z9s lost fullofsecrets B to Merlin too
+  (20038 g1, 3,195 to 17,150, king killed r1900).
+ledger=the face search runs at the end of the king's turn (after Econ.endTurn and KPath.tick) while 6000 bytecodes are
+  left; the renewal test sits inside futile()'s K 20 settle; the frozen branch's faceTile test is unledgered (3 bytecodes,
+  nothing after it in that turn reads the clock)
+falsifiers (registered 2026-11-07 19:10 PST, before any z9w game):
+  1. Chain ~/diag26b/cq52 (seed 0, cq51's 13 games): on fullofsecrets the king reaches a face tile in at least 6 of 8
+     games (km=v then km=w at (4,32) as A, (35,12) as B); summed fullofsecrets transfer at least 1.4x z9v's 51,910 in
+     cq51; fullofsecrets wins at least z9v's 6 of 8; the 5 rose and evileye games won (z9v won all 5).
+  2. The s7 (zd278 vs zd205) and s6 (zd279 vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
