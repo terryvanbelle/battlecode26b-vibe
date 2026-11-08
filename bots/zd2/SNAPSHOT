@@ -1,0 +1,15 @@
+name=zd2
+source=bots/zc9
+source_sha=3fc07187378e
+commit=db730974
+created=2026-11-08 04:16 PST
+
+zd2 = z3x + DEFEND_D2 36 (from 100; existing constant, one Cfg line, never tuned since s3b on 2026-10-28) + CASH_READ_LEFT 6000. Snapshot of zc9 with RUSH_FROM put back to 4, so Cfg.java and Baby.java are the only files that differ from z3x: the DEFEND_D2 line, CASH_READ_LEFT, and z7u's budget read in cashTick's squeak loop. zd2 (36) and zd3 (225) are the two dose arms of one test.
+Lever: at war, while a king's alert is fresh with a threat (an enemy rat within dist2 18 of its centre), gatherers within dist2 DEFEND_D2 of it leave the economy for war movement (Baby.war: close on the enemy king or nearest enemy rat, no standoff). 100 reaches Chebyshev 10, so most home mines; 36 reaches Chebyshev 6, so fewer gatherers defend.
+Evidence: z3x's field losses trail on cheese picked by r100 (Finals 241 to 467, nzjt 313 to 579, Hugo 267 to 425; scratch pick200.py over the VM dumpcache) with more babies than the opponent and only a few more early deaths (r<150: 19.4 to 14.5 lost in losses, 14.0 to 12.2 in wins, early150.py); most losses are king kills after a backstab before r52 (solid.py). Which way the defence radius should move is the test: 36 keeps the outer gatherers working through a siege, 225 sends more bodies to the king.
+Registered 2026-11-08 04:16 PST, before any zd2 or zd3 game.
+Falsifiers (each arm judged alone):
+  1. Chain ~/diag26b/cq87 (fresh seed 17; DefaultMedium, uneasy_alliance, thunderdome, tiny; both seats vs agrab and araid; zd2, zd3 and z3x, 48 games). Any overrun or exception drops the arm. Mechanism: the share of the arm's gatherer turns before r300 in war movement (indicator 'G' role with mv=w; scratch mvloc.py) must be at least 20% lower than z3x's for zd2 and at least 20% higher for zd3, else the arm is inert and dropped. The arm winning fewer of the 16 games than z3x, or losing 2 or more cells z3x won, drops it.
+  2. Screens s7 (vs z3x's zd205) and s6 (vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  3. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
+  4. If both arms pass 1, only the one with more chain wins goes on (zd2 on a tie).
