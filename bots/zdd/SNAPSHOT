@@ -1,0 +1,12 @@
+name=zdd
+source=bots/zc9
+source_sha=3fc07187378e
+commit=d043522c
+created=2026-11-08 08:04 PST
+
+zdd = zc9's sources re-registered (code identical apart from the package name): z3x + RUSH_FROM 12 (from 4; existing constant) + CASH_READ_LEFT 6000. 4 opening rushers (spawn index 12-15), not 12; the first 11 babies, and replacements born before r300 with fewer than 12 alive, gather.
+Why: the rush-index line was closed on local gates that local archetypes decide. In the field the rush hardly touches in-band kings: 0.5-4 king bites a game by r300 against Finals, Icarus, Hugo, Varun, nzjt and waxmango, in wins and losses alike (TRAINING_LOG 11-08, rushval.py). Replica r1-200 picks per baby-round are about half the top opponents' (Finals 0.23 to 0.49, Merlin 0.24 to 0.41; z4d's note), and in losses we trail on cheese picked by r100 (Finals 241 to 467, nzjt 313 to 579, Hugo 267 to 425) though we field more babies. Against nzjt at r300 in losses we have 4.5 more spawns and 2.5 more babies but 496 less transfer and 712 less bank (scratch spend.py, VM dumpcache). z4f (RUSH_FROM 12 on z3z) failed only its picks/100 rat-turns gate (z -2.11; more gatherers dilute picks per rat-turn) with pick amount per round 1.024x, transfer per round 1.081x, D 4, net +2, t +1.00 and 0 overruns (zd178). zc9 (these sources) was dropped at chain cq85 on 10 of 16 pairs: lost 2 cells z3x won, gained 1, wins 8 to 9. Neither reached the replica; none of their games is evidence for zdd, which is judged only on fresh data.
+Registered 2026-11-08 08:04 PST, before any zdd game.
+Falsifiers:
+  1. Screens on seed 1 (fresh): s7 zd348 against z3x control zd342, and s6 zd349 against z3x control zd344 (zd343's and zd345's cells with zdb -> zdd). Paired t <= -1.5 in either rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x the control's in either rejects (xpr.py). Mechanism: pickupAmt per game round on the shared cells of both screens together (ppr.py's sums) under 1.01x the controls' drops it.
+  2. Replica, against z3x's set anchors, on new matches: block 1 rejects at t <= 0, block 2 at pooled t <= 1, block 3 at t <= 1.5; accept at pooled t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
