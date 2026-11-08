@@ -8554,3 +8554,7 @@
   - Mechanism (scratch lowspawn.py 8 12): 92 low-band spawns (babies in [8, 12), bank under price + 300) to zdb's 0, all on ratsareants (6, 19, 11, 56). King starvation deaths 0 to 0, so "no more than zdb" holds.
   - zdt: 0 overruns and 0 exceptions (araid 52, agrab 2).
   - Next: s6 zd371 (playing), then the replica after zdq. cq116 (zdu) now runs.
+- 14:43: **zdu DROPPED at falsifier 1 (cq116, seed 41): its kings starved more, not less**
+  - Mechanism (lowspawn.py 8 16): 66 low-band spawns to zdb's 9, so the floor cut acts. But king starvation deaths were 6 to zdb's 5, and the clause needed fewer.
+  - Outcome: wins 5 to 5. Gained starvation A vs atrap3 (W r738; zdb L r750). Lost starvation B vs agtr (L r760 with 2 kings starved; zdb W r1131). Stash A and B vs atrap3 were lost by both builds (zdu r708 and r592, zdb r1062 and r634). 0 overruns, 0 exceptions.
+  - Reading: spending the 300 reserve on rats with 12-16 babies alive can starve the king sooner: the new rats do not repay their price before the bank runs out. zdt's narrower band (under 12) stays live; zd372/zd373 are off the queue.
