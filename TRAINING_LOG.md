@@ -7794,11 +7794,9 @@
   - The hook is ledgered in biteEnemies (K 20 with G.settle). Falsifiers are in the SNAPSHOT, registered at 17:13 before any game: chain ~/diag26b/cq43 (seed 0, 48 games; scratch cq43score.py) must show kills by our bites per bite at least 1.12x z3x's, mean damage per bite at least 11.5, transfer at least 0.95x and wins at least z3x's; then the s7 zd268 and s6 zd269 gates and the replica rules.
   - zd268 preempted the zd198 filler (3 cells done; it resumes after zd269). cq43 started at 17:14, after a first start that read no spec was cleared.
 
-### 17:21 z9m on the replica (#268); partials split, VM disk pruned
-- **z9m submitted as #268** at 17:21 so the replica is not idle while its screens run. Block 1 (set 2) sent 12 matches (20014-20025); 4 rows wait in research/panel/queue.tsv. Any failed falsifier withdraws it (drop those rows).
-- **Partials:**
-  - cq43 at 11 of 48 games. Kills by our bites per bite are 0.68x z3x's (bar 1.12x). Mean damage per bite is 10.89 vs 9.96 (bar 11.5).
-  - On mincemeat z9m makes far fewer bites than z3x: 45/76, 46/61, 27/78 and 39/69 per game. The cooldown is not the cause: the engine charges the same action cooldown for `attack(loc, cheese)` as for `attack(loc)` (RobotControllerImpl.attack).
-  - The cheese paid is small, about 50 a game. The mincemeat transfer gaps are larger (831/573, 1174/635, 1908/505, 675/830), so they read as divergence after the first paid bite rather than the payment itself.
+- 17:21: **z9m on the replica as #268** so the replica is not idle while its screens run (precedent: z9l at 16:50). Block 1 (set 2) sent 12 matches (20014-20025); 4 rows wait in research/panel/queue.tsv. Any failed falsifier withdraws it (drop those rows).
+  - cq43 at 11 of 48 games: kills by our bites per bite 0.68x z3x's (bar 1.12x); mean damage per bite 10.89 vs 9.96 (bar 11.5).
+  - On mincemeat z9m makes far fewer bites than z3x: 45/76, 46/61, 27/78 and 39/69 a game. Not a cooldown effect: the engine charges the same action cooldown for `attack(loc, cheese)` as for `attack(loc)` (RobotControllerImpl.attack).
+  - The cheese paid is small, about 50 a game, against mincemeat transfer gaps of 831/573, 1174/635, 1908/505 and 675/830. Those read as divergence after the first paid bite, not the payment itself.
   - zd268 (s7) at 13 of 48: D 4, net -2, t -1.00; transfer 34418 vs 48305. One cell carries the gap: cheesefarm A, where z3x won on points at r2000 (26694 transfer) and z9m lost its king at r445. Without that cell z9m's transfer is the higher one.
-- VM disk was at 2.0 GB. I pruned 29 replica replays older than 36 hours (list in /root) and deleted the turn and action dumps of the closed cq40 chain (summaries kept; 671 MB to 6.5 MB). Now 2.7 GB free.
+  - VM disk was at 2.0 GB. I pruned 29 replica replays older than 36 hours (list in /root) and deleted the turn and action dumps of the closed cq40 chain (summaries kept; 671 MB to 6.5 MB): 2.7 GB free.
