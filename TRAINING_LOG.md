@@ -7889,3 +7889,14 @@
   - za3's 16 set-2 matches (#275) had all been sent (8 at 20:19, 8 by the drain at 20:23), and they play out as a near-twin of z3x.
   - **za4** (zek2 = zek with the relative test; bundle.sh za4 zl0 z3x zek2; za4-bea21a06bf4a). The rules: up to r300; the enemy king within 12 of one live mirror spot; every other live spot at least 16 farther. Offline (scratch ekeval.py over the cq57/cq59 dumps) it fires on 6 of 8 ratsareants game-sides at r101-163, all on HOR, while the king's mask was still 7 or 3.
   - Falsifiers (bots/za4/SNAPSHOT, 20:27): (1) offline over every dumped game on the VM (~/diag26b/ekeval_all.txt, running): at most 1 in 50 firings wrong; (2) chain cq60 (ratsareants A/B vs araid and agtr: king HOR by r250 in 3 of 4, transfer at least 1.1x z3x's, no win lost; 4 guard maps); (3) screens zd286 (s7) and zd287 (s6), which replace za3's zd284/zd285 at the head of the queue; (4) the replica rules. Submitted as #276; its 16 set-2 rows are queued for the drain behind za3's matches.
+- 20:33: **za4 passes its offline falsifier; za5 = z3x + SCOUT_SYM registered for rose; probe chain cq62 measures the ambiguous maps.**
+  - za4 falsifier 1 (ekeval.py 12 16 300 over every dumped game on the VM, 880 game-sides, ~/diag26b/ekeval_all.txt): 27 firings, all on the map's symmetry. clouds 10 (king mask resolved at r356-1466 or never), cheesefarm 8, DefaultSmall 7 (2 rounds before the king), streetsofnewyork 1, Stash 1. So the reach is small: about 3% of game-sides.
+  - From the same file, the non-ROT maps where the king's mask is still ambiguous at r300 (firstSym() gives ROT, so the home half is wrong):
+    - HOR: FreeTheCheese 15/16, TheHeist 16/16, corridorofdoomanddespair 8/16.
+    - VER: rose 84/84, keepout 32/32, tiny 20/22, knifefight 17/28, clouds 12/12, uneasy_alliance 8/8, streetsofnewyork 2/4.
+  - **za5 = z3x + SCOUT_SYM** (switch bot zsc; bundle.sh za5 zl0 z3x zsc; za5-51d9a5a42809). While two or more symmetries are live, exploreHome (scouts and seekers) also takes never-seen tiles on our half under any live symmetry. The test is ledgered (symHomeL, K 23).
+    - rose: under ROT the top centre of our half is the enemy's. No scout sees (24,23)/(24,24), whose ROT twins (35,8)/(35,7) our gatherers do see.
+    - Not HOME_ALL_SYM (u0h), which narrowed every rat's half to the intersection.
+    - Falsifiers (SNAPSHOT, 20:31): (1) chain cq61, za5 on rose and ratsareants (A/B vs araid and agtr): king true by r400 in 5 of 8, at least 2 more wins than z3x's 4 of 8; 4 guard maps. (2) The s7/s6 gates. (3) The replica rules.
+  - Probe chain **cq62** (30 games vs araid, both seats): zsh (HOR forced) on FreeTheCheese, TheHeist and corridorofdoom; zsv (VER forced) on clouds, knifefight, streetsofnewyork, uneasy_alliance and keepout; z3x controls alongside (keepout's are zd172's). It measures what knowing the symmetry would buy on each map.
+  - VM disk: cq57-cq59 replays removed and tables gzipped (375 to 46 MB); 2.5 GB free.

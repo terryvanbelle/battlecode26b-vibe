@@ -1,0 +1,27 @@
+name=za5
+source=bots/z3x
+source_sha=c585a2762c96
+commit=84a32c01
+created=2026-11-07 20:31 PST
+recipe=snapshot zsc from zl0 + SCOUT_SYM (new switch), then bash tools/bundle.sh za5 zl0 z3x zsc: z3x + SCOUT_SYM
+idea=SCOUT_SYM (new switch; exploreHome's sample test, ledgered Baby.symHomeL K 23): while two or more symmetries are
+  live, scouts and seekers also take a never-seen tile that is on our half under any live symmetry, not only under
+  firstSym() (ROT first). Sym eliminates a symmetry only when a wall or mine and its twin have both been seen, and
+  under firstSym nobody explores the part of our true half that holds the deciding twins.
+  rose (VER, 60x32; kings (16,1)/(43,1)): z3x's mask was ROT|VER from r55 to the end (cq58, cq59). Under ROT the
+  top centre of our half (mine (24,24)) is the enemy's, so no scout sees (24,23)/(24,24), whose ROT twins (35,8) (a
+  mine) and (35,7) our gatherers see working (35,8), a ROT home mine. z3x lost rose A to araid at r1285 (picked
+  7,940, transferred 1,420) and to agtr at r937; the VER-forced probe zsv won both on points (cq58). ratsareants
+  (HOR): the west of our half is home only under HOR, and its mines' ROT twins (e.g. (48,18) for (6,31)) lie on the
+  rushers' path.
+  Not a repeat: HOME_ALL_SYM (u0h) narrowed the half to where every live symmetry agrees, for every rat; SWEEP,
+  SCOUT_FRONTIER, SCOUT_AREA, HOME_PICK changed how scouts cover firstSym's half. None widened it to the union.
+  Separate from za4 (EK_SYM), which cannot reach rose.
+ledger=symHomeL wraps the new test (K 23); the base line gains one && term evaluated only for non-home samples
+falsifiers (registered 2026-11-07 20:31 PST, before any za5 game):
+  1. Chain ~/diag26b/cq61 (seed 0). za5 on rose and ratsareants, seats A and B, vs araid and agtr (8 games; z3x's
+     are cq57-cq59): the king's sym= is the true symmetry (4 rose, 2 ratsareants) by r400 in at least 5 of 8; za5
+     wins at least 2 more of the 8 than z3x (z3x: 4 of 8). Guard: za5 seat A vs araid on DefaultMedium,
+     wallsofparadis, Nofreecheese and whatsthecatdoin (z3x's in cq59) loses none that z3x wins.
+  2. The s7 and s6 screen gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules.
