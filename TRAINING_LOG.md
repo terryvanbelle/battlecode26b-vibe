@@ -8026,14 +8026,14 @@
   - The s7 screen zd302 had passed: n 48, D 13, net +1, t +0.27, 0 overruns, transfer per rat-turn 1.025x. The s6 screen zd303 was stopped at 1 of 48 (abort_watch.stop), and zd304 (zb8 s7) took the slot.
   - Replica #282, partial block 1 (20350-20361 against the set-2 twins): 36 cells, 34 alike, D 2 (-2: Varun clouds A, waxmango learn_your_lesson A), t -1.41. Its 4 unsent rows were withdrawn (saved in /dev/shm/kd/zb7_queue.tsv). **zb8 was resubmitted as #285**, so the drain sends its 16 rows.
   - Chain cq77 (zb8 falsifier 1) started when cq76 ended.
-- 00:09: **zb8 is DROPPED at falsifier 1** (chain ~/diag26b/cq77, seed 7). Our spawned over zb8's 16 games was 1,249 against z3x's 1,247 (1.002x; the bar was 1.03x).
+- 00:08: **zb8 is DROPPED at falsifier 1** (chain ~/diag26b/cq77, seed 7). Our spawned over zb8's 16 games was 1,249 against z3x's 1,247 (1.002x; the bar was 1.03x).
   - The clause summed whole games, and zb8 won sooner: dirtpassageway A vs agrab at r814 (z3x r1699), A vs araid at r206 (r344). That is the game-length confound zb3 hit.
   - Results held: wins 13 to 12 (+1 thunderdome B vs agrab, 0 lost), transferAmt 1.045x.
-- 00:09: **zb9 = zb8's sources re-registered** with a matched-round clause (zb9-868247cab6d0; precedent zb5). Falsifiers (bots/zb9/SNAPSHOT, registered 00:08 before any zb9 game):
+- 00:08: **zb9 = zb8's sources re-registered** with a matched-round clause (zb9-868247cab6d0; precedent zb5). Falsifiers (bots/zb9/SNAPSHOT, registered 00:08 before any zb9 game):
   1. Fresh chain ~/diag26b/cq78, seed 8: keepout, Stash, RUN and DefaultMedium, both seats, vs agrab and araid, zb9 and z3x (32 games, started 00:08). Our spawns up to each pair's last common round, summed over 16 pairs, must be at least 1.03x z3x's. zb9 must win at least z3x's count and lose at most 1 cell z3x won.
   2. Screens zd304 (s7) and zd305 (s6), played by bots/zb8 (identical sources). They were queued at 23:37 and not scored or inspected before this registration.
   3. Replica block 1 on set 2, played by #285 (the zb8 build). None of its games had played at registration.
-- 00:09: **Field studies** (scratch, over z3x's cached replica dumps):
+- 00:08: **Field studies** (scratch, over z3x's cached replica dumps):
   - starveloss.py: 42 of 68 distinct lost games had starvation damage on our king, often the full 600. Examples: fullofsecrets x4, clockwisdom x5, whatsthecatdoin x2, canyoudig x2 vs Xzibit (set 2), wallsofparadis x2 vs Finals. The opponent's king starved in 2 of them. In 101 wins, 5 had any.
   - minegap.py: in losses they work 5.79 mines to our 4.15, 2.35 of them on our half (1.05 in wins). They pick 2,248 a lost game on our half (261 per 100 rounds; 69 in wins), against our 4,018.
   - theft.py: 76% of the cheese they pick on our half in our losses (122,635 of 161,383) is taken with none of our babies within Chebyshev 4, mostly after r300.
