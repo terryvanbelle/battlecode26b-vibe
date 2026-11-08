@@ -1,0 +1,11 @@
+name=zc7
+source=bots/zl0
+source_sha=c585a2762c96
+commit=c5ae1a13
+created=2026-11-08 02:46 PST
+bundle=tools/bundle.sh zc7 zl0 z3x zcf (zcf = zl0 + CAT_FEED: Baby.tryThrow's cat case scored by Baby.feedScore under a plain ledger wrap, K 9)
+reason=z3x + CAT_FEED (new switch). A thrown rat whose flight meets a cat dies outright, whatever its health (InternalRobot.travelFlying: "cat feeding"; the cat sleeps CAT_SLEEP_TIME 2 rounds). z3x's tryThrow scores that flight -50 ("no damage"), so it avoids the surest kill a throw has. CAT_FEED scores it at the victim's health + 40, at most 120 (a point-blank enemy baby 84, a king 126); a cat at tiles 3-4 counts 75%, beyond that 37%.
+evidence=(registered 02:47 PST, before any zc7 game) Field dumps of z3x (66 matches, 194 games; scratch fedcount.py, feedopp.py): the enemy fed 177 of our rats to cats (0.91 a game), we fed 28 of theirs (0.14). Of our 72.3 throws a game, 1.07 had a cat as the first obstacle within 2 tiles of a free first tile, 2.38 within 4 and 3.85 within 8 (end-of-turn positions, initial walls; an upper bound). Enemy throws had 0.91 a game within 2, matching their 0.92 feeds. Cat feeding has no attempt on record (attempts.py find feed, sleep, "cat eats").
+falsifier1=chain ~/diag26b/cq83 (fresh seed 13; sunandmoon, 5t4rv4t10n_1337, mincemeat and Meow, maps outside both screens with the most cat lines in our field throws; both seats vs agrab and araid; zc7 and z3x, 16 pairs, 32 games). Any overrun or exception drops it. Mechanism: our fed kills (actions.tsv die rows with cause fed and killer team ours) summed over zc7's 16 games at least 2x z3x's and at least 8 more. Results: zc7 wins at least z3x's count and loses at most 1 cell z3x won.
+falsifier2=screens s7 zd318 (vs zd205) and s6 zd319 (vs zd172) under the standard gates (t <= -1.5 rejects, any overrun or exception, transfer per round under 0.97x, s6 per-round picks z <= -2).
+falsifier3=the replica, block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round under 0.95x the twin's rejects.
