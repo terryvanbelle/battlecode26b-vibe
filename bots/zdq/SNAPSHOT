@@ -1,0 +1,25 @@
+name=zdq
+source=bots/zdb
+source_sha=638afd6102f7
+commit=087f50bb
+created=2026-11-08 12:17 PST
+falsifiers (registered 2026-11-08 12:19 PST, before any zdq game has finished):
+  zdq = zdb + LATE_STRIKE 2 / LATE_STRIKE_FROM 1600 (new switch; Baby.turn hook beside WAR_STRIKE, ledgered K 20):
+  from r1600, once cooperation is over, one in two fighters (by birth round, WAR_STRIKE's striker test) turns
+  attacker and goes for the enemy king. Kings alive at r2000 weigh 0.5 of war points. Field evidence (zdb anchors):
+  of 6 points losses, 4 stood 1-1 or 2-2 in kings (rose A and averystrangespace A vs YokoOno; RUN A and
+  FreeTheCheese B vs Merlin), so one enemy king killed flips each; RUN A's Merlin king held 210 hp at r1600 (latek2.py).
+  Untried: WAR_STRIKE (s5g, s5h, Oct 29) struck from the war's start, never late. Twin switch bot zhq
+  (LATE_STRIKE_FROM 1000000: the test runs every turn, never fires).
+  1. Chain ~/diag26b/cq112 (seed 37): zhq, zdq and zdb on RUN, FreeTheCheese, rose and keepout, both seats vs agrab
+     and araid (48 games). zhq must replay zdb in every cell (winner, rounds, cheese transfer); any difference drops
+     zdq. Any zdq overrun or exception drops it. Do-no-harm: zdq wins no fewer cells than zdb and loses at most 1
+     cell zdb won. Mechanism: our rats' bites on enemy kings from r1600 (actions.tsv bite rows on a KING), summed
+     over the cells, must exceed zdb's; if no cell reaches r1600 at war in zdb's games, this part moves to clause 3.
+  2. Screens on seed 1: s7 runs/zd364 vs zdb's zd343 and s6 runs/zd365 vs zdb's zd345. Paired t <= -1.5 in either
+     rejects; any zdq overrun or exception rejects; transfer per round on the shared cells under 0.97x the
+     control's rejects (xpr.py).
+  3. Replica, block 1 on set 2 against zdb's anchors (20984-20999), the usual rules (t <= 0 after block 1 rejects;
+     block 2 on set 3; accept at pooled t >= 2 with D >= 4). Mechanism: if no zdq replica game of blocks 1-2 shows
+     a bite by our rats on an enemy king after r1600, zdq is dropped as inert, whatever its t.
+  Order: replica after zdo and zdp, once clause 1 holds; a screen rejection closes zdq whatever the replica shows.

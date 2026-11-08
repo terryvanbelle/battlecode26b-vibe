@@ -8473,3 +8473,13 @@
   - Twin: zhe (HEIR_BABIES 1000000) replays zdb in all 12 cells (winner, rounds and final transfer equal), on arrows, thunderdome and cheesebottles, both seats vs agrab and araid.
   - zdp: 0 overruns and 0 exceptions in 12 games. Outcome is not a clause, but it lost arrows A vs agrab (L r1825, transfer 9,323; zdb W r2000, 10,403). thunderdome B vs araid ended r39 to zdb's r42, lost by both. The other 10 cells are equal.
   - Next: replica block 1 on set 4 once zdo's set-3 block leaves the slot. Screens zd360 (playing) and zd361 still bind.
+- 12:19: **zdq registered (zdb + LATE_STRIKE); zdp passes its s7 screen**
+  - zdp s7 zd360 vs zd343: n 48, D 3, net +1, t +0.57; transfer per round 0.988x; 0 overruns, 0 exceptions. Flips: +agrab evileye B (W r2000), +atrap3 DefaultMedium B, -agtr DefaultMedium B (L r549). s6 zd361 is playing.
+  - zdb's six field points losses (ptsparts.py): keepout A and B vs Finals (kings 2-5 and 1-2), rose A and averystrangespace A vs YokoOno (2-1 and 1-1 at the end, lost on transfer and cat damage), RUN A and FreeTheCheese B vs Merlin (2-2). All six trail on transfer, 0.3-0.5x. War points weigh kings 0.5, cat damage 0.3 and transfer 0.2, so one enemy king killed flips the 1-1 and 2-2 games.
+  - Enemy kings at r1600 in zdb's r2000 games (scratch latek2.py): mostly 600 hp, Chebyshev 25-49 from ours. Low ones: RUN A Merlin 210 hp (lost), dirtpassageway B 52, tornadoes B 94 and RUN B 200 (all won).
+  - zdq = zdb + LATE_STRIKE 2 / LATE_STRIKE_FROM 1600 (bots/zdq/SNAPSHOT, zdq-f23e6ab34b09): from r1600, at war, one in two fighters turns attacker. WAR_STRIKE (s5g, s5h) struck from the war's start; a late strike is untried. Twin zhq (FROM 1000000).
+  - Chain cq112 (seed 37): RUN, FreeTheCheese, rose and keepout, both seats vs agrab and araid, for zhq, zdq and zdb (48 games). Screens zd364 (s7) and zd365 (s6) are queued after zdo's.
+  - Other loss notes, no candidate:
+    - DefaultMedium vs collegejunior: our king loses 320 to 41 hp in r230-290 to thrown rats.
+    - Merlin, DefaultLarge A: we spend the bank 1,900 to 885 by r40 (31 babies), then lose 27 rats in r50-100 to throw landings and cat crushes.
+    - Early throws (ethrow.py, r120) average 22.7 a game for Merlin, but also 21.8 for YokoOno, whom we beat 12-6. Throw counts do not separate the rush losses.
