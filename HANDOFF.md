@@ -96,23 +96,25 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 22:10 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (22:10):**
-  - **Delivery line (open).** Rose A vs araid: our base is sealed; attackers see the centre mines from r256, but only
-    gatherers and scouts courier, so the king listed (2,7) alone all game in z3x's games. Clockwisdom: couriers never
-    find the way home through the spiral (and under ROT (2,25) counts as enemy-half). Scratch: /dev/shm/kd/bfs.py,
-    newsgap.py, firstml.py, cutscan2.py (copied to VM ~/diag26b).
-  - **zb3** (bots/zb3; = zb2's code = z3x + ATK_DELIVER 100 + ATK_DELIVER_COOP; transfer hypothesis). Falsifier 1:
-    chain ~/diag26b/cq72 (seed 1, 33 games). Falsifier 2: zd296 (s7, identical to z3x on 48/48: pass) and zd297 (s6,
-    `bash tools/score_screen.sh zd297 zb2 zd172 z3x`). Falsifier 3: replica on zb2's build (#280; drain "active build
-    zb2", 12 rows queued); block 1 on set 2, score with `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`.
-  - **zb4** (bots/zb4; z3x + ATK_NEWS, switch bot bots/zan): in cooperation attackers carry unlisted home-half mines
-    to the nearest king. Falsifier 1: chain ~/diag26b/cq73 (seed 2, 32 games; mechanism clause on rose A ml= and
-    identity of no-'n' games). Screens zd298 (s7) and zd299 (s6) queued behind zd297. Not yet on the replica.
-  - Dropped tonight: zb2 (mechanism clause), zb1 (EXPLORE_TTL), za9 (SYM_PROBE), za6/za5 (SCOUT_SYM), za3/za4,
-    za1/za2, z9v.
+## State (2026-11-07 23:28 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (23:28):**
+  - **zb7** (bots/zb7 = z3x + THROW_CHECK, one Cfg line; zb7-b0633f4a0667). Falsifier 1: chain ~/diag26b/cq76 (seed 5,
+    32 games: arrows, evileye, dirtpassageway, thunderdome x both seats x agrab/araid x zb7/z3x). Our friendlyDmg over
+    zb7's 16 games <= 0.5x z3x's (void if z3x's < 300), throws >= 0.85x, wins >= z3x's, <= 1 cell lost. Score from the
+    NAME.log JSON lines (field friendlyDmg, throws in the A/B dicts). Falsifier 2: screens zd302 (s7, `bash
+    tools/score_screen.sh zd302 zb7 zd205 z3x`) and zd303 (s6, `... zd303 zb7 zd172 z3x`). Falsifier 3: replica #282,
+    block 1 on set 2 (drain "active build zb7"); score with `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`.
+  - **Field loss study (23:23 log entry):** our kings die to enemy throws of our own rats (237 throws, 9,045 hp in 64
+    losses; Merlin, waxmango) and bites; our own throws hit our king 33 times. Merlin out-delivers us 2x from r150
+    and grabs 92 to our 34. Closed families on this axis: AMMO_AWAY (u1v), RETREAT_HP (u7d-z0m), GLANCE (u5i),
+    RESCUE (u6g), BITE_CARRIER/BITE_GUARD (s4i), KING_BITE_CARRIER (u7b), GRAB_MICRO (overruns). The 11-05 capability
+    sweep (v0a-v0o) never ran: those switches are untested on z3x. Scratch: /dev/shm/kd/kingdmg.py, grabs.py,
+    ffire.py, grabwar.py, bitedmg.py, econ.py, flip.py (copied to VM ~/diag26b; run on build/dumpcache with PKG z3x).
+  - Dropped tonight: zb6 (ATK_NEWS_TTL), zb5/zb3/zb2 (ATK_DELIVER_COOP: coop-only, inert in the field), zb4,
+    zb1, za9, za6/za5, za3/za4, za1/za2, z9v.
   - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail.
-  - VM disk 2.1 GB (22:00, after pruning 42 replays). Laptop ~168 MB free; /dev/shm ~81 MB free (scratch /dev/shm/kd).
+  - VM disk 2.5 GB (23:26, after deleting replays of 14 rejected screens and pruning 70 replica replays). Laptop ~168 MB
+    free; /dev/shm ~81 MB free (scratch /dev/shm/kd).
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,
