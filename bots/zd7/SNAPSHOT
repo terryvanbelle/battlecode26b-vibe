@@ -1,0 +1,14 @@
+name=zd7
+source=bots/zc9
+source_sha=3fc07187378e
+commit=1c65794a
+created=2026-11-08 05:42 PST
+
+zd7 = z3x + EXPLORE_CENTER_FROM 40 (existing switch, one Cfg value; 0 since s3c) + CASH_READ_LEFT 6000. Snapshot of zc9 with RUSH_FROM put back to 4; Cfg.java (EXPLORE_CENTER_FROM, CASH_READ_LEFT) and Baby.java (z7u's budget read in cashTick's squeak loop) are the only files that differ from z3x.
+Lever: while the team knows no mine, explore() ranks its unseen samples by closeness to the map centre from round EXPLORE_CENTER_FROM; before that, by Chebyshev distance from the rat. With 40, every explorer explores locally for the first 40 rounds and goes centre-first only if no mine is known by then. A time split, where zd6 (EXPLORE_LOCAL 2) is a split by rat.
+Evidence: zd6's (clockwisdom: 0 mines known at r300 in all 6 local z3x games, all lost; field 5 of 6 lost). Also jail, field-lost in both seats vs Finals: our mines (8,36) and (52,35) lie 18 and 26 tiles over open ground from our king (26,37), and the centre is the walled cat cage; locally the king knows 0 mines at r100 in all 4 z3x games, and 0 at r300 in 3 (knownm.py). z9h (always local) found the first mine at r23 vs r65.7 on keepout but lost Excavation A, where centre-first digging pays from r0-24 (s3c).
+Registered 2026-11-08 05:42 PST, before any zd7 game and before any cq92 game was looked at.
+Falsifiers:
+  1. Chain ~/diag26b/cq93 (seed 22, zd6's seed: zd7 on clockwisdom and Excavation, both seats vs agtr and araid, paired with cq92's z3x games; plus jail, both seats vs agtr and araid, zd7 and z3x; 16 new games). Any overrun or exception drops it. Mechanism (knownm.py, rounds.tsv cumulative transfer): on clockwisdom and jail together zd7's king must list a mine by r300 in at least 6 of its 8 games, and their transfer summed at r600 must be at least 1.3x z3x's; else it is inert and dropped. On Excavation, zd7 losing a game z3x won, or Excavation transfer summed at game end under 0.9x z3x's, drops it. zd7 winning fewer of its 12 games than z3x drops it.
+  2. Screens s7 (zd334 vs z3x's zd205) and s6 (zd335 vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  3. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.

@@ -8203,3 +8203,15 @@
   - Per map, the flee share fell 6.74% to 5.95% on canyoudig, 10.71% to 7.59% on mincemeat, and 2.99% to 2.60% on whatsthecatdoin. Most flee turns are from cats that can sense the gatherer.
   - s7 zd330 was stopped after 8 minutes and zd331 was taken off the queue. zd332 (zd6 s7) has run since 13:40 UTC, and cq92 (zd6's chain) has started.
   - Field check (VM dumpcache, z3x): clockwisdom was lost 5 of 6 (Xzibit A/B, collegejunior A/B, Varun B), so zd6's lever has the field weight. TheHeist was won 6 of 6 and rose 7 of 8, so the known-mine census there is local only.
+- 05:45: **zd6 (z3x + EXPLORE_LOCAL 2) DROPPED at falsifier 1 (chain cq92, seed 22); its clockwisdom premise was a map misread**
+  - Results (fedpick.py): 6 wins of 8 to z3x's 3. Gained Excavation A vs agtr, Excavation B vs araid, clockwisdom A vs agtr and clockwisdom B vs both. Lost Excavation A vs araid (r588; z3x won at r466) and clockwisdom A vs araid. 0 overruns.
+  - The Excavation clause (no game z3x won may be lost) fails. That is the same cell z9h lost.
+  - The mechanism is inert. zd6's king listed 0 mines at r300 in all 4 clockwisdom games (bar: 3 of 4; z3x 0, 0, 1, 1). Clockwisdom transfer at r600 was 40-60 a game either way, so the clockwisdom wins were not economic.
+  - Correction to the 05:34 entry: on clockwisdom the diagonal ring wall meets the map edge at (57-58,19). Our king's corner (56,9) is a closed triangle, and (56,27)/(56,33) are not up an open corridor.
+    - By path (scratch minepath.py) our nearest mines are (2,25) at 59 steps and (2,31) at 65. Both count as the enemy's by the Euclidean half test, and every Euclid-home mine is 103+ steps away.
+    - That inversion is zth's (TRIP_HALF probe, 11-07: no gain). So exploring locally cannot find a home mine there, and the clockwisdom line stays closed to exploration fixes.
+  - jail is a real case of the centre rule. Our mines (8,36) and (52,35) are 18 and 26 steps over open ground from our king (26,37). In cq80 A vs araid, z3x's explorers clustered round the centre cage (mean (25-30, 17-27) through r250), and the king's list was empty with income 0 at r50, r150 and r290. z3x lost jail in both seats vs Finals in the field.
+  - **zd7 = z3x + EXPLORE_CENTER_FROM 40 + CASH_READ_LEFT 6000** was registered at 05:42, before any cq92 game was read: every explorer explores locally for the first 40 rounds, then goes centre-first if no mine is known.
+    - Falsifiers in bots/zd7/SNAPSHOT: chain cq93 (seed 22; clockwisdom and Excavation paired with cq92's z3x games, plus jail for zd7 and z3x). Mechanism: on clockwisdom and jail together a mine is listed by r300 in at least 6 of 8 games, and their transfer at r600 is at least 1.3x z3x's. Excavation: no lost win, and transfer at least 0.9x. Then screens zd334/zd335 and the replica rules.
+    - Its evidence repeats zd6's clockwisdom misread. The wording is frozen (cq93 had started), so this entry records the error. zd7 needs most of its jail games and two clockwisdom games to clear the mechanism bar.
+  - s7 zd332 was stopped and zd333 taken off the queue. zd334 (zd7 s7) has run since 13:45 UTC, with zd335 queued.
