@@ -8013,3 +8013,11 @@
     2. Screens s7 zd302 (vs zd205) and s6 zd303 (vs zd172), both queued.
     3. Replica block 1 on set 2 (t ≤ 0 rejects). zb7 was submitted as #282 (aef996c8c725edbc). The hourly limit sent none of its 16 rows, so all 16 are in research/panel/queue.tsv for the drain.
   - Local friendly fire (z3x's chain logs): arrows A vs agrab 1,174 hp, evileye A vs agrab 306, cheesebottles 136, dirtpassageway vs araid 118 and 68.
+- 23:40: **zb8 = z3x + MAX_BABIES_WAR 30** (existing constant flipped from 18; zb8-33032e39bd8b). At war, with enemies in the king's sight and the bank at least cost + WAR_FLOOR, the baby cap is 30. s4h tried it on s4d (lean positive locally, t +0.93 vs abrk) and never went to the replica alone.
+  - Field dose (scratch capbind.py, 68 lost and 101 won distinct z3x games in the dump cache): in losses, 3,500 of 12,339 king-rounds at war with an enemy baby in the king's sight had 20+ babies and a bank in [cost + 300, 1000), where the 18 cap blocks a spawn the floors allow. That is 51 a lost game and 28 a won game (2,802). It is most common on dirtpassageway, RUN, thunderdome, keepout, cheesebottles, Stash and DefaultMedium.
+  - The newborn spawn-side idea from the king-damage study is not pursued: newborn grabs were measured at 12:06 (about 1.3 a lost game).
+  - Falsifiers (bots/zb8/SNAPSHOT, registered 23:37 before any zb8 game):
+    1. Chain ~/diag26b/cq77, fresh seed 7: dirtpassageway, thunderdome, cheesebottles and DefaultMedium, both seats, vs agrab and araid, zb8 and z3x (32 games). Our spawned summed over zb8's 16 games must be at least 1.03x z3x's. zb8 must win at least z3x's count and lose at most 1 cell z3x won. It starts when cq76 ends (waiter ~/diag26b/after2.sh).
+    2. Screens s7 zd304 (vs zd205) and s6 zd305 (vs zd172), queued after zd303.
+    3. Replica block 1 on set 2 (t ≤ 0 rejects). zb8 was submitted as #283 and its 16 rows queued.
+  - The #283 submit made zb8 the active build, so the drain held zb7's 4 unsent rows. **zb7 was resubmitted as #284** (same digest aef996c8c725). The 12 zb7 matches already sent (20350-20361) were created under #282 and play zb7. zb8 is resubmitted once zb7's 4 rows are sent.
