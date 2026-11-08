@@ -1,0 +1,6 @@
+name=zsq
+source=bots/zl0
+source_sha=c585a2762c96
+commit=96ae6d40
+created=2026-11-07 21:12 PST
+reason=switch bot (not a candidate): zl0 + SYM_PROBE v2 (new switch). While exactly two symmetries are live a scout walks each turn to the nearest unseen deciding tile: a live twin of a listed mine (mineless rules that symmetry out) or a sampled tile whose two live twins it saw differ; scouting lasts to r250 while two-way or holding unshared news, which it walks to a king.
