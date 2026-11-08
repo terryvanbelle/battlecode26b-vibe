@@ -8021,3 +8021,8 @@
     2. Screens s7 zd304 (vs zd205) and s6 zd305 (vs zd172), queued after zd303.
     3. Replica block 1 on set 2 (t ≤ 0 rejects). zb8 was submitted as #283 and its 16 rows queued.
   - The #283 submit made zb8 the active build, so the drain held zb7's 4 unsent rows. **zb7 was resubmitted as #284** (same digest aef996c8c725). The 12 zb7 matches already sent (20350-20361) were created under #282 and play zb7. zb8 is resubmitted once zb7's 4 rows are sent.
+- 23:48: **zb7 is DROPPED at falsifier 1** (chain ~/diag26b/cq76, seed 5; scratch chainscore.py). Our friendlyDmg over zb7's 16 games was 3,820 against z3x's 6,570 (0.581x; the bar was at most 0.5x). Throws were 1.156x (bar 0.85x, held). Wins were 13 to 13, with no cell lost or gained.
+  - THROW_CHECK cuts friendly fire by about 40%, short of the registered half. zb7's games ran longer in the cells it shared (evileye 1,791 rounds vs 957), which adds exposure.
+  - The s7 screen zd302 had passed: n 48, D 13, net +1, t +0.27, 0 overruns, transfer per rat-turn 1.025x. The s6 screen zd303 was stopped at 1 of 48 (abort_watch.stop), and zd304 (zb8 s7) took the slot.
+  - Replica #282, partial block 1 (20350-20361 against the set-2 twins): 36 cells, 34 alike, D 2 (-2: Varun clouds A, waxmango learn_your_lesson A), t -1.41. Its 4 unsent rows were withdrawn (saved in /dev/shm/kd/zb7_queue.tsv). **zb8 was resubmitted as #285**, so the drain sends its 16 rows.
+  - Chain cq77 (zb8 falsifier 1) started when cq76 ended.
