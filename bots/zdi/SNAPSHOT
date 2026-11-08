@@ -1,0 +1,13 @@
+name=zdi
+source=bots/zdb
+source_sha=638afd6102f7
+commit=f78df4ae
+created=2026-11-08 09:33 PST
+
+zdi = zdb + RUSH_FROM 12 (from 4; RUSH_TO stays 16): zdd's lever on the new incumbent, 4 opening rushers (spawn index 12-15) instead of 12. Cfg.java's RUSH line is the only change from zdb. On maps over 441 tiles zdb's CORE_SMALL does not act (its ledger keeps the bytecode count), so there zdi runs zdd's code; on maps of 441 tiles or fewer both levers act.
+Evidence (zdd, judged on its own registration): s7 zd348 vs z3x's zd342 (seed 1): n 48, D 15, net +7, t +1.85, 37 wins to 30 (gained agtr Stash A and bed B, atrap3 DefaultMedium A and B, Stash A, bed A, cheesefarm A, evileye A, and others; lost agtr evileye A, atrap3 tiny B and 2 more); transfer per round 1.055x; pick amount per round 1.017x (per-cell z +1.54); 0 overruns, 0 exceptions. zdd's s6 zd349 is still to come. Field census 11-08 08:47: by r150 in losses we spawned 39.1 rats and 13.9 picked (36%), the opponents 32.1 and 15.8 (49%); attackers took 14% of our rat turns by r300 on cq96 (mvshare.py, 09:26).
+Registered 2026-11-08 09:33 PST, before any zdi game.
+Falsifiers:
+  1. zdd's own falsifier 1 must hold (s6 zd349 vs zd344: t > -1.5, no overrun or exception, transfer per round >= 0.97x; both screens' pooled pick amount per round >= 1.01x). If it fails, zdi is dropped with it.
+  2. Chain ~/diag26b/cq105 (seed 25): zdi on cq98's 16 cells (bed, canyoudig, evileye, tiny; both seats vs abrk and araid), against cq98's zdb games (same seed and cells; zdb is deterministic), P 2, run beside cq103. These are the small maps, where the rush and CORE_SMALL interact. Any zdi overrun or exception drops it. zdi winning fewer of its 16 games than zdb (15), or losing 2 or more cells zdb won, drops it.
+  3. Replica, after zdf's blocks, against zdb's own games as anchors: block 1 on set 2 (20984-20999) rejects at t <= 0, block 2 on set 4 (20817-20824, 20842-20845, 20848-20851) at pooled t <= 1; accept at pooled t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
