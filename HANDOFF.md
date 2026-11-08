@@ -96,32 +96,30 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 09:57 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (09:57):**
+## State (2026-11-08 11:22 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (11:22):**
   - **Incumbent zdb** (accepted 09:05 over z3x: #293, pooled 96 cells, D 4 (+4 -0), t 2.00). New candidates build on
     bots/zdb (`BC_JDK=$SP/nojdk TMPDIR=/dev/shm bash tools/snapshot.sh NEW bots/zdb`, switch lines by python replace
     with asserts). Screen controls: s7 **zd343**, s6 **zd345** (seed 1). Replica anchors: set 2 = 20984-20999 (twin rows
-    ~/diag26b/zdbb2.jsonl), set 4 = 20817-20824, 20842-20845, 20848-20851 (zdbb1.jsonl).
-  - **Replica: zdb twin block on set 3** (#295, sent 09:56; 21016-21019 sent, 12 in the drain queue). When it is in,
-    its rows are the set-3 anchors (fetch, move replays + match.json to VM ~/diag26b/rp, `field_report.py games --ids
-    ... --dir ~/diag26b/rp > ~/diag26b/zdbb3.jsonl`). zdj's block 1 is on set 3 against it.
-  - **zdj** (zdb + KING_FAR: no listed mine within dist2 400 of the start -> from r60 the king walks to the nearest
-    home-half mine within 1600; acts only on Nofreecheese, uneruesansfin, wallsofparadis, whatsthecatdoin): chain
-    ~/diag26b/cq106 (seed 31, 38 games, P 2, running). Score: king within Chebyshev 1 of a mine at r250 in 12+ of 16
-    (kpos-style turns.tsv read), transfer at r600 >= 1.15x zdb, wins not fewer, <= 1 lost cell; identity cells
-    (arrows A / evileye B vs araid seed 29 = cq103's zdb games; Hike A/B seed 31 vs zdb twins) must match exactly.
-    Screens zd356 (s7, must be D 0) and zd357 (s6). Replica: set 3 vs the zdb twin, then set 4.
-  - **zdk** (zdb + RUSH_FROM_BIG 12: 4 rushers on maps over 441 tiles): falsifier 1 = zdd's s6 zd349's large-map cells
-    (`python3 ~/diag26b/celldiff.py zd344 z3x zd349 zdd`, run in the repo dir: more lost than gained drops it);
-    chain cq107 (seed 32; waiter cq107run.sh starts it when cq104 ends): wins not fewer than zdb's on 12 cells, < 2 lost,
-    tiny B identity vs cq98's zdb games. Replica sets 2 then 4.
-  - **zdh** (zdb + DELIVER_FAR): chain cq104 (seed 30, running): `tripsc.py zdh 300 ~/diag26b/cq104` vs zdb (far20 <=
-    0.6x, amt >= 1.0x, wins, under 2 lost cells). Screens zd354 / zd355.
-  - **zdd** (z3x + RUSH_FROM 12): s6 zd349 running vs zd344; pooled ppr clause (>= 1.01x) over zd348 + zd349.
-  - Dropped/rejected this hour: zdf (replica block 1, t -1.73: lost clouds A/B, learn_your_lesson B), zdg (cq103:
-    inert 0.83x, 2 lost cells), zdi (cq105: lost tiny B x2), zde.
-  - Screen queue: zd349 (running), zd354, zd355, zd356, zd357 (about 50 min each now; load ~21). Add more first.
-  - Chains: cq104 (zdh) and cq106 (zdj) running; cq107 (zdk) waits on cq104. Next fresh seed: 33.
+    ~/diag26b/zdbb2.jsonl), set 4 = 20817-20824, 20842-20845, 20848-20851 (zdbb1.jsonl), **set 3 = 21016-21023 +
+    21036-21043** (zdb twin block complete; rows ~/diag26b/zdbb3.jsonl, replays in VM ~/diag26b/rp).
+  - **Replica: zdk** (#296, zdb + RUSH_FROM_BIG 12) block 1 on set 2: 8 of 16 in (21048-21051, 21065-21068), t -1.63
+    (D 6, +1 -5): lost the rush kills of YokoOno's / Varun's kings (streetsofnewyork A r92, clouds A/B). Remaining
+    21079-21082 playing, 4 in the drain queue. Judge at block end (`paired --dir /dev/shm/rp 20984-20999 IDS`;
+    t <= 0 rejects). The rush count is the field optimum both ways (u0o 8 rushers net -7, u1o 16 net -3, zdk 4 now).
+  - **zdk screens**: s7 zd358 passed (D 8 +7 -1, t +2.21, small maps identical); s6 **zd359 playing** (falsifier 4).
+  - **zdo** (zdl's sources re-registered: zdb + KING_FAR + KING_FAR_MIRROR): chain **cq110** (seed 35, running, P 4):
+    `python3 ~/diag26b/farchk6.py ~/diag26b/cq110 600 zdo` (repo dir): king within Chebyshev 5 of a mine at r600 in
+    11+ of the 16 target cells (wallsofparadis, whatsthecatdoin, Nofreecheese, ultimatestarvation), xfer600 >= 1.15x
+    zdb, wins not fewer, < 2 lost; jail/clouds do-no-harm (not net lost, xfer >= 0.95x); `cellres.py DIR zdo zdb`.
+    Field caution: Merlin walks its own king to whatsthecatdoin's centre mines and kills our still king (r288/r325).
+  - Closed this segment: zdh REJECTED (zd354 t -1.70), zdj DROPPED (r250 mechanism 6 of 16; Hike identity), zdl
+    DROPPED (Hike identity), zdn DROPPED (cq109 xfer 0.982x of zdk; wins 15 vs zdk 14, zdb 11).
+  - Screen queue after zd359: empty. Add zdo's screens if cq110 holds, or new candidates first.
+  - Next fresh seed: 36. Scratch: cellres.py DIR BOT... (per-cell results, xfer600), farchk6.py, kmine.py (per-mine
+    pickups in a cached replica game), early.py, kinghp.py (king hp + deaths per window) in ~/diag26b.
+  - Laptop root is near full (the session transcript grows): build/vmruns deleted at 10:46 (progress-refresh.sh
+    re-pulls ~87 MB; delete it again after a refresh). /tmp/claude-1000 holds 746 MB of other sessions (owner's call).
   - zdb's lost cells on sets 2 and 4 (23 of 96; /dev/shm/rp/*/match.json): seat-split ones are arrows A vs Varun,
     averystrangespace A and rose A vs YokoOno (points), clockwisdom B vs Varun, dirtpassageway A vs Finals, knifefight A
     vs Merlin (r107; Merlin's own king walk is asymmetric: as B it retreats to a wall pocket at (14,17), as A it walks
