@@ -96,8 +96,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 00:15 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (00:15):**
+## State (2026-11-08 00:14 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (00:14):**
   - **zb9** (bots/zb9 = zb8's sources = z3x + MAX_BABIES_WAR 30, one Cfg line; zb9-868247cab6d0), re-registered after
     zb8 failed a whole-game spawn clause (game-length confound; results 13-12, +1 -0). Falsifier 1: chain
     ~/diag26b/cq78 (seed 8; keepout, Stash, RUN, DefaultMedium x both seats x agrab/araid x zb9/z3x, started 00:08).
