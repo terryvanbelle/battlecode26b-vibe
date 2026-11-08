@@ -1,0 +1,26 @@
+name=z9n
+source=bots/zl0
+source_sha=c585a2762c96
+commit=db1e0c48
+created=2026-11-07 17:47 PST
+recipe=bash tools/bundle.sh z9n zl0 z3x zfu (zfu = zl0 + KING_FUTILE 8, KING_FUTILE_HOLD 300; scratch, untracked)
+idea=z3x + KING_FUTILE 8 / KING_FUTILE_HOLD 300 (new switch; basics repair, the king's walks): after a run of 8 king
+  moves inside one 3x3 box, with no movement-ready turn standing still, the king's pile walk (KING_ROAM) and home-mine
+  walk stop for 300 rounds (King.futile, mineWhy 'w'), so its tile, the carriers' delivery target, holds still.
+  Case: cq44 (z3x vs araid/abrk/agrab/agtr on fullofsecrets, both seats, seed 0) z3x lost all 8 at r627-812; vs araid A
+  it picked 8,340 and delivered 180 (araid 1,829). The king walked (1-3,32) against home mine (2,26) behind its pocket's
+  south wall (km=z/p); each step resets the carriers' Nav stall (NAV_SAME_R 0), so carriers at (8-10,27-31), Chebyshev
+  5-6 out, sat in mv=d with stall 0-2 and never asked Flow for the 39-step way round. Same mechanism as u4v (KING_STRICT,
+  log 2026-11-01 01:10-01:46): its still king won 2 of 3 fullofsecrets games vs s7d locally, but strict steps changed
+  every walk and stranded the rose king (rejected at block 1, lost rose x4). Here no step changes until the run is
+  complete; s4w (NAV_SAME_R) and u4g/u4k (DELIVER_ANCHOR) treated the carriers' side. attempts find jiggl, jitter,
+  oscill, futile: none.
+ledger=hook in King.move before the pile walk, K 20 with G.settle; games replay z3x's until the first freeze
+falsifiers (registered 2026-11-07 17:49 PST, before any z9n game had finished):
+  1. Chain ~/diag26b/cq45 (seed 0): z9n on fullofsecrets vs araid/abrk/agrab/agtr, both seats, against cq44's z3x
+     games: z9n wins at least 2 of the 8 and its summed transfer there is at least 3x z3x's.
+  2. In cq45's paired cells (rose vs araid and abrk, clockwisdom and dirtpassageway vs araid, both seats; z9n and z3x)
+     z9n loses no game z3x wins.
+  3. In any cq45 game where no z9n king shows km=w, the game equals z3x's (winner, rounds, transfer).
+  4. The s7 (zd270 vs zd205) and s6 (zd271 vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  5. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
