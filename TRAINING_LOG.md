@@ -8414,3 +8414,20 @@
   - Mean babies r100-500 summed 335.2 to 327.6, within noise (not a clause).
   - Remaining: screens zd354 (s7, 28 of 48 in) and zd355 (s6), then the replica on set 2 vs zdb's anchors.
   - VM disk was 1.9 GB: deleted the .bc26 replays of cq104 (zdh's chain clause is judged; the tsvs are gzipped and kept) and of closed chains cq95-cq97, and pruned 90 /srv replays older than 36 h. Now 2.2 GB.
+- 10:41: **zdh REJECTED at falsifier 2 (s7 screen zd354 vs zdb's zd343)**
+  - n 48, D 9 (+2 -7), net -5, paired t -1.70 (bar -1.5). Transfer per round on the 48 shared cells 0.881x (bar 0.97x).
+  - Lost: Stash A and starvation A vs agrab, cheesefarm B vs agrab, DefaultMedium B vs agtr (W r186 to L r66), cheesefarm A vs agtr, bed B and starvation B vs atrap3. Gained: Stash A vs agtr, arrows B vs atrap3.
+  - No zdh overruns or exceptions (both overruns in the run are agrab's). zd355 (its s6 screen) was pulled from the queue unplayed; zdj's zd356/zd357 had been moved ahead of it at 10:26.
+- 10:41: **zdj DROPPED at falsifier 1, mechanism clause (chain cq106, seed 31; farchk.py)**
+  - King within Chebyshev 1 of a mine at r250 in 6 of 16 cells (bar 12): wallsofparadis 4 of 4, whatsthecatdoin 2 (B vs agtr/araid; A at 2 and 8), Nofreecheese 0 (A vs agtr at 6), uneruesansfin 0 (the king never left its start by r250).
+  - The identity clause also fails: Hike A vs araid xfer600 2424 to zdb's 2607 (both W r971), Hike B W r1079 to r1288. arrows A and evileye B vs araid at seed 29 replay cq103's zdb games exactly.
+  - The outcome clauses held: transfer at r600 summed over the 16 cells 37,940 to 27,162 (1.40x, bar 1.15x); wins 15 to 14; one lost cell (whatsthecatdoin B vs agtr, L r514 where zdb won r856), gained uneruesansfin A vs araid and whatsthecatdoin A vs agtr; wallsofparadis transfer 15,339 to 8,586. No overruns.
+  - uneruesansfin (king indicator, A vs agtr): km=n0 to r150, one enemy-half mine from r200, home mine (32,49) named only at r300-350 and walked to by r400 (stopped at (22,57), km=z3). Discovery, not the walk, is the bottleneck there, and with sym=3 (two symmetries live) to r500 zdl's mirror cannot act either. zdl's 12-of-16 bar (cq108, same 4 maps) therefore needs every Nofreecheese, wallsofparadis and whatsthecatdoin cell. zdl's identity cells run first and include Hike, where zdj already differs.
+  - zdj's screens zd356 (s7) and zd357 (s6) are dropped with it; zdl's own screens were registered only if zdj's were not decisive, so zd356/zd357 would not have been zdl's. Queue now empty after zd356 (playing): replaced below.
+- 10:45: **zdl DROPPED at falsifier 2 (identity cells, run first in cq108)**: Hike A vs araid transferred 6,485 to zdb's 8,627 (both W r971); Hike B won r1079 to zdb's r1288 (transfer 1,884 to 2,790). arrows A and evileye B vs araid replay cq103's zdb games. The Hike premise was wrong for the whole KING_FAR line: Hike's king is 17 from its nearest mine at r250, inside KING_FAR_R2, so the far pick acts there. cq108's chain tree and zd356 (zdj's s7, 11 of 48 in) were stopped by pid; zd357 was never started.
+- 10:45: **zdk passes falsifier 2 (chain cq107, seed 32, 26 of 26)**
+  - Wins 9 of 12 to zdb's 4. Gained 5 cells, lost none: DefaultMedium A and B vs atrap3 (zdb L r184/r250), Stash A vs agtr (zdb L r590), cheesefarm A vs agtr (zdb L r1555) and vs atrap3 (zdk W r2000 on points). zdk overruns 0, exceptions 0.
+  - Identity: tiny B vs abrk (B r66, 40/60) and vs araid (B r60, 0/40) replay cq98's zdb games exactly.
+  - Mean babies r100-500 summed 270.6 to 238.4, the more-gatherers premise in action (not a clause).
+  - **Submitted as #296**; block 1 on set 2 queued (4 sent, 12 in the drain queue for zdk). zdb's 8 unsent set-3 twin rows are held by the drain (rows are tagged by build); they only mattered for zdj/zdl, now both closed, and resume if zdb is resubmitted.
+  - Falsifier 4 added before any of its games: s7 zd358 and s6 zd359 under the standard gates, and maps of 441 tiles or fewer must replay zdb. Both are queued.
