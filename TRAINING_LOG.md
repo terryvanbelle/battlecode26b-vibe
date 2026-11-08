@@ -8264,3 +8264,16 @@
     - Falsifier 1 (registered 06:33): chain ~/diag26b/cq97, after cq96. zda on cq96's 16 cells, against cq96's z3x games. Same clauses as zd9: mean babies over r100-500 summed at least z3x's + 16; wins at least z3x's; any overrun or exception drops it.
     - Falsifier 2: screens zd340 (s7) and zd341 (s6), queued behind zd339.
   - VM disk fell to 1.9 GB. Removed the .bc26 files and gzipped the tsvs of the closed chains cq89-cq93, and pruned 134 replica replays older than 36 h: 2.2 GB free.
+- 06:47: **zd8 DROPPED at falsifier 2 (s6 per-round picks); its sources re-registered as zdb (matched-round picks clause, fresh data) and submitted as #293**
+  - zd337 (zd8 s6 vs zd172): n 44, D 2 (+abrk bed A, +araid evileye B), net +2, t +1.43, transfer per round 0.997x, 0 overruns. But per-round picks (ppr.py) were z -2.10, and s6 rejects at z <= -2, so zd8 fails its falsifier 2 and is dropped. Its replica blocks are void, and the 12 set-4 rows left in the drain were taken out (a copy of the rows is in /dev/shm/kd/queue-zd8-void.tsv).
+  - The failure is game length (scratch pprcells.py, cellres.py). Only 13 of the 44 shared cells differ (the small maps; the rest run z3x's code). The largest drops are faster wins: bed B vs araid at r96 to z3x's r162 (picked 400 to 1,220), bed B vs abrk at r142 to r195, bed A vs araid at r202 to r223, and bed A vs abrk, won at r270 where z3x lost at r302. ppr divides whole-game picks by game rounds, so an earlier king kill reads as a weaker economy. zb3's whole-game transfer clause had the same confound; zb5 re-registered it with a matched-round clause.
+  - On zd8's chains cq94 and cq95, picks at matched rounds (scratch mpick.py: cumulative picks at the shorter game's last round) were 24,254 to 24,883 (0.975x), per-cell z -0.59. That is design information, not a test.
+  - zd8's replica record (void, kept for the record; replays in VM ~/diag26b/rp):
+    - Block 1 on set 2, final: 48 cells, 46 alike, D 2, +Xzibit canyoudig A and B, net +2, t 1.41.
+    - Set 4's first 4 matches (20787-20790): 12 cells, D 2, +Finals averyfineline A and B (z3x lost both at r113-127), t 1.41.
+  - **zdb** (bots/zdb/SNAPSHOT; zdb-0c69409ceaad): zd8's code, identical apart from the package name, judged only on fresh data. Registered 06:45.
+    - Falsifier 1: chain ~/diag26b/cq98 (seed 25, running): bed, canyoudig, evileye and tiny, both seats, vs abrk and araid (s6's opponents), 16 games for each build.
+      - Overruns, exceptions, or fewer wins than z3x drop it.
+      - Matched-round picks per cell (mpick.py) at z <= -2 drop it. This replaces s6's whole-game ppr gate.
+    - Falsifier 2: screens on seed 1, with new z3x controls: s7 zd343 vs zd342 and s6 zd345 vs zd344. These rejects stand: t <= -1.5, any overrun, transfer per round under 0.97x. They are queued after zd339, ahead of zda's zd340 and zd341.
+    - Falsifier 3: the replica on new matches. zdb was submitted as #293 at 06:46, because the replica was idle; block 1 on set 4 has 16 rows queued, and block 2 is on set 2. A failed falsifier 1 or 2 voids the blocks.
