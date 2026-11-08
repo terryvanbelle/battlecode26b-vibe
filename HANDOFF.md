@@ -96,19 +96,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 05:34 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (05:34):**
-  - **Replica: z9u** (z3x + KING_FUTILE 8/300, R 7; `bundle.sh z9u zl0 z3x zfz`; no CASH_READ_LEFT) is #291, block 1 on
-    set 2 (16 rows in the drain from 05:02). Score with `contest.py paired --dir /dev/shm/rp
+## State (2026-11-08 06:10 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (06:10):**
+  - **Replica: zd8** (z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000; zd8-2e3b8e469695) is #292, block 1
+    on set 2: matches 20750-20753 sent at 06:03, 12 rows in the drain. Score with `contest.py paired --dir /dev/shm/rp
     18722-18725,18736-18739,18745-18748,18750-18753 IDS` once all 16 are in (fetch with space-separated ids, tar to VM
     ~/diag26b/rp, rm local replays). Block 1 rejects at t <= 0; pooled t <= 1 after block 2 rejects; t >= 2 with D >= 4 accepts.
-  - **zd5** (z3x + CAT_FRONT 8 + CASH_READ_LEFT; zd5-61c023b30112): chain ~/diag26b/cq91 (seed 21, 32 games, running),
-    score with `python3 ~/diag26b/gcflee.py ~/diag26b/cq91 zd5 z3x` (c share <= 0.7x, cat kills/1000 G <= 1.3x) and
-    fedpick.py; screens zd330 (s7, running since 13:32 UTC) and zd331 (s6).
-  - **zd6** (z3x + EXPLORE_LOCAL 2 + CASH_READ_LEFT; zd6-00d0153490e9): chain ~/diag26b/cq92 (seed 22, 16 games) starts when
-    cq91 ends (VM after2.sh pid 2331810). Score with `python3 ~/diag26b/knownm.py zd6 ~/diag26b/cq92` (and z3x),
-    rounds.tsv transfer at r600 on clockwisdom (>= 1.3x) and Excavation totals (>= 0.9x, no lost win); screens zd332, zd333.
-  - Next fresh chain seed: 23.
+    It went on before its screens (the slot was idle); s7 **zd336** (running since 14:00 UTC; at 29 of 48: +bed B vs
+    agrab/agtr, -evileye B vs agrab/agtr, transfer 1.013x) and s6 **zd337** still bind, and a failed screen voids the block.
+    Falsifier 1 (chain cq94) held: bank at r100 17,940 to z3x's 7,180, wins 15 to 13.
+  - Chain ~/diag26b/cq95 (seed 0, 8 games, running): zd8 and z3x replaying zd336's evileye B and bed B cells with
+    dumps, to see why evileye B flips to a loss (the replacements past the core take spawn index 8-11, so they rush).
+  - Closed this morning: z9u (replica block 1: 48 alike, t 0.00), zd7 (EXPLORE_CENTER_FROM 40; cq93 mechanism 5 of 8,
+    transfer 0.42x), zd6 (EXPLORE_LOCAL), zd5 (CAT_FRONT). The explore-start line is closed on clockwisdom and jail.
+  - Next fresh chain seed: 24.
   - Closed tonight: z7u (replica block 1 t -1.41), zd4 (MINE_RR; s7 transfer 0.952x; s6 zd329 later t +1.77, record
     only), zd2/zd3 (DEFEND_D2 doses), zc8, zd1, zc9, zc6, zc5, zc7, zc4, zc3, zc2, zb7-zb9, zc1.
   - **Open leads:** (1) sealed-pocket dig-out on averystrangespace (only 253 tiles and 1 mine reachable without dirt;
