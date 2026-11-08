@@ -1,0 +1,14 @@
+name=zc4
+source=bots/zl0
+source_sha=c585a2762c96
+commit=a5c9246a
+created=2026-11-08 01:36 PST
+
+zc4 = z3x + RAW_TRAPS (z0q's switch ported to the z3x line: switch bot bots/zrw = zl0 + Baby.rawTrap + the Cfg lines, ledgered with G.settle K 18; bundle.sh zc4 zl0 z3x zrw; Baby.java and Cfg.java are the only files that differ from z3x). At war an attacker (role ATTACK, rushers, never delivers) carrying 20+ raw cheese lays a rat trap on the TRAP_ADJ tile beside the nearest enemy baby within dist2 13, while we have fewer than 20 live, paid from its raw alone.
+Evidence (2026-11-08): in z3x's field dumps the enemy's rat traps kill 13.9 of our babies a lost game and 15.0 a won one, while ours kill 0.2 or fewer (scratch z3xdeath.py, g0 of the 66 match dumps: 23 lost, 43 won). z3x lays none: spendtl.py (all 194 games) shows 0 cheese on rat traps in every window to r600 against the opponents' 42-88 a window. z0q (u9p + this switch) was the best trap result: replica pooled 144 cells D 26 (+15 -11), net +4, t 0.78, rejected at block 3 (bar 1.5); blocks 1-2 were +2 and +4. The u9p-line set-2 cells it lost (TRAINING_LOG 2026-11-06 09:14) were shared by every u9p-line build, and z3x's set-2 games differ from u9p's.
+Registered 2026-11-08 01:37 PST, before any zc4 game.
+Falsifiers:
+  1. Screens s7 zd312 (vs z3x's zd205) and s6 zd313 (vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  2. Mechanism, pooled over both screens: zc4's ratTraps under 92 (one a cell) drops it as inert; its ratTrapHits under 0.7x its ratTraps drops it (the traps miss).
+  3. Ledger: a screen cell where zc4 laid no rat trap that does not replay z3x's control cell (same winner, rounds and transferAmt; scr_eq.py) drops it as a ledger fault.
+  4. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
