@@ -1,0 +1,11 @@
+name=zdj
+source=bots/zdb
+source_sha=638afd6102f7
+commit=6e296065
+created=2026-11-08 09:45 PST
+description=zdb + KING_FAR (new switch, KING_FAR_R2 1600, KING_FAR_FROM 60): with no listed mine within KING_MINE_R2 (dist2 400) of its start, from r60 the king walks to the nearest home-half mine within dist2 1600, re-picked until it is there; a mine listed within 400 ends it. Census: acts on Nofreecheese, uneruesansfin, wallsofparadis, whatsthecatdoin only (z3x/zdb field: lost Nofreecheese A/B vs collegejunior, wallsofparadis A/B vs AdamTan12_Finals, whatsthecatdoin A/B vs nzjt; won uneruesansfin A/B vs Xzibit). Ledgered (King.move, K 9).
+falsifiers (registered 09:47, after chain cq106 was launched at 09:46 and before any of its games finished):
+ 1. chain ~/diag26b/cq106 (seed 31; zdj and zdb on Nofreecheese, wallsofparadis, whatsthecatdoin, uneruesansfin, both seats, vs agtr and araid; 16 cells each). Mechanism: zdj's king stands within Chebyshev 1 of a mine at r250 in at least 12 of its 16 cells. Summed cheeseXfer at r600 (a game that ends earlier counts at its end) at least 1.15x zdb's over the same cells. zdj wins at least as many of the 16 as zdb and loses at most 1 cell zdb won. Any overrun or exception in a zdj game that its zdb twin lacks drops it.
+ 2. Identity (same chain): zdj's arrows A and evileye B vs araid at seed 29 replay cq103's zdb games (same winner, rounds and transfer), and Hike A and B vs araid at seed 31 replay zdb's twins. Any difference drops zdj (a ledger or early-pick fault).
+ 3. Screens: s7 zdj vs zd343 (no far-mine map: must be D 0) and s6 vs zd345 (2 wallsofparadis cells) under the standard gates.
+ 4. Replica: block 1 on set 3 against a zdb twin block on set 3; block 2 on set 4 against zdb's set-4 anchors (20817-20824, 20842-20845, 20848-20851). Standard rules: block 1 rejects at t <= 0, pooled t <= 1 after block 2, <= 1.5 after block 3; accept at t >= 2 with D >= 4.
