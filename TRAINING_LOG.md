@@ -8513,3 +8513,9 @@
   - CAT_DEFEND is the first move branch for every rat, attackers included, ahead of retreat and war(). CAT_YIELD gives way to enemy rats at war. z3n tried it on z1z and was dropped locally (fired in 5 of 16, +1 -1).
   - Engine: a pounce moves the cat's 2x2 up to dist2 13 and kills everything under it. From the cat's centre that reaches dist2 18.5, just inside GATHER_CAT_DIST 20.
   - Against Merlin (ekbite.py): our rats bite its kings 0-2 times in most games, and Merlin's rats bite ours 0 times in all 18 games. Its king kills come from throws and starvation.
+- 13:45: **zdr REJECTED at s7 zd366 by its transfer clause (0.969x, the bar is 0.97x), though it gained 4 cells**
+  - zd366 vs zd343: n 48, D 4, all gained, net +4, t +2.07; 0 overruns.
+  - Gains: agrab evileye A (W r1449 where zdb lost at r1456), evileye B (W r1539; zdb L r1786), and atrap3 arrows B and cheesefarm B (W r2000 on points where zdb lost on points).
+  - Transfer per round on the shared cells was 0.969x: the strikers stop delivering. The clause is binding, so zdr closes.
+  - Chain cq113 was stopped at 25 of 48 games and zd367 at its start; cq114 (zds) now runs.
+  - Reading: a strong late strike wins points games locally at a transfer cost of about 3%. zdq (half the dose, from r1600) is the live test on the replica (#299, 4 of 16 in, 21205-21208 all won). A re-registered strong dose would need its gate set before fresh games, e.g. transfer per round over rounds 1-1400 only.
