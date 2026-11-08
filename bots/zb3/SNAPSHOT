@@ -1,0 +1,10 @@
+name=zb3
+source=bots/zb2
+source_sha=ad41b6de6104
+commit=6685bd16
+created=2026-11-07 21:50 PST
+reason=re-registration of zb2's sources (identical code: z3x + ATK_DELIVER 100 + ATK_DELIVER_COOP) under a new hypothesis. zb2 was dropped at 21:52 by falsifier 1's mechanism clause (TheHeist A raw at the end 1,780, bar under 500); its results clause held on cq71 (8 of 13 cells won to z3x's 5: +clockwisdom A, +rose A, +TheHeist A, none lost). cq71 is not evidence for zb3.
+idea=transfer hypothesis: in cooperation, attackers holding 100+ raw deliver it. On maps where attackers wander with loads during a long truce (rose's sealed base, clockwisdom's spiral, TheHeist), the loads become transfer and the king survives or wins on points; it does not claim that the hoard empties.
+falsifier1=(registered 21:52 PST) chain ~/diag26b/cq72, fresh seed 1: rose, clockwisdom, TheHeist and EscapeTheNight, both seats, vs araid and agtr, each with zb3 and with z3x (32 games), plus one identity game (TheHeist A vs araid seed 0, must equal zb2's cq71 game: won r411, transfer 1,790). Mechanism: zb3's summed transferAmt over its 16 seed-1 games at least 1.1x z3x's. Results: zb3 wins at least z3x's count + 1 on the 16 cells and loses at most 1 cell z3x won.
+falsifier2=screens s7 zd296 and s6 zd297 (zb2's runs of the identical code, results unseen at 21:52): the s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier3=the replica rules on zb2's build (identical code; block 1 on set 2, t <= 0 rejects; its results unseen at 21:52).
