@@ -1,0 +1,6 @@
+name=zsp
+source=bots/zl0
+source_sha=c585a2762c96
+commit=22bebf5d
+created=2026-11-07 20:57 PST
+reason=switch bot (not a candidate): zl0 + SYM_PROBE (new switch). With exactly two symmetries live, scouts and seekers head for an unseen tile within Chebyshev 15 whose two live twins they have seen with different walls or mines (one sighting rules one out); a scout holding a resolved mask sharper than the shared one walks it to a king.

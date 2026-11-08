@@ -1,0 +1,17 @@
+name=za8
+source=bots/zl0
+source_sha=c585a2762c96
+commit=22bebf5d
+created=2026-11-07 20:58 PST
+recipe=bash tools/bundle.sh za8 zl0 z3x zsp (z3x + SYM_PROBE, new switch on zl0 = bots/zsp)
+idea=resolve the symmetry instead of hedging it. With mask ROT|VER (or any two), an unseen tile q whose two live twins
+  this rat has seen with different walls or mines decides the pair in one sighting: Sym.record(q) already eliminates
+  the twin that disagrees. Scouts and seekers resample to the nearest such tile within Chebyshev 15 (16 samples from
+  a private xorshift, so G.rand is untouched); a scout whose resolved mask is sharper than the shared one walks it to
+  a king. Why: per-robot memory means a symmetry falls only when one rat sees both twins, and on rose the ROT and
+  VER twins of our half both lie across the centre; z3x's and za5-za7's kings stayed at 5 all game there. The zsv
+  probe (VER forced) flipped rose A vs araid. Hooks ledgered (G.settle K 23 and 21).
+falsifier1=(registered 21:00 PST) chain ~/diag26b/cq66 = cq61's 12 cells with za8: rose and ratsareants vs araid and agtr, both seats, plus the guards DefaultMedium, wallsofparadis, Nofreecheese, whatsthecatdoin (za8 as A vs araid). Mechanism: the king's sym= is the true symmetry (4 rose, 2 ratsareants) by r400 in at least 5 of the 8 (z3x 2 in cq57/cq59, za5 2, za7 1). Results: za8 wins at least 6 of the 8 (z3x's 6) and loses no cell z3x won (z3x lost only rose A twice), and wins all 4 guards (z3x won all 4 in cq59).
+falsifier2=fresh maps: cq63's 16 cells (FreeTheCheese, TheHeist, corridorofdoomanddespair, clouds, knifefight, streetsofnewyork, uneasy_alliance, keepout; both seats vs araid) against cq62's z3x c* games and zd172's keepout cells: wins at least z3x's, summed transfer at least 0.97x, and at most 1 game lost that z3x won.
+falsifier3=screens s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier4=the replica rules (block 1 t <= 0 rejects).
