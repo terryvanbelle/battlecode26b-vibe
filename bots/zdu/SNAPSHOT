@@ -1,0 +1,19 @@
+name=zdu
+source=bots/zdb
+source_sha=638afd6102f7
+commit=9658f086
+created=2026-11-08 14:12 PST
+falsifiers (registered 2026-11-08 14:12 PST, before any zdu game):
+  zdu = zdb + LOW_BABIES 16 (from 8): zdt's dose arm (zdt = 12, registered 13:53). Under 16 live babies every spawn
+  floor (CORE_FLOOR, WAR_FLOOR, SPAWN_FLOOR, 300 each) drops to LOW_FLOOR 100. It covers the starving games whose bank
+  sat at the 300 floor with 12-16 babies (wallsofparadis B vs Finals, Nofreecheese B vs collegejunior), which zdt
+  leaves alone. No twin (one constant).
+  1. Chain ~/diag26b/cq116 (after cq115): zdu on cq115's 16 cells with cq115's seed 40 (mercifullattice,
+     wallsofparadis, Nofreecheese, ratsareants, both seats vs agrab and araid), scored against cq115's zdb games.
+     Any zdu overrun or exception drops it. Do-no-harm: zdu wins no fewer cells than zdb and loses at most 1 cell zdb
+     won. Mechanism: zdu makes at least 8 spawns over its 16 games with babies in [8, 16) and the bank under the
+     spawn price + 300, and more than zdb; and its king starvation deaths are no more than zdb's.
+  2. Screens on seed 1: s7 runs/zd372 vs zd343 and s6 runs/zd373 vs zd345 (t <= -1.5, an overrun, or transfer
+     per round under 0.97x rejects).
+  3. Replica after zdq and zdt (whichever of zdt and zdu passes 1-2 with the higher s7 t goes first), block 1 on
+     set 3, then set 2; the usual rules.

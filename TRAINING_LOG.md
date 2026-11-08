@@ -8537,3 +8537,7 @@
   - Lost cells, all vs agtr from seat B: DefaultMedium (L r292; zdb W r186), bed (L r212; zdb W r152), cheesefarm (L r418; zdb W r2000).
   - Reading: rats that stop defending a cat at the king to fight enemy babies gain local fights on averyfineline but lose king races to agtr, and gather less. The CAT_YIELD line closes on zdb.
   - zd369 (s6) was stopped at its start and taken off the queue. zd370 (zdt s7) now plays, zd371 queued. The replica slot after zdq goes to zdt if cq115 passes.
+- 14:12: **zdu (zdb + LOW_BABIES 16, zdt's dose arm) registered; chain cq116 and screens zd372/zd373 queued**
+  - zdt's 12 leaves alone the starving games where the bank sat at the 300 floor with 12-16 babies. Example: wallsofparadis B vs Finals, 297-303 banked with 16-15 babies over r551-651, then 7 babies and 118 at r731.
+  - cq116 plays zdu on cq115's 16 cells with cq115's seed 40 and scores against cq115's zdb games. It starts when cq115 ends. Clauses as zdt's, with the band [8, 16). bots/zdu/SNAPSHOT, zdu-6d3fef4e0190.
+  - Queue: zd370 (zdt s7, playing), zd371, zd372, zd373.
