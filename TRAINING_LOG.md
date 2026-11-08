@@ -8569,3 +8569,8 @@
 - 14:56: **zdt passes its s6 screen zd371, so falsifier 2 holds in full**
   - Result vs zdb's zd345 (seed 1): n 44, D 1 (+abrk DefaultSmall A, W r505 where zdb lost at r481), net +1, t +1.00; transfer per round 7.523 to 7.425 (1.013x); picks per-cell z -0.31; 0 zdt overruns (abrk 6, araid 17).
   - zdt goes to the replica when zdq's block 1 ends (2 Xzibit matches still out), block 1 on set 3.
+- 15:07: **zdq REJECTED at replica block 1; zdt goes to the replica (#300, set 3)**
+  - zdq, #299 on set 2 (21205-21208, 21217-21220, 21236-21243, against zdb's 20984-20999): 48 cells, 48 alike, D 0, t 0.00. Block 1 rejects at t <= 0.
+  - The inert clause (a late king bite in blocks 1-2) is moot after the rejection and was not read. Replays are in VM ~/diag26b/rp/zdq_b1s2_1508.tgz.
+  - Tool note: the Xzibit pair of a block can carry lower ids than the rest (here 21236-21237). `contest.py matches` lists only the newest 10, so use `--pages 2`.
+  - zdt submitted as #300 (zdb + LOW_BABIES 12). Block 1 is on set 3 against zdb's 21016-21023 and 21036-21043; all 16 requests went out (17661-17676).
