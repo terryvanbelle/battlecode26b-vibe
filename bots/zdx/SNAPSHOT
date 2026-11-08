@@ -1,0 +1,18 @@
+name=zdx
+source=bots/zdw
+source_sha=215f2e08e39a
+commit=2881e8be
+created=2026-11-08 15:53 PST
+falsifiers (registered 2026-11-08 15:54 PST; chain cq119 was launched at 15:53, before any of its
+  results existed or were read): zdx = zdw + TRAP_OPEN_TO 150 (TRAP_OPEN_FLOOR 1500): before round 150 a baby lays a rat trap only
+  with 1500 banked. zdw was rejected at s7 screen zd378 on transfer per round (0.929x; 0.867x in the 39 cells shorter
+  than r1500, 1.006x in the 9 long ones) after passing chain cq118 (12 wins to zdb's 10). Pre-registered falsifiers:
+  1. Chain ~/diag26b/cq119 (seed 44): zdx and zdb on thunderdome, arrows, cheesebottles and DefaultMedium, both seats
+     vs agrab and araid (32 games). Any zdx overrun or exception drops it. Do-no-harm: zdx wins no fewer cells than
+     zdb and loses at most 1 cell zdb won. Mechanism: zdx lays at most half as many rat traps by r150 as zdw did in
+     cq118 on the 12 games other than thunderdome's 4 (zdw: 169, i.e. at most 84), and enemy rats still set off zdx's traps at least
+     3 times a game over its 16 games.
+  2. Screens on seed 1: s7 runs/zd380 vs zd343 and s6 runs/zd381 vs zd345 (t <= -1.5, an overrun, or transfer per
+     round under 0.97x rejects).
+  3. Replica block 1 on set 4, then set 2; the usual rules. Inert if zdx lays fewer than 3 rat traps a game over
+     block 1.

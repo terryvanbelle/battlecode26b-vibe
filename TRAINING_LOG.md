@@ -8599,3 +8599,17 @@
   - Gained Stash A vs YokoOno. Lost where_are_you A and B vs Finals, mincemeat A vs Icarus, uneruesansfin A vs Xzibit, and corridorofdoomanddespair B vs Varun.
   - Replays: VM ~/diag26b/rp/zdt_b1s3_1547.tgz (16).
   - zdw submitted as #301; block 1 on set 4 started (4 sent, 12 queued for the drain loop). This runs alongside screens zd378/zd379: a screen reject still drops zdw.
+- 15:52: **zdw rejected at s7 screen zd378** (48/48 vs zd343)
+  - t −0.53 (bar −1.5) and no zdw overrun (agrab 3, agtr 2), but transfer per round 0.929x against the 0.97x bar: binding, so zdw is out.
+  - Split by length: in the 9 cells where both games ran past r1500 the ratio is 1.006 (6.13 vs 6.17); in the 39 shorter ones it is 0.867. The cost sits in fights: on arrows vs agrab zdw spawned 160 and 144 to zdb's 118 and 119 and moved 7-10% less.
+  - Cells: 14 differ, net −2: gains DefaultMedium B agrab, evileye A agrab and A atrap3, tiny B agrab, Stash A agtr, DefaultMedium A atrap3; losses bed (3), tiny A agrab and B agtr, DefaultMedium B agtr, arrows A atrap3, starvation B atrap3.
+  - Withdrawn: zd379 (s6) stopped at 0 and dequeued; 12 unsent replica rows of #301 pulled (saved in /dev/shm/kd/zdw_queue.tsv); its 4 sent matches play out.
+  - zd376 (seed-2 s6 zdb control) had died at start at 23:28 UTC (log "Terminated", likely caught when I stopped zdv's screens). It was requeued and restarted at 23:51 UTC.
+- 15:55: **zdx (zdw + TRAP_OPEN_TO 150, TRAP_OPEN_FLOOR 1500) registered; chain cq119, screens zd380/zd381, replica #302**
+  - Why: zdw's transfer loss sits in short games (0.867x), and in cq118 it laid 169 traps by r150 in the 12 non-thunderdome games (none on cheesebottles). Before r150, zdx lays a trap only with 1500 banked. The switch already existed (u1q, u4x lineage) and was off in zdw.
+  - Falsifiers (bots/zdx/SNAPSHOT, 15:54):
+    1. Chain cq119 (seed 44): the cq118 cells, zdx and zdb (32 games). No overrun; wins ≥ zdb's with at most 1 lost cell. Mechanism: at most 84 traps by r150 outside thunderdome, and enemy triggers ≥ 3 a game.
+    2. Screens zd380 (s7) and zd381 (s6): the usual bars, transfer ≥ 0.97x included.
+    3. Replica set 4, then set 2.
+  - zdx is compiled as zdx-6116a20c3f16. It was submitted as #302 (16 rows queued for the drain) alongside the chain and screens so the replica does not idle; a fail at 1 or 2 withdraws it.
+  - VM disk: pruned 121 replica replays and removed the closed chain dirs cq111-cq117. Free space went from 1.6 to 2.7 GB.
