@@ -1,0 +1,20 @@
+name=z9m
+source=bots/zl0
+source_sha=c585a2762c96
+commit=aed859ea
+created=2026-11-07 17:12 PST
+recipe=bash tools/bundle.sh z9m zl0 z3x zpb (zpb = zl0 + PAID_BITE 3, PAID_BITE_FLOOR 400; scratch, untracked)
+idea=z3x + PAID_BITE 3: at war a baby's bite on an enemy rat that finishCheese leaves unpaid spends the least cheese
+  that kills in as few bites as +3 damage would (the engine adds ceil(sqrt(c)): +2 for 2, +3 for 5), while the bank
+  holds 400. 100 health dies in 8 bites at 13 instead of 10. Babies spent nothing on ordinary bites before; no attempt
+  in the ledger pays for them (attempts find sqrt, FINISH, bite.*cheese: s1j finishing bites, u7c/u7k king bites).
+  Replica dumps (match >= 18600): our lost games have 215 bites each, 122 of them with a bank of 400 or more.
+ledger=hook in biteEnemies, K 20 with G.settle (the zcm/cashTick shape); games replay z3x's until the first paid bite
+falsifiers (registered 2026-11-07 17:13 PST, before any z9m game):
+  1. Chain ~/diag26b/cq43 (seed 0; z9m and z3x paired on mincemeat, rose, Hike, t_minus_five_minutes, clockwisdom and
+     knifefight, both seats, vs araid and agrab; 48 games). Summed over each build's games: enemy rats killed by our
+     bites per our bite on enemy rats must be at least 1.12x z3x's, and mean damage per such bite at least 11.5.
+     Summed transfer must be at least 0.95x z3x's.
+  2. In the same chain z9m wins at least as many games as z3x.
+  3. The s7 (zd268 vs zd205) and s6 (zd269 vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  4. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
