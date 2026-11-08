@@ -1,0 +1,13 @@
+name=z9q
+source=bots/z9p
+source_sha=a200064cec69
+commit=8e9126aa
+created=2026-11-07 17:53 PST
+recipe=z9p + HUNGRY 300 (one Cfg constant)
+idea=z9p + HUNGRY 300 (existing switch): while global cheese is under 300 any carrier, attackers included, delivers
+  first. With the king held still the way home exists. z9n on fullofsecrets (cq45 fosA-araid) still starved with
+  2,200-3,100 raw in attackers (mv=a toward the enemy king at stall 50-85). z7r (z3x + HUNGRY 300) delivered no more in
+  the starving games (1.0x) because its king still jiggled; z7v (TRAIL + HUNGRY) lost fos B vs abrk.
+falsifiers (registered 2026-11-07 17:54 PST, before any z9q game):
+  1. Chain ~/diag26b/cq46 (seed 0): z9q wins more fullofsecrets games than z9p (of 8) and delivers at least 1.3x.
+  2. rose vs araid both seats: z9q loses no game z3x wins.

@@ -1,0 +1,15 @@
+name=z9p
+source=bots/zl0
+source_sha=c585a2762c96
+commit=8e9126aa
+created=2026-11-07 17:53 PST
+recipe=bash tools/bundle.sh z9p zl0 z3x zfv (zfv = zfu with the revised run rule; scratch, untracked)
+idea=z9n with KING_FUTILE's run rule revised: a stand-still turn no longer ends a run, a turn within Chebyshev 1 of the
+  home mine does (pile trips from the mine). z9n's first freeze on fullofsecrets (cq45 fosA-araid) came at r176 after 26
+  moves in the (1-3,32) box: gaps of 6-7 rounds between moves (a ready turn with no step) kept resetting the run.
+ledger=as z9n (hook in King.move, K 20 with G.settle); games replay z3x's until the first freeze
+falsifiers (registered 2026-11-07 17:54 PST, before any z9p game):
+  1. Chain ~/diag26b/cq46 (seed 0): on fullofsecrets vs araid/abrk/agrab/agtr, both seats, z9p's first freeze comes
+     earlier than z9n's (cq45) in at least 6 of 8 games, and its summed transfer is at least z9n's.
+  2. rose vs araid both seats (cq46): z9p loses no game z3x wins (cq45).
+  3. If z9p passes 1-2 it replaces z9n only through its own screens and replica block.
