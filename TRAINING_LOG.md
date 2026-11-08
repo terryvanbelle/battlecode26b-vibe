@@ -8235,3 +8235,22 @@
   - cq94 (seed 23; scratch bankat.py): zd8's bank at r100 summed over its 16 games was 17,940 to z3x's 7,180 (bar: z3x + 2,400). It won 15 of 16 to z3x's 13, gaining averyfineline B and canyoudig B vs agtr and losing none (both lost whereisthecheese A vs agtr). 0 overruns, 0 exceptions.
   - The core count binds as designed: 11-13 babies at r100 in 12 of the 16 games, where z3x held 15-20 in 14 of its 16 (8 in both canyoudig games vs agtr). In the other four (5t4rv4t10n A agtr, canyoudig A araid, whereisthecheese A and B agtr) zd8 held 19-20, from spawns past the core count (war or the income test).
   - The replica was idle after z9u, so zd8 went on before its screens: #292, block 1 on set 2, matches 20750-20753 sent and 12 queued for the drain. Screens zd336 (s7, running since 14:00 UTC) and zd337 (s6) still bind; a failed screen voids the block.
+- 06:27: **zd8 passes s7 (zd336); its evileye losses are not the core; zd9 = z3x + SPAWN_FLOOR 200 registered (cq96)**
+  - zd336 (zd8 s7 vs zd205): n 48, D 6, net +2, t +0.81, transfer per round 0.997x, 0 overruns, so the s7 gate holds. Gained bed B vs agrab, agtr and atrap3 and evileye B vs atrap3; lost evileye B vs agrab (r744) and agtr (r1669), both won by z3x at r2000 on points. zd337 (s6) is playing.
+  - cq95 (seed-0 copies of the evileye B and bed B cells, local dumps; scratch births.py, rolemix.py):
+    - On evileye vs agrab the kings of both builds stop at the spawn floor from r140: 'f' in 16 of z3x's 17 reads every 10 rounds over r140-300 and 15 of zd8's, with surplus 889-3,372. The core count does not bind after r140.
+    - Before r41 the spawn sequences differ by two spawns (zd8 r1-12, then r18-19; z3x r1-14). After that the games diverge: deaths by r200 were 33-34 to z3x's 24-27, and live babies at r200 were 12 and 14 to 19 and 18.
+    - zd8's late rushers on evileye: 6 (vs agrab) and 8 (vs agtr) born r175-291; 1 and 7 of them died before r300. z3x had none.
+    - On bed vs agtr most spawns past the 16th before r300 were rushers in both builds: 39 of zd8's 44, 23 of z3x's 45.
+  - Replica #292 so far (20750-20753, 20759-20761): 21 cells, 21 alike. Of set 2's maps only canyoudig and evileye are 441 tiles or under, and evileye vs TSPAARK stayed alike, so block 1 can move at most the two canyoudig cells vs Xzibit.
+  - Field king deaths re-read (z3x's 192 replica dumps; scratch deathbank.py, deathraw.py; 64 king-kill losses):
+    - Ten rounds before the end the bank was 0-12 in 31 of them. In 9 of those our babies still held 620-4,520 raw (clockwisdom 5, fullofsecrets 4). That is the known hoard mode, with the CASH line closed.
+    - 6 died with 569-983 banked and 19-27 babies (cheesebottles A and B and peaceinourtime B vs Merlin; thunderdome A and B and arrows A vs Varun): over MAX_BABIES 18 and under RICH_BANK 1000. Earlier, MAX_BABIES_WAR 30 and RICH_BANK 500 were both tried and failed.
+  - **zd9** (bots/zd9/SNAPSHOT; zd9-4fc89490fc9f) = z3x + SPAWN_FLOOR 200 (from 300; an existing constant, never tuned) + CASH_READ_LEFT 6000. It is independent of zd8.
+    - Boot spawns keep CORE_FLOOR 300 and war spawns keep WAR_FLOOR 300, so the cut binds only the spawns the income test passes. TRAP_SPAWN_FIRST, the floor's other use, is off.
+    - Evidence (scratch floorband.py): 18.8% of rounds 50-1500 in z3x's field wins and 20.4% in its losses have under 18 babies and the bank in [price + 200, price + 300).
+    - Falsifier 1 (registered 06:26): chain ~/diag26b/cq96, seed 24, running. Cells: evileye, arrows, clouds and dirtpassageway, both seats, vs agtr and araid; 16 games for each build.
+      - Mechanism: zd9's mean live babies over rounds 100-500, summed over its 16 games, must be at least z3x's sum + 16.
+      - Results: wins at least z3x's.
+      - Any overrun or exception drops it.
+    - Falsifier 2: screens zd338 (s7) and zd339 (s6), queued behind zd337. Falsifier 3: the replica.

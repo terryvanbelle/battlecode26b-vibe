@@ -1,0 +1,14 @@
+name=zd9
+source=bots/zc9
+source_sha=3fc07187378e
+commit=72bae7cf
+created=2026-11-08 06:25 PST
+
+zd9 = z3x + SPAWN_FLOOR 200 (from 300; existing constant, never tuned) + CASH_READ_LEFT 6000. Snapshot of zc9 with RUSH_FROM put back to 4; Cfg.java (SPAWN_FLOOR, CASH_READ_LEFT) and Baby.java (z7u's budget read in cashTick's squeak loop) are the only files that differ from z3x. Independent of zd8 (no CORE_SMALL).
+Lever: every spawn must leave the price plus SPAWN_FLOOR banked. Boot spawns (under CORE_BABIES 18) already need CORE_FLOOR 300 and war spawns WAR_FLOOR 300, so the cut binds only the spawns the income test (Econ.surplus() >= price + 100) allows. Its other use, TRAP_SPAWN_FIRST's rat-trap test (King.starves), is off in z3x.
+Evidence: z3x's 192 replica dumps (VM build/dumpcache, scratch floorband.py): 18.8% of rounds 50-1500 in wins and 20.4% in losses have under 18 babies and the bank in [price + 200, price + 300), where the 300 floor alone blocks a spawn the income test may pass. Locally (cq95 evileye B vs agrab, the king's indicator read every 10 rounds over r140-300) z3x stopped at 'f' (the floor) in 16 of 17 reads and zd8 in 15, with surplus 889-3,372.
+Registered 2026-11-08 06:26 PST, before any zd9 game.
+Falsifiers:
+  1. Chain ~/diag26b/cq96 (seed 24, fresh): zd9 and z3x on evileye, arrows, clouds and dirtpassageway, both seats vs agtr and araid (16 games each). Any zd9 overrun or exception drops it. Mechanism (rounds.tsv, our babies column): the mean of zd9's live babies over the rounds 100-500 each game reached, summed over its 16 games, must be at least z3x's sum + 16 (one baby a game); else it is inert and dropped. zd9 winning fewer of its 16 games than z3x drops it.
+  2. Screens s7 (zd338 vs z3x's zd205) and s6 (zd339 vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
+  3. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
