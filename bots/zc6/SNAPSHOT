@@ -12,3 +12,5 @@ Falsifiers:
   2. Screens s7 zd316 (vs z3x's zd205) and s6 zd317 (vs z3x's zd172): paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x z3x's rejects (xpr.py); s6 per-round picks z <= -2 rejects (ppr.py).
   3. Mechanism, pooled over both screens' shared cells: zc6's killsRat / deathsByEnemy at or below z3x's drops it (the micro does not improve the exchange); fewer than 10 shared cells differing from z3x's (winner, rounds or transferAmt) drops it as inert.
   4. Replica, against z3x's set anchors: block 1 on set 2 rejects at t <= 0, block 2 at t <= 1, block 3 at t <= 1.5; accept at t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.
+Added 2026-11-08 02:27 PST, before any cq82 game:
+  5. Chain ~/diag26b/cq82 (fresh seed 12; thunderdome, mercifullattice, ratsareants and whatsthecatdoin, maps outside both screens where the field opens wars early; both seats vs agrab and araid; zc6 and z3x, 16 pairs): fewer zc6 wins than z3x's drops it, and so do more than 2 cells lost (z3x won, zc6 lost).
