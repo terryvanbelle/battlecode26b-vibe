@@ -7751,3 +7751,19 @@
     3. The s7 (zd264 vs zd205) and s6 (zd265 vs zd172) gates.
     4. The replica rules.
   - zd264 started at 15:56, preempting the zd197 filler, whose 21 finished cells resume after zd265. cq39 started at 15:56 in the chain slot.
+- 16:26: **z9k passes s7** (zd264 vs zd205, `bash tools/score_screen.sh zd264 z9k zd205 z3x`): n 48, D 16 (+10 -6), net +4, t +1.00, 31 wins to 27.
+  - Gains: bed B vs all three, Stash A vs agtr and atrap3, Stash B, cheesefarm B vs agtr, evileye A vs agtr and atrap3, evileye B vs atrap3. Losses: evileye A and B vs agrab, starvation A vs agrab, cheesefarm A vs agtr, evileye B vs agtr, cheesefarm B vs atrap3 (points).
+  - Picks/100 rat-turns 34.87 vs 33.93 (z +1.26). Transfer was 238,670 to 236,276 on 878,586 rat-turns to 914,472. 0 overruns.
+- 16:26: **z9k DROPPED at falsifier 1** (chain cq39, seed 0, 24 games a build; scratch cq39score.py).
+  - Attacks on our rats after our own squeak: 177 to z3x's 617 (0.29x; bar 0.4, held).
+  - All cat attacks on our rats: 1,184 to 1,255, 0.94x summed (bar 0.85, **failed**). Per 1000 game rounds the ratio is 0.80x, because z9k's games ran 27,809 rounds to 23,648. The bar was registered on summed counts, so it stands as failed.
+  - Transfer 117,657 to 99,246 (1.19x; held). Wins 20 to 16 (falsifier 2, held). By map: attack_on_cat 4-0 to 1-3 and rose 4-0 to 2-2; clockwisdom 1-3 to 2-2.
+  - Ledger check (scratch firstdiff.py and diffrow.py): on t_minus_five_minutes A and B vs araid the first squeak difference came one round before the first state difference, as designed. On A vs agrab the state changed at r60, before any squeak differed. That rat had skipped report()'s gossip reads with its squeak (15,754 bytecodes in z3x's turn against 7,306), so a muted rat stopped learning mines.
+  - zd265 (z9k s6) was stopped at 8 of 48 cells.
+- 16:24: **z9l = z3x + CAT_MUTE 6 + CAT_MUTE_HEAR** (bots/zcn on zl0, `bash tools/bundle.sh z9l zl0 z3x zcn`; bots/z9l/SNAPSHOT; compiled as z9l-0a4267135eff). It is z9k, except that a muted rat still runs the gossip reads (hearOnly), so only its own squeak waits. The diff from z9k is the mute branch and hearOnly() only.
+  - Falsifiers (registered 16:24, before any z9l game):
+    1. Chain ~/diag26b/cq40 (seed 1, z9l and z3x paired on cq39's cells; 48 games). Per 1000 game rounds, attacks on our rats after our own squeak must be at most 0.4x z3x's and all cat attacks on our rats at most 0.85x. Summed transfer must be at least 0.97x.
+    2. In the same chain, z9l wins at least as many games as z3x.
+    3. The s7 (zd266 vs zd205) and s6 (zd267 vs zd172) gates.
+    4. The replica rules.
+  - cq40 restarted at 16:26 after a broken spec line (a space in the seat-A names) was caught 2 minutes in; its partial outputs were cleared. zd266 started at 16:26.

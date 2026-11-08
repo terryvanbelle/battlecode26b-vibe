@@ -1,0 +1,27 @@
+name=z9l
+source=bots/zl0
+source_sha=c585a2762c96
+commit=11e072cc
+created=2026-11-07 16:24 PST
+
+z9l = z3x + CAT_MUTE 6 + CAT_MUTE_HEAR (bots/zcn on zl0; bash tools/bundle.sh z9l zl0 z3x zcn). As z9k (no baby squeak
+while the cat it saw in the last 6 rounds may hear it), but a muted rat still runs report()'s gossip reads (mine and
+symmetry news), so only its own squeak waits. Diff from z9k: the mute branch and hearOnly() only.
+
+Evidence:
+- z9k's chain cq39 (seed 0, 24 games a build): attacks on our rats after our own squeak 177 to z3x's 617 (0.29x; per
+  1000 rounds 6.4 to 26.1), all cat attacks on our rats 1,184 to 1,255 (0.94x summed, 0.80x per 1000 rounds: z9k's
+  games ran 27,809 rounds to 23,648), transfer 1.19x, wins 20 to 16. s7 zd264: n 48, D 16, net +4, t +1.00.
+- z9k fell at falsifier 1's summed all-attack bar (0.94x against 0.85x). In t_minus_five_minutes A vs agrab its first
+  state change came at r60, before any squeak differed: a muted rat had skipped the mine news it would have read.
+
+Registered 2026-11-07 16:24 PST, before any z9l game.
+
+Falsifiers:
+1. Chain ~/diag26b/cq40 (seed 1, z9l and z3x paired, cq39's cells: t_minus_five_minutes, rose, attack_on_cat, Hike,
+   clockwisdom and cheesebottles, both seats, vs araid and agrab; 48 games). Per 1000 game rounds: cat attacks on our
+   rats after our own squeak at most 0.4x z3x's, and all cat attacks on our rats at most 0.85x z3x's. Summed transfer at
+   least 0.97x z3x's.
+2. In the same chain, z9l wins at least as many games as z3x.
+3. The s7 (zd266 vs zd205) and s6 (zd267 vs zd172) gates.
+4. The replica rules.
