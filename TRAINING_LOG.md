@@ -8223,3 +8223,11 @@
   - u5t (CORE_BABIES 12 on every map) went net -1 on the replica, with 5 of its 6 lost cells on maps of 900+ tiles and a gain on tiny A. Gating it to small maps is untried (attempts: CORE_BABIES, MAX_BABIES, baby cap).
   - **zd8 = z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000** (new switch, King.spawn ledgered K 9; zd8-2e3b8e469695), registered at 05:55 before any zd8 game. Replacements then take spawn index 8-11, so before r300 they are rushers.
     - Falsifiers in bots/zd8/SNAPSHOT: chain cq94 (seed 23; zd8 and z3x on canyoudig, averyfineline, whereisthecheese, 5t4rv4t10n_1337, both seats vs agtr and araid). zd8's bank at r100 summed over its 16 games must beat z3x's by 2400, and zd8 must win at least as many. Then screens zd336 (s7) and zd337 (s6), queued after zd335, and the replica rules.
+- 06:00: **z9u rejected at replica block 1 (#291); zd7 dropped at falsifier 1 (cq93)**
+  - z9u block 1 (20693-20696, 20712-20715, 20718-20721, 20726-20729 vs set 2's anchors): 48 cells, 48 alike, D 0, net 0, t 0.00. Block 1 rejects at t <= 0. The king freeze it fixes decided no set-2 cell. Replays are in VM ~/diag26b/rp; the local copies are gone.
+  - zd7 (EXPLORE_CENTER_FROM 40), scored on cq93 with cq92's z3x games for clockwisdom and Excavation (scratch knownm.py, xfer600.py):
+    - Mine listed by r300 in 5 of its 8 clockwisdom and jail games (bar 6). None in clockwisdom B or jail B vs araid.
+    - Their transfer at r600 was 5,060 to z3x's 11,928 (0.42x, bar 1.3x). Jail alone was 4,740 to 11,768: on seed 22 z3x's jail kings knew a mine at r100 in all 4 games, so the local start only slowed jail down.
+    - It lost Excavation B vs agtr, which z3x won at r283; Excavation transfer at the end was 0.92x (that bar holds). Wins 6 of 12 to z3x's 7.
+    - 0 overruns of ours. zd334 (s7) was stopped at 14:00 UTC and zd335 left the queue; zd336 (zd8 s7) started at 14:00.
+  - The explore-start line (zd6 by rat, zd7 by time) is closed on clockwisdom and jail.
