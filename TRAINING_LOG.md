@@ -8408,3 +8408,9 @@
   - The binding clause is 12 of 16 cells by r250. Nofreecheese has spent 3 of the 4 misses it can afford, so zdj may fail on mechanism even if it wins.
   - zdl (zdl-a9d7b06a5a47; bots/zdl/SNAPSHOT, registered 10:14) = zdj + KING_FAR_MIRROR. With one symmetry left, a listed mine's twin counts in the far walk's near test and far pick; nothing is listed for the gatherers.
   - zdl falsifiers: chain cq108 (fresh seed 33, after cq106; identity cells first; king within Chebyshev 2 of a mine at r300 in 12+ of 16; transfer at r600 >= 1.15x; wins not fewer; <= 1 lost cell), then the replica as zdj.
+- 10:26: **zdh passes falsifier 1 on chain cq104 (16 cells vs zdb, seed 30)**
+  - Mechanism: far single-pile trips by r300 (tripsc.py) 42 to zdb's 198 (0.21x, bar 0.6x). Transfer amount by r300 28961 to 27906 (1.04x, bar 1.0x). The deliveries got shorter without losing cheese.
+  - Wins 15 vs 15. One lost cell (cheeseguardians B vs agrab, L r1535 to zdb's W r2000) and one gained (ratsareants B vs agrab, W r637 to zdb's L r486); bar is under 2. No overruns, no exceptions.
+  - Mean babies r100-500 summed 335.2 to 327.6, within noise (not a clause).
+  - Remaining: screens zd354 (s7, 28 of 48 in) and zd355 (s6), then the replica on set 2 vs zdb's anchors.
+  - VM disk was 1.9 GB: deleted the .bc26 replays of cq104 (zdh's chain clause is judged; the tsvs are gzipped and kept) and of closed chains cq95-cq97, and pruned 90 /srv replays older than 36 h. Now 2.2 GB.
