@@ -112,7 +112,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     and **zc5** (z3x + RUSH_FROM 12, one Cfg line; zc5-708e26d29627), registered 01:37 and 01:41. Screens zd312/zd313
     (zc4) and zd314/zd315 (zc5) queued after zc3's zd310/zd311. zc4 mechanism: pooled ratTraps >= 92 and ratTrapHits
     >= 0.7x ratTraps; no-trap cells must replay z3x's (ledger). zc5 mechanism: pooled pick amount per round >= 1.01x.
-    zd308 (zc2 s7) passed (t +0.33, transfer per round 0.993x). Replica order after zc2: zc3, then zc4/zc5 as they pass.
+    zd308 (zc2 s7) passed (t +0.33, transfer per round 0.993x), but **zc2 was DROPPED 01:49** at cq80 (matched-round
+    picked 0.955x, bar 1.05x). **zc3 is on the replica as #287** (01:50; block 1 on set 2, 4 sent + 12 queued); then
+    zc4/zc5 as they pass. cq81 (zc3's chain) runs; gzip its finished-game tsvs as they land (each chain is ~700 MB raw).
   - **Clockwisdom** (z3x 1-5 in the field, transfer 0-260 to their 1,480-3,425): a spiral where the nearest mines by
     path ((2,25) at 59 steps from A (56,9)) lie on the far Euclidean half; rushers stick on the bottom strip and
     gatherers explore toward the spiral core. Probed before (zth, z9h, u6f, z5f); recorded in the 01:01 log entry.
