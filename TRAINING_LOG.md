@@ -8545,3 +8545,7 @@
   - cq115's first 9 games (scratch lowspawn.py LO HI BOT DIR) show no king starvation and no low-band spawn for zdt or zdb: on mercifullattice and wallsofparadis vs agrab/araid both play to r2000 with 17-25k transfer. zdt's mechanism clause may well come out inert; it stands as registered.
   - zdb's only local starvations in its screens: zd343 Stash A vs agtr (r845) and vs atrap3 (r601), and starvation B vs atrap3 (r1679).
   - cq116 (seed 41): zdu and zdb on Stash and starvation, both seats vs agtr and atrap3 (16 games). Mechanism: at least 4 low-band spawns ([8, 16)) and more than zdb, and fewer starvation deaths than zdb (void if zdb starves in none).
+- 14:32: **zdt passes its s7 screen zd370** (vs zdb's zd343, seed 1)
+  - Result: n 48, D 3 (+1 -2), net -1, t -0.57; transfer per round 0.995x; picks per-cell z -1.56; 0 zdt overruns (agrab 1, agtr 1).
+  - Flips: +agtr tiny A (W r79; zdb L r70), -atrap3 bed B (L r239; zdb W r353), -atrap3 starvation B (L r1054; zdb W r1679, though one of zdb's kings starved there).
+  - Stash A vs agtr and vs atrap3, zdb's two local starvation losses, are unchanged. s6 zd371 is playing; cq115 is 18 of 32 in.
