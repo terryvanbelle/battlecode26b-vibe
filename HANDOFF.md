@@ -96,8 +96,22 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 11:22 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (11:22):**
+## State (2026-11-08 13:13 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (13:13):**
+  - Incumbent still **zdb** (controls s7 zd343, s6 zd345; anchors below). Closed since 11:22: zdk REJECTED (replica
+    block 1 t -2.12), zdo REJECTED (#297 block 1 on set 3, D 1, t -1.00; replays VM ~/diag26b/rp/zdo_b1s3_1228.tgz).
+  - **Replica: zdp** (#298, zdb + HEIR) block 1 on set 4 (anchors 20817-20824, 20842-20845, 20848-20851): 21148-21151
+    in (all won), 12 in the drain queue (hourly limit, ~4 an hour). Judge with `paired --dir /dev/shm/rp
+    20817-20824,20842-20845,20848-20851 IDS` (comma-joined ranges; `--partial` for interim). Falsifiers 1-2 passed
+    (cq111 twin 12/12; zd360 t +0.57, zd361 t 0.00). Inert clause: a heir must form in some block 1-2 game.
+  - **Next on the replica: zdq** (zdb + LATE_STRIKE 2 from r1600; bots/zdq/SNAPSHOT): cq112 passed (twin zhq 16/16,
+    14 late king bites vs 0), s7 zd364 passed (t +1.00); s6 **zd365 playing**. Block 1 on set 2 (20984-20999).
+  - **zdr** (dose arm: LATE_STRIKE 1 from r1400): chain **cq113** (seed 38, running; `python3 ~/diag26b/twinchk.py
+    cq113 zdq zdr zdb 1400` in ~/diag26b: per-cell results and late king bites), screens zd366/zd367 queued.
+  - Next fresh seed: 39. Scratch this segment (VM ~/diag26b): twinchk.py, latek2.py, ethrow.py, digspend.py, diglow.py.
+  - Tool notes: screen_t/xpr/celldiff take bare names (not bots/NAME); gssh with a piped stdin must not add
+    `< /dev/null`; never run `attempts.py init` (it re-sorts the file and adds probe rows).
+- **Earlier (11:22):**
   - **Incumbent zdb** (accepted 09:05 over z3x: #293, pooled 96 cells, D 4 (+4 -0), t 2.00). New candidates build on
     bots/zdb (`BC_JDK=$SP/nojdk TMPDIR=/dev/shm bash tools/snapshot.sh NEW bots/zdb`, switch lines by python replace
     with asserts). Screen controls: s7 **zd343**, s6 **zd345** (seed 1). Replica anchors: set 2 = 20984-20999 (twin rows
