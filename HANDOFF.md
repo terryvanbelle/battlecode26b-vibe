@@ -96,22 +96,21 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 03:14 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (03:14):**
-  - **zc6** (z3x + GRAB_MICRO_L; zc6) is on the replica as #288: set-2 block 1 (requests after 20547; 10 played at
-    03:14, Icarus and Merlin still queued for the drain). Its falsifiers 1 and 5 (chains gm3, cq82) held. Screens zd316
-    (s7, running) and zd317 (s6) are queued; mechanism clauses: pooled killsRat and deathsByEnemy vs z3x's, and at least
-    10 shared cells differing. Score block 1 with `contest.py paired --dir /dev/shm/rp 18722-18725,18736-18739,
-    18745-18748,18750-18753 IDS` once all 16 are in (fetch, tar to VM ~/diag26b/rp, rm local replays, packages from
-    dumpcache meta).
-  - **zc8** (z3x + RAW_TRAPS + CASH_READ_LEFT 6000; zc8-f5939776e452), registered 03:06: zc4 with z7u's overrun fix.
-    Falsifier 1 (ov8, the ov4 cell) HELD: 0 overruns, maxBcRat 16,302. Chain ~/diag26b/cq84 (seed 14; knifefight,
-    canyoudig, UncomfortablyClose, cheesefarm vs agrab/araid) starts when cq83's chains.sh (pid 2058126) exits; score
-    ratTraps, ratTrapHits and overruns from each chain log's last JSON line, and wins and lost cells with fedpick.py. Screens zd320 (s6, binding) and zd321 (s7, reject-only).
-  - **zc5** (z3x + RUSH_FROM 12): screens zd314/zd315 queued; mechanism: pick amount per round >= 1.01x.
-  - Queue order: zd316 (running), zd317, zd320, zd314, zd315, zd321 (about 23 min each).
-  - Closed tonight: zc7 (CAT_FEED; cq83 lost 2 cells and overran 13 times at r1882-1885 on Meow B vs araid, though fed
-    kills were 53 to 3), zc4 (RAW_TRAPS; 4 overruns, z3x's own cashTick in the r1880 CASH_END crowd), zc3
+## State (2026-11-08 03:33 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (03:33):**
+  - **zc8** (z3x + RAW_TRAPS + CASH_READ_LEFT 6000; zc8-f5939776e452), registered 03:06. Falsifiers 1 (ov8: 0 overruns)
+    and 2 (chain cq84) HELD. On the replica as #289: set-2 block 1 (requests 17053-17056 onward; 4 of 16 played at 03:32,
+    matches 20589-20592). Score with `contest.py paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,
+    18750-18753 IDS` once all 16 are in (fetch, tar to VM ~/diag26b/rp, rm local replays). Screen zd320 (s6, binding;
+    plus traps >= 40 pooled and the ledger clause) running since 11:25 UTC; zd321 (s7, reject-only) queued.
+  - **zc9** (z3x + RUSH_FROM 12, RUSH_TO 16 + CASH_READ_LEFT 6000; zc9-54c0f2f19789), registered 03:28; supersedes zc5.
+    Chain ~/diag26b/cq85 (seed 15; diamond, toomuchcheese, minimaze, popthecork vs agrab/araid; chains.sh pid 2120471):
+    score `python3 ~/diag26b/mrpick.py ~/diag26b/cq85 zc9 z3x` (matched-round pick >= 1.01x) and fedpick.py (wins,
+    lost cells, overruns). Screens zd314 (s7) and zd315 (s6) queued; pooled pick per round >= 1.01x.
+  - Queue order: zd320 (running), zd314, zd315, zd321 (about 23 min each). If zc8 fails on the replica, submit zc9.
+  - Closed tonight: zc6 (GRAB_MICRO_L; rejected at replica block 1, t 0.00, flipped knifefight A vs Merlin), zc5
+    (superseded by zc9), zc7 (CAT_FEED; cq83 lost 2 cells and overran 13 times at r1882-1885 on Meow B vs araid, though
+    fed kills were 53 to 3), zc4 (RAW_TRAPS; 4 overruns, z3x's own cashTick in the r1880 CASH_END crowd), zc3
     (KING_FORAGE), zc2 (SEEK_FRONTIER), zb7-zb9, zc1.
   - **The r1880 crowd overrun** is z3x's: cashTick reads every squeak in the CASH_END recall crowd. It shows only
     locally (agrab/araid/atrap3 cells); z3x's 192 field games in the VM dumpcache have no rat turn over 17,500 past
@@ -119,7 +118,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - Field picture (VM dumpcache, 212 dumps): z3x is 7-17 vs Merlin, 14-21 vs the rest (scratch oppz.py). Merlin
     transfers about 2x ours in every loss; 63 cells were lost by every build (solid.py), nearly all king kills after
     a backstab before r52. 14 opponent-map pairs split by seat (seatsplit.py; 9 won as B), under every symmetry.
-  - Next fresh chain seed: 15.
+  - Next fresh chain seed: 16.
   - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail. Closed king-defence
     families: AMMO_AWAY, RETREAT_HP, GLANCE_MEM, RESCUE, BITE_CARRIER/BITE_GUARD, KING_BITE_CARRIER, KING_BITE_MAX,
     GUARD_KING_R, KING_FLEE, KING_PRESS, GRAB_MICRO (zc6's GRAB_MICRO_L is the live variant), THIEF_LOAD.
