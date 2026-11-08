@@ -1,0 +1,10 @@
+name=zb4
+source=bots/zl0
+source_sha=c585a2762c96
+commit=36ca9fbd
+created=2026-11-07 21:58 PST
+reason=new switch ATK_NEWS (zan, bundled onto z3x): in cooperation an attacker that knows a home-half mine missing from the kings' list walks to the nearest king and holds in earshot (dist2 16) until the mine is listed, giving up after 10 turns in earshot (then no news for 100 rounds) or when the list is full. Ledgered (G.settle K 20); it checks one of its mines a turn.
+idea=Rose A vs araid (cq70 zb1, cq71 z3x): attackers saw the centre mines from r256 (mm=2-4) but the king's list held (2,7) alone all game, because only gatherers and scouts courier and none was in squeak range. zb2's attackers walking loads home got the centre mines listed by r400 and won the cell. ATK_NEWS carries only the news, not the load. Smoke (seed 0, cq73s): rose A vs araid W r2000 (z3x lost it r1285 in cq71), king listed (24,24), (24,16), (24,8) at r332-343; vs agtr W r972.
+falsifier1=(registered 22:09 PST) chain ~/diag26b/cq73, fresh seed 2: rose, clockwisdom, TheHeist and EscapeTheNight, both seats, vs araid and agtr, each with zb4 and with z3x (32 games). Mechanism: in both rose A games zb4's king lists a mine with x >= 20 by r500 (turns.tsv ml=), and every zb4 game without a single why-'n' baby turn equals z3x's game (winner, rounds, transferAmt). Results: zb4 wins at least z3x's count + 1 on the 16 cells and loses at most 1 cell z3x won.
+falsifier2=screens s7 zd298 and s6 zd299: the s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier3=the replica, block 1 on set 2 (t <= 0 rejects).
