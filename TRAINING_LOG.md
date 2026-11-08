@@ -8038,8 +8038,8 @@
   - minegap.py: in losses they work 5.79 mines to our 4.15, 2.35 of them on our half (1.05 in wins). They pick 2,248 a lost game on our half (261 per 100 rounds; 69 in wins), against our 4,018.
   - theft.py: 76% of the cheese they pick on our half in our losses (122,635 of 161,383) is taken with none of our babies within Chebyshev 4, mostly after r300.
   - wallsofparadis A vs Finals (minework.py): we worked only (30,3) (1,200 picked; 12 digs). Finals dug into the rings (78 digs) and worked the four inner mines, about 1,400-1,600 each. Transfer was 1,170 to 6,300 and our king starved at r715: the same failure u2t recorded on u2g (1,170 to 7,325). SWEEP (u2u, u2x) and SEEK_FRONTIER (u2t) were the old answers.
-- 00:14: **zb9's s7 screen passes** (zd304, played by bots/zb8, identical sources): n 48, D 11, net -1, t -0.30, 0 overruns, transfer per rat-turn 1.003x (total transfer 1.055x). The s6 screen zd305 is running.
-- 00:14: **zc1 = z3x + MAX_BABIES_WAR 40** (zb9's dose arm, one Cfg line; zc1-238244270fef). The siege cap matches the RICH_BABIES level without its 1,000 bank.
+- 00:13: **zb9's s7 screen passes** (zd304, played by bots/zb8, identical sources): n 48, D 11, net -1, t -0.30, 0 overruns, transfer per rat-turn 1.003x (total transfer 1.055x). The s6 screen zd305 is running.
+- 00:13: **zc1 = z3x + MAX_BABIES_WAR 40** (zb9's dose arm, one Cfg line; zc1-238244270fef). The siege cap matches the RICH_BABIES level without its 1,000 bank.
   - Field basis (theft.py): when the opponent picks our half's cheese with none of ours within Chebyshev 4, in our losses we have 14.8 babies alive to their 24.3 (in wins 19.1 to 20.6). 13.7 of our 14.8 are on our half, 5.3 of them within 6 of our king; the pile is about 23 from it.
   - Falsifiers (bots/zc1/SNAPSHOT, registered 00:13 before any zc1 game):
     1. Chain ~/diag26b/cq79, fresh seed 9, on cq77's maps (dirtpassageway, thunderdome, cheesebottles, DefaultMedium), both seats, vs agrab and araid, zc1 and z3x (32 games). It starts when cq78 ends. Matched-round spawns must be at least 1.05x z3x's. zc1 must win at least z3x's count and lose at most 1 cell z3x won.
