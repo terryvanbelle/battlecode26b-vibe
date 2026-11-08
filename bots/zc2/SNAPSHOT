@@ -1,0 +1,10 @@
+name=zc2
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=ff3e25ff
+created=2026-11-08 00:51 PST
+reason=z3x + SEEK_FRONTIER (existing switch, one Cfg line; untested on z3x: u2t parked on u2g with mixed local results, v0o's sweep screen zd80 never ran). Field (z3x, 68 lost games): our king took starvation damage in 42 of the 68 losses (5 of 101 wins). In losses they worked 5.79 mines to our 4.15. wallsofparadis vs Finals: we worked only (30,3), with 12 digs; Finals dug 78 times into the four inner mines, transfers ran 1,170 to 6,300 and our king starved at r715.
+idea=a seeker (SEEK_CROWD at a crowded mine, SEEK_IDLE idle at its mine) takes the never-seen tile nearest by path cost (Flow's frontier search, digging dirt) instead of exploreHome's random never-seen sample of our half, so mines behind dirt get found.
+falsifier1=(registered 01:00 PST, before any zc2 game) chain ~/diag26b/cq80, fresh seed 10: wallsofparadis, jail, pipes and streetsofnewyork, both seats, vs agrab and araid, each with zc2 and with z3x (32 games). Mechanism: cheese our team picked up (actions.tsv pickup rows, column b) at rounds up to each pair's last common round, summed over the 16 pairs (scratch mrpick.py), at least 1.05x z3x's. Results: zc2 wins at least z3x's count and loses at most 1 cell z3x won.
+falsifier2=screens s7 zd308 (vs zd205) and s6 zd309 (vs zd172): the s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier3=the replica, block 1 on set 2 (t <= 0 rejects); block rules after that.

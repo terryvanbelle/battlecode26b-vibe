@@ -1,0 +1,10 @@
+name=zc3
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=ff3e25ff
+created=2026-11-08 00:51 PST
+reason=z3x + KING_FORAGE (existing switch, one Cfg line; never on the replica alone: u0s went +3 -1 in diag fg1 on u0m, then only inside the rejected u0z bundle; v0i's sweep screen zd74 never ran). Field (z3x, 68 lost games): our king took starvation damage in 42 of the 68 losses (5 of 101 wins). Nofreecheese A vs collegejunior (18799): our king sat at its corner start (6,5), 34+ from every mine, so KING_MINE (dist2 400) never fired; bank out r733, 410 of 600 hp lost to starvation. Local starvation maps (rose, fullofsecrets, EscapeTheNight) do not exercise it: there z3x's king has a home mine (hm set).
+idea=a king bound to starve before r2000 (projected surplus < 0, from r200, every 50 rounds) with no mine of its own (none within KING_MINE_R2 400, or another king's) walks to the nearest listed home-half mine no other king holds, at any distance, and eats from it.
+falsifier1=(registered 01:00 PST, before any zc3 game) chain ~/diag26b/cq81, fresh seed 11: uneruesansfin, where_are_you, Hike and Nofreecheese, both seats, vs agtr and araid, each with zc3 and with z3x (32 games). Mechanism: cheese our KING picked up (actions.tsv pickup rows of type KING, our team) at rounds up to each pair's last common round, summed over the 16 pairs, at least 1.2x z3x's and at least 500 more. Results: zc3 wins at least z3x's count and loses at most 1 cell z3x won.
+falsifier2=screens s7 zd310 (vs zd205) and s6 zd311 (vs zd172): the s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier3=the replica, block 1 on set 2 (t <= 0 rejects); block rules after that.

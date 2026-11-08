@@ -96,27 +96,28 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 00:13 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (00:13):**
-  - **zb9** (bots/zb9 = zb8's sources = z3x + MAX_BABIES_WAR 30, one Cfg line; zb9-868247cab6d0), re-registered after
-    zb8 failed a whole-game spawn clause (game-length confound; results 13-12, +1 -0). Falsifier 1: chain
-    ~/diag26b/cq78 (seed 8; keepout, Stash, RUN, DefaultMedium x both seats x agrab/araid x zb9/z3x, started 00:08).
-    Score: `python3 ~/diag26b/mrspawn.py ~/diag26b/cq78 zb9 z3x` on the VM (matched-round spawns >= 1.03x, wins >=
-    z3x's, <= 1 cell lost). Falsifier 2: zd304 (s7, bots/zb8) PASSED (n 48, D 11, net -1, t -0.30, 0 overruns,
-    transfer per rat-turn 1.003x); zd305 (s6, bots/zb8) running: `bash tools/score_screen.sh zd305 zb8 zd172 z3x`
-    (from the laptop). Falsifier 3: replica #285 (the zb8 build; 16 rows in research/panel/queue.tsv, drain "active
-    build zb8"); score with `paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`.
-  - **zc1** (bots/zc1 = z3x + MAX_BABIES_WAR 40; zc1-238244270fef), zb9's dose arm. Falsifier 1: chain ~/diag26b/cq79
-    (seed 9; dirtpassageway, thunderdome, cheesebottles, DefaultMedium), started by ~/diag26b/after2.sh when cq78's
-    chains.sh (pid 1810677) exits; matched-round spawns >= 1.05x. Screens zd306 (s7) and zd307 (s6) queued after
-    zd305. Replica after zb9's block (submit, then block_v4s2.sh; the drain sends only the latest submission's rows:
-    submitting a new build holds the old one's unsent rows, as zb8's #283 did to zb7 at 23:39).
+## State (2026-11-08 01:01 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (01:01):**
+  - **zc2** (bots/zc2 = z3x + SEEK_FRONTIER, one Cfg line; zc2-36c765e978e4) and **zc3** (bots/zc3 = z3x + KING_FORAGE;
+    zc3-9000524b2fdb), registered 01:00. Falsifier 1: chains ~/diag26b/cq80 (zc2, seed 10; wallsofparadis, jail,
+    pipes, streetsofnewyork x both seats x agrab/araid; started 01:00) and ~/diag26b/cq81 (zc3, seed 11; uneruesansfin,
+    where_are_you, Hike, Nofreecheese x both seats x agtr/araid; started by after2.sh when cq80's chains.sh, pid
+    1894297, exits). Score zc2 with `python3 ~/diag26b/mrpick.py ~/diag26b/cq80 zc2 z3x` (matched-round picked >=
+    1.05x); zc3 needs matched-round KING pickups (pickup rows of type KING) >= 1.2x and +500. Both: wins >= z3x's,
+    <= 1 cell lost. Screens zd308/zd309 (zc2 s7/s6) and zd310/zd311 (zc3) queued on worker 1138096 (score from the
+    laptop: `bash tools/score_screen.sh zd308 zc2 zd205 z3x`, s6 with zd172). Replica: zc2 is #286, block 1 on set 2
+    queued (12 rows); submit zc3 and run block_v4s2.sh once zc2's block is sent.
+  - zb9 dropped (matched-round spawns 0.996x), zc1 withdrawn: MAX_BABIES_WAR closed (zb8, zb9, zc1).
+  - **Clockwisdom** (z3x 1-5 in the field, transfer 0-260 to their 1,480-3,425): a spiral where the nearest mines by
+    path ((2,25) at 59 steps from A (56,9)) lie on the far Euclidean half; rushers stick on the bottom strip and
+    gatherers explore toward the spiral core. Probed before (zth, z9h, u6f, z5f); recorded in the 01:01 log entry.
+  - Next fresh chain seed: 12.
   - **Field studies (00:08 log entry):** starvation in 42 of 68 losses (starveloss.py); in losses they work 2.35 of
     our half's mines (1.05 in wins) and 76% of their our-half picks happen with none of ours within 4 (theft.py),
     while we have 14.8 babies alive to their 24.3; wallsofparadis vs Finals: we work 1 mine, they dig into all 4
     inner ones (minework.py). Scratch in /dev/shm/kd and VM ~/diag26b: capbind.py, starveloss.py, minegap.py,
     theft.py, minework.py, kingbite.py, chainscore.py, mrspawn.py.
-  - Dropped tonight: zb8 (spawn clause), zb7 (THROW_CHECK, friendly fire 0.581x), zb6, zb5/zb3/zb2, zb4, zb1, za9,
+  - Dropped tonight: zb9 (matched-round spawns), zc1 (withdrawn), zb8 (spawn clause), zb7 (THROW_CHECK, friendly fire 0.581x), zb6, zb5/zb3/zb2, zb4, zb1, za9,
     za6/za5, za3/za4, za1/za2, z9v. Closed king-defence families: AMMO_AWAY, RETREAT_HP, GLANCE_MEM, RESCUE,
     BITE_CARRIER/BITE_GUARD, KING_BITE_CARRIER, KING_BITE_MAX, GUARD_KING_R, KING_FLEE, KING_PRESS, GRAB_MICRO.
   - **Before designing:** `python3 tools/attempts.py find TERM`, one term per call, read the tail.

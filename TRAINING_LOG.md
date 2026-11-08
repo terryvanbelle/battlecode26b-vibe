@@ -8045,3 +8045,15 @@
     1. Chain ~/diag26b/cq79, fresh seed 9, on cq77's maps (dirtpassageway, thunderdome, cheesebottles, DefaultMedium), both seats, vs agrab and araid, zc1 and z3x (32 games). It starts when cq78 ends. Matched-round spawns must be at least 1.05x z3x's. zc1 must win at least z3x's count and lose at most 1 cell z3x won.
     2. Screens s7 zd306 and s6 zd307, queued after zd305.
     3. Replica block 1 on set 2, after zb9's.
+- 01:01: **zb9 dropped, zc1 withdrawn; MAX_BABIES_WAR closed; zc2 (SEEK_FRONTIER) and zc3 (KING_FORAGE) registered**
+  - zb9 (z3x + MAX_BABIES_WAR 30, matched-round clause) failed falsifier 1: cq78 matched-round spawns 1,888 to z3x's 1,896 (0.996x, bar 1.03x); wins 15 to 15, no cell lost or gained. The bank, not the cap, limits siege spawns.
+  - zc1 (MAX_BABIES_WAR 40) withdrawn before any falsifier was judged: the zb8 build (#285) went 46 of 48 replica cells alike, D 2 both lost (-Varun clouds B, -waxmango learn_your_lesson A), t -1.41. cq79 killed after about 2 games; zd306 (28 of 48) and zd307 stopped.
+  - Clockwisdom diagnosis (cq75 clockwisdom A vs agtr, king indicator): both kings (z3x and agtr, our code) earn 0 to r500 and list no mine until r500. 12 of 20 babies are rushers stuck on the bottom strip (y 1-4) bug-navigating to (2,49) and (56,49); the gatherers explore toward the centre (EXPLORE_CENTER_FROM 0), the spiral core. BFS (scratch mapbfs2.py): from A (56,9) the nearest mines by path are (2,25) at 59 steps and (2,31) at 65; (56,27), 18 tiles straight up, is 309. Field: z3x 1-5 on clockwisdom, transferring 0-260 a game to their 1,480-3,425. The line has been probed (zth TRIP_HALF, z9h, u6f FLOW_UNSEEN, z5f) without gain, so it is recorded, not acted on.
+  - zc2 = z3x + SEEK_FRONTIER (existing switch; u2t parked on u2g). Seekers take the never-seen tile nearest by path cost. It does not act on clockwisdom: seeking starts only at a known mine.
+  - zc3 = z3x + KING_FORAGE (existing switch; u0s, never on the replica alone). On the local starvation maps (rose, fullofsecrets, EscapeTheNight) z3x's king has a home mine, so the branch would not fire there; its chain uses maps where the king starts without one.
+  - Falsifiers (bots/zc2/SNAPSHOT and bots/zc3/SNAPSHOT, registered 01:00 before any game):
+    1. zc2: chain ~/diag26b/cq80, fresh seed 10 (wallsofparadis, jail, pipes, streetsofnewyork, both seats, vs agrab and araid). Matched-round picked (scratch mrpick.py) at least 1.05x z3x's; wins at least z3x's; at most 1 cell lost.
+    2. zc3: chain ~/diag26b/cq81, fresh seed 11, after cq80 (uneruesansfin, where_are_you, Hike, Nofreecheese, both seats, vs agtr and araid). Matched-round king pickups at least 1.2x z3x's and 500 more; wins at least z3x's; at most 1 cell lost.
+    3. Screens: zc2 s7 zd308 and s6 zd309; zc3 s7 zd310 and s6 zd311.
+    4. Replica block 1 on set 2: zc2 is #286 (12 queued); zc3 follows when zc2's block is in.
+  - VM disk 2.0 GB to 2.8 GB: cq78/cq79 replays deleted and tsvs gzipped, 120 replica replays over 36 h pruned.
