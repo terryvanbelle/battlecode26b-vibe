@@ -1,0 +1,20 @@
+name=za2
+source=bots/zl0
+source_sha=c585a2762c96
+commit=614b3917
+created=2026-11-07 19:42 PST
+recipe=bash tools/snapshot.sh zki bots/zkh (KING_FUTILE 0 in zki), then bash tools/bundle.sh za2 zl0 z3x zki: z3x +
+  KING_FACE_N 40 alone (KING_FUTILE's code is present and off; KING_FACE_FZ false)
+idea=za1's KING_FACE_N on z3x, without z9v's KING_FUTILE and z7u (z9v was replica-neutral: block 1 D 4, net 0, t 0.00,
+  19:42), so the block measures the trigger alone. Mechanism and census: bots/za1/SNAPSHOT.
+ledger=as za1 (futile()'s K 20 settle still runs with KING_FUTILE 0)
+falsifiers (registered 2026-11-07 19:43 PST, before any za2 game):
+  1. Chain ~/diag26b/cq56 (seed 0, after cq55): clockwisdom A and B vs araid, agtr, abrk and agrab for za2 and z3x
+     (16 games), and the guard maps (Nofreecheese, wallsofparadis, whatsthecatdoin, EscapeTheNight, A vs araid) for
+     both (8 games):
+     - the king walks (km=v) in at least 6 of za2's 8 clockwisdom games and its mine list is non-empty by r300 in 6+;
+     - za2's summed clockwisdom transfer is at least 3x z3x's over the 8 cells, and za2 wins at least 2 more;
+     - every guard game where za2's king never walks equals z3x's game (winner, rounds, transfer).
+  2. The s7 (vs zd205) and s6 (vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
+  It goes on the replica now (set 2, Varun first) so the replica is not idle; a failed falsifier 1 withdraws it.
