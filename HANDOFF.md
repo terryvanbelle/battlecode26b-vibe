@@ -96,17 +96,23 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 06:10 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (06:10):**
-  - **Replica: zd8** (z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000; zd8-2e3b8e469695) is #292, block 1
-    on set 2: matches 20750-20753 sent at 06:03, 12 rows in the drain. Score with `contest.py paired --dir /dev/shm/rp
-    18722-18725,18736-18739,18745-18748,18750-18753 IDS` once all 16 are in (fetch with space-separated ids, tar to VM
-    ~/diag26b/rp, rm local replays). Block 1 rejects at t <= 0; pooled t <= 1 after block 2 rejects; t >= 2 with D >= 4 accepts.
-    It went on before its screens (the slot was idle); s7 **zd336** (running since 14:00 UTC; at 29 of 48: +bed B vs
-    agrab/agtr, -evileye B vs agrab/agtr, transfer 1.013x) and s6 **zd337** still bind, and a failed screen voids the block.
-    Falsifier 1 (chain cq94) held: bank at r100 17,940 to z3x's 7,180, wins 15 to 13.
-  - Chain ~/diag26b/cq95 (seed 0, 8 games, running): zd8 and z3x replaying zd336's evileye B and bed B cells with
-    dumps, to see why evileye B flips to a loss (the replacements past the core take spawn index 8-11, so they rush).
+## State (2026-11-08 06:48 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (06:48):**
+  - **Replica: zdb** (#293; zd8's code re-registered: z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000;
+    zdb-0c69409ceaad). Block 1 on set 4: 16 rows in the drain from 06:46. Score with `contest.py paired --dir
+    /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 IDS`; block 2 is set 2 (`bash build/block_v4s2.sh`).
+    Block 1 rejects at t <= 0, pooled t <= 1 after block 2; accept at t >= 2 with D >= 4. zd8's own replica games
+    (void after its s6 drop) gained Xzibit canyoudig A/B on set 2 and Finals averyfineline A/B in set 4's first 4
+    matches; replica results repeat for identical code, so expect those.
+  - zdb's local falsifiers, fresh data: chain ~/diag26b/cq98 (seed 25; bed/canyoudig/evileye/tiny x A/B x abrk/araid;
+    wins >= z3x, matched-round picks z > -2 by scratch mpick.py `python3 mpick.py zdb z3x cq98` in ~/diag26b) and
+    seed-1 screens zd343 (s7) vs control zd342 (z3x) and zd345 (s6) vs control zd344: `score_screen.sh zd343 zdb zd342
+    z3x`, `xpr.py zd342 z3x zd343 zdb`. The whole-game ppr gate does not apply to zdb (replaced, see its SNAPSHOT).
+  - **zd9** (z3x + SPAWN_FLOOR 200 + CASH_READ_LEFT 6000): chain ~/diag26b/cq96 (seed 24, running; mechanism: mean
+    babies r100-500 summed >= z3x + 16; scratch needs writing), screens zd338 (s7, running since 14:41 UTC) and zd339.
+    **zda** (SPAWN_FLOOR 100, zd9's dose arm): chain cq97 (after cq96, vs cq96's z3x games), screens zd340/zd341.
+  - Screen queue: zd339, zd342, zd343, zd344, zd345, zd340, zd341 (to about 17:40 UTC).
+  - Next fresh chain seed: 26.
   - Closed this morning: z9u (replica block 1: 48 alike, t 0.00), zd7 (EXPLORE_CENTER_FROM 40; cq93 mechanism 5 of 8,
     transfer 0.42x), zd6 (EXPLORE_LOCAL), zd5 (CAT_FRONT). The explore-start line is closed on clockwisdom and jail.
   - Next fresh chain seed: 24.
