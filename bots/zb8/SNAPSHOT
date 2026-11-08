@@ -1,0 +1,10 @@
+name=zb8
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=9e4a2994
+created=2026-11-07 23:37 PST
+reason=z3x + MAX_BABIES_WAR 30 (from 18; existing constant, an existing-switch flip): at war, with enemies in the king's sight and the bank at least cost + WAR_FLOOR, the baby cap is 30 (the cost-step count stops at 32). s4h (s4d + MAX_BABIES_WAR 30) was lean positive locally (rush run vs abrk, t +0.93, cells +11 -7) and never went to the replica alone; s4j stacked it with GLANCE_MEM and was rejected.
+idea=field siege cap (scratch capbind.py over z3x's cached replica dumps, 68 lost and 101 won distinct games): of 12,339 lost-game king-rounds at war with an enemy baby within the king's sight, 3,500 had 20+ babies and a bank in [cost + 300, 1000), where the 18 cap blocks a spawn the floors allow (51 a lost game; 2,802 in wins, 28 a won game). Most on dirtpassageway, RUN, thunderdome, keepout, cheesebottles, Stash and DefaultMedium.
+falsifier1=(registered 23:37 PST, before any zb8 game) chain ~/diag26b/cq77, fresh seed 7: dirtpassageway, thunderdome, cheesebottles and DefaultMedium, both seats, vs agrab and araid, each with zb8 and with z3x (32 games). Mechanism: our spawned summed over zb8's 16 games at least 1.03x z3x's. Results: zb8 wins at least z3x's count and loses at most 1 cell z3x won.
+falsifier2=screens s7 zd304 (vs zd205) and s6 zd305 (vs zd172): the s7 and s6 gates (t <= -1.5 rejects, any overrun, transfer per round under 0.97x).
+falsifier3=the replica, block 1 on set 2 (t <= 0 rejects); block rules after that.
