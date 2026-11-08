@@ -96,20 +96,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-07 15:59 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (15:59):**
-  - **z9e on the replica as #266** (z3x + TRAIL + CASH_READ_LEFT 6000 + THROW_ADAPT). Block 1 (set 2) passed at
-    15:43: 48 cells, D 5 (+3 -2), net +1, t 0.45. Block 2 (set 4, `build/block_v4s4.sh`) sent 19862-19865
-    (12 cells, all alike), and 12 rows wait in research/panel/queue.tsv for drain-loop.sh (laptop pid 1065185). Score with
-    `python3 tools/galaxy26/contest.py paired --dir /dev/shm/rp 18760-18763,18783-18786,18797-18800,18810-18813 BLOCK2`
-    and pool it with block 1 (19813-19816,19824-19831,19835-19838 vs the set-2 refs): t <= 1 rejects; t >= 2 with D >= 4 accepts.
-  - **z9k = z3x + CAT_MUTE 6** (registered 15:56; bots/z9k/SNAPSHOT). Our squeaks steer attacking cats onto our own
-    rats: 87% of cat attacks after our squeak hit us (TRAINING_LOG 15:56). Falsifiers: chain ~/diag26b/cq39 (48 games,
-    started 15:56; score with `python3 ~/diag26b/cq39score.py ~/diag26b/cq39` on the VM: after-ours attacks on us <= 0.4x,
-    all attacks on us <= 0.85x, transfer >= 0.97x, wins >= z3x), s7 zd264 (running since 15:56) and s6 zd265 (next).
-    Screen with `bash tools/score_screen.sh zd264 z9k zd205 z3x` and `zd265 z9k zd172 z3x`. If z9e is accepted first,
-    rebase CAT_MUTE onto it (`bash tools/bundle.sh NEW zl0 z9e zcm`; bots/zcm holds the switch on zl0, untracked).
-  - Screen queue after zd265: zd197 (21 of 48 cells done, preempted), zd198, zd199 (z3x ablations, filler).
+## State (2026-11-07 16:50 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (16:50):**
+  - **z9l on the replica as #267** (z3x + CAT_MUTE 6 + CAT_MUTE_HEAR; bots/z9l/SNAPSHOT). Block 1 (set 2,
+    `build/block_v4s2.sh`) sent 8 at 16:50; 8 rows wait in research/panel/queue.tsv for drain-loop.sh (laptop pid 1065185).
+    Score with `python3 tools/galaxy26/contest.py paired --dir /dev/shm/rp 18722-18725,18736-18739,18745-18748,18750-18753 BLOCK1`
+    (block 1 rejects at t <= 0), then set 4 (`build/block_v4s4.sh`, refs 18760-18763,18783-18786,18797-18800,18810-18813).
+  - z9l's falsifiers still run (registered 16:24, TRAINING_LOG): chain ~/diag26b/cq40 (`python3 ~/diag26b/cq39score.py
+    ~/diag26b/cq40 z9l z3x` on the VM; per 1000 rounds after-ours <= 0.4x, all <= 0.85x; summed transfer >= 0.97x; wins >=
+    z3x), s7 zd266 (`bash tools/score_screen.sh zd266 z9l zd205 z3x`, net +4 at 44/48) and s6 zd267 (`... zd267 z9l zd172 z3x`).
+    Any failure withdraws z9l from the replica (drop its queue.tsv rows).
+  - Our squeaks steer attacking cats onto our own rats (TRAINING_LOG 15:56). z9k (CAT_MUTE alone) dropped at 16:26: all
+    cat attacks 0.94x summed (bar 0.85; 0.80x per 1000 rounds), and a muted rat skipped report()'s gossip reads.
+  - **z9e REJECTED 16:47** (block 2 D 3, net -1, t -0.58; pooled 90 cells D 8, net 0, t 0.00).
+  - Screen queue after zd267: zd197 (21 of 48 cells done, preempted), zd198, zd199 (z3x ablations, filler).
   - **Closed today:** the enemy rat-trap line (TRAINING_LOG 15:43: avoidance and laying are both tried out, and a rich-bank
     trap acts only in wins), the knifefight Merlin seat split (cq38: no local stand-in), z9j (FERRY), z9i (LOAD_FLEE),
     z9f (block 2), z9h (EXPLORE_CENTER_FROM), z8b, z9a/z9b (PICK_TRIP), z9c (HEIR), zth, z9d (block 2), zmm, z9g. Also
@@ -117,7 +117,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     the canyoudig scarcity race, rose B starvation, averystrangespace A, the points losses, keepout and averyfineline
     vs Finals. Stable both-seat losses are listed in TRAINING_LOG 11:47; 29 z3x-era losses end before r450, and by
     r150 we lose 40.2 babies to their 26.7, spread over every cause (scratch earlyk.py and earlydeath.py).
-  - VM disk 2.5 GB free (15:58).
+  - VM disk 2.4 GB free (16:45; replay prune plus cq39 tsv files deleted).
 - Incumbent: **z3x** (accepted 2026-11-06 21:01 PST over z1z; replica blocks 1-2 pooled 94 cells, D 4 (+4 -0), net +4,
   t 2.00; transfer 1.09x and 1.065x the twin's). z3x = z1z + ledger + FORM_WAR_FROM 300 + CASH_END 1880 + END_CAT 1850 +
   LAST_FLOOR 20. Screen controls: s7 **zd205** (agrab, agtr, atrap3 on 8 maps), s6 **zd172** (z3x, on zd136's cells): `screen_t.py zd172 z3x RUN BOT` (and ppr, xpr,

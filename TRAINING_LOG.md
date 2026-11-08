@@ -7767,3 +7767,13 @@
     3. The s7 (zd266 vs zd205) and s6 (zd267 vs zd172) gates.
     4. The replica rules.
   - cq40 restarted at 16:26 after a broken spec line (a space in the seat-A names) was caught 2 minutes in; its partial outputs were cleared. zd266 started at 16:26.
+- 16:47: **z9e REJECTED after replica block 2** (set 4: 19862-19865, 19994-20005 vs 18760-18763, 18783-18786, 18797-18800, 18810-18813).
+  - Block 2: 48 cells, 45 alike, D 3 (+Varun arrows A; -Icarus mincemeat A, -Merlin sunandmoon A), net -1, t -0.58.
+  - Pooled with block 1: 90 cells, 82 alike, D 8 (+4 -4), net 0, t 0.00. Pooled t ≤ 1 rejects.
+  - Merlin went 0-3 in 20004 (A) and 2-1 in 20005 (B); the champion took sunandmoon A there.
+  - VM disk was 1.8 GB at 16:40. Pruning 103 replica replays older than 36 hours gave 0.1 GB. Deleting the turns/actions tsv files of the scored cq39 chain brought it to 2.4 GB.
+- 16:50: **z9l on the replica as #267** while its falsifiers finish (precedent: z6j, 01:01; a falsifier failure withdraws it). Partial gates at submission:
+  - s7 zd266 at 44 of 48 cells: net +4, D 12, t +1.16, 29 wins to 25. Gains: bed B vs agrab and agtr; Stash A vs agtr and atrap3; Stash B; cheesefarm B; evileye B and starvation A vs atrap3. Losses: evileye A and B vs agrab, starvation A vs agrab, evileye B vs agtr (z9k lost the same evileye agrab pair).
+  - cq40 at 18 z9l and 16 z3x games: per 1000 rounds, after-ours 0.38x and all 0.88x (bars 0.4 and 0.85); summed transfer 0.981x.
+  - Block 1 (set 2, `build/block_v4s2.sh`) sent 8 matches (spsquared, Finals, YokoOno and Varun, both seats); 8 wait for drain-loop.sh.
+  - cq39score.py now globs every seed (`*_s*`); it read only seed 0 before, so cq40 scored empty at first.
