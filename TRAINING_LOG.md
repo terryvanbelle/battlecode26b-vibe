@@ -8587,3 +8587,15 @@
   - Outcome: wins 14 to 14 and no cell flipped. The four r2000 points losses (FreeTheCheese, averystrangespace, keepout and rose, all B vs atrap3) stay lost, and final transfer moved -2,679 to +873 by cell. 0 overruns, 0 exceptions.
   - With zdq's 48-of-48 replica block, the late-strike line closes. zd375 was stopped at its start and zd377 taken off the queue.
   - The seed-2 zdb control zd374 (s7, 48 games) is complete; zd376 (s6) now plays. Both are kept as fresh-data controls for later re-registrations.
+- 15:46: **zdw passes falsifier 1 (cq118, seed 43, 32 games)**
+  - Wins zdw 12 of 16, zdb 10 of 16. zdw gains DefaultMedium B agrab, arrows B araid, thunderdome B araid; loses only thunderdome A agrab (r81, was a zdb win at r91). Bar: no fewer wins and at most 1 lost cell: met.
+  - No zdw overruns or exceptions (araid had 16 overruns).
+  - Mechanism: zdw laid 755 rat traps, enemy rats set off 714 (44.6 a game, bar 3); zdb set off 3. King starvation deaths 0 for both.
+  - Late king bites fell from 27 to 16, over 6 late games against zdb's 8.
+  - Caveat: thunderdome's ~2,500 start bank leaves the 900 floor slack, so zdw lays ~40 traps there before r100. Both thunderdome agrab games end before r90, and zdw's are the shorter ones.
+  - Next: screens zd378 (44 of 48 in), then zd379.
+- 15:48: **zdt rejected at replica block 1 (#300, set 3, 21301-21316)**
+  - Paired vs zdb anchors 21016-21023,21036-21043: 48 cells, 42 alike, D 6 (gained 1, lost 5), net −4, t −1.63 (bar t > 0).
+  - Gained Stash A vs YokoOno. Lost where_are_you A and B vs Finals, mincemeat A vs Icarus, uneruesansfin A vs Xzibit, and corridorofdoomanddespair B vs Varun.
+  - Replays: VM ~/diag26b/rp/zdt_b1s3_1547.tgz (16).
+  - zdw submitted as #301; block 1 on set 4 started (4 sent, 12 queued for the drain loop). This runs alongside screens zd378/zd379: a screen reject still drops zdw.
