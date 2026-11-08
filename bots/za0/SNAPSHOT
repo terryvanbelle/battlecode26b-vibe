@@ -1,0 +1,8 @@
+name=za0
+source=bots/zl0
+source_sha=c585a2762c96
+commit=c893cabc
+created=2026-11-07 19:38 PST
+recipe=bash tools/snapshot.sh zkh bots/zkg (zkg = z9z's switch bot), KING_FACE_FZ false and KING_FACE_N 40 in zkh, then
+  bash tools/bundle.sh za0 zl0 z3x zkh: z3x + KING_FUTILE + KING_FACE_N (KING_FACE's search with its freeze hooks off);
+  component of za1

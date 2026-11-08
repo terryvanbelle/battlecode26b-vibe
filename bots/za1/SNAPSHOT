@@ -1,0 +1,34 @@
+name=za1
+source=bots/z3x
+source_sha=8f92dbaab2ff
+commit=c893cabc
+created=2026-11-07 19:38 PST
+recipe=bash tools/bundle.sh za0 zl0 z3x zkh, then bash tools/bundle.sh za1 z3x za0 z7u: z9v + KING_FACE_N 40
+idea=KING_FACE_N (new trigger for KING_FACE's search, King.move's no-home-mine branch): from r40, a king with no home
+  mine while the team's mine list is empty runs KING_FACE's tile search once (tiles within Chebyshev 3 whose 3x3 it has
+  seen open, scored by the transfer-zone tiles that are not known wall or dirt and lie across a known wall or dirt tile)
+  and walks there by strictly closer steps. KING_FACE's freeze hooks (z9w, z9z) are off (KING_FACE_FZ false).
+  Mechanism (clockwisdom; replica 18739 z3x B vs Varun, local cq54 z9v A/B vs araid and agtr): the king starts in the
+  spiral's outer corridor at (56,9) (B: (2,49)). Babies report mines by squeak within dist2 16 of the king and deliver
+  within dist2 9 of its body, through walls, but no inner-ring tile is within 16 of the start's body. The mine list
+  stayed empty to r510-687 in all four cq54 games (km=n, ml= from r1), the king never moved, and transfer was 0-420;
+  both losses starved, both wins were early king kills. In 18739 our babies held 3,870 raw at r900 with 260
+  transferred, and the king starved at r980. scratch facesim.py picks (54,10), two tiles off the start, whose zone
+  covers the inner face (50-54, 11-14). scratch zoneat.py: from (54,10) mines (56,27) and (56,33) are 13 and 19 no-dig
+  steps from the zone, against 304-314 from the start; (20,11) 30 against 270.
+  Census (scratch nomine.py): 10 maps have no home-half mine within KING_MINE_R2 of the start (km=n all game), but the
+  trigger also needs the team's mine list empty at r40; whether that happens off clockwisdom is what the guard maps
+  in falsifier 1 test.
+ledger=the search runs at the end of the king's turn while 6000 bytecodes are left (as z9w); the trigger and the walk
+  sit in move()'s no-home-mine branch, after the ledgered futile() settle (unledgered, a few bytecodes, nothing after
+  them in that turn reads the clock)
+falsifiers (registered 2026-11-07 19:39 PST, before any za1 game):
+  1. Chain ~/diag26b/cq55 (seed 0). Clockwisdom A and B vs araid, agtr, abrk and agrab for za1 (8 games), with z9v's
+     abrk and agrab games alongside (its araid and agtr games are cq54's):
+     - the king walks (km=v) in at least 6 of 8 za1 games, and the king's mine list is non-empty by r300 in at least 6
+       of 8 (z9v: r510-687 in all of cq54);
+     - za1's summed clockwisdom transfer is at least 3x z9v's over the 8 cells, and za1 wins at least 2 more of the 8;
+     - guard maps (Nofreecheese, wallsofparadis, whatsthecatdoin, EscapeTheNight, seat A vs araid, both builds): every
+       game where za1's king never walks (no km=v) equals z9v's game (winner, rounds, transfer).
+  2. The s7 (vs zd205) and s6 (vs zd172) gates: t <= -1.5, overruns, transfer per round under 0.97x.
+  3. The replica rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects, t >= 2 with D >= 4 accepts).
