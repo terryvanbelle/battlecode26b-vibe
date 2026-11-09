@@ -96,8 +96,25 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 15:55 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (15:55):**
+## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Now (17:54):**
+  - Incumbent still **zdb**. Closed since 15:55: zdx DROPPED (cq119; field block t -3.16), zdz DROPPED (cq122), zea
+    DROPPED (cq123), zdy REJECTED (#303 block 1 on set 4, D 9 +1 -8, t -2.33; replays VM
+    ~/diag26b/rp/zdy_b1s4_1723.tgz). The reactive baby rat trap line is closed. zeb DROPPED at cq124's clockwisdom
+    no-loss clause (7 cells won to zdb's 2, transfer 3.0x, but lost B vs araid).
+  - **zec** = zeb's build re-registered unchanged (zdb + BUG_SWITCH 20: a bug walk not round its obstacle after 20
+    turns reverses its hand, doubling each leg; bots/zeb/SNAPSHOT). Games run bots/zeb. Falsifiers: chain **cq125**
+    (seed 50, queued behind cq124; clockwisdom transfer >= 2x and net flips >= +2; other cells transfer >= 0.9x, net
+    >= -1), s7 zd388 **passed** (t -0.44, length-matched transfer 1.009x), s6 **zd389 playing**, replica **#304**
+    set-4 block (21484-21487 all 3-0 won; judge with `paired --dir /dev/shm/rp 20817-20824,20842-20845,20848-20851
+    IDS`), then set 2.
+  - Length-matched transfer bar: `python3 tools/lmxfer.py CTRLRUN CTRLBOT RUN BOT` on the VM.
+  - Next fresh seed: 51. New scratch (VM ~/diag26b): gtrace.py PKG OPP MAP SEAT STEP (one field game's economy),
+    carry.py GAMEDIR BOT (carriers' distance to the king), nodeliv.py PKG R (transferred/picked ranking), oppband.py,
+    losslist.py, kingdmg.py, kingsiege.py, deathcause.py, fbite.py, rawheld.py, lowbank.py.
+  - Closed lines rechecked this segment (attempts.py find): CARRY_MAX, LOAD_AT, TRAIL, ATK_CARRY, ATK_DELIVER, RUSH_*,
+    RISK_ADAPT/FACE_HOLD/WOUNDED_HP (local diags showed no drop in trap fires), THROW_ADAPT, MAX/RICH_BABIES.
+- **Earlier (15:55):**
   - Incumbent still **zdb**. Closed since 14:11: zdq REJECTED (replica block 1, 48/48 alike), zdu and zdv DROPPED
     (cq116 starvation, cq117 late bites; the late-strike line is closed), zdt REJECTED (#300 block 1 on set 3,
     t -1.63; replays VM ~/diag26b/rp/zdt_b1s3_1547.tgz), zdw REJECTED (s7 zd378 transfer 0.929x after passing
