@@ -9139,3 +9139,11 @@
     - zfp gained streetsofnewyork A vs atrap3, and lost DefaultSmall A vs agrab and Stash B vs atrap3.
   - **zfp submitted (#322).** Its set-3 block is queued: 22435-22438 sent, 12 in the drain queue.
   - zfq's chain cq159 (falsifier 2) and screen zd445 are running.
+- 09:48: **zfs = zfp + SPAWN_AWAY registered** (new switch in King.spawn; bots/zfs/SNAPSHOT, zfs-02c8b749ef88)
+  - At war, zdb aims a spawn at the first sensed enemy ("fresh rats join the fight at once"). zfs scores spawn tiles toward the king's far side, the enemy mirrored through the king, so newborns are not born beside the grabbers. WAR_FACE still turns them toward the nearest enemy.
+  - attempts find SPAWN_AWAY, "spawn side" and "spawn toward": none.
+  - Falsifiers:
+    1. Chain cq160 (seed 77, cq157's 12 cells): at least zfp's 7 wins, and our rats thrown within 8 rounds of birth at most 0.8x zfp's 92.
+    2. Screen zd446 (s7): t > -1.5.
+    3. The replica rules.
+  - zfq (zfp + GUARD_DIST2 20) carries zfm's rejected radius. Its chain and screen finish as records, but it will not go to the replica unless it beats zfp in both.

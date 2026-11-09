@@ -1,0 +1,7 @@
+name=zfs
+source=bots/zfp
+source_sha=ba67f22706e0
+commit=f926eb89
+created=2026-11-09 09:47 PST
+change=zfp + SPAWN_AWAY (new switch, King.spawn): at war with enemies in sight the spawn tile is scored toward the king's far side (the first sensed enemy mirrored through the king) instead of toward the enemy
+falsifiers=(1) chain cq160 (seed 77, cq157's 12 cells): zfs wins at least zfp's 7, and our rats thrown within 8 rounds of birth at most 0.8x zfp's 92 (73); (2) screen zd446 (s7): paired win t vs zdb > -1.5; (3) replica block rules
