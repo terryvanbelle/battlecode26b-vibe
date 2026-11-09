@@ -8832,3 +8832,7 @@
   - The RAID code (s2g, 2026-10-28) still runs on zdb with RAID_EVERY 0. Every earlier raid test also laid RAID_TRAPS 8, on s4d/S7D (s6i/s6k pending, s8i parked, s8j rejected). zen raids without traps.
   - Falsifiers (bots/zen/SNAPSHOT 22:34): cq134 mechanism (enemy-half rats r300-600 ≥ 1.5x zdb's, and more enemy-half pickups by r1000), transfer by r1000 ≥ 0.97x, wins ≥ zdb's − 1 with ≤ 2 flips lost; then the screens; then replica set 4, then set 2.
   - zem's cq133 seed 59: seat A now reaches the centre at r356, but seat B never tunnelled (digs equal to zdb's), and averystrangespace cat damage is 3,080 to 5,380. Seed 60 decides clauses b and c.
+- 22:56: **zem passes replica block 1 on its target cell; block 2 (set 3) queued; chain clauses still open**
+  - #310 set 2 (21738-21741, 21746-21757 vs zdb's 20984-20999; replays VM ~/diag26b/rp/zem_b1s2.tgz): 48 cells, 47 alike, D 1. It gained averystrangespace A vs YokoOno, the field seat split that started the tunnel line (zdb A L r2000 / B W). t +1.00 (block 1 rejects at t ≤ 0). Block 2 on set 3: 4 sent, 12 queued.
+  - zd402 (s7) passed: identical to zdb (48 cells, t 0.00, 1.000x, 0 overruns). zd403 (s6) is next.
+  - The chain clauses still bind: cq133 is at 36 of 96. If seed 60 does not reach the centre in all 4 averystrangespace cells (b), or cat damage misses 1.5x (c), zem drops whatever the replica says. A re-registration would then be judged on fresh blocks.
