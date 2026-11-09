@@ -9156,3 +9156,9 @@
     - Earlier tries: u3f (RICH_MIN_AREA 901) and u3h (RICH_BANK 1500) were both rejected locally against our rush archetypes. A time gate is untried.
   - **zft** = zdb + RICH_FROM 150 (new switch in King.babyCap; bots/zft/SNAPSHOT, zft-3aef3955b42d). The rich tiers start at r150.
     - Falsifiers: (1) chain cq161 (seed 78; Stash, externalsustenance, mincemeat, wallsofparadis, DefaultSmall and whatsthecatdoin vs agrab and atrap3, both seats): at least zdb's wins, and at most 2 cells lost that zdb won; (2) an s7 screen: t > -1.5; (3) the replica rules.
+- 10:15: **zft holds its chain falsifier (19 wins of 24 to zdb's 16, +3 -0); zfq passes its screen and is parked**
+  - cq161 (seed 78; six small and in-band maps vs agrab and atrap3, both seats): zft gained DefaultSmall A and B vs atrap3 (r268 both; zdb lost at r301 and r551) and externalsustenance B vs agrab (r361). It lost none of zdb's wins. Its s7 screen zd448 is queued.
+  - Chain cq162 (seed 78; zft and zdb on DefaultMedium, DefaultLarge, rose, arrows, keepout and cheesefarm vs agrab and atrap3, both seats) checks the larger maps, where the opening 40-cap army may pay. Decision rule added now, after zft's first games, so it only tightens: if zft loses 3 or more cells net there, it does not go to the replica.
+  - zd445 (zfq, s7): n 48, D 17, net +1, t +0.24. Picks/100 37.41 vs 34.11 (z +1.76); transfer 0.955x pooled and 0.968x length-matched; 0 overruns. Falsifier 1 holds: its wins are above both zd442's (net 0) and zd444's (net -1).
+    - zfq's chain only tied zfp (7 and 7), so **it is parked**. It goes to the replica only if zfp is accepted and zfq beats it again.
+  - zfp's replica block: 22435-22442 played, all 24 cells alike so far (t 0.00); 8 rows remain in the drain. Replays: VM ~/diag26b/rp/zfp_b1s3a.tgz.
