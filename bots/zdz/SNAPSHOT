@@ -1,0 +1,20 @@
+name=zdz
+source=bots/zdb
+source_sha=638afd6102f7
+commit=cc21d105
+created=2026-11-08 16:37 PST
+falsifiers (registered 2026-11-08 16:38 PST; chain cq122 was launched at 16:37, before any of its results existed):
+  zdz = zdb + RAW_BITE (new switch, two lines in Baby: biteEnemies and tryBiteCat): an attacker bites with all the
+  raw cheese it carries. The engine spends a bite's cheese from the biter's load first and adds ceil(sqrt(c)) damage.
+  Attackers never deliver (HUNGRY and ATK_DELIVER are off), so their load is worth nothing to us, slows their moves and
+  actions 1% a unit, and drops for the enemy when they die. Field: the clockwisdom starvation losses (A/B vs Xzibit,
+  B vs Varun) held 2,000-3,760 raw in attackers with no delivery over 100+ rounds (starvew.py on zdb's cache). Earlier
+  tries capped the pickup (ATK_CARRY 25: u2n, u5z) or forced delivery (HUNGRY: u4c, u5a, z7r, z7v, z9q); none spent it.
+  1. Chain ~/diag26b/cq122 (seed 47): zdz and zdb on clockwisdom, fullofsecrets, mincemeat and arrows, both seats vs
+     agrab and araid (32 games). Any zdz overrun or exception drops it. Do-no-harm: zdz wins no fewer cells than zdb
+     and loses at most 1 cell zdb won. Mechanism: the cheese our bites spend (bite rows, column e) over zdz's 16 games
+     is at least twice zdb's, and zdz's mean bite damage (column d) is above zdb's.
+  2. Screens on seed 1: s7 runs/zd384 vs zd343 and s6 runs/zd385 vs zd345. Rejects: t <= -1.5, any zdz overrun, or
+     transfer per round under 0.97x on the cells whose length ratio is within 0.8-1.25x (zdy's reading; if fewer than
+     12 such cells, the pooled figure under 0.97x rejects instead).
+  3. Replica block 1 on set 4, then set 2; the usual rules. Inert if zdz's bites spend no raw in any block-1 game.

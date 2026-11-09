@@ -8639,3 +8639,19 @@
     - Second king then starvation: 2 kings died in Stash A and FreeTheCheese A; ratsareants A formed a second king at r625 and starved by r750.
     - FORM_NET100 200 (z6k) was rejected, so the formation income gate is not rebuilt.
     - In ratsareants vs Varun, Varun opens on 13 babies with a 2,000 bank and grows to 30-40, while we open on 20, pin the bank at the 300 floor and decline to 3-8.
+- 16:38: **zdx's replica block (#302, set 4, 21452-21467), played after its drop, read as field evidence for the trap line: D 10, gained 0, lost 10, t −3.16**
+  - Paired vs zdb's set-4 anchors.
+    - Lost: averyfineline A and B vs Finals (zdb won at r129 and r123), attack_on_cat B vs Finals, sunandmoon A and B vs Merlin (zdb won at r148 and r142), mincemeat A and tiny A vs Icarus, Meow A vs YokoOno, arrows B vs Varun, RUN B vs Merlin.
+    - Nearly every game changed length.
+  - Trap use (scratch fieldtraps.py on the dumped replays): 0-39 traps laid a game, and the enemy sets off almost all of them (trigByThem ≈ layU). sunandmoon A vs Merlin was lost with 4 traps laid.
+  - Mechanism read: the baby lays its trap before biting (Baby step 1), so a fighter in a rush spends its action on a trap instead of a bite. The field's fast king kills are where zdb wins.
+  - zdy (the same trap set without the gate) still runs as registered: s7 zd382 is at 47 of 48, and its replica rows (#303) are queued. The trap line is expected to close there. Diagnostic chain cq121 was stopped after about 30 games, since the small-map trap gate it informs is moot.
+  - Replays: VM ~/diag26b/rp/zdx_b1s4_1632.tgz.
+- 16:38: **zdz = zdb + RAW_BITE registered** (new switch; bots/zdz/SNAPSHOT; zdz-03902f91cb8c)
+  - An attacker bites with all the raw cheese it carries. The engine takes a bite's cheese from the biter's load first and adds ceil(sqrt(c)) damage (InternalRobot.bite, addCheese).
+  - Attackers never deliver, so the load only slows them (1% a unit, moves and actions) and drops for the enemy on death. The field clockwisdom starvation losses held 2,000-3,760 raw in attackers.
+  - Searched first: ATK_CARRY (u2n, u5z), HUNGRY (5 tries), ATK_DELIVER, BITE_BOOST (z7i) and PAID_BITE (z9m) all capped the pickup or spent the bank. None spent the attackers' load.
+  - Falsifiers:
+    1. Chain cq122 (seed 47): clockwisdom, fullofsecrets, mincemeat and arrows vs agrab and araid, 32 games. Do-no-harm as usual. Mechanism: the cheese spent in bites is at least 2x zdb's, and the mean bite damage is above zdb's.
+    2. Screens zd384 (s7) and zd385 (s6), with the transfer bar read on length-matched cells.
+    3. Replica set 4, then set 2.
