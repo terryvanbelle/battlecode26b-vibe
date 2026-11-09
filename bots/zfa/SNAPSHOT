@@ -20,3 +20,4 @@ FALSIFIERS (04:38 11-09, binding):
   2. Screens zd422 (s7) / zd423 (s6): t <= -1.5 or any overrun rejects; lm transfer < 0.95x rejects.
   3. Replica: set 3 first (zdb's clean anchors 21016-21023, 21036-21043), then set 4 twin-anchored once zez's
      block is in.
+OUTCOME cq146 (05:56): REJECTED, cat over 17 r2000 cells 1.002x (bar 1.05x), xfer 0.999x, wins 22/24 = zdb, 0 flips, 0 exceptions

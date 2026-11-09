@@ -9002,3 +9002,7 @@
 - 05:54: **zfc registered (zey + RAW_TRAP_CAP 35), screens zd426/zd427 queued**
   - The screen queue was down to the running zd425. zfc is zey's dose arm and goes to the replica only if zey accepts.
   - VM /srv replays pruned (307 files); disk 2.3 GB free.
+- 05:56: **zfa rejected on chain cq146 (END_CAT inert); zfb dropped; cq147 queued**
+  - cq146 (seed 72, 48 games, 0 exceptions): cat damage over 17 r2000 cells 1.002x zdb (bar 1.05x), transfer 0.999x, wins 22/24 for both, no flips. Scorer: VM ~/diag26b/catx.py.
+  - zfb carries the same END_CAT lever, so it's dropped; zd425 aborted and the slot passes to zfc's zd426.
+  - cq147 (seed 73) runs behind cq146: zfc vs zey (dose arm against its base) on cq146's maps.
