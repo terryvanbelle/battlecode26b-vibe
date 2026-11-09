@@ -8674,3 +8674,6 @@
     1. Chain cq123 (seed 48): zea, zdy and zdb on sunandmoon, averyfineline, mincemeat and tiny vs agrab and araid, 48 games. Do-no-harm vs zdb as usual. Mechanism: traps laid with an enemy baby within dist2 2 are at most half of zdy's, and enemy triggers stay at 3 or more a game.
     2. Screens zd386 (s7) and zd387 (s6).
     3. Replica set 4 (zdx's set), then set 2.
+- 17:03: **zdy passes s6 zd383** (seed 2, vs zd376): n 44, D 4 (+3 −1), net +2, t +1.00, 0 overruns. Transfer per round 1.003x pooled and 1.023x on the 26 length-matched cells.
+  - Gained bed B vs abrk, evileye B and starvation A vs araid; lost keepout B vs araid.
+  - All local falsifiers hold. Replica #303 block 1 on set 4: 4 sent, 12 in the drain queue.
