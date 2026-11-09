@@ -22,3 +22,4 @@ RESCORE (05:41 11-09): block 1 twin-anchored (`paired --dir /dev/shm/rp 22083-22
   20817-20824,20842-20845,20848-20851`): 48 cells, 39 alike, D 9 (gained 6, lost 3), net +3, t +1.00 > 0: block 1
   PASSES once zdb's crown luck (twin vs crown t -2.32) is removed. Block 2 goes to set 3 (clean anchors) after zey's
   set-3 block is sent (#317).
+REPLICA (05:53): #318, block 2 on set 3 queued

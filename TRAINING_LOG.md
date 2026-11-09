@@ -8996,3 +8996,6 @@
   - Both rat-trap candidates now pass block 1: zey (attacker traps, t +1.41) and zdy (reactive baby traps, t +1.00). zdy's block 2 goes on set 3 once zey's rows are all sent.
   - VM disk had fallen to 157 MB, so the closed chains' dumps cq131-cq143 were removed (~2.2 GB). VM is now 2.1 GB.
   - Laptop: build/bots (121 old laptop-compiled class trees, newest 11-06) and build/ftc1 were archived to VM ~/diag26b/laptop_build_*.tgz (file counts verified) and removed locally. Laptop free space is now ~21 MB.
+- 05:53: **zfb passes zd424; zdy submitted #318 for block 2 on set 3**
+  - zfb zd424: n 44, D 6, net 0, t 0.00, lm 0.990x, 0 overruns. zd425 is queued.
+  - zey's set-3 rows are all sent, so zdy (#318) takes the set-3 slot; 12 rows queued.

@@ -8,3 +8,4 @@ DESCRIPTION (05:29 11-09): zey + END_CAT 1650 (zfa's one-constant lever on zey; 
   zd423 D 0, 1.012x.
 FALSIFIERS (05:29 11-09, binding): screens zd424 (s7) / zd425 (s6): t <= -1.5, any overrun, or lm transfer < 0.95x
   rejects. Chain and replica only after zey's verdict (as zey + END_CAT, judged against zey).
+OUTCOME zd424 (05:53): n 44 D 6 net 0 t 0.00, lm 0.990x, pooled 0.900x, 0 overruns: passes
