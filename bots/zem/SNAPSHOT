@@ -1,0 +1,22 @@
+name=zem
+source=bots/zel
+source_sha=144334e6adc7
+commit=e6c094aa
+created=2026-11-08 22:04 PST
+description: zdb + STALL_TUNNEL 10 (dose arm of zej/zel's 30): a STALL_CAT hunter whose walk to its cat or centre tile
+  made no progress for 10 turns tunnels by Nav.tunnelTo for the rest of the game. Why: in cq132 seed 57 zel's seat-A
+  averystrangespace hunters did not reach the centre before r600 (seat B r521), while zej at seed 56 reached it at
+  r420-522; sealed-pocket hunters stand for hundreds of turns, so 20 turns earlier costs nothing there, while it may
+  switch hunters stalled in traffic on open maps (the screens measure that).
+falsifiers (22:04, registered before any game of zem):
+  0. Build: zem's source equals zel's apart from the package line and STALL_TUNNEL; compiles on the VM.
+  1. Chain cq133 (seeds 59 AND 60; averystrangespace, EscapeTheNight, where_are_you, whatsthecatdoin, minimaze,
+     DefaultMedium x agrab/araid x both seats x zem/zdb; 48 cells per bot):
+     a. any exception or overrun rejects;
+     b. mechanism: in >= 6 of the 8 averystrangespace zem cells a zem rat stands within Chebyshev 6 of (29,29)/(30,30)
+        before r600, and zem's digs by r600 on those 8 cells exceed zdb's;
+     c. averystrangespace cat damage (ours, at r1200 or the end) summed over its 8 cells >= 1.5x zdb's;
+     d. transfer by r1000 (or end) summed over all 48 cells >= 0.97x zdb's;
+     e. wins >= zdb's, and cells zdb won but zem lost <= 3.
+  2. Screens zd402 (s7, vs zd343) / zd403 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
+  3. Replica: set 2, then set 3 (block 1 rejects at t <= 0; pooled t <= 1 after block 2 rejects; accept at t >= 2, D >= 4).

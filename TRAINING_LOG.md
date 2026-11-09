@@ -8815,3 +8815,9 @@
 - 21:29: **zel registered (zej's build unchanged, re-registered on fresh data); chain cq132, screens zd400/zd401, replica #309**
   - zej failed only clause 1e, by one cell (a points loss by 27 transfer after an early cat kill); every mechanism clause passed. zel is judged only on new games: cq132 runs seeds 57 and 58 over the same 6 maps (48 cells per bot), with the bars scaled to 8 averystrangespace cells and flips ≤ 3 (SNAPSHOT 21:28).
   - zd399 (zej's s6 screen) killed by pid: it was a closed line. Replica #309: 8 set-3 matches sent, 8 queued (hourly limit). Next fresh chain seed: 59.
+- 22:05: **zel half-way; zem (STALL_TUNNEL 10 dose arm) registered and queued**
+  - zd400 (s7) passed: identical to zdb (t 0.00, 1.000x, 0 overruns). zd401 (s6) playing.
+  - Replica #309 set 3, 10 of 16 matches (21692-21701; replays VM ~/diag26b/rp/zel_b1s3_a.tgz): 30 cells, all alike (t 0.00). 6 rows wait on the hourly limit.
+  - cq132 seed 57 (scratch zelsc.py): zel wins 20 to zdb's 19, gains where_are_you B vs agrab, loses no cell zdb won; x1000 0.998x. On averystrangespace zel's cat damage at r1200 is 11,750 to 300 and digs by r600 768 to 352, but the centre was reached before r600 only in seat B (r521). Seat A got there later. Clause b needs 6 of 8, so seed 58 must reach it in all 4 cells.
+  - So **zem** = zdb + STALL_TUNNEL 10 (bots/zem/SNAPSHOT 22:04): chain cq133 (seeds 59+60) waits on cq132, screens zd402/zd403 queued, replica set 2 then set 3 once zel's block is done.
+  - Checked this hour and not built (all closed or not flippable): SIEGE_FLOOR (s7t), HEIR (z9c), CORE_BABIES (u5t/zd8), coop cat-end delivery (zb2/zb3), knifefight's seat split. All 17 cached field cat-kill endings in cooperation were wins (scratch catend.py), so there is nothing there to flip. The cat's target scan is mirrored by chirality in the engine, so targeting has no seat bias.
