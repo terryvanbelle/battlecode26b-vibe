@@ -16,3 +16,6 @@ FALSIFIERS (01:54 11-09, binding):
   2. Screens zd414 (s7 vs zd343) / zd415 (s6 vs zd345): t <= -1.5, any overrun, or lm transfer < 0.97x rejects; and
      t below zeu's on the same set (zd412 / zd413) drops it in zeu's favour.
   3. Replica only if zeu is rejected or zev beats zeu on 1c and 2.
+OUTCOME (02:33 11-09): DROPPED unplayed: its base zeu was rejected at cq140 1d for forming its mine king at r82,
+  a flaw zev (more mine kings) inherits. cq141 was killed at start (6 dirs, no finished game), zd414 killed, zd415
+  dequeued. Replaced by zew.

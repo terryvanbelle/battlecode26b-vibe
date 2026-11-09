@@ -1,0 +1,20 @@
+name=zew
+source=bots/zeu
+source_sha=f814dd0d8a30
+commit=fab677fd
+created=2026-11-09 02:31 PST
+DESCRIPTION (02:33 11-09): zeu + FORM_MINE_FROM 250 (new constant, ledgered K 11): FORM_MINE names no mine site
+  before round 250, so zdb's seen-mine formation (pickFormSite) runs until then. zeu lost cheesebottles B to both
+  local opponents with a mine king formed at r82 in cooperation, where zdb formed at r245-255; the field's far kings
+  form at r260-707. Otherwise zeu: FORM_MINE's mineSite, no income test for mine sites.
+FALSIFIERS (02:33 11-09, binding):
+  1. Chain cq142 (seed 68; mercifullattice, wallsofparadis, keepout, Nofreecheese, cheesebottles, where_are_you;
+     x agrab/araid x both seats x zew/zdb; 24 cells per bot; `python3 ~/diag26b/k2sc.py ~/diag26b/cq142 zew zdb`,
+     plus `grep -ci "exception\|overr" ~/diag26b/cq142.chain.out`):
+     a. any exception or overrun rejects;
+     b. mechanism: zew forms a mine-site king (first extra king within Chebyshev 1 of a mine) in at least 8 of 24
+        cells and in more cells than zdb, and none before r250;
+     c. transfer by r1000 summed >= 0.97x zdb's;
+     d. wins >= zdb's - 1, and flips lost <= 2.
+  2. Screens zd416 (s7 vs zd343) / zd417 (s6 vs zd345): t <= -1.5, any overrun, or lm transfer < 0.97x rejects.
+  3. Replica #314: set 4 (sent 02:31), then set 2, by the block rules.

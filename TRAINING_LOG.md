@@ -8914,3 +8914,16 @@
   - zev is the dose arm: up to two extra kings on home mines.
     - Chain cq141 (seed 67, vs zeu) is queued behind cq140. Screens zd414/zd415 are queued.
     - It goes to the replica only if it beats zeu.
+- 02:33: **zeu REJECTED at cq140 clause 1d; zev dropped; zew registered (zeu + FORM_MINE_FROM 250), replica #314**
+  - zeu, cq140 (seed 66):
+    - Mine-site kings in 19 cells vs zdb's 6. Transfer by r1000 was 1.029x. No exceptions or overruns.
+    - Wins 20 vs 23, with 3 flips lost. That fails clause 1d (bar: wins ≥ 22 and flips lost ≤ 2).
+    - cheesebottles B was lost to both opponents. zeu's mine king formed at r82, during cooperation; its r1000 transfer was 540-800 against zdb's 2720-6300. zdb formed at r245-255 and won both.
+    - where_are_you A araid was also lost.
+  - zeu's screens: zd412 (s7) t +1.77, lm 1.033x; zd413 (s6) t 0.00, lm 1.071x.
+  - zev (zeu + FORM_MAX 3) was dropped unplayed, since it inherits the r82 king.
+  - zew gates mine sites to r250 or later, with zdb's seen-mine formation before that.
+    - Chain cq142 (seed 68, same maps) is playing. Screens zd416/zd417 are queued (zd416 playing).
+    - Replica #314's set-4 block has been sent.
+  - Laptop disk: build/u8fk and build/u9mchk (old diagnostics, 11-04/05) were archived to VM ~/diag26b/laptop_build_*.tgz (verified, 7 files each) and removed locally to unblock git.
+    - That freed ~11 MB. This session's transcript grows ~1 MB every few calls.

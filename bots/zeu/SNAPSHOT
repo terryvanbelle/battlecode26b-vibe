@@ -26,3 +26,10 @@ FALSIFIERS (01:01 11-09, binding):
      d. wins >= zdb's - 1, and flips lost <= 2.
   2. Screens zd412 (s7 vs zd343) / zd413 (s6 vs zd345): t <= -1.5, any overrun, or lm transfer < 0.97x rejects.
   3. Replica: set 4, then set 2, by the block rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects).
+OUTCOME (02:33 11-09): REJECTED at chain cq140 (seed 66) clause 1d: wins 20 vs zdb's 23 (bar >= 22), flips lost 3
+  (bar <= 2): cheesebottles B agrab and araid (zeu's mine king formed at r82, in cooperation; transfer by r1000 800 and
+  540 to zdb's 6300 and 2720; dead r419/r354, zdb formed at r245-255 and won both) and where_are_you A araid (king r594;
+  lost r1292). None gained. Clauses 1a-1c held: 0 exceptions/overruns, mine-site kings in 19 cells to zdb's 6,
+  transfer by r1000 1.029x. Screens: zd412 (s7) n 48 D 3 net +3 t +1.77, lm 1.033x; zd413 (s6) n 44 D 2 net 0
+  t 0.00, lm 1.071x; 0 overruns. Replica #313's set-4 rows were already sent (unscored information). Follow-up: zew
+  (FORM_MINE_FROM 250).
