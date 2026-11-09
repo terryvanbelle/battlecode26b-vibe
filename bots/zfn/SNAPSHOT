@@ -1,0 +1,7 @@
+name=zfn
+source=bots/zdb
+source_sha=638afd6102f7
+commit=1b52fd55
+created=2026-11-09 08:56 PST
+change=Cfg ALERT_DIST2 225 -> 400 (never tuned): babies answer a king's alert from dist2 400, so defenders reach a king under attack sooner
+falsifiers=(1) screen zd443 (s7 cells): paired win t vs zdb > -1.5; (2) cq155: zfn must not lose more of its 8 games than zdb; (3) replica block rules

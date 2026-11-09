@@ -9088,3 +9088,9 @@
   - The lost cell is the mechanism itself. The third king formed at r1008, the bank fell from 548 to 2 by r1200, two kings starved at r1268 and r1270, and the last was killed at r1415 (zdb won the cell). Econ.surplus(3) >= 0, which trusts 75% of the measured income, does not guard against starvation. The target cell (FreeTheCheese B vs Merlin) was still lost.
   - zfl forms more kings on the same test, so it is dropped before its screens and chain. Its ledger check had passed (zdb's game until r800, kings at r804 and r852).
   - Stopped: zd439 (zfj s6), zd440 (zfl s7, just started), cq153 (zfj/zdb, 11 of 40 games played), cq154 (queued). The screen queue and the chain slot are free.
+- 08:57: **zfm and zfn registered: two never-tuned defence radii against collegejunior's king kills.**
+  - Diagnosis (dumped zdb vs collegejunior games on tiny and DefaultMedium, lost in both seats at r142-r308): throws do 330-440 damage to our king (10-13 throws) plus 70-270 in bites. In the tiny A game collegejunior made 77 throws to our 32, with 40 throw hits on our robots.
+  - **zfm** = zdb + GUARD_DIST2 20 (from 13; bots/zfm/SNAPSHOT, zfm-9cea918fb187). Guard facing (Baby.guardTurn and the Nav strafe) covers enemies within dist2 20, so fewer of our rats are grabbed from behind. attempts find GUARD_DIST2: none.
+  - **zfn** = zdb + ALERT_DIST2 400 (from 225; zfn-7483d8f474b3). Babies answer a king's alert from further away. attempts find ALERT_DIST2: none.
+  - Falsifiers (SNAPSHOT): (1) screens zd442 (zfm) and zd443 (zfn) on s7 cells: paired win t vs zdb > -1.5; (2) chain cq155 (~/diag26b, seed 76: zfm, zfn and zdb vs agrab and atrap3 on tiny and DefaultMedium, both seats): zfm's throw hits on our kings must not exceed zdb's, and zfn must not lose more games than zdb; (3) the replica block rules.
+  - zfm submitted (#321) and its set-3 block queued with build/block_v4s3.sh: matches 22419-22422 sent, 12 in the drain queue.
