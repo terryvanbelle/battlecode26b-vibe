@@ -1,0 +1,7 @@
+name=zft
+source=bots/zdb
+source_sha=638afd6102f7
+commit=885291c1
+created=2026-11-09 09:51 PST
+change=new switch Cfg.RICH_FROM 150 (King.babyCap): the RICH tiers (cap 40 from 1000 banked, 80 from 3000) start at r150, so the opening 2,488 bank does not buy a 40-baby army at 50-110 a baby
+falsifiers=(1) chain cq161 (seed 78; Stash, externalsustenance, mincemeat, wallsofparadis, DefaultSmall, whatsthecatdoin vs agrab and atrap3, both seats; 24 games each): zft wins at least zdb's count and loses at most 2 cells zdb won; (2) screen (s7): paired win t vs zdb > -1.5; (3) replica block rules

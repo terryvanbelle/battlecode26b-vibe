@@ -9147,3 +9147,12 @@
     2. Screen zd446 (s7): t > -1.5.
     3. The replica rules.
   - zfq (zfp + GUARD_DIST2 20) carries zfm's rejected radius. Its chain and screen finish as records, but it will not go to the replica unless it beats zfp in both.
+- 09:51: **zfs DROPPED (1 win of 12); zfq holds its chain falsifier; zft = zdb + RICH_FROM 150 registered**
+  - cq160 (zfs, seed 77): 1 win of 12 to zfp's 7. It lost all four knifefight games (r20-27) and all four tiny games. Young throws fell to 35 (zfp 92), so the mechanism worked, but on rush maps the newborns must be at the fight. **zfs is DROPPED**; zd446 was dequeued.
+  - cq159 (zfq, seed 77): 7 wins of 12, the same as zfp (falsifier 2 holds). Young throws 71 and king hits 81 (zfp 92 and 95). zd445 is playing.
+  - zfp's s6 screen zd447 is queued, for more evidence while its replica block runs.
+  - **Why the opening overspends.** King.babyCap raises the cap to RICH_BABIES 40 whenever the bank holds 1,000. Every game starts with 2,488, so the opening bank buys a 40-cap army. The price rises 10 for every 4 live babies, so these babies cost 50-110 each.
+    - externalsustenance A: 44 spawns by r76. In u3f's small-map field games we had 23 babies at r50 to their 17.5, and by r150 the bank was 386 to their 1,069.
+    - Earlier tries: u3f (RICH_MIN_AREA 901) and u3h (RICH_BANK 1500) were both rejected locally against our rush archetypes. A time gate is untried.
+  - **zft** = zdb + RICH_FROM 150 (new switch in King.babyCap; bots/zft/SNAPSHOT, zft-3aef3955b42d). The rich tiers start at r150.
+    - Falsifiers: (1) chain cq161 (seed 78; Stash, externalsustenance, mincemeat, wallsofparadis, DefaultSmall and whatsthecatdoin vs agrab and atrap3, both seats): at least zdb's wins, and at most 2 cells lost that zdb won; (2) an s7 screen: t > -1.5; (3) the replica rules.
