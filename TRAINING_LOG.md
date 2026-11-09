@@ -8808,3 +8808,7 @@
     r910); first middle-mine pickups r350 (zdb r908); the king's list gains (25,26) and (53,4) by r500 (zdb's holds
     only the home mine to r800).
   - Chain cq131 (zej) starts now; screen zd398 playing, zd399 queued; replica #308 set 3 queued.
+- 21:27: **zej DROPPED at cq131 clause 1e (wins 19 vs 20)**
+  - a: 0 exceptions, 0 overruns. b: zej reached the centre in 4/4 averystrangespace cells (r420/420/522/522); digs by r600 863 vs zdb 316. c: averystrangespace cat damage at r1200 8,570 vs 4,120 (2.08x). d: transfer by r1000 over 24 cells 1.021x.
+  - e FAILED: where_are_you A vs araid lost at r1344 on points (xfer 5,870/5,897, cat 12,000/12,000); zdb won that cell at r2000. First divergence vs zdb at r207, so the tunnel acted there. All other maps identical.
+  - zd398 (s7) passed (t 0.00, 1.000x). Replica #308 (set 3) stays unscored for zej; the mechanism is strong on the sealed map, so a re-registration on fresh seeds follows.

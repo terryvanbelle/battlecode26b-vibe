@@ -25,3 +25,4 @@ falsifiers (20:12, registered before any game):
      e. wins >= zdb's, and cells zdb won but zej lost <= 2.
   2. Screens zd398 (s7, vs zd343) / zd399 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
   3. Replica: set 3 (averystrangespace, where_are_you, whatsthecatdoin, minimaze), then set 2.
+OUTCOME 21:27: DROPPED at cq131 clause 1e. a 0 exc/0 overruns; b centre reached 4/4 averystrangespace cells (r420/420/522/522), digs by r600 863 vs 316; c averystrangespace cat dmg r1200 8570 vs 4120 (2.08x); d xfer by r1000 1.021x over 24 cells; e FAIL wins 19 vs 20: where_are_you A vs araid lost r1344 on points (zdb won r2000), first divergence r207 (the mechanism acted). zd398 (s7) passed t 0.00 1.000x.
