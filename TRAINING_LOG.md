@@ -8719,3 +8719,8 @@
 - 18:12: **zec passes s6 zd389**
   - zeb vs zdb (zd345): n 44, D 2, net +0, t +0.00; 0 overruns, 0 exceptions; pooled transfer 1.005x, length-matched 0.995x on 35 cells. Both screens passed.
   - VM disk was 1.9 GB; removed closed chain dumps cq72-75, 77, 78, 80-82, 85, 89 -> 2.4 GB.
+- 18:27: **zec REJECTED at replica block 1** (#304, set 4, 21484-21491 + 21500-21507)
+  - 48 cells, 43 alike, D 5: gained YokoOno rose A; lost YokoOno Meow A, Varun arrows B, Merlin RUN B, collegejunior t_minus_five_minutes A. Net −3, t −1.34 ≤ 0. Replays VM ~/diag26b/rp/zeb_b1s4_1826.tgz.
+  - Both screens had passed (zd388 t −0.44, zd389 t +0.00). Chain cq125 stopped at 36 of 40 games; cq126 (zee) started at once.
+  - zee submitted as #305; set-3 block queued (8 sent, 8 in the drain).
+  - Rose diagnosis (zdb field, A and B vs YokoOno): the king's pocket has one exit, the diagonal (11,1)-(10,2) into the 1-wide x=9 stem. From ~r150 to r1000 two empty outbound rats sit on those two tiles while loaded carriers queue in the stem. Known jam: SWAP_HOLD (s7x) and SWAP_LOADED (z1l, z8b, z9v) were rejected on the replica, so not rebuilt.
