@@ -9129,3 +9129,13 @@
     - Falsifiers: (1) screen zd445 (s7): t > -1.5, and its wins not below both zd442's and zd444's; (2) a chain on cq157's cells before any replica block: at least zfp's 7 wins; (3) the replica rules.
   - Chain cq158 (informational; zfp and zdb on externalsustenance, streetsofnewyork, arrows, rose, Stash and DefaultSmall vs agrab and atrap3, seed 77) checks for harm off the rush maps.
   - externalsustenance A vs YokoOno (zdb, lost at r439, while the B seat won at r184): our bank fell from 2,488 to 380 by r75 on 44 spawns and 36 cat traps. YokoOno spawned 30 and still had 1,233.
+- 09:47: **zfm REJECTED at replica block 1; zfp passes its screen and is on the replica**
+  - zfm (#321, set 3, matches 22419-22434 vs zdb's 21016-21023 and 21036-21043): 48 cells, 40 alike, D 8 (+3 -5), net -2, t -0.71. Block 1 rejects at t <= 0.
+    - Gained: Icarus mincemeat B, YokoOno Stash A, Varun thunderdome B.
+    - Lost: Icarus mincemeat A, Xzibit uneruesansfin A, YokoOno externalsustenance B, spsquared rose A, collegejunior FreeTheCheese B.
+    - Replays: VM ~/diag26b/rp/zfm_b1s3.tgz (16).
+  - zd444 (zfp, s7 vs zd343): n 48, D 11, net -1, t -0.30. Picks/100 34.71 vs 34.11 (per cell z +2.01); transfer 0.941x pooled and 1.011x length-matched; 0 overruns. **Passes.**
+  - cq158 (informational; zfp vs zdb off the rush maps, seed 77; 24 games each): wins 18 vs 19 (+1 -2), with 80 throw hits on our kings for each.
+    - zfp gained streetsofnewyork A vs atrap3, and lost DefaultSmall A vs agrab and Stash B vs atrap3.
+  - **zfp submitted (#322).** Its set-3 block is queued: 22435-22438 sent, 12 in the drain queue.
+  - zfq's chain cq159 (falsifier 2) and screen zd445 are running.
