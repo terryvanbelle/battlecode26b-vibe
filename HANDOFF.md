@@ -97,7 +97,18 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (21:35):**
+- **Now (23:40):**
+  - Incumbent still **zdb**. zel DROPPED (cq132 1b), zem DROPPED (cq133 1b/1c; #310 set 2 D 1 t +1.00, replays VM
+    ~/diag26b/rp/zem_b1s2.tgz).
+  - **zeo** (23:16) = zem's code re-registered: chain **cq135** (seed 62, queued behind cq134; score with
+    ~/diag26b/zelsc.py), replica set-4 block on the zem build (judge with `paired --dir /dev/shm/rp
+    20817-20824,20842-20845,20848-20851 IDS`), set 3 fresh next if t > 0 (21768-21771 excluded).
+  - **zen** (22:35) = zdb + RAID_EVERY 2: chain **cq134** (seed 61, running; ~/diag26b/raidsc.py DIR zen), screen zd404
+    PASSED (t +0.27, 0.988x), zd405 (s6) playing. Replica set 4 then set 2 once the replica is free and cq134 passes.
+  - **zep** (23:39) = zen + MINE_MIRROR (ledgered): chain **cq136** (seed 63, behind cq135; ~/diag26b/mirsc.py DIR zep
+    zen), screens zd406/zd407 queued. Clauses in each SNAPSHOT.
+  - Next fresh seed: 64. Next screen id: zd408.
+- **Earlier (21:35):**
   - Incumbent still **zdb**. zej DROPPED at cq131 clause 1e only (wins 19 vs 20: where_are_you A vs araid, a points
     loss at r1344, divergence r207); its mechanism clauses all passed (centre 4/4, digs 863 vs 316, cat dmg 2.08x,
     xfer 1.021x). zd399 killed; #308 left unscored.
