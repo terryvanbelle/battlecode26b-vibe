@@ -8677,3 +8677,14 @@
 - 17:03: **zdy passes s6 zd383** (seed 2, vs zd376): n 44, D 4 (+3 −1), net +2, t +1.00, 0 overruns. Transfer per round 1.003x pooled and 1.023x on the 26 length-matched cells.
   - Gained bed B vs abrk, evileye B and starvation A vs araid; lost keepout B vs araid.
   - All local falsifiers hold. Replica #303 block 1 on set 4: 4 sent, 12 in the drain queue.
+- 17:09: **zea dropped at cq123** (seed 48, 48 games; do-no-harm clause)
+  - zea won 11 of 16 cells to zdb's 13 (zdy 12). It lost 3 cells zdb won:
+    - mincemeat A agrab, r341.
+    - mincemeat B araid, r607.
+    - sunandmoon A araid, r426.
+  - It gained tiny A agrab.
+  - The mechanism held but did not help:
+    - Traps laid next to an enemy baby fell from zdy's 273 to 46.
+    - zea laid 138 traps and enemies set off 118 (7.4 a game).
+  - Screen zd386 was stopped at start, and zd387 was dequeued.
+  - zdy's replica block: the first 4 matches (21468-21471) lost averyfineline A vs Finals and knifefight B vs spsquared (partial t −1.41).
