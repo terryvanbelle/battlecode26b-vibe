@@ -1,0 +1,6 @@
+name=zfg
+source=bots/zdb
+source_sha=638afd6102f7
+commit=aededea3
+created=2026-11-09 06:57 PST
+FALSIFIERS (06:58, before any game): as zff: screens zd434/zd435 t <= -1.5, overrun/exception, lm < 0.95x reject; cq150 (seed 74 vs atrap3) fires > 0.90x zdb's (cq149) drops as inert, wins < zdb - 1 rejects; replica set 3 with fires vs Finals/Icarus/Varun > 0.85x zdb anchors rejecting. Only the better of zff/zfg on chain fires goes to the replica.

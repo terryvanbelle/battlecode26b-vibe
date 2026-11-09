@@ -9028,3 +9028,4 @@
   - The burn-signal family (RISK_ADAPT, WOUNDED_HP, FACE_HOLD, RUSH_BURN) was last tried on u-era bases (Oct 30 to Nov 4) and closed on local trapper evidence. It never reached the replica, except RUSH_BURN (u8h pooled t +0.41).
   - zff = zdb + FACE_HOLD (one Cfg line). Screens zd432/zd433; chain cq149 (seed 74, zff/zdb vs atrap3) checks the mechanism. Replica on set 3, which holds Finals, Icarus and Varun.
   - zfe's cq148 runs to the end as zdb's baseline.
+  - 06:58: zfg = zdb + RISK_ADAPT 2 as a sibling arm (screens zd434/zd435, chain cq150 vs atrap3 behind cq149). Only the arm that cuts chain fires more goes to the replica.
