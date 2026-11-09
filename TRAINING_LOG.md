@@ -8868,3 +8868,8 @@
   - Rule: an empty-handed gatherer with 60+ health, no enemy king in view and no king alert, whose own home-half mine has an enemy baby within dist2 20 of it, fights that baby as a fighter would. The baby must be no healthier than us and within dist2 20 of us. Indicator ev= counts the turns.
   - Falsifiers in bots/zes/SNAPSHOT: evictions in ≥ 12 of 24 cells; enemy pickups on our half by r1000 ≤ 0.9x zdb's (cq134 zdb: 776 over 24 cells); transfer ≥ 0.97x; wins ≥ zdb − 1, ≤ 2 flips lost.
   - zep at cq136 16/48: keepout and clockwisdom are cell for cell like zen (km600 equal), so MINE_MIRROR looks inert again so far. On clockwisdom both list 0-1 mines at r600, deliver 0-215 by r1000 and lose 3 of 4 to the local archetypes. That is the known spiral problem, a line closed earlier.
+- 00:36: **zep DROPPED at cq136 clause 1b (MINE_MIRROR inert again)**
+  - The king's listed mines at r600 summed 127 to zen's 123 (1.03x, bar 1.1x), and picks by r1000 were 8,775 to 8,834. Transfer was 0.986x, wins 21 to 21 with no flips, and 0 exceptions or overruns.
+  - Only RUN moved: km +1 in 3 cells, transfer up in both araid cells. keepout and clockwisdom were cell for cell zen's. Screen zd406 matched zen's zd404 on all 48 cells.
+  - zeq (zep + CHIRAL_SYM + SYM_GOSSIP + SYM_HEAR_TILE) keeps its cq137 chain; its clauses compare with zep and test whether faster symmetry knowledge changes anything.
+  - Replica: zer's 16 set-4 rows on the #311 build began going out at 00:31.

@@ -22,3 +22,7 @@ falsifiers (23:39, registered before any game of zep):
      d. wins >= zen's - 1, and cells zen won but zep lost <= 2.
   2. Screens zd406 (s7, vs zd343) / zd407 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
   3. Replica only if zen reaches the replica: as zen's (set 4, then set 2).
+OUTCOME (00:36 11-09): DROPPED at cq136 clause 1b: the king's listed mines at r600 summed 127 to zen's 123 (1.03x,
+  bar 1.1x) and picks by r1000 8,775 to zen's 8,834 (below). Others: transfer by r1000 144,724 /
+  146,846 = 0.986x, wins 21 vs 21, no flip either way, 0 exceptions or overruns. Screen zd406 cell for cell zen's
+  zd404 (D 0 vs zen). Only RUN moved (km +1 in 3 cells). MINE_MIRROR stays inert on the z-line even with raiders.
