@@ -9319,3 +9319,11 @@
   - **zgj** = zgi unchanged, re-registered on fresh data (precedent zel/zeo).
     - Chain cq174 (seed 86, after cq173): zgh and zgj on fullofsecrets, TheHeist (zb2's stalled-attacker map), rose and keepout, agrab/atrap3 x seats, 32 games.
     - Falsifier: fullofsecrets + TheHeist transfer < 1.2x zgh's; fewer wins than zgh; any overrun; any rose or keepout cell lost that zgh wins.
+- 15:24: **zgg rejected at replica block 1; zgh submitted (#330)**
+  - zgg (#329, KING_THREAT_D2 25), set 3 (22658-22669, 22693-22696): 48 cells, 47 alike, D 1 (−Varun corridorofdoomanddespair B), t −1.00. Replays: VM ~/diag26b/rp/zgg_b1.tgz.
+    - The KING_THREAT_D2 line is closed: zgf failed s7, zgg the replica.
+    - zd463 was dequeued.
+  - zgh (z7x's trail on zdb):
+    - s7 zd464 passed: n 48, D 3, net +1, t +0.57, picks z +1.38, 0 overruns.
+    - Submitted as #330 with its set-3 block: 22708-22711 sent, 12 in the drain.
+    - It is withdrawn if s6 zd465 (playing, the keepout overrun test) or cq172's rose/keepout cells fail it.
