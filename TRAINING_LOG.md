@@ -8862,3 +8862,9 @@
   - Screens: zd404 t +0.27 (lm 0.988x), zd405 n 44, D 5, net +3, t +1.35 (lm 1.063x).
   - #311's 4 sent rows (21829-21832) play unscored, and the 12 queued rows were removed. zer (identical code, bots/zer) has a fresh chain, cq138 (seed 64: cheesefarm, FreeTheCheese, keepout, DefaultLarge, fullofsecrets, whatsthecatdoin vs agrab/araid), with an enemy-half bar of 1.15x. Its replica block 1 is 16 fresh set-4 rows on the #311 build.
   - zep's games had already started (cq136), so its replica clause stays as registered (only if zen reaches the replica).
+- 00:13 (11-09): **zes registered: zdb + MINE_EVICT 20 / EVICT_HP 60 (new switch); chain cq139 (seed 65) and screens zd410/zd411 queued**
+  - At war, WAR_GATHER 2 makes our gatherers ignore every non-adjacent enemy, and nothing defends a mine. In zdb's field losses the opponent picks 38.4 piles a game on our half by r400 (12.7 in wins).
+  - Examples: keepout A vs Finals, (47,30) 7 tiles from our king, their 21 picks to our 10. Stash B vs YokoOno, (10,11)/(15,11) beside our king, 31 and 40 to our 8 and 1.
+  - Rule: an empty-handed gatherer with 60+ health, no enemy king in view and no king alert, whose own home-half mine has an enemy baby within dist2 20 of it, fights that baby as a fighter would. The baby must be no healthier than us and within dist2 20 of us. Indicator ev= counts the turns.
+  - Falsifiers in bots/zes/SNAPSHOT: evictions in ≥ 12 of 24 cells; enemy pickups on our half by r1000 ≤ 0.9x zdb's (cq134 zdb: 776 over 24 cells); transfer ≥ 0.97x; wins ≥ zdb − 1, ≤ 2 flips lost.
+  - zep at cq136 16/48: keepout and clockwisdom are cell for cell like zen (km600 equal), so MINE_MIRROR looks inert again so far. On clockwisdom both list 0-1 mines at r600, deliver 0-215 by r1000 and lose 3 of 4 to the local archetypes. That is the known spiral problem, a line closed earlier.
