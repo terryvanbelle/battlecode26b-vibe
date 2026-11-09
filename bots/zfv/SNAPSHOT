@@ -1,0 +1,7 @@
+name=zfv
+source=bots/zdb
+source_sha=638afd6102f7
+commit=0e50d5b1
+created=2026-11-09 11:12 PST
+falsifiers=(1) chain cq164 (seed 80; FreeTheCheese, keepout, averystrangespace, Meow vs agrab and atrap3, both seats; 16 games each for zfv, zfw and zdb): cheese transfer at r1000 (or the end) summed over its 16 games at least 1.05x zdb's, and wins at least zdb's - 1; (2) its s7 screen (zd451 zfv, zd452 zfw): paired win t vs zdb > -1.5; (3) replica block rules
+change=Cfg MINE_SPREAD 4 -> 2 (gatherers pick among the 2 nearest known home mines: shorter trips)

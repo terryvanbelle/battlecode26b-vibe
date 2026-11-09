@@ -9180,3 +9180,20 @@
     1. Chain cq163 (seed 79; tiny, DefaultMedium, knifefight, DefaultSmall, Stash and arrows vs agrab and atrap3, both seats): at least zdb's wins + 1, and throw hits on enemy kings (scratch ekthrow.py) at least 1.25x zdb's.
     2. Screen zd450 (s7): t > -1.5.
     3. The replica rules.
+- 11:12: **zfu DROPPED at its chain falsifier; MINE_SPREAD arms zfv (2) and zfw (6) registered**
+  - cq163 (seed 79): zfu won 15 of 24, the same as zdb, and needed zdb + 1. Its throw hits on enemy kings were 140 to zdb's 153; the bar was 1.25x.
+    - The walk-to-king move (mv=Y) fired on 40 turns in tiny A vs agrab, 3 on knifefight B and 0 on DefaultSmall B. zd450 was dequeued.
+  - zft's screen zd448 (record): n 48, D 9, net +1, t +0.33.
+  - **Points in zdb's r2000 field games** (scratch endcmp.py over the cached dumps): all five losses are delivery deficits.
+    - FreeTheCheese B vs Merlin: 13.0k vs 23.8k delivered.
+    - RUN A vs Merlin: 8.5k vs 16.4k.
+    - keepout A vs Finals: 15.2k vs 32.5k; Finals had 5 kings to our 2.
+    - averystrangespace A vs YokoOno: 4.6k vs 14.5k.
+    - rose A vs YokoOno: 2.9k vs 10.6k.
+  - **Cat-trap floor checked and not built** (scratch coopbank.py). Cat traps are legal only in cooperation (GameWorld.catTrapsAllowed). Only 4 of 132 field games had 100 or more cooperation rounds with our bank under TRAP_FLOOR 600, so lowering the floor would be nearly inert.
+    - In averystrangespace A vs YokoOno we made 0 cat damage before the r1040 backstab although the bank held 600 or more for 723 of those rounds. Our rats never met the cats; YokoOno laid 14 traps (13 triggered).
+  - **zfv** = zdb + MINE_SPREAD 2 and **zfw** = zdb + MINE_SPREAD 6 (one Cfg line each; zfv-86eb5acd1434, zfw-f708e46c52f1). Gatherers pick uniformly among the N nearest known home mines (Baby.java:2061). The only prior change was s3q's MINE_SPREAD 1 inside an early ablation bundle.
+  - Falsifiers, for each arm:
+    1. Chain cq164 (seed 80; FreeTheCheese, keepout, averystrangespace and Meow vs agrab and atrap3, both seats; 16 games each for zfv, zfw and zdb): transfer at r1000 (or the end; scratch xferc.py) at least 1.05x zdb's, and wins at least zdb's - 1.
+    2. Its s7 screen (zd451 zfv, zd452 zfw): t > -1.5.
+    3. The replica rules.
