@@ -8707,3 +8707,8 @@
     1. New chain cq125 (seed 50, 40 games; abrk replaces agtr). Clockwisdom bars: transfer at least 2x, and net flips at least +2. Other cells: keepout, fullofsecrets and rose vs agrab and abrk.
     2. The running screens zd388/zd389.
     3. #304's set-4 block.
+- 17:48: **zec (zeb's build) passes s7 zd388** (seed 1, vs zd343): n 48, D 5, net −1, t −0.44, 0 overruns, 0 exceptions.
+  - Transfer per round: 0.950x pooled; 1.009x on the 34 cells whose length ratio is within 0.8-1.25x (bar 0.97x).
+  - The length-matched check is now tools/lmxfer.py (CTRLRUN CTRLBOT RUN BOT). It gives zd382 0.979x / 1.005x against the logged 0.980x / 1.011x.
+  - zd389 (s6) started at 17:47.
+  - Replica: zeb's first 4 set-4 matches (21484-21487, spsquared and Finals, both seats) were all 3-0 wins.
