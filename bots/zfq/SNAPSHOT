@@ -1,0 +1,7 @@
+name=zfq
+source=bots/zfp
+source_sha=ba67f22706e0
+commit=073e9601
+created=2026-11-09 09:20 PST
+change=zfp (WAR_FACE) + GUARD_DIST2 20 (zfm's change): the two throw-defence passes stacked
+falsifiers=(1) screen zd445 (s7): paired win t vs zdb > -1.5 and not below both zd442 (zfm) and zd444 (zfp) wins; (2) a chain on cq157's cells (seed 77) before any replica block: wins at least zfp's 7; (3) replica block rules

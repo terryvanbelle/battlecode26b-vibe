@@ -9120,3 +9120,12 @@
     1. Chain cq157 (fresh seed 77; zfp and zdb on tiny, DefaultMedium and knifefight vs agrab and atrap3, both seats; 24 games): zfp must win more of its 12 games than zdb, and its throw hits on our kings must not exceed zdb's.
     2. Screen zd444 (s7, repointed to zfp before it started): t > -1.5.
     3. The replica rules.
+- 09:20: **zfp holds its chain falsifier; zfm passes its screen; zfq (the two stacked) registered**
+  - cq157 (fresh seed 77, scratch newbornc.py): zfp won 7 of 12, zdb 4. It gained DefaultMedium A vs atrap3, tiny A vs agrab and vs atrap3, and tiny B vs agrab, and lost knifefight B vs agrab (r31). Throw hits on our kings: zfp 95, zdb 99. **Falsifier 1 holds.**
+    - The knifefight games repeat cq156's exactly; the seed does not change them.
+  - zd442 (zfm, s7 vs zd343): n 48, D 10, net +0, t +0.00. Picks/100 34.70 vs 34.11; transfer 0.974x pooled and 1.010x length-matched; 0 overruns. **Passes** (t > -1.5).
+  - zfm's replica block (#321): 22413-22422 are done and 12 rows wait for the drain (hourly limit). zfp goes to the replica after zfm's block 1.
+  - **zfq** = zfp + GUARD_DIST2 20 (bots/zfq/SNAPSHOT, zfq-c61c76a6f7ea).
+    - Falsifiers: (1) screen zd445 (s7): t > -1.5, and its wins not below both zd442's and zd444's; (2) a chain on cq157's cells before any replica block: at least zfp's 7 wins; (3) the replica rules.
+  - Chain cq158 (informational; zfp and zdb on externalsustenance, streetsofnewyork, arrows, rose, Stash and DefaultSmall vs agrab and atrap3, seed 77) checks for harm off the rush maps.
+  - externalsustenance A vs YokoOno (zdb, lost at r439, while the B seat won at r184): our bank fell from 2,488 to 380 by r75 on 44 spawns and 36 cat traps. YokoOno spawned 30 and still had 1,233.
