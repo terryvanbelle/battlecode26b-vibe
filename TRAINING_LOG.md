@@ -9094,3 +9094,19 @@
   - **zfn** = zdb + ALERT_DIST2 400 (from 225; zfn-7483d8f474b3). Babies answer a king's alert from further away. attempts find ALERT_DIST2: none.
   - Falsifiers (SNAPSHOT): (1) screens zd442 (zfm) and zd443 (zfn) on s7 cells: paired win t vs zdb > -1.5; (2) chain cq155 (~/diag26b, seed 76: zfm, zfn and zdb vs agrab and atrap3 on tiny and DefaultMedium, both seats): zfm's throw hits on our kings must not exceed zdb's, and zfn must not lose more games than zdb; (3) the replica block rules.
   - zfm submitted (#321) and its set-3 block queued with build/block_v4s3.sh: matches 22419-22422 sent, 12 in the drain queue.
+- 09:07: **zfn dropped at its chain falsifier; zfm holds its throw falsifier; zfo = zdb + WAR_FACE registered**
+  - cq155 (seed 76, tiny and DefaultMedium vs agrab and atrap3, both seats; scratch kthrowc.py counts enemy throw hits on our kings):
+    - zdb: 4 wins of 8; 71 throw hits on our kings (2,786 hp).
+    - zfm: 3 wins; 59 hits (2,360 hp). Falsifier 2 holds. It won tiny A vs atrap3 (1 hit, zdb 9) and lost tiny B vs atrap3 and DefaultMedium B vs agrab. These are mirror rushes that move order decides.
+    - zfn: 3 wins; 69 hits. It lost DefaultMedium B vs agrab (r305, zdb won at r2000) and replayed zdb's other 7 results. **zfn is DROPPED** (5 losses to zdb's 4). zd443 was dequeued.
+  - Throw diagnosis (scratch kthrow.py over zdb's set-3 games vs collegejunior on tiny and DefaultMedium): in all four games every throw hit on our king is one of our own rats, grabbed and thrown by collegejunior. There were 10-13 hits of 22-42 each before the king died (r142-r308).
+  - Seat-split cells in zdb's cached field games (scratch seatsplit.py): 10 of 66 cells are won in one seat and lost in the other. Examples: knifefight vs Merlin (A lost at r107, B won at r22), streetsofnewyork vs YokoOno (A won r92, B lost r917) and externalsustenance vs YokoOno (A lost r439, B won r184).
+  - knifefight A vs Merlin: we spawned 49 babies by r60 to their 30 and lost 27 to their 17. Merlin threw 87 of our rats in the game. Our bank fell from 2,488 to 532 by r54 and the king starved at r107.
+  - Thrown-rat ages (scratch newborn.py): 2-7 of each game's 77-111 thrown rats were within 3 rounds of birth, and 6-25 within 8 rounds.
+  - **zfo** = zdb + WAR_FACE (new switch in King.spawn; bots/zfo/SNAPSHOT, zfo-4476c30c3224).
+    - At war with enemies in sight, the king turns before it builds so the newborn faces the enemy baby nearest its spawn tile. A newborn takes its king's facing, and a rat that sees its grabber and is not weaker cannot be grabbed.
+    - attempts find WAR_FACE and SPAWN_AWAY: none. SYM_FACE faced the spawn tile, for symmetry.
+  - zfo's falsifiers:
+    1. Chain cq156 (seed 76; zfo on cq155's cells, plus knifefight for zfo and zdb): our rats thrown within 8 rounds of birth must be at most 0.7x zdb's, and throw hits on our kings must not exceed zdb's.
+    2. Screen zd444 (s7): t > -1.5.
+    3. The replica rules.

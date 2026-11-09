@@ -1,0 +1,7 @@
+name=zfo
+source=bots/zdb
+source_sha=638afd6102f7
+commit=8f2ffc11
+created=2026-11-09 09:07 PST
+change=new switch Cfg.WAR_FACE (true), King.spawn: at war with enemies in sight the king turns before buildRat so the newborn faces the enemy baby nearest its spawn tile
+falsifiers=(1) chain cq156 (seed 76; tiny/DefaultMedium zdb games from cq155, knifefight zfo and zdb): our rats thrown by the enemy within 8 rounds of their birth, summed over zfo's 12 games, must be at most 0.7x zdb's in the same cells; throw hits on our kings must not exceed zdb's; (2) screen zd444 (s7): paired win t vs zdb > -1.5; (3) replica block rules
