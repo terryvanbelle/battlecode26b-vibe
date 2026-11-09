@@ -8731,3 +8731,8 @@
   - s7 zd390 vs zd343: n 48, D 0, t +0.00, 0 overruns, length-matched transfer 1.000x. s6 zd391 vs zd345: n 44, D 0, t +0.00, 0 overruns, length-matched 1.027x. KING_FAR never fires on the screen maps.
   - cq126 (seed 51), 15 of 32 so far: zee's king is within Chebyshev 1 of a mine at r400 in 6 of 7 cells (wallsofparadis B atrap3 at 2); zdb's sits 26-31 away. xfer600 on wallsofparadis 4,915/4,152/4,404/3,666 to zdb's 1,943/1,275/–/1,635, on Nofreecheese 3,998/3,968/4,084/3,929 to 2,718/2,855/2,939/1,540. Flipped Nofreecheese B and wallsofparadis B vs atrap3 to wins.
   - Replica #305 set-3 block: 21516-21523 played, 8 rows wait on the hourly limit.
+- 19:04: **zee passes falsifier 1 (cq126, seed 51, 32 games)**
+  - 0 exceptions and 0 overruns for either bot (scratch chainx.py reads the per-game JSON in the logs).
+  - Mechanism: the king is within Chebyshev 1 of a mine at r400 in 10 of 16 cells (bar 10): Nofreecheese 4, wallsofparadis 3 (B atrap3 at 2), whatsthecatdoin 3 (B abrk lost at r385). uneruesansfin never fires (king at 28, same as zdb).
+  - xfer600 summed 40,671 to zdb's 23,160 (1.76x, bar 1.15x). Net flips +2: gained Nofreecheese B atrap3, uneruesansfin B abrk, wallsofparadis B atrap3; lost whatsthecatdoin B abrk (r385 to zdb's win at r447).
+  - Field note: zee's first set-3 rows vs Finals (21518/21519) still lost wallsofparadis both seats by king kill (r966 A, r642 B; zdb r715, r851), though zee delivered 3,324 by r966 as A to zdb's 1,170 by r715.
