@@ -8909,3 +8909,8 @@
   - Gatherers that fight stop gathering, and the intruders keep picking.
   - zd410 (s7) had passed (t −0.83, 0.995x). zd411 was killed. Replica #312's 8 queued rows were withdrawn.
   - Next: zeu (FORM_MINE) holds the chain (cq140, starting now) and screens zd412/zd413.
+- 01:54: **zeu passes its s7 screen (zd412: t +1.77, net +3, lm transfer 1.033x); zev registered (zeu + FORM_MAX 3)**
+  - zeu was submitted as #313 at 01:30 and its set-4 block is queued. Partial cq140: mine-site kings in 16 of zeu's games, 0 of zdb's so far.
+  - zev is the dose arm: up to two extra kings on home mines.
+    - Chain cq141 (seed 67, vs zeu) is queued behind cq140. Screens zd414/zd415 are queued.
+    - It goes to the replica only if it beats zeu.

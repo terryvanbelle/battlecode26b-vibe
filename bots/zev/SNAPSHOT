@@ -1,0 +1,18 @@
+name=zev
+source=bots/zeu
+source_sha=f814dd0d8a30
+commit=1064a0c0
+created=2026-11-09 01:54 PST
+DESCRIPTION (01:54 11-09): zeu + FORM_MAX 3 (existing constant): up to two extra kings, each on a home-half mine
+  (FORM_MINE's mineSite), the dose arm of zeu. Field: Finals/Icarus/waxmango run two kings from r260-700; spsquared
+  three on superioristhmus. t0j (t0i + FORM_MAX 3, s9s base) was dropped with t0i in Oct.
+FALSIFIERS (01:54 11-09, binding):
+  1. Chain cq141 (seed 67; zeu's six maps x agrab/araid x both seats x zev/zeu; 24 cells per bot; score with
+     `python3 ~/diag26b/k2sc.py ~/diag26b/cq141 zev zeu` plus a max-kings count):
+     a. any exception or overrun rejects;
+     b. mechanism: zev holds 3+ kings at some round in at least 6 of 24 cells;
+     c. transfer by r1000 summed >= 1.00x zeu's (a dose arm must beat its base);
+     d. wins >= zeu's, and flips lost <= 2.
+  2. Screens zd414 (s7 vs zd343) / zd415 (s6 vs zd345): t <= -1.5, any overrun, or lm transfer < 0.97x rejects; and
+     t below zeu's on the same set (zd412 / zd413) drops it in zeu's favour.
+  3. Replica only if zeu is rejected or zev beats zeu on 1c and 2.
