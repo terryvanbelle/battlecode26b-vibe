@@ -9221,3 +9221,6 @@
     1. Chain cq166 (seed 82; corridorofdoomanddespair, minimaze, cheesebottles, EscapeTheNight, Stash vs agrab/atrap3, both seats, zdb control): wins ≥ zdb's, at most 2 cells lost that zdb won, summed transfer ≥ zdb's.
     2. Screens zd455 (s7) and zd456 (s6): t > -1.5, and D > 0 on at least one.
     3. The replica rules.
+- 12:18: **zfx's s7 screen passes its bar narrowly, but picks fall 7%**
+  - zd453 (zfx, MINE_NEAR 2): 48 cells, D 5, net −3, t −1.35 (bar −1.5). Picks per 100 rat-turns 31.63 vs 34.11 (z −2.28).
+  - So far the mine cap costs cheese instead of saving trips. zfx stays pending only because its replica block 1 is half sent (8 of 16); the block decides. zfy (cap 3) screen zd454 is playing.
