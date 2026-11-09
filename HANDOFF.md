@@ -97,7 +97,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (19:15):**
+- **Now (19:53):**
+  - Incumbent still **zdb**. zee REJECTED (#305 block 1 set 3, D 1, t -1.00; replays VM ~/diag26b/rp/zee_b1s3_1918.tgz).
+    zeg DROPPED (cq128: fullofsecrets xfer600 0.29x; its #306 block plays out unfetched). BUG_SWITCH line closed.
+  - **zeh** (zdb + THREAT_WALL_REACH 5): chain **cq129** running (seed 54), screens zd394 (s7, playing) / zd395 (s6),
+    replica **#307** set-3 block queued in research/panel/queue.tsv (judge with `paired --dir /dev/shm/rp
+    21016-21023,21036-21043 IDS`), set 4 next if t > 0.
+  - **zei** (19:32) = zdb + SWAP_HOLD 2 + SWAP_YIELD + SWAP_NO_ALONG + SWAP_NARROW 4 (swap only where both tiles have
+    <= 4 open neighbours). Ledger check passed (identical to zdb until the first swap). Chain **cq130** (seed 55, waits
+    on cq129run.sh; clauses in bots/zei/SNAPSHOT), screens zd396 / zd397 queued, replica set 4 then set 1.
+  - Mine-use asymmetry on averystrangespace (field A works 1 of 3 home mines) is not reproduced locally: both seats
+    reach the middle mines only late (A r908, B r1199). The mine-pick line is saturated (MINE_MIRROR, MINE_RR,
+    KMINE_SKIP, MINE_EXPLORE, NOMINE_HOME all rejected or dropped).
+  - Next fresh seed: 56.
+- **Earlier (19:15):**
   - Incumbent still **zdb**. zec REJECTED (#304 block 1 set 4, D 5 +1 -4, t -1.34; replays VM
     ~/diag26b/rp/zeb_b1s4_1826.tgz). zef (zeb's BUG_SWITCH 40) DROPPED at its mechanism clause (cq127 partial:
     8 wins to 4, xfer 2.3x, flips under the 50 bar); re-registered as **zeg** (bar 25, fresh data): chain **cq128**
