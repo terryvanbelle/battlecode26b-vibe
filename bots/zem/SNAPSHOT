@@ -20,3 +20,10 @@ falsifiers (22:04, registered before any game of zem):
      e. wins >= zdb's, and cells zdb won but zem lost <= 3.
   2. Screens zd402 (s7, vs zd343) / zd403 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
   3. Replica: set 2, then set 3 (block 1 rejects at t <= 0; pooled t <= 1 after block 2 rejects; accept at t >= 2, D >= 4).
+OUTCOME 23:15: DROPPED at cq133 clauses 1b and 1c (stopped at 57 of 96 games). b: centre before r600 in 4 of 8
+  averystrangespace cells, seat A only (r356 s59, r527 s60); seat B never tunnelled (digs equal to zdb's). c: cat
+  damage at r1200 4500 vs 7700 (0.58x; zdb dealt 2690/1160 in seat A untunnelled). Held: 0 overruns, wins 27 vs 25
+  (+where_are_you B araid s59, nothing lost), x1000 1.05x. Screens zd402/zd403 passed (identical to zdb). Replica
+  #310 block 1 set 2 (21738-21741, 21746-21757): 48 cells, 47 alike, D 1 (+averystrangespace A vs YokoOno: zem
+  reached the centre at r537, cat damage 1255 to 1190 vs zdb's 650 to 2220, won on points with kings 2-1), t +1.00.
+  Block 2's 4 sent set-3 matches (21768-21771) play unscored; its 12 unsent rows were removed.

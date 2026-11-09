@@ -1,0 +1,21 @@
+name=zeo
+source=bots/zem
+source_sha=cab20a113260
+commit=44d8f6c8
+created=2026-11-08 23:15 PST
+description: re-registration of zem's build unchanged (zdb + STALL_TUNNEL 10: a STALL_CAT hunter whose walk to its
+  cat or centre tile made no progress for 10 turns tunnels by Nav.tunnelTo for the rest of the game). The replica runs
+  submission #310 (bots/zem, same code). zem was dropped at its local mechanism clauses: the centre-by-r600 and 1.5x
+  cat-damage bars, which seat-by-seat noise decides (seat A reached the centre at seeds 56/59/60 and missed at 57/58;
+  zdb untunnelled sometimes deals 1-3k cat damage in seat A). The field shows the mechanism where it counts:
+  averystrangespace A vs YokoOno flipped to a win (centre r537, cat damage share up). Judged only on fresh data: no
+  game of zej, zel or zem counts, and #310's 21768-21771 (sent before this registration) do not count.
+falsifiers (23:16, registered before any game of zeo):
+  1. Chain cq135 (seed 62; averystrangespace, EscapeTheNight, RUN, fullofsecrets, FreeTheCheese, TheHeist, Stash,
+     where_are_you x agrab/araid x both seats x zeo/zdb; 32 cells per bot), safety only:
+     a. any exception or overrun rejects;
+     b. transfer by r1000 (or end) summed over the 32 cells >= 0.97x zdb's;
+     c. wins >= zdb's - 1, and cells zdb won but zeo lost <= 2.
+  2. Replica (#310, the zem build): block 1 on set 4 (anchors 20817-20824, 20842-20845, 20848-20851) rejects at
+     t <= 0; then block 2 on set 3 (fresh matches only, anchors 21016-21023, 21036-21043): pooled t <= 1 rejects,
+     t >= 2 with D >= 4 accepts; otherwise block 3 on set 1.
