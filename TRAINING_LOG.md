@@ -8736,3 +8736,8 @@
   - Mechanism: the king is within Chebyshev 1 of a mine at r400 in 10 of 16 cells (bar 10): Nofreecheese 4, wallsofparadis 3 (B atrap3 at 2), whatsthecatdoin 3 (B abrk lost at r385). uneruesansfin never fires (king at 28, same as zdb).
   - xfer600 summed 40,671 to zdb's 23,160 (1.76x, bar 1.15x). Net flips +2: gained Nofreecheese B atrap3, uneruesansfin B abrk, wallsofparadis B atrap3; lost whatsthecatdoin B abrk (r385 to zdb's win at r447).
   - Field note: zee's first set-3 rows vs Finals (21518/21519) still lost wallsofparadis both seats by king kill (r966 A, r642 B; zdb r715, r851), though zee delivered 3,324 by r966 as A to zdb's 1,170 by r715.
+- 19:07: **zef DROPPED at its mechanism clause; re-registered unchanged as zeg**
+  - cq127 (seed 52), stopped at 21 of 48: clockwisdom flips per game 68/50/39/34, mean 47.75 against a bar of 50 (set too high: a 40-turn first leg fires about a quarter as often as zeb's 20). fullofsecrets mean 8 (bar ≤ 25 held).
+  - Results on the 10 complete cells: zef won 8 to zdb's 4; xfer600 3,230 to 1,420; clockwisdom 4 of 4 won (zdb 2) with xfer600 610 to 200; fullofsecrets xfer600 1,015 to 80; 0 exceptions, 0 overruns.
+  - zeg (bots/zef/SNAPSHOT, games run bots/zef): chain cq128 (seed 53, same spec, started 19:07), mechanism bar clockwisdom ≥ 25 flips; screens zd392/zd393 (unread at registration); replica set 2 then set 4.
+  - VM disk 1.9 GB: removed closed chain dumps cq96, cq100, cq101, cq104, cq109, cq110 -> 2.2 GB.
