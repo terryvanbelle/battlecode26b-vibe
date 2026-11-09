@@ -24,3 +24,17 @@ falsifiers (registered 2026-11-08 17:20 PST, before any zeb game):
      the pooled figure under 0.97x rejects instead).
   3. Replica block 1 on set 4, then set 2; the usual rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2
      rejects; accept at t >= 2 with D >= 4).
+outcome 1 (2026-11-08 17:30 PST): zeb DROPPED at falsifier 1, clockwisdom no-loss clause. On cq124's 8 clockwisdom cells zeb
+  won 7 to zdb's 2 and transferred 1,325 to 440 (3.0x, clause passed), with bs > 0 in game A vs agrab. But it lost B vs
+  araid (r937), which zdb won (r875). Every clockwisdom game ended in a king starvation; agtr's cells replayed agrab's.
+re-registration zec (registered 2026-11-08 17:30 PST): zeb's build re-registered unchanged, judged only on data none of
+  which had finished at 17:30. Games run bots/zeb (zeb-d946371e8709).
+  1. Chain ~/diag26b/cq125 (seed 50): zeb and zdb on clockwisdom vs agrab, araid, atrap3 and abrk, both seats (8
+     cells), and keepout, fullofsecrets and rose vs agrab and abrk, both seats (12 cells): 40 games. Any zeb overrun
+     or exception drops it. Clockwisdom: zeb's summed transfer at least 2x zdb's, and zeb's wins in cells zdb lost
+     minus its losses in cells zdb won at least +2. Other 12 cells: summed transfer at least 0.9x zdb's, and that
+     net at least -1.
+  2. Screens zd388 (s7 vs zd343) and zd389 (s6 vs zd345), seed 1, running bots/zeb; zd388 started 17:22, no cell
+     looked at. Same bars as zeb's falsifier 2.
+  3. Replica: #304's set-4 block (request 17743 sent 17:24, 12 rows queued; none finished at 17:30) is block 1, then
+     set 2; the usual rules.

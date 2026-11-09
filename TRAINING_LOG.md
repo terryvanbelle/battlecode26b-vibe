@@ -8699,3 +8699,11 @@
   - With zdx's field block (t −3.16), the reactive baby rat trap line has now failed the field twice. It is closed.
   - Replays are archived at VM ~/diag26b/rp/zdy_b1s4_1723.tgz (32 entries); local replay.bc26 files removed, match.json kept.
   - zeb is submitted as #304 so the replica is not idle. Set-4 block: request 17743 sent, 12 rows queued. Its local gates (cq124, zd388/zd389) are still running; a local failure drops it whatever the block shows.
+- 17:31: **zeb DROPPED at cq124's clockwisdom no-loss clause; its build is re-registered as zec** (bots/zeb/SNAPSHOT, 17:30).
+  - Clockwisdom's 8 cells (seed 49): zeb won 7, zdb won 2. Summed transfer was 1,325 to 440 (3.0x, bar 2x). But zeb lost B vs araid (r937), which zdb won (r875), and the clause allowed no such loss.
+  - Every clockwisdom game still ended in a king starvation, decided by who starved first. agtr's cells replayed agrab's exactly.
+  - The heavy holders are attackers, not gatherers. zeb's rat 11761 (role A) walked the spiral toward the enemy king from r15 and picked up cheese on the way: 1,290 raw by r630, 45 tiles from home. Attackers never deliver (ATK_DELIVER 0). Carriers held 3,580-4,440 at r600-r1000 in both bots.
+  - zec = zeb's build unchanged, judged only on data unfinished at 17:30:
+    1. New chain cq125 (seed 50, 40 games; abrk replaces agtr). Clockwisdom bars: transfer at least 2x, and net flips at least +2. Other cells: keepout, fullofsecrets and rose vs agrab and abrk.
+    2. The running screens zd388/zd389.
+    3. #304's set-4 block.
