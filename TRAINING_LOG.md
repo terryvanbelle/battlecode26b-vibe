@@ -8881,3 +8881,11 @@
     - Wins: ours 34.5 to theirs 26.1. Cats kill 15.2 of ours (pounce 9.2) to 8.4 of theirs.
     - We spawn 56-58 a game by r500 to their 44-55.
   - Trap line on the z-line: z0q (RAW_TRAPS) rejected at block 3; zc4 rejected for overruns; zdw rejected at screen transfer 0.929x. Not reopened.
+- 00:53: **zer REJECTED at replica block 1 (t −2.71); zeq dropped; zes submitted (#312), set-4 block queued**
+  - zer (zen's code, #311) on set 4, 21938-21953: 48 cells, 37 alike, D 11 (gained 1, lost 10), net −9, t −2.71.
+    - Gained: Icarus mincemeat B.
+    - Lost: Finals attack_on_cat A, averyfineline B, closeup A; Icarus mincemeat A, tiny B; YokoOno Meow B; Varun sunandmoon B; Merlin sunandmoon A/B; collegejunior t_minus_five_minutes A.
+    - Most were short wins zdb takes with its fight force (sunandmoon r142-172, averyfineline r123). Raiders take fighters away from them. RAID_EVERY is closed on the z-line.
+    - Replays are in VM ~/diag26b/rp/zer_b1s4.tgz.
+  - zeq dropped unfinished: its raiding base is rejected and its replica clause needed zep. cq137 was stopped at 20 of 24, zd408 killed, zd409 dequeued, cq138 cancelled.
+  - zes (#312) now holds the replica (16 set-4 rows queued for the hourly limit), chain cq139 (playing) and screen zd410 (playing; zd411 next).

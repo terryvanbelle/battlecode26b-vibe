@@ -16,3 +16,9 @@ falsifiers (23:58, registered before any game of zer; judged only on fresh data)
      d. wins >= zdb's - 1, and cells zdb won but zer lost <= 2.
   2. Replica #311 build: block 1 on set 4, fresh rows queued after 23:58 only (21829-21832 excluded); rejects at t <= 0.
      Block 2 on set 2: pooled t <= 1 rejects, t >= 2 with D >= 4 accepts; otherwise block 3 on set 3.
+OUTCOME (00:53 11-09): REJECTED at replica block 1 (#311 build, set 4: 21938-21953 vs anchors 20817-20824,
+  20842-20845, 20848-20851): 48 cells, 37 alike, D 11 (gained 1: Icarus mincemeat B; lost 10: Finals attack_on_cat A,
+  averyfineline B, closeup A; Icarus mincemeat A, tiny B; YokoOno Meow B; Varun sunandmoon B; Merlin sunandmoon A/B;
+  collegejunior t_minus_five_minutes A), net -9, t -2.71. Mostly short wins zdb took with its fight force (sunandmoon
+  r142-172, averyfineline r123): raiders take fighters off. Chain cq138 cancelled unplayed. Replays VM
+  ~/diag26b/rp/zer_b1s4.tgz.

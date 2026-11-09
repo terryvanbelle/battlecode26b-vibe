@@ -19,3 +19,6 @@ falsifiers (23:53, registered before any game of zeq):
      d. wins >= zep's - 1, and cells zep won but zeq lost <= 2.
   2. Screens zd408 (s7, vs zd343) / zd409 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
   3. Replica only if zep gets there: then as zen's (set 4, then set 2).
+OUTCOME (00:53 11-09): DROPPED unfinished: its base line (zen/zer, RAID_EVERY 2) was rejected at replica block 1
+  (zer, t -2.71) and its replica clause needed zep, which was dropped. cq137 stopped at 20 of 24 (paired with zep:
+  2 flips lost, 1 gained; CHIRAL_SYM gave r1 symmetry on RUN B and clockwisdom B); zd408 killed, zd409 dequeued.
