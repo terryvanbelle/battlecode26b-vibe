@@ -9074,3 +9074,12 @@
     - In set 3, zdb's field kings starve rather than get bitten to death: Stash A/B, wallsofparadis A/B, mincemeat B, externalsustenance A, whatsthecatdoin A/B (scratch starv.py).
     - In each of these, babies fall to 4-8 against the opponent's 15-40, and the bank drains at the 2-a-round upkeep while transfer stalls. On whatsthecatdoin, carriers from mine (14,20) take the cat corridor into dirt and stall at the unseen x=8 wall (70 rounds and 25 cheese of digging a trip, local wcd).
     - SYM_FILL (u5x) and STAB_LAY (z0d) were the matching levers, and both are closed.
+- 08:41: **zfl registered = zdb + RICH_LATE 800/300/0 + RICH_MORE 800/300/0 + RICH_GAP 40** (bots/zfl/SNAPSHOT; zfl-ad5c87189175; zfj's dose arm, existing ledgered switches)
+  - Why: the king-count push before the r1150 cut. Two kings name a third site from r800, three or four name one more, each with 300 banked and Econ.surplus(k+1) >= 0, and the next site opens 40 rounds after a king forms.
+  - z2x carried these switches but lost replica cells to its mid-game CASH and RICH_FIX kings starving (rose A, minimaze A), and zfl has neither. z2k (RICH_LATE alone) passed its screen and flipped cheesefarm A.
+  - Margins checked first (k3.py over zez's set-2 averystrangespace dumps, VM ~/diag26b/dc_zez): one more king does not flip any of zez's r2000 losses there (33.8-44.8 becomes 38.8-49.0).
+  - Falsifiers (binding, SNAPSHOT):
+    0. Ledger lc_zfl (running).
+    1. Chain **cq154** (zfl on cq153's 20 cells, seed 75, queued): kings at r1200 ≥ zfj's + 3; wins ≥ zdb's with ≤ 1 cell lost; starved kings ≤ zdb's + 1; 0 exceptions/overruns.
+    2. Screens zd440/zd441 (queued after zd439).
+    3. Replica after zfj's verdict.

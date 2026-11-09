@@ -1,0 +1,22 @@
+name=zfl
+source=bots/zdb
+source_sha=638afd6102f7
+commit=9c224895
+created=2026-11-09 08:41 PST
+
+08:41 zfl = zdb + RICH_LATE 800 / RICH_LATE_BANK 300 / RICH_LATE_SUR 0 + RICH_MORE 800 / RICH_MORE_BANK 300 /
+RICH_MORE_SUR 0 + RICH_GAP 40 (existing switches, three Cfg lines; rich() and the gap tests are ledgered, K 12/11/13).
+zfj's dose arm: the king-count push before the r1150 cut. From r800 two kings name a third site, three or four name
+one more, each while 300 is banked and Econ.surplus(kings + 1) >= 0. A king formed at a site from r600 on lets the next
+site open 40 rounds later instead of 210. z2x carried these switches but lost its replica cells to the mid-game CASH
+and RICH_FIX kings starving (rose A, minimaze A), and zfl has neither. z2k (RICH_LATE alone) passed its screen and
+flipped cheesefarm A.
+Falsifiers (binding):
+ 0. Ledger: lc_zfl (Meow A vs agrab seed 73) replays zdb's cq148 game exactly until the first rich site opens.
+ 1. Chain cq154 (zfl on cq153's 20 cells, seed 75, scored against cq153's zdb games and zfj's):
+    a. mechanism: kings at r1200 summed over the 20 cells >= zfj's + 3;
+    b. wins >= zdb's, and at most 1 cell lost that zdb won;
+    c. starved kings (summary kingDeaths starve) no more than zdb's + 1;
+    d. 0 exceptions, 0 overruns.
+ 2. Screens zd440 (s7 vs zd343) and zd441 (s6 vs zd345): screen_t t > -1.0 and length-matched transfer >= 0.97x.
+ 3. Replica only if zfj fails its set-3 block 1, or after zfj's verdict: set 3 block rules as usual.
