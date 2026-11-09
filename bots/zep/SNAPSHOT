@@ -1,0 +1,24 @@
+name=zep
+source=bots/zen
+source_sha=44ee5688fb87
+commit=f23f4188
+created=2026-11-08 23:38 PST
+description: zen + MINE_MIRROR (existing switch; hook now ledgered K 18 in King.turn): once the king's symmetry mask is
+  down to one, it lists the our-half twin of every listed mine. zmm (z9f + MINE_MIRROR) was inert: the king's mask
+  never resolved and only attackers, who never come home, saw enemy-half mines. zen's raiders go to enemy-half mines
+  and come home to deliver, carrying their sharper mask (SQ_SYM) and the mines they saw (SQ_MINE gossip).
+  Diagnosis (23:30, scratch homemine.py / minecov.py over zdb/zel/zem's cached field games, r400): in losses the
+  opponent works 5.09 mines to our 3.35 and takes 38.4 pickups on our half (12.7 in wins); 78 of 268 home mines in
+  wins and 53 of 160 in losses were never within dist2 20 of our rats by r400; never-seen home mines they emptied:
+  clockwisdom (2,31)/(2,25)/(56,27) vs Varun and Xzibit, keepout (46,42)/(21,47) vs Finals, RUN (37,48) vs Merlin,
+  ratsareants (17,15) vs Varun, Stash (20,11) vs YokoOno.
+falsifiers (23:39, registered before any game of zep):
+  1. Chain cq136 (seed 63; clockwisdom, keepout, RUN, ratsareants, Stash, wallsofparadis x agrab/araid x both seats x
+     zep/zen; 24 cells per bot):
+     a. any exception or overrun rejects;
+     b. mechanism: the king's listed mines (indicator km) at r600 (or its last king turn before), summed over the 24
+        cells, >= 1.1x zen's; and our pickups by r1000 summed >= zen's;
+     c. transfer by r1000 (or end) summed >= 0.97x zen's;
+     d. wins >= zen's - 1, and cells zen won but zep lost <= 2.
+  2. Screens zd406 (s7, vs zd343) / zd407 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
+  3. Replica only if zen reaches the replica: as zen's (set 4, then set 2).
