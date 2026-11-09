@@ -97,7 +97,18 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (18:00):**
+- **Now (19:15):**
+  - Incumbent still **zdb**. zec REJECTED (#304 block 1 set 4, D 5 +1 -4, t -1.34; replays VM
+    ~/diag26b/rp/zeb_b1s4_1826.tgz). zef (zeb's BUG_SWITCH 40) DROPPED at its mechanism clause (cq127 partial:
+    8 wins to 4, xfer 2.3x, flips under the 50 bar); re-registered as **zeg** (bar 25, fresh data): chain **cq128**
+    (seed 53, running; games run bots/zef), screens zd392 (s7, playing) / zd393 (s6, queued).
+  - **zee** (zdb + KING_FAR) passed cq126 (mechanism 10/16, xfer600 1.76x, net +2) and zd390/zd391; replica
+    **#305** set-3 block 12/16 done (21516-21523, 21541-21544, 21555-21558; judge with `paired --dir /dev/shm/rp
+    21016-21023,21036-21043 IDS`); set 4 next if t > 0.
+  - **zeh** (19:15) = zdb + THREAT_WALL_REACH 5 (z7d port; Stash pocket stall). Chain **cq129** (seed 54, waits on
+    cq128run.sh; Stash/evileye x agrab/agtr/atrap3 x seats x zeh/zdb), screens zd394 (s7) / zd395 (s6) queued.
+  - Next fresh seed: 55.
+- **Earlier (18:00):**
   - Incumbent still **zdb**. Closed since 15:55: zdx DROPPED (cq119; field block t -3.16), zdz DROPPED (cq122), zea
     DROPPED (cq123), zdy REJECTED (#303 block 1 on set 4, D 9 +1 -8, t -2.33; replays VM
     ~/diag26b/rp/zdy_b1s4_1723.tgz). The reactive baby rat trap line is closed. zeb DROPPED at cq124's clockwisdom
