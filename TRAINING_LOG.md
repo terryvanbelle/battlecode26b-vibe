@@ -9204,3 +9204,11 @@
   - pickMine returns from the MINE_BALANCE branch (true in zdb) before MINE_SPREAD is read. zd451 (zfv s7) played identical to zdb (D 0); zd452 (zfw) was killed, cq164 stopped.
   - zfv's 4 unsent replica rows were withdrawn; the 4 already sent (22480-22483) and the rest of #324 count as zdb-equivalent field data.
   - Lesson: before building a Cfg-switch candidate, check that the switch's code path is reached under the base's other switches.
+- 11:47: **zfx, zfy registered: MINE_NEAR 2 and 3 (the live form of MINE_SPREAD)**
+  - MINE_BALANCE spreads gatherers by slot over every known home mine, far ones included. MINE_NEAR caps that list at the nearest 2 (zfx) or 3 (zfy) by distance from home; IDLE_SHIFT cycles inside the cap. Checked reached: MINE_RR is false, so the MINE_BALANCE return is the live path.
+  - Why: zdb's 36 cached field losses delivered 37.8k vs 53.6k by r300 (0.70x) with equal baby counts.
+  - Falsifiers:
+    1. Chain cq165 (seed 81; FreeTheCheese, Meow, averystrangespace, keepout vs agrab and atrap3, both seats, zdb control): wins ≥ zdb's and at most 2 cells lost that zdb won.
+    2. s7 screens zd453 (zfx), zd454 (zfy): t > -1.5 and D > 0 (D 0 means inert).
+    3. The replica rules.
+  - The replica is idle (zfv's #324 matches are done), so zfx goes up now; it is withdrawn if cq165 or zd453 fails it.

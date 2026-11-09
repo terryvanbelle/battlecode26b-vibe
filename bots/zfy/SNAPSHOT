@@ -1,0 +1,8 @@
+name=zfy
+source=bots/zdb
+source_sha=638afd6102f7
+commit=1769dbb6
+created=2026-11-09 11:46 PST
+created=2026-11-09 11:47 PST
+change=new switch Cfg.MINE_NEAR 3 (Baby.pickMine): MINE_BALANCE's slot (and IDLE_SHIFT) pick runs over only the nearest MINE_NEAR known home mines by distance from home
+falsifiers=(1) chain cq165 (seed 81; FreeTheCheese, Meow, averystrangespace, keepout vs agrab and atrap3, both seats; 16 games each): wins >= zdb's count and at most 2 cells lost that zdb won; (2) screen s7 (zd454): paired win t vs zdb > -1.5 and D > 0 (D 0 = inert); (3) replica block rules
