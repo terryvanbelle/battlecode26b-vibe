@@ -8633,3 +8633,9 @@
   - Thunderdome A vs agrab is lost by both trap builds (zdw r81 at seed 43, zdx r84 at seed 44) and won by zdb (r91, r69). It is a seat-and-build cell to look at.
   - Withdrawn: screens zd380/zd381 (never started). The drain had already sent all 16 of #302's rows at 16:07, so they play out and are not scored.
   - zdy (zdw re-registered) is next: cq120 is running, then screens zd382/zd383 after zd376.
+- 16:16: **Diagnostic chain cq121 queued** (seed 46, behind cq120): zdy and zdb on bed, tiny, evileye and starvation, both seats vs agrab, agtr and atrap3 (48 games).
+  - Why: zdw's zd378 cell changes cluster on the 400-tile maps. bed lost 3, tiny lost 2 and gained 1, evileye gained 2. Thunderdome A agrab is lost by both trap builds. A fresh seed tells whether a small-map trap gate (an area threshold) is worth building on zdy.
+  - Field check, done before designing (zdb's 144 cached games, kingdie.py and starvew.py): 20 starvation king deaths.
+    - Second king then starvation: 2 kings died in Stash A and FreeTheCheese A; ratsareants A formed a second king at r625 and starved by r750.
+    - FORM_NET100 200 (z6k) was rejected, so the formation income gate is not rebuilt.
+    - In ratsareants vs Varun, Varun opens on 13 babies with a 2,000 bank and grows to 30-40, while we open on 20, pin the bank at the 300 floor and decline to 3-8.
