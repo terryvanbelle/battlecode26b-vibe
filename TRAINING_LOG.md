@@ -9197,3 +9197,6 @@
     1. Chain cq164 (seed 80; FreeTheCheese, keepout, averystrangespace and Meow vs agrab and atrap3, both seats; 16 games each for zfv, zfw and zdb): transfer at r1000 (or the end; scratch xferc.py) at least 1.05x zdb's, and wins at least zdb's - 1.
     2. Its s7 screen (zd451 zfv, zd452 zfw): t > -1.5.
     3. The replica rules.
+- 11:16: **zft's 8 field matches are neutral; zfv on the replica**
+  - zft (#323, 22457-22464, sent before its drop): 24 cells, 22 alike, +1 -1, t 0.00. It gained YokoOno Stash A and lost Finals where_are_you A. Replays: VM ~/diag26b/rp/zft_s3a.tgz.
+  - zfv (MINE_SPREAD 2) was submitted (#324) so the replica is not idle while cq164 runs. Its set-3 block is queued (22480-22483 sent, 12 in the drain). It is withdrawn if cq164 or zd451 fails it.
