@@ -8827,3 +8827,8 @@
   - zd401 (s6) passed: identical to zdb (44 cells, t 0.00, 1.000x).
   - Replica #309 set 3 complete (21686-21701; replays VM ~/diag26b/rp/zel_b1s3_{a,b}.tgz): 48 cells, 47 alike, D 1 (lost spsquared rose B), t -1.00. Block 1 would reject. In the field the switch almost never acts: averystrangespace vs Icarus stays W/W.
   - zem (STALL_TUNNEL 10) tests whether an earlier switch gets seat A out by r600. Its cq133 (seeds 59+60) started at 22:23.
+- 22:35: **zen registered: zdb + RAID_EVERY 2 (raiders, no traps); chain cq134 (seed 61) queued behind cq133, screens zd404/zd405 queued**
+  - Diagnosis (scratch fieldalloc.py over zdb's 90 cached field games vs the in-band five: 63 W, 27 L; rats sampled every 10 rounds). In losses the opponent keeps 4.0-4.6 rats in our half (nearer our king's start than theirs) from r100 to r600, while we keep 0.6-2.3 in theirs. In wins they keep 0.9-2.3 in ours. In losses their rats within Chebyshev 4 of a mine outnumber ours from r200 (5.9-7.4 to 4.1-6.6); in wins ours outnumber theirs (5.1-8.9 to 3.3-5.3).
+  - The RAID code (s2g, 2026-10-28) still runs on zdb with RAID_EVERY 0. Every earlier raid test also laid RAID_TRAPS 8, on s4d/S7D (s6i/s6k pending, s8i parked, s8j rejected). zen raids without traps.
+  - Falsifiers (bots/zen/SNAPSHOT 22:34): cq134 mechanism (enemy-half rats r300-600 ≥ 1.5x zdb's, and more enemy-half pickups by r1000), transfer by r1000 ≥ 0.97x, wins ≥ zdb's − 1 with ≤ 2 flips lost; then the screens; then replica set 4, then set 2.
+  - zem's cq133 seed 59: seat A now reaches the centre at r356, but seat B never tunnelled (digs equal to zdb's), and averystrangespace cat damage is 3,080 to 5,380. Seed 60 decides clauses b and c.

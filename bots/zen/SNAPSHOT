@@ -1,0 +1,25 @@
+name=zen
+source=bots/zdb
+source_sha=638afd6102f7
+commit=1927d20b
+created=2026-11-08 22:34 PST
+description: zdb + RAID_EVERY 2 (existing switch, off since s2e on 2026-10-28; tested only with RAID_TRAPS 8 on s4d/S7D,
+  never on the z-line): one in two fighters (fighters are born on even rounds past GATHER_FIRST, so a quarter of later
+  babies) is a raider: at war, empty-handed with 60+ health on our half and no enemy within dist2 8, and as a fighter
+  with no known cat, it heads for an enemy-half mine (known or mirrored), wanders round it for RAID_STAY 60 rounds and
+  picks its piles (then delivers). No raid traps.
+  Diagnosis (22:30, scratch fieldalloc.py over zdb's 90 cached field games vs Varun, waxmango, YokoOno, Finals,
+  Icarus): in the 27 losses the opponent keeps 4.0-4.6 rats in our half from r100 to r600 while we keep 0.6-2.3 in
+  theirs; in the 63 wins they keep 0.9-2.3 in ours. Their rats near mines outnumber ours in losses (5.9-7.4 to 4.1-6.6
+  from r200). We never contest their half.
+falsifiers (22:34, registered before any game of zen):
+  1. Chain cq134 (seed 61; DefaultMedium, Nofreecheese, wallsofparadis, mercifullattice, ratsareants, Stash x
+     agrab/araid x both seats x zen/zdb; 24 cells per bot):
+     a. any exception or overrun rejects;
+     b. mechanism: zen's rats in the enemy half (nearer the enemy king's start than ours), sampled every 10 rounds over
+        r300-r600 and summed over the 24 cells, >= 1.5x zdb's; and zen's pickups on enemy-half tiles by r1000 exceed
+        zdb's;
+     c. transfer by r1000 (or end) summed over the 24 cells >= 0.97x zdb's;
+     d. wins >= zdb's - 1, and cells zdb won but zen lost <= 2.
+  2. Screens zd404 (s7, vs zd343) / zd405 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
+  3. Replica: set 4, then set 2 (block 1 rejects at t <= 0; pooled t <= 1 after block 2 rejects; accept at t >= 2, D >= 4).
