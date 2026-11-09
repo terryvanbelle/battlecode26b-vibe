@@ -8716,3 +8716,6 @@
   - Mechanism: on wallsofparadis our king sits at (3,2) because KING_MINE_R2 is 400 and the mine (30,3) is at dist² 730; Finals' king walks to its mine. zdj's cq106 kings reached their mines at r175–300.
   - Falsifiers in bots/zee/SNAPSHOT: cq126 (seed 51, 32 games on Nofreecheese, wallsofparadis, whatsthecatdoin, uneruesansfin vs atrap3/abrk): king within Chebyshev 1 of a mine at r400 in ≥ 10 of 16 cells, summed xfer600 ≥ 1.15x zdb's, net flips ≥ −1, no overrun or exception; screens zd390 (s7) and zd391 (s6) standard bars; replica set 3 then set 4.
   - The first cq126run.sh launched at once (it waited on cq125's chains.sh, not yet started); killed its tree by pid and removed ~/diag26b/cq126 before any game finished. Relaunched waiting on cq125run.sh.
+- 18:12: **zec passes s6 zd389**
+  - zeb vs zdb (zd345): n 44, D 2, net +0, t +0.00; 0 overruns, 0 exceptions; pooled transfer 1.005x, length-matched 0.995x on 35 cells. Both screens passed.
+  - VM disk was 1.9 GB; removed closed chain dumps cq72-75, 77, 78, 80-82, 85, 89 -> 2.4 GB.
