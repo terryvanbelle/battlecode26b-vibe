@@ -1,0 +1,8 @@
+name=zgc
+source=bots/zga
+source_sha=01548f6c48eb
+commit=2cab7f07
+created=2026-11-09 13:09 PST
+created=2026-11-09 13:10 PST
+change=zga with Cfg.WALL_HOLD false: only KING_WALL_THREAT (King's alert skips enemy babies behind a wall; no alert when all seen are)
+falsifiers=(1) chain cq168 (cq166's 20 zga cells with zgc, seed 82; control: cq166's zdb games): wins >= zdb's 12 and at most 2 cells lost that zdb won; summed cheeseXfer >= zdb's 144,900; (2) screens zd459 (s7), zd460 (s6): t > -1.5 and D > 0 on at least one; (3) replica block rules

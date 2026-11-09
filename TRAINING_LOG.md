@@ -9246,3 +9246,9 @@
   - zga (WALL_HOLD + KING_WALL_THREAT), cq166: wins 11 vs zdb 12, and 3 cells lost that zdb won (cheesebottles B, minimaze A/B vs agrab; bar 2). Transfer was 1.61x overall, but on minimaze it fell (13.1k vs 18.1k as A, 8.4k vs 19.1k as B): in a maze, an enemy behind a wall is a short detour away. Like z3v, big transfer and lost cells.
   - zgb (MINE_BURN 50), cq167 vs atrap3: trap deaths 528 vs 559 (0.945x, inert bar 0.9x); wins 6 vs 7. Its #326 replica matches already sent (22579-22590) play on; 4 unsent rows withdrawn. Screens dequeued.
   - cq165 (zfx/zfy, both closed) was stopped.
+- 13:10: **zgc registered: KING_WALL_THREAT alone**
+  - zga minus WALL_HOLD: only the king's alert ignores enemy babies behind a wall. This is the part aimed at the Stash failure; the baby-side hold change is what cost minimaze.
+  - Falsifiers:
+    1. Chain cq168 (cq166's 20 cells, seed 82; control = cq166's zdb games): wins ≥ 12, at most 2 cells lost that zdb won, transfer ≥ 144,900.
+    2. Screens zd459 (s7) and zd460 (s6): t > −1.5, and D > 0 on at least one.
+    3. The replica rules.
