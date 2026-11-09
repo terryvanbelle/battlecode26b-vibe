@@ -9278,3 +9278,7 @@
   - zgc (#327, KING_WALL_THREAT), set 3 (22599-22606, 22637-22644 vs zdb's 21016-21023, 21036-21043): 48 cells, 46 alike, D 2 (+1 YokoOno Stash A, -1 Varun corridorofdoomanddespair B), net 0, t 0.00. Block 1 rejects at t <= 0. Replays: VM ~/diag26b/rp/zgc_b1.tgz.
   - The chain's transfer gain (167,651 vs 144,900) did not flip a field cell. The KING_THREAT_D2 dose arms (zgf, zgg) test the same lever by radius.
   - zdb was resubmitted so the replica's ranked games play the incumbent (precedent: u6x #230, z3x #252). The next candidate goes up when one passes its screen and chain.
+- 14:33: **zgg submitted (#329), set-3 block 1 queued**
+  - Submitting it now keeps the replica busy while zd463 and cq170 run. It is withdrawn if either fails it (zgb precedent).
+  - zgg (KING_THREAT_D2 25) went up rather than zgf (13) because 7 of zdb's 10 field seat-split losses ended in a king kill before r2000. zgc's fewer-pulls direction just failed on the replica.
+  - 22658-22669 were sent; 4 rows (Icarus, Merlin) are in the drain. Block rules as usual: t <= 0 after block 1 rejects.
