@@ -9048,3 +9048,7 @@
 - 07:58: **zfi (RUSH_BURN 6) dropped as inert on cq151: fires 1.18x; burn-signal family closed again on zdb**
   - Against atrap3, fires on our rats: zdb 1012, FACE_HOLD 1066, RISK_ADAPT 2 1170, RUSH_BURN 6 1197. Wins: 7, 5, 3, 6. Every adaptive arm takes more fires and loses more rats than zdb's default TrapRisk mask.
   - Holding, sidestepping or rerouting rushers once burned keeps our rats inside the trapper's laying range for longer. The field's trap losses need a different counter, such as killing the layer (it's stunned for 15 cooldown after a lay) or our own traps (zdy, on the replica now).
+- 08:02: **zdy rejected at block 2 (set 3: +2 −5; pooled t 0.00); both twin revivals fail on set 3**
+  - zdy's set-3 rows were 22181-22184, 22189-22192 and 22230-22237. Replays archived to VM ~/diag26b/rp/zdy_b2s3a.tgz and zdy_b2s3b.tgz (8 each, verified).
+  - Pooled with the twin-rescored block 1 (+6 −3): D 16, net 0. Neither zey's nor zdy's trap lever beats zdb once both blocks count. Trap laying is closed on zdb.
+  - zez's 12 set-2 rows (22251-22262) have played; twin set-2 rescoring of zdf/zdk/zdq is next.

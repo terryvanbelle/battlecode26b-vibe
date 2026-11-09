@@ -23,3 +23,4 @@ RESCORE (05:41 11-09): block 1 twin-anchored (`paired --dir /dev/shm/rp 22083-22
   PASSES once zdb's crown luck (twin vs crown t -2.32) is removed. Block 2 goes to set 3 (clean anchors) after zey's
   set-3 block is sent (#317).
 REPLICA (05:53): #318, block 2 on set 3 queued
+OUTCOME block 2 set 3 (08:02): D 7 (+2 -5), net -3, t -1.13; pooled with twin block 1 (+6 -3) D 16 net 0 t 0.00: REJECTED
