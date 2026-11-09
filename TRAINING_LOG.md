@@ -8999,3 +8999,6 @@
 - 05:53: **zfb passes zd424; zdy submitted #318 for block 2 on set 3**
   - zfb zd424: n 44, D 6, net 0, t 0.00, lm 0.990x, 0 overruns. zd425 is queued.
   - zey's set-3 rows are all sent, so zdy (#318) takes the set-3 slot; 12 rows queued.
+- 05:54: **zfc registered (zey + RAW_TRAP_CAP 35), screens zd426/zd427 queued**
+  - The screen queue was down to the running zd425. zfc is zey's dose arm and goes to the replica only if zey accepts.
+  - VM /srv replays pruned (307 files); disk 2.3 GB free.
