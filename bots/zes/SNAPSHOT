@@ -21,3 +21,8 @@ falsifiers (00:13 11-09, registered before any game of zes):
      d. wins >= zdb's - 1, and cells zdb won but zes lost <= 2.
   2. Screens zd410 (s7, vs zd343) / zd411 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
   3. Replica: set 4, then set 2 (block 1 rejects at t <= 0; pooled t <= 1 after block 2 rejects; accept at t >= 2, D >= 4).
+OUTCOME (01:28 11-09): REJECTED at chain cq139 (seed 65) clauses 1b and 1c. Evictions fired in 17 of 24 cells (3022
+  evicting turns), but the enemy's pickups on our half by r1000 rose to 642 against zdb's 564 (1.14x; bar <= 0.9x), and
+  transfer by r1000 was 155,466 against 160,724 (0.967x; bar 0.97x). Wins 20 vs 21; flip lost cheesefarm A agrab;
+  none gained. Screen zd410 (s7) had passed (n 48, D 13, net -3, t -0.83, lm transfer 0.995x, 0 overruns); zd411 was
+  killed at 01:28. Replica #312: 8 queued rows were withdrawn; rows already sent are left unscored.

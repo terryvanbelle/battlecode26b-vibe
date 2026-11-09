@@ -8901,3 +8901,11 @@
   - Falsifiers are in bots/zeu/SNAPSHOT.
   - Name fix: zet was a switch bot (11-07), so the next free name after zeu is zev.
   - The laptop root disk is at ~6 MB free. Two other sessions' /tmp/claude-1000 dirs (363 MB and 383 MB) are the owner's call.
+- 01:28: **zes REJECTED at cq139 (clauses 1b and 1c): eviction fights do not keep the enemy off our mines**
+  - Evictions fired in 17 of 24 cells (3022 evicting turns).
+  - Enemy pickups on our half by r1000 rose to 1.14x zdb's (642 vs 564; the bar was ≤ 0.9x).
+  - Transfer by r1000 was 0.967x (the bar was 0.97x).
+  - Wins 20 vs 21. Lost cheesefarm A agrab.
+  - Gatherers that fight stop gathering, and the intruders keep picking.
+  - zd410 (s7) had passed (t −0.83, 0.995x). zd411 was killed. Replica #312's 8 queued rows were withdrawn.
+  - Next: zeu (FORM_MINE) holds the chain (cq140, starting now) and screens zd412/zd413.
