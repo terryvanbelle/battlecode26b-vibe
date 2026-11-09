@@ -9040,3 +9040,5 @@
 - 07:32: **zfi = zdb + RUSH_BURN 6 (third trap-family arm)**
   - cq149 vs atrap3: 190 of zdb's ~1,000 fires came before r100, in the rush. Fire turns carry no move code (the victim's row is its death row), so the move reasons can't be split.
   - Screens zd436/zd437; chain cq151 behind cq150.
+- 07:45: **zfg (RISK_ADAPT 2) rejected on cq150: 3 wins vs 7, fires 1.16x**
+  - Both hold/avoid arms raise fires and deaths against atrap3. Holding or sidestepping in contact lets the trapper lay on our next tile anyway. zfi (rushers stand down) is the last arm; cq151 is playing.
