@@ -18,3 +18,11 @@ FALSIFIERS (02:33 11-09, binding):
      d. wins >= zdb's - 1, and flips lost <= 2.
   2. Screens zd416 (s7 vs zd343) / zd417 (s6 vs zd345): t <= -1.5, any overrun, or lm transfer < 0.97x rejects.
   3. Replica #314: set 4 (sent 02:31), then set 2, by the block rules.
+OUTCOME (03:36 11-09): REJECTED at replica block 1 (#314, set 4: 21992-22007 vs 20817-20824, 20842-20845,
+  20848-20851): 48 cells, 42 alike, D 6 (gained 1: YokoOno rose A; lost 5: YokoOno Meow A and B, rose B, tornadoes B;
+  Xzibit dirtpassageway B), net -4, t -1.63. In every lost cell zew formed its second king at r266-560 and later lost
+  every king (RATKING_DESTROYED r799-1900). Local clauses had all held: cq142 (seed 68) 0 exceptions/overruns,
+  mine-site kings 16 cells to zdb's 6 (none before r250; an r243 king was a pickFormSite one, Chebyshev 10 from any
+  mine), transfer by r1000 1.037x, wins 23 vs 23 (lost where_are_you A agrab, gained cheesebottles B agrab); zd416
+  (s7) t +1.77, lm 1.039x; zd417 (s6) n 44 D 2 net 0 t 0.00, lm 1.051x. Replays VM ~/diag26b/rp/zew_b1s4.tgz.
+  FORM_MINE is now rejected three times on the replica (t0i, u8e, zew): the line is closed.

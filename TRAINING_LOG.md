@@ -8930,3 +8930,12 @@
 - 02:58: **zew passes s7 (zd416: t +1.77, net +3, lm 1.039x); zex registered (zew + FORM_MINE_FAR)**
   - zex sends the mine-site king to the farthest safe home mine, as the field's far kings sit, instead of the nearest.
   - Chain cq143 (seed 69, vs zdb) is queued behind cq142. Screens zd418/zd419 are queued.
+- 03:36: **zew REJECTED at replica block 1 (t −1.63); the FORM_MINE line is closed**
+  - #314 on set 4, 21992-22007: 48 cells, 42 alike, D 6 (gained 1, lost 5), net −4.
+    - Lost: YokoOno Meow A/B, rose B, tornadoes B; Xzibit dirtpassageway B.
+    - Gained: YokoOno rose A.
+    - In every lost cell zew formed its second king at r266-560, and later all its kings were destroyed (r799-1900).
+  - Locally it had passed everything: cq142 (transfer 1.037x, wins 23-23, mine kings 16 cells vs 6), zd416 (t +1.77) and zd417 (t 0.00).
+  - Mine-site kings are now rejected three times on the replica (t0i, u8e, zew). Local agrab/araid do not punish an exposed second king; Hugo's bots do.
+  - zex (a farther mine king) has the same exposure. Its chain cq143 keeps the slot busy until the next candidate is built; it will not go to the replica.
+  - Replays are in VM ~/diag26b/rp/zew_b1s4.tgz.
