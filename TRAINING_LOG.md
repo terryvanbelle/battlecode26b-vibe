@@ -9238,3 +9238,6 @@
 - 13:06: **zfy dropped: its s7 screen changed no cell**
   - zd454 (zfy, MINE_NEAR 3): 48 cells, D 0, t 0.00. Picks per-cell diff −0.16 (z −0.33). Its pre-registered inert clause (D 0) drops it.
   - cq165 so far: zfx 10 of 16, zfy 12 of 16, zdb control 7 of 8 played.
+- 13:07: **zfx rejected at replica block 1; zgb on the replica**
+  - zfx (#325, MINE_NEAR 2), set 3 (22513-22520, 22531-22538): 48 cells, 45 alike, D 3 (+1 YokoOno externalsustenance A; −2 Finals where_are_you B, Icarus mincemeat A), net −1, t −0.58. Replays: VM ~/diag26b/rp/zfx_b1s3.tgz. The mine-cap line is closed: zfx cost picks (zd453 z −2.28) and zfy changed nothing.
+  - zgb (MINE_BURN) submitted (#326), set-3 block 22579-22590 sent, 4 in the drain. It is withdrawn if cq167 or its screens fail it.
