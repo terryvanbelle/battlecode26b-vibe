@@ -8689,7 +8689,7 @@
   - Screen zd386 was stopped at start, and zd387 was dequeued.
   - zdy's replica block: the first 4 matches (21468-21471) lost averyfineline A vs Finals and knifefight B vs spsquared (partial t −1.41).
 - 17:21: **zeb = zdb + BUG_SWITCH 20** (new switch in Nav.choose; bots/zeb/SNAPSHOT, falsifiers registered 17:20 before any game).
-  - Diagnosis: 26 of zdb's 43 field losses entered starvation (bank under 2) from r300; only 3 distinct won games did. Ranking zdb's field games by transferred / picked by r600 puts clockwisdom first: 0 transferred in all 4 games (Varun A/B, Hugo A/B, 3 lost) on 42-142 picks. fullofsecrets A/B vs Merlin is next at 9-11%.
+  - Diagnosis: 26 of zdb's 43 cached field losses entered starvation (bank under 2) from r300 (mincemeat B vs Icarus is cached twice); 5 cached wins did, 3 of them distinct games. Ranking zdb's field games by transferred / picked by r600 puts clockwisdom first: 0 transferred in all 4 games (Varun A/B, Hugo A/B, 3 lost) on 42-142 picks. fullofsecrets A/B vs Merlin is next at 9-11%.
   - Locally the same: cq122 zdb on clockwisdom picked 174-238 and transferred in 0-1 trips. Carrier 10163 (A vs araid) started home from (9,15) at r110 with 40 raw. It bug-walked north round the ring in mode d for 90 rounds, reached (24,46) with 180 raw, and died by the far cat.
   - Cause: G.hand sets the bug hand from the map centre, so both seats circle the spiral the same wrong way. HAND_FLIP fixed clockwisdom (z2b 2,965 / 1,355 to u9p 0 / 200) but cut keepout's transfer. TRAIL (z9d) and TRAIL_BUG (z9g) did not lift clockwisdom's total.
   - Switch: a bug walk not round its obstacle after 20 turns reverses its hand and walks back along the wall for twice as long, doubling at each switch. Indicator bs= counts switches.
