@@ -9212,3 +9212,12 @@
     2. s7 screens zd453 (zfx), zd454 (zfy): t > -1.5 and D > 0 (D 0 means inert).
     3. The replica rules.
   - The replica is idle (zfv's #324 matches are done), so zfx goes up now; it is withdrawn if cq165 or zd453 fails it.
+- 11:58: **zga registered: WALL_HOLD (z3v, ported) + KING_WALL_THREAT**
+  - Field loss Stash B vs HugoIngelsson (r555): both pockets are sealed by a wall row with 1-tile dirt plugs at the corners. We dug out at r26/r40, but from r45 their rats camped at y 8-9, just outside our wall (y 7) and within KING_THREAT_D2 of our king. Our 29 babies stood in the pocket with 0 cheese to r300; we delivered 140 all game to their 6,095, and the king starved.
+  - Mechanism: the king counts enemies across the wall as a threat, so gatherers drop into war() (WAR_GATHER exempts them only without a threat), and the d2 ≤ 20 standoff holds them facing rats they cannot reach.
+  - zga ports z3v's WALL_HOLD (dropped 11-06 at a 1-win clause; walled holds 2,375 to 28,309, transfer 1.42x on 20 maze cells). It adds KING_WALL_THREAT: the alert's threat skips enemy babies behind a wall, and no alert is raised when every enemy seen is one.
+  - Local Stash vs agrab does not reproduce it (zdb B won, 5,600 delivered; agrab does not camp), so the chain uses z3v's maze maps.
+  - Falsifiers:
+    1. Chain cq166 (seed 82; corridorofdoomanddespair, minimaze, cheesebottles, EscapeTheNight, Stash vs agrab/atrap3, both seats, zdb control): wins ≥ zdb's, at most 2 cells lost that zdb won, summed transfer ≥ zdb's.
+    2. Screens zd455 (s7) and zd456 (s6): t > -1.5, and D > 0 on at least one.
+    3. The replica rules.

@@ -1,0 +1,8 @@
+name=zga
+source=bots/zdb
+source_sha=638afd6102f7
+commit=f805ba22
+created=2026-11-09 11:57 PST
+created=2026-11-09 11:58 PST
+change=Cfg.WALL_HOLD (z3v's Baby.behindWall/faceEnemy/war() code ported) + new Cfg.KING_WALL_THREAT (King: alert threat skips enemy babies behind a wall; no alert when every seen enemy is one)
+falsifiers=(1) chain cq166 (seed 82; corridorofdoomanddespair, minimaze, cheesebottles, EscapeTheNight, Stash vs agrab and atrap3, both seats; 20 games each, zdb control): wins >= zdb's and at most 2 cells lost that zdb won; summed cheeseXfer >= zdb's; (2) screens zd455 (s7), zd456 (s6): paired win t vs zdb > -1.5 and D > 0 on at least one; (3) replica block rules
