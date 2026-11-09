@@ -20,3 +20,8 @@ falsifiers (21:28, registered before any game of zel):
      e. wins >= zdb's, and cells zdb won but zel lost <= 3.
   2. Screens zd400 (s7, vs zd343) / zd401 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
   3. Replica: set 3, then set 2 (block 1 rejects at t <= 0; pooled t <= 1 after block 2 rejects; accept at t >= 2, D >= 4).
+OUTCOME 22:24: DROPPED at cq132 clause 1b (mechanism). Centre (Cheb 6 of (29,29)/(30,30)) before r600 in 4 of 8
+  averystrangespace cells, all seat B (r474-521); seat A reached it only at r869 (s58) or later (s57). Other clauses
+  held when stopped (72 of 96 games): 0 overruns, digs by r600 1458 vs 570, cat dmg at r1200 20806 vs 300, x1000
+  1.06x, wins 29 vs 27 (+where_are_you B agrab s57, nothing lost). Screens zd400/zd401 passed (identical to zdb).
+  Replica #309 set 3 (21686-21701): 48 cells, 47 alike, D 1 (lost spsquared rose B), t -1.00.

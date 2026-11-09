@@ -8821,3 +8821,9 @@
   - cq132 seed 57 (scratch zelsc.py): zel wins 20 to zdb's 19, gains where_are_you B vs agrab, loses no cell zdb won; x1000 0.998x. On averystrangespace zel's cat damage at r1200 is 11,750 to 300 and digs by r600 768 to 352, but the centre was reached before r600 only in seat B (r521). Seat A got there later. Clause b needs 6 of 8, so seed 58 must reach it in all 4 cells.
   - So **zem** = zdb + STALL_TUNNEL 10 (bots/zem/SNAPSHOT 22:04): chain cq133 (seeds 59+60) waits on cq132, screens zd402/zd403 queued, replica set 2 then set 3 once zel's block is done.
   - Checked this hour and not built (all closed or not flippable): SIEGE_FLOOR (s7t), HEIR (z9c), CORE_BABIES (u5t/zd8), coop cat-end delivery (zb2/zb3), knifefight's seat split. All 17 cached field cat-kill endings in cooperation were wins (scratch catend.py), so there is nothing there to flip. The cat's target scan is mirrored by chirality in the engine, so targeting has no seat bias.
+- 22:24: **zel DROPPED at cq132 clause 1b (mechanism); cq132 stopped at 72 of 96 games, and zem's cq133 started**
+  - On averystrangespace the centre was reached before r600 in 4 of 8 cells (bar 6), all in seat B (r474-521). Seat A got there only at r869 (s58) or later (s57). Seat B's pocket exit is faster in both seeds.
+  - The other clauses held when stopped: 0 overruns; digs by r600 1,458 vs 570; cat damage at r1200 20,806 vs 300; x1000 1.06x; wins 29 vs 27 (+where_are_you B agrab s57, nothing lost).
+  - zd401 (s6) passed: identical to zdb (44 cells, t 0.00, 1.000x).
+  - Replica #309 set 3 complete (21686-21701; replays VM ~/diag26b/rp/zel_b1s3_{a,b}.tgz): 48 cells, 47 alike, D 1 (lost spsquared rose B), t -1.00. Block 1 would reject. In the field the switch almost never acts: averystrangespace vs Icarus stays W/W.
+  - zem (STALL_TUNNEL 10) tests whether an earlier switch gets seat A out by r600. Its cq133 (seeds 59+60) started at 22:23.
