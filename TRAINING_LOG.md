@@ -9064,5 +9064,13 @@
     0. Ledger check lc_zfj (Meow A agrab seed 73, running).
     1. Chain **cq153** (seed 75, 40 games, queued behind cq152): 3+ kings at r1200 in ≥ zdb's + 4 of 20 cells; wins ≥ zdb's with ≤ 1 cell lost; end kings ≥ zdb's wherever a 3rd formed; 0 exceptions/overruns.
     2. Screens zd438/zd439 (queued): t > -1.0, length-matched transfer ≥ 0.97x.
-    3. Replica **#320** set-3 block, all 16 requests sent (18451-18466; judge with `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`).
+    3. Replica **#320** set-3 block, matches 22403-22418, all 16 sent; judge with `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`).
   - VM disk 1.3 GB: pruned 150 replica replays older than 36 h and removed closed chain dumps cq144-cq147, cq45, cq46, cq54 (2.3 GB free).
+- 08:38: **zfj passes the ledger check and screen zd438**
+  - Ledger (falsifier 0, VM ~/diag26b/lc_zfj, scratch ldiff.py): Meow A vs agrab seed 73 matches zdb's cq148 game row for row until r950, when the third-king site opens (mv=K). The king forms at r957, and the game ends 3 kings to 1, won 66-33 (zdb won with 2).
+  - zd438 (s7 vs zd343): n 48, D 1, net +1, t +1.00; picks/100 34.37 vs 34.11 (z +1.67); transfer 0.997x pooled and length-matched; 0 overruns, 0 exceptions. zd439 (s6) is playing, chain cq153 is at 7 of 40, and replica #320 is playing.
+  - cq152 (informational: zdy, zey and zdb vs atrap3, seed 74): wins 6, 6 and 7 of 12; trap fires on us 1,183, 932 and 1,012. Both are already rejected.
+  - Diagnosis notes, no candidate from them:
+    - In set 3, zdb's field kings starve rather than get bitten to death: Stash A/B, wallsofparadis A/B, mincemeat B, externalsustenance A, whatsthecatdoin A/B (scratch starv.py).
+    - In each of these, babies fall to 4-8 against the opponent's 15-40, and the bank drains at the 2-a-round upkeep while transfer stalls. On whatsthecatdoin, carriers from mine (14,20) take the cat corridor into dirt and stall at the unseen x=8 wall (70 rounds and 25 cheese of digging a trip, local wcd).
+    - SYM_FILL (u5x) and STAB_LAY (z0d) were the matching levers, and both are closed.
