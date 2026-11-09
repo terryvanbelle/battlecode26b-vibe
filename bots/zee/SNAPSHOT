@@ -1,0 +1,29 @@
+name=zee
+source=bots/zdj
+source_sha=9a0e1d6fc1b9
+commit=a52a9f02
+created=2026-11-08 17:57 PST
+description=zdj's sources re-registered unchanged (package rename): zdb + KING_FAR (KING_FAR_R2 1600, KING_FAR_FROM 60). With
+  no listed mine within KING_MINE_R2 (dist2 400) of its start, from r60 a king walks to the nearest home-half mine
+  within dist2 1600, re-picked until it is there; a mine listed within 400 ends it.
+evidence (17:40-17:58 PST): zdb's field losses vs in-band opponents on wallsofparadis (A/B vs Finals) came from a king
+  that never left its start: dumpcache 39db49fb g1 (A), our king at (3,2) all game (nearest mine (30,3), dist2 730),
+  Finals' king walked to its mine (29,56) by r400 and formed a centre king at r300; by r300 they had picked 151 and
+  transferred 2,095 to our 38 and 575 with 20 babies each, and our king starved at r715. zdj (same code) was dropped
+  at cq106 only on its r250 mechanism clause (6 of 16) and its identity clause: its kings walked to the mine but
+  slowly (wallsofparadis A vs agtr: (30,3) at r250; Nofreecheese A vs agtr: (36,21) at r300) or were pushed off by a
+  cat (whatsthecatdoin A vs araid), and on Hike a second king formed at r400 took a far mine (9,37), dist2 425 from
+  its start, which the census had not counted. Its outcomes held: transfer at r600 1.40x, wins 15-14, 1 lost cell,
+  0 overruns. Field: zdb lost Nofreecheese A/B (collegejunior, set 4), wallsofparadis A/B (Finals),
+  whatsthecatdoin A/B (Merlin, set 3).
+falsifiers (registered 2026-11-08 17:58 PST, before any zee game; judged only on fresh data):
+  1. Chain ~/diag26b/cq126 (seed 51, after cq125): zee and zdb on Nofreecheese, wallsofparadis, whatsthecatdoin and
+     uneruesansfin, both seats, vs atrap3 and abrk (16 cells, 32 games). Any zee overrun or exception drops it.
+     Mechanism: zee's first king stands within Chebyshev 1 of a mine at r400 in at least 10 of its 16 cells (a game
+     over by then counts as a miss). Summed cheeseXfer at r600 (a game ending earlier counts at its end) at least
+     1.15x zdb's. zee's wins in cells zdb lost minus its losses in cells zdb won at least -1.
+  2. Screens on seed 1: s7 runs/zd390 vs zd343 and s6 runs/zd391 vs zd345. Rejects: t <= -1.5, any zee overrun, or
+     transfer per round under 0.97x on the cells whose length ratio is within 0.8-1.25x (fewer than 12 such cells:
+     the pooled figure rejects instead); tools/lmxfer.py.
+  3. Replica block 1 on set 3 (whatsthecatdoin vs Merlin, uneruesansfin vs Hugo; anchors 21016-21023, 21036-21043),
+     then set 4 (Nofreecheese vs collegejunior); the usual rules.

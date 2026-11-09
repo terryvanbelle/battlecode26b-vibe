@@ -8712,3 +8712,7 @@
   - The length-matched check is now tools/lmxfer.py (CTRLRUN CTRLBOT RUN BOT). It gives zd382 0.979x / 1.005x against the logged 0.980x / 1.011x.
   - zd389 (s6) started at 17:47.
   - Replica: zeb's first 4 set-4 matches (21484-21487, spsquared and Finals, both seats) were all 3-0 wins.
+- 18:00: **zee registered (zdb + KING_FAR, package rename of zdj)**
+  - Mechanism: on wallsofparadis our king sits at (3,2) because KING_MINE_R2 is 400 and the mine (30,3) is at dist² 730; Finals' king walks to its mine. zdj's cq106 kings reached their mines at r175–300.
+  - Falsifiers in bots/zee/SNAPSHOT: cq126 (seed 51, 32 games on Nofreecheese, wallsofparadis, whatsthecatdoin, uneruesansfin vs atrap3/abrk): king within Chebyshev 1 of a mine at r400 in ≥ 10 of 16 cells, summed xfer600 ≥ 1.15x zdb's, net flips ≥ −1, no overrun or exception; screens zd390 (s7) and zd391 (s6) standard bars; replica set 3 then set 4.
+  - The first cq126run.sh launched at once (it waited on cq125's chains.sh, not yet started); killed its tree by pid and removed ~/diag26b/cq126 before any game finished. Relaunched waiting on cq125run.sh.

@@ -97,7 +97,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (17:54):**
+- **Now (18:00):**
   - Incumbent still **zdb**. Closed since 15:55: zdx DROPPED (cq119; field block t -3.16), zdz DROPPED (cq122), zea
     DROPPED (cq123), zdy REJECTED (#303 block 1 on set 4, D 9 +1 -8, t -2.33; replays VM
     ~/diag26b/rp/zdy_b1s4_1723.tgz). The reactive baby rat trap line is closed. zeb DROPPED at cq124's clockwisdom
@@ -108,8 +108,11 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     >= -1), s7 zd388 **passed** (t -0.44, length-matched transfer 1.009x), s6 **zd389 playing**, replica **#304**
     set-4 block (21484-21487 all 3-0 won; judge with `paired --dir /dev/shm/rp 20817-20824,20842-20845,20848-20851
     IDS`), then set 2.
+  - **zee** (18:00) = zdb + KING_FAR (rename of zdj; first king walks to a mine beyond dist2 400). Chain **cq126**
+    (seed 51, waits on cq125run.sh; 16 cells: king within Cheb 1 of a mine at r400 in >= 10, xfer600 >= 1.15x, net
+    >= -1), screens zd390 (s7) / zd391 (s6) queued after zd389, replica set 3 then set 4 (next if zec fails).
   - Length-matched transfer bar: `python3 tools/lmxfer.py CTRLRUN CTRLBOT RUN BOT` on the VM.
-  - Next fresh seed: 51. New scratch (VM ~/diag26b): gtrace.py PKG OPP MAP SEAT STEP (one field game's economy),
+  - Next fresh seed: 52. New scratch (VM ~/diag26b): gtrace.py PKG OPP MAP SEAT STEP (one field game's economy),
     carry.py GAMEDIR BOT (carriers' distance to the king), nodeliv.py PKG R (transferred/picked ranking), oppband.py,
     losslist.py, kingdmg.py, kingsiege.py, deathcause.py, fbite.py, rawheld.py, lowbank.py.
   - Closed lines rechecked this segment (attempts.py find): CARRY_MAX, LOAD_AT, TRAIL, ATK_CARRY, ATK_DELIVER, RUSH_*,
