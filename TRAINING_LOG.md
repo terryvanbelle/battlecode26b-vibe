@@ -9042,3 +9042,6 @@
   - Screens zd436/zd437; chain cq151 behind cq150.
 - 07:45: **zfg (RISK_ADAPT 2) rejected on cq150: 3 wins vs 7, fires 1.16x**
   - Both hold/avoid arms raise fires and deaths against atrap3. Holding or sidestepping in contact lets the trapper lay on our next tile anyway. zfi (rushers stand down) is the last arm; cq151 is playing.
+- 07:49: **Laptop disk freed: git loose objects packed (173 MB to 3.7 MB)**
+  - The root disk hit 0 MB mid-commit; attempts.csv and the log were checked intact. All 3,377 loose objects were packed through /dev/shm, verified (no missing objects, fsck connectivity clean), and then `git prune-packed` was run. The disk now has 183 MB free.
+  - The zfg timestamps were corrected to 07:45 (time taken before the entry).
