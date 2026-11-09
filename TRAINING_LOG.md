@@ -9171,3 +9171,12 @@
     - It gained DefaultLarge B and arrows B vs atrap3.
     - Over both chains it is 33 = 33, and map area does not separate the gains from the losses (900-tile maps: arrows and DefaultSmall gained, cheesefarm lost).
     - **zft is DROPPED.** 8 replica matches (#323, 22457-22464) had been sent and play out as field data. 8 rows were withdrawn (/dev/shm/kd/zft_queue.tsv). zd448 finishes as a record; zd449 was dequeued.
+- 10:52: **zfu = zdb + CARRY_KING 6 / CARRY_KING_HOLD 9 registered** (new switch; bots/zfu/SNAPSHOT, zfu-d2284325b7ca)
+  - collegejunior beats zdb on tiny and DefaultMedium in both seats with fewer babies. It had 9-16 to our 20-31 by r30-60, and kept its bank at 1,500-2,000 while ours fell to 300-500 by r60-150.
+    - Its weapon is throws: 77 to our 32 in tiny A. Every hit on our king was one of our own rats, and throws are free damage to both the thrown rat and the king.
+  - Our carriers throw at once at a point-blank robot (CARRY_AIM, within Chebyshev 3) and otherwise hold for 6 rounds. They never walk an enemy rat to the enemy king. attempts find KING_THROW, CARRY_KING and "into their king": none.
+  - **zfu:** a carrier of an enemy rat whose enemy king is within Chebyshev 6 walks to it and holds the throw up to 9 rounds into the 10-round carry. The king is taken from view, else from the kings' shared sighting (Comms.EKING). aimCarry then throws point-blank into the king.
+  - Falsifiers:
+    1. Chain cq163 (seed 79; tiny, DefaultMedium, knifefight, DefaultSmall, Stash and arrows vs agrab and atrap3, both seats): at least zdb's wins + 1, and throw hits on enemy kings (scratch ekthrow.py) at least 1.25x zdb's.
+    2. Screen zd450 (s7): t > -1.5.
+    3. The replica rules.

@@ -1,0 +1,7 @@
+name=zfu
+source=bots/zdb
+source_sha=638afd6102f7
+commit=4defaba6
+created=2026-11-09 10:52 PST
+change=new switch Cfg.CARRY_KING 6 / CARRY_KING_HOLD 9 (Baby.moveDecision after the carry aim, Baby.tryThrow's hold, Baby.carryKingLoc): a carrier of an enemy rat with the enemy king (in view, else Comms.EKING) within Chebyshev 6 walks to it and holds the throw up to 9 rounds into the carry, so the carry aim throws point-blank into the king
+falsifiers=(1) chain cq163 (seed 79; tiny, DefaultMedium, knifefight, DefaultSmall, Stash, arrows vs agrab and atrap3, both seats; 24 games each): zfu wins at least zdb's + 1, and throw hits on enemy kings (scratch ekthrow.py) at least 1.25x zdb's; (2) screen zd450 (s7): paired win t vs zdb > -1.5; (3) replica block rules
