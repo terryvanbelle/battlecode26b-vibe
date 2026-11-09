@@ -9022,3 +9022,9 @@
 - 06:50: **zfe dropped as inert (no local second kings at war)**
   - cq148: 0 of 24 zfe games held 2 kings at r600, short of the pre-registered bar (zdb + 3). zd430: D 0, lm 1.000x. zd431 aborted.
   - Local wars against agrab/araid don't reach the formation conditions, so a war-formation lever can't be tested locally. cq148 runs on to give zdb's baseline.
+- 06:56: **Enemy rat traps dominate our losses to trappers; zff = zdb + FACE_HOLD re-registered**
+  - Scratch trig.py over the VM field dumps counts our rats setting off enemy rat traps. Per game, lost vs won: AdamTan12_Finals 99.1 vs 47.8, Icarus 78.8 vs 23.4, Varun 74.1 vs 42.6, YokoOno 27.1 vs 23.3.
+  - Each fire is 50 damage plus a 30-turn movement cooldown and starts war. On keepout vs Finals, traps were laid on the tile in front of our moving rats and fired the next round (34 fires by r150).
+  - The burn-signal family (RISK_ADAPT, WOUNDED_HP, FACE_HOLD, RUSH_BURN) was last tried on u-era bases (Oct 30 to Nov 4) and closed on local trapper evidence. It never reached the replica, except RUSH_BURN (u8h pooled t +0.41).
+  - zff = zdb + FACE_HOLD (one Cfg line). Screens zd432/zd433; chain cq149 (seed 74, zff/zdb vs atrap3) checks the mechanism. Replica on set 3, which holds Finals, Icarus and Varun.
+  - zfe's cq148 runs to the end as zdb's baseline.

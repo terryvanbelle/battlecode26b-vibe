@@ -1,0 +1,6 @@
+name=zff
+source=bots/zdb
+source_sha=638afd6102f7
+commit=fc728c51
+created=2026-11-09 06:56 PST
+FALSIFIERS (06:56, before any game): screens zd432/zd433: t <= -1.5, any overrun/exception, lm < 0.95x rejects. cq149 (seed 74 vs atrap3): exception/overrun rejects; our rats' trap fires > 0.90x zdb's drops as inert; wins < zdb - 1 rejects. Replica block 1 set 3: block rules, plus fires on us per game vs AdamTan12_Finals/Icarus/Varun > 0.85x zdb's anchors rejects.
