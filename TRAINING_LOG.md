@@ -8970,3 +8970,13 @@
     - z0c, the same dose on u9p, was pooled t 1.15 on the replica and failed only a transfer floor.
     - Chain cq146 (seed 72; maps that reach r2000) is queued. Screens zd422/zd423 are playing.
     - Replica: set 3 first (clean anchors).
+- 05:00: **zdb's set-4 anchors are a lucky crown: its own twin scores t −1.73 there. Twin rescore revives zey (block 1 t +1.13); zew and zer stay rejected**
+  - The twin zez (#316) set-4 block is 22083-22086 and 22117-22128 (22127/22128 still running).
+    - Against zdb's crowning games: 42 cells, D 12 (gained 3, lost 9), net −6, t −1.73.
+    - zdb replayed with flipped ties would itself fail block 1 there. The lost cells match those recent candidates lost (Icarus mincemeat A, tiny A, Finals closeup A/B, YokoOno Meow B, tornadoes B).
+  - Rescored with `paired --partial ZEZ CAND --crown ZDB_SET4`:
+    - zey: 44 cells, D 7 (+5 −2), net +3, t +1.13. Block 1 passes.
+    - zew: t −1.13. Stays rejected; its losses follow its exposed second king.
+    - zer: t −1.67. Stays rejected.
+  - zey was resubmitted as #317 for block 2 on set 3 (clean anchors). The twin's last 12 set-2 rows are held behind it.
+  - Rule from now on: zdb candidates take block 1 on set 3, and set-4 or set-2 blocks are scored against the twin with --crown.

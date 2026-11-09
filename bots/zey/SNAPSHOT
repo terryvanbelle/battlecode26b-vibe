@@ -32,3 +32,9 @@ LOCAL (04:38 11-09): falsifiers 1 and 2 held. cq144 (seed 70): 0 exceptions/over
   zd421 (s6): n 44 D 4 net 0 t 0.00, lm 1.014x, 0 overruns. A second chain cq145 (seed 71; tiny, DefaultMedium,
   thunderdome, ratsareants, cheesebottles, mercifullattice) runs as extra evidence. The replica verdict waits on
   zez's twin rescore.
+RESCORE (05:00 11-09): block 1 twin-anchored (z6t's method): `paired --partial --dir /dev/shm/rp 22083-22086,
+  22117-22128 22060-22075 --crown 20817-20824,20842-20845,20848-20851`: 23 cells replay zdb's crowning game (d 0);
+  44 cells scored (twin 22127/22128 still out), 37 alike, D 7 (gained 5, lost 2), net +3, t +1.13 > 0: block 1
+  PASSES on the twin pending its last two matches. The twin itself against zdb's crown on set 4: 42 cells, D 12
+  (+3 -9), net -6, t -1.73 (the crown's luck). Block 2: resubmitted #317, set 3 (clean anchors 21016-21023,
+  21036-21043) queued 05:00.
