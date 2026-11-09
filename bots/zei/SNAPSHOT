@@ -1,0 +1,12 @@
+name=zei
+source=bots/zdb
+source_sha=638afd6102f7
+commit=0b50919c
+created=2026-11-08 19:31 PST
+description: zdb + SWAP_HOLD 2 + SWAP_YIELD + SWAP_NO_ALONG (the s7x corridor swap, switches already in zdb's code) + SWAP_NARROW 4 (new): an ally is carried past only when both our tile and its tile have at most 4 open neighbours (a 1-wide corridor). The three swap hooks are ledgered (Nav/Flow G.settle K 20, Baby's SWAP_YIELD mask K 9), so games replay zdb's until a swap fires.
+evidence (19:32): rose's 1-wide stem out of the king's pocket jams outbound empties against inbound loaded rats in both seats, all game. Field zdb A vs YokoOno: 8-10 of ours in the stem at r600-r1800, 1,160 raw held at r1900 with the bank at 1-215, lost 38-62 at r2000. Field B: 8-10 in the mirrored stem, won 50-49. Local cq124 A vs araid: head-on at (9,3)/(9,4) from r1000, king starved at r1985 with 1,200-2,080 raw held. The swap without a narrow gate cleared rose (s9l: 4,590/2,830 delivered to 830/670) but lost cells on open maps (s8c, s9l, u1s -15 +5).
+falsifiers (registered 19:32, before any result is read; binding, mechanism clauses included):
+  0. Ledger check (engineering, VM ~/diag26b/zeq): zei vs araid Meow A seed 53 must replay zdb's cq128 game (replay_eq.py) up to the first ally swap; otherwise this build is withdrawn and a fixed build is registered under a new name.
+  1. Chain cq130 (seed 55; rose, Stash, minimaze, EscapeTheNight, DefaultMedium, Meow; vs agrab and araid; both seats; zei and zdb; 48 games). Any exception or overrun rejects. Mechanism: mean ally swaps per rose game (our rats dropping our own rats, actions.tsv) >= 5, and summed rose transfer by r1000 (or the end) over the 4 rose cells >= 1.5x zdb's. Exactness: on DefaultMedium and Meow every zei game has zdb's winner, end round and transfer, unless a swap fired in it. Results over the 24 cells: zei's wins >= zdb's, and cells zdb won but zei lost <= 2.
+  2. Screens s7 (vs zd343) and s6 (vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
+  3. Replica: block 1 on set 4 (rose vs YokoOno), then set 1 (rose vs Icarus); block 1 rejects at t <= 0, pooled t <= 1 after block 2 rejects, accept at t >= 2 with D >= 4.
