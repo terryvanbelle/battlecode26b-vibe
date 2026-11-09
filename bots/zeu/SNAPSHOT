@@ -1,0 +1,28 @@
+name=zeu
+source=bots/zdb
+source_sha=638afd6102f7
+commit=75593b42
+created=2026-11-09 01:00 PST
+DESCRIPTION (01:01 11-09): zdb + FORM_MINE = true (existing switch, one Cfg line; formation v3): the second king's site
+  is a home-half mine itself (mineSite: the nearest listed mine more than 4 from the king, 2*d2(start) <= d2(enemy
+  start), unheld, not banned; no king sight needed), the income test skipped for mine sites, babies within dist2 400
+  of a mine site join (FORM_MINE_SHARE), a formed king passes on its old home tile for the half test.
+  Why now: zdb's field games (144, dumpcache) by second king: in our 43 losses the opponent forms one in 17 and first
+  in 12; in our 101 wins in 8 and first in 5. Their kings sit on their own half, far out (Finals wallsofparadis d2
+  1060-1201 from their start, waxmango Nofreecheese 1377-1417, Icarus mercifullattice 442-530, Finals keepout
+  328-410), not near our rats (0-2 of our deaths within dist2 36 in the next 300 rounds). mercifullattice B vs Icarus:
+  we hold 26-33 babies and ~950 bank to r700 with one king all game (zdb's pickFormSite wants a seen clear 3x3); their
+  second king forms at r707 and their transfer goes 6145 -> 12385 by r1100 to our 6764 -> 9044; our king starves r1147.
+  Prior evidence against (older bases): t0i (s9s + FORM_MINE) rejected on the replica, t -1.00; u8e (u6x + FORM_MINE)
+  rejected at screen zd29 (29 wins, delivered -14%, 7 starved kings). zdb differs (FORM_WAR_FROM 300, CORE, RICH).
+FALSIFIERS (01:01 11-09, binding):
+  1. Chain cq140 (seed 66; mercifullattice, wallsofparadis, keepout, Nofreecheese, cheesebottles, where_are_you;
+     x agrab/araid x both seats x zeu/zdb; 24 cells per bot; score with
+     `python3 ~/diag26b/k2sc.py ~/diag26b/cq140 zeu zdb` plus the exception/overrun count over the logs):
+     a. any exception or overrun rejects;
+     b. mechanism: zeu forms a mine-site king (its first extra king within Chebyshev 1 of a mine) in at least 8 of 24
+        cells and in more cells than zdb;
+     c. transfer by r1000 summed >= 0.97x zdb's;
+     d. wins >= zdb's - 1, and flips lost <= 2.
+  2. Screens zd412 (s7 vs zd343) / zd413 (s6 vs zd345): t <= -1.5, any overrun, or lm transfer < 0.97x rejects.
+  3. Replica: set 4, then set 2, by the block rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects).

@@ -8889,3 +8889,15 @@
     - Replays are in VM ~/diag26b/rp/zer_b1s4.tgz.
   - zeq dropped unfinished: its raiding base is rejected and its replica clause needed zep. cq137 was stopped at 20 of 24, zd408 killed, zd409 dequeued, cq138 cancelled.
   - zes (#312) now holds the replica (16 set-4 rows queued for the hourly limit), chain cq139 (playing) and screen zd410 (playing; zd411 next).
+- 01:01: **zeu registered (zdb + FORM_MINE): a second king on a far home-half mine**
+  - Diagnosis over zdb's 144 field games:
+    - King deaths in losses: starvation 20, throwHit 10, bite 7.
+    - In our 43 losses the opponent forms a second king in 17 and forms it first in 12. In our 101 wins those counts are 8 and 5.
+    - Their extra kings sit far out on their own half (Finals wallsofparadis/keepout, waxmango Nofreecheese, Icarus mercifullattice), not near our rats.
+    - mercifullattice B vs Icarus: we hold 26-33 babies and ~950 bank with one king all game. Their r707 king doubles their transfer rate and our king starves at r1147.
+  - zdb's pickFormSite needs a clear 3x3 that the king has seen. FORM_MINE (formation v3) names the nearest listed home mine instead.
+  - Prior evidence against, on old bases: t0i (replica t −1.00) and u8e (screen: 7 starved kings).
+  - Chain cq140 (seed 66, 6 maps × agrab/araid × seats) is queued behind cq139. Screens zd412 (s7) and zd413 (s6) are queued. Score the chain with ~/diag26b/k2sc.py.
+  - Falsifiers are in bots/zeu/SNAPSHOT.
+  - Name fix: zet was a switch bot (11-07), so the next free name after zeu is zev.
+  - The laptop root disk is at ~6 MB free. Two other sessions' /tmp/claude-1000 dirs (363 MB and 383 MB) are the owner's call.
