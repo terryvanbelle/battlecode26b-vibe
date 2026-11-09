@@ -9262,3 +9262,9 @@
 - 14:03: **zgc passes both screens; zgd dropped**
   - zgc s7 zd459: D 1, net +1, t +1.00 (picks z −0.69). s6 zd460: 44 cells, D 0, t 0.00. Every local falsifier is met, and replica block 1 (#327) is running.
   - zgd (war()-site WALL_HOLD on zgc), cq169: 12 wins to zgc's 13, so dropped despite transfer 183k vs 168k. zge (faceEnemy site) is still playing; its s7 screen zd461 is queued.
+- 14:09: **zgf, zgg registered: KING_THREAT_D2 dose arms (13 and 25, from 18).**
+  - The constant was never tuned. It sets which enemy rats count as a threat to our king, which pulls gatherers into war().
+  - zgc (KING_WALL_THREAT: walled-off rats don't count) raised chain transfer to 167,651 from 144,900, so a tighter radius (zgf) tests the same lever by dose; zgg is the opposite arm.
+  - Screens zd462 (zgf s7) and zd463 (zgg s7) are queued after zd461.
+  - Falsifier: s7 net < 0 or transfer < 0.95x zdb drops it; a chain vs agrab/atrap3 must match zdb's wins with no new king-death cells.
+  - Knifefight seat split (Merlin, A L r107 / B W r22): as A, 49 of our 58 rat deaths were throws (Merlin 87 throws, 105 grabs); their king sat back at (14,17) and we bit it once. Nothing flippable found that the z-line hasn't tried (KING_FLEE u6v, GUARD_DIST2 zfm, CARRY_KING zfu).
