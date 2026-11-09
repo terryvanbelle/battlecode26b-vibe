@@ -1,0 +1,20 @@
+name=zex
+source=bots/zew
+source_sha=931c16a9aa24
+commit=73b5c528
+created=2026-11-09 02:57 PST
+DESCRIPTION (02:58 11-09): zew + FORM_MINE_FAR (new switch; constant-folded, one subtraction per mine in mineSite,
+  not ledgered): FORM_MINE's site is the safe home-half mine farthest from the king (clean before dirty), not the
+  nearest. The field's extra kings sit far out on their own half (Finals wallsofparadis d2 1060-1201 from their start,
+  waxmango Nofreecheese 1377-1417, Icarus mercifullattice 442-530); a near mine's king duplicates the first king's
+  reach. Same r250 gate as zew.
+FALSIFIERS (02:58 11-09, binding):
+  1. Chain cq143 (seed 69; zew's six maps x agrab/araid x both seats x zex/zdb; 24 cells per bot;
+     `python3 ~/diag26b/k2sc.py ~/diag26b/cq143 zex zdb`, plus `grep -ci "exception\|overr" ~/diag26b/cq143.chain.out`):
+     a. any exception or overrun rejects;
+     b. mechanism: zex forms a mine-site king in at least 6 of 24 cells, none before r250;
+     c. transfer by r1000 summed >= 0.97x zdb's;
+     d. wins >= zdb's - 1, and flips lost <= 2.
+  2. Screens zd418 (s7 vs zd343) / zd419 (s6 vs zd345): t <= -1.5, any overrun, or lm transfer < 0.97x rejects.
+  3. Replica: only if zew is rejected, or after zew's blocks if zex beats zew's chain and screen results (set 4,
+     then set 2, by the block rules).

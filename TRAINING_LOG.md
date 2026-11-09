@@ -8927,3 +8927,6 @@
     - Replica #314's set-4 block has been sent.
   - Laptop disk: build/u8fk and build/u9mchk (old diagnostics, 11-04/05) were archived to VM ~/diag26b/laptop_build_*.tgz (verified, 7 files each) and removed locally to unblock git.
     - That freed ~11 MB. This session's transcript grows ~1 MB every few calls.
+- 02:58: **zew passes s7 (zd416: t +1.77, net +3, lm 1.039x); zex registered (zew + FORM_MINE_FAR)**
+  - zex sends the mine-site king to the farthest safe home mine, as the field's far kings sit, instead of the nearest.
+  - Chain cq143 (seed 69, vs zdb) is queued behind cq142. Screens zd418/zd419 are queued.
