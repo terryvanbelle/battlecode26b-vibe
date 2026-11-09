@@ -9013,3 +9013,9 @@
   - Pooled with the twin-anchored block 1 (+6 −2): D 14, net +2, t 0.53, under the bar of 1. RAW_TRAPS is closed on zdb.
   - zfc (dose arm) and zfd (bundle) lose their base: zd426 aborted, zd427-zd429 dequeued, cq147 stopped at 26 dirs.
   - /dev/shm holds 456 older replays (~790 MB) with no VM copy; the VM's 2.3 GB can't take them, so they stay.
+- 06:14: **zfe registered: zdb + FORM_NET100_WAR −300 (looser second-king income test at war)**
+  - zey's set-3 losses (dumped to VM ~/diag26b/dc_zey; scratch lsum.py, bsband.py, early.py, traj.py, seat.py): most kill losses are long wars after an enemy backstab before r60.
+  - Against YokoOno on maps over 900 tiles we won 14 games holding 2 kings from r400 and lost 16 on 1 king, with transfer and bank by r300 no lower in the losses. The coop income bar (4 cheese/round) is rarely met at war.
+  - Not tried before: `attempts.py find NET100_WAR` = 0; z1d loosened it in coop only (dropped).
+  - Screens zd430/zd431; chain cq148 (seed 73, zfe/zdb vs agrab/araid) waits on the now-empty cq147 slot.
+  - Seat check: zdb has 10 seat-split field cells (7 lost in seat A); the twin's HAND_FLIP changes cells evenly by seat (A +1 −6, B +2 −6), so there's no seat lever there.

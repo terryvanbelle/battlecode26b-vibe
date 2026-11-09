@@ -1,0 +1,6 @@
+name=zfe
+source=bots/zdb
+source_sha=638afd6102f7
+commit=23dd659d
+created=2026-11-09 06:13 PST
+FALSIFIERS (06:14, before any game): screens zd430/zd431: t <= -1.5, any overrun or exception, lm transfer < 0.95x rejects. Chain cq148 (seed 73): exception/overrun rejects; games with 2 kings at r600 < zdb's + 3 drops as inert; wins < zdb - 1 or flips lost > 2 rejects. Replica block 1 on set 3.
