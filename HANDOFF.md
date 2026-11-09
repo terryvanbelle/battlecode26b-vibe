@@ -97,7 +97,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (23:40):**
+- **Now (00:55 11-09):**
+  - Incumbent still **zdb**. Raiding (RAID_EVERY, zen/zer) is CLOSED: zer rejected at replica block 1 (set 4,
+    21938-21953, t -2.71; it loses short fight-force wins). MINE_MIRROR (zep) inert, dropped; zeq dropped; zeo rejected.
+  - **zes** (00:13) = zdb + MINE_EVICT 20 (at war, a healthy empty-handed gatherer fights an enemy baby on its own
+    home-half mine). Chain **cq139** (seed 65, running; score with `python3 ~/diag26b/evsc.py ~/diag26b/cq139 zes zdb`),
+    screens zd410 (s7, playing) / zd411 (s6, queued), replica **#312** set-4 block queued (judge with
+    `paired --dir /dev/shm/rp 20817-20824,20842-20845,20848-20851 IDS`), set 2 next if t > 0. Clauses in bots/zes/SNAPSHOT.
+  - Next fresh seed: 66. Next screen id: zd412. Next free name: zet.
+- **Earlier (23:40):**
   - Incumbent still **zdb**. zel DROPPED (cq132 1b), zem DROPPED (cq133 1b/1c; #310 set 2 D 1 t +1.00, replays VM
     ~/diag26b/rp/zem_b1s2.tgz).
   - **zeo** (23:16) = zem's code re-registered: chain **cq135** (seed 62, queued behind cq134; score with
