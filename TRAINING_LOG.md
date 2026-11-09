@@ -8873,3 +8873,11 @@
   - Only RUN moved: km +1 in 3 cells, transfer up in both araid cells. keepout and clockwisdom were cell for cell zen's. Screen zd406 matched zen's zd404 on all 48 cells.
   - zeq (zep + CHIRAL_SYM + SYM_GOSSIP + SYM_HEAR_TILE) keeps its cq137 chain; its clauses compare with zep and test whether faster symmetry knowledge changes anything.
   - Replica: zer's 16 set-4 rows on the #311 build began going out at 00:31.
+- 00:39: **Queue reordered for zes; field rat-budget diagnosis**
+  - zd407 (zep, s6) was killed by pid at 00:37 (runs/zd407/ABORTED). Screen order is now zd408 (zeq, playing), zd410/zd411 (zes), zd409 (zeq). Chains: cq137 (zeq, playing), then cq139 (zes), then cq138 (zer).
+  - Field allocation (scratch fieldalloc2.py, zdb's 144 cached field games, rats sampled every 10 rounds): in the 43 losses our rats fall from 19.6 (r100-200) to 9.8 (r500-600) while theirs hold 17.9 to 13.3. They keep about 4 rats in our half from r100 to us 1-2 in theirs, and 7-8 of theirs stand away from both kings and every mine (ours 5-8).
+  - Deaths by r500 (scratch deathcause.py), per game:
+    - Losses: ours 42.5 to theirs 34.2. Their rat traps kill 7.4 of ours to 0 of theirs; bites 4.3 to 1.0.
+    - Wins: ours 34.5 to theirs 26.1. Cats kill 15.2 of ours (pounce 9.2) to 8.4 of theirs.
+    - We spawn 56-58 a game by r500 to their 44-55.
+  - Trap line on the z-line: z0q (RAW_TRAPS) rejected at block 3; zc4 rejected for overruns; zdw rejected at screen transfer 0.929x. Not reopened.
