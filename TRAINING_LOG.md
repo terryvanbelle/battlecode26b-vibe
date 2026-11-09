@@ -9259,3 +9259,6 @@
 - 13:31: **zgd, zge registered: zga's WALL_HOLD split by site, on zgc**
   - zgd has the war() skip only (no standoff or approach against an enemy behind a wall); zge has the faceEnemy pass-over only. Both keep KING_WALL_THREAT.
   - Chain cq169 (cq166's 20 cells, seed 82): each must beat zgc (13 wins, transfer 167,651) or it is dropped, and lose at most 2 cells zdb won.
+- 14:03: **zgc passes both screens; zgd dropped**
+  - zgc s7 zd459: D 1, net +1, t +1.00 (picks z −0.69). s6 zd460: 44 cells, D 0, t 0.00. Every local falsifier is met, and replica block 1 (#327) is running.
+  - zgd (war()-site WALL_HOLD on zgc), cq169: 12 wins to zgc's 13, so dropped despite transfer 183k vs 168k. zge (faceEnemy site) is still playing; its s7 screen zd461 is queued.
