@@ -19,3 +19,6 @@ falsifiers (23:16, registered before any game of zeo):
   2. Replica (#310, the zem build): block 1 on set 4 (anchors 20817-20824, 20842-20845, 20848-20851) rejects at
      t <= 0; then block 2 on set 3 (fresh matches only, anchors 21016-21023, 21036-21043): pooled t <= 1 rejects,
      t >= 2 with D >= 4 accepts; otherwise block 3 on set 1.
+OUTCOME (23:51): REJECTED at replica block 1 (#310 build, set 4: 21800-21815 vs anchors 20817-20824, 20842-20845,
+  20848-20851): 48 cells, 48 alike, D 0, t 0.00 (block 1 rejects at t <= 0). Chain cq135 cancelled unplayed.
+  Replays VM ~/diag26b/rp/zeo_b1s4.tgz.
