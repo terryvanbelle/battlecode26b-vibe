@@ -4,3 +4,4 @@ source_sha=2faf887d6230
 commit=3cee8295
 created=2026-11-09 05:54 PST
 FALSIFIERS (05:54, before any game): screens zd426/zd427 vs zdb cells; t <= -1.5, any overrun or exception, or length-matched transfer < 0.95x rejects. Replica only after zey accepts (zfc is its dose arm).
+OUTCOME (06:09): DROPPED, base zey rejected

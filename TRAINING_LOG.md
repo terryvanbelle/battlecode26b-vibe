@@ -9008,3 +9008,8 @@
   - cq147 (seed 73) runs behind cq146: zfc vs zey (dose arm against its base) on cq146's maps.
 - 05:57: **zfd registered: zey + zdy's trap set (bundled by hand), screens zd428/zd429**
   - Both levers revived on the twin. zdy is Cfg-only, so zfd = a zey snapshot plus zdy's five Cfg lines.
+- 06:09: **zey rejected at block 2 (set 3: +2 −4, t −0.82; pooled t 0.53); zfc and zfd dropped**
+  - zey's set-3 rows: 22143-22146 and 22169-22180 (22181-22184 are zdy's first four). Replays archived to VM ~/diag26b/rp/zey_b2s3a.tgz and zey_b2s3b.tgz (8 each, verified).
+  - Pooled with the twin-anchored block 1 (+6 −2): D 14, net +2, t 0.53, under the bar of 1. RAW_TRAPS is closed on zdb.
+  - zfc (dose arm) and zfd (bundle) lose their base: zd426 aborted, zd427-zd429 dequeued, cq147 stopped at 26 dirs.
+  - /dev/shm holds 456 older replays (~790 MB) with no VM copy; the VM's 2.3 GB can't take them, so they stay.
