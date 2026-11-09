@@ -9297,3 +9297,11 @@
     - cq171 (seed 85): zdb on fullofsecrets, agrab/atrap3 x seats.
     - cq172 (seed 85, after cq171): zgh on the same 4 cells, plus zdb and zgh on clockwisdom, rose and keepout.
   - Falsifier: any overrun in s6 or the chains; s7 net < 0; cq172 losing a rose or keepout cell that zdb wins; fullofsecrets transfer not above zdb's in cq171.
+- 14:54: **cq171/cq172 first results; zgi registered (stalled attackers deliver)**
+  - cq171 (seed 85), zdb on fullofsecrets: A L r313 vs agrab and L r368 vs atrap3, B W both. Picked 1,410-7,050 a game and transferred 80-180: the field's delivery failure reproduces locally.
+  - cq172, zgh on the same 4 cells: 3 wins (+A vs atrap3) and transfer 1,575 vs zdb's 460, with 0 overruns. Its delivery is still poor: A vs agrab picked 4,840, transferred 305 and starved at r717.
+  - In that game at r400, the raw was on six ATTACKERS (mv=a), not gatherers: 40-800 each (1,870 total), with Nav stalls up to 54 toward the enemy king in its walled pocket. Attackers never deliver.
+  - zgi = zgh + ATK_STUCK 30 / ATK_STUCK_RAW 100 (new switch, ledgered K 20): an attacker with 100+ raw whose Nav walk has not got closer for 30 turns delivers, latched until it holds none.
+    - This differs from ATK_DELIVER (u4q, zb2), which sent every loaded attacker home, and from HUNGRY, which is gated on the bank.
+  - Chain cq173 (seed 85): zgi on fullofsecrets, clockwisdom and rose, agrab/atrap3 x seats.
+  - Falsifier: fullofsecrets + clockwisdom transfer not 1.3x zgh's; any rose cell lost that zgh wins; any overrun.
