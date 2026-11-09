@@ -1,0 +1,22 @@
+name=zel
+source=bots/zej
+source_sha=d6c468f23ca1
+commit=079c8f79
+created=2026-11-08 21:28 PST
+description: re-registration of zej's build unchanged (STALL_TUNNEL 30: a STALL_CAT hunter whose walk to its cat or centre
+  tile made no progress for 30 turns tunnels by Nav.tunnelTo for the rest of the game). zej was dropped at cq131 clause 1e
+  only (wins 19 vs 20: where_are_you A vs araid, a points loss at r1344 by 27 transfer after the cat died early); every
+  mechanism clause passed (centre 4/4, digs 863 vs 316, sealed-map cat damage 2.08x, transfer 1.021x). Judged on fresh
+  data only: zej's cq131, zd398 and replica #308 games do not count.
+falsifiers (21:28, registered before any game of zel):
+  0. Build: zel's source equals zej's apart from the package line (diff checked at 21:28), compiles on the VM.
+  1. Chain cq132 (seeds 57 AND 58; averystrangespace, EscapeTheNight, where_are_you, whatsthecatdoin, minimaze,
+     DefaultMedium x agrab/araid x both seats x zel/zdb; 48 cells per bot):
+     a. any exception or overrun rejects;
+     b. mechanism: in >= 6 of the 8 averystrangespace zel cells a zel rat stands within Chebyshev 6 of the centre
+        (29,29)/(30,30) before r600, and zel's dirt digs by r600 on those 8 cells exceed zdb's;
+     c. averystrangespace peace cat damage (ours, at r1200 or the end) summed over its 8 cells >= 1.5x zdb's;
+     d. transfer by r1000 (or end) summed over all 48 cells >= 0.97x zdb's;
+     e. wins >= zdb's, and cells zdb won but zel lost <= 3.
+  2. Screens zd400 (s7, vs zd343) / zd401 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
+  3. Replica: set 3, then set 2 (block 1 rejects at t <= 0; pooled t <= 1 after block 2 rejects; accept at t >= 2, D >= 4).

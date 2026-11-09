@@ -8812,3 +8812,6 @@
   - a: 0 exceptions, 0 overruns. b: zej reached the centre in 4/4 averystrangespace cells (r420/420/522/522); digs by r600 863 vs zdb 316. c: averystrangespace cat damage at r1200 8,570 vs 4,120 (2.08x). d: transfer by r1000 over 24 cells 1.021x.
   - e FAILED: where_are_you A vs araid lost at r1344 on points (xfer 5,870/5,897, cat 12,000/12,000); zdb won that cell at r2000. First divergence vs zdb at r207, so the tunnel acted there. All other maps identical.
   - zd398 (s7) passed (t 0.00, 1.000x). Replica #308 (set 3) stays unscored for zej; the mechanism is strong on the sealed map, so a re-registration on fresh seeds follows.
+- 21:29: **zel registered (zej's build unchanged, re-registered on fresh data); chain cq132, screens zd400/zd401, replica #309**
+  - zej failed only clause 1e, by one cell (a points loss by 27 transfer after an early cat kill); every mechanism clause passed. zel is judged only on new games: cq132 runs seeds 57 and 58 over the same 6 maps (48 cells per bot), with the bars scaled to 8 averystrangespace cells and flips ≤ 3 (SNAPSHOT 21:28).
+  - zd399 (zej's s6 screen) killed by pid: it was a closed line. Replica #309: 8 set-3 matches sent, 8 queued (hourly limit). Next fresh chain seed: 59.
