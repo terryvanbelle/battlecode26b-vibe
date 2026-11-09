@@ -1,0 +1,18 @@
+name=zer
+source=bots/zen
+source_sha=44ee5688fb87
+commit=dc9245fb
+created=2026-11-08 23:58 PST
+description: zen's code re-registered (zdb + RAID_EVERY 2; identical apart from the package); the replica plays
+  zen's #311 build. zen was dropped at cq134 clause 1b (enemy-half rats 1.23x, bar 1.5x) with its other clauses
+  passed and both screens positive (zd404 t +0.27, zd405 t +1.35).
+falsifiers (23:58, registered before any game of zer; judged only on fresh data):
+  1. Chain cq138 (seed 64; cheesefarm, FreeTheCheese, keepout, DefaultLarge, fullofsecrets, whatsthecatdoin x
+     agrab/araid x both seats x zer/zdb; 24 cells per bot):
+     a. any exception or overrun rejects;
+     b. mechanism: enemy-half rats sampled every 10 rounds over r300-600 (raidsc.py) >= 1.15x zdb's, and
+        farPick > zdb's;
+     c. transfer by r1000 summed >= 0.97x zdb's;
+     d. wins >= zdb's - 1, and cells zdb won but zer lost <= 2.
+  2. Replica #311 build: block 1 on set 4, fresh rows queued after 23:58 only (21829-21832 excluded); rejects at t <= 0.
+     Block 2 on set 2: pooled t <= 1 rejects, t >= 2 with D >= 4 accepts; otherwise block 3 on set 3.

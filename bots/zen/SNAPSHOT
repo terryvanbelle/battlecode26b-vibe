@@ -23,3 +23,8 @@ falsifiers (22:34, registered before any game of zen):
      d. wins >= zdb's - 1, and cells zdb won but zen lost <= 2.
   2. Screens zd404 (s7, vs zd343) / zd405 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
   3. Replica: set 4, then set 2 (block 1 rejects at t <= 0; pooled t <= 1 after block 2 rejects; accept at t >= 2, D >= 4).
+OUTCOME (23:58): DROPPED at cq134 clause 1b. Enemy-half rats r300-600: 1414 to zdb's 1146 = 1.23x (bar 1.5x). The
+  rest passed: farPick 1406 > 1284; transfer by r1000 131,961 / 136,019 = 0.970x; wins 20 vs 21; flips lost 2
+  (DefaultMedium A agrab, Stash A araid), gained 1 (ratsareants A agrab); 0 exceptions or overruns.
+  Screens: zd404 n 48, t +0.27, lm xfer 0.988x; zd405 n 44, t +1.35, lm xfer 1.063x.
+  #311: 4 set-4 rows were sent (21829-21832, unscored), and the 12 queued rows were removed. Re-registered as zer.

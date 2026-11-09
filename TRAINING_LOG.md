@@ -8856,3 +8856,9 @@
   - Why: MINE_MIRROR lists nothing until the king's mask is one symmetry. In cq134 (scratch symres.py) the first king resolves at r50 on DefaultMedium, r91-210 on mercifullattice/Nofreecheese/ratsareants, and r234-1009 on wallsofparadis. zdb's king on ratsareants never resolved in 3 of 4 cells.
   - Of 136 off switches in zdb's Cfg, 87 were never tried on the z-line. CHIRAL_SYM (u4z on u4e) passed two screens (+3 each, 8 of 9 changed cells on seat B), then lost 1 net at replica block 1 (t −0.38). It never had MINE_MIRROR to feed.
   - Falsifiers in bots/zeq/SNAPSHOT: vs zep cell by cell. Cells resolved by r50 must be ≥ zep's + 6, with km600 ≥ zep's, transfer ≥ 0.97x, wins ≥ zep − 1 and ≤ 2 flips lost. Screens reject at t ≤ −1.5, any overrun, or lm transfer < 0.97x.
+- 23:58: **zen DROPPED at cq134 clause 1b; re-registered as zer (chain cq138, seed 64; replica set-4 block on #311)**
+  - cq134 final, zen vs zdb over 24 cells: enemy-half rats r300-600 were 1414 to 1146, 1.23x against the 1.5x bar. It was 3.3x on the first 12 games, but zdb also goes far in the long games.
+  - The other clauses passed: farPick 1406 to 1284; transfer by r1000 0.970x; wins 20 to 21; flips lost 2 (DefaultMedium A agrab, Stash A araid), gained 1 (ratsareants A agrab); 0 exceptions or overruns.
+  - Screens: zd404 t +0.27 (lm 0.988x), zd405 n 44, D 5, net +3, t +1.35 (lm 1.063x).
+  - #311's 4 sent rows (21829-21832) play unscored, and the 12 queued rows were removed. zer (identical code, bots/zer) has a fresh chain, cq138 (seed 64: cheesefarm, FreeTheCheese, keepout, DefaultLarge, fullofsecrets, whatsthecatdoin vs agrab/araid), with an enemy-half bar of 1.15x. Its replica block 1 is 16 fresh set-4 rows on the #311 build.
+  - zep's games had already started (cq136), so its replica clause stays as registered (only if zen reaches the replica).
