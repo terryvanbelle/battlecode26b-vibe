@@ -9162,3 +9162,12 @@
   - zd445 (zfq, s7): n 48, D 17, net +1, t +0.24. Picks/100 37.41 vs 34.11 (z +1.76); transfer 0.955x pooled and 0.968x length-matched; 0 overruns. Falsifier 1 holds: its wins are above both zd442's (net 0) and zd444's (net -1).
     - zfq's chain only tied zfp (7 and 7), so **it is parked**. It goes to the replica only if zfp is accepted and zfq beats it again.
   - zfp's replica block: 22435-22442 played, all 24 cells alike so far (t 0.00); 8 rows remain in the drain. Replays: VM ~/diag26b/rp/zfp_b1s3a.tgz.
+- 10:51: **zfp REJECTED at block 1 (48 of 48 cells alike); zft DROPPED by its larger-maps rule**
+  - zfp (#322, set 3, 22435-22450): 48 cells, 48 alike, D 0, t 0.00, and block 1 rejects at t <= 0. WAR_FACE changed no field result: collegejunior tiny and DefaultMedium are still lost in both seats.
+    - Its local evidence had been positive: cq157 7 of 12 vs 4, zd447 (s6) t +0.57. The field rushers do not lose to newborn facing.
+    - Replays: VM ~/diag26b/rp/zfp_b1s3a.tgz and zfp_b1s3b.tgz.
+  - cq162 (zft vs zdb, seed 78, larger maps): 14 wins of 24 to zdb's 17 (+2 -5).
+    - zft lost DefaultLarge A vs agrab, DefaultMedium B vs agrab (r59; zdb won at r2000), cheesefarm B, and rose A and B vs atrap3.
+    - It gained DefaultLarge B and arrows B vs atrap3.
+    - Over both chains it is 33 = 33, and map area does not separate the gains from the losses (900-tile maps: arrows and DefaultSmall gained, cheesefarm lost).
+    - **zft is DROPPED.** 8 replica matches (#323, 22457-22464) had been sent and play out as field data. 8 rows were withdrawn (/dev/shm/kd/zft_queue.tsv). zd448 finishes as a record; zd449 was dequeued.
