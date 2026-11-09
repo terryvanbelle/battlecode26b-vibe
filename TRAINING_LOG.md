@@ -9083,3 +9083,8 @@
     1. Chain **cq154** (zfl on cq153's 20 cells, seed 75, queued): kings at r1200 ≥ zfj's + 3; wins ≥ zdb's with ≤ 1 cell lost; starved kings ≤ zdb's + 1; 0 exceptions/overruns.
     2. Screens zd440/zd441 (queued after zd439).
     3. Replica after zfj's verdict.
+- 08:53: **zfj REJECTED at replica block 1; zfl DROPPED** (the RICH_LATE line is closed)
+  - #320 (set 3, 22403-22418 vs 21016-21023/21036-21043): 48 cells, 47 alike, D 1 (lost Xzibit minimaze B), net -1, t -1.00. Replays are in VM ~/diag26b/rp/zfj_b1s3.tgz; the minimaze dump is in VM ~/diag26b/dc_zfj.
+  - The lost cell is the mechanism itself. The third king formed at r1008, the bank fell from 548 to 2 by r1200, two kings starved at r1268 and r1270, and the last was killed at r1415 (zdb won the cell). Econ.surplus(3) >= 0, which trusts 75% of the measured income, does not guard against starvation. The target cell (FreeTheCheese B vs Merlin) was still lost.
+  - zfl forms more kings on the same test, so it is dropped before its screens and chain. Its ledger check had passed (zdb's game until r800, kings at r804 and r852).
+  - Stopped: zd439 (zfj s6), zd440 (zfl s7, just started), cq153 (zfj/zdb, 11 of 40 games played), cq154 (queued). The screen queue and the chain slot are free.
