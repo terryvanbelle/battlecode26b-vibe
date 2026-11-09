@@ -1,0 +1,12 @@
+name=zeh
+source=bots/zdb
+source_sha=638afd6102f7
+commit=ad6c98e3
+created=2026-11-08 19:14 PST
+description: zdb + THREAT_WALL (with THREAT_WALL_REACH 5), ported verbatim from z7d (King.allWalled/wallReach, Baby.kingWalled; ledgered, K 18). A king stops counting enemy rats toward its alert's threat when every in-range enemy is behind a wall closed on both sides of the line and none can walk to the king's ring within 5 steps. The switch passed locally in z6z/z7d (Stash 5/6 vs 2/6) and was only ever tested on the replica inside bundles (z7g, z9f), which were rejected for other parts. zdb lacks it.
+evidence (19:14): local cq107 Stash, zdb seat A vs agtr: transfer stuck at 320 from r150 to r590 (lost), bank 1780 -> 1. At r250 every zdb rat is in the walled pocket (y 23-26) holding in war() (mv=w/C/M) while agtr's attackers stand at y 19-21 beyond the y=22 wall. Field Stash B vs YokoOno (zdb) delivered 140 and lost at r555 with the same pocket stall.
+falsifiers (registered 19:14, before any game; binding, mechanism clauses included):
+  1. Mechanism chain cq129 (seed 54; Stash and evileye vs agrab, agtr, atrap3, both seats, zeh and zdb): summed Stash transfer by r600 (or game end) over the 6 Stash cells must be at least 1.3x zdb's, and Stash A vs agtr must reach transfer above 1,000 by r400. Otherwise rejected.
+  2. Same chain: zeh must win no fewer of the 6 evileye cells than zdb (the reach test's job), and no fewer of all 12 cells than zdb. Zero exceptions and overruns.
+  3. Screens s7 (vs zd343) and s6 (vs zd345) under the standing bars (t > -1.5, no overrun, length-matched transfer >= 0.97x).
+  4. Replica: the standing block rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects; accept t >= 2 with D >= 4).
