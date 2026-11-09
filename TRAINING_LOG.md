@@ -8623,3 +8623,13 @@
     2. Seed-2 screens zd382 (s7 vs zd374) and zd383 (s6 vs zd376). The transfer bar is read on the length-matched cells (≥ 12 needed, else pooled); t ≤ −1.5 and overruns as usual.
     3. Replica set 4, then set 2.
   - Trap-dodging check before designing (scratch trapage.py, zdb's 144 field games): of 5,285 enemy rat-trap hits on our rats, 3,578 were on traps 0-2 rounds old and 99.7% of those were engaged (an enemy baby within dist2 20). That is the zone RISK_ADAPT covers, but dodging has lost five times (log 10-30, u0u: hits 1250 vs 1129). Not rebuilt.
+- 16:12: **zdx dropped at cq119** (seed 44, 32 games; falsifier 1, do-no-harm clause)
+  - zdx won 13 of 16 cells to zdb's 12. It gained cheesebottles B agrab, thunderdome B agrab and thunderdome B araid, but lost DefaultMedium B agrab (r312 to zdb's win at r517) and thunderdome A agrab (r84 to zdb's win at r69). Two lost cells against a bar of at most 1, so zdx is out.
+  - Everything else held:
+    - No zdx overruns or exceptions (araid had 18).
+    - Starvation 0 for both.
+    - Enemy rats set off 494 zdx traps (30.9 a game).
+    - The gate held: 43 traps by r150 outside thunderdome, against zdw's 169 in cq118 and a bar of 84.
+  - Thunderdome A vs agrab is lost by both trap builds (zdw r81 at seed 43, zdx r84 at seed 44) and won by zdb (r91, r69). It is a seat-and-build cell to look at.
+  - Withdrawn: screens zd380/zd381 (never started). The drain had already sent all 16 of #302's rows at 16:07, so they play out and are not scored.
+  - zdy (zdw re-registered) is next: cq120 is running, then screens zd382/zd383 after zd376.
