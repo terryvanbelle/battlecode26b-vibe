@@ -8659,3 +8659,11 @@
   - cq120 (seed 45, 32 games): wins 14 of 16 to zdb's 13. Gained arrows B araid and thunderdome B araid; lost arrows A agrab (r396), 1 cell against a bar of 1. No zdy overruns. Enemy triggers: 742 of 796 laid (46 a game). Starvation 0 for both.
   - zd382 (s7, seed 2, vs zd374): n 48, D 13, net +3, t +0.83, 0 overruns. Transfer per round 0.980x pooled and 1.011x on the 26 length-matched cells.
   - s6 zd383 is next. Replica #303 has 16 rows waiting on the hourly limit (none sent yet). Locally the trap set is fine; zdx's block says the field punishes it.
+- 16:54: **zdz dropped at cq122** (seed 47, 32 games; falsifier 1, do-no-harm clause)
+  - Wins 12 to 12, but zdz lost 2 cells zdb won, against a bar of 1:
+    - fullofsecrets B agrab, r592 (zdb won at r670).
+    - mincemeat A agrab, r325 (zdb won at r421).
+  - It gained fullofsecrets B araid and mincemeat B araid. Clockwisdom was identical in all 4 cells. No zdz overruns.
+  - Instrument error in the registered mechanism clause: ReplayDump's bite row carries the damage (d) and a lethal flag (e). The replay does not record a bite's cheese, so "column e" counted lethal bites (zdz 23, zdb 31) and could not measure the lever. The do-no-harm failure drops zdz on its own.
+  - zdz's king bites rose from 20 to 90. Screens zd384/zd385 were dequeued before they started.
+  - Tool note: a bite's cheese can only be inferred from the biter's load (turns.tsv cheese) dropping on a bite turn.
