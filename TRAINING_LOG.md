@@ -9327,7 +9327,7 @@
     - s7 zd464 passed: n 48, D 3, net +1, t +0.57, picks z +1.38, 0 overruns.
     - Submitted as #330 with its set-3 block: 22708-22711 sent, 12 in the drain.
     - It is withdrawn if s6 zd465 (playing, the keepout overrun test) or cq172's rose/keepout cells fail it.
-- 15:55: **zgh passes every local gate; its replica block is in flight**
+- 15:47: **zgh passes every local gate; its replica block is in flight**
   - s6, zd465: n 44, D 1, net +1, t +1.00, picks z +1.38, 0 overruns. z7x had failed s6 on 3 keepout overruns; the ledgered end-of-turn alloc fixes that here.
   - cq172 on clockwisdom/rose/keepout: 6 wins each with zdb. zgh gained rose B vs atrap3 (W2000 where zdb lost) and lost clockwisdom B vs agrab. No rose or keepout cell lost, 0 overruns.
   - fullofsecrets: zgh 3 of 4 (zdb 2), transfer 1,575 vs 460.
