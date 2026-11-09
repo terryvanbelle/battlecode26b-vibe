@@ -9033,3 +9033,7 @@
   - zdy's 16 set-3 rows are all sent. zey's dumps show rows bind to the build at request time: 22175-22180 played as zey after zdy's 05:53 submission.
   - zez's set-2 rows give twin anchors for set-2 rescoring (zdf, zdk, zdq) and for future set-2 blocks.
   - cq148 final: zfe 23/24 wins, zdb 23/24; 2 kings at r600 in 0 zfe games and 1 zdb game.
+- 07:30: **zff (FACE_HOLD) rejected on cq149: no fewer fires, fewer wins**
+  - cq149 (seed 74, vs atrap3): fires on our rats zff 1066 vs zdb 1012 (1.05x; bar 0.90x), deaths 701 vs 666, wins 5 vs 7 (lost minimaze A, rose A/B; gained minimaze B). zd432 had passed (t −0.44, lm 1.025x). zd433 aborted.
+  - atrap3 reproduces the field trappers' rate: zdb takes 84 fires a game, close to AdamTan12_Finals's 99 in our field losses. It's a usable local bench for the trap family.
+  - zfg (RISK_ADAPT 2) is next: zd434 playing, cq150 after cq149.
