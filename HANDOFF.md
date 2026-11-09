@@ -97,7 +97,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (21:12):**
+- **Now (21:35):**
+  - Incumbent still **zdb**. zej DROPPED at cq131 clause 1e only (wins 19 vs 20: where_are_you A vs araid, a points
+    loss at r1344, divergence r207); its mechanism clauses all passed (centre 4/4, digs 863 vs 316, cat dmg 2.08x,
+    xfer 1.021x). zd399 killed; #308 left unscored.
+  - **zel** (21:28) = zej's build unchanged, re-registered on fresh data. Chain **cq132** (seeds 57+58, 96 games,
+    running), screens zd400 (s7, playing) / zd401 (s6, queued), replica **#309** set-3 block (21692-21701+ queued;
+    judge with `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`), set 2 next if t > 0. Clauses in
+    bots/zel/SNAPSHOT.
+  - Laptop root disk is full (30 MB free): fetching replays needs space first (fetch on the VM or ask the owner).
+  - Checked and closed for new designs: SIEGE_FLOOR (s7t), HEIR (z9c), CORE_BABIES (u5t, zd8), CAT_YIELD (zds),
+    knifefight seat split (36 attempts). externalsustenance A vs YokoOno (r439 starve): a sealed box, mines outside;
+    we fight both cats (6993 cat dmg vs 280) and lose 16 rats to pounces and 28 to throws.
+  - Next fresh seed: 59.
+- **Earlier (21:12):**
   - Incumbent still **zdb**. zeh DROPPED (cq129 Stash xfer600 0.88x; 8 of #307 played, replays VM
     ~/diag26b/rp/zeh_b1s3_2105.tgz; paired partial 24 cells D 2 net 0). zei DROPPED (cq130 rose xfer1000 0.75x).
   - **zej** (20:12) = zdb + STALL_TUNNEL 30: STALL_CAT hunters whose hunt walk stalls 30 turns tunnel (Nav.tunnelTo).
