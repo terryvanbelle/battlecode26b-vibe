@@ -8989,3 +8989,10 @@
   - zfb = zey + END_CAT 1650, the follow-up if zey is accepted.
     - bundle.sh refused zey's Cfg removals, so the first zfb build was wrong. It was deleted unplayed, and zfb was rebuilt from zey's snapshot.
     - Screens zd424/zd425 are queued.
+- 05:41: **Twin rescore of every zdb set-4 rejection: zdy revives (t +1.00); zdp, zeo, zec, zew and zer stand. VM disk cleanup**
+  - Rescored with `paired ZEZ CAND --crown ZDB_SET4`:
+    - zdy: D 9 (+6 −3), net +3, t +1.00. It was t −2.33 against the crown.
+    - zdp t −1.00, zeo t −1.00, zec t −0.71, zew t −1.13, zer t −1.67.
+  - Both rat-trap candidates now pass block 1: zey (attacker traps, t +1.41) and zdy (reactive baby traps, t +1.00). zdy's block 2 goes on set 3 once zey's rows are all sent.
+  - VM disk had fallen to 157 MB, so the closed chains' dumps cq131-cq143 were removed (~2.2 GB). VM is now 2.1 GB.
+  - Laptop: build/bots (121 old laptop-compiled class trees, newest 11-06) and build/ftc1 were archived to VM ~/diag26b/laptop_build_*.tgz (file counts verified) and removed locally. Laptop free space is now ~21 MB.
