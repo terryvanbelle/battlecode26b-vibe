@@ -9110,3 +9110,13 @@
     1. Chain cq156 (seed 76; zfo on cq155's cells, plus knifefight for zfo and zdb): our rats thrown within 8 rounds of birth must be at most 0.7x zdb's, and throw hits on our kings must not exceed zdb's.
     2. Screen zd444 (s7): t > -1.5.
     3. The replica rules.
+- 09:10: **zfo DROPPED at its mechanism bar; zfp (the same code) registered for a replication on a fresh seed**
+  - cq156 (seed 76, scratch newbornc.py; zdb's tiny and DefaultMedium games from cq155):
+    - Our rats thrown within 8 rounds of birth: zfo 66, zdb 90 (0.73x). The bar was 0.7x, so **zfo is DROPPED**.
+    - Throw hits on our kings: zfo 73, zdb 93.
+    - Wins: zfo 9 of 12, zdb 7. zfo gained tiny A vs agrab and vs atrap3 and DefaultMedium A vs agrab (r275; zdb lost at r176). It lost knifefight B vs agrab (r31) and tiny B vs atrap3.
+  - **zfp** = zfo's code under a new package (bots/zfp/SNAPSHOT, zfp-8f745711f27a). The mechanism bar failed but the results moved, so this is a fresh test of the outcome, not of the mechanism.
+  - zfp's falsifiers:
+    1. Chain cq157 (fresh seed 77; zfp and zdb on tiny, DefaultMedium and knifefight vs agrab and atrap3, both seats; 24 games): zfp must win more of its 12 games than zdb, and its throw hits on our kings must not exceed zdb's.
+    2. Screen zd444 (s7, repointed to zfp before it started): t > -1.5.
+    3. The replica rules.

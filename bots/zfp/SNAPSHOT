@@ -1,0 +1,7 @@
+name=zfp
+source=bots/zfo
+source_sha=eaf07d200c8e
+commit=3b5e6e82
+created=2026-11-09 09:10 PST
+change=same code as zfo (Cfg.WAR_FACE true; only the package differs): an independent replication on a fresh seed after zfo failed its mechanism bar but won 9 of 12 cq156 cells to zdb's 7
+falsifiers=(1) chain cq157 (fresh seed 77; zfp and zdb on tiny, DefaultMedium and knifefight vs agrab and atrap3, both seats, 24 games): zfp must win more of its 12 games than zdb, and throw hits on our kings must not exceed zdb's; (2) screen zd444 (s7): paired win t vs zdb > -1.5; (3) replica block rules
