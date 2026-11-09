@@ -9268,3 +9268,9 @@
   - Screens zd462 (zgf s7) and zd463 (zgg s7) are queued after zd461.
   - Falsifier: s7 net < 0 or transfer < 0.95x zdb drops it; a chain vs agrab/atrap3 must match zdb's wins with no new king-death cells.
   - Knifefight seat split (Merlin, A L r107 / B W r22): as A, 49 of our 58 rat deaths were throws (Merlin 87 throws, 105 grabs); their king sat back at (14,17) and we bit it once. Nothing flippable found that the z-line hasn't tried (KING_FLEE u6v, GUARD_DIST2 zfm, CARRY_KING zfu).
+- 14:31: **zge dropped at its chain; cq170 queued (zdb, zgf, zgg).**
+  - cq169 (seed 82): zge 12 wins, zgd 12; the bar was zgc's 13 wins with transfer >= 167,651. zge's transfer was 220,110 (zgd 182,998), but it misses on wins.
+  - zge differs from zgd in 4 cells, 2 each way: zge won corridorofdoomanddespair A vs agrab and vs atrap3, and lost EscapeTheNight B and minimaze B vs atrap3 (all at r2000 except zgd's r1066 and r1791).
+  - Screen zd461 (zge s7): n 48, D 12, net 0, t 0.00, picks z +1.34.
+  - The WALL_HOLD split is closed: zgc (KING_WALL_THREAT alone) stays the line's candidate on the replica.
+  - cq170 (seed 84, 60 games): zdb control plus zgf and zgg on cq169's 5 maps x 2 seats x agrab/atrap3. It starts when cq169's wrapper exits.
