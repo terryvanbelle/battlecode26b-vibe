@@ -1,0 +1,26 @@
+name=zeb
+source=bots/zdb
+source_sha=638afd6102f7
+commit=5a6f3d5f
+created=2026-11-08 17:19 PST
+description=zdb + BUG_SWITCH 20 (new switch, Nav.choose): a bug walk not round its obstacle after 20 turns reverses
+  its hand and walks back along the wall for twice as long, doubling at each switch. G.hand picks the hand from the
+  map centre, so on a spiral both seats circle the same wrong way.
+evidence (17:00-17:20 PST): zdb's field games on clockwisdom (vs Varun A/B, Hugo A/B, 3 losses, all king starvations
+  in the losses) transferred 0 by r600 while picking 42-142 piles; locally (cq122, vs agrab/araid) zdb picked 174-238
+  and made 0-1 transfers. Carrier 10163 (cq122 clockwisdom A vs araid) delivered from (9,15) at r110 with 40 raw, bug
+  walked north round the ring (nt 56,9, mode d for 90 rounds), reached (24,46) with 180 raw and died by the far cat.
+  The salted twin z2b (u9p + HAND_FLIP) transferred 2,965 / 1,355 there where u9p made 0 / 200, but HAND_FLIP cut
+  keepout's transfer (12.3-12.6 a round to 15.5). A switch-back walk tries both hands on any map.
+falsifiers (registered 2026-11-08 17:20 PST, before any zeb game):
+  1. Chain ~/diag26b/cq124 (seed 49): zeb and zdb on clockwisdom and keepout, both seats vs agrab, araid, agtr and
+     atrap3, and fullofsecrets (vs agrab, araid) and rose (vs agtr, araid), both seats (48 games). Any zeb overrun or
+     exception drops it. Clockwisdom: zeb's summed transfer over its 8 cells at least 2x zdb's, and zeb loses no
+     cell zdb won there; mechanism: bs > 0 (a hand switch) on at least one zeb rat in each clockwisdom game. Other 16
+     cells: zeb's summed transfer at least 0.9x zdb's, and zeb's losses in cells zdb won exceed its wins in cells zdb
+     lost by at most 1.
+  2. Screens on seed 1: s7 runs/zd388 vs zd343 and s6 runs/zd389 vs zd345. Rejects: t <= -1.5, any zeb overrun, or
+     transfer per round under 0.97x on the cells whose length ratio is within 0.8-1.25x (fewer than 12 such cells:
+     the pooled figure under 0.97x rejects instead).
+  3. Replica block 1 on set 4, then set 2; the usual rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2
+     rejects; accept at t >= 2 with D >= 4).
