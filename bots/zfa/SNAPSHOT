@@ -1,0 +1,22 @@
+name=zfa
+source=bots/zdb
+source_sha=638afd6102f7
+commit=62d3dbd9
+created=2026-11-09 04:37 PST
+DESCRIPTION (04:38 11-09): zdb + END_CAT 1650 (existing constant, from 1850): the endgame cat errand (unloaded
+  babies of any role, no threatened king, go for the nearest cat at war) starts 200 rounds earlier. zdb's r2000 field
+  games (43 of 144): point margins in the 37 won are cat +16.3, kings +11.3, transfer +2.6; in the 6 lost cat -6.8,
+  kings -3.6, transfer -7.6 (war weights 0.3/0.5/0.2). averystrangespace A vs YokoOno was lost on cat damage (-16)
+  despite 2 kings to 1; rose A on cat -12. z0c (u9p + END_CAT 1650) pooled D 19, net +5, t 1.15 over two replica
+  blocks, rejected only by a transfer floor (0.86x on set 1); z0e (1450) passed locally. Never dosed on zdb.
+FALSIFIERS (04:38 11-09, binding):
+  1. Chain cq146 (seed 72; keepout, rose, averystrangespace, Meow, minimaze, where_are_you x agrab/araid x both
+     seats x zfa/zdb; `python3 ~/diag26b/evsc.py ~/diag26b/cq146 zfa zdb`, endsum-style cat damage from the rounds
+     dumps, `grep -ci "exception\|overr" ~/diag26b/cq146.chain.out`):
+     a. any exception or overrun rejects;
+     b. mechanism: in cells reaching r2000, zfa's summed cat damage at the end >= 1.05x zdb's;
+     c. final transfer summed over r2000 cells >= 0.95x zdb's (the errand covers 17.5% of a game);
+     d. wins >= zdb's - 1, and flips lost <= 2.
+  2. Screens zd422 (s7) / zd423 (s6): t <= -1.5 or any overrun rejects; lm transfer < 0.95x rejects.
+  3. Replica: set 3 first (zdb's clean anchors 21016-21023, 21036-21043), then set 4 twin-anchored once zez's
+     block is in.

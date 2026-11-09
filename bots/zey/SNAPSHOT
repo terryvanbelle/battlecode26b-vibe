@@ -27,3 +27,8 @@ OUTCOME (04:08 11-09): REJECTED at replica block 1 on zdb's set-4 anchors (#315,
   the cells zey lost recur in zer's and zew's losses. zez (zdb + HAND_FLIP, #316) now plays set 4 and set 2 as a
   salted twin; this block is to be rescored with `paired --dir /dev/shm/rp ZEZ_SET4 22060-22075 --crown 20817-20824,
   20842-20845,20848-20851` (z6t's method), and the verdict revisited only on that rescore.
+LOCAL (04:38 11-09): falsifiers 1 and 2 held. cq144 (seed 70): 0 exceptions/overruns; rat traps in 18 of 24 cells
+  (60 laid); transfer by r1000 199,371 vs 204,761 (0.974x); wins 22 vs 21, gained evileye B araid, none lost.
+  zd421 (s6): n 44 D 4 net 0 t 0.00, lm 1.014x, 0 overruns. A second chain cq145 (seed 71; tiny, DefaultMedium,
+  thunderdome, ratsareants, cheesebottles, mercifullattice) runs as extra evidence. The replica verdict waits on
+  zez's twin rescore.

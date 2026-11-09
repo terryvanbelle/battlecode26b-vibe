@@ -8959,3 +8959,14 @@
   - zez = zdb + HAND_FLIP, a salted twin like z3x's z6t. Submitted as #316, with its set-4 and set-2 blocks queued (32 rows).
   - Once in, recent set-4 blocks (zer 21938-21953, zew 21992-22007, zey 22060-22075, zeo 21800-21815) are rescored with `paired ZEZ CAND --crown ZDB`.
   - Until then, new candidates take set 3 first.
+- 04:38: **zey passes all local clauses; zfa registered (zdb + END_CAT 1650)**
+  - zey:
+    - cq144 (seed 70): wins 22 vs 21 (+evileye B, none lost), transfer 0.974x, rat traps in 18 of 24 cells, 0 exceptions/overruns.
+    - zd421 (s6): t 0.00, lm 1.014x.
+    - Its replica rejection (t −1.34) was against zdb's crowning set 4, so it waits for zez's twin rescore.
+    - A second chain cq145 (seed 71) is playing.
+  - zfa moves the endgame cat errand from r1850 to r1650.
+    - Cat damage carries the largest point margin in zdb's r2000 games.
+    - z0c, the same dose on u9p, was pooled t 1.15 on the replica and failed only a transfer floor.
+    - Chain cq146 (seed 72; maps that reach r2000) is queued. Screens zd422/zd423 are playing.
+    - Replica: set 3 first (clean anchors).
