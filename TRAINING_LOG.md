@@ -9241,3 +9241,8 @@
 - 13:07: **zfx rejected at replica block 1; zgb on the replica**
   - zfx (#325, MINE_NEAR 2), set 3 (22513-22520, 22531-22538): 48 cells, 45 alike, D 3 (+1 YokoOno externalsustenance A; −2 Finals where_are_you B, Icarus mincemeat A), net −1, t −0.58. Replays: VM ~/diag26b/rp/zfx_b1s3.tgz. The mine-cap line is closed: zfx cost picks (zd453 z −2.28) and zfy changed nothing.
   - zgb (MINE_BURN) submitted (#326), set-3 block 22579-22590 sent, 4 in the drain. It is withdrawn if cq167 or its screens fail it.
+- 13:09: **zga and zgb dropped at their chains**
+  - The cq166/cq167 run scripts' wait line failed (awk choked on the `\&\&` copied from the template), so both chains started at 12:20 alongside cq165 and have finished. Run scripts from now on use a wait line without backslashes.
+  - zga (WALL_HOLD + KING_WALL_THREAT), cq166: wins 11 vs zdb 12, and 3 cells lost that zdb won (cheesebottles B, minimaze A/B vs agrab; bar 2). Transfer was 1.61x overall, but on minimaze it fell (13.1k vs 18.1k as A, 8.4k vs 19.1k as B): in a maze, an enemy behind a wall is a short detour away. Like z3v, big transfer and lost cells.
+  - zgb (MINE_BURN 50), cq167 vs atrap3: trap deaths 528 vs 559 (0.945x, inert bar 0.9x); wins 6 vs 7. Its #326 replica matches already sent (22579-22590) play on; 4 unsent rows withdrawn. Screens dequeued.
+  - cq165 (zfx/zfy, both closed) was stopped.
