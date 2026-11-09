@@ -8727,3 +8727,7 @@
 - 18:32: **zef registered (zdb + BUG_SWITCH 40, dose arm of zeb's 20)**
   - cq124 cell table: zeb won 19 cells to zdb's 13 (clockwisdom 7 of 8, rose 4 of 4), yet fullofsecrets xfer600 fell from 1,490 to 440 summed, with ~50 flips a game. On clockwisdom ~185 flips a game, only ~20 of them loaded, so a carriers-only gate would lose the gain; a longer first leg is the cut.
   - Falsifiers in bots/zef/SNAPSHOT: chain cq127 (seed 52, 48 games, queued behind cq126) with mechanism clauses on flip counts, screens zd392/zd393 (queued after zd391), replica set 2 then set 4.
+- 19:01: **zee passes both screens; cq126 half done**
+  - s7 zd390 vs zd343: n 48, D 0, t +0.00, 0 overruns, length-matched transfer 1.000x. s6 zd391 vs zd345: n 44, D 0, t +0.00, 0 overruns, length-matched 1.027x. KING_FAR never fires on the screen maps.
+  - cq126 (seed 51), 15 of 32 so far: zee's king is within Chebyshev 1 of a mine at r400 in 6 of 7 cells (wallsofparadis B atrap3 at 2); zdb's sits 26-31 away. xfer600 on wallsofparadis 4,915/4,152/4,404/3,666 to zdb's 1,943/1,275/–/1,635, on Nofreecheese 3,998/3,968/4,084/3,929 to 2,718/2,855/2,939/1,540. Flipped Nofreecheese B and wallsofparadis B vs atrap3 to wins.
+  - Replica #305 set-3 block: 21516-21523 played, 8 rows wait on the hourly limit.
