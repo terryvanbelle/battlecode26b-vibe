@@ -8724,3 +8724,6 @@
   - Both screens had passed (zd388 t −0.44, zd389 t +0.00). Chain cq125 stopped at 36 of 40 games; cq126 (zee) started at once.
   - zee submitted as #305; set-3 block queued (8 sent, 8 in the drain).
   - Rose diagnosis (zdb field, A and B vs YokoOno): the king's pocket has one exit, the diagonal (11,1)-(10,2) into the 1-wide x=9 stem. From ~r150 to r1000 two empty outbound rats sit on those two tiles while loaded carriers queue in the stem. Known jam: SWAP_HOLD (s7x) and SWAP_LOADED (z1l, z8b, z9v) were rejected on the replica, so not rebuilt.
+- 18:32: **zef registered (zdb + BUG_SWITCH 40, dose arm of zeb's 20)**
+  - cq124 cell table: zeb won 19 cells to zdb's 13 (clockwisdom 7 of 8, rose 4 of 4), yet fullofsecrets xfer600 fell from 1,490 to 440 summed, with ~50 flips a game. On clockwisdom ~185 flips a game, only ~20 of them loaded, so a carriers-only gate would lose the gain; a longer first leg is the cut.
+  - Falsifiers in bots/zef/SNAPSHOT: chain cq127 (seed 52, 48 games, queued behind cq126) with mechanism clauses on flip counts, screens zd392/zd393 (queued after zd391), replica set 2 then set 4.
