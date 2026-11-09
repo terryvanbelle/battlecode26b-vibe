@@ -9006,3 +9006,5 @@
   - cq146 (seed 72, 48 games, 0 exceptions): cat damage over 17 r2000 cells 1.002x zdb (bar 1.05x), transfer 0.999x, wins 22/24 for both, no flips. Scorer: VM ~/diag26b/catx.py.
   - zfb carries the same END_CAT lever, so it's dropped; zd425 aborted and the slot passes to zfc's zd426.
   - cq147 (seed 73) runs behind cq146: zfc vs zey (dose arm against its base) on cq146's maps.
+- 05:57: **zfd registered: zey + zdy's trap set (bundled by hand), screens zd428/zd429**
+  - Both levers revived on the twin. zdy is Cfg-only, so zfd = a zey snapshot plus zdy's five Cfg lines.
