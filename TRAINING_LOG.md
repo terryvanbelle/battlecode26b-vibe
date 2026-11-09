@@ -8694,3 +8694,8 @@
   - Cause: G.hand sets the bug hand from the map centre, so both seats circle the spiral the same wrong way. HAND_FLIP fixed clockwisdom (z2b 2,965 / 1,355 to u9p 0 / 200) but cut keepout's transfer. TRAIL (z9d) and TRAIL_BUG (z9g) did not lift clockwisdom's total.
   - Switch: a bug walk not round its obstacle after 20 turns reverses its hand and walks back along the wall for twice as long, doubling at each switch. Indicator bs= counts switches.
   - Chain ~/diag26b/cq124 (seed 49, 48 games: clockwisdom and keepout vs agrab, araid, agtr and atrap3; fullofsecrets vs agrab and araid; rose vs agtr and araid; both seats) is running. Screens zd388 (s7 vs zd343) and zd389 (s6 vs zd345) are queued.
+- 17:24: **zdy REJECTED at replica block 1** (#303, set 4, 21468-21483 vs zdb's 20817-20824, 20842-20845, 20848-20851): 48 cells, 39 alike, D 9 (+1 −8), net −7, t −2.33.
+  - Gained arrows A vs Varun. Lost averyfineline A vs Finals, mincemeat A and tiny A vs Icarus, Meow B vs YokoOno, arrows B vs Varun, sunandmoon A/B vs Merlin, knifefight B vs spsquared.
+  - With zdx's field block (t −3.16), the reactive baby rat trap line has now failed the field twice. It is closed.
+  - Replays are archived at VM ~/diag26b/rp/zdy_b1s4_1723.tgz (32 entries); local replay.bc26 files removed, match.json kept.
+  - zeb is submitted as #304 so the replica is not idle. Set-4 block: request 17743 sent, 12 rows queued. Its local gates (cq124, zd388/zd389) are still running; a local failure drops it whatever the block shows.
