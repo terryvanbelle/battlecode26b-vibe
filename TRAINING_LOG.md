@@ -9274,3 +9274,7 @@
   - Screen zd461 (zge s7): n 48, D 12, net 0, t 0.00, picks z +1.34.
   - The WALL_HOLD split is closed: zgc (KING_WALL_THREAT alone) stays the line's candidate on the replica.
   - cq170 (seed 84, 60 games): zdb control plus zgf and zgg on cq169's 5 maps x 2 seats x agrab/atrap3. It starts when cq169's wrapper exits.
+- 14:32: **zgc rejected at replica block 1; zdb resubmitted (#328)**
+  - zgc (#327, KING_WALL_THREAT), set 3 (22599-22606, 22637-22644 vs zdb's 21016-21023, 21036-21043): 48 cells, 46 alike, D 2 (+1 YokoOno Stash A, -1 Varun corridorofdoomanddespair B), net 0, t 0.00. Block 1 rejects at t <= 0. Replays: VM ~/diag26b/rp/zgc_b1.tgz.
+  - The chain's transfer gain (167,651 vs 144,900) did not flip a field cell. The KING_THREAT_D2 dose arms (zgf, zgg) test the same lever by radius.
+  - zdb was resubmitted so the replica's ranked games play the incumbent (precedent: u6x #230, z3x #252). The next candidate goes up when one passes its screen and chain.
