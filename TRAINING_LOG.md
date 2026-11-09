@@ -9305,3 +9305,8 @@
     - This differs from ATK_DELIVER (u4q, zb2), which sent every loaded attacker home, and from HUNGRY, which is gated on the bank.
   - Chain cq173 (seed 85): zgi on fullofsecrets, clockwisdom and rose, agrab/atrap3 x seats.
   - Falsifier: fullofsecrets + clockwisdom transfer not 1.3x zgh's; any rose cell lost that zgh wins; any overrun.
+- 14:58: **zgf dropped (s7 net −2); zgi 4/4 on fullofsecrets**
+  - zd462 (zgf, KING_THREAT_D2 13): n 48, D 10, net −2, t −0.63, picks z +0.42. Fails its s7 falsifier (net < 0).
+  - cq173, zgi on fullofsecrets (seed 85): 4 of 4 won (zgh 3, zdb 2) with transfer 2,435 vs zgh's 1,575 and zdb's 460 (1.55x zgh). A vs agrab, which zgh starved in at r717, zgi won at r557 (transferred 525).
+  - cq172 clockwisdom (zdb and zgh): picks of 6,130-14,250 a game, transfers of 0-580. zgh lost B vs agrab, a cell zdb won (r970 vs r845). zgi's clockwisdom games are next.
+  - Screens: zd465 (zgh s6), then zd466 (zgi s7), zd463 (zgg s7, wrongly dropped from the queue for a minute and re-added), zd467 (zgi s6).
