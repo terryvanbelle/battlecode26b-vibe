@@ -18,3 +18,6 @@ FALSIFIERS (02:58 11-09, binding):
   2. Screens zd418 (s7 vs zd343) / zd419 (s6 vs zd345): t <= -1.5, any overrun, or lm transfer < 0.97x rejects.
   3. Replica: only if zew is rejected, or after zew's blocks if zex beats zew's chain and screen results (set 4,
      then set 2, by the block rules).
+OUTCOME (03:40 11-09): DROPPED unfinished: the replica rejected zew (its base, the r250-gated mine king) at block 1,
+  t -1.63, every lost cell after a r266-560 extra king with all kings destroyed later; a farther mine king is more
+  exposed. FORM_MINE is closed (t0i, u8e, zew). cq143 killed at 3 games; zd418/zd419 killed.

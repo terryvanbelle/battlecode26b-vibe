@@ -8939,3 +8939,12 @@
   - Mine-site kings are now rejected three times on the replica (t0i, u8e, zew). Local agrab/araid do not punish an exposed second king; Hugo's bots do.
   - zex (a farther mine king) has the same exposure. Its chain cq143 keeps the slot busy until the next candidate is built; it will not go to the replica.
   - Replays are in VM ~/diag26b/rp/zew_b1s4.tgz.
+- 03:40: **zex dropped; zey registered (zdb + RAW_TRAPS), replica #315 set 4 sent**
+  - zex was killed at 3 games, along with zd418/zd419. A farther mine king is more exposed, and the replica just closed FORM_MINE.
+  - Diagnosis notes:
+    - Of zdb's 43 field losses, 6 go to points at r2000. There the margins are cat −6.8, kings −3.6, transfer −7.6. In the 37 points wins they are cat +16.3, kings +11.3, transfer +2.6. At war the weights are cat 0.3, kings 0.5, transfer 0.2.
+    - rose A vs YokoOno is lost with a starved bank (no endgame king). averystrangespace A is lost on cat damage despite 2 kings to 1.
+    - zdb's own pre-r600 second kings show no harm (12-6 won vs 20-14 without one).
+  - zey = zdb + RAW_TRAPS, bundled from zrw: at war, attackers with raw cheese trap the tile beside the nearest enemy baby.
+    - Earlier replica runs: z0q pooled net +4 (t 0.78). zc4/zc8 were rejected for z3x's cashTick overruns and a D-1 block.
+    - Chain cq144 (seed 70; Stash, cheesefarm, Nofreecheese, keepout, evileye, wallsofparadis) and screens zd420/zd421 are under way.

@@ -1,0 +1,21 @@
+name=zey
+source=bots/zl0
+source_sha=c585a2762c96
+commit=3a8fe288
+created=2026-11-09 03:39 PST
+DESCRIPTION (03:40 11-09): zdb + RAW_TRAPS (bundle.sh zey zl0 zdb zrw; z0q's switch, ledgered K 18; 16 Baby lines +
+  RAW_TRAPS/RAW_TRAP_CAP 20): at war an attacker with 20+ raw lays a rat trap on the TRAP_ADJ tile beside the nearest
+  enemy baby within dist2 13, paid from its raw, under 20 live. zdb lays no rat traps; in its 43 field losses their
+  traps kill 7.4 of ours by r500 and ours 0 (4.5 in wins). Replica history: z0q (u9p) pooled 144 cells D 26 (+15 -11)
+  net +4 t 0.78 (rejected at block 3, t -0.63); zc4 (z3x) rejected only for 4 overruns in z3x's cashTick (fixed by
+  CASH_READ_LEFT 6000, which zdb has); zc8 (z3x + both) rejected at block 1 with D 1 (47 of 48 alike). Never on zdb.
+FALSIFIERS (03:40 11-09, binding):
+  1. Chain cq144 (seed 70; Stash, cheesefarm, Nofreecheese, keepout, evileye, wallsofparadis x agrab/araid x both
+     seats x zey/zdb; 24 cells per bot; `python3 ~/diag26b/evsc.py ~/diag26b/cq144 zey zdb` for wins/xfer/flips, plus
+     `grep -ci "exception\|overr" ~/diag26b/cq144.chain.out`, plus a rat-trap count from the actions dumps):
+     a. any exception or overrun rejects;
+     b. mechanism: zey lays rat traps in at least 8 of 24 cells;
+     c. transfer by r1000 summed >= 0.97x zdb's;
+     d. wins >= zdb's - 1, and flips lost <= 2.
+  2. Screens zd420 (s7 vs zd343) / zd421 (s6 vs zd345): t <= -1.5, any overrun, or lm transfer < 0.97x rejects.
+  3. Replica #315: set 4 (sent 03:41), then set 2, by the block rules.
