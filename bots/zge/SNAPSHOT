@@ -1,0 +1,8 @@
+name=zge
+source=bots/zga
+source_sha=01548f6c48eb
+commit=46f9689e
+created=2026-11-09 13:30 PST
+created=2026-11-09 13:31 PST
+change=zga with WALL_HOLD split by site: WALL_HOLD_FACE true, WALL_HOLD_WAR false (+ KING_WALL_THREAT)
+falsifiers=(1) chain cq169 (cq166's 20 cells, seed 82; controls cq166 zdb and cq168 zgc): wins >= zgc's 13 and transfer >= zgc's 167,651, else dropped (no gain over zgc); at most 2 cells lost that zdb won; (2) screens s7/s6: t > -1.5; (3) replica block rules
