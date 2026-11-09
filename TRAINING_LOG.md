@@ -9332,3 +9332,8 @@
   - cq172 on clockwisdom/rose/keepout: 6 wins each with zdb. zgh gained rose B vs atrap3 (W2000 where zdb lost) and lost clockwisdom B vs agrab. No rose or keepout cell lost, 0 overruns.
   - fullofsecrets: zgh 3 of 4 (zdb 2), transfer 1,575 vs 460.
   - Replica #330 set-3 block 1: 22708-22711 sent, 12 in the drain.
+- 15:52: **zgk registered (TRAIL_STALL 10, dose arm on zgh); cq170 closed**
+  - zgk = zgh + TRAIL_STALL 10 (from 20). The value 20 was never dose-tested. On clockwisdom at r600, zgi's delivering carriers sat at Nav stall 11-19 and never reached 20.
+  - Screen zd470 (s7) is queued after zd468/zd469 (zgj). Chain cq175 (seed 86, after cq174) covers fullofsecrets, TheHeist, rose and keepout, against zgh's cells there.
+  - Falsifier: s7 net < 0; fewer chain wins than zgh; fullofsecrets + TheHeist transfer below zgh's; any rose cell lost that zgh wins; any overrun.
+  - cq170 (seed 84) had finished, for the record: zdb 14 wins, zgf 12, zgg 13.
