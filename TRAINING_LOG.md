@@ -8980,3 +8980,12 @@
     - zer: t −1.67. Stays rejected.
   - zey was resubmitted as #317 for block 2 on set 3 (clean anchors). The twin's last 12 set-2 rows are held behind it.
   - Rule from now on: zdb candidates take block 1 on set 3, and set-4 or set-2 blocks are scored against the twin with --crown.
+- 05:29: **zey's block 1 passes on the full twin (t +1.41); zfa passes both screens; zfb (zey + END_CAT 1650) on screens**
+  - zey's block 1 against the twin: 48 cells, 40 alike (23 replay the crown), D 8 (+6 −2), net +4, t +1.41.
+    - The twin against the crown: D 15 (+3 −12), net −9, t −2.32.
+    - Block 2 (set 3, #317) is playing. The accept bar is pooled t ≥ 2 with D ≥ 4.
+  - zey's extra chain cq145 (seed 71): wins 18-18 (one flip each way), transfer by r1000 0.903x, 0 exceptions.
+  - zfa (END_CAT 1650) screens: zd422 and zd423 both D 0, transfer 0.993x and 1.012x. Its chain cq146 is playing.
+  - zfb = zey + END_CAT 1650, the follow-up if zey is accepted.
+    - bundle.sh refused zey's Cfg removals, so the first zfb build was wrong. It was deleted unplayed, and zfb was rebuilt from zey's snapshot.
+    - Screens zd424/zd425 are queued.

@@ -1,0 +1,10 @@
+name=zfb
+source=bots/zey
+source_sha=2faf887d6230
+commit=f024858c
+created=2026-11-09 05:29 PST
+DESCRIPTION (05:29 11-09): zey + END_CAT 1650 (zfa's one-constant lever on zey; snapshot of zey, hand-edited after
+  bundle.sh refused zey's Cfg removals): the follow-up ready if zey is accepted. zfa's screens: zd422 D 0, 0.993x;
+  zd423 D 0, 1.012x.
+FALSIFIERS (05:29 11-09, binding): screens zd424 (s7) / zd425 (s6): t <= -1.5, any overrun, or lm transfer < 0.95x
+  rejects. Chain and replica only after zey's verdict (as zey + END_CAT, judged against zey).
