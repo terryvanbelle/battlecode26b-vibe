@@ -9200,3 +9200,7 @@
 - 11:16: **zft's 8 field matches are neutral; zfv on the replica**
   - zft (#323, 22457-22464, sent before its drop): 24 cells, 22 alike, +1 -1, t 0.00. It gained YokoOno Stash A and lost Finals where_are_you A. Replays: VM ~/diag26b/rp/zft_s3a.tgz.
   - zfv (MINE_SPREAD 2) was submitted (#324) so the replica is not idle while cq164 runs. Its set-3 block is queued (22480-22483 sent, 12 in the drain). It is withdrawn if cq164 or zd451 fails it.
+- 11:45: **zfv and zfw are inert: MINE_SPREAD is dead code**
+  - pickMine returns from the MINE_BALANCE branch (true in zdb) before MINE_SPREAD is read. zd451 (zfv s7) played identical to zdb (D 0); zd452 (zfw) was killed, cq164 stopped.
+  - zfv's 4 unsent replica rows were withdrawn; the 4 already sent (22480-22483) and the rest of #324 count as zdb-equivalent field data.
+  - Lesson: before building a Cfg-switch candidate, check that the switch's code path is reached under the base's other switches.
