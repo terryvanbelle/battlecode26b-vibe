@@ -9019,3 +9019,6 @@
   - Not tried before: `attempts.py find NET100_WAR` = 0; z1d loosened it in coop only (dropped).
   - Screens zd430/zd431; chain cq148 (seed 73, zfe/zdb vs agrab/araid) waits on the now-empty cq147 slot.
   - Seat check: zdb has 10 seat-split field cells (7 lost in seat A); the twin's HAND_FLIP changes cells evenly by seat (A +1 −6, B +2 −6), so there's no seat lever there.
+- 06:50: **zfe dropped as inert (no local second kings at war)**
+  - cq148: 0 of 24 zfe games held 2 kings at r600, short of the pre-registered bar (zdb + 3). zd430: D 0, lm 1.000x. zd431 aborted.
+  - Local wars against agrab/araid don't reach the formation conditions, so a war-formation lever can't be tested locally. cq148 runs on to give zdb's baseline.
