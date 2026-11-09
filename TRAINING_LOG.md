@@ -8667,3 +8667,10 @@
   - Instrument error in the registered mechanism clause: ReplayDump's bite row carries the damage (d) and a lethal flag (e). The replay does not record a bite's cheese, so "column e" counted lethal bites (zdz 23, zdb 31) and could not measure the lever. The do-no-harm failure drops zdz on its own.
   - zdz's king bites rose from 20 to 90. Screens zd384/zd385 were dequeued before they started.
   - Tool note: a bite's cheese can only be inferred from the biter's load (turns.tsv cheese) dropping on a bite turn.
+- 16:55: **zea = zdy + TRAP_LATE registered** (new switch; bots/zea/SNAPSHOT; zea-5f7be63e4d12)
+  - Babies lay their rat trap last in the turn, only with the action unused after the post-move grab and bites, and never as attackers.
+  - This answers zdx's field block: zdb's fast king kills became losses while babies traded bites for traps.
+  - Falsifiers:
+    1. Chain cq123 (seed 48): zea, zdy and zdb on sunandmoon, averyfineline, mincemeat and tiny vs agrab and araid, 48 games. Do-no-harm vs zdb as usual. Mechanism: traps laid with an enemy baby within dist2 2 are at most half of zdy's, and enemy triggers stay at 3 or more a game.
+    2. Screens zd386 (s7) and zd387 (s6).
+    3. Replica set 4 (zdx's set), then set 2.

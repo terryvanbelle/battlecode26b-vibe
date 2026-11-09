@@ -1,0 +1,18 @@
+name=zea
+source=bots/zdy
+source_sha=bce22e638ec3
+commit=9e9b1d7f
+created=2026-11-08 16:55 PST
+falsifiers (registered 2026-11-08 16:55 PST; chain cq123 was launched at 16:55, before any of its results existed):
+  zea = zdy + TRAP_LATE (new switch, two lines in Baby): a baby lays its rat trap last in the turn, only with the
+  action unused after the post-move grab and bites, and never as an attacker. zdx's replica block (set 4, t -3.16,
+  D 10 all lost) turned zdb's fast king kills into losses while its babies laid traps before biting.
+  1. Chain ~/diag26b/cq123 (seed 48): zea, zdy and zdb on sunandmoon, averyfineline, mincemeat and tiny, both seats
+     vs agrab and araid (48 games). Any zea overrun or exception drops it. Do-no-harm: zea wins no fewer cells than
+     zdb and loses at most 1 cell zdb won. Mechanism: rat traps zea lays while an enemy baby stands within dist2 2
+     of the layer (turns.tsv positions that round) are at most half of zdy's, and enemy rats still set off zea's
+     traps at least 3 times a game over its 16 games.
+  2. Screens on seed 1: s7 runs/zd386 vs zd343 and s6 runs/zd387 vs zd345 (t <= -1.5, any zea overrun, or transfer
+     per round under 0.97x on the length-matched cells, 0.8-1.25x; pooled if fewer than 12).
+  3. Replica block 1 on set 4 (zdx's set, so the rush cells are read directly), then set 2; the usual rules. Inert if
+     zea lays fewer than 3 rat traps a game over block 1.
