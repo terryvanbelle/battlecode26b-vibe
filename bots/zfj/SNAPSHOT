@@ -1,0 +1,23 @@
+name=zfj
+source=bots/zdb
+source_sha=638afd6102f7
+commit=3e3fc86d
+created=2026-11-09 08:14 PST
+
+08:15 zfj = zdb + RICH_LATE 950 / RICH_LATE_BANK 300 / RICH_LATE_SUR 0 (existing switch, one Cfg line; rich() is
+ledgered, K 12). From r950 to the r1150 cut a team with two kings and 300 banked (FORM_CHEESE's floor) names a third
+king's site while Econ.surplus(3) >= 0. After r1200 a team with two kings cannot form, so a third king must come
+before then. At war living kings weigh 0.5 of the points.
+Why: field FreeTheCheese B vs Merlin (set 3, lost both seats in the anchors) lost 47.4 on points at r2000 with kings
+2/1 at r1100 and 2/2 at the end; one more king scores 52.4. zdb's RICH_LATE (bank 600, surplus 3000) never fires at
+the field's ~300 r1100 banks. Locally zdb holds two kings at r1100 on Meow, keepout, minimaze and cheesefarm (cq107
+cheesefarm A/B and cq149 minimaze B vs atrap3 are 2/2 points losses).
+Falsifiers (binding):
+ 0. Ledger: lc_zfj (Meow A vs agrab seed 73) replays zdb's cq148 game exactly until lateRich first fires.
+ 1. Chain cq153 (seed 75; minimaze, cheesefarm, Meow, FreeTheCheese, keepout x agrab/atrap3 x seats, zfj and zdb):
+    a. mechanism: zfj has 3+ kings at r1200 in at least 4 of 20 cells (zdb's 3-king cells at r1200 + 4);
+    b. wins >= zdb's, and at most 1 cell lost that zdb won;
+    c. in every cell where zfj had 3+ kings at r1200, its kings at the end >= zdb's;
+    d. 0 exceptions, 0 overruns.
+ 2. Screens zd438 (s7 vs zd343) and zd439 (s6 vs zd345): screen_t t > -1.0 and length-matched transfer >= 0.97x.
+ 3. Replica set 3 (anchors 21016-21023, 21036-21043), block rules; then set 2 with the twin anchors.

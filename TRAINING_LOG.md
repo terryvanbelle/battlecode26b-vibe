@@ -9056,3 +9056,13 @@
   - zez on set 2 (22129-22132, 22251-22262; replays at VM ~/diag26b/rp/zez_s2a.tgz and zez_s2b.tgz) vs zdb's set-2 anchors: D 10 (+2 −8), net −6, t −1.90.
   - Twin-anchored rescores: zdk D 8 (+3 −5) t −0.71; zdf D 3 (+1 −2) t −0.58; zdq D 0. All stay at or below 0.
   - Now there are twin anchors for sets 2 and 4. The replica has no candidate, so the next build goes up as soon as it passes local screens.
+- 08:16: **zfj registered = zdb + RICH_LATE 950 / RICH_LATE_BANK 300 / RICH_LATE_SUR 0** (bots/zfj/SNAPSHOT; zfj-5bcb3b70d7da; existing switch, one Cfg line, rich() already ledgered K 12)
+  - Delivery lead parked: rose and minimaze stall carriers in 1-wide stems (rose's king basin opens only through the x=8-9 corridor), but zdb wins both in the set-3 anchors (rose 2-0 vs TSPAARK, minimaze 2-0 vs Xzibit), so faster delivery there flips nothing.
+  - Why zfj: at war living kings weigh 0.5 of the points, and after r1200 a team with two kings cannot form another. k3.py (VM ~/diag26b) over zdb's field r2000 games scores each with one more king at the end. Flips: FreeTheCheese B vs Merlin (47.4 -> 52.4; set 3, kings 2/1 at r1100, 2/2 at the end) and RUN A vs Merlin (46.9 -> 51.9, but 1/1 at r1100). zdb's RICH_LATE gate (bank 600, surplus 3000) never fires at the field's ~300 r1100 banks.
+  - Locally zdb holds two kings at r1100 in 10 of 47 cq106-cq152 games, including 2/2 points losses on cheesefarm A/B and minimaze B vs atrap3.
+  - Falsifiers (binding, SNAPSHOT):
+    0. Ledger check lc_zfj (Meow A agrab seed 73, running).
+    1. Chain **cq153** (seed 75, 40 games, queued behind cq152): 3+ kings at r1200 in ≥ zdb's + 4 of 20 cells; wins ≥ zdb's with ≤ 1 cell lost; end kings ≥ zdb's wherever a 3rd formed; 0 exceptions/overruns.
+    2. Screens zd438/zd439 (queued): t > -1.0, length-matched transfer ≥ 0.97x.
+    3. Replica **#320** set-3 block, all 16 requests sent (18451-18466; judge with `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`).
+  - VM disk 1.3 GB: pruned 150 replica replays older than 36 h and removed closed chain dumps cq144-cq147, cq45, cq46, cq54 (2.3 GB free).
