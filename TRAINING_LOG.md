@@ -8655,3 +8655,7 @@
     1. Chain cq122 (seed 47): clockwisdom, fullofsecrets, mincemeat and arrows vs agrab and araid, 32 games. Do-no-harm as usual. Mechanism: the cheese spent in bites is at least 2x zdb's, and the mean bite damage is above zdb's.
     2. Screens zd384 (s7) and zd385 (s6), with the transfer bar read on length-matched cells.
     3. Replica set 4, then set 2.
+- 16:39: **zdy passes cq120 and s7 zd382**
+  - cq120 (seed 45, 32 games): wins 14 of 16 to zdb's 13. Gained arrows B araid and thunderdome B araid; lost arrows A agrab (r396), 1 cell against a bar of 1. No zdy overruns. Enemy triggers: 742 of 796 laid (46 a game). Starvation 0 for both.
+  - zd382 (s7, seed 2, vs zd374): n 48, D 13, net +3, t +0.83, 0 overruns. Transfer per round 0.980x pooled and 1.011x on the 26 length-matched cells.
+  - s6 zd383 is next. Replica #303 has 16 rows waiting on the hourly limit (none sent yet). Locally the trap set is fine; zdx's block says the field punishes it.
