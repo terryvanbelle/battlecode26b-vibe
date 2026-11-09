@@ -9052,3 +9052,7 @@
   - zdy's set-3 rows were 22181-22184, 22189-22192 and 22230-22237. Replays archived to VM ~/diag26b/rp/zdy_b2s3a.tgz and zdy_b2s3b.tgz (8 each, verified).
   - Pooled with the twin-rescored block 1 (+6 −3): D 16, net 0. Neither zey's nor zdy's trap lever beats zdb once both blocks count. Trap laying is closed on zdb.
   - zez's 12 set-2 rows (22251-22262) have played; twin set-2 rescoring of zdf/zdk/zdq is next.
+- 08:06: **Set-2 anchors are crowned too (twin −6); zdk, zdf and zdq rejections stand on twin rescore**
+  - zez on set 2 (22129-22132, 22251-22262; replays at VM ~/diag26b/rp/zez_s2a.tgz and zez_s2b.tgz) vs zdb's set-2 anchors: D 10 (+2 −8), net −6, t −1.90.
+  - Twin-anchored rescores: zdk D 8 (+3 −5) t −0.71; zdf D 3 (+1 −2) t −0.58; zdq D 0. All stay at or below 0.
+  - Now there are twin anchors for sets 2 and 4. The replica has no candidate, so the next build goes up as soon as it passes local screens.
