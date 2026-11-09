@@ -97,7 +97,19 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (19:53):**
+- **Now (21:12):**
+  - Incumbent still **zdb**. zeh DROPPED (cq129 Stash xfer600 0.88x; 8 of #307 played, replays VM
+    ~/diag26b/rp/zeh_b1s3_2105.tgz; paired partial 24 cells D 2 net 0). zei DROPPED (cq130 rose xfer1000 0.75x).
+  - **zej** (20:12) = zdb + STALL_TUNNEL 30: STALL_CAT hunters whose hunt walk stalls 30 turns tunnel (Nav.tunnelTo).
+    Ledger check passed. Screen zd398 identical to zdb (inert off sealed maps); zd399 (s6) playing. Chain **cq131**
+    (seed 56) playing; clauses in bots/zej/SNAPSHOT. Replica **#308** set-3 block all sent (21627+); judge with
+    `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`, set 2 next if t > 0.
+  - Diagnosis notes: Stash losses (field vs YokoOno, local vs atrap3) are starvations. Rat traps at the exits and
+    mines kill 22-40 of our rats, and the king's alert counts enemies across the wall row (DEFEND locks the
+    gatherers). Enemy traps are invisible and vanish when they fire. Thunderdome vs Varun: 23 divers bite the king
+    once or twice each (r115-436). DefaultMedium vs waxmango: the king dies to throws.
+  - Next fresh seed: 57.
+- **Earlier (19:53):**
   - Incumbent still **zdb**. zee REJECTED (#305 block 1 set 3, D 1, t -1.00; replays VM ~/diag26b/rp/zee_b1s3_1918.tgz).
     zeg DROPPED (cq128: fullofsecrets xfer600 0.29x; its #306 block plays out unfetched). BUG_SWITCH line closed.
   - **zeh** (zdb + THREAT_WALL_REACH 5): chain **cq129** running (seed 54), screens zd394 (s7, playing) / zd395 (s6),
