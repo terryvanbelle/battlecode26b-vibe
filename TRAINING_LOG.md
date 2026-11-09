@@ -8948,3 +8948,14 @@
   - zey = zdb + RAW_TRAPS, bundled from zrw: at war, attackers with raw cheese trap the tile beside the nearest enemy baby.
     - Earlier replica runs: z0q pooled net +4 (t 0.78). zc4/zc8 were rejected for z3x's cashTick overruns and a D-1 block.
     - Chain cq144 (seed 70; Stash, cheesefarm, Nofreecheese, keepout, evileye, wallsofparadis) and screens zd420/zd421 are under way.
+- 04:08: **zey REJECTED at block 1 on set 4 (t −1.34); set 4 and set 2 found to be zdb's crowning draws, so the twin zez (#316) re-anchors them**
+  - zey (#315), 22060-22075: 48 cells, 43 alike, D 5 (gained 1, lost 4), net −3.
+    - Gained: Icarus mincemeat B.
+    - Lost: Icarus mincemeat A, tiny B; Xzibit dirtpassageway B; Merlin sunandmoon A.
+    - zd420 (s7) had passed (t +0.37, 0.996x).
+  - The same cells recur in zer's and zew's losses. zdb's set-4 anchors (20817-20851) are its accepting block 1, and set 2 (20984-20999) is block 2 (11-08 09:05). Both are crowning draws, which TRAINING_ALGORITHM calls a biased reference.
+    - Every zdb candidate since has had its block 1 judged against set 4.
+    - Set 3 (21016-21043, #295, played after the acceptance) is clean.
+  - zez = zdb + HAND_FLIP, a salted twin like z3x's z6t. Submitted as #316, with its set-4 and set-2 blocks queued (32 rows).
+  - Once in, recent set-4 blocks (zer 21938-21953, zew 21992-22007, zey 22060-22075, zeo 21800-21815) are rescored with `paired ZEZ CAND --crown ZDB`.
+  - Until then, new candidates take set 3 first.

@@ -1,0 +1,11 @@
+name=zez
+source=bots/zdb
+source_sha=638afd6102f7
+commit=90b02553
+created=2026-11-09 04:06 PST
+DESCRIPTION (04:08 11-09): zdb + HAND_FLIP = true (existing switch): a salted twin, not a candidate. zdb's set-4
+  (20817-20851) and set-2 (20984-20999) anchors are its accepting blocks 1 and 2 (crowning draws; zdb gained Finals
+  averyfineline A/B and Xzibit canyoudig A/B there). Recent set-4 rejections share lost cells (Icarus mincemeat A,
+  tiny B, Merlin sunandmoon, Xzibit dirtpassageway B: zer, zew, zey). Submitted #316; set-4 and set-2 blocks queued
+  (28 rows in the drain plus 4 sent). Use: `paired --dir /dev/shm/rp ZEZ_IDS CAND_IDS --crown ZDB_IDS`, as z6t did
+  for z3x (11-07 01:51).
