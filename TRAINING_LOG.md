@@ -9252,3 +9252,7 @@
     1. Chain cq168 (cq166's 20 cells, seed 82; control = cq166's zdb games): wins ≥ 12, at most 2 cells lost that zdb won, transfer ≥ 144,900.
     2. Screens zd459 (s7) and zd460 (s6): t > −1.5, and D > 0 on at least one.
     3. The replica rules.
+- 13:30: **zgc passes its chain and goes on the replica**
+  - cq168 (zgc on cq166's 20 cells, zdb control from cq166): 13 wins to 12. It lost 1 cell zdb won (minimaze A vs atrap3; bar 2) and gained Stash A and minimaze B vs atrap3. Transfer 167,651 vs 144,900 (1.16x): EscapeTheNight 35.7k vs 12.8k, Stash 22.1k vs 11.8k, minimaze 55.2k vs 65.6k, the others identical. 0 overruns or exceptions.
+  - zga's 105k on EscapeTheNight came mostly from WALL_HOLD, but that arm also lost minimaze; the king-side filter alone keeps a third of the gain without the minimaze losses.
+  - zgb's 12 replica matches (22579-22590) finished; zgc submitted (#327), set-3 block 22599-22606 sent, 8 in the drain. Screens zd459 (s7) and zd460 (s6) are playing; it is withdrawn if they fail.
