@@ -8756,3 +8756,26 @@
 - 19:41: **zeg DROPPED at cq128's fullofsecrets clause** (seed 53, 48 games, 0 exceptions, 0 overruns). The mechanism held: fullofsecrets flips per game 15.75 (bar <= 25), clockwisdom 35.25 (bar >= 25). clockwisdom summed xfer600 was 40 to zdb's 0 (bar: above 0 when zdb's is 0). But fullofsecrets summed xfer600 was 420 to zdb's 1,470 (0.29x, bar >= 0.9x): BUG_SWITCH costs fullofsecrets its delivery at 40 as it did at 20 (zeb cq124: 1,490 -> 440). Wins 17 to 15 (+clockwisdom A/B vs araid, +t_minus A vs araid; -rose A vs araid, lost r1660 where zdb won r1932). The BUG_SWITCH line is closed. The rest of zeg's replica block (#306; 21566-21569, 21579-21586) plays out for the record, and its 4 unsent rows are cleared.
   - **ledger check for zei passes** (falsifier 0, ~/diag26b/zeq): Meow A vs araid seed 53 replays zdb's cq128 game exactly until r664, where the first ally swap fired at a 2-wide gap through a 1-tile wall (both tiles have 4 open neighbours, as the gate allows). zei's rose A vs araid at the same seed fired 406 swaps, all in the stem, and won on points at r2000 (zdb won at r1932); it transferred 1,920 by r1000 to zdb's 2,770, though zdb did not jam in that seed. cq130 judges zei on fresh seeds.
   - **zeh submitted** (#307) with a set-3 block (Stash vs YokoOno; 16 queued) for the replica slot. Its chain cq129 runs next.
+- 20:12: **zej registered (zdb + STALL_TUNNEL 30): averystrangespace's sealed home pocket**
+  - Field: zdb's seat-split losses to YokoOno on averystrangespace and rose end at r2000 on points (avss A 45-55: cat
+    share 0.23, transfer 0.24). In 15 cached YokoOno games on those two maps seat B won 14, whoever held it. 20988/20989
+    (zdb A/B, game 1): both cats patrol the centre symmetrically; the cat damage comes from cat traps that gatherers lay
+    at the middle mine (YokoOno as B from r356; zdb as B at (34,33) from r630; zdb as A none before r1200). Our first
+    pickups: A (10,7) only until r1072; B (34,33) from r620. YokoOno works 4-5 mines from r213-472 in either seat.
+  - Cause: from A's start the no-dig region is 253 tiles (x 0-24, y 0-26) and every other mine is ~30 dirt away
+    (bfsmap.py, dirtseal.py: 47-53 steps if dug, unreachable if not). In zdb's local seed-54 games (~/diag26b/asA) the
+    king's mine list held only the home mine to r900 in both seats (ml=:7 / ml=ad), no rat's mm passed 1, and 10
+    rushers turned STALL_CAT hunters stood at (7-8, 20-26) from r100 to r900 with stalls of 500+ toward (29,29), 1-3
+    digs each. The middle mines are first picked at r908 (A) / r1199 (B), probably after cats dug through.
+  - Mine-pick and scout lines checked first (attempts find): MINE_MIRROR, MINE_RR, KMINE_SKIP, MINE_EXPLORE, NOMINE_HOME,
+    SCOUT_MINES/FRONTIER/AREA, BREAKOUT, BUG_DIG, BFLOW all rejected, dropped or parked. z1x's tunnel walk (CAT_SEEK_DIG)
+    won 3 of 4 on averystrangespace with peace cat damage 3.8-6.6k to 0, but it sat on every cat seeker and failed
+    the screen at 0.956x transfer. zej puts the tunnel walk only on attackers that already stalled 100 rounds and then
+    30 more on their hunt walk.
+  - dirtseal.py census (74 maps): sealed home mines behind 6+ dirt on averystrangespace (30), attack_on_cat (20),
+    whatsthecatdoin (14), EscapeTheNight (12), fullofsecrets (11), minimaze / seepastyourgreed (9-10), where_are_you /
+    diamond (6-9), superioristhmus (8), peaceinourtime (6).
+  - Build zej-c7f1f9c4ecc0. Nav.tunnelTo is new and base paths are untouched; one stallCat hook (settle K 20).
+    Falsifiers in bots/zej/SNAPSHOT: ledger check (VM ~/diag26b/zejq vs asA); chain cq131 (seed 56, 6 sealed and open
+    maps x agrab/araid x seats; mechanism: centre reached before r600 in >= 3 of 4 averystrangespace cells, cat damage
+    >= 1.5x, transfer >= 0.97x, wins >= zdb's); screens zd398/zd399; replica set 3 then set 2. Next fresh seed: 57.

@@ -1,0 +1,27 @@
+name=zej
+source=bots/zdb
+source_sha=638afd6102f7
+commit=f0e924ec
+created=2026-11-08 20:11 PST
+description: zdb + STALL_TUNNEL 30 (new switch). A STALL_CAT hunter whose walk to its cat or centre tile has made no progress
+  for 30 turns walks, for the rest of the game, by a new Nav.tunnelTo: no Flow or BitFlow, the dirt straight ahead dug
+  first, the bug walk digging the first dirt its sweep meets (z1x's tunnel walk, here only for idle stalled attackers;
+  z1x put it on every cat seeker and failed the screen at 0.956x transfer). One hook in Baby.stallCat (settle, K 20).
+  Diagnosis (20:12, TRAINING_LOG): averystrangespace's home pocket (253 tiles from (3,3)) is sealed; every other mine is
+  30 dirt away. In zdb's local seed-54 games no rat saw a second mine before r900, 10 rushers stood at (7-8, 20-26) from
+  r100 to r900 with stalls of 500+ toward (29,29), and peace cat damage was 0 to r900 in both seats. In the field
+  (20988/20989 vs YokoOno) whoever sits in seat B takes the cat and the game; YokoOno digs out and works the middle mine
+  from r213.
+falsifiers (20:12, registered before any game):
+  0. Ledger: zej's averystrangespace seed-54 games vs araid (VM ~/diag26b/zejq) replay zdb's (~/diag26b/asA) exactly until
+     the first tunnel-walk dig, or the build is broken (fix and re-check before chain).
+  1. Chain cq131 (seed 56; averystrangespace, EscapeTheNight, where_are_you, whatsthecatdoin, minimaze, DefaultMedium x
+     agrab/araid x both seats x zej/zdb):
+     a. any exception or overrun rejects;
+     b. mechanism: in >= 3 of the 4 averystrangespace zej cells a zej rat stands within Chebyshev 6 of the centre
+        (29,29)/(30,30) before r600, and zej's dirt digs by r600 on those 4 cells exceed zdb's;
+     c. averystrangespace peace cat damage (ours, at r1200 or the end) summed over its 4 cells >= 1.5x zdb's;
+     d. transfer by r1000 (or end) summed over all 24 cells >= 0.97x zdb's;
+     e. wins >= zdb's, and cells zdb won but zej lost <= 2.
+  2. Screens zd398 (s7, vs zd343) / zd399 (s6, vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
+  3. Replica: set 3 (averystrangespace, where_are_you, whatsthecatdoin, minimaze), then set 2.
