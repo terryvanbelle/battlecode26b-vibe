@@ -9235,3 +9235,6 @@
     2. Screens zd457 (s7) and zd458 (s6): t > −1.5.
     3. The replica rules.
   - Also on the clockwisdom loss vs HugoIngelsson: our king lists 0 mines to r300 while attackers carry 7 known mines and 180-420 cheese each. The idea is closed (zb4 ATK_NEWS, zd6, zd7, BUG_SWITCH; 56 attempts name the map), so no candidate.
+- 13:06: **zfy dropped: its s7 screen changed no cell**
+  - zd454 (zfy, MINE_NEAR 3): 48 cells, D 0, t 0.00. Picks per-cell diff −0.16 (z −0.33). Its pre-registered inert clause (D 0) drops it.
+  - cq165 so far: zfx 10 of 16, zfy 12 of 16, zdb control 7 of 8 played.
