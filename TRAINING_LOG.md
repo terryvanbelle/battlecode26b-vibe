@@ -9310,3 +9310,12 @@
   - cq173, zgi on fullofsecrets (seed 85): 4 of 4 won (zgh 3, zdb 2) with transfer 2,435 vs zgh's 1,575 and zdb's 460 (1.55x zgh). A vs agrab, which zgh starved in at r717, zgi won at r557 (transferred 525).
   - cq172 clockwisdom (zdb and zgh): picks of 6,130-14,250 a game, transfers of 0-580. zgh lost B vs agrab, a cell zdb won (r970 vs r845). zgi's clockwisdom games are next.
   - Screens: zd465 (zgh s6), then zd466 (zgi s7), zd463 (zgg s7, wrongly dropped from the queue for a minute and re-added), zd467 (zgi s6).
+- 15:03: **zgi dropped by its falsifier; zgj re-registers it on fresh data**
+  - Transfer on fullofsecrets + clockwisdom: zgi 2,435 vs zgh 1,935, which is 1.26x against a bar of 1.3x.
+    - fullofsecrets alone: 1.55x, and zgi won 4 of 4 to zgh's 3.
+    - clockwisdom: zgi 0, zgh 360. Every bot transfers 0-580 there and both teams starve; wins are zgi 1, zgh 1, zdb 2.
+  - zgi's screens zd466/zd467 were dequeued.
+  - At r500 on clockwisdom A (zgh): three attackers held 1,290/510/280 raw with Nav stalls of 89-114 toward the enemy king at (2,49). The king knew no mine (km=n0, inc 0). That is the map's old fault (11-09: "attackers hold the mine knowledge").
+  - **zgj** = zgi unchanged, re-registered on fresh data (precedent zel/zeo).
+    - Chain cq174 (seed 86, after cq173): zgh and zgj on fullofsecrets, TheHeist (zb2's stalled-attacker map), rose and keepout, agrab/atrap3 x seats, 32 games.
+    - Falsifier: fullofsecrets + TheHeist transfer < 1.2x zgh's; fewer wins than zgh; any overrun; any rose or keepout cell lost that zgh wins.
