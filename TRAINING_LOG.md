@@ -9037,3 +9037,6 @@
   - cq149 (seed 74, vs atrap3): fires on our rats zff 1066 vs zdb 1012 (1.05x; bar 0.90x), deaths 701 vs 666, wins 5 vs 7 (lost minimaze A, rose A/B; gained minimaze B). zd432 had passed (t −0.44, lm 1.025x). zd433 aborted.
   - atrap3 reproduces the field trappers' rate: zdb takes 84 fires a game, close to AdamTan12_Finals's 99 in our field losses. It's a usable local bench for the trap family.
   - zfg (RISK_ADAPT 2) is next: zd434 playing, cq150 after cq149.
+- 07:32: **zfi = zdb + RUSH_BURN 6 (third trap-family arm)**
+  - cq149 vs atrap3: 190 of zdb's ~1,000 fires came before r100, in the rush. Fire turns carry no move code (the victim's row is its death row), so the move reasons can't be split.
+  - Screens zd436/zd437; chain cq151 behind cq150.
