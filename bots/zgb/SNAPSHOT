@@ -1,0 +1,8 @@
+name=zgb
+source=bots/zdb
+source_sha=638afd6102f7
+commit=194b965b
+created=2026-11-09 12:22 PST
+created=2026-11-09 12:23 PST
+change=Cfg.MINE_BURN 50 (z0u's code ported: Comms SQ_MBURN=10 + burn stamps in the mine words' bits 6-9, King.noteBurn, Baby.burnSay/mineBurn/mineBanned + pickMine filter, RobotPlayer hpStart hook)
+falsifiers=(1) chain cq167 (seed 83; keepout, mercifullattice, dirtpassageway, ratsareants, arrows, wallsofparadis vs atrap3, both seats; 12 games each, zdb control): our rat deaths by trap <= 0.9x zdb's, else dropped as inert; wins >= zdb's - 1, else rejected; any exception or overrun rejects; (2) screens zd457 (s7), zd458 (s6): paired win t vs zdb > -1.5; (3) replica block rules

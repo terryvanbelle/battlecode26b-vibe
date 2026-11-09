@@ -9224,3 +9224,14 @@
 - 12:18: **zfx's s7 screen passes its bar narrowly, but picks fall 7%**
   - zd453 (zfx, MINE_NEAR 2): 48 cells, D 5, net −3, t −1.35 (bar −1.5). Picks per 100 rat-turns 31.63 vs 34.11 (z −2.28).
   - So far the mine cap costs cheese instead of saving trips. zfx stays pending only because its replica block 1 is half sent (8 of 16); the block decides. zfy (cap 3) screen zd454 is playing.
+- 12:23: **zgb registered: MINE_BURN 50 (z0u's switch, ported to zdb)**
+  - Death causes in zdb's cached field games (scratch deathc.py, trapw.py, trapspot.py on VM ~/diag26b): our rats die to enemy rat traps 14.7 times a lost game (9.4 won), and the opponents lose 0.1 to ours.
+    - In losses 9.4 a game fall on our half, away from both kings, mostly after r400.
+    - Of 595 in losses, 316 were within Chebyshev 4 of a mine, and 289 within 3 tiles and 100 rounds of an earlier one.
+    - keepout vs AdamTan12_Finals: 96-97 a game. Finals laid 327 traps in one game and every one fired on us, some spots re-laid 8 times (45,26 beside our king).
+  - MINE_BURN was built as z0u on u9p (11-06) and never judged: its screen zd113 stayed queued. zgb ports it unchanged except the squeak id (SQ_MBURN 10; 9 is SQ_CASH in zdb).
+  - Falsifiers:
+    1. Chain cq167 (seed 83; keepout, mercifullattice, dirtpassageway, ratsareants, arrows, wallsofparadis vs atrap3, both seats, zdb control): trap deaths ≤ 0.9x zdb's, else dropped as inert. Wins ≥ zdb's − 1, else rejected. Any exception or overrun rejects.
+    2. Screens zd457 (s7) and zd458 (s6): t > −1.5.
+    3. The replica rules.
+  - Also on the clockwisdom loss vs HugoIngelsson: our king lists 0 mines to r300 while attackers carry 7 known mines and 180-420 cheese each. The idea is closed (zb4 ATK_NEWS, zd6, zd7, BUG_SWITCH; 56 attempts name the map), so no candidate.
