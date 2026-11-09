@@ -9029,3 +9029,7 @@
   - zff = zdb + FACE_HOLD (one Cfg line). Screens zd432/zd433; chain cq149 (seed 74, zff/zdb vs atrap3) checks the mechanism. Replica on set 3, which holds Finals, Icarus and Varun.
   - zfe's cq148 runs to the end as zdb's baseline.
   - 06:58: zfg = zdb + RISK_ADAPT 2 as a sibling arm (screens zd434/zd435, chain cq150 vs atrap3 behind cq149). Only the arm that cuts chain fires more goes to the replica.
+- 07:08: **zez resubmitted (#319) to send its 12 held set-2 rows**
+  - zdy's 16 set-3 rows are all sent. zey's dumps show rows bind to the build at request time: 22175-22180 played as zey after zdy's 05:53 submission.
+  - zez's set-2 rows give twin anchors for set-2 rescoring (zdf, zdk, zdq) and for future set-2 blocks.
+  - cq148 final: zfe 23/24 wins, zdb 23/24; 2 kings at r600 in 0 zfe games and 1 zdb game.
