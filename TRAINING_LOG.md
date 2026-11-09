@@ -9282,3 +9282,18 @@
   - Submitting it now keeps the replica busy while zd463 and cq170 run. It is withdrawn if either fails it (zgb precedent).
   - zgg (KING_THREAT_D2 25) went up rather than zgf (13) because 7 of zdb's 10 field seat-split losses ended in a king kill before r2000. zgc's fewer-pulls direction just failed on the replica.
   - 22658-22669 were sent; 4 rows (Icarus, Merlin) are in the drain. Block rules as usual: t <= 0 after block 1 rejects.
+- 14:38: **zgh registered: z7x's delivery trail ported onto zdb**
+  - zdb's field king-kill losses (dumpcache, `~/diag26b/kdeath.py`): 20 of 36 are starvation, often with 7-19 babies alive.
+  - `~/diag26b/starve.py`:
+    - fullofsecrets B vs Merlin picked up 5,855 and delivered 300 in 11 transfers. Carriers holding 40-270 raw sat at (31-33, 14-17), against the wall of the pocket round the king at (37,12); the pocket's only open way runs through (39,1).
+    - clockwisdom (A and B vs Xzibit, B vs Varun): 2,000-4,500 raw held at Chebyshev 34-48 while the king starved.
+  - TRAIL is what z7x built for this: Cfg's note says Flow paths to a pocketed king failed in 131 of 490 searches on fullofsecrets.
+    - On z3x it flipped +Merlin fullofsecrets B and +Varun clockwisdom B (z7x block 1 t 1.41, void for 3 s6 overruns).
+    - z9d (with the overrun fix) pooled t 0.58 and lost Meow B vs YokoOno.
+    - It never reached the zdb line: zdb's TRAIL is off, and zdb has the old code without the per-trip reset.
+  - zgh = zdb plus the exact z3x-to-z7x diff (Baby 29, Cfg 16, RobotPlayer 2, Trail 74 diff lines, the same sizes).
+  - Screens: zd464 (s7) and zd465 (s6) went to the head of the queue, ahead of zd463. zd462 (zgf) is running.
+  - Chains:
+    - cq171 (seed 85): zdb on fullofsecrets, agrab/atrap3 x seats.
+    - cq172 (seed 85, after cq171): zgh on the same 4 cells, plus zdb and zgh on clockwisdom, rose and keepout.
+  - Falsifier: any overrun in s6 or the chains; s7 net < 0; cq172 losing a rose or keepout cell that zdb wins; fullofsecrets transfer not above zdb's in cq171.
