@@ -9045,3 +9045,6 @@
 - 07:49: **Laptop disk freed: git loose objects packed (173 MB to 3.7 MB)**
   - The root disk hit 0 MB mid-commit; attempts.csv and the log were checked intact. All 3,377 loose objects were packed through /dev/shm, verified (no missing objects, fsck connectivity clean), and then `git prune-packed` was run. The disk now has 183 MB free.
   - The zfg timestamps were corrected to 07:45 (time taken before the entry).
+- 07:58: **zfi (RUSH_BURN 6) dropped as inert on cq151: fires 1.18x; burn-signal family closed again on zdb**
+  - Against atrap3, fires on our rats: zdb 1012, FACE_HOLD 1066, RISK_ADAPT 2 1170, RUSH_BURN 6 1197. Wins: 7, 5, 3, 6. Every adaptive arm takes more fires and loses more rats than zdb's default TrapRisk mask.
+  - Holding, sidestepping or rerouting rushers once burned keeps our rats inside the trapper's laying range for longer. The field's trap losses need a different counter, such as killing the layer (it's stunned for 15 cooldown after a lay) or our own traps (zdy, on the replica now).

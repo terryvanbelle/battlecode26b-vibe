@@ -4,3 +4,4 @@ source_sha=638afd6102f7
 commit=b8366101
 created=2026-11-09 07:32 PST
 FALSIFIERS (07:32, before any game): screens zd436/zd437: t <= -1.5, overrun/exception, lm < 0.95x reject. cq151 (seed 74 vs atrap3): fires > 0.90x zdb's 1012 (cq149) drops as inert; wins < 6 rejects. Replica set 3 with fires vs Finals/Icarus/Varun > 0.85x zdb anchors rejecting.
+OUTCOME (07:58): DROPPED as inert on cq151: fires 1.18x zdb, deaths 751 vs 666, wins 6 vs 7; zd436 aborted, zd437 dequeued
