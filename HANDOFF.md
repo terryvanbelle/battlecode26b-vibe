@@ -97,7 +97,16 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (00:55 11-09):**
+- **Now (11:47 11-09):**
+  - Incumbent still **zdb**. Since 00:55: zes..zfu all dropped or rejected (see attempts.csv). zfv/zfw INERT
+    (MINE_SPREAD is unreachable under MINE_BALANCE=true: check a switch's path is live before building).
+  - Field diagnosis (36 cached zdb losses, /dev/shm/kd/spend.py): delivered by r300 0.70x the opponents' with equal
+    baby counts; 0 rat traps laid vs their 708; most losses end in king starvation.
+  - **zfx** (MINE_NEAR 2) / **zfy** (MINE_NEAR 3): chain **cq165** (seed 81, zdb control; score with
+    `~/diag26b/kthrowc.py ~/diag26b/cq165 zfx zfy zdb` for wins), screens zd453/zd454 (s7), replica **#325** (zfx)
+    set-3 block (22513-22516 sent, 12 in the drain). Clauses in each SNAPSHOT.
+  - Next fresh seed: 82. Next screen id: zd455. Next free name: zfz is taken (untracked); use zga+.
+- **Earlier (00:55 11-09):**
   - Incumbent still **zdb**. Raiding (RAID_EVERY, zen/zer) is CLOSED: zer rejected at replica block 1 (set 4,
     21938-21953, t -2.71; it loses short fight-force wins). MINE_MIRROR (zep) inert, dropped; zeq dropped; zeo rejected.
   - **zes** (00:13) = zdb + MINE_EVICT 20 (at war, a healthy empty-handed gatherer fights an enemy baby on its own
