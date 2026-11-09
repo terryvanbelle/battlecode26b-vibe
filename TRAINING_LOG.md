@@ -8779,3 +8779,15 @@
     Falsifiers in bots/zej/SNAPSHOT: ledger check (VM ~/diag26b/zejq vs asA); chain cq131 (seed 56, 6 sealed and open
     maps x agrab/araid x seats; mechanism: centre reached before r600 in >= 3 of 4 averystrangespace cells, cat damage
     >= 1.5x, transfer >= 0.97x, wins >= zdb's); screens zd398/zd399; replica set 3 then set 2. Next fresh seed: 57.
+- 20:18: **zeh dropped at cq129; zej ledger check passes, #308 submitted**
+  - zeh (THREAT_WALL_REACH 5) cq129: 24 games, 0 exceptions, 0 overruns. Stash transfer by r600 over its 6 cells was
+    20,678 vs zdb's 23,378 (0.88x; registered bar 1.3x), so DROPPED. The other clauses: Stash A vs agtr 3,268 by r400;
+    wins 7 to 7; the evileye cells identical to zdb's. Screen zd394 had passed (t +1.43, length-matched 1.007x); zd395
+    was stopped by pid. 8 of its #307 matches played (21600-21603, 21612-21615) and stay unfetched; the other 8 were
+    removed from queue.tsv.
+  - zej ledger check (VM ~/diag26b/zejq vs asA, averystrangespace seed 54 vs araid): A diverges from zdb at r266, where
+    rushers 13112 and 10558 make the first tunnel digs right after 13112's hunt stall reached 30; B diverges at r628/629
+    (11398, stall 57 toward (30,30)). Results: A W r1951 (transfer 8,688, cat damage 8,000, 349 digs); B W r2000
+    (transfer 8,777 vs zdb's 4,960, cat damage 5,977 vs 4,397).
+  - The replica slot freed by zeh went to zej: submission #308, set-3 block queued (16, hourly limit).
+  - Disk: pruned 41 replica files older than 36 h and removed the closed chains cq118-cq125 (2.1 -> 2.9 GB).

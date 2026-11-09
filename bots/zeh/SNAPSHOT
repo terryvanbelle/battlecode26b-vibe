@@ -10,3 +10,7 @@ falsifiers (registered 19:14, before any game; binding, mechanism clauses includ
   2. Same chain: zeh must win no fewer of the 6 evileye cells than zdb (the reach test's job), and no fewer of all 12 cells than zdb. Zero exceptions and overruns.
   3. Screens s7 (vs zd343) and s6 (vs zd345) under the standing bars (t > -1.5, no overrun, length-matched transfer >= 0.97x).
   4. Replica: the standing block rules (block 1 t <= 0 rejects; pooled t <= 1 after block 2 rejects; accept t >= 2 with D >= 4).
+outcome (20:18): DROPPED at falsifier 1 (chain cq129, 24 games, 0 exceptions, 0 overruns): Stash transfer by r600 over the
+  6 Stash cells 20,678 vs zdb's 23,378 (0.88x; bar 1.3x). Stash A vs agtr 3,268 by r400 (passes the > 1,000 clause); wins 7
+  to 7; evileye cells identical to zdb's. Screen zd394 (s7) had passed (n 48, D 2, t +1.43, length-matched 1.007x); zd395
+  stopped. Replica #307 set-3 block: 8 played (21600-21603, 21612-21615), unfetched; the other 8 removed from the queue.
