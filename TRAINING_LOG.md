@@ -8852,3 +8852,7 @@
 - 23:51: **zeo REJECTED at replica block 1; zen submitted (#311), set-4 block queued**
   - zeo (zem's code, #310 build) on set 4, 21800-21815 vs anchors 20817-20824, 20842-20845, 20848-20851: 48 cells, 48 alike, D 0, t 0.00. Block 1 rejects at t ≤ 0. Replays are in VM ~/diag26b/rp/zeo_b1s4.tgz. Chain cq135 was cancelled unplayed, and cq136 (zep) now waits directly on cq134.
   - zen: #311 accepted; 16 set-4 rows are queued in research/panel/queue.tsv because of the hourly limit. cq134 at 36/48: zen far 652 to zdb's 393, farPick 894 to 584; one flip lost (DefaultMedium A agrab), none gained.
+- 23:53: **zeq registered: zep + CHIRAL_SYM + SYM_GOSSIP + SYM_HEAR_TILE; chain cq137 (seed 63, paired with zep's cq136 cells) and screens zd408/zd409 queued**
+  - Why: MINE_MIRROR lists nothing until the king's mask is one symmetry. In cq134 (scratch symres.py) the first king resolves at r50 on DefaultMedium, r91-210 on mercifullattice/Nofreecheese/ratsareants, and r234-1009 on wallsofparadis. zdb's king on ratsareants never resolved in 3 of 4 cells.
+  - Of 136 off switches in zdb's Cfg, 87 were never tried on the z-line. CHIRAL_SYM (u4z on u4e) passed two screens (+3 each, 8 of 9 changed cells on seat B), then lost 1 net at replica block 1 (t −0.38). It never had MINE_MIRROR to feed.
+  - Falsifiers in bots/zeq/SNAPSHOT: vs zep cell by cell. Cells resolved by r50 must be ≥ zep's + 6, with km600 ≥ zep's, transfer ≥ 0.97x, wins ≥ zep − 1 and ≤ 2 flips lost. Screens reject at t ≤ −1.5, any overrun, or lm transfer < 0.97x.
