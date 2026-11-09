@@ -10,3 +10,7 @@ falsifiers (registered 19:32, before any result is read; binding, mechanism clau
   1. Chain cq130 (seed 55; rose, Stash, minimaze, EscapeTheNight, DefaultMedium, Meow; vs agrab and araid; both seats; zei and zdb; 48 games). Any exception or overrun rejects. Mechanism: mean ally swaps per rose game (our rats dropping our own rats, actions.tsv) >= 5, and summed rose transfer by r1000 (or the end) over the 4 rose cells >= 1.5x zdb's. Exactness: on DefaultMedium and Meow every zei game has zdb's winner, end round and transfer, unless a swap fired in it. Results over the 24 cells: zei's wins >= zdb's, and cells zdb won but zei lost <= 2.
   2. Screens s7 (vs zd343) and s6 (vs zd345): t <= -1.5, any overrun, or length-matched transfer < 0.97x rejects.
   3. Replica: block 1 on set 4 (rose vs YokoOno), then set 1 (rose vs Icarus); block 1 rejects at t <= 0, pooled t <= 1 after block 2 rejects, accept at t >= 2 with D >= 4.
+outcome (20:46): DROPPED at falsifier 1 (chain cq130, 48 games, 0 exceptions, 0 overruns). Mechanism fired (our drops per
+  rose game 184-591, zdb 0), but rose transfer by r1000 (or end) over the 4 rose cells was 7,580 vs zdb's 10,165 (0.75x;
+  bar 1.5x). DefaultMedium identical; Meow within 3%. Wins 21 to 21 (gained Stash A vs agrab, lost minimaze A vs
+  agrab). Minimaze swaps 119-341 a game. Screen zd396 (s7) n 48, D 5, t -0.44, length-matched 1.011x; zd397 stopped.

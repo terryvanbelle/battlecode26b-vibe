@@ -8791,3 +8791,20 @@
     (transfer 8,777 vs zdb's 4,960, cat damage 5,977 vs 4,397).
   - The replica slot freed by zeh went to zej: submission #308, set-3 block queued (16, hourly limit).
   - Disk: pruned 41 replica files older than 36 h and removed the closed chains cq118-cq125 (2.1 -> 2.9 GB).
+- 20:46: **zei dropped at cq130 (narrow-gated corridor swap)**
+  - 48 games, 0 exceptions, 0 overruns. The swaps fired (our drops a rose game 184-591; zdb 0), but rose transfer by r1000
+    over the 4 rose cells was 7,580 vs zdb's 10,165 (0.75x; registered bar 1.5x), so DROPPED. Swapping in the stem
+    did not speed delivery; it slowed it. DefaultMedium was identical and Meow within 3%; minimaze swapped 119-341 times
+    a game. Wins 21 to 21 (gained Stash A vs agrab, lost minimaze A vs agrab). Screen zd396: t -0.44,
+    length-matched 1.011x; zd397 was stopped by pid. The corridor-swap line (SWAP_HOLD/YIELD/NO_ALONG/NARROW) is
+    closed again.
+  - Field check for zej (coop-only memory note): field averystrangespace games stay in cooperation until r1040 (20988)
+    and r693 (20989), and all 33 of our rats are still in the sealed pocket at r400 in 20988, so the tunnel trigger
+    (r266 A / r628 B locally) has a window in the field. Local stalled-hunter census (huntstall.py, cq126-cq129: Meow,
+    Nofreecheese, Stash, arrows, clockwisdom, evileye, fullofsecrets, rose, t_minus, uneruesansfin, wallsofparadis,
+    whatsthecatdoin): 0 hunters stalled 30+ on every map but rose (2 at one round), so zej should be inert off the
+    sealed maps.
+  - zej's tunnelers on averystrangespace A (zejq vs asA): first rat within Chebyshev 6 of the centre at r352 (zdb
+    r910); first middle-mine pickups r350 (zdb r908); the king's list gains (25,26) and (53,4) by r500 (zdb's holds
+    only the home mine to r800).
+  - Chain cq131 (zej) starts now; screen zd398 playing, zd399 queued; replica #308 set 3 queued.
