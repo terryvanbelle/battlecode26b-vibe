@@ -97,7 +97,18 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (11:47 11-09):**
+- **Now (14:38 11-09):**
+  - Incumbent still **zdb** (resubmitted #328 after zgc's block-1 reject). zga-zge dropped or rejected (WALL_HOLD,
+    MINE_BURN, KING_WALL_THREAT lines closed).
+  - **zgh** (z7x's delivery trail ported exactly onto zdb; field king starvation in pockets, `~/diag26b/kdeath.py`
+    and `starve.py` on build/dumpcache): screens zd464 (s7) / zd465 (s6) at the head of runs/screenq.txt; chains
+    cq171 (zdb control, fullofsecrets) then cq172 (zgh + zdb on clockwisdom/rose/keepout), seed 85. Score with
+    `python3 ~/diag26b/chsc.py ~/diag26b/cq172 zdb zgh`. Next for the replica if it passes.
+  - **zgg** (KING_THREAT_D2 25) on the replica (#329, set-3 block 1: 22658-22669 + 4 in the drain; judge with
+    `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`). **zgf** (13) screen zd462 running, zgg's zd463 queued;
+    chain cq170 (zdb/zgf/zgg, seed 84) running.
+  - Next fresh seed: 86. Next screen id: zd466. Next chain: cq173. Next free name: zgi.
+- **Earlier (11:47 11-09):**
   - Incumbent still **zdb**. Since 00:55: zes..zfu all dropped or rejected (see attempts.csv). zfv/zfw INERT
     (MINE_SPREAD is unreachable under MINE_BALANCE=true: check a switch's path is live before building).
   - Field diagnosis (36 cached zdb losses, /dev/shm/kd/spend.py): delivered by r300 0.70x the opponents' with equal
