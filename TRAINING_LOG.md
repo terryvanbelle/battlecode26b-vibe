@@ -9435,3 +9435,4 @@
   - zdb's boot (under 18 babies) and war (enemies in sight) spawns skip the income test and spend to 300. zgv raises both floors to 500.
   - Screen zd480 queued; chain cq183 (seed 91, five set-3 loss maps x A/B x agrab/atrap3) running.
   - Falsifier: zd480 net < 0 or t < 0, any overrun, or cq183 wins below zdb or transfer under 0.95x.
+  - zgw registered (19:16) as the dose arm: CORE_FLOOR / WAR_FLOOR 700. Screen zd481 queued behind zd480; same falsifier.
