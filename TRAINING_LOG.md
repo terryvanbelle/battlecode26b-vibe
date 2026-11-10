@@ -9337,3 +9337,9 @@
   - Screen zd470 (s7) is queued after zd468/zd469 (zgj). Chain cq175 (seed 86, after cq174) covers fullofsecrets, TheHeist, rose and keepout, against zgh's cells there.
   - Falsifier: s7 net < 0; fewer chain wins than zgh; fullofsecrets + TheHeist transfer below zgh's; any rose cell lost that zgh wins; any overrun.
   - cq170 (seed 84) had finished, for the record: zdb 14 wins, zgf 12, zgg 13.
+- 16:00: **zgh rejected at replica block 1; zgj passed cq174 and is submitted (#331)**
+  - zgh (#330), set 3 (22708-22711, 22716-22727): 48 cells, 46 alike, D 2. Both differing cells were lost: Finals where_are_you A and Varun corridorofdoomanddespair B. Net −2, t −1.41. Replays: VM ~/diag26b/rp/zgh_b1.tgz.
+  - Varun corridor B was also lost by zgc and zgg, the last three set-3 candidates, all different mechanisms; zfx won it. zdb's single reference win there looks like noise. The rule stands: block 1 rejects at t <= 0.
+  - The trail did not flip fullofsecrets or clockwisdom on set 3: neither map is in set 3's draws (set 2 held both for z7x).
+  - cq174 (seed 86), zgj vs zgh: fullofsecrets + TheHeist transfer 12,651 vs 8,878 (1.42x, bar 1.2x). Wins 7 vs 6, one differing cell (+fullofsecrets B vs agrab, W2000 where zgh lost at r1115), 0 overruns. That passes the falsifier.
+  - zgj is submitted as #331 with its set-3 block. The hourly limit holds all 16 rows in the drain. It is withdrawn if zd468 (s7, playing) or zd469 (s6) fails it.
