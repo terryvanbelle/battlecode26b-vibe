@@ -10207,3 +10207,7 @@
 - 15:09 (11-10): **zii passes its last local gate (s6 zd538: n 44, D 3, net +3, t +1.77, 0 own overruns)**
   - zii (ledgered AMMO_AWAY) has now passed s7, s6 and chain cq214. It goes on the replica after zio's block.
   - Chains at 15:09: cq223 zis 14 of 17 vs zdb 10 of 16; cq224 zit 7 of 10 vs zdb 5 of 8 (+cheesebottles A and B vs agrab, where the switch fires).
+- 15:20 (11-10): **ziu registered (RUSH_HUNGRY 300, zit's dose arm); zis chain cq223 at 15 of 20**
+  - King and bank timelines of zdb's 20 set-3 anchor losses: the starvation losses are mostly single-king games with near-zero income. Stash B transferred 140 cheese by r555, wallsofparadis A 1,170 by r715, mincemeat B 815 by r472, externalsustenance A 715 by r439. The bank crossed 300 around r300-560. At 150 a converted rusher has about 75 rounds of upkeep left, so ziu fires at 300. Wins dip under 300 before r600 too (where_are_you B, clouds B, corridorofdoom A/B, mincemeat A, collegejunior FreeTheCheese A), so this arm risks more.
+  - Two-king starvations (Merlin FreeTheCheese A, cheesebottles B) formed the second king at r343-760 with 249-524 banked.
+  - ziu: chain cq225 (ziu rows only, seed 129, scored against cq224's zdb rows) starts when cq223 ends; screens zd561/zd562 at the queue tail. zih's information-only screens zd539/zd540 are out of the queue.
