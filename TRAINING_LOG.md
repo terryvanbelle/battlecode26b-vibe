@@ -9653,3 +9653,10 @@
   - zd499 (s7) was identical to zdb in all 48 cells, and zd500 (s6) was identical at 42 of 48.
   - All 16 of zhk's replica matches (#341) were sent, so they count as information only. zhl submitted as #342, with its set-3 block (16) in the drain.
   - The formation line (zhi, zhk) is closed for now: removing the mid-game king costs transfer, and loosening its gate changes nothing locally.
+- 01:21 (11-10): **zhl rejected at its chain**
+  - cq196 (complete): zhl won 11 to zdb's 12, failing "wins ≥ zdb". The one differing game was knifefight B vs agrab, lost at r21 where zdb won at r30. 0 overruns; transfer identical (13,310).
+  - zd501 (s7) replayed zdb in all 35 cells played before I stopped it; zd502 was dropped unplayed. Outside the chain, the hold barely fires.
+  - Information-only replica blocks, compared match by match against zdb's set-3 anchors (no replays fetched):
+    - zhf (23102-23117), zhh (23172-23187) and 23135-23138 matched zdb's scores in every match.
+    - zhi's block lost 23194 (Finals keepout A, 0 vs 1). The #340 block (zhj) lost 23325 (spsquared TheHeist A, 2 vs 3) and 23328 (Finals keepout B, 0 vs 1). None gained a match.
+  - Lesson for registrations: "net ≥ 0" and "wins ≥ zdb" reject on one coin-flip cell (a r21 knifefight game). From zhm on, the gates are screen t > -1.5 with no overrun, and chain wins ≥ zdb − 1.
