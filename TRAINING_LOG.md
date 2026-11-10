@@ -10020,3 +10020,11 @@
   - Replica order: zif (in the drain), then zih ahead of zig.
   - Lesson: on zdb, any new code that runs every turn re-rolls fragile set-3 cells. Ledger every switch that runs
     when it does not act.
+- 10:53 (11-10): **zii replaces zig: AMMO_AWAY under the ledger**
+  - zig's ammoAway check runs on every war turn without a ledger, so it would re-roll fragile cells as zie did. zig
+    is withdrawn unplayed.
+  - zii = zdb + AMMO_AWAY with a Baby.moveDecision hook, K 11 (9, plus iload and ifeq on the flag). Compiled
+    f4b7b62c858b.
+  - Ledger check: tiny vs agrab seed 118 matches zdb's game until r28, the first AMMO_AWAY step (mv=A). That game was
+    lost at r66; zdb won it at r79.
+  - Screens zd537/zd538 and chain cq214 were swapped to zii before they started. Falsifiers are zig's, carried over.
