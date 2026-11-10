@@ -10095,3 +10095,12 @@
       - zim first diverges at r463: a carrier's step reads the marked grid.
     - Screens zd547/zd548 head the queue; chain cq219 (seed 125) runs. If it passes, zim joins zil's members in the
       next bundle.
+- 12:31 (11-10): **zim dropped by its chain; zil passes both screens; zih's chain 17 vs 13**
+    - zim, cq219 (seed 125): 14 of 20 to zdb's 16, below the bar of 15. It lost DefaultMedium A and corridorofdoom A
+      (both vs atrap3) and gained nothing. zd547 was stopped at 16 of 48 and zd548 dequeued.
+    - zil, s6 zd546: n 44, D 6, net +4, t +1.67, 0 own overruns. Falsifiers 1 and 2 are passed.
+    - zil, replica #360, first 24 cells: 22 alike, D 2 (+Varun thunderdome B, -YokoOno externalsustenance B), net 0.
+      externalsustenance B was also lost by zho and zid. Eight rows are still playing.
+    - zih (RESCUE, ledgered), cq215 (seed 121): 17 of 20 to zdb's 13, 0 overruns. Gained DefaultMedium A,
+      corridorofdoom B, thunderdome B, and tiny A and B vs atrap3; lost tiny B vs agrab.
+    - zik, cq217: 10 to 9 after 12 of 20 games.
