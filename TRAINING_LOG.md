@@ -9631,3 +9631,17 @@
     2. zd500 (s6): net ≥ 0, no overrun.
     3. Chain cq195 (seed 102; DefaultLarge, FreeTheCheese, cheesebottles, peaceinourtime and fullofsecrets × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb's; transfer ≥ 1.0x; games with 2+ kings at r1000 > zdb's (VM ~/diag26b/kingsc.py).
   - Replica: #341, with its set-3 block (16) in the drain.
+- 00:48 (11-10): **zhl registered: no spawn into an outnumbered fight** (zdb + SPAWN_HOLD 13 / SPAWN_HOLD_MIN 2, new switch; compiled 43e357274acc)
+  - Switch: at war, King.spawn holds while 2 or more enemy babies within dist² 13 of the king outnumber our babies there. The king's action then goes to bite(), which runs right after spawn(). The hook is ledgered (G.settle, K 18), and allies are sensed only once 2 enemies are that close.
+  - Why: at war zdb aims the spawn tile at the first sensed enemy. Against thewaxmango (DefaultMedium and tiny, lost in both seats on set 3), the newborn is grabbed and thrown into our king, 11-12 hits a game for 330-410 of its 600 HP.
+  - Prior work: WAR_FACE (zfo, zfp) turned the king. SPAWN_AWAY (zfs) spawned on the far side and lost every knifefight game. Holding only while outnumbered has not been tried.
+  - Falsifiers (binding):
+    1. zd501 (s7): net ≥ 0 and t ≥ 0, no overrun.
+    2. zd502 (s6): net ≥ 0, no overrun.
+    3. Chain cq196 (seed 103; tiny, DefaultMedium, DefaultSmall, knifefight and thunderdome × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb's, 0 overruns.
+    - Dropped as inert if all three replay zdb cell for cell.
+  - Also: VM disk was at 1.1 GB. I removed the closed chain dumps cq189-cq193 and pruned 149 replays older than 36 hours on /srv, which brought it to 1.8 GB. On the laptop I packed 1,710 loose git objects (100 MB to a 1.9 MB pack, verified 0 missing, then prune-packed), so the root disk went from 38 MB to 135 MB free.
+  - Diagnosis notes (21043, FreeTheCheese B vs Merlin):
+    - Our rats are loaded on 26.5% of their turns to Merlin's 40%.
+    - Our empty rats stand still on 10.5% of their turns to Merlin's 5.4%, mostly at both mouths of the 1-wide x=30 corridor ((30,16)-(30,18) and (29-31,12)). That is the rose-stem jam again; the corridor swap line (SWAP_*, zei) is closed.
+    - Cats killed 115 of ours by pounce, 59 of them adjacent biters. Field-wide, cat deaths are even between the sides (11-07 study), so that line stays parked.
