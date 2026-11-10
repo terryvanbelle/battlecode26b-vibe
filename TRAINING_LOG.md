@@ -9599,3 +9599,14 @@
     - As A, our second king formed at r400 and died by r500, and our babies fell from 29 to 19.
     - As B, our r750 second king was gone by r1300.
     - Merlin held one king until r900-1100 on a 3,000+ bank. Both seats show the mid-game formation cost zhi removes.
+- 23:19: **zhj registered: cat traps from a 300 bank** (zdb + TRAP_FLOOR 300, from 600; never tuned; compiled 64aa364467c6)
+  - War points are 0.3 cat-damage share, 0.5 king share and 0.2 transfer share. In zdb's r2000 baseline games the two sides' cat damage sums to exactly 8,000, so the cats die before the end and their damage is a race.
+    - Points losses vs atrap3: arrows B and evileye A, each lost at cat share 0.49 with transfer share 0.50-0.51.
+    - Merlin FreeTheCheese B (21043): we laid 14 cat traps to Merlin's 26, while our bank sat at 200-500.
+  - A cat trap costs 10 and deals 100, ten times a paid bite's rate (z1j's finding). The reactive trap (tryCatTrap) works at war, but it needs getAllCheese ≥ TRAP_FLOOR. The lane traps are coop-only and stay at CAT_LAY_FLOOR 400.
+  - Falsifiers (binding):
+    1. zd497 (s7): net ≥ 0 and t ≥ 0, no overrun.
+    2. zd498 (s6): net ≥ 0, no overrun.
+    3. Chain cq194 (seed 101; cheesefarm, arrows, evileye, FreeTheCheese and peaceinourtime × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb's; summed cat traps laid > zdb's, so the mechanism fires; summed cat damage ≥ zdb's; transfer ≥ 0.97x.
+  - cq194's first launch waited on the wrong script and started 2 games beside cq193. I killed it, removed its partial output, and relaunched it behind cq193.
+  - Queue: zd495 (zhi, running), zd496, zd497, zd498. Chains: cq193 (zhi), then cq194. Replica: zhi #339 in the drain.
