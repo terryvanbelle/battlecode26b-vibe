@@ -10126,3 +10126,10 @@
     - Registered falsifiers stay binding. New candidates will also register a rate-score falsifier.
     - zil's last row (24013, Merlin, zil as B) is playing. 24012 lost 0-3, as zdb's anchor did.
     - zih submitted as #361 (zdb + ledgered RESCUE; chain 17 vs 13). Its 16 set-3 rows are in the drain.
+- 12:44 (11-10): **zil dropped at replica block 1 (net -1)**
+    - #360: 48 cells, 45 alike, D 3 (+1 -2), net -1, t -0.58. Falsifier 3 (net < 0) drops it.
+    - Its one real surprise is Varun thunderdome B, won at a base rate of 0.11. Its two losses are the chaotic cells
+      Icarus mincemeat A (rate 0.61) and YokoOno externalsustenance B (rate 0.74). Rate score +0.36, z +0.24.
+    - The Merlin rows lost 0-3 both ways, as zdb's anchors did.
+    - Replays: VM rp/zil_b1s3{a,b,c}.tgz.
+    - Next on the replica: zih (#361, RESCUE alone).
