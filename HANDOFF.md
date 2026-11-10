@@ -97,18 +97,16 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (01:27 11-10):**
-  - Incumbent still **zdb** (#334). Rejected since 22:58: zhh, zhi, zhj, zhk, zhl (TRAINING_LOG). The formation
-    line from the FORM_FROM/FORM_BABIES side (zhi, zhk) is closed; spawn hold (zhl) barely fires.
-  - **zhm** (#343; zdb + FORM_BABIES 12, FORM_CHEESE 150): keepout vs Finals, our bank pinned at the 300 spawn
-    floor so the 300 formation gate flips; one king until r1900 while Finals ran 3-5. Screens zd503 (s7) and zd504
-    (s6) queued; chain cq197 (seed 104; keepout, where_are_you, rift, averystrangespace, minimaze) running; set-3
-    block (16) in the drain. Gates are the standard ones now (t > -1.5, wins >= zdb - 1); bars in attempts.csv.
-    Mechanism: `python3 ~/diag26b/kingsc.py cq197 zdb zhm` (2+ kings at r1000 >= zdb's).
-  - Info-only replica blocks (#337-#342) vs zdb's set-3 anchors: no candidate gained a match; zhi lost 23194,
-    zhj's block lost 23325 and 23328.
-  - Next fresh seed: 105. Next screen id: zd505. Next chain: cq198. Next free name: zhn (check the dir too).
-  - VM disk 1.9 GB; cq196 (zhl) dump removable.
+- **Now (01:37 11-10):**
+  - Incumbent still **zdb** (#334). Rejected since 22:58: zhh, zhi, zhj, zhk, zhl; zhm dropped (keepout replayed
+    zdb: the income king's site picker needs seen mine tiles, so FORM_CHEESE/FORM_BABIES never bind there).
+  - **zhn** (#344; zdb + FORM_RICH_BANK 2800): the RICH2 80-baby tier pins the bank at 2,900-2,960, just under the
+    3000 rich-king test, so rich kings never fire (local keepout: one king until r1865, 14.9k unspent). Screens
+    zd505 (s7) and zd506 (s6) queued; chain cq198 (seed 104, zdb pairs from cq197 linked) running; set-3 block (16)
+    in the drain. Score: `chsc.py cq198 zdb zhn`, `kingsc.py cq198 zdb zhn`; bars in attempts.csv.
+  - Info-only replica blocks (#337-#343) vs zdb's set-3 anchors: no candidate gained a match.
+  - Next fresh seed: 105. Next screen id: zd507. Next chain: cq199. Next free name: zho (check the dir too).
+  - VM disk 1.9 GB; cq196 (zhl) and cq197 (zhm) dumps removable once cq198 is scored (cq198 links cq197's zdb pair).
 - **Earlier (22:58 11-09):**
   - Incumbent still **zdb** (#334). zhf rejected (zd490 s7 changed cells). zhg rejected at zd491 (s6 net -1:
     evileye A vs abrk); its 12 drain rows were dropped and its 4 sent replica matches (#337) are information only.
