@@ -9474,3 +9474,6 @@
 - 20:29: **zdb set-3 re-draw, first half: 24 of 24 cells alike (D 0)**
   - #334, 22997-23000 and 23002-23005 (spsquared, Finals, YokoOno, Varun) against zdb's anchors 21016-21023: D 0, net 0. These replica cells replay as drawn, so a D on them is the candidate's.
   - The other 8 (Xzibit, thewaxmango, Icarus, Merlin) are in the drain; zgt's one loss (Xzibit minimaze B) is among them. Replays on the VM as rp/zdb_redraw_s3a.tgz.
+- 20:42: **zgz (RETREAT_HP 60) dropped at its screen**
+  - zd484 (s7): n 48, D 11, net -1, t -0.30, picks/100 34.31 vs 34.11, 0 overruns. The falsifier drops at net < 0, so the grab-cell chain is not run.
+  - zd485 (zha) started 20:41. Pending: zgx (cq185 running), zha (zd485, cq186 behind cq185), the second half of zdb's set-3 re-draw.
