@@ -97,7 +97,16 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (16:41 11-09):**
+- **Now (18:02 11-09):**
+  - Incumbent still **zdb** (resubmitted #332). zgj rejected at replica block 2 (pooled t 0.83: +8 set 2, -3 set 3,
+    Finals where_are_you A and B as zgh). zgo, zgp dropped; zgq/zgr/zgs withdrawn with zgj.
+  - **zgt** (zdb + BREAKOUT_TTL 150, pocket escape): screen zd478 (s7) running, chain cq181 (seed 89, 5 pocket maps;
+    `chsc.py ~/diag26b/cq181 zdb zgt`; clause on pickupAmt 1.05x and wins).
+  - **zgu** (zdb + ATK_STUCK alone, no trail): screen zd479 queued, chain cq182 after cq181 (seed 90, cq177 cells;
+    transfer 1.1x and wins).
+  - Next for the replica: whichever passes; set 3 first (`paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`).
+  - Next fresh seed: 91. Next screen id: zd480. Next chain: cq183. Next free name: zgv.
+- **Earlier (16:41 11-09):**
   - Incumbent still **zdb**. zgh (z7x trail port) rejected at replica set 3 (#330, t -1.41); zgi/zgk/zgn dropped.
   - **zgj** (zgh + ATK_STUCK 30 / ATK_STUCK_RAW 100) on the replica as #331, set-2 block 1: 22843-22850 sent, 8 rows
     in the drain. After 7 games D 4 (+4 -0), t 2.00 (replays VM ~/diag26b/rp/zgj_b1s2a.tgz). Judge with
