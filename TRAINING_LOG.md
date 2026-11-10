@@ -9465,3 +9465,9 @@
   - zd483: n 48, D 7, net -1, t -0.37, 0 overruns.
   - cq184 fails both of its clauses: wins 13 to zdb's 14 (9 cells differ, mostly tiny/thunderdome/DefaultSmall), and throw hits on our own king are 143 vs 130 (5,712 vs 5,230 hp). The carrier guard does not cut the hits; it adds a few.
   - cq185 (zgx) is running in the freed chain slot.
+- 20:28: **zha registered: zdb + HOLD_TTL 40 / HOLD_OFF 100 (new switch, Stash wall standoff)**
+  - Stash A vs agrab (cq181, zdb): 65% of our rat-turns to r600 are 'f'/'w'. 22 holds lasted 50+ turns on one tile (7,172 rat-turns, up to 490). At r300, 15 of our rats stand at y 23-25 facing agrab's at y 21 through the y 22 pocket wall. Agrab picked 8,286 to our 580. The two atrap3 Stash games had no hold of 50 (longest 54 and 47).
+  - Switch: a rat that ends 40 turns in 'f' or 'w' on one tile, movement still ready, leaves the enemy rats it sees out of its movement for 100 rounds. An adjacent enemy, a seen enemy king, a threatened king of ours or a lost hit point ends this; prey is still chased. Two ledgered hooks (K 18).
+  - FACE_REACH and WALL_HOLD (geometric wall tests) were dropped or rejected 5 times, mostly on minimaze. This one fires only on long frozen holds.
+  - Falsifiers (attempts.csv): ledger check (cq186's first cell, Stash A agrab seed 89, against cq181's zdb game); screen zd485 (s7) net < 0, t < 0 or an overrun; chain cq186 (seed 94, 6 pocket/wall maps x 2 seats x agrab/atrap3, paired with zdb): wins below zdb's, transfer under 1.0x, or Stash pickup under 1.3x.
+  - VM disk was at 1.8 GB: pruned 82 /srv replays and removed closed dumps cq183, cq184, zejq, asA (2.2 GB free).
