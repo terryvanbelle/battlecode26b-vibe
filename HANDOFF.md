@@ -97,18 +97,19 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (06:23 11-10):**
-  - Incumbent still **zdb** (#334). **zhw** (RAID_EVERY 2 from r500): zd517 net +2, zd518 net +1 (both pass); chain
-    cq204 at 16 of 20 (11 wins each side so far). Replica #350 set 3: 7 matches in, D 1 (+Stash A); 8 rows go ~07:08.
-    Fetched replays are in VM ~/diag26b/rp/z350a.tgz.
-  - **zhx** (zhw + RAID_EVERY 1, dose arm): screens zd519/zd520 queued, chain cq205 (seed 111) waits on cq204.
-  - **zhy** (zdb + FORM_MAX 3: a third king; kings are 0.5 of r2000 war points): screens zd521/zd522 queued, chain
-    cq206 (seed 112; keepout, wallsofparadis, thunderdome, cheesebottles, FreeTheCheese) waits on cq205. Watch for
-    inertness: zhm found keepout's form-site picker needs mine tiles the king has seen.
-  - Replica order: after zhw's last rows are sent (~07:08), submit zhx or zhy (whichever passed local gates).
-  - Next fresh seed: 113. Next screen id: zd523. Next chain: cq207. Next free name: zhz.
-  - VM disk 2.2 GB (06:08: pruned replays > 30 h and chain dirs cq185, cq198-cq203). build/dumpcache (2.1 GB) is
-    write-protected; leave it.
+- **Now (06:40 11-10):**
+  - Incumbent still **zdb** (#334). zhw rejected 06:36 at replica block 1 (D 2: +Stash A, -corridorofdoom B; t 0).
+    zhx dropped with it. The late-raid line is closed.
+  - **zhy** (zdb + FORM_MAX 3; #351): zd521 playing, zd522 next; chain cq206 (seed 112) playing; 16 set-3 rows in
+    the drain. Score: `screen_t.py zd343 zdb zd521 zhy`, `zd345 zdb zd522 zhy`, `chsc.py cq206 zdb zhy`; replica vs
+    anchors 21016-21023, 21036-21043. Falsifier 4: inert if no third king forms anywhere.
+  - **zhz** (zdb + GLANCE_MEM 20; throwLand is our top baby death cause in 13 of 21 anchor losses): zd523/zd524
+    queued, chain cq207 (seed 113) waits on cq206. Submit after zhy's 16 rows are all sent.
+  - Scratch census tools on the VM (copies in laptop /dev/shm/kd): /dev/shm/kingsum.py (kings by round),
+    kdie.py (how our kings died), bdie.py (baby death causes), kdmg.py; run with BC_DUMPCACHE=/dev/shm/kdc.
+  - Next fresh seed: 114. Next screen id: zd525. Next chain: cq208. Next free name: zia.
+  - VM disk 2.3 GB. build/dumpcache (2.1 GB) is write-protected; leave it.
+- **Earlier (06:23 11-10):** zhw/zhx/zhy pending; see TRAINING_LOG 06:10-06:36.
 - **Earlier (05:43 11-10):**
   - Incumbent still **zdb** (#334). zhn rejected 02:44 as inert (screens, chain cq198 and replica #344 all equal zdb).
   - zho (#345; STANDOFF_ODDS 3) rejected 03:22 at its replica block (D 3, net -1: +Stash A, -rose A, -externalsustenance B).
