@@ -9456,3 +9456,4 @@
   - #333, 22932-22935 + 22960-22971 vs zdb's anchors: 48 cells, 47 alike, D 1 (lost Xzibit minimaze B), net -1, t -1.00.
   - BREAKOUT_TTL left every set-3 loss cell unchanged (Finals keepout/wallsofparadis, Merlin's three, thewaxmango DefaultMedium/tiny, Varun thunderdome, YokoOno Stash).
   - zdb resubmitted (#334). Replays archived on the VM as zgt_b2s3{a,b,c}.tgz.
+  - Replica otherwise idle (nothing past local gates), so #334 zdb runs a set-3 re-draw: a zdb-vs-zdb-anchor noise measure for judging later set-3 blocks. Requests 18941-18944 sent, 12 in the drain.
