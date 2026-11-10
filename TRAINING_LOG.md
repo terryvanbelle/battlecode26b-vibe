@@ -9362,3 +9362,11 @@
 - 16:15: **zgk dropped at cq175; zgj passes s7**
   - zgk (TRAIL_STALL 10) on cq175, 14 of 16 games played. It lost rose A vs agrab (r810), a cell zgh won at r752, which is the rose clause. Its fullofsecrets + TheHeist transfer was 7,745 vs zgh's 8,878, which is the transfer clause. It gained rose A vs atrap3 (W2000). An earlier trail hurts rose, as u4o's 4 did. TRAIL_STALL stays 20. zd470 was dequeued.
   - zd468 (zgj s7): n 48, D 3, net +1, t +0.57. That is identical to zgh's zd464: no stalled loaded attacker in the s7 cells. zd469 (s6) is playing.
+- 16:28: **zgn dropped by its transfer clause; zgo re-registers it with a wins bar**
+  - cq176 against zgj's cq174 cells and zgi's cq173 clockwisdom cells (the same code as zgj):
+    - Transfer on fullofsecrets + TheHeist + clockwisdom: 12,024 vs 12,651, which is 0.95x against a bar of 1.1x. That is the transfer clause, so zgn is dropped.
+    - Wins: 10 of 20 vs 8. Gained fullofsecrets A vs agrab (W917), rose B vs agrab (W962) and rose B vs atrap3 (W2000, a cell zdb also loses). Lost clockwisdom A vs agrab (L775). 0 overruns.
+  - zgn's screen zd471 was dequeued.
+  - zgo = zgn unchanged, judged on fresh data (precedent zgj). Its bar is on wins, the effect zgn showed, rather than on transfer.
+  - Chain cq177 (seed 87, 40 games): zgj and zgo on fullofsecrets, rose, TheHeist, keepout and mercifullattice (a set-2 Icarus map zez lost on both seats), agrab/atrap3 x seats. Screen zd472 (s7).
+  - Falsifier: zgo wins < zgj's + 1; more than 1 cell lost that zgj wins; any overrun; s7 net < 0.
