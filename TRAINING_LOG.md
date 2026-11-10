@@ -9343,7 +9343,7 @@
   - The trail did not flip fullofsecrets or clockwisdom on set 3: neither map is in set 3's draws (set 2 held both for z7x).
   - cq174 (seed 86), zgj vs zgh: fullofsecrets + TheHeist transfer 12,651 vs 8,878 (1.42x, bar 1.2x). Wins 7 vs 6, one differing cell (+fullofsecrets B vs agrab, W2000 where zgh lost at r1115), 0 overruns. That passes the falsifier.
   - zgj is submitted as #331 with its set-3 block. The hourly limit holds all 16 rows in the drain. It is withdrawn if zd468 (s7, playing) or zd469 (s6) fails it.
-- 16:05: **zgj's replica block moved to set 2 before any game**
+- 16:01: **zgj's replica block moved to set 2 before any game**
   - Set 3 never draws the trail's target maps. Set 2 draws clockwisdom (Varun), fullofsecrets (Merlin), and TheHeist and mercifullattice (Icarus).
   - The 16 set-3 rows were withdrawn from queue.tsv before any was sent, and the 16 set-2 rows were queued.
   - Judge with `paired --dir /dev/shm/rp 22129-22132,22251-22262 IDS`, the zez twin anchors, since zdb's own set-2 draws are crowned. The bars are unchanged.
