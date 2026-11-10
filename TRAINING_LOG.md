@@ -10069,3 +10069,8 @@
         collegejunior keeps about 1,600 banked with 9-15 babies while we spend to 26. This is bite-then-grab micro,
         which GRAB_MICRO tried three times and failed.
     - zil's screens head the queue; chain cq218 is running.
+- 11:48 (11-10): **zil passes its chain; s7 screen passes**
+    - cq218 (seed 124): zil won 11 of 20 to zdb's 8, with 0 overruns. Gained Stash A (agrab and atrap3), thunderdome
+      A and tiny A (atrap3); lost thunderdome B (atrap3).
+    - s7 zd545: n 48, D 13, net +1, t +0.27, picks/100 34.89 vs 34.11. Its one overrun is the opponent agtr's.
+    - s6 zd546 is playing. zil goes to the replica once zij's last rows leave the drain.
