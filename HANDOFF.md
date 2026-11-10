@@ -97,17 +97,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (05:19 11-10):**
+- **Now (05:43 11-10):**
   - Incumbent still **zdb** (#334). zhn rejected 02:44 as inert (screens, chain cq198 and replica #344 all equal zdb).
   - zho (#345; STANDOFF_ODDS 3) rejected 03:22 at its replica block (D 3, net -1: +Stash A, -rose A, -externalsustenance B).
   - zhp rejected 05:19 at replica block 2 (set 4 net -3; pooled net -2). zhu dropped (cq202 11-13). zhv withdrawn. The
     standoff line (zho, zhp, zhu) is closed: its one stable gain is YokoOno Stash A, which zgc also took.
-  - **zht** (#349 resubmitted; zdb + RUSH_SMALL 400: no opening rushers on maps of 400 tiles or fewer). Local gates passed
-    (zd511 net +2, zd512 net +2 t +1.43, cq201 14-15). Set-3 block: 23484-23487 played (sp, Finals: equal), 12 rows go out
-    at the next hourly send. Judge vs 21016-21023, 21036-21043 (tiny vs thewaxmango is the target; averyfineline vs
-    Icarus is the 400-tile risk).
+  - zht rejected 05:43 at replica block 1 (D 1: -averyfineline A vs Icarus; tiny vs thewaxmango still lost both seats).
   - **zhw** (zdb + RAID_EVERY 2 + RAID_FROM 500: a quarter of babies born at r500+ raid enemy-half mines; Merlin
-    out-raids us 2,306 to 96 on cheesebottles). Screens zd517/zd518; chain cq204 (seed 110) running. Replica after zht.
+    out-raids us 2,306 to 96 on cheesebottles). zd517 passed (net +2); zd518 queued; chain cq204 (seed 110) running.
+    Replica #350 set-3 block: 16 rows in the drain (from 06:08).
   - Next fresh seed: 111. Next screen id: zd519. Next chain: cq205. Next free name: zhx.
   - VM disk 2.1 GB (pruned replica replays > 30 h; cq196 and cq197 removed).
 - **Earlier (01:37 11-10):**

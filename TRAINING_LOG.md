@@ -9754,3 +9754,7 @@
   - Basis: cheesebottles vs Merlin is a raiding gap (05:19); zer's raid-from-birth lost short fight-force wins that end before r500.
   - Compiled 51a854a08541; screens zd517 (running) / zd518; chain cq204 (seed 110, 40 games, long-game maps) running. zd515 (zhv, information only) stopped at the switch.
   - Other loss classes checked and left: DefaultMedium vs thewaxmango (we bite the cat 222 times r50-150 while they bite our king 14 times; CAT_YIELD zds was rejected), keepout vs Finals (traps; the RISK_ROWS line zhb-zhf is closed), rose (corridor swap line closed).
+- 05:43 (11-10): **zht rejected at replica block 1 (D 1, net -1)**
+  - Set 3: 47 of 48 alike; -Icarus averyfineline A (400 tiles, the named risk). tiny vs thewaxmango stayed lost in both seats: without our rushers they still destroy our king.
+    Local tiny gains came against atrap3 only. zht's 16 matches were all checked per map or score-identical.
+  - zhw's s7 zd517 passed: n 48, D 2, net +2, t +1.43. zhw submitted (#350); its set-3 block (16 rows) is in the drain for the next hourly send.
