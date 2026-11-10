@@ -97,7 +97,18 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (20:52 11-09):**
+- **Now (22:06 11-09):**
+  - Incumbent still **zdb** (#334). zgx was rejected on the replica (set 3: 48/48 alike, D 0). zha, zhb, zhc and zhd
+    were dropped (zhd failed its ledger: TrapRisk's class initialiser ran at init).
+  - **zhf** (#336) is zdb + RISK_ROWS on maps of 2500+ tiles, with the flag held in G.riskRows.
+    - Why: zdb's flat trap-mark array needs 3·W·H+8000 bytecode left, so it is rarely allocated on 50x50 maps. On
+      keepout, Finals' traps killed 100 of our rats in each seat. 216 of the 319 triggers came within 1 round of the
+      lay (scan: /dev/shm/trapscan.out and trapdelay.py on the VM).
+    - Falsifiers (binding): zd490 s7 must match zdb in every cell; cq190 (seed 97) needs wins ≥ zdb, transfer ≥ 1.02x
+      and no overruns. Its replica set-3 block is queued, and the drain sends the last 4.
+  - In-fight trap avoidance has been rejected 4 times (s8h, t0b, u0u, zfg). Don't retry it as it stood.
+  - Next fresh seed: 98. Next screen id: zd491. Next chain: cq191. Next free name: zhg (check the dir too).
+- **Earlier (20:52 11-09):**
   - Incumbent still **zdb** (#334). zgy and zgz dropped at their screens.
   - Replica: #334 zdb set-3 re-draw. The first 24 cells (spsquared, Finals, YokoOno, Varun; 22997-23000,
     23002-23005) are all alike, D 0, so set 3 replays as drawn. The other 8 (Xzibit, thewaxmango, Icarus, Merlin) are
