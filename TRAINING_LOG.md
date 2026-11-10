@@ -10181,3 +10181,10 @@
     - Screens zd555/zd556 are at the queue head. Chain cq222 (seed 128; 6 maps, including the 60x60 grove for
       overruns) is running.
     - Other results: zio chain cq220 12 vs zdb 11 (pass); zih 13.
+- 13:39 (11-10): **zih rejected at replica block 1 (net 0, t 0); zio submitted (#362)**
+    - zih (#361), 48 cells: D 4, net 0, t 0.00. Gains: Varun thunderdome A and B (rates 0.10, 0.15). Losses: YokoOno
+      externalsustenance B (0.70) and Icarus mincemeat A (0.58). The block-1 rule rejects at t <= 0. Rate score:
+      +1.34, z +0.88. RESCUE's thunderdome gains repeat (zie, zil, zih), but the chaotic cells take them back.
+      Replays: VM rp/zih_b1s3{a,b}.tgz.
+    - zio (zih + RESCUE_BLOCK) is next. It passed chain cq220 (12 vs zdb 11) and screens zd549 (s7: D 13, net +3,
+      t +0.83) and zd550 (s6: D 0). #362's set-3 block: 2 rows sent, the rest in the drain.
