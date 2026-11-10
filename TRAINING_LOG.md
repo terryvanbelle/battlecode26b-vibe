@@ -9660,3 +9660,16 @@
     - zhf (23102-23117), zhh (23172-23187) and 23135-23138 matched zdb's scores in every match.
     - zhi's block lost 23194 (Finals keepout A, 0 vs 1). The #340 block (zhj) lost 23325 (spsquared TheHeist A, 2 vs 3) and 23328 (Finals keepout B, 0 vs 1). None gained a match.
   - Lesson for registrations: "net ≥ 0" and "wins ≥ zdb" reject on one coin-flip cell (a r21 knifefight game). From zhm on, the gates are screen t > -1.5 with no overrun, and chain wins ≥ zdb − 1.
+- 01:25 (11-10): **zhm registered: the income king's gates off the spawn floor** (zdb + FORM_BABIES 12, FORM_CHEESE 150, from 16 and 300; compiled 77b10ad2eb30)
+  - Diagnosis, set 3 keepout vs Finals (lost in both seats on points at r2000), from the cached dumps:
+    - Points components: A 31.8 (kings 2/5, cat 3,833/6,458, transfer 15,198/32,488); B 37.0 (kings 1/2, transfer 17,124/26,080).
+    - From r200 to r900 our bank sat at 291-333 with 7-19 babies. Finals held 1,100-1,900 and formed kings at r400, r500, r700 and r900 (A).
+    - We had one king until r1900 (A) and r1200 (B). The income king needs FORM_CHEESE 300 banked, exactly the spawn floor, so the gate flips with every spawn; FORM_BABIES 16 rarely holds.
+  - Prior: zhk (FORM_BABIES 12 alone) changed no local king count. The pair was last tried on s4 (s4r, 10-28), before the ledger and the rich-king switches.
+  - Falsifiers (binding; the standard gates from now on):
+    1. zd503 (s7): t > -1.5, no overrun.
+    2. zd504 (s6): t > -1.5, no overrun.
+    3. Chain cq197 (seed 104; keepout, where_are_you, rift, averystrangespace and minimaze × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb − 1, 0 overruns, and games with 2+ kings at r1000 ≥ zdb's.
+    4. Replica set-3 block: net below 0 drops it.
+    - Dropped as inert if the screens and chain all replay zdb.
+  - Disk: removed the cq194 and cq195 dumps (1.9 GB free).
