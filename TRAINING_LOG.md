@@ -9917,3 +9917,17 @@
   - Screens zd531 (s7) and zd532 (s6) queued behind zic's zd529/zd530; chain cq211 (seed 117; wallsofparadis,
     FreeTheCheese, keepout, averystrangespace, Stash x agrab/atrap3 x A/B) waits on cq210. Falsifiers in
     attempts.csv; replica after zic's rows are sent.
+- 09:04 (11-10): **zic clears its local gates; zie registered (RESCUE)**
+  - zic: zd530 (s6) n 44, D 1, net +1, t +1.00; cq210 (seed 116) complete: zic 13 vs zdb 13 wins of 20, 0 overruns,
+    transfer 273,120 vs 262,349 (1.04x). Its 16 set-3 rows (#355): 8 played (only Varun corridorofdoom B differs, -1),
+    8 still held in the drain by the hourly limit.
+  - zie = zdb + RESCUE (existing switch, one Cfg line, never alone on the z-line; u6g rejected the wider
+    RESCUE_D2 18 + RESCUE_WALK arm on u6a). Within dist2 8, an enemy baby carrying one of ours comes first: our rat
+    steps to a tile next to the carrier that the carrier cannot see, then grabs it, so the carrier drops ours.
+    Grabbed-and-thrown is the top baby-death cause in 13 of zdb's 21 set-3 anchor losses (06:40-06:42 censuses).
+  - Compiled 53cae5fd034b. Falsifiers (binding):
+    1. zd533 (s7) and zd534 (s6): t > -1.5, 0 overruns.
+    2. cq212 (seed 118; whatsthecatdoin, tiny, externalsustenance, Stash, DefaultMedium x A/B x agrab/atrap3): wins
+       >= zdb - 1, 0 overruns.
+    3. Replica set-3 block 1: net < 0 drops, t <= 0 rejects.
+  - Queue: zd532 (zid) then zd533/zd534; cq212 waits on cq211 (zid).
