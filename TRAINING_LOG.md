@@ -9739,3 +9739,6 @@
   - zhp Stash A (23431 vs anchor 21020, dumped in VM /dev/shm/stx/dc): YokoOno backstabs at r50; the games first differ at r67.
     By r300 YokoOno has 15 babies to zdb-game's 21 (we have 23 vs 20); we form a second king by r500 and destroy theirs at r950. zdb's game lost at r1175.
     Our home rats attacking the backstabbers instead of holding is the mechanism zhp was built for.
+- 04:25 (11-10): **zhv registered: bundle zhp + zht**
+  - zhv = zdb + STANDOFF_HOME 5 + RUSH_SMALL 400. Compiled 1ba2b6276692; screens zd515/zd516 after zhu's; chain cq203 (seed 109, 40 games) behind cq202.
+    Replica after zht's block, and only if zhp and zht both still stand.

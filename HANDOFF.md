@@ -107,7 +107,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - **zht** (zdb + RUSH_SMALL 400: no opening rushers on maps of 400 tiles or fewer; tiny vs thewaxmango). Screens
     zd511/zd512 queued; chain cq201 (seed 107) running. Replica #347: 4 set-3 matches sent 04:12 (23484-23487), 12 rows held behind zhp's block 2.
   - **zhu** (zhp with STANDOFF_HOME 8, the dose arm). Screens zd513/zd514; chain cq202 (seed 108) behind cq201. Replica after zht.
-  - Next fresh seed: 109. Next screen id: zd515. Next chain: cq203. Next free name: zhv (zhq and zhs are old dirs).
+  - **zhv** (bundle zhp + zht). Screens zd515/zd516; chain cq203 (seed 109) behind cq202. Replica only if zhp and zht both stand.
+  - Next fresh seed: 110. Next screen id: zd517. Next chain: cq204. Next free name: zhw.
   - VM disk 2.1 GB (pruned replica replays > 30 h; cq196 and cq197 removed).
 - **Earlier (01:37 11-10):**
   - Incumbent still **zdb** (#334). Rejected since 22:58: zhh, zhi, zhj, zhk, zhl; zhm dropped (keepout replayed
