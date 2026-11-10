@@ -9359,3 +9359,6 @@
   - Slip: I first snapshotted to "zgl", which already existed (the zc6 switch bot, untracked). The snapshot refused, and my Cfg edit landed on that bot instead.
     - The edit was reverted at once and the VM copy re-synced (ATK_CARRY = 0 again, the only line touched).
     - The wrongly compiled build and the two partial games of the first cq176 were deleted. Nothing was committed.
+- 16:15: **zgk dropped at cq175; zgj passes s7**
+  - zgk (TRAIL_STALL 10) on cq175, 14 of 16 games played. It lost rose A vs agrab (r810), a cell zgh won at r752, which is the rose clause. Its fullofsecrets + TheHeist transfer was 7,745 vs zgh's 8,878, which is the transfer clause. It gained rose A vs atrap3 (W2000). An earlier trail hurts rose, as u4o's 4 did. TRAIL_STALL stays 20. zd470 was dequeued.
+  - zd468 (zgj s7): n 48, D 3, net +1, t +0.57. That is identical to zgh's zd464: no stalled loaded attacker in the s7 cells. zd469 (s6) is playing.
