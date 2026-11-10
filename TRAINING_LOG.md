@@ -9720,3 +9720,9 @@
 - 03:25 (11-10): **zht registered: no opening rushers on maps of 400 tiles or fewer**
   - zht = zdb + RUSH_SMALL 400 (Baby.rusher). Basis: tiny vs thewaxmango (see 03:22). zhq and zhs are taken by old directories, so the name is zht.
     Compiled 4bffcc29ced6; screens zd511/zd512 queued after zhp's; chain cq201 (seed 107, 40 games) behind cq200. Replica once zhp's block has all been sent.
+- 03:55 (11-10): **zhp: local gates pass, replica +1 after 8 matches**
+  - zd509 (s7): n 48, D 8, net 0, t 0.00, picks/100 35.85 vs 34.11. zd510 (s6) at 30 of 44: D 4, net 0.
+  - Chain cq200 (seed 106): zhp 14 vs zdb 13 wins, 0 overruns, transfer 79,139 vs 78,382; +tiny A agrab, +thunderdome B agrab, -thunderdome A agrab.
+  - Replica #346: 23422-23425, 23431-23434 vs anchors: +YokoOno Stash A (5t4 W, Stash W, externalsustenance L); YokoOno B unchanged (W L W); spsquared, Finals and Varun equal.
+    Stash A is the cell zgc and zho also gained: any change to how our home rats meet the enemy seems to flip it. 8 rows wait for the next hourly send.
+  - cheesebottles vs Merlin (dumpc 0f2f, A): Merlin out-delivers us 8,011 to 4,300 by r1000 with 24-30 babies to our 19-22, and bites our king from 560 to 20 over r300-1042; our second king (r400) died by r500.
