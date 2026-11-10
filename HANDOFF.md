@@ -97,14 +97,14 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (06:43 11-10):**
-  - Incumbent still **zdb** (#334). zhw rejected 06:36 at replica block 1 (D 2: +Stash A, -corridorofdoom B; t 0).
-    zhx dropped with it. The late-raid line is closed.
-  - **zhy** (zdb + FORM_MAX 3; #351): zd521 playing, zd522 next; chain cq206 (seed 112) playing; 16 set-3 rows in
-    the drain. Score: `screen_t.py zd343 zdb zd521 zhy`, `zd345 zdb zd522 zhy`, `chsc.py cq206 zdb zhy`; replica vs
-    anchors 21016-21023, 21036-21043. Falsifier 4: inert if no third king forms anywhere.
-  - **zhz** (zdb + GLANCE_MEM 20; throwLand is our top baby death cause in 13 of 21 anchor losses): zd523/zd524
-    queued, chain cq207 (seed 113) waits on cq206. Submit after zhy's 16 rows are all sent.
+- **Now (07:30 11-10):**
+  - Incumbent still **zdb** (#334). zhw rejected 06:36 (replica block 1 D 2, t 0); zhx dropped with it. zhy (FORM_MAX
+    3) dropped 07:27 at its chain (10 vs 12; a third king starves all kings); its #351 rows play as information only.
+  - **zhz** (zdb + GLANCE_MEM 20; #352): zd523 playing, zd524 next; chain cq207 (seed 113) playing; set-3 block: 4
+    sent 07:27, 12 in the drain. Score: `screen_t.py zd343 zdb zd523 zhz`, `zd345 zdb zd524 zhz`,
+    `chsc.py cq207 zdb zhz`; replica vs anchors 21016-21023, 21036-21043.
+  - **zia** (zdb + BITE_GUARD; 73% of field grabs on us take a weaker rat): zd525/zd526 queued, chain cq208 (seed
+    114) waits on cq207. Submit after zhz's rows are all sent.
   - Scratch census tools on the VM (copies in laptop /dev/shm/kd): /dev/shm/kingsum.py (kings by round),
     kdie.py (how our kings died), bdie.py (baby death causes), kdmg.py; run with BC_DUMPCACHE=/dev/shm/kdc.
   - **zia** (zdb + BITE_GUARD; 73% of field grabs on us take a weaker rat): zd525/zd526 queued, chain cq208 (seed
