@@ -10216,3 +10216,11 @@
   - zis cq223 per-cell: +Stash A and B vs atrap3 (as zir did), +averystrangespace B and +where_are_you A vs agrab; −averystrangespace A and −cheesebottles B vs atrap3.
   - whatsthecatdoin A vs Merlin (anchor 21042): 47 king spawns by r300 ate the 2,488 bank, as our babies lost the r41 war, and 42 cheese was transferred. The low-babies floors (LOW_FLOOR 100, LAST_FLOOR 20) let the replacements spend to zero. That is a floor-line question, and the floor line is closed (zd9, zdf, zgv, zgx).
   - ziv = zis + zit: chain cq226 (ziv rows, seed 129) waits on cq223; screens zd563/zd564 at the queue tail. ziu's chain cq225 started in cq224's slot.
+- 15:44 (11-10): **zio REJECTED at replica block 1 (#362: net 0, t 0); zii submitted (#363)**
+  - zio's set-3 block was 24066-24077 and 24090-24093. My 14:40 note had it starting at 24072, but zih's rows end at 24050. Result: 48 cells, 42 alike, D 6, net 0, t 0.00.
+    - Gained: collegejunior tiny B (rate 0.00, the RESCUE_BLOCK target), Varun thunderdome B (0.19), YokoOno Stash A (0.33).
+    - Lost: YokoOno externalsustenance B (0.67), Varun corridorofdoom B (0.67), Icarus mincemeat A (0.55).
+    - Rate score +1.28 (z +0.84). The binding block-1 rule (t ≤ 0) rejects it.
+  - zih (+1.34) and zio (+1.28) both score positive on rates and 0 on net. The registered net falsifier is what judges them.
+  - zii (ledgered AMMO_AWAY) is on the replica as #363. The block script ran twice; the duplicate Icarus/Merlin queue lines were removed, so the block stays at 16 rows (8 sent, 8 in the drain).
+  - VM disk is at 1.7-1.8 GB free after pruning replica replays (227 MB) and deleting the closed chains cq215/cq221/cq222.
