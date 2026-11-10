@@ -9494,3 +9494,7 @@
   - Second half (23021-23026, 23028, 23030: Xzibit, thewaxmango, Icarus, Merlin): D 0. Whole re-draw: 48 cells, D 0. Set 3 is deterministic for zdb, so zgt's lost Xzibit minimaze B was zgt's own. Replays on the VM as rp/zdb_redraw_s3b.tgz.
   - zgx (#335): requests 18989-18996 sent, 8 more in the drain (hourly limit). Judge with `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`. Targets: externalsustenance A (YokoOno) and mincemeat B (Icarus).
   - Other notes: thewaxmango tiny A kills our king in 20 rounds with 4-5 biters plus our newborns thrown into it, which SPAWN_AWAY, WAR_FACE and AMMO_AWAY have already covered. Merlin FreeTheCheese B was lost 52-47 at 2 kings each, on transfer (13k vs 24k).
+- 21:24: **zhb (RISK_ROWS) dropped at its screen; zha's screen for the record**
+  - zd486 (s7): n 48, D 11, net -5, t -1.53, picks/100 33.11 vs 34.11, 0 overruns. Row-wise trap marks change movement on every map (s7 is small maps, where the flat array already allocated), and the moves cost cells. cq187 stopped after 8 games; cq188 (zhc) started 21:23.
+  - zd485 (zha, information only; zha was dropped as inert on its target): n 48, D 1, net -1, t -1.00.
+  - Replica zgx (#335): 23047, 23049, 23050 done, 23048 and 23051-23056 running or queued, 4 in the drain.
