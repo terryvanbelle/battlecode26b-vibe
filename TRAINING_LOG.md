@@ -9793,3 +9793,14 @@
     FreeTheCheese B (2 kings each). thunderdome A: one king bitten to death r125-436 with 950 banked and 25 babies.
     No site was ever named: the side mines are 14 vs 22 from the starts (the "clearly ours" test wants 2x), and the
     back spot is in the box wall. FORM_MINE's site picker would fix that, but its line is closed (zeu, zew).
+- 06:40 (11-10): **zhz registered: GLANCE_MEM 20 (face back after a recent enemy sighting)**
+  - Cause census of zdb's 21 set-3 anchor losses (scratch kdie.py, bdie.py):
+    - King deaths: 9 starvations (wallsofparadis A/B, Stash A/B, externalsustenance A, mincemeat B, FreeTheCheese A,
+      whatsthecatdoin A/B), where the bank drains to 0 as the army collapses. The rest are bites or a thrown rat on
+      the king (thunderdome, DefaultMedium, tiny, cheesebottles).
+    - Baby deaths: being grabbed and thrown (throwLand) is the top cause in 13 of the 21 games. Traps lead only on
+      keepout (Finals, 100 a game); pounce leads on FreeTheCheese vs Merlin.
+  - Grabs need the victim facing away or weaker. zhz = zdb + GLANCE_MEM 20. It never ran alone on the replica: u5g
+    cut local grabs 3.56 to 3.36 per 1000 rat-turns and was stopped by a picks bar by a hair.
+  - Screens zd523/zd524 queued after zd522; chain cq207 (seed 113; tiny, DefaultMedium, whatsthecatdoin,
+    externalsustenance, Stash) waits on cq206.
