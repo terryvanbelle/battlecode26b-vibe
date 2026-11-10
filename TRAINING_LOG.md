@@ -10110,3 +10110,19 @@
       front of it. A throw needs that tile empty, so the carrier can't throw. It runs only inside a rescue, so it adds
       no drift. Its only earlier run was s8q's screen on s8o (t -1.5), before the ledger.
     - Screens zd549/zd550 head the queue. Chain cq220 (seed 126) plays zio, zih and zdb on the RESCUE maps.
+- 12:35 (11-10): **Set-3 base rates: zdb's anchor draw is about 1.4 cells lucky; zih on the replica (#361)**
+    - New tool, tools/cellrate.py. It takes every set-3 match since id 22000 (zdb derivatives, about 19 draws a
+      cell) and gives each cell's win rate next to zdb's anchor result.
+    - zdb's anchors win 28 cells, but the rates expect 26.6. These anchor wins are chaotic cells:
+      - Icarus mincemeat A 0.61, Varun corridorofdoom B 0.63, YokoOno externalsustenance B 0.74.
+      - Xzibit uneruesansfin A 0.78, Finals where_are_you A 0.79 and B 0.84, Xzibit minimaze B 0.83.
+      - thewaxmango FreeTheCheese A and B 0.89, spsquared rose A 0.89.
+    - These anchor losses sometimes flip: Stash A 0.37, mincemeat B 0.17, thunderdome A and B 0.11.
+    - So a candidate that re-rolls every cell with no real effect expects net about -1.4 against the anchors. Block
+      1's "net < 0 drops" is biased against candidates.
+    - The rate score (wins minus rates, binomial z) for the last two blocks:
+      - zij: -1.75, z -1.16. Its drop stands on either yardstick.
+      - zil, first 42 cells: +0.42, z +0.28. Its one real surprise is Varun thunderdome B, won at rate 0.11.
+    - Registered falsifiers stay binding. New candidates will also register a rate-score falsifier.
+    - zil's last row (24013, Merlin, zil as B) is playing. 24012 lost 0-3, as zdb's anchor did.
+    - zih submitted as #361 (zdb + ledgered RESCUE; chain 17 vs 13). Its 16 set-3 rows are in the drain.
