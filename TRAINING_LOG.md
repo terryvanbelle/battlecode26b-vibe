@@ -9528,3 +9528,25 @@
     - Replays archived to the VM: rp/zgx_b1s3a.tgz and rp/zgx_b1s3b.tgz (8 each).
     - zhf went to the replica as #336 so the replica is not idle while its local gates run. Its set-3 block is queued:
       12 requests sent from 19046, 4 in the drain. If zd490 fails falsifier 0, the block is void and zhf is dropped regardless.
+- 22:26: **zhg registered: zhc's hold-off, fired only against wall-held enemies (Stash vs YokoOno)**
+    - Diagnosis from zdb's set-3 field losses (dumps on the VM):
+        - keepout vs Finals: 100 trap deaths in each seat. 307 of 319 fires came while our rat was engaged, where
+          TrapRisk's mask is off, so zhf (RISK_ROWS on big maps) can hardly reach them. 146 came from a rat two tiles
+          from the enemy, already inside the fresh trap's 3x3. That is FACE_HOLD's mechanism, closed by zff today.
+        - wallsofparadis vs Finals: we starve (1,170 transferred to 7,160). Finals works all six inner mines and our
+          corner mine. Locally zdb's king lists one mine until r250. Scouting and half variants were already tried
+          (s7w, zc2, MINE_TIES ×10).
+        - thunderdome vs Varun and DefaultMedium vs thewaxmango: our king is worn down by bites and by throws of our
+          own grabbed rats. Grab and rescue variants were already tried (zgy, s8o, u6g).
+        - Stash vs YokoOno, both seats lost to starvation. In B we transferred 140 to 6,175. 19-29 of our rats stood
+          at y 4-6 under the pocket wall (y 7), facing YokoOno at y 8-9. Both exits were dug by r40.
+    - zhc (the hold-off) lost one s7 cell, starvation A vs atrap3 on open ground, and was dropped (D 1). Its other
+      five fires were Stash ×3, still won, cheesefarm B, won at r1058 instead of r2000, and evileye A, still lost.
+    - zhg = zhc + HOLD_WALL: the hold-off fires only when the step toward the nearest enemy is a known wall or dirt
+      tile, and at Chebyshev 2 no shared neighbour is open (reach1).
+    - Binding falsifiers:
+        - (1) s6 zd491: net ≥ 0, t ≥ 0, no overrun.
+        - (2) s7 zd492: net ≥ 0, no overrun, and starvation A atrap3 still won.
+        - (3) chain cq191 (seed 98, cq188's six maps × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb and summed
+          transfer ≥ 1.0x.
+      Then the replica (set 3 has Stash ×2 vs YokoOno). cq191 runs after cq190.
