@@ -9815,3 +9815,9 @@
     still lose the king.
   - So the rat war turns on health edges after the first bites more than on facing. A health-edge lever (keep the
     healthier rat in front, or step back when bitten below the adjacent enemy) would cover the 73%.
+- 06:43 (11-10): **zia registered: BITE_GUARD (bite first the adjacent enemy that could grab us)**
+  - The health-edge lever from the grab census: 73% of the field's grabs on us take a rat weaker than its grabber.
+    BITE_GUARD (existing; s3r ran it only on screens with no war, s4i bundled it with BITE_CARRIER) bites an adjacent
+    enemy healthier than us by at most one bite ahead of the lowest-health target, so it cannot grab us next.
+  - Screens zd525/zd526 queued after zhz's; chain cq208 (seed 114; tiny, DefaultMedium, whatsthecatdoin, keepout,
+    thunderdome) waits on cq207.
