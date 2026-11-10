@@ -97,24 +97,24 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (09:52 11-10):**
-  - Incumbent still **zdb** (#334). Dropped today: zia, zib, zic (MAX_BABIES 24; replica set-3 block 1 net -2).
-  - **zid** (zdb + TRIP_LOAD 20/2/80/200; #356): zd531 t +0.37, zd532 t -0.44 (both pass). Replica set-3 rows
-    23864-23875 net -1 (+Stash A, -Finals where_are_you A, -YokoOno externalsustenance B); Icarus and Merlin rows
-    still in the drain. Score with `contest.py paired --dir /dev/shm/rp 21016-21023,21036-21043 23864-23879`
-    (replays 23864-23875 are on the VM: rp/zid_b1s3a.tgz and zid_b1s3b.tgz; fetch them back or score the rest by hand).
-    Chain cq211 (seed 117) running: `chsc.py cq211 zdb zid`.
-  - **zie** (zdb + RESCUE): screens zd533 (running) and zd534; chain cq212 (seed 118) waits on cq211. Replica next
-    after zid's rows are sent. Rescue doesn't fire against agrab locally (it throws within 1-2 rounds).
-  - **zif** (zid's bank dose: TRIP_LOAD_BANK 600): screens zd535 and zd536 queued; chain cq213 (seed 119) waits on
-    cq212.
-  - Closed today: late raid (zhw/zhx), third king (zhy), GLANCE_MEM (zhz), BITE_GUARD (zia), THROW_HOLD (zib),
-    peace cap (zic); king defence by blind bites (z3u, 11-06); king throw dodge (the king moves every 4 rounds).
-  - Scratch census tools on the VM (copies in laptop /dev/shm/kd): /dev/shm/kingsum.py, kdie.py, bdie.py, kdmg.py,
-    grabs.py, kdef.py/kdef2.py, esus.py (economy timeline), holds.py, ledger.py (cheese ledger), halves.py (pickups by
-    half), capbind.py, carrb2.py, throwhit.py, kpick.py; run with BC_DUMPCACHE=/dev/shm/kdc.
-  - Next fresh seed: 120. Next screen id: zd537. Next chain: cq214. Next free name: zig.
+- **Now (10:58 11-10):**
+  - Incumbent still **zdb** (#334). Dropped today at replica block 1, net -2 each: zic (MAX_BABIES 24), zid
+    (TRIP_LOAD), zie (RESCUE). zig and zif were withdrawn for their ledgered versions.
+  - **Key lesson** (memory ledger-every-switch): unledgered per-turn code re-rolls zdb's fragile set-3 cells. zie's
+    10 changed cells had 0-1 rescues in 8. Every new candidate is ledgered and checked with ~/diag26b/replay_eq.py.
+  - **zij** (TRIP_LOAD 600, ledgered; #359): 16 set-3 rows in the drain; screens zd541/zd542 next in the queue;
+    chain cq216 (seed 122) after cq215. Never-acting copy bots/zjchk (untracked) is identical to zdb for 773 rounds.
+  - **zih** (RESCUE, ledgered): screens zd539/zd540, chain cq215 (seed 121; thunderdome, tiny, DefaultMedium,
+    corridorofdoom, knifefight). Replica next after zij.
+  - **zii** (AMMO_AWAY, ledgered): screens zd537/zd538, chain cq214 (seed 120). Replica after zih.
+  - Screen order: zd536 (zif, information only) running, then zd541, zd542, zd537, zd538, zd539, zd540. Chains:
+    cq213 (zif, information only), cq214, cq215, cq216.
+  - Replays on the VM: rp/zic_b1s3{a,b}.tgz, zid_b1s3{a,b,c}.tgz, zie_b1s3{a,b}.tgz.
+  - Scratch census tools on the VM (copies in laptop /dev/shm/kd): kingsum, kdie, kdmg, grabs, esus, kwin (king
+    window), rushcmp, spend, ammocen (own-rat throws on our king), rescues; run with BC_DUMPCACHE=/dev/shm/kdc.
+  - Next fresh seed: 123. Next screen id: zd543. Next chain: cq217. Next free name: zik.
   - VM disk about 2.2 GB. build/dumpcache (2.1 GB) is write-protected; leave it.
+- **Earlier (09:52 11-10):** zid, zie, zif pending; see TRAINING_LOG 09:31-10:58.
 - **Earlier (08:23 11-10):** zic and zid pending; see TRAINING_LOG 08:16-09:31.
 - **Earlier (07:55 11-10):** zia playing, zib queued; see TRAINING_LOG 07:55-08:16.
 - **Earlier (07:30 11-10):** zhz pending, zia waiting; see TRAINING_LOG 07:27-07:47.
