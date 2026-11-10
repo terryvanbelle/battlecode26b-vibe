@@ -97,7 +97,17 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (22:06 11-09):**
+- **Now (22:58 11-09):**
+  - Incumbent still **zdb** (#334). zhf rejected (zd490 s7 changed cells). zhg rejected at zd491 (s6 net -1:
+    evileye A vs abrk); its 12 drain rows were dropped and its 4 sent replica matches (#337) are information only.
+  - **zhh** (#338; zdb + KING_PAY 100 / floor 500: the king pays 100 for a bite on a baby rat when biteCheese pays 0;
+    thunderdome vs Varun, king bitten down with 933 banked). Screens zd493 (running) and zd494; chain cq192 (seed 99)
+    running. Its set-3 block (16) is in the drain. Score with `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`.
+  - **zhi** (zdb + FORM_FROM 1200: no mid-game second king; END_KING/CASH_END still form one at the end). Target
+    Merlin FreeTheCheese B, lost 47-52 on points. Screens zd495/zd496 queued; chain cq193 (seed 100) behind cq192.
+    Bars in attempts.csv. Replica next once zhh's block has drawn.
+  - Next fresh seed: 101. Next screen id: zd497. Next chain: cq194. Next free name: zhj (check the dir too).
+- **Earlier (22:06 11-09):**
   - Incumbent still **zdb** (#334). zgx was rejected on the replica (set 3: 48/48 alike, D 0). zha, zhb, zhc and zhd
     were dropped (zhd failed its ledger: TrapRisk's class initialiser ran at init).
   - **zhf** (#336) is zdb + RISK_ROWS on maps of 2500+ tiles, with the flag held in G.riskRows.
