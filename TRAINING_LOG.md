@@ -9673,3 +9673,17 @@
     4. Replica set-3 block: net below 0 drops it.
     - Dropped as inert if the screens and chain all replay zdb.
   - Disk: removed the cq194 and cq195 dumps (1.9 GB free).
+- 01:37 (11-10): **zhm dropped (its target never reaches its gates); zhn registered: rich kings below the bank pin** (zdb + FORM_RICH_BANK 2800, from 3000; compiled af140ad9f6e5)
+  - zhm: cq197's keepout A and B vs agrab replayed zdb exactly (transfer 60,734 each; second king at r1865 in both).
+    - zdb's king indicators show no formation site named from r300 to r1000, with income at 1,500 per hundred rounds and the baby count at the cap.
+    - pickFormSite needs a home mine whose 3x3 the king has seen (King.clear3 tests Sym.SEEN), and keepout's other home mines are beyond its sight. The 4-tiles-behind spot is off the map. FORM_CHEESE and FORM_BABIES never bind there.
+    - Stopped cq197 at 4 games and zd503 at its start; zd504 dequeued. Its #343 rows were dropped for zhn.
+  - zhn's mechanism is on the rich path, which falls back to a ring site when pickFormSite has none.
+    - Local keepout A vs agrab: the bank sat at 2,904-2,959 from r600 to r1000 at 45-79 babies, because the RICH2 tier (80-baby cap from 3000) spends every cheese over 3000. FORM_RICH_BANK 3000 never held before the r1150 cut. The game ended with 14,899 unspent and one king until r1865.
+    - z6x moved the pin instead (RICH2_BANK 3300 on z3x): s7 even, parked, never on the replica. z0h (1500 on u9p) was rejected on king deaths (13 vs 10).
+  - Falsifiers (binding):
+    1. zd505 (s7): t > -1.5, no overrun.
+    2. zd506 (s6): t > -1.5, no overrun.
+    3. Chain cq198 (seed 104; keepout, where_are_you, rift, averystrangespace and minimaze × A/B × agrab/atrap3, paired with zdb; zdb's keepout agrab pair linked from cq197): wins ≥ zdb − 1, 0 overruns, games with a king death ≤ zdb's + 1, and more games with 3+ kings formed than zdb (mechanism).
+    4. Replica set-3 block: net below 0 drops it.
+    - Dropped as inert if all of these replay zdb.
