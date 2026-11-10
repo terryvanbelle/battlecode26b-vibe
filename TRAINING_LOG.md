@@ -9490,3 +9490,7 @@
   - zhc = zha + HOLD_KING_D2 8: a threatened king ends the hold-off only while the nearest enemy is within dist2 8 of its centre (next to its body).
   - Falsifier 0 holds (~/diag26b/zhcq, same cell): identical to zdb to r164, diverges at r165. The cell is still lost (r585 vs zdb r635), transfer 180 = 180, pickup 620 vs 580. Released rats chase cheese and mine more (C+M r200-400: 1,035 vs 591 rat-turns), but most go back to 'w'. Weak, so the chain decides.
   - Screen zd487 queued after zd486 (zhb); chain cq188 (cq186's 48 cells, seed 94) after cq187.
+- 20:59: **zdb set-3 re-draw complete: 48 of 48 cells alike; zgx submitted (#335), set-3 block 1**
+  - Second half (23021-23026, 23028, 23030: Xzibit, thewaxmango, Icarus, Merlin): D 0. Whole re-draw: 48 cells, D 0. Set 3 is deterministic for zdb, so zgt's lost Xzibit minimaze B was zgt's own. Replays on the VM as rp/zdb_redraw_s3b.tgz.
+  - zgx (#335): requests 18989-18996 sent, 8 more in the drain (hourly limit). Judge with `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`. Targets: externalsustenance A (YokoOno) and mincemeat B (Icarus).
+  - Other notes: thewaxmango tiny A kills our king in 20 rounds with 4-5 biters plus our newborns thrown into it, which SPAWN_AWAY, WAR_FACE and AMMO_AWAY have already covered. Merlin FreeTheCheese B was lost 52-47 at 2 kings each, on transfer (13k vs 24k).
