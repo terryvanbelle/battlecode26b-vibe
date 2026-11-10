@@ -9373,3 +9373,7 @@
 - 16:32: **zgj passes s6; every local gate is clear**
   - zd469: n 44, D 1, net +1, t +1.00, picks z +0.79, 0 overruns on our side (10 rows carry opponent overruns).
   - Its replica block (set 2, #331) is in the drain behind the replica's ranked games. Judge with `paired --dir /dev/shm/rp 22129-22132,22251-22262 IDS`.
+- 16:36: **zgp registered: zdb + FINISH_K 10**
+  - FINISH_K is on the live bite path (biteEnemies, GrabMicro): bites finish 11-20 HP rats for k*k cheese when global ≥ 200; zdb stops at 5.
+  - Falsifier: zd473 (s7) net < 0 or t < 0, zd474 (s6) net < 0, or cq178 (cq170's 20 zdb cells, zgp swapped in) wins < zdb's 14.
+  - cq178 waits for cq177 (zgo vs zgj).
