@@ -9397,3 +9397,6 @@
   - FINISH_K 10 loses more cells than it wins; zd474 (s6) and cq178 stopped. FINISH_K stays at 5.
   - knifefight vs Merlin (zgj block, A L107 / B W22): Merlin's king steps toward us on r1 as seat A (bodies one tile apart; our rats kill it by r22) and away as seat B (gap 3), where it wins the grab-and-throw fight (our rats: 19 throwHit + 30 throwLand deaths; we spawned 30 in 30 rounds and the bank fell 2,300 to 315 by r60). The asymmetry is theirs; no cheap switch.
   - VM disk: removed cq170, cq177, cq178, zeq (2.3 GB free). dc_zey is a read-only dump cache, like dc_z4d.
+- 17:18: **zgq and zgr registered: dose arms of zgj's ATK_STUCK**
+  - zgq = zgj + ATK_STUCK_RAW 50 (from 100). zgr = zgj + ATK_STUCK 15 (from 30). Both built ahead of zgj's verdict so the screen and chain slots don't sit idle.
+  - Falsifier for each: zd475 / zd476 (s7) net < 0 or t < 0; chain cq179 (seed 88, cq177's 20 zgj cells, the three bots paired) wins below zgj's or summed transfer under 1.05x zgj's; any overrun of ours.
