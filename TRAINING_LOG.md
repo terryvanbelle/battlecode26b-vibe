@@ -9507,3 +9507,6 @@
   - The chain slot was given to zhd first (cq189 started 21:27). cq188's remainder is cancelled.
   - zgx #335 (23045-23056 against zdb's set-3 anchors): 36 cells, 36 alike, D 0. externalsustenance A vs YokoOno is still lost, so lower floors don't change it. Icarus (mincemeat B target) and Merlin are in the drain. Replays: VM rp/zgx_b1s3a.tgz; 23053-23056 still in /dev/shm.
   - zd488 (zhd's ledger screen) started 21:43.
+- 21:52: **zd489 queued: zhd on s6 (information, not a registered falsifier)**
+  - s6 (zd345, zdb's reference) is 48 cells vs araid/abrk, 44 on small maps plus keepout and wallsofparadis, 2 each. The small cells add to zd488's ledger check; the 4 big cells add a raider opponent to cq189's atrap3/agrab. zhd's falsifiers were registered before any game and are unchanged.
+  - Diagnosis, whatsthecatdoin vs Merlin (lost both seats, our king starved r288/r325): we pick about 400 at the contested centre mines (14,20)/(25,19) and deliver 42/140, with carriers grabbed and thrown. As A, Merlin took 420 from the pocket mine (3,37), 13 dirt tiles up a column from the centre band. Pocket digs are the BREAKOUT_TTL/SEEK_FRONTIER line, failed before. Parked.
