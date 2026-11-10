@@ -10048,3 +10048,11 @@
     - Queued: screens zd543 (s7) and zd544 (s6), chain cq217 (seed 123, five wall maps x agrab/atrap3, behind cq216).
     - Falsifiers: screens t > -1.5 with 0 overruns; chain wins >= zdb-1; replica set-3 block 1 net < 0 drops, t <= 0
       rejects.
+- 11:10 (11-10): **zil registered: bundle of the three ledgered switches (RESCUE + AMMO_AWAY + KING_WALL_THREAT)**
+    - Ledgering makes each switch change state only where it acts, so stacking them no longer stacks drift. Unledgered,
+      each moved at most 2 cells (zie +thunderdome A/B, zgc +Stash A), too few for D >= 4 alone.
+    - Built from zih plus zii's and zik's diffs against zdb, applied strictly (no fuzz).
+    - Screens zd545/zd546 go to the head of the queue. Chain cq218 (seed 124: the switches' target maps) runs now,
+      alongside cq213. zil takes the next replica slot after zij, ahead of zih, zii and zik.
+    - Falsifiers: screens t > -1.5 with 0 overruns; chain wins >= zdb-1; replica set-3 block 1 net < 0 drops, t <= 0
+      rejects.
