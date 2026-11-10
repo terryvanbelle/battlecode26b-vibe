@@ -9696,3 +9696,6 @@
   - zho = zdb + STANDOFF_ODDS 3 (Baby.war): skip the standoff when our baby rats in view outnumber theirs by 3+ (counting this rat).
     Compiled fcfc2e016975; screens zd507/zd508 queued; chain cq199 (seed 105, 40 games: thunderdome, corridorofdoom, tiny, cheesebottles, Stash) waits on cq198;
     replica #345 block on set 3 (4 sent, 12 queued). Falsifiers in attempts.csv.
+- 02:34 (11-10): **zhp registered: zho's sibling arm by place (no standoff within 5 of our king)**
+  - zhp = zdb + STANDOFF_HOME 5 (Baby.war, Comms.nearestKing). Compiled 5073b40dfe9f; screens zd509/zd510 queued; chain cq200 (seed 106) behind cq199.
+    Replica after zho's block has been sent (the drain sends only the active build's rows).
