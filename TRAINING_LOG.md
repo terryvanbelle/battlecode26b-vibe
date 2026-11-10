@@ -9779,3 +9779,17 @@
   - zhy = zdb + FORM_MAX 3. A third king still needs the income test at kings + 1 (FORM_NET100 -100, INCOME_TRUST 75),
     so it forms only on incomes of about 930 a hundred rounds. s3x (FORM_MAX 4, 10-28) was rejected on an old base.
     Screens zd521/zd522, chain cq206 (seed 112; keepout, wallsofparadis, thunderdome, cheesebottles, FreeTheCheese).
+- 06:36 (11-10): **zhw rejected at replica block 1 (D 2, net 0); zhx dropped; zhy submitted (#351)**
+  - zhw #350 set 3 (23618-23629, 23632-23635 vs zdb's anchors): 48 cells, 46 alike, D 2, net 0, t 0.00.
+    - Gained YokoOno Stash A, the cell zgc and zho also gained, so it likely flips on any change.
+    - Lost Varun corridorofdoom B. The game left zdb's at r1348, when a late raider left an 8-baby economy. The bank
+      fell from 253 to 33 by r1800 and the lone king died at r1904; zdb formed its end king there and won on points.
+  - zhx dropped by its falsifier 4 (base rejected). Its s7 zd519 had read net +3, t +1.35 (information only); zd520
+    and cq205 stopped. The late-raid line is closed: on the replica it only reaches long, poor games, where raiding
+    costs the delivery we need.
+  - zhy submitted as #351; its 16 set-3 rows are in the drain. zd521 is playing; cq206 started at 06:35.
+  - Set-3 anchor census (zdb, 48 games; scratch kingsum.py): 21 losses, 18 of them king kills of a lone king (11
+    before r900). The 3 points losses are keepout A/B (Finals held 5 and 2-3 kings to our 1-2) and Merlin
+    FreeTheCheese B (2 kings each). thunderdome A: one king bitten to death r125-436 with 950 banked and 25 babies.
+    No site was ever named: the side mines are 14 vs 22 from the starts (the "clearly ours" test wants 2x), and the
+    back spot is in the box wall. FORM_MINE's site picker would fix that, but its line is closed (zeu, zew).
