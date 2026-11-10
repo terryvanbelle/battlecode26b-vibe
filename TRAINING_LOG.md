@@ -9442,3 +9442,4 @@
   - wallsofparadis vs Finals (21018/21019 game 1): Finals works all four dirt-ringed inner mines (about 1,100-1,460 picked from each by r600) while we work one outer home mine. ~70% of our rat-turns stay outside ring 1 through r400. A local zdb game shows every rat knows only (30,3) until r196.
     - Prior fixes for this (SEEK_FRONTIER zc2, SWEEP u2u/u2x, EXPLORE_CENTER zd7, SCOUT_EVERY 2 u8o) all failed. Parked.
     - The local game also had ~10 rushers stalled 130+ turns at the walled corridor, but the field games show none (it was a long-coop artifact vs agrab).
+- 19:37: **zgv DROPPED** (floors 500): zd480 n 48, D 3, net -1, t -0.57 (picks/100 35.17 vs 34.11), 0 overruns. cq183 left to finish as floor diagnostics.
