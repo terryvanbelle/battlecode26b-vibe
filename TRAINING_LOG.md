@@ -9477,3 +9477,7 @@
 - 20:42: **zgz (RETREAT_HP 60) dropped at its screen**
   - zd484 (s7): n 48, D 11, net -1, t -0.30, picks/100 34.31 vs 34.11, 0 overruns. The falsifier drops at net < 0, so the grab-cell chain is not run.
   - zd485 (zha) started 20:41. Pending: zgx (cq185 running), zha (zd485, cq186 behind cq185), the second half of zdb's set-3 re-draw.
+- 20:45: **zhb registered: zdb + RISK_ROWS (existing switch, Finals' traps on keepout)**
+  - Set 3 keepout vs Finals (21018/21019) was lost in both seats on points at r2000: Finals had 5 kings to our 1-2 and twice our transfer. Their rat traps fired on our rats 319 and 333 times, 92-94% in our half, clustered at our king (45,25) and home mines, at a steady rate all game: 100 trap deaths a game.
+  - zdb's TrapRisk allocates its flat W*H array only on a turn with 3*W*H + 8000 bytecodes left (15,500 on 50x50, 18,800 on 60x60), against a baby budget of 17,500 with zdb rats at p99 16k. RISK_ROWS keeps the marks a row at a time. It was tested once, on s9s (t0e, weak), never on the z-line.
+  - Falsifiers (attempts.csv): screen zd486 (s7) net < 0, t < 0 or an overrun; chain cq187 (seed 95, 6 maps of 2500+ tiles x 2 seats x atrap3/agrab, paired with zdb): wins below zdb's, transfer under 1.0x, or trap deaths not under 0.9x zdb's.
