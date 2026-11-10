@@ -97,18 +97,21 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (07:30 11-10):**
-  - Incumbent still **zdb** (#334). zhw rejected 06:36 (replica block 1 D 2, t 0); zhx dropped with it. zhy (FORM_MAX
-    3) dropped 07:27 at its chain (10 vs 12; a third king starves all kings); its #351 rows play as information only.
-  - **zhz** (zdb + GLANCE_MEM 20; #352): zd523 playing, zd524 next; chain cq207 (seed 113) playing; set-3 block: 4
-    sent 07:27, 12 in the drain. Score: `screen_t.py zd343 zdb zd523 zhz`, `zd345 zdb zd524 zhz`,
-    `chsc.py cq207 zdb zhz`; replica vs anchors 21016-21023, 21036-21043.
-  - **zia** (zdb + BITE_GUARD; 73% of field grabs on us take a weaker rat): zd525/zd526 queued, chain cq208 (seed
-    114) waits on cq207. Submit after zhz's rows are all sent.
-  - Scratch census tools on the VM (copies in laptop /dev/shm/kd): /dev/shm/kingsum.py (kings by round),
-    kdie.py (how our kings died), bdie.py (baby death causes), kdmg.py; run with BC_DUMPCACHE=/dev/shm/kdc.
-  - Next fresh seed: 115. Next screen id: zd527. Next chain: cq209. Next free name: zib.
-  - VM disk 2.3 GB. build/dumpcache (2.1 GB) is write-protected; leave it.
+- **Now (07:55 11-10):**
+  - Incumbent still **zdb** (#334). zhz (GLANCE_MEM 20) rejected 07:46; zhy dropped 07:27.
+  - **zia** (zdb + BITE_GUARD; #353): zd525 (s7) playing, zd526 (s6) next; chain cq208 (seed 114) playing; set-3
+    block: 16 rows in the drain (0 sent at 07:50). Score: `screen_t.py zd343 zdb zd525 zia`,
+    `zd345 zdb zd526 zia`, `chsc.py cq208 zdb zia`; replica vs anchors 21016-21023, 21036-21043.
+  - **zib** (zdb + THROW_HOLD 3; 1,265 of zdb's anchor holds ran to round 6 for nothing): zd527/zd528 queued, chain
+    cq209 (seed 115, cq207's maps) waits on cq208. Submit after zia's rows are all sent. Mechanism bar: no zib
+    throw 4+ rounds after its grab (scratch /dev/shm/holds.py reads anchors; adapt for chain gz dumps).
+  - Closed today: late raid (zhw/zhx), third king (zhy), GLANCE_MEM (zhz), king defence by blind bites (z3u, 11-06).
+  - Scratch census tools on the VM (copies in laptop /dev/shm/kd): /dev/shm/kingsum.py, kdie.py, bdie.py, kdmg.py,
+    grabs.py, kdef.py/kdef2.py (king defence), esus.py (economy timeline), holds.py (grab-to-throw); run with
+    BC_DUMPCACHE=/dev/shm/kdc.
+  - Next fresh seed: 116. Next screen id: zd529. Next chain: cq210. Next free name: zic.
+  - VM disk 2.2 GB. build/dumpcache (2.1 GB) is write-protected; leave it.
+- **Earlier (07:30 11-10):** zhz pending, zia waiting; see TRAINING_LOG 07:27-07:47.
 - **Earlier (06:23 11-10):** zhw/zhx/zhy pending; see TRAINING_LOG 06:10-06:36.
 - **Earlier (05:43 11-10):**
   - Incumbent still **zdb** (#334). zhn rejected 02:44 as inert (screens, chain cq198 and replica #344 all equal zdb).
