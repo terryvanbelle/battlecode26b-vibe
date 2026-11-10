@@ -10028,3 +10028,15 @@
   - Ledger check: tiny vs agrab seed 118 matches zdb's game until r28, the first AMMO_AWAY step (mv=A). That game was
     lost at r66; zdb won it at r79.
   - Screens zd537/zd538 and chain cq214 were swapped to zii before they started. Falsifiers are zig's, carried over.
+- 10:58 (11-10): **zij replaces zif on the replica: TRIP_LOAD 600 under the ledger**
+  - zif's trip timer runs every turn without a ledger, so its replica block would mix real effects with re-rolls.
+    Its 16 rows were removed from the drain before any was sent (copy in laptop /dev/shm/kd/zif_queue.tsv).
+  - zij = zif with four ledgered Baby hooks: the walk timer in born, pickUp and the transfer (K 9), and the
+    moveDecision rule (K 11). zdb's delivery rule runs unchanged unless the trip load changes the decision. Compiled
+    4cb3986f9c37.
+  - Ledger check: zjchk (untracked; zij with TRIP_LOAD_BANK 99999, never acting) replays zdb's cq211 Stash A agrab
+    game (seed 117) identically for all 773 rounds.
+  - Submitted #359; 16 set-3 rows in the drain. Screens zd541/zd542 are at the front of the queue. Chain cq216
+    (seed 122, cq211's maps) waits on cq215. zif's zd535/zd536 and cq213 finish as information only.
+  - Screen queue: zd536 (zif, running), zd541, zd542 (zij), zd537, zd538 (zii), zd539, zd540 (zih).
+  - Chains: cq213 (zif), then cq214 (zii), cq215 (zih) and cq216 (zij).
