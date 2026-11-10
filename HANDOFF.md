@@ -97,7 +97,22 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (11:28 11-10):**
+- **Now (14:01 11-10):**
+  - Incumbent still **zdb** (#334). Rejected or dropped at replica block 1 today: zij, zil (bundle, net -1), zih
+    (net 0, t 0; rate score +1.34). **zio** (#362, zih + RESCUE_BLOCK) is on the replica: set-3 rows from 24072.
+  - **Why-tags:** zdb pads every turn so that bytecode count mod 128 encodes the baby's move decision (Debug.tag).
+    `tools/smuggle.py` decodes replica replays, and its decode() is usable from scripts. VM scratch:
+    /dev/shm/dcx/pwhy.py (why codes of rats in a Stash pocket), pocket.py (pocket exits), ethrow.py (enemy throws of
+    our rats into our king).
+  - **zir** (RUSH_BFLOW: rushers walk by BitFlow; c80db635b074) targets Stash. zdb's 12 rushers sat in the pocket
+    all game in set-3 Stash B. Never-acting copy bots/zrbchk (untracked) replays zdb's game exactly. Chain cq222
+    (seed 128) stands at 11 of 13 vs zdb 8, with Stash A and B vs atrap3 flipped. Screens zd555/zd556 are at the
+    queue head. Next on the replica if they pass.
+  - Other pending: ziq (WALL_STAND; cq221 is losing minimaze A as zga did), zii (zd538), zik (zd543/zd544).
+    zip was withdrawn as a repeat of zga.
+  - Next screen zd557, next chain cq223, next seed 129, next name zis. Probe bots zrchk, zbfchk, zpchk, zqchk are
+    untracked.
+- **Earlier (11:28 11-10):**
   - Incumbent still **zdb** (#334). zij's 16 set-3 rows are in the drain (4 done at 11:25). Replica order after zij:
     **zil** (bundle: ledgered RESCUE + AMMO_AWAY + KING_WALL_THREAT, ce4e2ddd7632), then zih, zii, zik singles.
   - **zil** screens zd545 (s7) / zd546 (s6) head the screen queue; chain cq218 (seed 124; thunderdome, cheesebottles,
