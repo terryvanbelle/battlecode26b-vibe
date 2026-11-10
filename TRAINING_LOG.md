@@ -10084,3 +10084,14 @@
     - zil submitted as #360; its 16 set-3 rows are in the drain.
     - zii: cq214 10 of 20 vs zdb 9, 0 overruns (+tiny A). zif's information chain cq213: 15 vs 15.
     - Chains now: cq215 (zih) and cq217 (zik). Screens: zd546 (zil s6) playing, then zd537-zd540, zd543, zd544.
+- 11:57 (11-10): **zim registered: THROW_KINGS, ledgered (our unseen kings block our own throws)**
+    - Friendly fire in zdb's set-3 anchors (scratch ffking.py, ffwhy.py): our throws hit our own king 20 times (736
+      damage). 9 of those hits were on thunderdome vs Varun (194 + 140 of the two 600-HP kings, both king kills
+      lost; bites did 406 in A).
+    - Nearly every hit came at THROW_HOLD expiry, 6 rounds after the grab. The thrower stood at Chebyshev 3-5 from a
+      king outside its view, so that flight looked empty (+10) and won the scoring.
+    - zim = zdb plus throwChecked's unseen-king marking only, ledgered in Baby.tryThrow (K 9).
+      - zmchk, which never marks, replays zdb's Stash s117 game 773/773.
+      - zim first diverges at r463: a carrier's step reads the marked grid.
+    - Screens zd547/zd548 head the queue; chain cq219 (seed 125) runs. If it passes, zim joins zil's members in the
+      next bundle.
