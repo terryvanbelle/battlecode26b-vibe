@@ -9521,3 +9521,10 @@
           × A/B × atrap3/agrab, paired with zdb): wins ≥ zdb, cheese transfer ≥ 1.02× zdb, no overruns.
     - cq189 (zhd, seed 96, 16 of 48 done) was stopped so cq190 could take the chain slot. zd490 is queued.
     - VM disk was at 1.6 GB. Removed the closed dumps cq181, cq186, cq187, cq188 and zhcq, which brought it to 1.9 GB.
+- 22:00: **zgx rejected on the replica (48 of 48 cells alike); zhf submitted as #336**
+    - Set-3 block 1 for zgx (#335; 23045-23056 and 23074-23077 against zdb's set-3 anchors): 48 cells, 48 alike, D 0, t 0.00.
+      Block 1 rejects at t ≤ 0. The lower floors never change a field game, and the targets (externalsustenance A vs YokoOno,
+      mincemeat B vs Icarus) are still lost.
+    - Replays archived to the VM: rp/zgx_b1s3a.tgz and rp/zgx_b1s3b.tgz (8 each).
+    - zhf went to the replica as #336 so the replica is not idle while its local gates run. Its set-3 block is queued:
+      12 requests sent from 19046, 4 in the drain. If zd490 fails falsifier 0, the block is void and zhf is dropped regardless.
