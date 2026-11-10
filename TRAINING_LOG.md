@@ -9576,3 +9576,14 @@
   - Stopped zd492 and cq191. Dropped zhg's 12 drain rows; the 4 matches already sent will play and count as information only.
   - zhh submitted as #338, and its set-3 block (16 matches) is queued in the drain.
   - Now: zd493 is running with zd494 queued; cq192 (zhh) has started.
+- 22:58: **zhi registered: one king until the endgame** (zdb + FORM_FROM 1200; compiled 1dc8b95fa49d)
+  - Diagnosis, Merlin FreeTheCheese B (21043 g1, lost 47-52 on points at r2000). Points check: cat damage 9,203 to 8,840, transfer 13,030 to 23,802, 2 kings each, which gives about 47.4 to 52.6.
+    - Merlin held one king until about r1900 and formed its second at the end. Through the game it ran 30-40 babies on a 700-1,500 bank, spawned 284 and picked up 33.5k.
+    - Ours formed its second king at about r450 and then ran 7-20 babies on a 200-500 bank. We spawned 176 and picked up 18k.
+  - Switch: mid-game formation runs only while FORM_FROM ≤ round ≤ 1150, so FORM_FROM 1200 turns it off, including the rich-site branch. END_KING (r1850) and CASH_END (r1880) still form a second king for the points count.
+  - Prior: u5l (FORM_FROM 600) was a near miss on the replica (pooled t +1.00). No later setting was tried.
+  - Falsifiers (binding):
+    1. zd495 (s7 vs zd343): net ≥ 0 and t ≥ 0, no overrun.
+    2. zd496 (s6 vs zd345): net ≥ 0, no overrun.
+    3. Chain cq193 (seed 100; FreeTheCheese, cheesebottles, DefaultLarge, fullofsecrets and peaceinourtime × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb's, and summed transfer ≥ 1.0x zdb's.
+  - Queue: zd494, then zd495-496. Chains: cq192 (zhh), then cq193.
