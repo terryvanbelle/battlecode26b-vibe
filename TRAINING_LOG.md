@@ -9428,3 +9428,10 @@
   - zd479 D 0: inert on the s7 screen.
   - cq182: wins 13 vs 12 (gained fullofsecrets A vs agrab); transfer 237,212 vs 224,603 = 1.056x, below the 1.1x falsifier.
   - VM disk 1.9 GB: pruned 166 old replica replays and cq182, now 2.3 GB.
+- 19:16: **zgv registered: zdb + CORE_FLOOR 500 / WAR_FLOOR 500**
+  - Seat-split diagnosis on zdb's set-3 anchors:
+    - mincemeat B vs Icarus (21041): bank 1430 -> 310 by r125 -> 0 at r325, king starved by r472. Seat A (21040) held 38-113 and won when theirs starved first.
+    - externalsustenance A vs YokoOno (21020): bank 1740 -> 270 by r100. As B (21021) our rats took their king 600 -> 180 by r80, so that split is mostly the king fight.
+  - zdb's boot (under 18 babies) and war (enemies in sight) spawns skip the income test and spend to 300. zgv raises both floors to 500.
+  - Screen zd480 queued; chain cq183 (seed 91, five set-3 loss maps x A/B x agrab/atrap3) running.
+  - Falsifier: zd480 net < 0 or t < 0, any overrun, or cq183 wins below zdb or transfer under 0.95x.
