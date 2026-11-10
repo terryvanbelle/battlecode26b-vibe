@@ -97,7 +97,7 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (06:40 11-10):**
+- **Now (06:43 11-10):**
   - Incumbent still **zdb** (#334). zhw rejected 06:36 at replica block 1 (D 2: +Stash A, -corridorofdoom B; t 0).
     zhx dropped with it. The late-raid line is closed.
   - **zhy** (zdb + FORM_MAX 3; #351): zd521 playing, zd522 next; chain cq206 (seed 112) playing; 16 set-3 rows in
@@ -107,7 +107,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     queued, chain cq207 (seed 113) waits on cq206. Submit after zhy's 16 rows are all sent.
   - Scratch census tools on the VM (copies in laptop /dev/shm/kd): /dev/shm/kingsum.py (kings by round),
     kdie.py (how our kings died), bdie.py (baby death causes), kdmg.py; run with BC_DUMPCACHE=/dev/shm/kdc.
-  - Next fresh seed: 114. Next screen id: zd525. Next chain: cq208. Next free name: zia.
+  - **zia** (zdb + BITE_GUARD; 73% of field grabs on us take a weaker rat): zd525/zd526 queued, chain cq208 (seed
+    114) waits on cq207. Replica order after zhy: zhz, then zia (each once the previous build's rows are all sent).
+  - Next fresh seed: 115. Next screen id: zd527. Next chain: cq209. Next free name: zib.
   - VM disk 2.3 GB. build/dumpcache (2.1 GB) is write-protected; leave it.
 - **Earlier (06:23 11-10):** zhw/zhx/zhy pending; see TRAINING_LOG 06:10-06:36.
 - **Earlier (05:43 11-10):**
