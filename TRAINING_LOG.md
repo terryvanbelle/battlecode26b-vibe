@@ -9989,3 +9989,14 @@
   - zie: cq212 complete, 9 vs 9 wins, 0 overruns (passes). Transfer is 0.60x, but these are short war maps and
     zie's bar carries no transfer clause. zd534 (s6) is at 40 cells: net +3, t +1.14.
   - Queue: zd535/zd536 (zif) then zd537/zd538 (zig). Chains: cq213 (zif) running, then cq214 (zig).
+- 10:48 (11-10): **zie DROPPED at replica block 1 (D 10, net -2); zif on the replica (#358)**
+  - zie #357 set-3 block 1 (23889-23896, 23902-23909): D 10, +4 -6, net -2.
+    - Gained: Stash A vs YokoOno, thunderdome A and B vs Varun (king kills at r40 and r45), mincemeat B vs Icarus.
+    - Lost: rose A vs spsquared, externalsustenance B vs YokoOno, corridorofdoom B vs Varun, mincemeat A vs Icarus,
+      minimaze B and uneruesansfin A vs Xzibit.
+  - thunderdome (scratch rescues.py): zie made 5-6 rescues (grabs of enemy carriers holding ours) in its 40-45
+    rounds. The anchors made 4-6 over 410-436 rounds and suffered 42-60 enemy throws of ours, against zie's 7-12.
+    Early rescues kept the rush alive. RESCUE moves many cells both ways, as u6g found on u6a.
+  - Local gates had passed: zd534 (s6) n 44, D 7, net +3, t +1.14.
+  - zif (#358) submitted at 10:47; 16 set-3 rows in the drain. zd535 is at 38 of 48 cells: net -1, t -0.44,
+    picks z +1.90.
