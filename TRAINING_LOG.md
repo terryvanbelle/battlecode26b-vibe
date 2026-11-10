@@ -9728,3 +9728,8 @@
   - cheesebottles vs Merlin (dumpc 0f2f, A): Merlin out-delivers us 8,011 to 4,300 by r1000 with 24-30 babies to our 19-22, and bites our king from 560 to 20 over r300-1042; our second king (r400) died by r500.
 - 03:56 (11-10): **zhu registered: zhp's dose arm (STANDOFF_HOME 8)**
   - Compiled 80336defaa83; screens zd513/zd514 after zht's; chain cq202 (seed 108, zho's 40-game map set) behind cq201. Replica after zht's block.
+- 04:23 (11-10): **zhp passes replica block 1 (set 3: D 1, +1, net +1); block 2 on set 4 queued**
+  - #346 set 3: 47 of 48 cells equal zdb's anchors (every match fetched or score-identical with no swap; Finals, Varun, thewaxmango, Icarus and Xzibit pairs checked per map); +YokoOno Stash A.
+  - zd510 (s6) final: n 44, D 5, net +1, t +0.44, picks/100 33.86 vs 32.96 (per-cell z +2.17).
+  - zhp resubmitted (#348) for block 2 on set 4 (zdb anchors 20817-20824, 20842-20845, 20848-20851; reject at t <= 1). 4 sent, 12 queued.
+    zht (#347) had 4 set-3 matches sent at 04:12 (23484-23487); its other 12 rows are held in the drain until zhp's are sent, then zht is resubmitted.

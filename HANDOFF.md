@@ -97,13 +97,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (03:22 11-10):**
+- **Now (04:23 11-10):**
   - Incumbent still **zdb** (#334). zhn rejected 02:44 as inert (screens, chain cq198 and replica #344 all equal zdb).
   - zho (#345; STANDOFF_ODDS 3) rejected 03:22 at its replica block (D 3, net -1: +Stash A, -rose A, -externalsustenance B).
-  - **zhp** (zdb + STANDOFF_HOME 5: no standoff within 5 of our king; zho's sibling arm). Screens zd509/zd510 queued;
-    chain cq200 (seed 106) running. Replica #346 set-3 block: 4 sent 03:22, 12 in the drain.
+  - **zhp** (zdb + STANDOFF_HOME 5: no standoff within 5 of our king; zho's sibling arm). Local gates passed (zd509,
+    zd510, cq200 14-13). Replica block 1 (#346 set 3) D 1 +1 net +1 (Stash A). Block 2 on set 4: resubmitted #348,
+    4 sent 04:23, 12 in the drain; judge vs zdb anchors 20817-20824,20842-20845,20848-20851 (reject at t <= 1;
+    accept at pooled t >= 2 with D >= 4). Then resubmit zht so its 12 held rows go out.
   - **zht** (zdb + RUSH_SMALL 400: no opening rushers on maps of 400 tiles or fewer; tiny vs thewaxmango). Screens
-    zd511/zd512 queued; chain cq201 (seed 107) behind cq200. Submit to the replica once zhp's 12 drain rows are sent.
+    zd511/zd512 queued; chain cq201 (seed 107) running. Replica #347: 4 set-3 matches sent 04:12 (23484-23487), 12 rows held behind zhp's block 2.
   - **zhu** (zhp with STANDOFF_HOME 8, the dose arm). Screens zd513/zd514; chain cq202 (seed 108) behind cq201. Replica after zht.
   - Next fresh seed: 109. Next screen id: zd515. Next chain: cq203. Next free name: zhv (zhq and zhs are old dirs).
   - VM disk 2.1 GB (pruned replica replays > 30 h; cq196 and cq197 removed).
