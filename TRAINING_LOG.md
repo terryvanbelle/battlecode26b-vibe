@@ -9377,3 +9377,9 @@
   - FINISH_K is on the live bite path (biteEnemies, GrabMicro): bites finish 11-20 HP rats for k*k cheese when global ≥ 200; zdb stops at 5.
   - Falsifier: zd473 (s7) net < 0 or t < 0, zd474 (s6) net < 0, or cq178 (cq170's 20 zdb cells, zgp swapped in) wins < zdb's 14.
   - cq178 waits for cq177 (zgo vs zgj).
+- 16:41: **Three ideas closed before building; VM disk pruned; zgj set 2 at +4 after 7**
+  - VM disk was 1.3 GB: removed closed chains cq166, cq168, cq169, cq171-cq173, cq175, cq176 and pruned 137 replica replays older than 36 h; 2.1 GB now.
+  - King walks to loaded carriers: king vision is dist2 25 and transfer reach dist2 9 from its body, so a step toward a seen carrier saves 1-2 steps at most. Not built.
+  - CASH at bank 0: starve.py shows the bank at 0 for every sample before field starvations, under CASH_FLOOR 60; the engine's assertCanBecomeRatKing checks the team bank ≥ 50 before the formers' raw is banked, so the floor is right. Not built.
+  - Cat traps after a backstab: only the backstabbed team keeps them 100 rounds, and BREAK_ROUND 30 makes us the backstabber. Not built.
+  - zgj #331 set 2, 22843-22849: 21 cells, D 4 (+4 -0: Finals dirtpassageway B, YokoOno averystrangespace B and streetsofnewyork A, Varun clouds A), t 2.00. 8 rows drain at ~17:33.
