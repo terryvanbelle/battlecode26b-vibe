@@ -9557,3 +9557,16 @@
       for big maps doesn't reach Finals' fight traps, which fire while our rats are engaged and the mask is off.
     - Replays archived on the VM: rp/zhf_b1s3a.tgz and zhf_b1s3b.tgz.
     - The replica is idle until zhg passes its local gates.
+- 22:30: **zhh registered: the king pays for its bites while 500 are banked (thunderdome vs Varun)**
+    - Target: zdb set 3, thunderdome vs Varun, lost in both seats. Our king was bitten from 600 to 0 over r100-r436
+      by 1-4 babies at a time, and died with 26 rats alive and 933 banked.
+    - zhh: King.bite spends 100 cheese (20 damage) on a bite that isn't a kill, provided 500 stay banked.
+      biteCheese's kill-only spend is unchanged. The new code is ledgered at K 18.
+    - Earlier tries were different: u7c/u7k raised only the kill-only cap and were inert; z7i boosted baby bites
+      and was rejected.
+    - Binding falsifiers:
+        - (1) s7 zd493 and (2) s6 zd494: net ≥ 0, t ≥ 0, no overrun.
+        - (3) chain cq192 (seed 99, cq184's five maps × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb and summed
+          transfer ≥ 0.95x.
+    - Queue: zd492 and zd493-494 behind zd491; the chains run cq191 (zhg), then cq192.
+    - zhg (#337) is on the replica, and its 16-match block is in the drain.
