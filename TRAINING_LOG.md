@@ -9687,3 +9687,12 @@
     3. Chain cq198 (seed 104; keepout, where_are_you, rift, averystrangespace and minimaze × A/B × agrab/atrap3, paired with zdb; zdb's keepout agrab pair linked from cq197): wins ≥ zdb − 1, 0 overruns, games with a king death ≤ zdb's + 1, and more games with 3+ kings formed than zdb (mechanism).
     4. Replica set-3 block: net below 0 drops it.
     - Dropped as inert if all of these replay zdb.
+- 02:32 (11-10): **zhn screens inert; zho registered: no standoff when we clearly outnumber**
+  - zhn: s7 zd505 n 48 D 0 t 0.00, s6 zd506 n 44 D 0 t 0.00 (falsifier 1 holds, inert so far). Chain cq198 30 of 38 done; replica #344 all 16 sent.
+  - VM disk 1.5 GB: removed cq196 (12 MB) and replica replays older than 30 h (594 MB), now 2.2 GB.
+  - Field diagnosis (new /dev/shm/stillwhere.py on dumpc, 25 games): our idle empty rats stand within 5 of our own king with an enemy
+    within dist2 20 (thunderdome 88%/80% en, corridorofdoom A 93%/92%, tiny B 94%/93%); the enemy's idle rats stand 11+ from their king (corridorofdoom 95-96%).
+    A standoff at our base pins our army while their gatherers work. STANDOFF was ablated only once (u3l on u2g, inconclusive).
+  - zho = zdb + STANDOFF_ODDS 3 (Baby.war): skip the standoff when our baby rats in view outnumber theirs by 3+ (counting this rat).
+    Compiled fcfc2e016975; screens zd507/zd508 queued; chain cq199 (seed 105, 40 games: thunderdome, corridorofdoom, tiny, cheesebottles, Stash) waits on cq198;
+    replica #345 block on set 3 (4 sent, 12 queued). Falsifiers in attempts.csv.

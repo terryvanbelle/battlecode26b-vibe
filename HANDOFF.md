@@ -97,7 +97,15 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (01:37 11-10):**
+- **Now (02:32 11-10):**
+  - Incumbent still **zdb** (#334). zhn (#344) screens inert (zd505/zd506 D 0); chain cq198 finishing; its 16
+    replica matches all sent. Score cq198 (`chsc.py cq198 zdb zhn`, `kingsc.py cq198 zdb zhn`) and log its verdict.
+  - **zho** (#345; zdb + STANDOFF_ODDS 3: no standoff when our baby rats in view outnumber theirs by 3+). Field
+    idle rats stand at our own king facing besiegers (/dev/shm/stillwhere.py on dumpc). Screens zd507/zd508 queued;
+    chain cq199 (seed 105, 40 games) waits on cq198; set-3 block: 4 sent, 12 in the drain. Bars in attempts.csv.
+  - Next fresh seed: 106. Next screen id: zd509. Next chain: cq200. Next free name: zhp (check the dir too).
+  - VM disk 2.2 GB (pruned replica replays > 30 h, removed cq196). cq197 removable once cq198 is scored.
+- **Earlier (01:37 11-10):**
   - Incumbent still **zdb** (#334). Rejected since 22:58: zhh, zhi, zhj, zhk, zhl; zhm dropped (keepout replayed
     zdb: the income king's site picker needs seen mine tiles, so FORM_CHEESE/FORM_BABIES never bind there).
   - **zhn** (#344; zdb + FORM_RICH_BANK 2800): the RICH2 80-baby tier pins the bank at 2,900-2,960, just under the
