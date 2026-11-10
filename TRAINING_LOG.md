@@ -9726,3 +9726,5 @@
   - Replica #346: 23422-23425, 23431-23434 vs anchors: +YokoOno Stash A (5t4 W, Stash W, externalsustenance L); YokoOno B unchanged (W L W); spsquared, Finals and Varun equal.
     Stash A is the cell zgc and zho also gained: any change to how our home rats meet the enemy seems to flip it. 8 rows wait for the next hourly send.
   - cheesebottles vs Merlin (dumpc 0f2f, A): Merlin out-delivers us 8,011 to 4,300 by r1000 with 24-30 babies to our 19-22, and bites our king from 560 to 20 over r300-1042; our second king (r400) died by r500.
+- 03:56 (11-10): **zhu registered: zhp's dose arm (STANDOFF_HOME 8)**
+  - Compiled 80336defaa83; screens zd513/zd514 after zht's; chain cq202 (seed 108, zho's 40-game map set) behind cq201. Replica after zht's block.
