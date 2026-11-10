@@ -10000,3 +10000,23 @@
   - Local gates had passed: zd534 (s6) n 44, D 7, net +3, t +1.14.
   - zif (#358) submitted at 10:47; 16 set-3 rows in the drain. zd535 is at 38 of 48 cells: net -1, t -0.44,
     picks z +1.90.
+- 10:52 (11-10): **zih registered: RESCUE under the bytecode ledger**
+  - zie's changed cells (scratch rescues.py; grabs of enemy carriers holding ours, zie vs anchor):
+    - With real rescues: thunderdome A and B (5-6 rescues by r40-45, both won) and corridorofdoom B (4, lost).
+    - With 0-1 rescues: rose A, externalsustenance B, mincemeat A and B, minimaze B, uneruesansfin A and Stash A.
+      zdb replays its anchors 48 of 48, so these are re-rolls of fragile cells by the unledgered scan's bytecode,
+      not rescues.
+  - zih = zdb + RESCUE with both hooks under the ledger (K 9):
+    - the rescueTarget scan in the war setup;
+    - tryCarry's holdsOurs bonus.
+    - zdb's own instructions stay outside both windows. Compiled fecc46ad37c7.
+  - Ledger check (replay_eq.py): tiny vs agrab seed 118 is identical to zdb's game through r68. It diverges at r69,
+    the turn of the first rescue (mv=R, rs=1), and zih wins at r82, as zdb did at r79.
+  - Falsifiers (binding):
+    1. zd539 (s7) and zd540 (s6): t > -1.5, 0 overruns.
+    2. cq215 (seed 121; thunderdome, tiny, DefaultMedium, corridorofdoom, knifefight x A/B x agrab/atrap3): wins
+       >= zdb - 1, 0 overruns.
+    3. Replica set-3 block 1: net < 0 drops, t <= 0 rejects.
+  - Replica order: zif (in the drain), then zih ahead of zig.
+  - Lesson: on zdb, any new code that runs every turn re-rolls fragile set-3 cells. Ledger every switch that runs
+    when it does not act.
