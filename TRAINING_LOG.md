@@ -9610,3 +9610,12 @@
     3. Chain cq194 (seed 101; cheesefarm, arrows, evileye, FreeTheCheese and peaceinourtime × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb's; summed cat traps laid > zdb's, so the mechanism fires; summed cat damage ≥ zdb's; transfer ≥ 0.97x.
   - cq194's first launch waited on the wrong script and started 2 games beside cq193. I killed it, removed its partial output, and relaunched it behind cq193.
   - Queue: zd495 (zhi, running), zd496, zd497, zd498. Chains: cq193 (zhi), then cq194. Replica: zhi #339 in the drain.
+- 23:57: **zhi rejected at its chain; zhj on the replica (#340)**
+  - cq193 (complete, 40 games): zhi won 12 to zdb's 13, with transfer 0.962x. That breaks the binding bars (wins ≥ zdb, transfer ≥ 1.0x).
+    - Lost: DefaultLarge B vs agrab (r552; zdb won at r1833), where the lone king was rushed, and peaceinourtime A vs atrap3 (r499).
+    - Gained: FreeTheCheese A vs atrap3 on points.
+  - The screens had passed:
+    - zd495 (s7): D 2, net +2, t +1.43, 0 overruns (+Stash A vs agtr, +cheesefarm B vs atrap3 on points).
+    - zd496 (s6): net +1 at 44 of 48.
+  - So one king to the endgame wins some points games, but it gives up transfer, since the mid-game second king is also a second delivery point, and it gives up the insurance king. Merlin can afford one king because its economy is bigger; ours can't. The formation-timing line stays closed past FORM_FROM 600.
+  - Replica: zhi's 4 sent matches count as information only, and its 12 drain rows were dropped. zhj submitted as #340, with its set-3 block (16) in the drain.
