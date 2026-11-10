@@ -9758,3 +9758,14 @@
   - Set 3: 47 of 48 alike; -Icarus averyfineline A (400 tiles, the named risk). tiny vs thewaxmango stayed lost in both seats: without our rushers they still destroy our king.
     Local tiny gains came against atrap3 only. zht's 16 matches were all checked per map or score-identical.
   - zhw's s7 zd517 passed: n 48, D 2, net +2, t +1.43. zhw submitted (#350); its set-3 block (16 rows) is in the drain for the next hourly send.
+- 06:10 (11-10): **zhx registered: zhw's raid dose arm (RAID_EVERY 1 from r500); zhw screens done**
+  - zhw: s6 zd518 n 44, D 1, net +1, t +1.00 (passes falsifier 1 with zd517's t +1.43). Chain cq204 at 16 of 20 zhw
+    games: 11 wins to zdb's 11 of 14, 0 overruns. Replica #350: 8 of 16 set-3 rows sent at 06:09.
+  - zhx = zhw + RAID_EVERY 1: every fighter born at r500 or later raids. zhw's quarter raised local enemy-half pickups
+    only 4%. Falsifiers in attempts.csv: zd519/zd520 t > -1.5, chain cq205 (seed 111, waits on cq204) wins >= zdb - 1
+    and transfer >= 0.97x, replica set-3 block 1.
+  - Checked and set aside first: king and baby rat traps (t0c, zd1, zdw, zdy, zey, u8f all rejected or dropped) and
+    every burn-signal switch (RISK_ADAPT zfg, WOUNDED_HP u1n, FACE_HOLD zff, RUSH_BURN zfi). keepout vs Finals
+    (22602): they lay 337 traps and fire 338 on us, 100 of our deaths are traps, and we end with 3 babies to 30.
+  - VM disk was 1.2 GB: pruned 213 replica replays and the chain dirs of rejected zgx/zhn/zho/zhp/zht/zhu/zhv
+    (cq185, cq198-cq203); now 2.2 GB. build/dumpcache (2.1 GB) is write-protected and was left alone.
