@@ -9570,3 +9570,9 @@
           transfer ≥ 0.95x.
     - Queue: zd492 and zd493-494 behind zd491; the chains run cq191 (zhg), then cq192.
     - zhg (#337) is on the replica, and its 16-match block is in the drain.
+- 22:53: **zhg rejected; zhh on the replica (#338)**
+  - zd491 (s6): D 1, net -1, t -1.00. The one changed cell is evileye A vs abrk: zhg lost at r1838, zdb won. That breaks the binding net ≥ 0 falsifier.
+  - cq191 was partial (12 games) before it was stopped: zhg 5 wins vs zdb 7 of 13. zhg lost minimaze A and B vs agrab, both of which zdb won at r2000.
+  - Stopped zd492 and cq191. Dropped zhg's 12 drain rows; the 4 matches already sent will play and count as information only.
+  - zhh submitted as #338, and its set-3 block (16 matches) is queued in the drain.
+  - Now: zd493 is running with zd494 queued; cq192 (zhh) has started.
