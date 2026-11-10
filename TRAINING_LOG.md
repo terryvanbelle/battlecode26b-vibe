@@ -9717,3 +9717,6 @@
   - Rose's jam (local rose1: loaded rats still on 59% of their turns, mostly delivering, with ~25 empty rats packed round the king) is the stem that SWAP_HOLD was made for (s7y; u1s, zei failed on the field).
   - Field tiny vs thewaxmango (anchor 21038/21039 dumped, VM /dev/shm/waxx/dc): we backstab at r11-12 both seats, spend 2,280 to 300 by r100 on babies that die (26 to 7), and our king falls at r142-161; they keep 1,600-2,300 banked.
   - zhp (#346) submitted; its set-3 block: 4 sent, 12 in the drain. zd509/zd510 and chain cq200 running.
+- 03:25 (11-10): **zht registered: no opening rushers on maps of 400 tiles or fewer**
+  - zht = zdb + RUSH_SMALL 400 (Baby.rusher). Basis: tiny vs thewaxmango (see 03:22). zhq and zhs are taken by old directories, so the name is zht.
+    Compiled 4bffcc29ced6; screens zd511/zd512 queued after zhp's; chain cq201 (seed 107, 40 games) behind cq200. Replica once zhp's block has all been sent.

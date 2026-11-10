@@ -102,7 +102,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   - zho (#345; STANDOFF_ODDS 3) rejected 03:22 at its replica block (D 3, net -1: +Stash A, -rose A, -externalsustenance B).
   - **zhp** (zdb + STANDOFF_HOME 5: no standoff within 5 of our king; zho's sibling arm). Screens zd509/zd510 queued;
     chain cq200 (seed 106) running. Replica #346 set-3 block: 4 sent 03:22, 12 in the drain.
-  - Next fresh seed: 107. Next screen id: zd511. Next chain: cq201. Next free name: zhq (check the dir too).
+  - **zht** (zdb + RUSH_SMALL 400: no opening rushers on maps of 400 tiles or fewer; tiny vs thewaxmango). Screens
+    zd511/zd512 queued; chain cq201 (seed 107) behind cq200. Submit to the replica once zhp's 12 drain rows are sent.
+  - Next fresh seed: 108. Next screen id: zd513. Next chain: cq202. Next free name: zhu (zhq and zhs are old dirs).
   - VM disk 2.1 GB (pruned replica replays > 30 h; cq196 and cq197 removed).
 - **Earlier (01:37 11-10):**
   - Incumbent still **zdb** (#334). Rejected since 22:58: zhh, zhi, zhj, zhk, zhl; zhm dropped (keepout replayed
