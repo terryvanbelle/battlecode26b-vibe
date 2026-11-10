@@ -9411,3 +9411,7 @@
   - where_are_you: zdb won both seats on points (21018/21019, now on the VM as zdb_s3_finals.tgz). zgj as A starved at r1884 with 2 kings, delivered 7,942 to zdb's 9,661, backstab at r419 on a Finals trap; as B it lost at r1467. zgh lost where_are_you A too, so the trail is the suspect there.
   - zdb resubmitted (#332). zgq/zgr (ATK_STUCK doses; s7 passed, net +1 each) and zgs (BREAKOUT on zgj, unplayed) withdrawn with their base; cq179 stopped at 38/60, cq180 and zd477 never ran.
   - zgt carries zgs's switch on zdb: screen zd478 (s7), chain cq181 (seed 89, 5 pocket maps x 2 seats x agrab/atrap3, paired with zdb). Falsifier in attempts.csv.
+- 18:02: **zgu registered: zdb + ATK_STUCK alone** (zgj's switch without the trail).
+  - zgj's set-3 losses (where_are_you A and B) match zgh's (the trail alone). This separates ATK_STUCK, which never ran without the trail.
+  - Hand port: the Baby hook after ATK_DELIVER (ledgered K 20), Baby.atkStuck, one Cfg line (15 + 5 diff lines).
+  - Falsifier: zd479 (s7) net < 0 or t < 0; any overrun of ours; cq182 (seed 90, cq177's 20 cells, paired with zdb; runs after cq181) wins below zdb's or summed transfer under 1.1x.
