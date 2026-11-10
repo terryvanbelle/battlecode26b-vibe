@@ -98,15 +98,14 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - **Now (02:32 11-10):**
-  - Incumbent still **zdb** (#334). zhn (#344) screens inert (zd505/zd506 D 0); chain cq198 finishing; its 16
-    replica matches all sent. Score cq198 (`chsc.py cq198 zdb zhn`, `kingsc.py cq198 zdb zhn`) and log its verdict.
+  - Incumbent still **zdb** (#334). zhn rejected 02:44 as inert (screens, chain cq198 and replica #344 all equal zdb).
   - **zho** (#345; zdb + STANDOFF_ODDS 3: no standoff when our baby rats in view outnumber theirs by 3+). Field
     idle rats stand at our own king facing besiegers (/dev/shm/stillwhere.py on dumpc). Screens zd507/zd508 queued;
     chain cq199 (seed 105, 40 games) waits on cq198; set-3 block: 4 sent, 12 in the drain. Bars in attempts.csv.
   - **zhp** (zdb + STANDOFF_HOME 5: no standoff within 5 of our king; zho's sibling arm). Screens zd509/zd510 queued;
     chain cq200 (seed 106) waits on cq199. Submit it to the replica once zho's block has all been sent.
   - Next fresh seed: 107. Next screen id: zd511. Next chain: cq201. Next free name: zhq (check the dir too).
-  - VM disk 2.2 GB (pruned replica replays > 30 h, removed cq196). cq197 removable once cq198 is scored.
+  - VM disk 2.1 GB (pruned replica replays > 30 h; cq196 and cq197 removed).
 - **Earlier (01:37 11-10):**
   - Incumbent still **zdb** (#334). Rejected since 22:58: zhh, zhi, zhj, zhk, zhl; zhm dropped (keepout replayed
     zdb: the income king's site picker needs seen mine tiles, so FORM_CHEESE/FORM_BABIES never bind there).

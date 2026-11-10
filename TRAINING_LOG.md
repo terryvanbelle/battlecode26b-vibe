@@ -9699,3 +9699,7 @@
 - 02:34 (11-10): **zhp registered: zho's sibling arm by place (no standoff within 5 of our king)**
   - zhp = zdb + STANDOFF_HOME 5 (Baby.war, Comms.nearestKing). Compiled 5073b40dfe9f; screens zd509/zd510 queued; chain cq200 (seed 106) behind cq199.
     Replica after zho's block has been sent (the drain sends only the active build's rows).
+- 02:44 (11-10): **zhn rejected as inert**
+  - Chain cq198: zhn 13 wins = zdb 13 (20 games each); transfer 319,373 vs 319,027, deaths 1,622 = 1,622, trap deaths 417 = 417, 0 overruns.
+  - Replica #344 (23365-23380, set 3): every match score equals zdb's anchor. With zd505/zd506 at D 0, the FORM_RICH_BANK cut never binds.
+  - cq197 removed (VM 2.1 GB). zho's first replica match 23383 vs spsquared (A) went 2-1 (anchor 3-0): an early minus.
