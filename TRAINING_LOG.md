@@ -9880,3 +9880,23 @@
     - wallsofparadis (60x60; corner kings, one home mine each outside three rings; four inner mines behind dirt):
       the exploration line (EXPLORE_CENTER, SCOUT_SYM, SYM_PROBE, SEEK_FRONTIER, EXPLORE_TTL) and the dig line
       (DIG_COST 2, POCKET_DIG, STALL_TUNNEL) were each dropped before; nothing cheap is left there.
+- 08:16 (11-10): **zib DROPPED at its chain; zic submitted (#355)**
+  - Chain cq209 (seed 115; whatsthecatdoin, tiny, externalsustenance, Stash, DefaultMedium x agrab/atrap3): zib 8
+    wins to zdb's 11, under the binding bar of 10. +Stash A agrab; -Stash A atrap3, -Stash B agrab,
+    -externalsustenance A atrap3, -tiny B atrap3. Screen zd527 agreed when stopped (24 cells, D 7, net -5, t -2.01);
+    zd528 dequeued. Replica #354: 12 rows sent (information only), 4 withdrawn. Faster throws do not help us.
+  - zhz's information-only replica rows (23698-23707) lost one game each in spsquared A/B, YokoOno B and Varun A
+    against the anchors and gained none: the replica agrees with its screen rejection.
+  - Censuses on zdb's 48 set-3 anchor games, no lever in them:
+    - Bites on enemy carriers of our rats (scratch carrb2.py, positions as of our turn): 3,585 turns beside one;
+      236 bit it, 94 bit another rat, 478 left the action unused with the carrier blind to us and 171 with it in our
+      cone. BITE_CARRIER would reorder only about 94 bites.
+    - Throws: we threw 2,390 times and the field 2,419, with 279 and 227 ground landings, so throw volume and aim
+      are even.
+    - Points games: 19 anchor games ended on points; the three losses (keepout A/B vs Finals, FreeTheCheese B vs
+      Merlin) do not flip even if our king's own pickups had counted as transfer (scratch kpick.py).
+    - Bytecode: our babies peak at 16,600 of 17,500 on keepout/wallsofparadis/where_are_you; no starvation.
+  - **zic = zdb + MAX_BABIES 24** (peace cap only; compiled 25fa67b6469c). The field backstabs by r60 on most maps,
+    but vs Merlin on FreeTheCheese and cheesebottles our king sat at 18 babies with 500+ banked for 82-152 rounds
+    before the backstab (scratch capbind.py). Screens zd529 (playing) and zd530; chain cq210 (seed 116; cq204's
+    maps) playing; replica #355 set-3 block (16 rows) in the drain. Falsifiers in attempts.csv.
