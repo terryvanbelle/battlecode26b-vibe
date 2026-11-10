@@ -9419,3 +9419,8 @@
   - zd478 (s7): n 47, D 2, net 0, t 0.00 (the clause drops at t < 0), picks/100 34.78 vs 34.30, 0 overruns.
   - cq181 (seed 89, 5 pocket maps): wins 11 to zdb's 11 (gained EscapeTheNight A vs atrap3 and Stash A vs agrab; lost mincemeat A vs agrab and B vs atrap3). pickupAmt 161,076 vs 151,729 (1.062x, bar 1.05x): fullofsecrets 1.45x, Stash 1.53x, mincemeat 0.79x. Trap deaths 103 vs 121.
   - Set 2 first because Merlin fullofsecrets (the target) is on it: 22886-22901, all 16 sent. Judge with `paired --dir /dev/shm/rp 22129-22132,22251-22262 IDS`.
+- 19:05: **zgt set-2 block: t 2.12, but the gains are the base's, not the switch's; block 2 on set 3 queued**
+  - #333, 22886-22901 vs the zez anchors: 48 cells, 40 alike, D 8 (+7 -1), net +6, t 2.12.
+  - Gains: Finals dirtpassageway B, Icarus averystrangespace A, YokoOno averystrangespace B and streetsofnewyork A, Varun clouds B, thewaxmango RUN A and B. Lost Merlin knifefight A (as zgj).
+  - Seven of the eight are zgj's set-2 gains too. zgj and zgt share only the zdb base, so on set 2 these cells measure zdb against the zez twin anchors; any zdb-based candidate gets them. Set 2 is a biased reference for zdb derivatives: I don't count this block for zgt. It still lost fullofsecrets and mercifullattice in both seats.
+  - Block 2 on set 3 (zdb's own anchors): 22932-22935 sent, 12 in the drain. Judge with `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`.
