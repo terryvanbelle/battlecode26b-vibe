@@ -9831,3 +9831,11 @@
     - The income test (rate at kings + 1) passes before the merge and does not count the babies the merge removes.
   - Falsifier 2 is judged at the chain's end. The remaining maps (keepout, thunderdome, wallsofparadis) are ones where
     no site was named for zdb, so a drop is likely. zhy's replica rows are still sending (#351, 4 of 16).
+- 07:27 (11-10): **zhy dropped at its chain (10 vs 12 wins); zhz submitted (#352)**
+  - cq206 (seed 112): zhy 10 wins to zdb's 12 (bar 11), transfer 0.885x, 0 overruns. The differing
+    cells: -FreeTheCheese A agrab, -FreeTheCheese A atrap3 (third king, then all kings starved),
+    -cheesebottles A agrab, +FreeTheCheese B atrap3. zd522 (s6) passed: n 44, D 1, net +1.
+  - The third-king line is closed. On the local maps where a third king forms, its upkeep and the 8 merged babies
+    cost more than the extra 0.5-weight king share is worth. On keepout, the field case, no site is named at all.
+  - zhy's 16 set-3 rows were all sent by 07:15 and play as information only.
+  - zhz (GLANCE_MEM 20) submitted as #352; set-3 block queued (4 sent now, 12 in the drain). zd523 (zhz s7) is playing.
