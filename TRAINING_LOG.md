@@ -9498,3 +9498,7 @@
   - zd486 (s7): n 48, D 11, net -5, t -1.53, picks/100 33.11 vs 34.11, 0 overruns. Row-wise trap marks change movement on every map (s7 is small maps, where the flat array already allocated), and the moves cost cells. cq187 stopped after 8 games; cq188 (zhc) started 21:23.
   - zd485 (zha, information only; zha was dropped as inert on its target): n 48, D 1, net -1, t -1.00.
   - Replica zgx (#335): 23047, 23049, 23050 done, 23048 and 23051-23056 running or queued, 4 in the drain.
+- 21:26: **zhd registered: RISK_ROWS on maps of 2500+ tiles only (ledgered)**
+  - zhb's 8 cq187 games before the stop: on keepout it won 4 of 4 to zdb's 2 (flipped atrap3 A and B, both r2000) with transfer up in all four (31.0k/30.3k, 26.7k/25.0k, 30.4k/28.3k, 28.2k/25.3k). On wallsofparadis it was mixed. Its screen losses were all on small maps, where zdb's flat array already allocates.
+  - zhd = zdb + RISK_ROWS_AREA 2500. TrapRisk.rows is set once after G.init (ledgered K 9). Where it is false, each of the five checks adds its own 6 counted instructions to G.debt, so small maps should replay zdb exactly.
+  - Falsifiers (attempts.csv): zd488 (s7, all maps under 2500 tiles) must be identical to zdb in every cell, as a ledger check; chain cq189 (seed 96, 6 big maps x 2 seats x atrap3/agrab, after cq188): wins below zdb's, transfer under 1.02x, or any overrun.
