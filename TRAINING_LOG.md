@@ -9954,3 +9954,20 @@
   - Falsifiers (binding): (1) zd535 (s7) and zd536 (s6) t > -1.5, 0 overruns; (2) cq213 (seed 119; cq211's maps)
     wins >= zdb-1, 0 overruns; (3) replica set-3 block 1: net < 0 drops, t <= 0 rejects.
   - VM disk: 1.9 GB at 09:36. I removed cq210 (zic, dropped) and pruned 73 replica replays older than 30 h; now 2.2 GB.
+- 10:25 (11-10): **zid DROPPED at replica block 1 (net -2); zie on the replica (#357)**
+  - zid #356 set-3 block 1: D 4 (+1 -3), net -2. It gained YokoOno Stash A and lost Finals where_are_you A,
+    YokoOno externalsustenance B and Icarus mincemeat A. Local gates had passed: cq211 complete at zid 14 vs zdb 15
+    wins, transfer 1.06x, 0 overruns.
+  - where_are_you A (23866 vs anchor 21018, scratch kwin.py, kingsum.py): zid formed a second king at (5,4) beside the
+    first (8,5) about r950, with 9 babies and the bank at 200-300. Both kings starved by r1267. The anchor kept one
+    king, rebuilt to 39 babies and won on points. CASH's rescue formation (bank < 250, a baby with 60+ raw) overlaps
+    zid's hold zone (bank >= 200), so heavier hauls feed it. zif's 600 gate removes that overlap.
+  - So zid's lean-bank holds explain two of its three losses; zif (TRIP_LOAD_BANK 600) stays queued.
+  - externalsustenance seats (21020 vs 21021, scratch rushcmp.py, spend.py): the same plan both ways (spawns 45 vs 40,
+    cat traps 36 vs 33, bites 192 vs 199 by r100). As B the rush took their king to 180 by r80; as A to 428. The
+    split is timing, not a lever.
+  - Merlin whatsthecatdoin (21042/21043, kdie.py): both kings starved (r288, r325). We led 20 babies to 16 with
+    1,049 banked at r88 and were down to 5 babies and 101 cheese by r188. We lost the central fight and the bank
+    went on respawns.
+  - zie: zd533 (s7) 48 cells, D 9, net -1, t -0.33 (passes); zd534 playing. Submitted #357 at 10:15; 16 set-3 rows in
+    the drain.
