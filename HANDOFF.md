@@ -97,7 +97,18 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (14:38 11-09):**
+- **Now (16:41 11-09):**
+  - Incumbent still **zdb**. zgh (z7x trail port) rejected at replica set 3 (#330, t -1.41); zgi/zgk/zgn dropped.
+  - **zgj** (zgh + ATK_STUCK 30 / ATK_STUCK_RAW 100) on the replica as #331, set-2 block 1: 22843-22850 sent, 8 rows
+    in the drain. After 7 games D 4 (+4 -0), t 2.00 (replays VM ~/diag26b/rp/zgj_b1s2a.tgz). Judge with
+    `paired --dir /dev/shm/rp 22129-22132,22251-22262 IDS`; if t > 0, block 2 on set 3.
+  - **zgo** (zgj + ATK_CARRY 300): chain cq177 (seed 87; `chsc.py ~/diag26b/cq177 zgj zgo`), screen zd472 (s7).
+  - **zgp** (zdb + FINISH_K 10): screens zd473 (s7) / zd474 (s6), chain cq178 (cq170's zdb cells, seed 84; compare
+    with zdb's 14 wins in cq170). Falsifiers in attempts.csv.
+  - Closed this afternoon: king-walks-to-carriers (king vision dist2 25 is barely past transfer reach), CASH at bank 0
+    (the engine needs 50 banked before becomeRatKing), backstabbed-team cat traps (we open the war at r30).
+  - Next fresh seed: 88. Next screen id: zd475. Next chain: cq179. Next free name: zgq.
+- **Earlier (14:38 11-09):**
   - Incumbent still **zdb** (resubmitted #328 after zgc's block-1 reject). zga-zge dropped or rejected (WALL_HOLD,
     MINE_BURN, KING_WALL_THREAT lines closed).
   - **zgh** (z7x's delivery trail ported exactly onto zdb; field king starvation in pockets, `~/diag26b/kdeath.py`
