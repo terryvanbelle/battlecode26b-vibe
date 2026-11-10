@@ -10133,3 +10133,15 @@
     - The Merlin rows lost 0-3 both ways, as zdb's anchors did.
     - Replays: VM rp/zil_b1s3{a,b,c}.tgz.
     - Next on the replica: zih (#361, RESCUE alone).
+- 12:54 (11-10): **zip and ziq registered (Stash B wall standoff, two ledgered arms)**
+    - Stash B vs YokoOno is lost in all 19 set-3 draws. In zdb's anchor (21021), 18-28 of our babies stood at y 6,
+      under Yoko's rats at y 8-9, holding a STANDOFF across the pocket wall. The exits dug at r26 and r40 stayed open
+      and unused; 0 raw from r80, starved r555.
+    - zip = zdb + WALL_HOLD, zga's baby-side switch alone (zga also had the unledgered KING_WALL_THREAT). It skips
+      both the standoff and the walk to a walled enemy, and faceEnemy ignores one. G.settle K 20.
+    - ziq = zdb + WALL_STAND (new): it skips only the standoff and still walks round to the enemy (Nav.goTo). zga
+      had dropped the walk and lost minimaze locally. Ledgered, K 11.
+    - Both never-acting copies (zpchk, zqchk) replay zdb's Stash/agrab s117 773/773.
+    - Chain cq221 (seed 127): Stash, minimaze, wallsofparadis, keepout, corridorofdoom x agrab/atrap3, with zdb. It
+      waits on cq220. Screens zd551-zd554 are queued.
+    - VM disk: pruned 94 replica replays and the chain dumps of dropped candidates; now 2.2 GB free.
