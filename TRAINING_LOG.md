@@ -9804,3 +9804,14 @@
     cut local grabs 3.56 to 3.36 per 1000 rat-turns and was stopped by a picks bar by a hair.
   - Screens zd523/zd524 queued after zd522; chain cq207 (seed 113; tiny, DefaultMedium, whatsthecatdoin,
     externalsustenance, Stash) waits on cq206.
+- 06:42 (11-10): **Grab census of zdb's set-3 anchors (48 games; scratch grabs.py on 'nap' rows)**
+  - 2,989 enemy grabs of our babies. Using each rat's last turn row before the grab:
+    - 73% caught a rat weaker than its grabber (46% weaker and in view).
+    - 20% caught a rat that was not weaker but had the grabber outside its 90-degree cone. That 20% is all zhz's
+      GLANCE_MEM can reach, and only when no enemy is in view.
+    - 75% of the victims were empty, not loaded.
+  - Grabs both ways in the losses are even: ours 2,180, theirs 2,155. The gaps are map-specific: whatsthecatdoin
+    (theirs 92 and 77, ours 34 and 36) and tiny (95 and 116 to 59 and 83). On thunderdome we grab twice as often and
+    still lose the king.
+  - So the rat war turns on health edges after the first bites more than on facing. A health-edge lever (keep the
+    healthier rat in front, or step back when bitten below the adjacent enemy) would cover the 73%.
