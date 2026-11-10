@@ -9457,3 +9457,7 @@
   - BREAKOUT_TTL left every set-3 loss cell unchanged (Finals keepout/wallsofparadis, Merlin's three, thewaxmango DefaultMedium/tiny, Varun thunderdome, YokoOno Stash).
   - zdb resubmitted (#334). Replays archived on the VM as zgt_b2s3{a,b,c}.tgz.
   - Replica otherwise idle (nothing past local gates), so #334 zdb runs a set-3 re-draw: a zdb-vs-zdb-anchor noise measure for judging later set-3 blocks. Requests 18941-18944 sent, 12 in the drain.
+- 20:00: **zgz registered: zdb + RETREAT_HP 60**
+  - Merlin sweep (zgt's 22970/22971, lost both seats as zdb did): on whatsthecatdoin Merlin ratnaps ours 82-92 times by r400 (we 34-36) and throws 64-82. We lose 30-36 rats by r400.
+  - 70% of those grabs use the health rule (our rat below the grabber's hp); victim hp median 58. RETREAT_HP has only ever been lowered (0 and 20 rejected), never raised.
+  - Screen zd484 queued behind zd483.
