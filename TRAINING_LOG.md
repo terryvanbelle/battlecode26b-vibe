@@ -9587,3 +9587,15 @@
     2. zd496 (s6 vs zd345): net ≥ 0, no overrun.
     3. Chain cq193 (seed 100; FreeTheCheese, cheesebottles, DefaultLarge, fullofsecrets and peaceinourtime × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb's, and summed transfer ≥ 1.0x zdb's.
   - Queue: zd494, then zd495-496. Chains: cq192 (zhh), then cq193.
+- 23:16: **zhh rejected; zhi on the replica (#339)**
+  - zd493 (s7): D 5, net -1, t -0.44, which breaks the binding net ≥ 0 falsifier.
+    - Gained: evileye B vs agrab, tiny B vs agrab.
+    - Lost: DefaultMedium B vs agtr, tiny A vs agrab, tiny B vs atrap3.
+    - The tiny cells flip both ways in 59-75 round king rushes, so paying for the king's bite only moves the coin.
+  - cq192 finished all 40 games: wins 10 to zdb's 10, transfer 1.09x, 0 overruns.
+  - zd494 stopped. All 16 of zhh's replica matches (#338) were sent before the screen ended, so they count as information only.
+  - zhi submitted as #339, and its set-3 block (16 matches) is in the drain. zd495 (zhi s7) is running, then zd496; cq193 (zhi) is running.
+  - Merlin cheesebottles, checked for zhi's risk:
+    - As A, our second king formed at r400 and died by r500, and our babies fell from 29 to 19.
+    - As B, our r750 second king was gone by r1300.
+    - Merlin held one king until r900-1100 on a 3,000+ bank. Both seats show the mid-game formation cost zhi removes.
