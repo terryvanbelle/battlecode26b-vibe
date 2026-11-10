@@ -10156,3 +10156,10 @@
     - Local: zdb lost Stash to atrap3 in seat B at seeds 127-130 and in seat A at seeds 127-128, with 22-44 trap
       deaths a game. The traps sit in the mine field (y 10-21), not at the exits. ziq lost seed 128 faster (r413 vs
       r870) and played zdb's game at 129/130.
+- 13:14 (11-10): **zih block 1 half-way +1 (rate score +1.45); zik chain and zii's s7 screen pass**
+    - zih (#361), 8 of 16 rows (24018-24021, 24028-24031), 24 cells: D 3, net +1, t 0.58. Gains: Varun thunderdome A
+      and B (rates 0.10 and 0.15); loss: YokoOno externalsustenance B (rate 0.70). wins - rate +1.45, z +1.27.
+      Replays: VM rp/zih_b1s3a.tgz.
+    - zik chain cq217: 14 wins vs zdb 13 (bar 12), 0 overruns, trap deaths 377 vs 427, Stash A atrap3 gained.
+    - zii screen zd537 (s7): n 48, D 12, net +2, t +0.57, 0 overruns.
+    - cq221 (ziq vs zdb, 40 games) started in cq217's slot.
