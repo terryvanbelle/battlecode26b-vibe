@@ -9415,3 +9415,7 @@
   - zgj's set-3 losses (where_are_you A and B) match zgh's (the trail alone). This separates ATK_STUCK, which never ran without the trail.
   - Hand port: the Baby hook after ATK_DELIVER (ledgered K 20), Baby.atkStuck, one Cfg line (15 + 5 diff lines).
   - Falsifier: zd479 (s7) net < 0 or t < 0; any overrun of ours; cq182 (seed 90, cq177's 20 cells, paired with zdb; runs after cq181) wins below zdb's or summed transfer under 1.1x.
+- 18:28: **zgt passes its local gates; submitted #333, replica block 1 on set 2**
+  - zd478 (s7): n 47, D 2, net 0, t 0.00 (the clause drops at t < 0), picks/100 34.78 vs 34.30, 0 overruns.
+  - cq181 (seed 89, 5 pocket maps): wins 11 to zdb's 11 (gained EscapeTheNight A vs atrap3 and Stash A vs agrab; lost mincemeat A vs agrab and B vs atrap3). pickupAmt 161,076 vs 151,729 (1.062x, bar 1.05x): fullofsecrets 1.45x, Stash 1.53x, mincemeat 0.79x. Trap deaths 103 vs 121.
+  - Set 2 first because Merlin fullofsecrets (the target) is on it: 22886-22901, all 16 sent. Judge with `paired --dir /dev/shm/rp 22129-22132,22251-22262 IDS`.
