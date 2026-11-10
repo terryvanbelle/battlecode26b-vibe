@@ -10104,3 +10104,9 @@
     - zih (RESCUE, ledgered), cq215 (seed 121): 17 of 20 to zdb's 13, 0 overruns. Gained DefaultMedium A,
       corridorofdoom B, thunderdome B, and tiny A and B vs atrap3; lost tiny B vs agrab.
     - zik, cq217: 10 to 9 after 12 of 20 games.
+- 12:33 (11-10): **zio registered: zih + RESCUE_BLOCK (block the enemy carrier's throw)**
+    - zih's chain (17 vs 13) makes ledgered RESCUE the strongest bundle member, so its arm comes next.
+    - RESCUE_BLOCK: when no blind tile next to the enemy carrier is one step away, the rescuer steps into the tile in
+      front of it. A throw needs that tile empty, so the carrier can't throw. It runs only inside a rescue, so it adds
+      no drift. Its only earlier run was s8q's screen on s8o (t -1.5), before the ledger.
+    - Screens zd549/zd550 head the queue. Chain cq220 (seed 126) plays zio, zih and zdb on the RESCUE maps.
