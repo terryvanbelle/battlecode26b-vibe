@@ -9865,3 +9865,18 @@
   - **zib = zdb + THROW_HOLD 3** (bots/zib, compiled d1c4dc9e0505; s8p parked the same dose on s8o in October as
     noise). Screens zd527 (s7) and zd528 (s6) queued after zd526; chain cq209 (seed 115; cq207's throw-heavy maps)
     waits on cq208. Falsifiers in attempts.csv. Replica after zia's 16 rows are sent.
+- 08:08 (11-10): **zia DROPPED at its screen; zib submitted (#354)**
+  - zd525 (s7 vs zd343): 48 cells, D 4 (+0 -4), net -4, t -2.07, under the binding t > -1.5 bar; picks z +0.24.
+    zd526 stopped unplayed. Chain cq208 (seed 114) finished 7 wins to zdb's 6, transfer 1.00x, 0 overruns, so the
+    chain did not see the screen's loss. BITE_GUARD stays off.
+  - zia's 16 set-3 rows (#353) were never sent (hourly limit); they are withdrawn (laptop /dev/shm/kd/zia_queue.tsv).
+  - **zib** (zdb + THROW_HOLD 3) submitted as #354; its set-3 block 1 (16 rows) is in the drain. zd527 is playing,
+    zd528 next; chain cq209 (seed 115) started at 08:04.
+  - Diagnosis since 07:55, no new candidate yet:
+    - FreeTheCheese B vs Merlin (lost 47-52 on points at 2 kings each): Merlin transferred 23.8k to our 13.0k. Halves
+      spawn alike; they picked 25.6k in their half plus 7.9k raided from ours, against our 17.4k plus 0.6k (scratch
+      halves.py, ledger.py). Our king also picked up 2,780 itself (KING_MINE), which scores no transfer; converting
+      it all would move the margin about 1.8 of the 5.2 points needed.
+    - wallsofparadis (60x60; corner kings, one home mine each outside three rings; four inner mines behind dirt):
+      the exploration line (EXPLORE_CENTER, SCOUT_SYM, SYM_PROBE, SEEK_FRONTIER, EXPLORE_TTL) and the dig line
+      (DIG_COST 2, POCKET_DIG, STALL_TUNNEL) were each dropped before; nothing cheap is left there.
