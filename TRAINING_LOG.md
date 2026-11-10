@@ -9370,3 +9370,6 @@
   - zgo = zgn unchanged, judged on fresh data (precedent zgj). Its bar is on wins, the effect zgn showed, rather than on transfer.
   - Chain cq177 (seed 87, 40 games): zgj and zgo on fullofsecrets, rose, TheHeist, keepout and mercifullattice (a set-2 Icarus map zez lost on both seats), agrab/atrap3 x seats. Screen zd472 (s7).
   - Falsifier: zgo wins < zgj's + 1; more than 1 cell lost that zgj wins; any overrun; s7 net < 0.
+- 16:32: **zgj passes s6; every local gate is clear**
+  - zd469: n 44, D 1, net +1, t +1.00, picks z +0.79, 0 overruns on our side (10 rows carry opponent overruns).
+  - Its replica block (set 2, #331) is in the drain behind the replica's ranked games. Judge with `paired --dir /dev/shm/rp 22129-22132,22251-22262 IDS`.
