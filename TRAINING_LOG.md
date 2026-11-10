@@ -9436,3 +9436,9 @@
   - Screen zd480 queued; chain cq183 (seed 91, five set-3 loss maps x A/B x agrab/atrap3) running.
   - Falsifier: zd480 net < 0 or t < 0, any overrun, or cq183 wins below zdb or transfer under 0.95x.
   - zgw registered (19:16) as the dose arm: CORE_FLOOR / WAR_FLOOR 700. Screen zd481 queued behind zd480; same falsifier.
+- 19:32: **zgw withdrawn unplayed; zgx registered (floors 150)**
+  - cq183 after 10 of 40 games: zgv (floors 500) 6 wins to zdb's 9, transfer 59.7k vs 69.1k. It lost externalsustenance A and B vs agrab and mincemeat A vs atrap3. Bodies beat bank here, so the 700 arm points the wrong way.
+  - zgx = zdb + CORE_FLOOR / WAR_FLOOR 150 takes the screen slot (zd482).
+  - wallsofparadis vs Finals (21018/21019 game 1): Finals works all four dirt-ringed inner mines (about 1,100-1,460 picked from each by r600) while we work one outer home mine. ~70% of our rat-turns stay outside ring 1 through r400. A local zdb game shows every rat knows only (30,3) until r196.
+    - Prior fixes for this (SEEK_FRONTIER zc2, SWEEP u2u/u2x, EXPLORE_CENTER zd7, SCOUT_EVERY 2 u8o) all failed. Parked.
+    - The local game also had ~10 rushers stalled 130+ turns at the walled corridor, but the field games show none (it was a long-coop artifact vs agrab).
