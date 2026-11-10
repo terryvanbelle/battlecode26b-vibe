@@ -9742,3 +9742,11 @@
 - 04:25 (11-10): **zhv registered: bundle zhp + zht**
   - zhv = zdb + STANDOFF_HOME 5 + RUSH_SMALL 400. Compiled 1ba2b6276692; screens zd515/zd516 after zhu's; chain cq203 (seed 109, 40 games) behind cq202.
     Replica after zht's block, and only if zhp and zht both still stand.
+- 05:19 (11-10): **zhp rejected at replica block 2; zhu dropped; zhv withdrawn. The standoff line (zho, zhp, zhu) is closed.**
+  - zhp set 4 (#348): +1 -4, net -3 (+Varun arrows A; -spsquared knifefight B, -YokoOno Meow B, -Varun arrows B, -Icarus B). Pooled with set 3's +1: net -2, t < 0.
+    Arrows flipped seats (A won, B lost), so the effect is chaotic, not a systematic defence gain. Stash A, the one stable gain, is the cell zgc and zho also took.
+  - zhu (STANDOFF_HOME 8): screens passed (zd513 net +3, zd514 net +2) but chain cq202 11 vs zdb 13 (bar 12), with more deaths (840 vs 756) and trap deaths (191 vs 143).
+  - zhv (zhp + zht) withdrawn with its base; its chain cq203 was 9 vs 11 anyway. zd515 runs on as information until the next candidate is queued.
+  - zht stands alone: s7 net +2, s6 net +2 (t +1.43), chain 14 vs 15; replica #349 (resubmitted) has 12 set-3 rows going out at the next hourly send.
+  - cheesebottles vs Merlin (dumpc 0f2f): mines spawn 6,920 on each half. Merlin picks up 2,306 on our half and 7,100 on its own; we pick up 5,086 on ours and 96 on theirs.
+    The 2:1 transfer gap is raiding; RAID_EVERY (zen/zer) and MINE_EVICT (zes) were rejected before.
