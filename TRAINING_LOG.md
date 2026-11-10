@@ -9931,3 +9931,12 @@
        >= zdb - 1, 0 overruns.
     3. Replica set-3 block 1: net < 0 drops, t <= 0 rejects.
   - Queue: zd532 (zid) then zd533/zd534; cq212 waits on cq211 (zid).
+- 09:31 (11-10): **zic DROPPED at replica block 1; zid passes zd531; zid on the replica (#356)**
+  - zic (#355) set-3 block 1 (23848-23863): 48 cells, 46 alike, D 2, both lost (Varun corridorofdoom B, thewaxmango
+    FreeTheCheese B), net -2, t -1.41. Falsifier 3 (net < 0 drops) applies. The peace cap is closed at 24. Replays are
+    on the VM (rp/zic_b1s3a.tgz, zic_b1s3b.tgz).
+  - zid zd531 (s7): 48 cells, D 7, net +1, t +0.37; picks/100 38.28 vs 34.11 (per-cell z +3.03). zd532 (s6) is playing.
+    cq211 is partial: zid 3 of 4, zdb 2 of 2. Submitted as #356 at 09:12; 16 set-3 rows, the first 4 played
+    (23864-23867).
+  - zie smoke (tiny vs agrab, seed 118): no rescue fired (agrab throws within 1-2 rounds), lost r53 where zdb won r79.
+    The divergence is the rescue scan's bytecode, not a rescue. The field is where carriers hold ours for long spells.
