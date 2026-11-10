@@ -10188,3 +10188,7 @@
       Replays: VM rp/zih_b1s3{a,b}.tgz.
     - zio (zih + RESCUE_BLOCK) is next. It passed chain cq220 (12 vs zdb 11) and screens zd549 (s7: D 13, net +3,
       t +0.83) and zd550 (s6: D 0). #362's set-3 block: 2 rows sent, the rest in the drain.
+- 14:31 (11-10): **zir DROPPED by its s7 screen (zd555 n 48 D 9 net -5 t -1.70)**
+  - Lost cells vs zdb's zd343: tiny ×4 (agrab A, agtr B, atrap3 A and B, all faster king kills against us), agtr DefaultMedium B, atrap3 arrows A, atrap3 evileye B. Gained agrab DefaultMedium B and agrab evileye A.
+  - Reading: BitFlow rushers lose the small-map rush race (tiny is decided by r60-76). The Stash pocket effect seen locally may still be real; a narrower arm (BitFlow rushers only above an area threshold) is the next test.
+  - zd556 (s6) and cq222 keep running as information only.
