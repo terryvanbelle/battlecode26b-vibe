@@ -9645,3 +9645,11 @@
     - Our rats are loaded on 26.5% of their turns to Merlin's 40%.
     - Our empty rats stand still on 10.5% of their turns to Merlin's 5.4%, mostly at both mouths of the 1-wide x=30 corridor ((30,16)-(30,18) and (29-31,12)). That is the rose-stem jam again; the corridor swap line (SWAP_*, zei) is closed.
     - Cats killed 115 of ours by pounce, 59 of them adjacent biters. Field-wide, cat deaths are even between the sides (11-07 study), so that line stays parked.
+- 01:07 (11-10): **zhk rejected at its chain; zhl on the replica (#342)**
+  - cq195 (complete) failed every chain bar:
+    - Wins: 13 to zdb's 14. It lost DefaultLarge A vs atrap3 at r1195, which zdb won at r2000.
+    - Transfer: 0.951x.
+    - Mechanism: 2+ kings at r1000 in 6 games to zdb's 6, with a second king formed in 12 games each. FORM_BABIES 16 is not the binding gate in these games.
+  - zd499 (s7) was identical to zdb in all 48 cells, and zd500 (s6) was identical at 42 of 48.
+  - All 16 of zhk's replica matches (#341) were sent, so they count as information only. zhl submitted as #342, with its set-3 block (16) in the drain.
+  - The formation line (zhi, zhk) is closed for now: removing the mid-game king costs transfer, and loosening its gate changes nothing locally.
