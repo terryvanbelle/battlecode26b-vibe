@@ -9900,3 +9900,20 @@
     but vs Merlin on FreeTheCheese and cheesebottles our king sat at 18 babies with 500+ banked for 82-152 rounds
     before the backstab (scratch capbind.py). Screens zd529 (playing) and zd530; chain cq210 (seed 116; cq204's
     maps) playing; replica #355 set-3 block (16 rows) in the drain. Falsifiers in attempts.csv.
+- 08:23 (11-10): **zid built (TRIP_LOAD: gatherers on long walks haul bigger loads)**
+  - Stash A vs YokoOno (21020; 30x30, each king in a walled pocket whose only exits are dirt corners, all six mines
+    in the middle band): both starting kings stay in their pockets all game. YokoOno picked up 15.8k to our 5.8k
+    (3,152 to 1,778 on its own half by r400, plus 1,060 from ours) with the same ~20 babies; our bank fell 1,860 to
+    300 by r360 while theirs held 1,100-1,500. As A (21021) YokoOno also formed a second king on its mine row at
+    r350; ours formed inside the pocket at r600. zdb's pickFormSite can't take that mine: clear3 needs the king's
+    own sight of the 3x3, about 7 tiles out of the pocket, so relaxing the "clearly ours" factor would change nothing
+    there.
+  - zdb's gatherers head home at 30 raw cheese, or at 10 with no pile in sight (DELIVER_IDLE), however long the walk.
+    Each unit carried slows moves 1%, so on a 30-step walk a 60 load roughly doubles cheese per round over 30.
+  - **zid = zdb + TRIP_LOAD** (new switch; compiled 95bc0d421741): after a walk out of 20+ rounds a gatherer heads
+    home with min(80, 2 x walk), and waits at its mine with a part load; the old rule applies late or while the bank
+    is under 200. Smoke game (Stash A vs atrap3, seed 116): zid 70 transfers and 3,120 picked up (lost r684, starved)
+    against zdb's 3 and 480 on the same seed (lost r647, starved); 0 exceptions or overruns.
+  - Screens zd531 (s7) and zd532 (s6) queued behind zic's zd529/zd530; chain cq211 (seed 117; wallsofparadis,
+    FreeTheCheese, keepout, averystrangespace, Stash x agrab/atrap3 x A/B) waits on cq210. Falsifiers in
+    attempts.csv; replica after zic's rows are sent.
