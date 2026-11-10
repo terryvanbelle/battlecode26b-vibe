@@ -9347,3 +9347,15 @@
   - Set 3 never draws the trail's target maps. Set 2 draws clockwisdom (Varun), fullofsecrets (Merlin), and TheHeist and mercifullattice (Icarus).
   - The 16 set-3 rows were withdrawn from queue.tsv before any was sent, and the 16 set-2 rows were queued.
   - Judge with `paired --dir /dev/shm/rp 22129-22132,22251-22262 IDS`, the zez twin anchors, since zdb's own set-2 draws are crowned. The bars are unchanged.
+- 16:03: **zgn registered (zgj + ATK_CARRY 300); a name slip on bots/zgl fixed**
+  - zgn = zgj + ATK_CARRY 300: an attacker takes no pile that would lift it above 300 raw.
+    - Only 25 was ever tried (t0l, u2n, u5z).
+    - On clockwisdom (zgi, cq173 r600) five delivering attackers held 590-1,130 raw each with a built Flow path of 97-99 steps home, and transferred 0 in 4 games: carried cheese slows moves 1% a unit.
+  - Screen zd471 (s7) is queued.
+  - Chain cq176:
+    - fullofsecrets, TheHeist, rose and keepout at seed 86, against zgj's cq174 cells.
+    - clockwisdom at seed 85, against zgi's cq173 cells (the same code as zgj).
+  - Falsifier: chain wins below zgj/zgi's on the same cells; transfer on fullofsecrets + TheHeist + clockwisdom < 1.1x theirs; any rose cell lost; any overrun; s7 net < 0.
+  - Slip: I first snapshotted to "zgl", which already existed (the zc6 switch bot, untracked). The snapshot refused, and my Cfg edit landed on that bot instead.
+    - The edit was reverted at once and the VM copy re-synced (ATK_CARRY = 0 again, the only line touched).
+    - The wrongly compiled build and the two partial games of the first cq176 were deleted. Nothing was committed.
