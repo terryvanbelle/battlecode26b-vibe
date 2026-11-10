@@ -97,7 +97,20 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (10:58 11-10):**
+- **Now (11:28 11-10):**
+  - Incumbent still **zdb** (#334). zij's 16 set-3 rows are in the drain (4 done at 11:25). Replica order after zij:
+    **zil** (bundle: ledgered RESCUE + AMMO_AWAY + KING_WALL_THREAT, ce4e2ddd7632), then zih, zii, zik singles.
+  - **zil** screens zd545 (s7) / zd546 (s6) head the screen queue; chain cq218 (seed 124; thunderdome, cheesebottles,
+    DefaultMedium, tiny, Stash) runs alongside cq213. Score: `chsc.py cq218 zdb zil`.
+  - **zik** (KING_WALL_THREAT ledgered, K 15; c268d0a08fcc): screens zd543/zd544, chain cq217 (seed 123) after cq216.
+    Never-acting copy bots/zkchk (untracked) replays zdb's Stash/agrab s117 773/773.
+  - Coin-flip set-3 cells: YokoOno Stash A (gained by zfm, zho, zhw, zid, zie, zgc) and Varun corridorofdoom B (lost
+    by zhw, zic, zgc) flip under any drift. Discount them; zgc's "+Stash A" was likely drift, so zik expects ~0.
+  - Anchor dumps of all 16 zdb set-3 matches: VM /dev/shm/dcx (index.txt: match id, dump dir). Scratch there:
+    richband.py (bank 700-999 at the baby cap: common in wins too, so RICH_BANK is not targeted), kbiters.py (enemy
+    rats biting our king; our adjacent babies mostly on cooldown), grabs.py, kdmg.py.
+  - Screen ids zd545/zd546 used; next screen zd547, next chain cq219, next seed 125, next name zim.
+- **Earlier (10:58 11-10):**
   - Incumbent still **zdb** (#334). Dropped today at replica block 1, net -2 each: zic (MAX_BABIES 24), zid
     (TRIP_LOAD), zie (RESCUE). zig and zif were withdrawn for their ledgered versions.
   - **Key lesson** (memory ledger-every-switch): unledgered per-turn code re-rolls zdb's fragile set-3 cells. zie's

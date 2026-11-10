@@ -10056,3 +10056,16 @@
       alongside cq213. zil takes the next replica slot after zij, ahead of zih, zii and zik.
     - Falsifiers: screens t > -1.5 with 0 overruns; chain wins >= zdb-1; replica set-3 block 1 net < 0 drops, t <= 0
       rejects.
+- 11:28 (11-10): **Set-3 anchor diagnostics; coin-flip cells named**
+    - zif's s6 screen zd536 (information only): n 43, D 2, net +2, t +1.43.
+    - Coin-flip cells: YokoOno Stash A was gained by zfm, zho, zhw, zid, zie and zgc, and Varun corridorofdoom B was
+      lost by zhw, zic and zgc. Both flip under any perturbation, so zgc's +Stash A was likely drift.
+    - All 16 zdb set-3 anchor matches dumped to VM /dev/shm/dcx. Findings:
+      - Bank 700-999 at the baby cap (just under RICH_BANK) for 50+ rounds: 20 of 28 wins and 14 of 20 losses. A
+        lower RICH_BANK would act everywhere; not pursued (u2v's 500 was net -5).
+      - Thunderdome vs Varun: 23 rats bit our king 41-43 times. At those rounds our babies were adjacent to a biter
+        50 times a game; 5-8 bit it, and most of the idle ones were on cooldown (grab, thrown, dig).
+      - tiny vs collegejunior: 83 and 103 enemy grabs before r150 (60-85% on a rat weaker than its grabber).
+        collegejunior keeps about 1,600 banked with 9-15 babies while we spend to 26. This is bite-then-grab micro,
+        which GRAB_MICRO tried three times and failed.
+    - zil's screens head the queue; chain cq218 is running.
