@@ -9849,3 +9849,19 @@
     withdrawn (/dev/shm/kd/zhz_queue.tsv).
   - zia (BITE_GUARD) submitted as #353; its set-3 block is queued (16, hourly limit). zd525 (s7) and chain cq208 are
     playing.
+- 07:55 (11-10): **zib built (zdb + THROW_HOLD 3); the king-defence lever is closed**
+  - King defence (thunderdome A anchor, scratch kdef2.py): our babies beside the rats biting our king had their action
+    ready in 398 of 513 turns but faced an attacker in only 166. Bites need the target in the 90-degree cone, and
+    biteEnemies sees only that cone. KING_CALL (z3u, 11-06) answered exactly this case and was dropped (8 blind ring bites
+    against a bar of 24), so the line stays closed.
+  - externalsustenance (30x40, both kings inside a sealed wall box, every mine outside; the only cheese spawns on the
+    box's edge rows) vs YokoOno, scratch esus.py: as A we spawned 26 babies and laid 20 cat traps in r20-100 (about
+    1,400 cheese; they spawned 12), and our king starved at r439. As B we bit their king 27 times by r200 (as A, twice),
+    so the split is the early king fight. Bank-reserve levers were already tried both ways (RESERVE_ROUNDS twice; zgv's
+    floors 500 lost this map vs agrab).
+  - Throw holds on zdb's 48 set-3 anchor games (scratch holds.py): 3,059 grabs; 2,380 thrown (564 at round 2, 1,265 at
+    round 6, the THROW_HOLD limit, with no better throw found; 389 in rounds 3-5); 536 victims taken back by enemy
+    grabs (100 after round 2), 84 killed in our hands, 47 carriers died holding.
+  - **zib = zdb + THROW_HOLD 3** (bots/zib, compiled d1c4dc9e0505; s8p parked the same dose on s8o in October as
+    noise). Screens zd527 (s7) and zd528 (s6) queued after zd526; chain cq209 (seed 115; cq207's throw-heavy maps)
+    waits on cq208. Falsifiers in attempts.csv. Replica after zia's 16 rows are sent.
