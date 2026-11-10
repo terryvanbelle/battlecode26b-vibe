@@ -10145,3 +10145,14 @@
     - Chain cq221 (seed 127): Stash, minimaze, wallsofparadis, keepout, corridorofdoom x agrab/atrap3, with zdb. It
       waits on cq220. Screens zd551-zd554 are queued.
     - VM disk: pruned 94 replica replays and the chain dumps of dropped candidates; now 2.2 GB free.
+- 13:13 (11-10): **zip withdrawn unrun (repeat of zga); Stash also lost locally to atrap3 in both seats**
+    - zip repeated tested work. WALL_HOLD at both sites was z3v (dropped), zga (dropped at cq166 on minimaze A/B vs
+      agrab) and zgd/zge (dropped). Its screens and chain rows are removed. ziq (no standoff across a wall, but still
+      walks round) is the untested arm, and stays.
+    - The Stash B mechanism is less clear than the standoff story. In 21021, the y 6 holds face Yoko's rats at
+      y 8-9 at r100. By r200, though, about 20 of our babies are still in the pocket with no enemy near the wall.
+      Yoko laid only 19 rat traps all game, and our rats fired them within a few rounds, so traps do not seal the
+      exits.
+    - Local: zdb lost Stash to atrap3 in seat B at seeds 127-130 and in seat A at seeds 127-128, with 22-44 trap
+      deaths a game. The traps sit in the mine field (y 10-21), not at the exits. ziq lost seed 128 faster (r413 vs
+      r870) and played zdb's game at 129/130.
