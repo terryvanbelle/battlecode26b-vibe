@@ -9383,3 +9383,7 @@
   - CASH at bank 0: starve.py shows the bank at 0 for every sample before field starvations, under CASH_FLOOR 60; the engine's assertCanBecomeRatKing checks the team bank ≥ 50 before the formers' raw is banked, so the floor is right. Not built.
   - Cat traps after a backstab: only the backstabbed team keeps them 100 rounds, and BREAK_ROUND 30 makes us the backstabber. Not built.
   - zgj #331 set 2, 22843-22849: 21 cells, D 4 (+4 -0: Finals dirtpassageway B, YokoOno averystrangespace B and streetsofnewyork A, Varun clouds A), t 2.00. 8 rows drain at ~17:33.
+- 17:10: **zgo DROPPED at its wins bar** (cq177, seed 87, paired with zgj).
+  - Wins 14 to 14; the bar was zgj's + 1. Lost fullofsecrets B vs agrab (L797 where zgj won W548), gained rose A vs atrap3 (W1356, zgj L2000 on points).
+  - Transfer 236,243 vs 236,955 (0.997x), trap deaths 290 each, 0 overruns. zd472 (s7) passed: n 48, D 3, net +1, t +0.57.
+  - ATK_CARRY 300 does next to nothing on top of zgj's ATK_STUCK; the line is closed.
