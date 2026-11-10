@@ -9485,3 +9485,8 @@
   - cq185 (seed 93, 20 games each): all 20 identical to zdb (wins 17 = 17, transfer 190,334 = 1.00x, trap deaths 364 = 364). zd482 was D 0 too. Against the local archetypes the boot and war floors never bind.
   - Its targets are field cells: externalsustenance A vs YokoOno (no-income box, our king starved at r439 after the bank fell 1,280 to 320 by r80) and mincemeat B vs Icarus. Set 3 replays as drawn (the zdb re-draw's first 24 cells were all alike), so any D there is the switch's. Submit after the re-draw's second half.
   - cq186 (zha) started 20:50.
+- 20:54: **zha dropped as inert on its target; zhc registered (narrowed king guard)**
+  - zha's ledger cell (cq186, Stash A vs agrab seed 89) replayed cq181's zdb game for all 635 rounds: the switch never acted. Its hold-off ends on any threatened king, and agrab's wall-held rats at y 21 are within KING_THREAT_D2 18 of our king at (16,24), so every hold-off was cancelled. cq186 stopped after 4 games; zd485 (zha's screen) is left to finish as information.
+  - zhc = zha + HOLD_KING_D2 8: a threatened king ends the hold-off only while the nearest enemy is within dist2 8 of its centre (next to its body).
+  - Falsifier 0 holds (~/diag26b/zhcq, same cell): identical to zdb to r164, diverges at r165. The cell is still lost (r585 vs zdb r635), transfer 180 = 180, pickup 620 vs 580. Released rats chase cheese and mine more (C+M r200-400: 1,035 vs 591 rat-turns), but most go back to 'w'. Weak, so the chain decides.
+  - Screen zd487 queued after zd486 (zhb); chain cq188 (cq186's 48 cells, seed 94) after cq187.
