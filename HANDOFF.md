@@ -107,8 +107,6 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     114) waits on cq207. Submit after zhz's rows are all sent.
   - Scratch census tools on the VM (copies in laptop /dev/shm/kd): /dev/shm/kingsum.py (kings by round),
     kdie.py (how our kings died), bdie.py (baby death causes), kdmg.py; run with BC_DUMPCACHE=/dev/shm/kdc.
-  - **zia** (zdb + BITE_GUARD; 73% of field grabs on us take a weaker rat): zd525/zd526 queued, chain cq208 (seed
-    114) waits on cq207. Replica order after zhy: zhz, then zia (each once the previous build's rows are all sent).
   - Next fresh seed: 115. Next screen id: zd527. Next chain: cq209. Next free name: zib.
   - VM disk 2.3 GB. build/dumpcache (2.1 GB) is write-protected; leave it.
 - **Earlier (06:23 11-10):** zhw/zhx/zhy pending; see TRAINING_LOG 06:10-06:36.
