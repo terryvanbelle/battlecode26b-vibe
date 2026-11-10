@@ -9461,3 +9461,7 @@
   - Merlin sweep (zgt's 22970/22971, lost both seats as zdb did): on whatsthecatdoin Merlin ratnaps ours 82-92 times by r400 (we 34-36) and throws 64-82. We lose 30-36 rats by r400.
   - 70% of those grabs use the health rule (our rat below the grabber's hp); victim hp median 58. RETREAT_HP has only ever been lowered (0 and 20 rejected), never raised.
   - Screen zd484 queued behind zd483.
+- 20:18: **zgy DROPPED** (GUARD_CARRY_R 5)
+  - zd483: n 48, D 7, net -1, t -0.37, 0 overruns.
+  - cq184 fails both of its clauses: wins 13 to zdb's 14 (9 cells differ, mostly tiny/thunderdome/DefaultSmall), and throw hits on our own king are 143 vs 130 (5,712 vs 5,230 hp). The carrier guard does not cut the hits; it adds a few.
+  - cq185 (zgx) is running in the freed chain slot.
