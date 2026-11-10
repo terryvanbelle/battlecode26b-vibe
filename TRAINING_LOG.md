@@ -9406,3 +9406,8 @@
   - Local cq174 zgj games (indicator strings): at r700 pocket rats are on 'C' chases of piles at the (2,26) mine seen through the south wall (Nav stall 6-12, re-picked each turn), or on 'M' to that mine with the flow still building.
   - BREAKOUT_TTL: two stalls on walled-off cheese within 100 rounds → 150 rounds of line-of-sight-only chasing and frontier exploring with digging. On s9s it was replica-neutral (t 0.00).
   - Falsifier: zd477 (s7) net < 0 or t < 0; any overrun of ours; cq180 (seed 89, 5 pocket maps x 2 seats x agrab/atrap3, paired with zgj) wins below zgj's or summed pickupAmt under 1.05x.
+- 18:01: **zgj REJECTED at replica block 2; zgq, zgr, zgs withdrawn; zgt = zdb + BREAKOUT_TTL 150 registered**
+  - #331 set 3 (22859-22874 vs zdb's anchors): 48 cells, 45 alike, D 3 (+0 -3: Finals where_are_you A and B, Varun corridor B), t -1.73. Pooled with block 1: D 13 (+8 -5), net +3, t 0.83 ≤ 1.
+  - where_are_you: zdb won both seats on points (21018/21019, now on the VM as zdb_s3_finals.tgz). zgj as A starved at r1884 with 2 kings, delivered 7,942 to zdb's 9,661, backstab at r419 on a Finals trap; as B it lost at r1467. zgh lost where_are_you A too, so the trail is the suspect there.
+  - zdb resubmitted (#332). zgq/zgr (ATK_STUCK doses; s7 passed, net +1 each) and zgs (BREAKOUT on zgj, unplayed) withdrawn with their base; cq179 stopped at 38/60, cq180 and zd477 never ran.
+  - zgt carries zgs's switch on zdb: screen zd478 (s7), chain cq181 (seed 89, 5 pocket maps x 2 seats x agrab/atrap3, paired with zdb). Falsifier in attempts.csv.
