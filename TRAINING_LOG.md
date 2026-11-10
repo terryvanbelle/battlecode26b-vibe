@@ -10074,3 +10074,13 @@
       A and tiny A (atrap3); lost thunderdome B (atrap3).
     - s7 zd545: n 48, D 13, net +1, t +0.27, picks/100 34.89 vs 34.11. Its one overrun is the opponent agtr's.
     - s6 zd546 is playing. zil goes to the replica once zij's last rows leave the drain.
+- 11:50 (11-10): **zij dropped at replica block 1 (net -3); zil on the replica (#360); zii's chain passes**
+    - zij (#359), 23949-23965: 48 cells, 43 alike, D 5 (+1 -4), net -3, t -1.34. It gained YokoOno Stash A (a
+      coin-flip cell) and lost Finals where_are_you B, Icarus mincemeat A, Xzibit uneruesansfin A and thewaxmango
+      FreeTheCheese A.
+      - zij is ledgered, so these cells are TRIP_LOAD's own effect: it acts on every 20+ round walk.
+      - The TRIP_LOAD line is closed (zid, zif, zij). Its screens zd541/zd542 and chain cq216 were dequeued.
+      - Replays: VM rp/zij_b1s3{a,b}.tgz.
+    - zil submitted as #360; its 16 set-3 rows are in the drain.
+    - zii: cq214 10 of 20 vs zdb 9, 0 overruns (+tiny A). zif's information chain cq213: 15 vs 15.
+    - Chains now: cq215 (zih) and cq217 (zik). Screens: zd546 (zil s6) playing, then zd537-zd540, zd543, zd544.
