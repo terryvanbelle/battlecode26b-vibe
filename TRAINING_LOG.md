@@ -10192,3 +10192,7 @@
   - Lost cells vs zdb's zd343: tiny ×4 (agrab A, agtr B, atrap3 A and B, all faster king kills against us), agtr DefaultMedium B, atrap3 arrows A, atrap3 evileye B. Gained agrab DefaultMedium B and agrab evileye A.
   - Reading: BitFlow rushers lose the small-map rush race (tiny is decided by r60-76). The Stash pocket effect seen locally may still be real; a narrower arm (BitFlow rushers only above an area threshold) is the next test.
   - zd556 (s6) and cq222 keep running as information only.
+- 14:33 (11-10): **ziq DROPPED (chain cq221 13 vs zdb 15); zis registered (zir with BitFlow rushers only on maps ≥ 600 tiles)**
+  - ziq lost minimaze A against both agrab and atrap3, so it misses the chain gate (needs ≥ 14). Its screens zd553/zd554 are out of the queue.
+  - zis = zir + RUSH_BFLOW_AREA 600. Below that area the switch never turns on and the bot replays zdb, so zir's four tiny losses must come back. Stash, arrows and DefaultMedium keep the BitFlow rushers.
+  - Falsifiers: s7 zd557 / s6 zd558 t ≤ -1.5 or own overrun drops; tiny/evileye s7 cells must equal zd343 (mechanism); cq223 wins < zdb-1 drops; replica net < 0 or rate score < 0 drops, t ≤ 0 rejects.
