@@ -9510,3 +9510,14 @@
 - 21:52: **zd489 queued: zhd on s6 (information, not a registered falsifier)**
   - s6 (zd345, zdb's reference) is 48 cells vs araid/abrk, 44 on small maps plus keepout and wallsofparadis, 2 each. The small cells add to zd488's ledger check; the 4 big cells add a raider opponent to cq189's atrap3/agrab. zhd's falsifiers were registered before any game and are unchanged.
   - Diagnosis, whatsthecatdoin vs Merlin (lost both seats, our king starved r288/r325): we pick about 400 at the contested centre mines (14,20)/(25,19) and deliver 42/140, with carriers grabbed and thrown. As A, Merlin took 420 from the pocket mine (3,37), 13 dirt tiles up a column from the centre band. Pocket digs are the BREAKOUT_TTL/SEEK_FRONTIER line, failed before. Parked.
+- 21:58: **zhd dropped (ledger); zhf registered, the same switch with the flag held in G**
+    - zd488 (s7, all maps under 2500 tiles, so RISK_ROWS is off everywhere) should have replayed zdb cell for cell.
+      It did not: 42 of 48 run, D 2, net −2, t −1.43. The cause is that `TrapRisk.rows` is set in RobotPlayer.run, which runs
+      TrapRisk's class initialiser before zdb would run it, so bytecode use shifts from round 1.
+    - zhf stores the flag in `G.riskRows` instead, and nothing else changes.
+    - Binding falsifiers, registered before any game:
+        - (0) zd490 s7 identical to zdb in every cell.
+        - (1) cq190 (seed 97, keepout, wallsofparadis, where_are_you, FreeTheCheese, averystrangespace, superioristhmus
+          × A/B × atrap3/agrab, paired with zdb): wins ≥ zdb, cheese transfer ≥ 1.02× zdb, no overruns.
+    - cq189 (zhd, seed 96, 16 of 48 done) was stopped so cq190 could take the chain slot. zd490 is queued.
+    - VM disk was at 1.6 GB. Removed the closed dumps cq181, cq186, cq187, cq188 and zhcq, which brought it to 1.9 GB.
