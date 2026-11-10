@@ -9733,3 +9733,9 @@
   - zd510 (s6) final: n 44, D 5, net +1, t +0.44, picks/100 33.86 vs 32.96 (per-cell z +2.17).
   - zhp resubmitted (#348) for block 2 on set 4 (zdb anchors 20817-20824, 20842-20845, 20848-20851; reject at t <= 1). 4 sent, 12 queued.
     zht (#347) had 4 set-3 matches sent at 04:12 (23484-23487); its other 12 rows are held in the drain until zhp's are sent, then zht is resubmitted.
+- 04:24 (11-10): **zht passes s7 and its chain; zhp's Stash A gain explained**
+  - zht zd511 (s7): n 48, D 6, net +2, t +0.81 (per-cell picks z -2.03). Chain cq201 (seed 107): zht 14 vs zdb 15 (bar 14), 0 overruns, transfer 41,681 vs 35,607;
+    +tiny A and B vs atrap3 (zdb lost both by r62), -UncomfortablyClose B agrab, -evileye A agrab, -evileye B atrap3. zd512 (s6) running.
+  - zhp Stash A (23431 vs anchor 21020, dumped in VM /dev/shm/stx/dc): YokoOno backstabs at r50; the games first differ at r67.
+    By r300 YokoOno has 15 babies to zdb-game's 21 (we have 23 vs 20); we form a second king by r500 and destroy theirs at r950. zdb's game lost at r1175.
+    Our home rats attacking the backstabbers instead of holding is the mechanism zhp was built for.
