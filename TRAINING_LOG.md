@@ -9443,3 +9443,8 @@
     - Prior fixes for this (SEEK_FRONTIER zc2, SWEEP u2u/u2x, EXPLORE_CENTER zd7, SCOUT_EVERY 2 u8o) all failed. Parked.
     - The local game also had ~10 rushers stalled 130+ turns at the walled corridor, but the field games show none (it was a long-coop artifact vs agrab).
 - 19:37: **zgv DROPPED** (floors 500): zd480 n 48, D 3, net -1, t -0.57 (picks/100 35.17 vs 34.11), 0 overruns. cq183 left to finish as floor diagnostics.
+- 19:39: **zgy registered: zdb + GUARD_CARRY_R 5**
+  - thewaxmango DefaultMedium and tiny (21038/21039, lost both seats): their rats ratnap ours and throw them into our king, 11-12 hits a game for 330-410 of its 600 HP. We land 1-8 such hits on theirs. Our king dies with 20+ rats alive and 300-980 banked.
+  - GUARD_CARRY_R (u2y on u2g, never on the z-line): babies within 8 of our king grab enemy carriers holding ours within 5 of its centre, from a blind tile.
+  - Screen zd483 queued behind zd482. Chain cq184 (seed 92: DefaultMedium, tiny, knifefight, DefaultSmall, thunderdome x A/B x agrab/atrap3) waits for cq183.
+  - Falsifier: zd483 net < 0 or t < 0, any overrun, cq184 wins below zdb, or throw hits on our king not under 0.85x zdb's.
