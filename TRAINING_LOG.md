@@ -9940,3 +9940,17 @@
     (23864-23867).
   - zie smoke (tiny vs agrab, seed 118): no rescue fired (agrab throws within 1-2 rounds), lost r53 where zdb won r79.
     The divergence is the rescue scan's bytecode, not a rescue. The field is where carriers hold ours for long spells.
+- 09:52 (11-10): **zid at -1 on the replica with 4 rows left; zif registered (TRIP_LOAD_BANK 600)**
+  - zid #356 set-3 rows 23864-23875 (12 of 16): +Stash A vs YokoOno (the cell zid was built for), -Finals
+    where_are_you A, -YokoOno externalsustenance B; the rest alike. Icarus and Merlin rows wait on the hourly limit.
+    zd532 (s6): n 44, D 5, net -1, t -0.44 (passes); picks/100 z +2.08.
+  - externalsustenance B (23869 vs anchor 21021, scratch esus.py): identical to r120. At r140 zid's bank was 255
+    against the anchor's 315 because gatherers were holding loads, and the anchor's fight killed YokoOno's king
+    (180 HP) at r184. zid's fight stalled, its bank hit 0 by r300 and its king died r407. In zid's Stash A win
+    our king stayed at 600 HP and the bank sat at 230-390 from r240.
+  - zif = zdb + TRIP_LOAD with TRIP_LOAD_BANK 600 (from 200; compiled 6127c5a5c604). It keeps the rich-bank holds
+    and drops the lean ones. This likely gives back Stash A's late holds; the screen and replica will show whether the
+    early holds alone carry it. An alert gate was rejected: Stash raises alerts across its wall.
+  - Falsifiers (binding): (1) zd535 (s7) and zd536 (s6) t > -1.5, 0 overruns; (2) cq213 (seed 119; cq211's maps)
+    wins >= zdb-1, 0 overruns; (3) replica set-3 block 1: net < 0 drops, t <= 0 rejects.
+  - VM disk: 1.9 GB at 09:36. I removed cq210 (zic, dropped) and pruned 73 replica replays older than 30 h; now 2.2 GB.
