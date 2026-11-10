@@ -9619,3 +9619,15 @@
     - zd496 (s6): net +1 at 44 of 48.
   - So one king to the endgame wins some points games, but it gives up transfer, since the mid-game second king is also a second delivery point, and it gives up the insurance king. Merlin can afford one king because its economy is bigger; ours can't. The formation-timing line stays closed past FORM_FROM 600.
   - Replica: zhi's 4 sent matches count as information only, and its 12 drain rows were dropped. zhj submitted as #340, with its set-3 block (16) in the drain.
+- 00:23 (11-10): **zhj rejected; zhk registered: second king from 12 babies (replica #341)**
+  - zhj, zd497 (s7): D 2, net -2, t -1.43, which breaks binding falsifier 1. It lost DefaultMedium B vs agtr (r183) and starvation B vs atrap3 (r989), both of which zdb won.
+    - cq194 (complete) would have passed: wins 14-14, cat traps 512 vs 487, cat damage 1.01x, transfer 0.988x. The floor fires, but it moves little.
+    - zd498 stopped. All 16 of its replica matches (#340) were sent before the screen ended, so they count as information only.
+  - zhk = zdb + FORM_BABIES 12 (from 16; compiled fe7af178ea6a).
+    - zhi's chain showed that the mid-game second king is worth about 4% of transfer and a game.
+    - zfe showed that local wars rarely reach the 16-baby gate after FORM_WAR_FROM 300 (2 kings at r600 in 0 of 24 games). FORM_BABIES 12 was last tried on the s4 base (10-28), bundled with FORM_FROM 30.
+  - Falsifiers (binding):
+    1. zd499 (s7): net ≥ 0 and t ≥ 0, no overrun.
+    2. zd500 (s6): net ≥ 0, no overrun.
+    3. Chain cq195 (seed 102; DefaultLarge, FreeTheCheese, cheesebottles, peaceinourtime and fullofsecrets × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb's; transfer ≥ 1.0x; games with 2+ kings at r1000 > zdb's (VM ~/diag26b/kingsc.py).
+  - Replica: #341, with its set-3 block (16) in the drain.
