@@ -97,13 +97,11 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (02:32 11-10):**
+- **Now (03:22 11-10):**
   - Incumbent still **zdb** (#334). zhn rejected 02:44 as inert (screens, chain cq198 and replica #344 all equal zdb).
-  - **zho** (#345; zdb + STANDOFF_ODDS 3: no standoff when our baby rats in view outnumber theirs by 3+). Field
-    idle rats stand at our own king facing besiegers (/dev/shm/stillwhere.py on dumpc). Screens zd507/zd508 queued;
-    chain cq199 (seed 105, 40 games) waits on cq198; set-3 block: 4 sent, 12 in the drain. Bars in attempts.csv.
+  - zho (#345; STANDOFF_ODDS 3) rejected 03:22 at its replica block (D 3, net -1: +Stash A, -rose A, -externalsustenance B).
   - **zhp** (zdb + STANDOFF_HOME 5: no standoff within 5 of our king; zho's sibling arm). Screens zd509/zd510 queued;
-    chain cq200 (seed 106) waits on cq199. Submit it to the replica once zho's block has all been sent.
+    chain cq200 (seed 106) running. Replica #346 set-3 block: 4 sent 03:22, 12 in the drain.
   - Next fresh seed: 107. Next screen id: zd511. Next chain: cq201. Next free name: zhq (check the dir too).
   - VM disk 2.1 GB (pruned replica replays > 30 h; cq196 and cq197 removed).
 - **Earlier (01:37 11-10):**

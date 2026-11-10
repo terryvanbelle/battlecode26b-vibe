@@ -9710,3 +9710,10 @@
     Both are marginal: zdb's bank fell to 85 at r1100 and recovered at r1200 to win on points; zho's fell to 50 and the king starved (r1235-1335).
     At r1000 (zdb) about 10 of our 20 babies held 40-320 cheese each in the wall maze west of our king's pocket (x 6-9, y 1-9) while map cheese grew past 12k: a delivery jam, not a standoff.
     The delivery-stuck line (TRAIL, ATK_STUCK: zgh, zgu) was rejected or dropped before. Two local zdb-vs-agrab rose games (rose1, seed 7) are running to see whether the jam reproduces with indicators.
+- 03:22 (11-10): **zho rejected at the replica (D 3, net -1); zhp submitted**
+  - Local gates held: zd508 (s6) n 44 D 2 net 0 t 0.00; chain cq199 zho 14 vs zdb 15 wins (bar 14), 0 overruns, transfer 75,245 vs 79,208;
+    lost corridorofdoom A vs agrab (its target map) and cheesebottles B vs atrap3, gained tiny B vs atrap3.
+  - Replica #345: 45 of 48 cells alike; +YokoOno Stash A (zgc gained the same cell), -spsquared rose A (a coin flip in a delivery-jammed game), -YokoOno externalsustenance B. Net -1, below 0, so rejected.
+  - Rose's jam (local rose1: loaded rats still on 59% of their turns, mostly delivering, with ~25 empty rats packed round the king) is the stem that SWAP_HOLD was made for (s7y; u1s, zei failed on the field).
+  - Field tiny vs thewaxmango (anchor 21038/21039 dumped, VM /dev/shm/waxx/dc): we backstab at r11-12 both seats, spend 2,280 to 300 by r100 on babies that die (26 to 7), and our king falls at r142-161; they keep 1,600-2,300 banked.
+  - zhp (#346) submitted; its set-3 block: 4 sent, 12 in the drain. zd509/zd510 and chain cq200 running.
