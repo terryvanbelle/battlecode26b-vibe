@@ -97,7 +97,19 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (20:00 11-09):**
+- **Now (20:52 11-09):**
+  - Incumbent still **zdb** (#334). zgy and zgz dropped at their screens.
+  - Replica: #334 zdb set-3 re-draw. The first 24 cells (spsquared, Finals, YokoOno, Varun; 22997-23000,
+    23002-23005) are all alike, D 0, so set 3 replays as drawn. The other 8 (Xzibit, thewaxmango, Icarus, Merlin) are
+    in the drain; score them with `paired` and log them, then submit zgx.
+  - **zgx** (CORE_FLOOR/WAR_FLOOR 150): passed its local gates as inert (cq185 identical to zdb). Replica set 3
+    next; targets externalsustenance A (YokoOno) and mincemeat B (Icarus).
+  - **zha** (HOLD_TTL 40 / HOLD_OFF 100, new ledgered switch; Stash wall standoff): screen zd485 running, chain
+    cq186 running (first cell = ledger check vs cq181's zdb Stash A agrab seed 89). Bars in attempts.csv.
+  - **zhb** (RISK_ROWS, existing; Finals' traps on keepout): screen zd486 queued, chain cq187 after cq186
+    (seed 95, 2500+ tile maps). Bars: wins, transfer 1.0x, trap deaths under 0.9x.
+  - Next fresh seed: 96. Next screen id: zd487. Next chain: cq188. Next free name: zhc.
+- **Earlier (20:00 11-09):**
   - Incumbent still **zdb** (#334). zgt rejected at its first counted block (set 3, t -1.00; set 2 is biased for
     zdb derivatives, memory set2-anchor-bias). zgu, zgv dropped; zgw withdrawn unplayed.
   - Replica: #334 zdb set-3 **re-draw** (noise measure vs its own anchors 21016-21023, 21036-21043); 4 sent, 12 in
