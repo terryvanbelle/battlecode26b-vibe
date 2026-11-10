@@ -9471,3 +9471,6 @@
   - FACE_REACH and WALL_HOLD (geometric wall tests) were dropped or rejected 5 times, mostly on minimaze. This one fires only on long frozen holds.
   - Falsifiers (attempts.csv): ledger check (cq186's first cell, Stash A agrab seed 89, against cq181's zdb game); screen zd485 (s7) net < 0, t < 0 or an overrun; chain cq186 (seed 94, 6 pocket/wall maps x 2 seats x agrab/atrap3, paired with zdb): wins below zdb's, transfer under 1.0x, or Stash pickup under 1.3x.
   - VM disk was at 1.8 GB: pruned 82 /srv replays and removed closed dumps cq183, cq184, zejq, asA (2.2 GB free).
+- 20:29: **zdb set-3 re-draw, first half: 24 of 24 cells alike (D 0)**
+  - #334, 22997-23000 and 23002-23005 (spsquared, Finals, YokoOno, Varun) against zdb's anchors 21016-21023: D 0, net 0. These replica cells replay as drawn, so a D on them is the candidate's.
+  - The other 8 (Xzibit, thewaxmango, Icarus, Merlin) are in the drain; zgt's one loss (Xzibit minimaze B) is among them. Replays on the VM as rp/zdb_redraw_s3a.tgz.
