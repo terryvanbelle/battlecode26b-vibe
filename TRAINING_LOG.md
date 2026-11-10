@@ -10163,3 +10163,21 @@
     - zik chain cq217: 14 wins vs zdb 13 (bar 12), 0 overruns, trap deaths 377 vs 427, Stash A atrap3 gained.
     - zii screen zd537 (s7): n 48, D 12, net +2, t +0.57, 0 overruns.
     - cq221 (ziq vs zdb, 40 games) started in cq217's slot.
+- 13:38 (11-10): **zir registered: rushers walk by BitFlow (Stash pocket exit)**
+    - Decoded why-tags (Debug.tag) of set-3 Stash B vs YokoOno (21021): zdb's 12 rushers sat in attack() at
+      (13-17, 3-6) under the enemy-king mirror spot, most until they died (last at r555). Pocket gatherers ('M')
+      were stuck too.
+    - Pocket exits by r100: us 3 to Yoko's 24 in seat B, and 12 to 21 in seat A. Yoko digs its exits at r18-19 and
+      empties its pocket by r60.
+    - Local probe (zrchk, Stash B vs agrab): the rushers' Flow searches (reverse A* across both pockets) are
+      dropped by robots in the way or by newly seen walls; each rat builds 3-6 paths per 100 rounds.
+      BitFlow for everyone gives 21 exits by r100 vs zdb's 11. BFLOW itself was parked on s9s (u0c) for fields
+      toward a moving king that restart.
+    - zir = zdb + RUSH_BFLOW: only rushers walk by BitFlow, and their sense loop keeps its wall rows. Every other
+      path is ledgered: each new switch charges its 6 counted instructions, and born()'s check charges K 9.
+      zrbchk replays zdb's Stash/agrab s117 773/773.
+    - Local Stash B seed 127: 18 exits by r100. zir beat atrap3 (zdb lost at seeds 127-130) and agrab, with 0
+      overruns.
+    - Screens zd555/zd556 are at the queue head. Chain cq222 (seed 128; 6 maps, including the 60x60 grove for
+      overruns) is running.
+    - Other results: zio chain cq220 12 vs zdb 11 (pass); zih 13.
