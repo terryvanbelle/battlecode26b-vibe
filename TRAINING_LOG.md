@@ -10040,3 +10040,11 @@
     (seed 122, cq211's maps) waits on cq215. zif's zd535/zd536 and cq213 finish as information only.
   - Screen queue: zd536 (zif, running), zd541, zd542 (zij), zd537, zd538 (zii), zd539, zd540 (zih).
   - Chains: cq213 (zif), then cq214 (zii), cq215 (zih) and cq216 (zij).
+- 11:08 (11-10): **zik registered: zgc's KING_WALL_THREAT, ledgered**
+    - zdb + the king alert ignores enemy babies behind a wall (Baby.behindWall from zgc), and is not raised when every
+      enemy it sees is walled. zgc's unledgered run gained YokoOno Stash A and lost Varun corridorofdoom B (D 2).
+    - Ledgered in King (K 15). The never-acting copy zkchk replays zdb's Stash/agrab s117 game for all 773 rounds; zik
+      first diverges at r133 (the switch acting) and still wins.
+    - Queued: screens zd543 (s7) and zd544 (s6), chain cq217 (seed 123, five wall maps x agrab/atrap3, behind cq216).
+    - Falsifiers: screens t > -1.5 with 0 overruns; chain wins >= zdb-1; replica set-3 block 1 net < 0 drops, t <= 0
+      rejects.
