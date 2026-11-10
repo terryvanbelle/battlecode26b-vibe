@@ -9448,3 +9448,7 @@
   - GUARD_CARRY_R (u2y on u2g, never on the z-line): babies within 8 of our king grab enemy carriers holding ours within 5 of its centre, from a blind tile.
   - Screen zd483 queued behind zd482. Chain cq184 (seed 92: DefaultMedium, tiny, knifefight, DefaultSmall, thunderdome x A/B x agrab/atrap3) waits for cq183.
   - Falsifier: zd483 net < 0 or t < 0, any overrun, cq184 wins below zdb, or throw hits on our king not under 0.85x zdb's.
+- 19:56: **zgx passes its screen but is inert on s7; chain queued**
+  - zd482: n 48, D 0, net 0, t 0.00, picks/100 34.10 vs 34.11, 0 overruns. Floors at 150 never bind on the s7 cells.
+  - Chain cq185 (cq183's cells, seed 93) queued behind cq184.
+  - cq183 final: zgv 14 wins to zdb's 16 (of 20); transfer 208,198 vs 211,013.
