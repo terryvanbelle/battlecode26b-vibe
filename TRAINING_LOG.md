@@ -9703,3 +9703,10 @@
   - Chain cq198: zhn 13 wins = zdb 13 (20 games each); transfer 319,373 vs 319,027, deaths 1,622 = 1,622, trap deaths 417 = 417, 0 overruns.
   - Replica #344 (23365-23380, set 3): every match score equals zdb's anchor. With zd505/zd506 at D 0, the FORM_RICH_BANK cut never binds.
   - cq197 removed (VM 2.1 GB). zho's first replica match 23383 vs spsquared (A) went 2-1 (anchor 3-0): an early minus.
+- 03:05 (11-10): **zho: s7 passes (active), replica -1 so far on a coin-flip rose**
+  - zd507 (s7): n 48, D 10, net -2, t -0.63 (passes > -1.5); zho is active, unlike zhn. zd508 (s6) running: 19 of 44, D 1, net -1.
+  - Replica #345: 23383 vs spsquared A 2-1 (anchor 3-0: lost rose); 23384-23386 equal the anchors. 12 rows wait for the hourly send.
+  - Rose (23383 vs zdb's redraw 22997, both dumped in VM /dev/shm/zhox/dc): spsquared backstabs at r409; the two games first differ at r436.
+    Both are marginal: zdb's bank fell to 85 at r1100 and recovered at r1200 to win on points; zho's fell to 50 and the king starved (r1235-1335).
+    At r1000 (zdb) about 10 of our 20 babies held 40-320 cheese each in the wall maze west of our king's pocket (x 6-9, y 1-9) while map cheese grew past 12k: a delivery jam, not a standoff.
+    The delivery-stuck line (TRAIL, ATK_STUCK: zgh, zgu) was rejected or dropped before. Two local zdb-vs-agrab rose games (rose1, seed 7) are running to see whether the jam reproduces with indicators.
