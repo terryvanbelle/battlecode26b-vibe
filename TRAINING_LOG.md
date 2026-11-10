@@ -9550,7 +9550,7 @@
         - (3) chain cq191 (seed 98, cq188's six maps × A/B × agrab/atrap3, paired with zdb): wins ≥ zdb and summed
           transfer ≥ 1.0x.
       Then the replica (set 3 has Stash ×2 vs YokoOno). cq191 runs after cq190.
-- 22:41: **zhf rejected (replica 48/48 alike); cq190 stopped, cq191 (zhg) takes the chain**
+- 22:28: **zhf rejected (replica 48/48 alike); cq190 stopped, cq191 (zhg) takes the chain**
     - zd490 (s7) matched zdb in all 48 cells, so the G.riskRows ledger fix holds.
     - Replica #336, set-3 block 1 (23102-23117): 48 cells, 48 alike, D 0, t 0.00. Block 1 rejects at t ≤ 0.
     - cq190 (seed 97) was stopped at 8 pairs: wins 4 vs zdb 6, trap deaths 209 vs 183. Turning TrapRisk's mask on
