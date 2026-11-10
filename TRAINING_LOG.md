@@ -9769,3 +9769,13 @@
     (22602): they lay 337 traps and fire 338 on us, 100 of our deaths are traps, and we end with 3 babies to 30.
   - VM disk was 1.2 GB: pruned 213 replica replays and the chain dirs of rejected zgx/zhn/zho/zhp/zht/zhu/zhv
     (cq185, cq198-cq203); now 2.2 GB. build/dumpcache (2.1 GB) is write-protected and was left alone.
+- 06:23 (11-10): **zhy registered: a third king (FORM_MAX 3); zhw replica block 1 at 7 of 16 matches**
+  - zhw #350 set 3 so far (23618-23624): one cell differs from zdb's anchors, +YokoOno Stash A (the cell zgc and zho
+    also gained). The remaining 8 rows go out at about 07:08.
+  - Points at r2000 (specs Eq. 2): 0.3 cat damage share, 0.5 share of living kings, 0.2 transfer share. keepout vs
+    Finals (22602 g0): Finals formed kings at r283 and r611 and held 3 to our 1 over r700-1100; we formed our second
+    only at r1140 and it died just before r2000 (2 to 1). With kings even at 2-2 that game is still about 45-55; at
+    3-2 it would be about 50-50.
+  - zhy = zdb + FORM_MAX 3. A third king still needs the income test at kings + 1 (FORM_NET100 -100, INCOME_TRUST 75),
+    so it forms only on incomes of about 930 a hundred rounds. s3x (FORM_MAX 4, 10-28) was rejected on an old base.
+    Screens zd521/zd522, chain cq206 (seed 112; keepout, wallsofparadis, thunderdome, cheesebottles, FreeTheCheese).
