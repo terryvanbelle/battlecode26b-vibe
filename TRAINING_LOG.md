@@ -9971,3 +9971,21 @@
     went on respawns.
   - zie: zd533 (s7) 48 cells, D 9, net -1, t -0.33 (passes); zd534 playing. Submitted #357 at 10:15; 16 set-3 rows in
     the drain.
+- 10:27 (11-10): **zig registered: AMMO_AWAY (wounded rats step away from our king); zie passes its chain**
+  - Census of zdb's set-3 anchor losses (VM /dev/shm/kdie.py, ammocen.py):
+    - Starvations are slow defeats against 2-3x our babies; keeping the king alive wouldn't flip them on points.
+    - The rich-bank king deaths are bites or thrown rats: thunderdome 938 banked, DefaultMedium 757-1013,
+      cheesebottles 628-930, tiny.
+    - Our own rats thrown into our king did 2,671 damage. 1,117 of it came from rats at <= 50 hp within Chebyshev 3
+      of the king on their last turn before the grab. By map: cheesebottles 888, DefaultMedium 727, tiny 584.
+    - retreat() walks rats at <= 40 hp to Chebyshev 2 of the king, which turns them into ammunition.
+  - zig = zdb + AMMO_AWAY (existing switch, never on the z-line; u1v rejected it on u0m). At war, a baby at <= 50 hp
+    within Chebyshev 3 of our king, with a healthier enemy within dist2 8, steps away from the king ahead of
+    retreat(). Compiled 718a0c0307c8.
+  - Falsifiers (binding):
+    1. zd537 (s7) and zd538 (s6): t > -1.5, 0 overruns.
+    2. cq214 (seed 120; cq212's maps): wins >= zdb - 1, 0 overruns.
+    3. Replica set-3 block 1: net < 0 drops, t <= 0 rejects.
+  - zie: cq212 complete, 9 vs 9 wins, 0 overruns (passes). Transfer is 0.60x, but these are short war maps and
+    zie's bar carries no transfer clause. zd534 (s6) is at 40 cells: net +3, t +1.14.
+  - Queue: zd535/zd536 (zif) then zd537/zd538 (zig). Chains: cq213 (zif) running, then cq214 (zig).
