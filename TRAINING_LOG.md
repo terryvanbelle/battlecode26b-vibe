@@ -9393,3 +9393,7 @@
   - fullofsecrets and mercifullattice still lost both seats (as the anchors). Replays on the VM: ~/diag26b/rp/zgj_b1s2{a,b,c}.tgz.
   - Block 2: set 3 (`paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`), 22859-22866 sent, 8 in the drain. Pooled t ≤ 1 rejects; t ≥ 2 with D ≥ 4 accepts.
   - cq177 TheHeist cells are cooperation mirror games (vs atrap3 the two seats are identical with the teams swapped; seat A wins on transfer when both cats die at r251), not field signal.
+- 17:17: **zgp DROPPED at s7** (zd473 vs zd343: n 48, D 11, net -5, t -1.53; picks/100 34.90 vs 34.11; 0 overruns).
+  - FINISH_K 10 loses more cells than it wins; zd474 (s6) and cq178 stopped. FINISH_K stays at 5.
+  - knifefight vs Merlin (zgj block, A L107 / B W22): Merlin's king steps toward us on r1 as seat A (bodies one tile apart; our rats kill it by r22) and away as seat B (gap 3), where it wins the grab-and-throw fight (our rats: 19 throwHit + 30 throwLand deaths; we spawned 30 in 30 rounds and the bank fell 2,300 to 315 by r60). The asymmetry is theirs; no cheap switch.
+  - VM disk: removed cq170, cq177, cq178, zeq (2.3 GB free). dc_zey is a read-only dump cache, like dc_z4d.
