@@ -97,7 +97,22 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
-- **Now (18:02 11-09):**
+- **Now (20:00 11-09):**
+  - Incumbent still **zdb** (#334). zgt rejected at its first counted block (set 3, t -1.00; set 2 is biased for
+    zdb derivatives, memory set2-anchor-bias). zgu, zgv dropped; zgw withdrawn unplayed.
+  - Replica: #334 zdb set-3 **re-draw** (noise measure vs its own anchors 21016-21023, 21036-21043); 4 sent, 12 in
+    the drain. Score it with `paired` like a candidate; cells that flip are set-3 noise.
+  - **zgx** (zdb + CORE_FLOOR/WAR_FLOOR 150): zd482 D 0 (inert on s7); chain cq185 (cq183 cells, seed 93) queued
+    behind cq184; `chsc.py cq185 zdb zgx`, bars wins >= zdb and transfer >= 0.95x.
+  - **zgy** (zdb + GUARD_CARRY_R 5; thewaxmango throws ours into our king 11-12 times a game): screen zd483 running,
+    chain cq184 (seed 92, DefaultMedium/tiny/knifefight/DefaultSmall/thunderdome) running; bars in attempts.csv
+    (throw hits on our king < 0.85x zdb's).
+  - **zgz** (zdb + RETREAT_HP 60; Merlin grabs by health, victim hp median 58): screen zd484 queued.
+  - Diagnoses this evening (TRAINING_LOG 19:16-20:00): mincemeat/externalsustenance bank collapses;
+    wallsofparadis inner mines never found (parked: discovery switches all failed before); thewaxmango throws;
+    Merlin health grabs. Replays on the VM: ~/diag26b/rp/x_s, x_f, x_w, x_m.
+  - Next fresh seed: 94. Next screen id: zd485. Next chain: cq186. Next free name: zha.
+- **Earlier (18:02 11-09):**
   - Incumbent still **zdb** (resubmitted #332). zgj rejected at replica block 2 (pooled t 0.83: +8 set 2, -3 set 3,
     Finals where_are_you A and B as zgh). zgo, zgp dropped; zgq/zgr/zgs withdrawn with zgj.
   - **zgt** (zdb + BREAKOUT_TTL 150, pocket escape): screen zd478 (s7) running, chain cq181 (seed 89, 5 pocket maps;
