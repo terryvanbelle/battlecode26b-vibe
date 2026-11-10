@@ -9839,3 +9839,13 @@
     cost more than the extra 0.5-weight king share is worth. On keepout, the field case, no site is named at all.
   - zhy's 16 set-3 rows were all sent by 07:15 and play as information only.
   - zhz (GLANCE_MEM 20) submitted as #352; set-3 block queued (4 sent now, 12 in the drain). zd523 (zhz s7) is playing.
+- 07:47 (11-10): **zhz rejected at its s7 screen (t -1.85); zia submitted (#353)**
+  - zd523 (s7): n 48, D 15 (+4 -11), net -7, t -1.85, which fails falsifier 1 (> -1.5). The differing cells show no
+    map class (Stash, tiny and DefaultMedium appear on both sides).
+  - Chain cq207 (throw-heavy maps, seed 113) disagreed: 12 wins to zdb's 7, transfer 1.52x. That is +externalsustenance
+    x3, +tiny x2, +Stash A and -whatsthecatdoin A x2, all short games where one turned head changes the fight. Read
+    together, the two say GLANCE_MEM is noise-level, with no edge to carry.
+  - zd524 stopped unplayed. Replica #352: 8 rows played or playing as information only; the 8 unsent rows were
+    withdrawn (/dev/shm/kd/zhz_queue.tsv).
+  - zia (BITE_GUARD) submitted as #353; its set-3 block is queued (16, hourly limit). zd525 (s7) and chain cq208 are
+    playing.
