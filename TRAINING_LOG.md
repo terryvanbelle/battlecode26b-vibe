@@ -9821,3 +9821,13 @@
     enemy healthier than us by at most one bite ahead of the lowest-health target, so it cannot grab us next.
   - Screens zd525/zd526 queued after zhz's; chain cq208 (seed 114; tiny, DefaultMedium, whatsthecatdoin, keepout,
     thunderdome) waits on cq207.
+- 06:58 (11-10): **zhy interim: the third king forms and starves all three kings**
+  - s7 zd521 passed: n 48, D 2, net 0, t 0.00, 0 overruns.
+  - Chain cq206 after 8 of 20 games: zhy 4 wins to zdb's 6. zhy formed a third king at r541-610 in three FreeTheCheese
+    games and lost both seat-A ones outright. In each, all three kings starved together (agrab r1754-1759, atrap3
+    r1315-1319).
+    - Formation merges 8 babies and upkeep rises to 6 a round. The army fell to 4-6 and the bank to 0. zdb on the
+      same seeds kept 2 kings, banked about 950 and 19-33 babies, and won on points.
+    - The income test (rate at kings + 1) passes before the merge and does not count the babies the merge removes.
+  - Falsifier 2 is judged at the chain's end. The remaining maps (keepout, thunderdome, wallsofparadis) are ones where
+    no site was named for zdb, so a drop is likely. zhy's replica rows are still sending (#351, 4 of 16).
