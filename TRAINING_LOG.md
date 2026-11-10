@@ -9387,3 +9387,9 @@
   - Wins 14 to 14; the bar was zgj's + 1. Lost fullofsecrets B vs agrab (L797 where zgj won W548), gained rose A vs atrap3 (W1356, zgj L2000 on points).
   - Transfer 236,243 vs 236,955 (0.997x), trap deaths 290 each, 0 overruns. zd472 (s7) passed: n 48, D 3, net +1, t +0.57.
   - ATK_CARRY 300 does next to nothing on top of zgj's ATK_STUCK; the line is closed.
+- 17:13: **zgj passes replica block 1 on set 2; block 2 on set 3 queued**
+  - #331, 22843-22858 vs the zez anchors (22129-22132, 22251-22262): 48 cells, 38 alike, D 10 (+8 -2), net +6, t 1.90.
+  - Gained: Finals dirtpassageway B, Icarus averystrangespace A, YokoOno averystrangespace B and streetsofnewyork A, Varun clouds A and B, thewaxmango RUN A and B. Lost: Icarus TheHeist B, Merlin knifefight A.
+  - fullofsecrets and mercifullattice still lost both seats (as the anchors). Replays on the VM: ~/diag26b/rp/zgj_b1s2{a,b,c}.tgz.
+  - Block 2: set 3 (`paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`), 22859-22866 sent, 8 in the drain. Pooled t ≤ 1 rejects; t ≥ 2 with D ≥ 4 accepts.
+  - cq177 TheHeist cells are cooperation mirror games (vs atrap3 the two seats are identical with the teams swapped; seat A wins on transfer when both cats die at r251), not field signal.
