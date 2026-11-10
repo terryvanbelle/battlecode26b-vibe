@@ -9424,3 +9424,7 @@
   - Gains: Finals dirtpassageway B, Icarus averystrangespace A, YokoOno averystrangespace B and streetsofnewyork A, Varun clouds B, thewaxmango RUN A and B. Lost Merlin knifefight A (as zgj).
   - Seven of the eight are zgj's set-2 gains too. zgj and zgt share only the zdb base, so on set 2 these cells measure zdb against the zez twin anchors; any zdb-based candidate gets them. Set 2 is a biased reference for zdb derivatives: I don't count this block for zgt. It still lost fullofsecrets and mercifullattice in both seats.
   - Block 2 on set 3 (zdb's own anchors): 22932-22935 sent, 12 in the drain. Judge with `paired --dir /dev/shm/rp 21016-21023,21036-21043 IDS`.
+- 19:11: **zgu DROPPED** (zdb + ATK_STUCK hand port)
+  - zd479 D 0: inert on the s7 screen.
+  - cq182: wins 13 vs 12 (gained fullofsecrets A vs agrab); transfer 237,212 vs 224,603 = 1.056x, below the 1.1x falsifier.
+  - VM disk 1.9 GB: pruned 166 old replica replays and cq182, now 2.3 GB.
