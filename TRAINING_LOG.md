@@ -10204,3 +10204,6 @@
   - zik: cq217 finished at 14 of 20 vs zdb 13 (+Stash A atrap3), so falsifier 2 passes. Its screens zd543/zd544 are at the queue head.
   - zio #362 partial (10 of 16 matches): 30 cells, D 4 (+2 −2), net 0; rate score +0.90 (z +0.74). It won collegejunior tiny B, a rate-0.00 cell, and thunderdome B (0.19); it lost corridorofdoom B (0.67) and mincemeat A (0.55). Replays: VM rp/zio_b1s3a.tgz, zio_b1s3b.tgz.
   - The zd556 (zir s6) and cq222 (zir chain) info runs were stopped to free the slots.
+- 15:09 (11-10): **zii passes its last local gate (s6 zd538: n 44, D 3, net +3, t +1.77, 0 own overruns)**
+  - zii (ledgered AMMO_AWAY) has now passed s7, s6 and chain cq214. It goes on the replica after zio's block.
+  - Chains at 15:09: cq223 zis 14 of 17 vs zdb 10 of 16; cq224 zit 7 of 10 vs zdb 5 of 8 (+cheesebottles A and B vs agrab, where the switch fires).
