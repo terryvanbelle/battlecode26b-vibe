@@ -9400,3 +9400,9 @@
 - 17:18: **zgq and zgr registered: dose arms of zgj's ATK_STUCK**
   - zgq = zgj + ATK_STUCK_RAW 50 (from 100). zgr = zgj + ATK_STUCK 15 (from 30). Both built ahead of zgj's verdict so the screen and chain slots don't sit idle.
   - Falsifier for each: zd475 / zd476 (s7) net < 0 or t < 0; chain cq179 (seed 88, cq177's 20 zgj cells, the three bots paired) wins below zgj's or summed transfer under 1.05x zgj's; any overrun of ours.
+- 17:22: **zgs registered: zgj + BREAKOUT_TTL 150** (pocket escape; s9z's switch, never tried on the z-line).
+  - Diagnosis: zgj's replica fullofsecrets A vs Merlin (22857 g1, starved at r1803). From r400 to r1000 nearly all our rat-turns are in the king's sealed pocket (no mine inside); 307 pickups to Merlin's 1,158, with 20 rats alive to their 40.
+  - Merlin dug a straight 19-tile tunnel out of its mirror pocket in r33-80; our 30 digs in r46-126 were scattered over the dirt east of the pocket.
+  - Local cq174 zgj games (indicator strings): at r700 pocket rats are on 'C' chases of piles at the (2,26) mine seen through the south wall (Nav stall 6-12, re-picked each turn), or on 'M' to that mine with the flow still building.
+  - BREAKOUT_TTL: two stalls on walled-off cheese within 100 rounds → 150 rounds of line-of-sight-only chasing and frontier exploring with digging. On s9s it was replica-neutral (t 0.00).
+  - Falsifier: zd477 (s7) net < 0 or t < 0; any overrun of ours; cq180 (seed 89, 5 pocket maps x 2 seats x agrab/atrap3, paired with zgj) wins below zgj's or summed pickupAmt under 1.05x.
