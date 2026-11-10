@@ -9750,3 +9750,7 @@
   - zht stands alone: s7 net +2, s6 net +2 (t +1.43), chain 14 vs 15; replica #349 (resubmitted) has 12 set-3 rows going out at the next hourly send.
   - cheesebottles vs Merlin (dumpc 0f2f): mines spawn 6,920 on each half. Merlin picks up 2,306 on our half and 7,100 on its own; we pick up 5,086 on ours and 96 on theirs.
     The 2:1 transfer gap is raiding; RAID_EVERY (zen/zer) and MINE_EVICT (zes) were rejected before.
+- 05:22 (11-10): **zhw registered: late raiding (RAID_EVERY 2 for babies born at r500+)**
+  - Basis: cheesebottles vs Merlin is a raiding gap (05:19); zer's raid-from-birth lost short fight-force wins that end before r500.
+  - Compiled 51a854a08541; screens zd517 (running) / zd518; chain cq204 (seed 110, 40 games, long-game maps) running. zd515 (zhv, information only) stopped at the switch.
+  - Other loss classes checked and left: DefaultMedium vs thewaxmango (we bite the cat 222 times r50-150 while they bite our king 14 times; CAT_YIELD zds was rejected), keepout vs Finals (traps; the RISK_ROWS line zhb-zhf is closed), rose (corridor swap line closed).

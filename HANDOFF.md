@@ -106,7 +106,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     (zd511 net +2, zd512 net +2 t +1.43, cq201 14-15). Set-3 block: 23484-23487 played (sp, Finals: equal), 12 rows go out
     at the next hourly send. Judge vs 21016-21023, 21036-21043 (tiny vs thewaxmango is the target; averyfineline vs
     Icarus is the 400-tile risk).
-  - Next fresh seed: 110. Next screen id: zd517. Next chain: cq204. Next free name: zhw.
+  - **zhw** (zdb + RAID_EVERY 2 + RAID_FROM 500: a quarter of babies born at r500+ raid enemy-half mines; Merlin
+    out-raids us 2,306 to 96 on cheesebottles). Screens zd517/zd518; chain cq204 (seed 110) running. Replica after zht.
+  - Next fresh seed: 111. Next screen id: zd519. Next chain: cq205. Next free name: zhx.
   - VM disk 2.1 GB (pruned replica replays > 30 h; cq196 and cq197 removed).
 - **Earlier (01:37 11-10):**
   - Incumbent still **zdb** (#334). Rejected since 22:58: zhh, zhi, zhj, zhk, zhl; zhm dropped (keepout replayed
