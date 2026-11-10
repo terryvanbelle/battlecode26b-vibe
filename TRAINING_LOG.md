@@ -10196,3 +10196,11 @@
   - ziq lost minimaze A against both agrab and atrap3, so it misses the chain gate (needs ≥ 14). Its screens zd553/zd554 are out of the queue.
   - zis = zir + RUSH_BFLOW_AREA 600. Below that area the switch never turns on and the bot replays zdb, so zir's four tiny losses must come back. Stash, arrows and DefaultMedium keep the BitFlow rushers.
   - Falsifiers: s7 zd557 / s6 zd558 t ≤ -1.5 or own overrun drops; tiny/evileye s7 cells must equal zd343 (mechanism); cq223 wins < zdb-1 drops; replica net < 0 or rate score < 0 drops, t ≤ 0 rejects.
+- 14:40 (11-10): **zit registered (RUSH_HUNGRY 150: at war, rushers gather once the bank is under 150); zik chain passed; zio partial block**
+  - Census of zdb's 48 set-3 anchor games (VM /dev/shm/dcx/bankmin.py): 10 of the 20 losses end with a king starving (wallsofparadis A/B, Stash A/B, mincemeat B, externalsustenance A, Merlin FreeTheCheese A, cheesebottles B, whatsthecatdoin A/B). The bank fell under 150 at r300-902 in 8 of them, and before r1100 in only 2 of the 28 wins (mincemeat A, rose A).
+  - Why-tags on #362's cheesebottles loss to Merlin (24092): rushers ('a') were 40% of our rat-turns. Our king never took a hit; both kings starved (r1150, r1189) after the second king formed near r500 with 933 banked. Upkeep is 4/round, income about 3.
+  - zit = zdb + RUSH_HUNGRY 150, ledgered K 9. Its Stash/agrab s117 game replays zdb 773/773 (the switch never fires there).
+  - Gates: screens zd559 (s7) / zd560 (s6), chain cq224 (seed 129: Stash, wallsofparadis, cheesebottles, mincemeat, externalsustenance × agrab/atrap3 × A/B). Falsifiers in attempts.csv, including the rate score.
+  - zik: cq217 finished at 14 of 20 vs zdb 13 (+Stash A atrap3), so falsifier 2 passes. Its screens zd543/zd544 are at the queue head.
+  - zio #362 partial (10 of 16 matches): 30 cells, D 4 (+2 −2), net 0; rate score +0.90 (z +0.74). It won collegejunior tiny B, a rate-0.00 cell, and thunderdome B (0.19); it lost corridorofdoom B (0.67) and mincemeat A (0.55). Replays: VM rp/zio_b1s3a.tgz, zio_b1s3b.tgz.
+  - The zd556 (zir s6) and cq222 (zir chain) info runs were stopped to free the slots.
