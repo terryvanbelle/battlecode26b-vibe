@@ -9502,3 +9502,8 @@
   - zhb's 8 cq187 games before the stop: on keepout it won 4 of 4 to zdb's 2 (flipped atrap3 A and B, both r2000) with transfer up in all four (31.0k/30.3k, 26.7k/25.0k, 30.4k/28.3k, 28.2k/25.3k). On wallsofparadis it was mixed. Its screen losses were all on small maps, where zdb's flat array already allocates.
   - zhd = zdb + RISK_ROWS_AREA 2500. TrapRisk.rows is set once after G.init (ledgered K 9). Where it is false, each of the five checks adds its own 6 counted instructions to G.debt, so small maps should replay zdb exactly.
   - Falsifiers (attempts.csv): zd488 (s7, all maps under 2500 tiles) must be identical to zdb in every cell, as a ledger check; chain cq189 (seed 96, 6 big maps x 2 seats x atrap3/agrab, after cq188): wins below zdb's, transfer under 1.02x, or any overrun.
+- 21:43: **zhc dropped at its screen; zgx 36 of 48 cells alike so far**
+  - zd487 (s7): n 48, D 1, net -1, t -1.00, picks/100 34.18 vs 34.11, 0 overruns. The hold time-limit line (zha/zhc) is closed for now; Stash's wall standoff stays open.
+  - The chain slot was given to zhd first (cq189 started 21:27). cq188's remainder is cancelled.
+  - zgx #335 (23045-23056 against zdb's set-3 anchors): 36 cells, 36 alike, D 0. externalsustenance A vs YokoOno is still lost, so lower floors don't change it. Icarus (mincemeat B target) and Merlin are in the drain. Replays: VM rp/zgx_b1s3a.tgz; 23053-23056 still in /dev/shm.
+  - zd488 (zhd's ledger screen) started 21:43.
