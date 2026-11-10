@@ -9452,3 +9452,7 @@
   - zd482: n 48, D 0, net 0, t 0.00, picks/100 34.10 vs 34.11, 0 overruns. Floors at 150 never bind on the s7 cells.
   - Chain cq185 (cq183's cells, seed 93) queued behind cq184.
   - cq183 final: zgv 14 wins to zdb's 16 (of 20); transfer 208,198 vs 211,013.
+- 19:57: **zgt REJECTED at its first counted replica block (set 3)**
+  - #333, 22932-22935 + 22960-22971 vs zdb's anchors: 48 cells, 47 alike, D 1 (lost Xzibit minimaze B), net -1, t -1.00.
+  - BREAKOUT_TTL left every set-3 loss cell unchanged (Finals keepout/wallsofparadis, Merlin's three, thewaxmango DefaultMedium/tiny, Varun thunderdome, YokoOno Stash).
+  - zdb resubmitted (#334). Replays archived on the VM as zgt_b2s3{a,b,c}.tgz.
