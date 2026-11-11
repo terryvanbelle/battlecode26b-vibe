@@ -10691,3 +10691,14 @@
     grabbable rat of ours; ours had 35. 57 of their grabs came from our blind side.
   - xa8 = xa7 + GRAB_MICRO (12,000-bytecode guard, ends the turn under BC_BAIL). Vs agrab (seed 153) it lost tiny and
     whatsthecatdoin, which xa7 won, and it did not raise our grab share. Replays kept for a closer look.
+- 07:16 (11-11): **xa7 (early multi-king) removed from the x-line: it starves on poor maps**
+  - Seed 155, FreeTheCheese vs agrab and atrap3: xa7 lost all three kings to starvation by r540-568 (transfer 1.7k
+    and 1.3k). cheesebottles vs atrap3 starved at r878. xa6 on the same games reached r2000 with 2 kings (W vs
+    agrab, L 46-53 vs atrap3, transfer 18.7k and 18.3k) and won cheesebottles vs agrab.
+  - Each formation takes 7 babies; with FORM_BABIES 12 and no income gate the second and third kings leave the
+    workforce at about 5 rats.
+  - The points spec counts living kings (score.kings = value % 10) at 0.5 after a backstab. In xa5's set-3 block,
+    FreeTheCheese x3 and cheesebottles B ended 2-2 in kings and lost on cat damage and transfer; 1-3 more kings
+    would flip them. Any extra king has to come from a surplus that survives to r2000 (zfj's third king starved
+    two kings).
+  - xa7's chains continue as the control for xa8 (= xa7 + GRAB_MICRO). Screens zd611/zd612 are dequeued.
