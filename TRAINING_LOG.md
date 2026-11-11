@@ -10614,3 +10614,14 @@
       symmetry, so the skip there probably came from an early mirror guess.
     - arrows, evileye, starvation, tiny, cheesefarm and Stash are unchanged.
   - s6 zd598 is playing.
+- 05:09 (11-11): **zjd rejected: D 0 on its block; its king lived 160-310 rounds longer on DefaultMedium but still died**
+  - #375 against zj3: 36 cells, 36 alike, D 0, t 0.00.
+    - The switch acted in all four DefaultMedium games (final4 and collegejunior, both seats). The king died at
+      r497/r562/r515/r530, where zj3's died at r186/r352/r355/r332. All four were still lost.
+    - EscapeTheNight vs collegejunior changed rounds only and was still won. fullofsecrets and DefaultLarge replayed
+      zj3.
+  - Locally zjd was +11 -2 (s7 +3, chains +8 -2) against agrab, agtr and atrap3. That didn't carry to the field.
+  - zjf (KING_FRONT 20 on every map) passed its registered screen bar: small-map net +1 over s7 and s6.
+    - Submitted as #376 with build/block_zjf.sh: the 12 set-3/4 matches whose small maps hold a home mine under
+      front 20, against zj3's existing anchors.
+    - Its chains cq265/cq266 are 23-23 so far, with no cell changed.
