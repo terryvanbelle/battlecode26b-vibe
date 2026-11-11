@@ -10366,3 +10366,5 @@
   - Chains cq242/cq243 (grab maps, seeds 136/137): zj3 25 of 40 against zdb 18, all six changed cells won, 0 overruns.
   - s7 screen zd575: D 7, net -3, t -1.14, 0 own overruns. That passes the -1.5 bar; s6 zd576 is running.
   - Ledger: chain games match zdb's exactly until r61/r63, where a carried rat is the first difference.
+- 22:21 (11-10): **zj4 (RESCUE_KING_R 5) and zj5 (10), zj3's dose arms, queued**
+  - Chains cq244/cq245 run on zj3's lines; screens zd577-zd580 are queued.
