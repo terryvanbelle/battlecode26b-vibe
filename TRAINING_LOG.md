@@ -10959,3 +10959,41 @@
       within dist2 2 for 50 damage and a 3-round move stun, and a fired rat trap starts the backstab.
     - Our baby traps are gated by RAT_TRAP_MIN_CHEESE 900; floors of 200-500 starved in u0y, u8f and u9j.
   - Replica dumps carry no indicator strings; xd6a-c.tgz (25613-25620, 25645-25649) are on the VM.
+- 15:56 (11-11): **Block #382 at 28 of 32 is even with base rate; the opponent's king walks to its mine where we lose; xe3 (KING_PATH) flips whatsthecatdoin locally**
+  - Block #382 (xd6), 20 matches with match.json (25613-25620, 25645-25656): 39 of 60 shared cells to zj3 #378's
+    42 (+1 -4: lost Finals where_are_you B, Icarus mincemeat A, Xzibit minimaze B, YokoOno externalsustenance B; won
+    YokoOno Stash A) and 39 to xc6 #381's 37. xd6 won Finals attack_on_cat A and B, which xc6 lost. Base-rate sum
+    over the 20 matches +0.20; set-3 cellrate z -0.06 (zj3 +1.84, xc6 +0.13). Replays xd6d.tgz and xd6e.tgz on the VM.
+  - Merlin 0 of 6 again (whatsthecatdoin, FreeTheCheese, cheesebottles; every line is 0 of 9 there).
+    - whatsthecatdoin (25651): our king sat at (3,3) all game, with no mine within dist2 400. It starved at r414
+      (we transferred 128 to Merlin's 1,457). Merlin's king walked from (36,36) to (28,19) by r180, beside the
+      central mine (25,19).
+    - cheesebottles: Merlin's transfers average 72 a trip (2.3 pickups) to our 36 (1.4), on a similar number of trips
+      (195 vs 226); it ends 15.2k to 8.5k.
+    - FreeTheCheese: Merlin's second king formed at (47,27), in the middle mine band, at r480. Their transfers went
+      2,920 to 5,585 in r400-500. Ours formed at (29,55), beside the first king.
+  - Survey over every cached replica dump (kingmove.py, the king's Chebyshev displacement from its start by r300).
+    Where the opponent's king walks and ours does not, we lose:
+    - whatsthecatdoin: us 0.1 vs them 16.2, win 0.12 (Merlin).
+    - wallsofparadis: 0.0 vs 13.8 (Finals' king walked in 14 games; we won 1).
+    - Nofreecheese: 0 vs 13.6, 0.20 (collegejunior).
+    - clockwisdom: 0 vs 10.2, 0.17 (Xzibit).
+    - externalsustenance: 5.2 vs 9.2, 0.12 (YokoOno).
+    - Owner #31's case: their kings go to the mines.
+  - xe3 (xe2 + KING_PATH, KP_FRONT 20; probe km1 vs agrab) won whatsthecatdoin A (r530) and B (r657), which xd6, xe1
+    and xe2 all lost (r848 and r637).
+    - Its king walked by path to (11,20) (A) and (31,19) (B) by r90-180, 3-6 tiles from the central mines. Transfer
+      at r200 was 445 to agrab's 35 (A).
+    - It then stood in 'W' (no allowed downhill step) for 336 turns, apparently refused by xe2's lane test on the
+      cat's band.
+    - xe3 also won cheesebottles A and B there.
+    - kp1 (11 king-path maps): xe3 has won 13 of 14 so far. It lost knifefight B to a r1 rush (km=e0 all game, so
+      the path never ran); the paired xe2 half has not started.
+    - km2 checks whether the king moves on Nofreecheese, clockwisdom, externalsustenance, fullofsecrets and
+      uneruesansfin.
+  - kf3 done: xe2 vs xd6 on bed, closeup, sunandmoon and whatsthecatdoin: +1 (sunandmoon A). xe2's net on kf1's
+    cells was +3.
+  - Screen zd644 (xe1 s6) vs xd6: 44 of 44 each, net 0, 0 overruns.
+  - xe3's s7/s6 screens are queued as zd647/zd648. build/block_xe3.sh (sets 3+4) is ready to go once #382 ends.
+  - Other #382 losses at rate about 0: collegejunior tiny and DefaultMedium. These are throw brawls: on tiny our king
+    took 370 throw and 190 bite damage to 228 and 10 dealt. Finals keepout and wallsofparadis also stay at about 0.
