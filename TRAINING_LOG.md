@@ -10261,3 +10261,10 @@
   - ziu s7 zd561: n 48, D 3 (+evileye B agtr; −DefaultMedium B agtr, −starvation A atrap3), net −1, t −0.57, 0 own overruns. Passes; s6 zd562 is running.
   - zis #364 block 1: 4 matches sent, still queued on the replica (24329-24332).
   - Chain cq231 (seed 131) finished: zdb 13 of 20 over cq229+cq231; zis, ziu, ziv 12 each (within the zdb−1 gate). zis lost DefaultMedium A vs atrap3 at r66 in a king race (atrap3's traps killed 11 of our rats) and three whatsthecatdoin cells.
+- 18:28 (11-10): **zis DROPPED at replica block 1 (net −1); zik submitted (#365)**
+  - zis #364, set 3 (24329-24344 vs 21016-21023 + 21036-21043): 48 cells, 43 alike, D 5, net −1, t −0.45. Rate score +0.12 (z +0.08).
+    - Gained: YokoOno Stash A (rate 0.35, the pocket target) and Merlin whatsthecatdoin B (rate 0.00).
+    - Lost: spsquared rose B (rate 1.00; a 49-50 points loss at r2000, where zdb won 65-34 and the first fight came at r589 instead of r421), Finals where_are_you B (0.87), Icarus mincemeat A (0.55).
+    - The registered falsifier (net < 0) drops it. Replays: VM ~/diag26b/rp/zis_b1s3a.tgz, zis_b1s3b.tgz.
+  - ziw (built on zis) keeps its own gates: its mechanism is the gatherers' mine walk, and its own block decides it.
+  - zik (zdb + KING_WALL_THREAT, all local gates passed) submitted as #365; block_v4s3.sh hit the hourly limit, so all 16 rows wait in the drain.
