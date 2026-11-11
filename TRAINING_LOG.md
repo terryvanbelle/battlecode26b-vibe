@@ -10230,3 +10230,11 @@
     - zdb 14 of 20; zit 14; ziu 15 (+externalsustenance B agrab); ziv 16 (+Stash A agrab and atrap3, −wallsofparadis B atrap3).
   - ziu's second chain cq227 (seed 130, ziu and zdb) runs in cq225's freed slot.
   - Diagnosis, no new candidate: in #362's wallsofparadis loss to Finals (24068) our king never left its corner (3,2), 27 from both home mines, and transferred 1,255 by r700 to Finals' 6,920. Finals' king walked to its mine by r250 and formed kings inside the rings. The king-walk line (zdj/zdl/zdo/zee, KING_FAR) already reached the replica and did not flip wallsofparadis, so it stays closed.
+- 16:34 (11-10): **zis passes s7 (zd557: net −1, t −0.57) with its mechanism clause; seed-130 chains for ziu and ziv; zii half block D 0**
+  - zis s7: n 48, D 3 (+DefaultMedium B agrab; −DefaultMedium B agtr, −arrows A atrap3), 0 own overruns. All 12 tiny/evileye cells are identical to zdb's zd343, so the area gate works. s6 zd558 is playing.
+  - Seed 130 on the same five maps (cq227 ziu with zdb; cq228 ziv):
+    - zdb 12 of 20.
+    - ziu 14: +externalsustenance B agrab, +mincemeat A agrab and atrap3; −externalsustenance A agrab.
+    - ziv 14: +Stash A agrab, +cheesebottles B atrap3, +mincemeat A ×2, +wallsofparadis A atrap3; −cheesebottles A atrap3, −externalsustenance A agrab, −externalsustenance B atrap3.
+  - Two seeds: zdb 26 of 40, zit 14 of 20 (seed 129 only), ziu 29 of 40, ziv 30 of 40. No overruns.
+  - zii #363: the first 8 replica matches (24193-24200: Icarus, Merlin, TSPAARK, Finals) give 24 cells, all alike (D 0); rate score +0.74. The other 8 are in the drain behind the hourly limit. Replays: VM rp/zii_b1s3a.tgz.
