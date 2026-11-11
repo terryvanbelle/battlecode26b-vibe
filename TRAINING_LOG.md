@@ -10506,3 +10506,9 @@
     - Other cells must replay zj3, else drop. The 20x20 cells are judged: net < 0 drops; accept at t >= 2 with
       D >= 4.
     - From zj8's replica games: set 3 +1 (tiny B), set 4 0.
+- 02:17 (11-11): **zjb withdrawn for zjc; two fresh-seed 20x20 chains started (zj3 against zjc)**
+  - zjb's 900-tile fence holds the 30x30 maps that lose. Its s7 zd591 plays on for those cells, as information;
+    s6 zd592 is off the queue.
+  - cq257 (seed 142): gridlock, t_minus_five_minutes, whereisthecheese, bed and UncomfortablyClose.
+  - cq258 (seed 143): tiny, evileye, canyoudig, averyfineline and UncomfortablyClose.
+  - Both play x agrab/atrap3 x A/B. These are information for zjc, not registered falsifiers.
