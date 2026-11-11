@@ -10339,3 +10339,17 @@
     rose fell for zit, ziv and zj0 alike.
   - With nothing else ready, zj2 went to the replica (#369) so it doesn't sit idle. Its screens and chains still bind:
     if either fails, zj2 drops whatever the block shows.
+- 21:49 (11-10): **zj3 = ledgered RESCUE gated to within 7 of our king; RESCUE's trade on set 3 traced**
+  - Every RESCUE build (zie, zih, zil, zio) won thunderdome vs Varun (rates 0.10-0.15) and lost both
+    externalsustenance B vs YokoOno and mincemeat A vs Icarus in 4 of 4. At rates of about 0.6-0.7 that can't be chance.
+    zih's rate score was +1.34 but it netted 0 against the biased anchors.
+  - VM dumps: zih's thunderdome grabs came 2-4 tiles from our king, where Varun rushes it from r3. In ext B (24029)
+    and mincemeat A (24047), the game first left the anchor's path at r28/r59 on a grab in place of a bite, 11-19
+    tiles from our king.
+  - zj3 = zih + RESCUE_KING_R 7: the rescue walk and tryCarry's carrier bonus run only within Chebyshev 7 of our
+    nearest king. Both hooks stay inside zih's ledger windows.
+  - Queued: screens zd575/zd576 and chains cq242/cq243 (thunderdome, ext, mincemeat, tiny, DefaultMedium; zj3 and
+    zdb rows). The chains wait on zj2's.
+  - Method change for new registrations: block 1 is judged on the cellrate score (< 0 drops), not on net against
+    the anchors. The anchors' draw sits about 1.4 cells above the base rates, so ziv, zit and zih all sat at net -1 to 0
+    with positive rate scores. Earlier registrations keep their own clauses.
