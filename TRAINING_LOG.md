@@ -10661,3 +10661,18 @@
     - The anchors' other big loss group is starvation: fullofsecrets 4 of 4, canyoudig B, DefaultLarge A.
   - Screens for xa3 are queued (zd605 s7, zd606 s6). Local mechanism games for xa4 (cheesefarm and DefaultMedium vs
     atrap3) are running.
+- 06:02 (11-11): **zjf rejected (D 0); the x-line tip xa5 (siege waves) is on the replica for a line comparison**
+  - zjf #376: 32 cells, all alike, D 0. KING_FRONT 20 carries on in the x-line (xa1).
+  - zjg chains cq267/cq268: 24 vs zj3's 27 (+2 -5: DefaultMedium B lost twice, knifefight B vs agrab). With s7's +7 -0,
+    the local total is +9 -5. It stays on the x-line.
+  - xa4 (WAR_STRIKE 2) mechanism check vs atrap3 (seed 152): strikers trickled in one at a time. Our rats within 5 of
+    the enemy king rose only from 0-0.8 to 0.5-2.2, and atrap3's rat count grew to 40.
+  - xa5 = xa4 + waves (new, Baby.waveHold, WAVE_P 150 / WAVE_GATHER 100 / WAVE_FRAC 50).
+    - Strikers rally halfway to the enemy king spot for the first 100 rounds of each 150 and charge together, latched.
+    - Locally it had 2.5-3.4 rats at the enemy king in r100-r400. It won DefaultMedium by throwing two kings to death
+      (r786) and won cheesefarm on points (zj3 lost it), with 0 overruns.
+  - xa5 submitted as #377 with build/block_xa5.sh: the full sets 3 and 4, all 8 opponents, both seats (32 matches).
+    - zj3 then plays the same 32 as fresh draws (build/block_zj3_fresh34.sh), so the line is judged on the same
+      window, not the old anchors.
+  - Local: xa5 screens zd607 (s7) and zd608 (s6) are queued behind zd600. Chains cq269/cq270 (DefaultMedium,
+    cheesefarm, fullofsecrets, DefaultLarge, tiny x agrab/atrap3) are running.
