@@ -10224,3 +10224,9 @@
   - zih (+1.34) and zio (+1.28) both score positive on rates and 0 on net. The registered net falsifier is what judges them.
   - zii (ledgered AMMO_AWAY) is on the replica as #363. The block script ran twice; the duplicate Icarus/Merlin queue lines were removed, so the block stays at 16 rows (8 sent, 8 in the drain).
   - VM disk is at 1.7-1.8 GB free after pruning replica replays (227 MB) and deleting the closed chains cq215/cq221/cq222.
+- 16:05 (11-10): **zik passes all local gates; ziu and ziv pass their chains**
+  - zik (ledgered KING_WALL_THREAT): s7 zd543 n 48, D 1, net +1, t +1.00; s6 zd544 n 44, D 0; chain cq217 14 vs 13; 0 own overruns. It goes on the replica after zii.
+  - Seed-129 chains on Stash, wallsofparadis, cheesebottles, mincemeat and externalsustenance × agrab/atrap3 × A/B (scored together with `chsc.py "~/diag26b/cq22[456]"`):
+    - zdb 14 of 20; zit 14; ziu 15 (+externalsustenance B agrab); ziv 16 (+Stash A agrab and atrap3, −wallsofparadis B atrap3).
+  - ziu's second chain cq227 (seed 130, ziu and zdb) runs in cq225's freed slot.
+  - Diagnosis, no new candidate: in #362's wallsofparadis loss to Finals (24068) our king never left its corner (3,2), 27 from both home mines, and transferred 1,255 by r700 to Finals' 6,920. Finals' king walked to its mine by r250 and formed kings inside the rings. The king-walk line (zdj/zdl/zdo/zee, KING_FAR) already reached the replica and did not flip wallsofparadis, so it stays closed.
