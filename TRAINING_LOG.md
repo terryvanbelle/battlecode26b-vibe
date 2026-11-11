@@ -10603,3 +10603,14 @@
     - On sets 1 and 3, zj3 loses all six target cells: DefaultMedium vs final4 and collegejunior, and fullofsecrets
       vs TSPAARK, both seats.
     - Set 2: zj3 won EscapeTheNight in both seats and lost fullofsecrets vs Merlin in both.
+- 04:47 (11-11): **zje dropped (dirtpassageway -2 at seed 145); zjf's s7 +1 on small maps (bed B)**
+  - zje (KING_FRONT 25) chains cq263/cq264: 20 wins to zj3's 22, +0 -2. That is under its bar of 21.
+    - Both losses were dirtpassageway vs atrap3 at seed 145, on points at r2000.
+    - zje's dirtpassageway wins ran to r1225-2000, where zj3's ended r367-639.
+    - peaceinourtime is identical. learn_your_lesson changed in rounds only.
+  - zjf (KING_FRONT 20 on every map) s7 zd597: n 48, D 4, net +4, t +2.07, 0 own overruns.
+    - Its DefaultMedium cells equal zjd's.
+    - Small maps: +bed B vs agrab, plus rounds-only changes in 5 bed cells. bed's mines have front 29 under the true
+      symmetry, so the skip there probably came from an early mirror guess.
+    - arrows, evileye, starvation, tiny, cheesefarm and Stash are unchanged.
+  - s6 zd598 is playing.
