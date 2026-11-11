@@ -10728,3 +10728,11 @@
   - xb4 = xb3 + KING_WALL_THREAT (zgc/zik ported without the ledger): the king's alert ignores enemy babies behind a wall.
     - zgc and zik each won YokoOno Stash A on the replica (rate 0.38); zik's rate score was +1.12.
     - Stash, both seats, seeds 155-158 running.
+- 08:42 (11-11): **xb4 chains 30 to 20 vs zj3, xb5 (CARRY_KING) dropped, xa6 s6 -3; wallsofparadis: scouts crawl**
+  - xb4's chains cq277/cq278 (seeds 153/154, 40 games vs agrab/atrap3) won 30 to zj3's 20 on the same seeds (cq269/cq270), 16 gained and 6 lost. Gains are spread over fullofsecrets (4 of 4 in cq277), DefaultMedium, DefaultLarge and tiny.
+  - xb5 = xb4 + CARRY_KING (an enemy-baby carrier within Chebyshev 6 of the enemy king aims only at the king, else walks to it). Over 6 games vs agrab (seed 160) it landed 48 throw hits on the enemy king, vs xb4's 66 and v1's 63, with 5 of 6 wins either way. mv=Y walks fired 25-152 turns a game, but a carrier walking into the defended king area gets napped itself (DL A r34-35). Dropped; the mechanism is absent.
+  - zd610 (xa6, s6) vs zd576: net -3 (t -1.35) over 44 cells; xa6 was +12 on s7.
+  - wallsofparadis (replica 0.00 in both seats vs Finals). Replays 25067/25068: Finals works the four central mines from the start (about 1,000 cheese each in r0-500) and digs 52-58 times. We dig 20-23 times and work mostly (30,3). Finals has rats at (21,37), (38,22) and (55,5) by r104-105, and on our home mine (30,3) by r101. We reach the inner mines at r140-390.
+  - Locally (xb4 vs atrap3, seed 160) our king knew one mine from r41 to r361 (km=n1). Rat 13388, a scout, made about 3 tiles per 20 rounds. Each SCOUT_FRONTIER search ends at the nearest never-seen tile, which with the vision cone is 2-3 steps away, and the scout stands still for the 3-4 turns of every search (fl= builds every ~5 rounds).
+  - A rusher resolved the symmetry at r69, but the king only did at about r441, because no one walks the mask home. On this map symmetry doesn't limit the gatherers (firstSym is ROT), so it isn't the fix here.
+  - xb6 = xb4 + FRONTIER_MIN 7: the frontier search skips unseen tiles within Chebyshev 7. Mechanism games are running (wallsofparadis vs atrap3; DefaultMedium/DefaultLarge/cheesefarm vs agrab; seed 160).
