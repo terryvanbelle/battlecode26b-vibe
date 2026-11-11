@@ -10844,3 +10844,34 @@
   - Ops: stale screens zd614 (xa9, stopped at 14 of 48) and zd615-zd618 (xb1, xb2) dropped from the queue. Replica
     replays pruned (86 files, ~/diag26b/pruned_1111l.txt) after the block was fetched (xc3_3.tgz, xc3_4.tgz). VM disk
     419 MB free.
+- 13:24 (11-11): **Stash pocket: rusher field restarts (xc7 BF_MOMENTUM), a mirror spot touching our own king (xc8 SYM_KING_GAP), gatherer errand churn (xc9 CHEESE_STICK, xd2 FLOW_PROGRESS + FLOW_REV_FREEZE); xc6 on the replica (#381)**
+  - Replica Stash B vs YokoOno (25400 g1): 20 of ours sat in our walled home pocket (y 0-7) to r75. YokoOno's first four
+    rats walked the row inside their wall east and west, dug the two comb dirt tiles each way and were out by r18-23;
+    all 25 were out by r100.
+  - Local probe xbfdbg (xc6 + bf= indicator), Stash B vs araid seed 180: 12 rushers left the pocket r86-205. Each
+    restarted its BitFlow field 2-5 times on wall it had not seen, waited 43-108 turns off-field for rebuilds (~3 waves a
+    turn) and meanwhile walked greedy back toward the target's column (11966: east to (18,6), back to (14,5); west to
+    (9,6), back to (13,4)).
+  - xc7 BF_MOMENTUM: during a rebuild the rusher walks on in its last field step's heading. Rushers out r49-75 on 4
+    seeds/opponents, median lag from birth 47-50 (xc6 110-119); 4 of 4 won as xc6.
+  - xc8 SYM_KING_GAP (exists, off since u1f): the horizontal flip's enemy-king spot (14,3) touches our king (15,3);
+    rushers walked to it r4-22. With it: rusher lag 33-43.
+  - Gatherers born r0-99 left the pocket a median 70-110 rounds after birth. In the pocket r25-150, 60% of their turns
+    had a flow search building and 30% a path ready. Each game they dropped a ready path for another errand 65-84 times
+    (Flow.ends[4]) and dropped one for a newly seen wall 8-13 times. Reverse searches take 10-12+ turns there, so cheese
+    chases (stall > 12) and mine errands (> 25) ended around the time their paths came ready.
+  - Our cheese picked by r100 on the same 4 seeds:
+
+    | bot | r100 pickups |
+    |---|---|
+    | xc6 | 440 / 460 / 240 |
+    | xc8 | 860 / 910 / 400 |
+    | xc9 (+ CHEESE_STICK, z1o port) | 920 / 970 / 640 / 1014 |
+    | xd2 (+ FLOW_PROGRESS + FLOW_REV_FREEZE) | 1180 / 1200 / 980 / 1140 |
+
+  - xd1 (momentum for Flow errands) lowered r150 pickups in 3 of 3 seeds vs xc9 (the wall drops it targets are rare).
+    Dropped.
+  - xc6: screens zd631 +17 (t +4.67) and zd632 -1 (t -0.57) vs zj3, net 0 vs xc5 in both. Chains cq287/cq288 28 of 40
+    (xc5 29, zj3 20). Replica block #381 (sets 3+4) submitted 13:10.
+  - Next: xd2 screens zd635/zd636 are queued. Pocket-map probes are running on averystrangespace, mincemeat,
+    externalsustenance and whatsthecatdoin vs agrab, xc6 vs xd2.
