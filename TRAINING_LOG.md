@@ -10676,3 +10676,18 @@
       window, not the old anchors.
   - Local: xa5 screens zd607 (s7) and zd608 (s6) are queued behind zd600. Chains cq269/cq270 (DefaultMedium,
     cheesefarm, fullofsecrets, DefaultLarge, tiny x agrab/atrap3) are running.
+- 06:53 (11-11): **x-line: xa5 is +17 -4 in chains and +7 on s7; xa6 overruns fixed; xa7 (multi-king) queued**
+  - xa5 (waves) locally: chains cq269/cq270 33 wins to zj3's 20 (+17 -4: DefaultMedium, cheesefarm, fullofsecrets,
+    DefaultLarge). s7 zd607 35 to 28 (D 19, t +1.63), 0 overruns, picks z +2.39.
+  - xa5 on the replica, set 3 (25065-25080): 26 of 48, rate score -1.18 (sd 1.53, z -0.77). Merlin 0 of 6,
+    collegejunior 1 of 6. Set 4 is half sent (hourly limit).
+  - xa6 and xa7 overran on superioristhmus vs agrab (2-3 rat turns at 17,501). Flow/KPath/BitFlow.left(), Seal and
+    six inline budget checks add G.debt to the real bytecodes left, and xa2's trail ledgers credit every rat turn.
+    On the x-line those reads now use the real count; the rerun had 0 overruns (max 17,049).
+  - xa7 = xa6 + FORM_BABIES 12, FORM_MAX 3, no income gate. It formed 2 kings vs atrap3 on DefaultLarge and
+    cheesefarm (both won). Screens zd611/zd612 are queued behind xa6's zd609/zd610.
+  - Merlin on whatsthecatdoin (25079, battle_report + scratch gopp.py): we starve by r322. They grabbed 104 of ours
+    (89 thrown point-blank, 33 deaths on landing), and we grabbed 46. Their rats had 131 turns starting next to a
+    grabbable rat of ours; ours had 35. 57 of their grabs came from our blind side.
+  - xa8 = xa7 + GRAB_MICRO (12,000-bytecode guard, ends the turn under BC_BAIL). Vs agrab (seed 153) it lost tiny and
+    whatsthecatdoin, which xa7 won, and it did not raise our grab share. Replays kept for a closer look.
