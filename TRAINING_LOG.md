@@ -10474,3 +10474,8 @@
     too (s7 tiny, evileye, bed; cq255 so far +tiny A, +evileye B).
   - Replica games are deterministic, so zj8's games predict zjb's (zj3's games on big maps, zj8's on small):
     - Set 3: +tiny B. Set 4: -arrows B, because arrows is 30x30 = 900 tiles, inside zjb's fence.
+- 01:53 (11-11): **zj8's last set-4 match changed nothing (48 cells, D 3, net -3); zja submitted (#372)**
+  - zja (zj8 + RESCUE_D2 18) passed its chain, 26 of 40. Its set-3 block 1 is queued: 8 sent, 8 in the drain.
+    It is judged on the cellrate score minus zj3's (+3.14).
+  - zjb (fenced to 900 tiles or fewer) stays local. On zj8's replica games it would score +1 on set 3 and -1 on
+    set 4.
