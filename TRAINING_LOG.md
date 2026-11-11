@@ -10368,3 +10368,11 @@
   - Ledger: chain games match zdb's exactly until r61/r63, where a carried rat is the first difference.
 - 22:21 (11-10): **zj4 (RESCUE_KING_R 5) and zj5 (10), zj3's dose arms, queued**
   - Chains cq244/cq245 run on zj3's lines; screens zd577-zd580 are queued.
+- 22:51 (11-10): **zj3 passes all local gates; zj6 (RESCUE_WEAK) queued; zj3's block at 12 of 16**
+  - zj3 s6 (zd576): n 44, D 6, net +4, t +1.67, 0 own overruns.
+  - Replica block 1 at 12 of 16: D 2, net +2, rate score +2.91 (z +2.12). Xzibit and collegejunior were unchanged.
+  - Dose arms zj4 (R 5) and zj5 (R 10) each won 23 of 40 on zj3's chain lines (zj3 25, zdb 18). Their screens are
+    queued.
+  - zj6 = zj3 + RESCUE_WEAK: a rescue whose carrier is weaker than us grabs from any adjacent tile, not only from its
+    blind side. Ledgered (K 11). Chain cq246 and screens zd581/zd582 are queued.
+  - Breadth chain cq247 runs zj3 against zdb on rose, Stash, corridorofdoom, cheesebottles and whatsthecatdoin.
