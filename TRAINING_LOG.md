@@ -10593,3 +10593,13 @@
     block goes in after them.
   - zjf (KING_FRONT 20 on every map, the small-map arm) has screens zd597/zd598 queued. zje's chains cq263/cq264 are
     running.
+- 04:27 (11-11): **zjd submitted (#375) with its 12-match block; screens pass; mechanism checked locally**
+  - s6 zd596: n 44, D 0, 0 own overruns. Every cell off DefaultMedium equals zd576.
+  - Local DefaultMedium vs agtr (seed 1, an s7 cell):
+    - zj3's king walked toward the centre mine and died at r139.
+    - zjd's king skipped it for the (34,24) mine (front 36), kept 302 hp and won at r782.
+  - zj3's anchors for zjd's block, all in hand:
+    - Sets 3/4: the existing anchors. Set 1: 24915-24916 and 24919-24920. Set 2: 24943-24946.
+    - On sets 1 and 3, zj3 loses all six target cells: DefaultMedium vs final4 and collegejunior, and fullofsecrets
+      vs TSPAARK, both seats.
+    - Set 2: zj3 won EscapeTheNight in both seats and lost fullofsecrets vs Merlin in both.
