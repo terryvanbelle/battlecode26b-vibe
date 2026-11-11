@@ -804,7 +804,12 @@ public final class Cfg {
      *  (Chebyshev) from the rat, not the nearest one (0 = off). With the vision cone the nearest unseen tile is 2-3
      *  steps away, so xb4's scouts searched every few steps and stood still 3-4 turns a search: on wallsofparadis
      *  a scout made ~3 tiles per 20 rounds and the king knew one mine from r41 to r361. */
-    public static final int FRONTIER_MIN = 7;
+    public static final int FRONTIER_MIN = 0;
+    /** xb6 (explore line): scouts walk to a random never-seen tile of our half first (exploreHome, zj3's scouting) and
+     *  take the frontier search only when the samples find none (what is left unseen is buried). xb4's frontier-first
+     *  scouts left the king knowing one mine to r300+ on wallsofparadis (seed 160, both seats; zj3 and xb4 without
+     *  SCOUT_FRONTIER: 2-5). FRONTIER_MIN 7 made each search take 9-15 turns and did not help. */
+    public static final boolean FRONTIER_LAST = true;
     /** xa6: extra Flow reserve on a newborn's first turn while SCOUT_FRONTIER is on (RobotPlayer). */
     public static final int FRONTIER_PAD = 1500;
     public static final int SCOUT_MINES = 4, SCOUT_MINES_UNTIL = 600;

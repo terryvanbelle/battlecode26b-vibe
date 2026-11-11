@@ -1342,11 +1342,12 @@ public final class Baby {
                 Nav.goTo(k); why = 's'; return;
             }
             why = 'S';
+            if (Cfg.FRONTIER_LAST && exploreHome()) return;
             Flow.frontMin = Cfg.FRONTIER_MIN;
             boolean ef = Cfg.SCOUT_FRONTIER && exploreFrontier();
             Flow.frontMin = 0;
             if (ef) return;
-            if (!exploreHome()) explore();
+            if (Cfg.FRONTIER_LAST || !exploreHome()) explore();
             return;
         }
         if (role == GATHER && G.round < seekUntil && seek()) { why = 'x'; return; }
