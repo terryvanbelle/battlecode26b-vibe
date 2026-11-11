@@ -10702,3 +10702,29 @@
     would flip them. Any extra king has to come from a surplus that survives to r2000 (zfj's third king starved
     two kings).
   - xa7's chains continue as the control for xa8 (= xa7 + GRAB_MICRO). Screens zd611/zd612 are dequeued.
+- 08:05 (11-11): **x-line: xa6 +12 on s7; xa5 61/96 on replica sets 3+4; zj3 fresh block #378 queued; xb2-xb4 target the Stash pocket**
+  - xa6 s7 screen zd609 vs zj3 (zd575): n 48, D 12, net +12, t +3.96, 0 overruns; picks/100 42.0 vs 34.7.
+    - Chains (cq269/cq270 controls, 40 paired each): xa7 35 wins to zj3's 20 (+17 -2); xa8 34 to 20 (+17 -3).
+    - xa8 vs xa7: 34 to 35 (+4 -5), so GRAB_MICRO alone moves nothing in the chains.
+  - xa5 replica block #377 done: set 3 26/48, set 4 35/48, 61/96.
+    - Losses by opponent: Merlin 9 of 12, Finals 7, collegejunior 7, YokoOno 5, Varun 3, Icarus 2, Xzibit 2, TSPAARK 0.
+    - Replays: VM ~/diag26b/rp/xa5_{a,b,c,d}.tgz.
+  - zj3 resubmitted as #378; build/block_zj3_fresh34.sh queued the same 32 matches as same-window controls (8 sent, 24 in the drain).
+  - Merlin DefaultLarge A/B (25140/25141, lost r149/r275): no bites on our king.
+    - Damage came from cat scratches (280/60) and our own rats thrown into it (270/210).
+    - scratch kthrow.py: Merlin grabs our rats 2-4 tiles from our king, carries them 2-5 rounds, then throws them point-blank from Chebyshev 3.
+  - xb2 = xb1 + WALL_BLIND: babies drop enemies behind a wall (a 3-ray line check) from nearestEnemy and prey.
+    - Stash seat B vs atrap3, seeds 156-158: 2 of 3 wins to xb1's 1, pickups 313/679/184 vs 31/319/84.
+    - Seed 158 rats stuck in the pocket at r250: 7 vs 14. Seed 156 stayed stuck in both.
+    - Screens zd617 (s7) and zd618 (s6) queued; chains cq275/cq276 (xb2 on cq271/cq272's specs) running.
+  - Seed 156 diagnosis: 7 rushers sat at (12-16, 3-6) under the pocket wall.
+    - Each Flow search toward the enemy-king spot took 35-57 turns (fl= lastTurns), and each rusher ran 5 builds by r200.
+  - xb3 = xb2 + RUSH_BFLOW (zis ported without the ledger): rushers walk by BitFlow distance fields.
+    - zis was dropped at net -1 on chaotic cells, after its mechanism had shown: Stash exits by r100 11 -> 21, +YokoOno Stash A.
+    - The first port overran 9-23 times a game, because the sense loop marked every tile in view (~4k bytecodes a turn) and BitFlow.work had only FLOW_RESERVE.
+    - Fixed: only wall and dirt tiles are marked, Sym.record clears dug ones, and BitFlow.work gets FRONTIER_PAD too.
+    - Stash seat B seeds 155-158: 4 of 4 wins (first win on 156), pickups 345-478. 1 overrun left (17508 on seed 157).
+    - Seat A seeds 157/158: both lost. At r200, 19 of our babies held in the pocket answering the king's alert ('w') while 4 atrap3 attackers stood at y 21 outside the wall.
+  - xb4 = xb3 + KING_WALL_THREAT (zgc/zik ported without the ledger): the king's alert ignores enemy babies behind a wall.
+    - zgc and zik each won YokoOno Stash A on the replica (rate 0.38); zik's rate score was +1.12.
+    - Stash, both seats, seeds 155-158 running.
