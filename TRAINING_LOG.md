@@ -10451,3 +10451,10 @@
   - Screens zd591/zd592 are queued and chain cq254 is running.
     - Falsifier 1: every big-map chain cell must equal zj3's result and round count.
     - The other falsifiers are in attempts.csv.
+- 01:21 (11-11): **zja chain 26 vs zj3's 25 (passes); zj8 block 2 sent; small-map chain cq255 started**
+  - cq253 (zja on zj3's cq242/cq243 lines): 26 of 40, 0 overruns, D 8 (+3 -5 on cells, but net +1 in games).
+    - Lost DefaultMedium A to both opponents, as zj8 lost DefaultMedium on the s7 screen.
+  - The drain sent zj8's 12 set-4 rows at 01:13.
+  - cq255 (fresh seed 140) plays tiny, evileye, bed, arrows and Stash x agrab/atrap3 x A/B for zj3 and zj8.
+    - It checks zj8's small-map effect on new seeds.
+    - If zjb's ledger holds, zjb plays zj8's games on these maps, so this chain covers zjb too.
