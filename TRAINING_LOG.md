@@ -10788,3 +10788,31 @@
     25313: attackers deep on the enemy side held 2-3k raw cheese from r750 while the king starved (r1095).
   - Ops: replica replays pruned twice (53 + 145 files; ~/diag26b/pruned_1111j.txt, pruned_1111k.txt) after the xb8
     block was fetched (xb8_1..4.tgz).
+- 11:54 (11-11): **WAR_STRIKE costs cat defence: xc5 drops it; TheHeist A regressed between xa5 and xb8; Finals' trap melee**
+  - attack_on_cat vs atrap3 (ac1/ac2: seeds 170-172, both seats): every game ends with a cat scratching a king to
+    death. xc3 won 3 of 6 (cat damage 10.7k), xc3 without strikers (xwsoff) 4 of 6 (20.4k), zj3 5 of 6 (21.6k). In
+    xc3 B 172 our rats bit the cat 0 times. The 5-6 fighters that turn striker at war start (r127-164) die at the
+    trapper's king by r250 (A 14 to 1). When the cat reaches our king at r450-500, 4 fighters are left and 2.6 rats
+    are within 6 tiles; zj3 has 13.8 and kills the cat.
+  - xb8's replica block against zj3 fresh, 70 shared cells: cat damage 219k vs 259k, cat bites 13.3k vs 16.9k, damage
+    to enemy kings 10.2k vs 10.9k. The cat finished the enemy king 3 times to zj3's 11. So the strikers buy no king
+    damage. On rift vs atrap3 (2000-round points games) cat bites: xc3 469-583, zj3 744-839, xwsoff 746, the only win.
+  - xc4 (strikers convert only after 100 rounds with no cat seen) went 1 of 6 on attack_on_cat. B 170/172 replayed
+    xc3 exactly: no cat is in sight at war start, so the gate never acted. Dropped. xc5 = xc3 + WAR_STRIKE 0, with
+    screens zd629/zd630 and chains cq285/cq286.
+  - xc3's first 8 replica matches (25395-25402) against zj3 fresh on the same 24 cells: 14 to 17. Lost TheHeist A,
+    rose A, rift B (TSPAARK; xb8 lost all three too) and externalsustenance B; gained Stash A.
+  - TheHeist A: zj3 (24802, 25173) and xa5 (25065) all won at r588, the same game. xb8 (25313) and xc3 (25395) lost at
+    r396-400 with an identical 660 transfer. zj3's rats harvest the corridor mines at y=14 (2.9k in r400-500) and
+    TSPAARK picks 11-12 a band. Against xc3 TSPAARK works its own corridor (48 and 42 pickups a band), delivers 1.66k
+    in r300-400, and both cats die at r400. The break lies in xa6..xb8 (harvest bundle, GRAB_MICRO, FORM_FROM,
+    WALL_BLIND, RUSH_BFLOW, KING_WALL_THREAT, WALL_BLIND_CAP). Not yet bisected.
+  - Finals wallsofparadis (lost by every build): Finals lays traps as a melee weapon. A rat puts a trap on the tile
+    in front of our approaching rat, and it fires for 50 damage. 48,25 was laid at r58, r59 and r61 and fired each
+    time. They have only 1-4 live traps at a time. Our bank is under the 900 trap floor from r150 (870, then
+    300-500), so we laid 12 to their 64. They pick 7.9k at the four mines inside the rings to our 1.7k, and dig 56
+    tiles to our 16. On keepout, 373 trap hits killed 109 of our rats.
+  - Screens: xb9 s6 zd624 -2 (t -1.00, 0 overruns). xc3 s7 zd627 +19 (t +5.55, 47 of 48, 0 overruns). xc3 chains
+    cq283/cq284: 33 of 40 (xb7 35, zj3 20; xc3 lost fullofsecrets A three times).
+  - Ops: VM root disk 318 MB, then 527 MB after runs finished. Replica storage holds only about 40 MB, so pruning
+    can't free much. journalctl vacuum freed 0. The rest is protected (rp archives, build/dumpcache, chain dirs).
