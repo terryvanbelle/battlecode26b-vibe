@@ -10417,3 +10417,11 @@
   - zj9: zio (RESCUE_BLOCK, unfenced) won collegejunior tiny B, a rate-0.00 cell, so the switch now gets a run inside
     the fence. Screens zd587/zd588 and chain cq251 are queued.
   - VM replica replays older than 10 h were pruned (350 files, ~/diag26b/pruned_1111c.txt): VM disk 935 MB to 1.4 GB.
+- 00:40 (11-11): **zj8 block 1 vs zj3: +collegejunior tiny B (rate 0.04), -corridorofdoom B; net 0. Block 2 queued**
+  - #371 on set 3 against zj3's block 1: D 2, net 0. tiny B is the second fenced/unfenced rescue-widening build to win
+    that rate-0 cell; zio also won it.
+  - The rate score (+3.03) clears its registered bar, but it is inflated: rates come from zdb-era builds, so every
+    zj3 derivative inherits zj3's thunderdome +2. zj3 itself scores +3.14.
+    - New rule for registrations from now on: score candidate minus zj3 on the same set (< 0 drops).
+    - Earlier registrations keep their clauses, so zj8 goes on to block 2 (set 4; pooled t <= 1 vs zj3 rejects).
+  - s7 zd584 (zj8 vs zj3) at 26 of 48: D 6, net +2.
