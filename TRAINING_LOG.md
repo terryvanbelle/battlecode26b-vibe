@@ -10241,3 +10241,7 @@
 - 16:45 (11-10): **Chains cq229 (ziv and zdb, seed 131: arrows, DefaultMedium, whatsthecatdoin, FreeTheCheese, keepout) and cq230 (zis rows, seed 129, against cq224) started**
   - Correction to zit's registration: attackers do pick up cheese after moving (Baby.java line 564; ATK_CARRY caps it), so "rushers never pick up cheese" is wrong. A rusher demoted by RUSH_HUNGRY also carries what it holds home as a gatherer. The switch and its falsifiers are unchanged.
   - thunderdome vs Varun (anchor 21022 A): our king's 600 HP went to 41 bites (406) from 23 different enemy rats over r115-436, plus 5 enemy throws into it (194). Our babies within Chebyshev 3 averaged 12.8 at bite rounds to their 3.6. This is the rescue/defense line (zie, zih and zio gained thunderdome); nothing new built from it.
+- 17:03 (11-10): **zii PASSES replica block 1 (#363, set 3: D 1, net +1, t +1.00; rate score +2.22, z +1.44); block 2 on set 4 queued**
+  - 48 cells, 47 alike. The one change is a gain: Varun thunderdome A (rate 0.14), the cell AMMO_AWAY's ledger census pointed at (wounded babies near the king step away from healthier enemies). No losses. Replays: VM rp/zii_b1s3a.tgz, zii_b1s3b.tgz.
+  - Block 2: set 4 against zdb's anchors 20817-20824, 20842-20845, 20848-20851 (12 sent, 4 in the drain). Block 2 rejects at pooled t ≤ 1. Accept needs pooled t ≥ 2 with D ≥ 4.
+  - Chains: cq229 (seed 131) ziv 6 of 12 vs zdb 8 of 12 so far. cq230 (zis rows, seed 129) 9 of 12.
