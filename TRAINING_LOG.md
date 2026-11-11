@@ -10479,3 +10479,14 @@
     It is judged on the cellrate score minus zj3's (+3.14).
   - zjb (fenced to 900 tiles or fewer) stays local. On zj8's replica games it would score +1 on set 3 and -1 on
     set 4.
+- 02:05 (11-11): **zja passes s7 (net +4); zj8's s6 is cell-for-cell zj3's; VM replica pruned**
+  - zd589 (zja vs zj3, s7): n 48, D 10, net +4, t +1.27, 0 own overruns.
+  - zd586 (zj8 vs zj3, s6, recorded after the rejection): n 44, D 0, 0 own overruns.
+  - Merlin DefaultLarge, lost in both set-4 seats (r187 and r291): our king starves, with no bite on it.
+    - We spend the bank on replacements (1,900 at r20, 885 at r40, 0 by r180) while 27-39 of our rats die on
+      throw landings.
+    - Merlin grabs 92-113 of ours a game. Our rat was weaker than the grabber in 71-78 of those, and
+      weaker but watching it in 46-50.
+    - u1n (wounded rats keep 2 away from enemy babies) tried that lever before and was rejected. Nothing built.
+  - VM disk was down to 867 MB. 452 replica replays older than 4 h (602 MB) were pruned, listed in
+    ~/diag26b/pruned_1111d.txt. Disk is now 1.5 GB.
