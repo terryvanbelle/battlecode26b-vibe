@@ -134,3 +134,11 @@ You just wasted two hours sitting there when you could have been doing something
 ## 29. 2026-11-06 05:41 PST
 
 I'd like you to re-read the top-level documents in the battlecode-vibe repository, making sure to filter out anything associated with 2026
+
+## 30. 2026-11-11 05:39 PST
+
+I think you might be stuck because you're too afraid to make a mistake, and so you're stuck at a local maximum.  What can we do to change that?  My recommendation would be for you to look for ideas that seem like good ideas, even if they don't pan out in the panel evaluation.  I'm open to ideas from you as well.  It's OK with me if you get worse, if by getting worse you get to a state where you can potentially get better than you are currently
+
+## 31. 2026-11-11 05:45 PST
+
+High level idea:  If one or more opponents uses a very effective tactic against us, then it's worth some short-term pain to learn how to use that tactic ourselves.  I'd be OK if you temporarily got worse in the process of learning it.

@@ -10642,3 +10642,22 @@
   - Screens zd599 (s7) and zd600 (s6) are queued. Chains cq267/cq268 are running (DefaultMedium, tiny,
     FreeTheCheese, cheesefarm, knifefight x agrab/atrap3).
   - VM prune: 132 replica replays older than 2 h (~179 MB), listed in pruned_1111f.txt. VM disk is 957 MB free.
+- 05:49 (11-11): **New method: an explore line (x-line), after owner prompts #30 and #31**
+  - From 11-08 to now, about 170 attempts gave 2 accepts (zdb, zj3), almost all one-constant tweaks. The ledger, the
+    "other cells must equal zj3" rule and lucky anchors only let surgical changes through.
+  - The x-line stacks ideas whose mechanism shows in dumps and that aren't clearly worse locally. It has no ledger
+    and no cell-equality rule. The whole line is judged against zj3 with same-window replica draws.
+  - zjg s7 zd599: n 47, +7 -0 (DefaultMedium A/B, bed B, evileye A/B vs agrab ...), t +2.84, 0 own overruns.
+  - x-line so far:
+    - xa1 = zjg + KING_FRONT 20.
+    - xa2 = + zgj's delivery trail and ATK_STUCK (pooled +8 -5 over two blocks; it fixed fullofsecrets transfer).
+    - xa3 = + AMMO_AWAY.
+    - xa4 = + WAR_STRIKE 2.
+  - Evidence for the last two, from the zj3-era anchor replays (scratch tac.py, near.py, kstat.py on the VM):
+    - collegejunior and Merlin hit our king 116 times (4,450 hp) by throwing our own rats, grabbed at Chebyshev 2-5
+      of it. We hit theirs 76 times, mostly on small maps.
+    - On cheesefarm (24945) and DefaultMedium (24988) they keep 2-10 rats within 5 of our king from r300. We keep
+      about 7 of ours parked beside our own king (their ammo) and 0.0 near theirs.
+    - The anchors' other big loss group is starvation: fullofsecrets 4 of 4, canyoudig B, DefaultLarge A.
+  - Screens for xa3 are queued (zd605 s7, zd606 s6). Local mechanism games for xa4 (cheesefarm and DefaultMedium vs
+    atrap3) are running.
