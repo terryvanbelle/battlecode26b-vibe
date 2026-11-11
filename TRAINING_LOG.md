@@ -10387,3 +10387,21 @@
   - Breadth chain cq247 so far: zj3 9 of 14, zdb 6 of 12.
   - VM disk was at 1.1 GB with the chains writing. Replica replays older than 15 h were pruned (143 files, listed in
     ~/diag26b/pruned_1111b.txt), bringing it to 1.3 GB.
+- 00:08 (11-11): **zj3 ACCEPTED over zdb (replica #370, pooled D 4, +4 -0, t 2.00)**
+  - zj3 = zdb + ledgered RESCUE + RESCUE_KING_R 7. Rats within Chebyshev 7 of our king grab an enemy carrying one of
+    ours.
+  - Block 1 (set 3): D 2, +thunderdome A and B vs Varun (rates 0.14/0.17), t 1.41, rate score +3.14.
+  - Block 2 (set 4, 24606-24617 and 24632-24635), against the twin zez with --crown (37 cells replay the crown): D 2,
+    +Icarus tiny A and +Varun arrows B, t 1.41. Against the crown alone, all 48 cells were alike.
+  - New controls for zj3 candidates:
+    - Screens: s7 zd575 and s6 zd576 (`sed s#bots/zj3\b#bots/NEW#g`; `screen_t.py zd575 zj3 zdN NEW`).
+    - Chains: zj3's rows in cq242/cq243.
+    - Replica anchors: set 3 = 24546-24553, 24572-24575, 24587-24590; set 4 = 24606-24617, 24632-24635. Both are
+      crowning draws, so blocks are also scored on the cellrate rate score.
+  - The dose arms zj4 (R 5) and zj5 (R 10) won 23 of 40 on zj3's chain lines against zj3's 25. They are withdrawn, and
+    zj5's s6 screen was taken out of the queue.
+  - Progress refresh: the replica-matches step timed out (600 s), so those progress/ files are stale. Everything else
+    was refreshed and build/vmruns deleted.
+  - Laptop root disk hit 0 MB during the refresh. Packing git's 1,550 loose objects (95 MB) into a 2 MB pack and
+    deleting build/vmruns brought it back to about 112 MB. ~/.claude holds 2.5 GB, including 738 MB of this project's
+    session transcripts; the owner should decide about those.
