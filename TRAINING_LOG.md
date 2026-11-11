@@ -10512,3 +10512,16 @@
   - cq257 (seed 142): gridlock, t_minus_five_minutes, whereisthecheese, bed and UncomfortablyClose.
   - cq258 (seed 143): tiny, evileye, canyoudig, averyfineline and UncomfortablyClose.
   - Both play x agrab/atrap3 x A/B. These are information for zjc, not registered falsifiers.
+- 02:38 (11-11): **zja dropped at replica block 1 (D 1: -thunderdome A vs Varun; rate score 1.18 under zj3's)**
+  - #372 on set 3: 48 cells, 47 alike. The one change was thunderdome A, one of the two cells zj3's rescue first
+    gained. zj8's tiny B gain did not repeat. Net -1, t -1.00, rate score +1.96 against zj3's +3.14.
+  - Locally zja looked better than zj3 (s7 +4, s6 +1, chain 26 vs 25). Like zj8, its local edge didn't carry to
+    the replica.
+  - The fresh-seed 20x20 chains are in: zjc against zj3, seeds 142/143, 6 gains and 6 losses.
+    - All four tiny cells were gained. Other 20x20 maps: -3 +1 on UncomfortablyClose, -1 each on bed, canyoudig
+      and evileye, +1 on averyfineline.
+    - Tiny across every run: 10 gains, 1 loss. Other 20x20 maps: 9 gains, 7 losses.
+    - Tiny's kings are 5 apart (kingDist2 25). knifefight's are too, and zj8 lost knifefight B on the replica, so
+      king distance doesn't explain it.
+  - zjb's s6 zd592 started before it was dequeued, so it was stopped after 20 minutes (killed by pid). zjc's s7
+    zd593 is running.
