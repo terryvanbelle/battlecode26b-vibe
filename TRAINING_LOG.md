@@ -10438,3 +10438,16 @@
   - zis (BitFlow rushers, dropped 11-10) won Merlin whatsthecatdoin B (rate 0.00), so I checked whether it could be
     fenced. All five of its changed cells diverge from zdb's games at r17-r68, and map size doesn't separate its
     wins from its losses (Stash 30x30 won, mincemeat 31x31 lost). No fence was found.
+- 01:11 (11-11): **zjb = zj8's rescue widening fenced to maps of at most 900 tiles; zj8's s7 screen final +6**
+  - zd584 (zj8 vs zj3, s7) finished: n 48, D 10, net +6, t +1.95, 0 own overruns.
+  - zj8's gains sit on 20x20 maps: tiny twice, evileye twice and bed, plus tiny B on the replica. Its losses are on
+    DefaultMedium (45x45) and on the replica's corridorofdoom B (20x60), which first diverged at r135 on a
+    rescue grab.
+  - zjb uses zj8's RESCUE_D2 13 + RESCUE_WALK on maps of 900 tiles or fewer. On bigger maps it keeps zj3's rescue
+    exactly.
+    - The flag is set inside zj3's war-setup ledger window.
+    - The walk branch carries its own debt: +6 over zj3 on big maps and +3 over zj8 on small ones, checked with
+      javap.
+  - Screens zd591/zd592 are queued and chain cq254 is running.
+    - Falsifier 1: every big-map chain cell must equal zj3's result and round count.
+    - The other falsifiers are in attempts.csv.
