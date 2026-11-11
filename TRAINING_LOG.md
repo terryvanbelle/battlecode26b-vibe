@@ -10490,3 +10490,19 @@
     - u1n (wounded rats keep 2 away from enemy babies) tried that lever before and was rejected. Nothing built.
   - VM disk was down to 867 MB. 452 replica replays older than 4 h (602 MB) were pruned, listed in
     ~/diag26b/pruned_1111d.txt. Disk is now 1.5 GB.
+- 02:17 (11-11): **Small-map chains: zj8's gains are on 20x20 maps, and 30x30 maps lose. zjc = fence at 400 tiles**
+  - cq255 (seed 140) and cq256 (seed 141), zj8 against zj3:
+    - 20x20 maps: +evileye B, +tiny A, +UncomfortablyClose B, +averyfineline A, +canyoudig A; -UncomfortablyClose A.
+    - 30x30 maps: +arrows B; -DefaultSmall B, -dirtfulcat A and B.
+  - All of zj8's local 20x20 games against zj3: 13 gains, 2 losses (s7 +5 -0, cq254 tiny +2 -1, cq255 +2,
+    cq256 +4 -1).
+  - zjc = zjb with RESCUE_WIDE_AREA 400. It runs zjb's verified ledger code with only the constant changed.
+  - Its screens are predicted exactly, because local games replay: s7 zd593 = zj3's zd575 with zj8's five 20x20
+    gains, and s6 zd594 = zd576. Any other cell is a ledger failure and drops zjc.
+  - Replica plan, registered before any game:
+    - Only the 22 panel matches that contain a 20x20 map: 3 opponents on set 1, 2 on set 2, 2 on set 3 and 4 on
+      set 4, both seats.
+    - zj3 plays the 10 set-1/2 matches as anchors.
+    - Other cells must replay zj3, else drop. The 20x20 cells are judged: net < 0 drops; accept at t >= 2 with
+      D >= 4.
+    - From zj8's replica games: set 3 +1 (tiny B), set 4 0.
