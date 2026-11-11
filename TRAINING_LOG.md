@@ -10907,7 +10907,7 @@
     fired on tiny or knifefight because symmetry was still unresolved there; uneasy_alliance was unchanged.
   - Knifefight B vs agrab reproduces locally. Turning GRAB_MICRO off flips it, but the wider ablation probe is
     chaotic, so GRAB_MICRO stays.
-  - xd6 screens: zd639 (s7) 44 vs xc6 45, with 1 own overrun (5t4rv4t10n B vs agrab s1, a won game, the same overrun
+  - xd6 screens: zd639 (s7) 44 vs xc6 45, with 1 own overrun (starvation B vs agrab s1, a won game, the same overrun
     as xd3). zd640 (s6) 48/48, 44 vs 42 on shared cells, 0 overruns. xd6 submitted as replica block #382.
   - Cat king deaths (t_minus_five A 25465/25588, attack_on_cat B 25432/25541; zj3's kings lived).
     - 25588 g2: at r243 the king fled a cat from its mine (2,6) into the corner (1,7), with the map edge to the west
