@@ -10583,3 +10583,13 @@
     learn_your_lesson are queued.
   - VM disk was at 1006 MB. 197 replica replays older than 150 min (274 MB) were pruned, listed in
     ~/diag26b/pruned_1111e.txt. Disk is now 1.3 GB.
+- 04:15 (11-11): **zjc rejected: its 20x20 block came out +tiny B -bed B (net 0); zjd's s6 unchanged so far**
+  - #373 against zj3 (sets 3/4 existing anchors, sets 1/2 new anchors 24915-24924 from #374): 60 cells, 58 alike,
+    D 2, net 0, t 0.00.
+    - Every cell off the 20x20 maps equals zj3's, so the drop clause did not fire. Accept needed t >= 2 with D >= 4.
+    - Locally, zj8's widening gained tiny in 10 of 11 games. On the replica it gained tiny B and lost bed B.
+  - zjd's s6 zd596, 46 of 48 played: D 0, 0 own overruns. Only two DefaultMedium cells changed, in rounds only.
+  - zjd waits for zj3's last 4 anchor matches (set 2 collegejunior and TheComplexMerlin, in the drain). Its 12-match
+    block goes in after them.
+  - zjf (KING_FRONT 20 on every map, the small-map arm) has screens zd597/zd598 queued. zje's chains cq263/cq264 are
+    running.
