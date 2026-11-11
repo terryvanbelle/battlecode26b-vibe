@@ -10382,3 +10382,8 @@
   - Mincemeat A, externalsustenance B and the rest replayed the anchors, so the king fence removed RESCUE's old cost.
   - Block 2 (set 4, block_v4s4.sh) is queued. It will be scored against the twin zez with --crown. Accept needs pooled
     t >= 2 with D >= 4, so set 4 must add about +2 more.
+- 23:11 (11-10): **zj6 (RESCUE_WEAK) dropped: chain 22 vs zj3's 25; VM replica pruned again**
+  - zj6's screens were taken out of the queue. zj4's s7 screen: D 9, net -3, t -1.00.
+  - Breadth chain cq247 so far: zj3 9 of 14, zdb 6 of 12.
+  - VM disk was at 1.1 GB with the chains writing. Replica replays older than 15 h were pruned (143 files, listed in
+    ~/diag26b/pruned_1111b.txt), bringing it to 1.3 GB.
