@@ -10425,3 +10425,6 @@
     - New rule for registrations from now on: score candidate minus zj3 on the same set (< 0 drops).
     - Earlier registrations keep their clauses, so zj8 goes on to block 2 (set 4; pooled t <= 1 vs zj3 rejects).
   - s7 zd584 (zj8 vs zj3) at 26 of 48: D 6, net +2.
+- 00:42 (11-11): **zj9 (RESCUE_BLOCK on zj3) dropped**
+  - Chain cq251: 19 of 40 against zj3's 25 on the same lines. The registered falsifier drops below 24.
+  - Its screens zd587/zd588 were taken off the queue unplayed.
