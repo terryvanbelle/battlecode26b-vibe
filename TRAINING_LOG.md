@@ -10238,3 +10238,6 @@
     - ziv 14: +Stash A agrab, +cheesebottles B atrap3, +mincemeat A ×2, +wallsofparadis A atrap3; −cheesebottles A atrap3, −externalsustenance A agrab, −externalsustenance B atrap3.
   - Two seeds: zdb 26 of 40, zit 14 of 20 (seed 129 only), ziu 29 of 40, ziv 30 of 40. No overruns.
   - zii #363: the first 8 replica matches (24193-24200: Icarus, Merlin, TSPAARK, Finals) give 24 cells, all alike (D 0); rate score +0.74. The other 8 are in the drain behind the hourly limit. Replays: VM rp/zii_b1s3a.tgz.
+- 16:45 (11-10): **Chains cq229 (ziv and zdb, seed 131: arrows, DefaultMedium, whatsthecatdoin, FreeTheCheese, keepout) and cq230 (zis rows, seed 129, against cq224) started**
+  - Correction to zit's registration: attackers do pick up cheese after moving (Baby.java line 564; ATK_CARRY caps it), so "rushers never pick up cheese" is wrong. A rusher demoted by RUSH_HUNGRY also carries what it holds home as a gatherer. The switch and its falsifiers are unchanged.
+  - thunderdome vs Varun (anchor 21022 A): our king's 600 HP went to 41 bites (406) from 23 different enemy rats over r115-436, plus 5 enemy throws into it (194). Our babies within Chebyshev 3 averaged 12.8 at bite rounds to their 3.6. This is the rescue/defense line (zie, zih and zio gained thunderdome); nothing new built from it.
