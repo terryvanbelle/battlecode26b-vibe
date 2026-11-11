@@ -10920,3 +10920,42 @@
     agrab/atrap3, xd6 vs xd9) is counting stuck rounds with /dev/shm/dcx/kingstuck.py. Screens zd643 (s7) and zd644
     (s6) are queued.
   - Pruned 90 replica replays older than 60 min (~/diag26b/pruned_1111m.txt); VM free went from 138 to 261 MB.
+- 15:32 (11-11): **Cat dodge line xd9 -> xe1 -> xe2; block #382 first 16 matches; field trap census**
+  - Engine (InternalRobot cat EXPLORE): an exploring cat walks a BFS path to its next waypoint. When the next step is
+    blocked it scratches what blocks it (20 a scratch). A cat moves every 2 rounds and a king every 4, so a king
+    can't outrun one; it has to get off the cat's path.
+  - kingstuck.py (VM /dev/shm/dcx) counts our king's rounds with a cat within dist2 20, movement ready and no move.
+    xc6 25588 t_minus_five A: stuck 139 of 149; xc3 25465 the same.
+  - xd9 (fan5): kf1, 40 games paired with xd6 on attack_on_cat, t_minus_five, cheesebottles, uneasy_alliance and
+    averystrangespace, both seats, vs agrab and atrap3.
+    - Stuck rounds fell: 87 -> 6, 79 -> 2, 45 -> 16; uneasy A 29 -> 11.
+    - Cells: attack_on_cat B vs agrab L -> W (scratches 30 -> 11), t_minus_five A vs atrap3 L -> W, cheesebottles A
+      vs atrap3 W -> L.
+    - Screen zd643 (s7): 45 vs xd6 44, net +1, t +0.57, overruns 1 vs 1.
+    - attack_on_cat A vs agrab was still lost: the king ran 20 tiles south along x = 1 inside the cat's patrol.
+    - cheesebottles B: our own second king formed at (47,2) beside the first, which pinned it.
+  - xe1 = xd9 + KING_DODGE with CAT_RISK_STEPS 6 (all 8 steps scored against the cat's next 6 footprints).
+    - kf2 vs xd9: scratches cheesebottles B 36 -> 2 and 28 -> 3, attack_on_cat A vs atrap3 14 -> 2.
+    - Cells net +1: uneasy B L -> W, cheesebottles A vs atrap3 L -> W, cheesebottles B vs agrab W -> L on points at
+      r2000.
+    - The king still dodged into the 3-wide x = 0..2 corridor that the cat patrols on attack_on_cat A.
+  - xe2 = xe1 + CAT_LANE (s9t's lane memory) + LANE_RISK 40 (catRisk counts known lane under the 3x3).
+    - kf3 so far: attack_on_cat A vs agrab W at r1095 with 8 scratches; xd6, xd9 and xe1 all lost it with 30.
+    - On kf1's cells xe2 nets +3 vs xd6 so far.
+    - Screens zd645 (s7) and zd646 (s6) are queued; zd644 is xe1 s6.
+  - Block #382 (xd6), first 16 of 32 matches:
+    - Sum of (win - base rate): +1.05 on the first 8, -1.33 on the next 4.
+    - Won TSPAARK TheHeist A and rose A (25613), two of the six cells every earlier x-line block lost.
+    - New loss: minimaze B vs Xzibit (25646; 16 of 16 before). Both our kings starved at r1235 although we delivered
+      5,247 to their 3,780. A second king formed at ~r470 doubled upkeep; Xzibit killed 68 of our rats to 30 of
+      theirs.
+    - formproj.py over 561 replica games: the starved formed-king losses formed with a median projected round-2000
+      surplus of +1,959, so a FORM_SURPLUS gate would not have stopped them. Not pursued.
+  - Field rat-trap census (trapbal.py, all replica dumps), per game, us vs them:
+    - Rat traps laid: Finals 5.0 vs 82.7, Xzibit 7.1 vs 40.0, final4 2.6 vs 38.5, YokoOno 6.0 vs 33.5, Icarus 2.1 vs
+      27.5.
+    - Both sides' traps fire about 95% of the time; our trap deaths vs Finals are 23.3 a game.
+    - Engine: enemy traps are invisible (MapInfo shows only our own team's). A rat trap fires on entering a tile
+      within dist2 2 for 50 damage and a 3-round move stun, and a fired rat trap starts the backstab.
+    - Our baby traps are gated by RAT_TRAP_MIN_CHEESE 900; floors of 200-500 starved in u0y, u8f and u9j.
+  - Replica dumps carry no indicator strings; xd6a-c.tgz (25613-25620, 25645-25649) are on the VM.
