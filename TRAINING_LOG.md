@@ -10570,3 +10570,16 @@
     - EscapeTheNight: seed 144 -A vs agrab, +B vs agrab.
     - fullofsecrets: identical so far.
   - Ledger: zjdchk replays zj3's DefaultMedium game (seed 144 vs agrab) through r2000 (replay_eq: no divergence).
+- 03:53 (11-11): **zjd's s7: +3 -0, all on DefaultMedium A, everything else unchanged; zjc's sets 3/4 done (+tiny B)**
+  - zd595 (zjd s7): n 48, D 3, net +3, t +1.77, 0 own overruns.
+    - Every cell off DefaultMedium equals zd575, winner and rounds.
+    - All six DefaultMedium cells changed. zjd won seat A vs agrab, agtr and atrap3, which zj3 lost at r139-249.
+  - zjd's chains cq259/cq260: zjd 17, zj3 15, with 1 game pending.
+    - DefaultMedium +1 at seed 145 (A vs atrap3). EscapeTheNight +2 -1.
+    - fullofsecrets and DefaultLarge are identical, so the switch didn't act there.
+  - zjc replica #373, all 22 played. Sets 3/4 against zj3: 32 cells, 31 alike, +tiny B, as predicted.
+  - zj3 resubmitted (#374) for the set-1/2 anchors: 14 matches, which also cover zjd's set-1/2 cells.
+  - zje (zjd's dose arm, KING_FRONT 25) registered. Chains cq263/cq264 on dirtpassageway, peaceinourtime and
+    learn_your_lesson are queued.
+  - VM disk was at 1006 MB. 197 replica replays older than 150 min (274 MB) were pruned, listed in
+    ~/diag26b/pruned_1111e.txt. Disk is now 1.3 GB.
