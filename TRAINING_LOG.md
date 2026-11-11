@@ -10376,3 +10376,9 @@
   - zj6 = zj3 + RESCUE_WEAK: a rescue whose carrier is weaker than us grabs from any adjacent tile, not only from its
     blind side. Ledgered (K 11). Chain cq246 and screens zd581/zd582 are queued.
   - Breadth chain cq247 runs zj3 against zdb on rose, Stash, corridorofdoom, cheesebottles and whatsthecatdoin.
+- 23:01 (11-10): **zj3 passes replica block 1 (D 2, +2 -0, rate score +3.14); block 2 on set 4 queued**
+  - #370 on set 3: 48 cells, 46 alike. It gained thunderdome A and B vs Varun (rates 0.14/0.17) and lost nothing.
+    Net +2, t +1.41, rate score +3.14 (z +2.04).
+  - Mincemeat A, externalsustenance B and the rest replayed the anchors, so the king fence removed RESCUE's old cost.
+  - Block 2 (set 4, block_v4s4.sh) is queued. It will be scored against the twin zez with --crown. Accept needs pooled
+    t >= 2 with D >= 4, so set 4 must add about +2 more.
