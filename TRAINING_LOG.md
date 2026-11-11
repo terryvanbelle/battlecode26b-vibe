@@ -10897,3 +10897,26 @@
     y = 10, and stood at (22,12) above the king from r380 with 760 raw (8.6x cooldown). Next lead.
   - mincemeat A vs Icarus (the x-line lost 25325, 25414, 25475, 25530; zj3 won 25293, 25309): xc6 picked 220 by
     r100 to zj3's 675, delivered 40 by r150 and starved at r375. Local probes hs3 (zj3, xa5, xd3 vs agrab s190).
+- 14:53 (11-11): **xc6 #381 trails zj3; xd7/xd8 dropped; xd6 on the replica (#382); cornered king fix xd9**
+  - xc6 block #381 complete: 58 cells vs zj3 63 on 90 shared (xc3 56), set 4 34 vs 38. zj3 won six cells that
+    both x-line blocks lost: Finals attack_on_cat B, Icarus mincemeat A, TSPAARK TheHeist A and rose A, YokoOno
+    externalsustenance B, collegejunior t_minus_five_minutes A. Only the x-line won YokoOno Stash A and Varun arrows A.
+  - externalsustenance B is lost by every line (about 1 in 7). The spending dumps show it isn't a trap effect.
+  - xd7 (RAT_TRAP_SURPLUS 200) was dropped unscreened: the defend exemption covered most rat traps, so the gate
+    rarely fired. xd8 (TRAP_NEAR 10) was dropped too: probe hs8 turned thunderdome A vs agrab W -> L. The gate never
+    fired on tiny or knifefight because symmetry was still unresolved there; uneasy_alliance was unchanged.
+  - Knifefight B vs agrab reproduces locally. Turning GRAB_MICRO off flips it, but the wider ablation probe is
+    chaotic, so GRAB_MICRO stays.
+  - xd6 screens: zd639 (s7) 44 vs xc6 45, with 1 own overrun (5t4rv4t10n B vs agrab s1, a won game, the same overrun
+    as xd3). zd640 (s6) 48/48, 44 vs 42 on shared cells, 0 overruns. xd6 submitted as replica block #382.
+  - Cat king deaths (t_minus_five A 25465/25588, attack_on_cat B 25432/25541; zj3's kings lived).
+    - 25588 g2: at r243 the king fled a cat from its mine (2,6) into the corner (1,7), with the map edge to the west
+      and the wall band at y = 9. From r266 a cat sat at (3,7)/(4,7), and the king stayed put in 139 of 149 near-cat
+      rounds, 20 HP per scratch.
+    - King.move's cat flee tries only G.fan(c, away): away and its two 45-degree neighbours. With the cat to the
+      east those are W/NW/SW, all off the map, so the king never stepped south even when (0..2,5) was empty
+      (r295-r300).
+  - xd9 = xd6 + KING_FLEE5: the flee uses G.fan5, adding the two 90-degree steps. Probe kf1 (5 cat maps x 2 seats x
+    agrab/atrap3, xd6 vs xd9) is counting stuck rounds with /dev/shm/dcx/kingstuck.py. Screens zd643 (s7) and zd644
+    (s6) are queued.
+  - Pruned 90 replica replays older than 60 min (~/diag26b/pruned_1111m.txt); VM free went from 138 to 261 MB.
