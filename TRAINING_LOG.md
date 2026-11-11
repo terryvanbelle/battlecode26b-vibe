@@ -10253,7 +10253,7 @@
   - zis (#364, BitFlow rushers on maps ≥ 600 tiles) is the next replica candidate; set-3 block 1 queued (4 sent, 12 in the drain).
   - zit passes its screens: s7 zd559 D 0, s6 zd560 D 0 (the switch did not change any screen game), 0 overruns.
   - Seed 131 decomposition (cq229/cq231): zdb 13 of 20, ziv 12, ziu 12, zis 6 of 10 so far. zis alone loses DefaultMedium A vs atrap3 (r66 vs r63) and whatsthecatdoin A vs agrab, the same two cells ziv lost. On open maps BitFlow rushers seem to lose the rush race, as on tiny for zir.
-- 18:49 (11-10): **ziw registered (zis + MINE_BFLOW: gatherers walk to mines by BitFlow on 600+ tile maps); ziu passes s7**
+- 18:07 (11-10): **ziw registered (zis + MINE_BFLOW: gatherers walk to mines by BitFlow on 600+ tile maps); ziu passes s7**
   - Why-tags (smuggle.py) on zdb's 48 set-3 anchor games: baby turns spent walking to a mine ('M') were 15-36% in the lost wallsofparadis, keepout, FreeTheCheese, cheesebottles, Stash and thunderdome cells, against 0-14% waiting at one ('W'). externalsustenance has no mines: both seats spend 44-46% of turns walking to cheese piles ('C'), won and lost alike.
   - Starving games spend nothing below a 300 bank on digs or traps (scratch spend.py over the 9 starvation losses): the drain is upkeep with too little income, not spending.
   - ziw: zis plus every baby on maps of 600+ tiles keeps BitFlow's rows and walks to its mine by BitFlow. Deliveries keep Flow, which avoids u0c's fault (fields toward a moving king restarting). Hooks are ledgered.
