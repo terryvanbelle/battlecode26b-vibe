@@ -10268,3 +10268,7 @@
     - The registered falsifier (net < 0) drops it. Replays: VM ~/diag26b/rp/zis_b1s3a.tgz, zis_b1s3b.tgz.
   - ziw (built on zis) keeps its own gates: its mechanism is the gatherers' mine walk, and its own block decides it.
   - zik (zdb + KING_WALL_THREAT, all local gates passed) submitted as #365; block_v4s3.sh hit the hourly limit, so all 16 rows wait in the drain.
+- 18:39 (11-10): **zix registered (ziw + DELIVER_BFLOW: deliveries walk down a second BitFlow field)**
+  - ziw's first 28 chain games (cq232/cq233, seeds 132/133): ziw 20 wins, zis 20, zdb 16 of 27, 0 overruns. ziw transferred 103.5k cheese to zis's 94.2k (+10%).
+  - zix adds BitFlowK, a copy of BitFlow with its own field on BitFlow's wall and dirt rows. Baby.deliver walks it toward the king, so each leg of a gather trip keeps its own field across trips. With u0c's single field, every mine/king switch restarted the field.
+  - Gates: chains cq234/cq235 (zix rows on cq232/cq233's seeds and maps, queued behind them); screens zd567 (s7) / zd568 (s6). The mechanism bar is on the delivering-walk ('d') share.
