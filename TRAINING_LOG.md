@@ -10466,3 +10466,11 @@
   - zjb won 26 of 40 against zj3's 25, with 0 overruns. The whole difference is zj8's tiny games.
   - The earlier chains on these lines were also fine. Each name appears once per seed, but chains.sh keeps both
     seeds' dumps, so only the .log file is overwritten. chsc counts double when the same bot is passed twice.
+- 01:52 (11-11): **zj8 REJECTED at replica block 2 (set 4: D 3, all losses; pooled D 5, net -3)**
+  - #371 on set 4, 15 of 16 matches: 45 cells, 42 alike.
+    - Lost YokoOno tornadoes B (50x50), Varun arrows B (30x30) and TSPAARK knifefight B (40x40).
+  - Pooled with block 1 (+tiny B, -corridorofdoom B): D 5, net -3. Block 2 rejects at pooled t <= 1.
+  - Of zj8's five replica changes, only tiny B was a gain, on a 20x20 map. Locally its gains were on 20x20 maps
+    too (s7 tiny, evileye, bed; cq255 so far +tiny A, +evileye B).
+  - Replica games are deterministic, so zj8's games predict zjb's (zj3's games on big maps, zj8's on small):
+    - Set 3: +tiny B. Set 4: -arrows B, because arrows is 30x30 = 900 tiles, inside zjb's fence.
