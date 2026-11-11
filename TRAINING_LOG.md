@@ -10353,3 +10353,10 @@
   - Method change for new registrations: block 1 is judged on the cellrate score (< 0 drops), not on net against
     the anchors. The anchors' draw sits about 1.4 cells above the base rates, so ziv, zit and zih all sat at net -1 to 0
     with positive rate scores. Earlier registrations keep their own clauses.
+- 22:01 (11-10): **zj2 dropped by its mechanism clause; zj3 submitted (#370)**
+  - zj2's first 8 block matches lost thunderdome on both sides while the switch was engaged:
+    - A: 150 rats spawned against the anchor's 82, the king lived to r901 against r436, and the bank held 780-980.
+    - B: 91 spawned against 89.
+  - More bodies only delay the bite-down, so the idle-bank line is closed.
+  - zj2's remaining rows, chains (cq240/cq241, 26 of 35 at the stop) and screens were stopped. zj3 went to the replica
+    (#370) at once. Its screens zd575/zd576 and chains cq242/cq243 run now, and they still bind.
