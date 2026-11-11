@@ -10296,3 +10296,8 @@
   - zis's replica win on whatsthecatdoin B vs Merlin (rate 0.00) was a starvation race: Merlin's king starved at r322 with ours on 5 cheese. zdb's game starved at r325 against Merlin's 458 bank.
   - Points census over zdb's set-3 anchors (scratch ptsflip.py): 3 of the r2000 points games were losses. One more king alive at r2000 would flip only FreeTheCheese B vs Merlin (2-2 kings, 47-52).
   - Finals keepout: their rat traps fire on us 319-333 times a game (100 kills). Two thirds fire within one round of being laid (scratch trapage.py): reactive traps on the tile our rat is stepping into. TrapRisk and RISK_ADAPT were already tried against exactly this (u0u, zfg).
+- 20:25 (11-10): **ziu DROPPED at replica block 1 (net −2); ziv submitted (#367)**
+  - ziu #366, set 3 (24403-24406, 24421-24424, 24439-24442, 24444-24447): 48 cells, 46 alike, D 2, both lost: spsquared rose A (rate 0.92) and Varun corridorofdoom B (0.64). Net −2, t −1.41; rate score −0.93 (z −0.61). Replays: VM rp/ziu_b1s3a.tgz, ziu_b1s3b.tgz.
+  - The one game the switch clearly decided went the wrong way. In rose A, rushers turned gatherers at r807 (bank under 300), the bank still ran out, and the king starved at r1062. zdb's king lived and won on points.
+  - Converting rushers when the bank is low does not buy enough income to outlast upkeep. zit (the same switch at 150) stays parked.
+  - ziv (zis + zit) submitted as #367: 4 rows sent, 12 in the drain. Its fresh-seed check (cq236/cq237) is still running, at ziv 8 of 12 vs zdb 6 of 10 so far. If it fails, the queued rows come out.
