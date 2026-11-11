@@ -10736,3 +10736,30 @@
   - Locally (xb4 vs atrap3, seed 160) our king knew one mine from r41 to r361 (km=n1). Rat 13388, a scout, made about 3 tiles per 20 rounds. Each SCOUT_FRONTIER search ends at the nearest never-seen tile, which with the vision cone is 2-3 steps away, and the scout stands still for the 3-4 turns of every search (fl= builds every ~5 rounds).
   - A rusher resolved the symmetry at r69, but the king only did at about r441, because no one walks the mask home. On this map symmetry doesn't limit the gatherers (firstSym is ROT), so it isn't the fix here.
   - xb6 = xb4 + FRONTIER_MIN 7: the frontier search skips unseen tiles within Chebyshev 7. Mechanism games are running (wallsofparadis vs atrap3; DefaultMedium/DefaultLarge/cheesefarm vs agrab; seed 160).
+- 09:46 (11-11): **x-line: xb6 dropped, xb8 on the replica, xb7 and xb9 folded into xc1, xc2 (rat traps) in test**
+  - xb6 (FRONTIER_MIN / FRONTIER_LAST) dropped 09:14: longer frontier searches gained nothing; FRONTIER_LAST helped open
+    maps and hurt buried-mine maps.
+  - xb4's s7 screen zd619 won 12 more cells than zj3 but overran 38 times (37 on Stash seat B: an attacker at the pocket
+    wall traced every enemy behind it). xb8 = xb4 + WALL_BLIND_CAP 8: 0 overruns, 4 of 4 won on those cells. Submitted
+    #379; block_xb8.sh (sets 3 and 4, 32 matches). First 8 (25313-25320): Varun thunderdome A won, B lost.
+  - Screens: zd613 (xa9 s7) 39 of 48 cells to zj3's 28 (2 overruns); zd620 (xb4 s6) 43 to 43 on 44 cells, transfer
+    0.87x, 11 overruns (the WALL_BLIND traces xb8 caps). xb8 s7/s6 (zd621/zd622) are playing; xb9's (zd623/zd624) are next.
+  - zj3's fresh block (#378) vs xa5's on 90 shared cells: zj3 63 wins, xa5 56. zj3 wins 10 cells xa5 loses; xa5 wins
+    3 cells zj3 loses. zj3's 10 include thunderdome A/B vs Varun, Finals attack_on_cat A/B and where_are_you B.
+  - Thunderdome: zj3 killed Varun's king at r40/r51 (25179/25180); xa5 lost at r420/r575 (25071/25072). The games are
+    identical to r16. zj3 kept 6-9 rats within d2 13 of the enemy king from r24 (12 king bites in r30-39). xa5 had
+    6 at r24, then 0-2 once the king stepped back to (30-31,17-18). In waveHold a striker charges only while it sees the
+    king; one that loses sight walks back to the rally point. xb9 = xb8 + WAVE_LATCH (a striker that has seen the king
+    charges for good) + WAVE_MIN 14 (no waves when the enemy king spot is that close). Locally all 6 thunderdome games
+    won, as with xb8, and faster (agrab B r37 vs r64). Varun's king retreat doesn't happen locally, so the replica
+    decides.
+  - xb7 (MINE_ANY + MINE_TIES) chains cq279/cq280: 35 of 40 to xb4's 30 (+5 -0) and zj3's 20. Finals-map singles vs
+    atrap3: keepout 2/2, wallsofparadis 0/2 (xb4 1/2). Kept. xc1 = xb9 + MINE_ANY/MINE_TIES; chains cq281/cq282 running.
+  - Finals wallsofparadis 25315 (xb8 seat A), r0-600: Finals laid 111 rat traps and our rats set off 107 of them (50
+    damage each); we laid 0. It picked 10,600 to our 5,568, at 296 tiles to our 167, including the centre-bottom pair
+    (21,47)/(28,47) and (37,3) in our half. Reactive baby traps were rejected about 10 times on the z-line, all near
+    0 net on the replica (u4m -1, u5o +1, u8f -1, zdy -3). Under owner #31 they go on the x-line: xc2 = xc1 + zdy's set
+    (BABY_RAT_TRAPS, TRAP_ADJ, TRAP_CAP 25, TRAP_SPAWN_FIRST, RAT_TRAP_MIN_CHEESE 900). Mechanism games vs atrap3 on
+    wallsofparadis/keepout are running.
+  - Ops: replica replays pruned (53 files, ~87 MB, list in ~/diag26b/pruned_1111j.txt); laptop git repacked (disk was
+    down to 36 MB).
