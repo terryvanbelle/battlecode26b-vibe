@@ -10428,3 +10428,13 @@
 - 00:42 (11-11): **zj9 (RESCUE_BLOCK on zj3) dropped**
   - Chain cq251: 19 of 40 against zj3's 25 on the same lines. The registered falsifier drops below 24.
   - Its screens zd587/zd588 were taken off the queue unplayed.
+- 00:48 (11-11): **zja = zj8 + RESCUE_D2 18 (dose arm) queued; zj8's s7 screen is +7 -2 against zj3**
+  - zd584 (zj8 vs zj3, s7): D 9, +7 -2. Gained tiny A and B, evileye A and B, bed B, arrows B and starvation B
+    (atrap3). Lost starvation B (agrab) and DefaultMedium B.
+  - On replica set 3, zj8's tiny B win first diverges from zj3's game at r17. A carry fight had started at r16.
+  - zj8's replica block 2 (set 4) is waiting on the hourly limit.
+  - zja widens the fenced rescue reach from dist2 13 to 18. Screens zd589/zd590 are queued and chain cq253 is
+    running. Falsifiers are in attempts.csv.
+  - zis (BitFlow rushers, dropped 11-10) won Merlin whatsthecatdoin B (rate 0.00), so I checked whether it could be
+    fenced. All five of its changed cells diverge from zdb's games at r17-r68, and map size doesn't separate its
+    wins from its losses (Stash 30x30 won, mincemeat 31x31 lost). No fence was found.
