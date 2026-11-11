@@ -10319,3 +10319,17 @@
     set-3 block 1 is queued.
 - 20:42 (11-10): **zj1 = zj0 with RICH_BANK 700 (dose arm), screens zd571/zd572 queued**
   - Of zj0 and zj1, the one with more screen+chain net goes to the replica after zit.
+- 21:35 (11-10): **zj0 dropped on its fresh-seed chains (24 vs 28); zj2 = war-only RICH threshold built**
+  - zj0 passed both screens (s7 D 8 net 0; s6 D 2 net +2, t +1.43; 0 overruns). On chains cq238/cq239 it won 24 of 40
+    against zdb's 28; the falsifier needed 27.
+    - It lost rose A agrab, rose B atrap3 (rose broke for ziv too), tiny A at r58, corridorofdoom B and
+      FreeTheCheese A, and gained DefaultMedium A.
+    - The bank starts well above 1000 (about 1,700 at r100), so RICH_BANK also reshapes the early coop game on every
+      map, not only the idle-bank wars.
+  - zj2 = zdb + RICH_WAR_BANK 850: only at war does the 40 cap open from 850. Coop keeps 1000. The hook is ledgered
+    (K 9). Screens zd573/zd574 are queued; chains cq240/cq241 run on the same seeds.
+  - zit's block (#368) is at 12 of 16 cells: D 2, net -2 (rose A at rate 0.89, uneruesansfin A at 0.84), cellrate
+    -1.15. Icarus and Merlin are still to play.
+  - VM disk fell to 411 MB with the chains writing replays. Replica replays older than 15 h (947 files, listed in
+    ~/diag26b/pruned_1111a.txt) were pruned, bringing it to 1.8 GB.
+  - 8 stale ziv rows were taken out of research/panel/queue.tsv.
