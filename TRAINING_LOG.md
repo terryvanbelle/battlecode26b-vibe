@@ -10525,3 +10525,8 @@
       king distance doesn't explain it.
   - zjb's s6 zd592 started before it was dequeued, so it was stopped after 20 minutes (killed by pid). zjc's s7
     zd593 is running.
+- 02:39 (11-11): **zjc submitted (#373); its registered 20x20 replica block is queued**
+  - build/block_zjc_20x20.sh: the 22 panel v4 matches with a 20x20 map, both seats. 4 are sent and 18 are in the
+    drain.
+  - zj3 then plays the 10 set-1/2 matches as anchors.
+  - Expectation from the chains: tiny cells may flip, and the other 20x20 maps net about zero.
