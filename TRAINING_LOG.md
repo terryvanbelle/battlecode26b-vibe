@@ -10459,3 +10459,10 @@
   - cq255 (fresh seed 140) plays tiny, evileye, bed, arrows and Stash x agrab/atrap3 x A/B for zj3 and zj8.
     - It checks zj8's small-map effect on new seeds.
     - If zjb's ledger holds, zjb plays zj8's games on these maps, so this chain covers zjb too.
+- 01:22 (11-11): **zjb's ledger holds both ways; chain 26 vs zj3's 25**
+  - cq254, scored per seed with a new VM scratch tool (/dev/shm/dcx/chseed.py):
+    - All 32 games on maps over 900 tiles equal zj3's in result and round count.
+    - All 8 tiny games equal zj8's.
+  - zjb won 26 of 40 against zj3's 25, with 0 overruns. The whole difference is zj8's tiny games.
+  - The earlier chains on these lines were also fine. Each name appears once per seed, but chains.sh keeps both
+    seeds' dumps, so only the .log file is overwritten. chsc counts double when the same bot is passed twice.
