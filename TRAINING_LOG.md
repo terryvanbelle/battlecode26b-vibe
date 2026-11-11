@@ -10301,3 +10301,11 @@
   - The one game the switch clearly decided went the wrong way. In rose A, rushers turned gatherers at r807 (bank under 300), the bank still ran out, and the king starved at r1062. zdb's king lived and won on points.
   - Converting rushers when the bank is low does not buy enough income to outlast upkeep. zit (the same switch at 150) stays parked.
   - ziv (zis + zit) submitted as #367: 4 rows sent, 12 in the drain. Its fresh-seed check (cq236/cq237) is still running, at ziv 8 of 12 vs zdb 6 of 10 so far. If it fails, the queued rows come out.
+- 20:30 (11-10): **zj0 = zdb + RICH_BANK 850 built and queued; zix s6 screen t +1.43**
+  - zd568 (zix s6): n 44, D 2, net +2, t +1.43. zix was already dropped by its mechanism bar; this is for the record.
+  - ziv's fresh-seed chains (cq236/cq237) so far: zdb 8 of 12, ziv 8 of 14, 0 overruns. That is inside the skip bar.
+  - zj0 changes one constant: the 40-baby cap opens from an 850 bank, not 1000. Thunderdome vs Varun sat at an 870-968
+    bank under the 18 cap while the king was bitten to death. Screens zd569/zd570 are queued; chains cq238/cq239 wait
+    on cq236/cq237.
+  - VM disk was down to 429 MB. Replica replays older than 30 h were pruned, which brought it to 627 MB. A delete of
+    the .bc26 files in dropped candidates' chain dirs (about 1.2 GB) was blocked by the classifier and left alone.
