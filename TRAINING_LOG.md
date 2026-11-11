@@ -10412,8 +10412,8 @@
     cq248 (zj3 vs zdb) is still going.
   - zj8 went to the idle replica (#371); its local gates still bind.
 - 00:30 (11-11): **zj7 dropped (chain 17 vs zj3's 25); zj8 chain 24 passes; zj9 = zj3 + RESCUE_BLOCK queued**
-  - The carrier guard pulls rats off their work: zj7's deliveries more than doubled (71k against 30k), but it won 8
-    fewer games.
+  - zj7 delivered more than twice as much cheese (71k against 30k) yet won 8 fewer games. Its guards lost the king
+    fights that decide these grab maps.
   - zj9: zio (RESCUE_BLOCK, unfenced) won collegejunior tiny B, a rate-0.00 cell, so the switch now gets a run inside
     the fence. Screens zd587/zd588 and chain cq251 are queued.
   - VM replica replays older than 10 h were pruned (350 files, ~/diag26b/pruned_1111c.txt): VM disk 935 MB to 1.4 GB.
