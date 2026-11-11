@@ -10309,3 +10309,11 @@
     on cq236/cq237.
   - VM disk was down to 429 MB. Replica replays older than 30 h were pruned, which brought it to 627 MB. A delete of
     the .bc26 files in dropped candidates' chain dirs (about 1.2 GB) was blocked by the classifier and left alone.
+- 20:41 (11-10): **ziv dropped at block 1 (net -1); zit submitted (#368)**
+  - ziv (#367) set-3 block 1: 48 cells, D 3. It gained Stash A vs YokoOno and lost where_are_you B vs Finals and rose B
+    vs TSPAARK. rose B has a rate of 0.96, so that loss is a real surprise. Net -1, t -0.58, cellrate +0.13 (z +0.09).
+    Its registered falsifier (net < 0) drops it.
+  - ziv's fresh-seed chains also lost rose A/B vs atrap3 at r2000. The zdb rows there haven't played yet. If zdb wins
+    them, the rose losses come from zis or zit; check zit's rose B on the replica block.
+  - zit (RUSH_HUNGRY 150 alone) was parked behind ziu and had passed every local gate. It is now replica #368, and its
+    set-3 block 1 is queued.
