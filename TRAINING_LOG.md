@@ -10245,3 +10245,6 @@
   - 48 cells, 47 alike. The one change is a gain: Varun thunderdome A (rate 0.14), the cell AMMO_AWAY's ledger census pointed at (wounded babies near the king step away from healthier enemies). No losses. Replays: VM rp/zii_b1s3a.tgz, zii_b1s3b.tgz.
   - Block 2: set 4 against zdb's anchors 20817-20824, 20842-20845, 20848-20851 (12 sent, 4 in the drain). Block 2 rejects at pooled t ≤ 1. Accept needs pooled t ≥ 2 with D ≥ 4.
   - Chains: cq229 (seed 131) ziv 6 of 12 vs zdb 8 of 12 so far. cq230 (zis rows, seed 129) 9 of 12.
+- 17:13 (11-10): **zis passes all local gates (s6 zd558: n 44, D 3, net +1, t +0.57)**
+  - zis: s7 net −1 (mechanism clause held), s6 net +1, chains cq223 18 vs 16 (seed 128) and cq230 15 vs 14 (seed 129). It goes on the replica after zii's block 2.
+  - ziv seed 131 (cq229, 18 of 20 in): 11 vs zdb 12. Changed cells: +arrows A atrap3, +keepout B agrab, +whatsthecatdoin B agrab; −DefaultMedium A atrap3 (r63 vs r66), −whatsthecatdoin A agrab/atrap3, −whatsthecatdoin B atrap3. whatsthecatdoin churns under any change, as it did for zit.
