@@ -10555,3 +10555,18 @@
     - Falsifiers are in attempts.
     - Chains cq259/cq260 (seeds 144/145): the four maps x agrab/atrap3 x A/B, zjd and zj3. Screens zd595/zd596 are
       queued. Ledger-check games on DefaultMedium (zj3, zjdchk, zjd vs agrab, seed 144) are running.
+- 03:24 (11-11): **zjc passes both screens with its ledger exact; replica block 12 of 22, set 3 as predicted**
+  - s6 zd594: n 44, D 0, the same winners as zj3's zd576 in all 44 cells.
+    - 11 cells on 20x20 maps differ from zd576 in rounds only.
+    - Every cell equals the composite prediction (zj8's zd586 on 20x20 maps, zd576 elsewhere), winner and rounds.
+    - The registration said "zd594 must equal zd576". Winners match; rounds differ where zj8's own s6 games did.
+    - 0 own overruns.
+  - Replica #373, done so far: 24832-24835 and 24853-24860, archived as VM rp/zjc_a.tgz and zjc_b.tgz.
+    - Set 3 collegejunior: D 1, +tiny B, the cell zj8's games predicted.
+    - The other done cells wait for zj3's set-1/2 anchors (build/block_zj3_anchors12.sh, 14 matches with zjd's
+      two).
+  - zjd's chains, partial: DefaultMedium is identical to zj3 at seed 144. At seed 145, zjd won A vs atrap3, which
+    zj3 lost.
+    - EscapeTheNight: seed 144 -A vs agrab, +B vs agrab.
+    - fullofsecrets: identical so far.
+  - Ledger: zjdchk replays zj3's DefaultMedium game (seed 144 vs agrab) through r2000 (replay_eq: no divergence).
