@@ -10405,3 +10405,9 @@
   - Laptop root disk hit 0 MB during the refresh. Packing git's 1,550 loose objects (95 MB) into a 2 MB pack and
     deleting build/vmruns brought it back to about 112 MB. ~/.claude holds 2.5 GB, including 738 MB of this project's
     session transcripts; the owner should decide about those.
+- 00:10 (11-11): **zj7 (carrier guard) and zj8 (wider fenced rescue) built on zj3; zj8 submitted (#371)**
+  - zj7 = zj3 + GUARD_CARRY_R 5, ledgered (K 9). Babies within 8 of our king go for enemy carriers within 5 of it.
+  - zj8 = zj3 + RESCUE_D2 13 + RESCUE_WALK. Fenced rescuers also reach carriers two steps out.
+  - Screens zd583-zd586 run against zj3's zd575/zd576. Chains cq249/cq250 run on zj3's cq242/cq243 lines. Breadth chain
+    cq248 (zj3 vs zdb) is still going.
+  - zj8 went to the idle replica (#371); its local gates still bind.
