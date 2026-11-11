@@ -10360,3 +10360,9 @@
   - More bodies only delay the bite-down, so the idle-bank line is closed.
   - zj2's remaining rows, chains (cq240/cq241, 26 of 35 at the stop) and screens were stopped. zj3 went to the replica
     (#370) at once. Its screens zd575/zd576 and chains cq242/cq243 run now, and they still bind.
+- 22:20 (11-10): **zj3 half block: thunderdome A and B flipped, rate score +2.45; chains 25 vs 18**
+  - Replica #370, first 8 matches: 24 cells, D 2, both gains on thunderdome vs Varun (rates 0.14/0.17).
+    externalsustenance B held, where every unfenced RESCUE build lost it. Net +2, rate score +2.45 (z +2.06).
+  - Chains cq242/cq243 (grab maps, seeds 136/137): zj3 25 of 40 against zdb 18, all six changed cells won, 0 overruns.
+  - s7 screen zd575: D 7, net -3, t -1.14, 0 own overruns. That passes the -1.5 bar; s6 zd576 is running.
+  - Ledger: chain games match zdb's exactly until r61/r63, where a carried rat is the first difference.
