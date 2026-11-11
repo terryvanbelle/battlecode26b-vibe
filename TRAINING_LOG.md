@@ -10816,3 +10816,31 @@
     cq283/cq284: 33 of 40 (xb7 35, zj3 20; xc3 lost fullofsecrets A three times).
   - Ops: VM root disk 318 MB, then 527 MB after runs finished. Replica storage holds only about 40 MB, so pruning
     can't free much. journalctl vacuum freed 0. The rest is protected (rp archives, build/dumpcache, chain dirs).
+- 12:50 (11-11): **xc3 replica block 56 vs zj3 63; xb1's one-king economy invites a third enemy king (xc6 reverts it); xc5 kept**
+  - xc3 #380 complete (32 matches, 25395-25402, 25410-25417, 25429-25432, 25459-25466, 25475-25478), 90 cells shared
+    with zj3's #378: xc3 56, zj3 63 (+4 -11). Lost: Finals attack_on_cat B and closeup B (king scratched by the cat,
+    r626/r284), Icarus mincemeat A and averyfineline B (king starved r399/r195), TSPAARK TheHeist A, rose A (king
+    starved r1244) and rift B, YokoOno externalsustenance B, collegejunior FreeTheCheese A and t_minus_five_minutes A
+    (cat scratched our king r403 with cat damage 10.1k to 0.4k), Varun arrows B. Gained: Icarus mincemeat B, Merlin
+    DefaultLarge B, YokoOno Stash A, Varun arrows A. Set-3 rate score: wins - rate -1.84, z -1.08. xb8's block was
+    -8 with the same TheHeist A, rose A, rift B, closeup B, externalsustenance B and mincemeat A losses.
+  - Kings at the end decide war points (0.5). In the r2000 war losses of both blocks, one more king for us flips 8 of
+    11. On rift both seats, with xb1's FORM_FROM 1200 we held one king to r1850 and spsquared formed a third (r464,
+    r619); B was lost 2 kings to 3 on points (-3) with 2,629 banked. zj3 formed its second at r103/r106 and they
+    stopped at two (+27, +33). FreeTheCheese A vs collegejunior: zj3's second king at r332 won 2-1 (+41); xc3 went
+    2-2 (their second r1479) and lost by 9. Merlin FreeTheCheese B, xb1's target, was lost both ways.
+  - The rule behind it (specs): no new king after r1200 while a team has two or more. A third king must form before
+    r1200; earlier late-third-king switches (zfj, zhy) starved on their upkeep.
+  - Reactive rat traps (xc2) are efficient: across xc3's block 1,173 laid, 1,125 hit enemy rats (zj3 lays none).
+  - xc5 (WAR_STRIKE 0): s7 zd629 45 of 48 (zj3 28, xc3 47; vs xc3 D 4 net -2 t -1.00), s6 zd630 46 (vs zj3 net -1 t
+    -0.57; vs xc3 net -1 t -1.00; 1 overrun, xc3 2); chains cq285/cq286 29 of 40 to xc3's 33 (+2 -6: DefaultLarge vs
+    agrab/atrap3, races the strikers won by r270) and zj3's 20. Kept: the replica evidence is cat defence.
+  - xc6 = xc5 + FORM_FROM 80 (xb1 removed). Screens zd631/zd632 and chains cq287/cq288 running; it goes to the
+    replica next, sets 3+4.
+  - Rose A (lost by every build vs YokoOno, and by xc3/xb8 vs spsquared): at r850 all 22 of our rats were in the
+    king's walled basin or its 1-wide x=9 corridor (9 loaded queued inside the corridor, 13 empty round the king and
+    in the squeeze at (9-11, 0-2)); none were harvesting, with 10-16k cheese on the map. The king's 3x3 cannot sit
+    close enough to the corridor for those carriers to deliver from it (walls at (11,2) and (12,3)).
+  - Ops: stale screens zd614 (xa9, stopped at 14 of 48) and zd615-zd618 (xb1, xb2) dropped from the queue. Replica
+    replays pruned (86 files, ~/diag26b/pruned_1111l.txt) after the block was fetched (xc3_3.tgz, xc3_4.tgz). VM disk
+    419 MB free.
