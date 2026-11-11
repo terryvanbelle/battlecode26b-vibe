@@ -10248,3 +10248,8 @@
 - 17:13 (11-10): **zis passes all local gates (s6 zd558: n 44, D 3, net +1, t +0.57)**
   - zis: s7 net −1 (mechanism clause held), s6 net +1, chains cq223 18 vs 16 (seed 128) and cq230 15 vs 14 (seed 129). It goes on the replica after zii's block 2.
   - ziv seed 131 (cq229, 18 of 20 in): 11 vs zdb 12. Changed cells: +arrows A atrap3, +keepout B agrab, +whatsthecatdoin B agrab; −DefaultMedium A atrap3 (r63 vs r66), −whatsthecatdoin A agrab/atrap3, −whatsthecatdoin B atrap3. whatsthecatdoin churns under any change, as it did for zit.
+- 17:57 (11-10): **zii REJECTED at replica block 2 (#363, set 4: D 2, net −2; pooled D 3, net −1, t −0.58); zis submitted (#364)**
+  - Set 4 (24313-24328): 46 of 48 alike, lost Icarus tiny B and YokoOno Meow B, gained none. Block 1's thunderdome A gain did not repeat as a pattern on set 4, and the pooled t is under the block-2 bar of 1.
+  - zis (#364, BitFlow rushers on maps ≥ 600 tiles) is the next replica candidate; set-3 block 1 queued (4 sent, 12 in the drain).
+  - zit passes its screens: s7 zd559 D 0, s6 zd560 D 0 (the switch did not change any screen game), 0 overruns.
+  - Seed 131 decomposition (cq229/cq231): zdb 13 of 20, ziv 12, ziu 12, zis 6 of 10 so far. zis alone loses DefaultMedium A vs atrap3 (r66 vs r63) and whatsthecatdoin A vs agrab, the same two cells ziv lost. On open maps BitFlow rushers seem to lose the rush race, as on tiny for zir.
