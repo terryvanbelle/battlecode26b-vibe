@@ -10317,3 +10317,5 @@
     them, the rose losses come from zis or zit; check zit's rose B on the replica block.
   - zit (RUSH_HUNGRY 150 alone) was parked behind ziu and had passed every local gate. It is now replica #368, and its
     set-3 block 1 is queued.
+- 20:42 (11-10): **zj1 = zj0 with RICH_BANK 700 (dose arm), screens zd571/zd572 queued**
+  - Of zj0 and zj1, the one with more screen+chain net goes to the replica after zit.
