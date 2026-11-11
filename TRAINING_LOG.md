@@ -10625,3 +10625,20 @@
     - Submitted as #376 with build/block_zjf.sh: the 12 set-3/4 matches whose small maps hold a home mine under
       front 20, against zj3's existing anchors.
     - Its chains cq265/cq266 are 23-23 so far, with no cell changed.
+- 05:18 (11-11): **zjg built: the king steps off the throw lines of enemy babies that carry our rats**
+  - zjf's chains cq265/cq266 finished at 33-33 against zj3, with no cell changed. The chain gate passes.
+  - zjf's block #376 so far: 12 cells (24999-25002, YokoOno and Icarus), all 12 alike, D 0. The other 4 matches
+    are queued in the drain.
+  - zjg = zj3 + THROW_DODGE 9, ledgered (K 11) at the top of King.move.
+    - For each enemy baby within Chebyshev 9 holding one of ours, it walks the 8 flight lines (up to 8 tiles,
+      stopped by walls, dirt and robots). The king moves to the neighbouring tile whose 3x3 lies on the fewest
+      lines, and stays on ties.
+    - Aim: collegejunior's throws of our own rats did 520-570 king hp in 24987/24988 (DefaultMedium).
+  - Ledger: zjgchk (never acts) replays zj3 vs agrab, DefaultMedium seed 150 (replay_eq: no divergence). In the zj3
+    mirror, zjg first diverges at r60 on its own king step.
+  - The first build overran 2-3 times per game (king max bytecode 20004). Rays that never enter the king's 5x5 are
+    now skipped without sensing, with a guard at 5000 bytecodes left. Re-run: 0 overruns, king mean bytecode 11011
+    against zj3's 9881.
+  - Screens zd599 (s7) and zd600 (s6) are queued. Chains cq267/cq268 are running (DefaultMedium, tiny,
+    FreeTheCheese, cheesefarm, knifefight x agrab/atrap3).
+  - VM prune: 132 replica replays older than 2 h (~179 MB), listed in pruned_1111f.txt. VM disk is 957 MB free.
