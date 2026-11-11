@@ -10281,3 +10281,8 @@
   - ziu submitted as #366; 4 rows sent, 12 in the drain.
   - ziv s7 zd563: n 48, D 2, net 0, t 0.00, 0 own overruns. Passes; s6 zd564 is running.
   - ziw chains so far (cq232/cq233): ziw 27 of 36, zis 24 of 35, zdb 20 of 34; 0 overruns.
+- 19:29 (11-10): **ziw DROPPED by its mechanism bar: the mine-walk share did not fall**
+  - Why-shares on chain cq232 (scratch msh.py over smuggle.py tags, 18-19 games per bot): mine walk ('M') zdb 30.7%, zis 28.7%, ziw 29.5%. The bar needed a fall of a fifth below zis.
+  - keepout's shares match across all three builds to within 0.4 points. Nav.goTo asks for a BitFlow field only after FLOW_STALL turns without progress, so most mine walks are greedy steps. The long walks are distance, not stalls.
+  - ziw's chain lead (27 of 36 vs zis 24 of 35) is re-rolls, not the switch.
+  - Deliveries ('d') take 41-52% of baby turns on wallsofparadis (19-28% elsewhere). zix keeps its own registration and d-share bar; chains cq234/cq235 are queued.
