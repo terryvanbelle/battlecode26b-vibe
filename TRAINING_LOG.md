@@ -10763,3 +10763,28 @@
     wallsofparadis/keepout are running.
   - Ops: replica replays pruned (53 files, ~87 MB, list in ~/diag26b/pruned_1111j.txt); laptop git repacked (disk was
     down to 36 MB).
+- 11:12 (11-11): **xb8 replica block 49 vs zj3 57; averystrangespace breakout traced to RUSH_BFLOW; xc3 on the replica (#380)**
+  - xb8 #379, 30 matches, 84 cells shared with zj3's fresh #378: xb8 49, zj3 57 (+5 -13). Lost cells: Icarus
+    averystrangespace A/B (4 of 4 games lost; zj3 and xa5 won 4 of 4), mincemeat A, tiny A; TSPAARK TheHeist A, rose A,
+    rift B; Finals attack_on_cat A, closeup B; YokoOno externalsustenance B, rose B; Merlin sunandmoon B; Varun
+    thunderdome B. Gained: Yoko Stash A, externalsustenance A; Xzibit clockwisdom A; Varun arrows A; Merlin DefaultLarge B.
+  - Screens: xb8 s7 zd621 39 of 48 to zj3 28 (1 overrun; xb4 38), s6 zd622 44 to 43 (0 overruns). xc2 s7 zd625 47 of
+    48 to 28 (games far shorter, kills by traps), s6 zd626 43 to 43, 2 own overruns. The local screens and the replica
+    disagree on the x-line by about 20 cells.
+  - Rat traps across xb8's block: every opponent lays them (TSPAARK 26-50, YokoOno 10-85, Varun 12-111, Finals 64-301 a
+    game) and our rats set off 90-99%; xb8 laid 0. xc2 (zdy's reactive set) lays 53-98 against atrap3, and 80-100 of
+    them fire.
+  - averystrangespace: our start corner is walled by dirt. xb8 25325 picked 4.5k from 73 tiles, all in the start box;
+    xa5 25077 dug out and picked 15.5k. Locally vs agrab, seeds 163-168: xb8 broke out in 1 of 6, xa6 6/6, zj3 6/6.
+    Bisect: xb2 3/3, xb3 1/3, xb8 without RUSH_BFLOW 3/3. xb3's BitFlow rushers sat in dirt pockets at nav stall
+    100-478. Attackers dug 30-60 times a game, against 70-100 for Flow rushers. (An earlier single-seed xa6-vs-xa9
+    split was chaos: the games diverge at r36 on a scout, from a few bytecodes in Flow's step count.)
+  - xc3 = xc2 + BF_GIVEUP 60 (a rusher stalled 60 turns leaves BitFlow for Flow): broke out 6 of 6 (first out-of-box
+    pickup r903-1957), 12 rushers a game switch; Stash B vs atrap3 4 of 4 (xc2 3 of 4). Submitted #380; block_xc3.sh
+    (sets 3+4) queued. Chains cq283/cq284 and screens zd627/zd628 queued.
+  - xc1 chains (cq281/cq282): 32 of 40 to xb7's 35 (-3: tiny A/B, DefaultLarge B). Tiny is a coin flip for every
+    build (zj3 4/8, xb7 5/8, xc1 3/8).
+  - King deaths in losses: starvation is common for both bots (zj3 16, xb8 9), so it isn't the x-line gap. Rose
+    25313: attackers deep on the enemy side held 2-3k raw cheese from r750 while the king starved (r1095).
+  - Ops: replica replays pruned twice (53 + 145 files; ~/diag26b/pruned_1111j.txt, pruned_1111k.txt) after the xb8
+    block was fetched (xb8_1..4.tgz).
