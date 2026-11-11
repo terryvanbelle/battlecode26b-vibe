@@ -10875,3 +10875,25 @@
     (xc5 29, zj3 20). Replica block #381 (sets 3+4) submitted 13:10.
   - Next: xd2 screens zd635/zd636 are queued. Pocket-map probes are running on averystrangespace, mincemeat,
     externalsustenance and whatsthecatdoin vs agrab, xc6 vs xd2.
+- 13:53 (11-11): **xc6 set 3 on the replica beats xc3 by 3 cells; the x-line's BitFlow rushers hoard cheese on TheHeist (xd3 = xd2 + ATK_CARRY 25)**
+  - xc6 #381, set 3 (25518-25533, 48 cells): 28 wins. Against zj3's #378 on the same cells 28-30 (+3 -5); against
+    xc3's #380 28-25 (+5 -2). cellrate: wins - rate +0.92, z +0.57. New wins that no zdb derivative had ever taken:
+    Finals wallsofparadis A and keepout B (rate 0.00). Set 4 (16 matches) still playing.
+  - cellhist (scratch): the x-line has lost TSPAARK TheHeist A and rose A in all three blocks since xb8 (25313,
+    25395, 25518). zj3 and xa5 won both in 6 of 6.
+  - TheHeist: xc6 picked xa5's 400 by r150, but delivered 165 to xa5's 290 and spawned 20 to r250 (xa5 30 by r100),
+    because Econ.surplus gates spawns on measured income. Local TheHeist s190 vs araid reproduces it (xa5 W, xd2 L
+    r454). xd2's 11 rushers (ind A) left the pocket by BitFlow and carried 435 raw by r200 and 3,585 by r400, at the
+    band's left exit; xa5's rushers never left the pocket (y <= 9) and carried nothing.
+  - Engine (GameConstants.CHEESE_COOLDOWN_PENALTY): moves and actions cost 1% more per unit carried.
+  - Rose (25518 g2, starved r1222): our rats picked 7,791 by r900 and delivered 1,160. Carriers holding 660-1,997
+    stood at the enemy cup's exit (40-43, 7-8), bit cats 9 and 10 and died; the next rat took the pile. TSPAARK took
+    the last 1,997 at r901.
+  - xd3 = xd2 + ATK_CARRY 25 (existing switch; 25 was neutral three times and 300 once on lines whose rushers
+    stayed home). TheHeist s190 vs araid: xd3 W r2000 (xd2 L r454), delivered 2,110 by r400 (490), spawned 44 (26),
+    rushers carried 83 at r400 (3,585). s191 vs agrab: both W. Screens zd637 (s7) and zd638 (s6) queued.
+  - With the rushers capped, gatherers take the band's cheese instead: 1,728 raw on 16 gatherers at r400 (s190).
+    Gatherer 11867 (s191) left the pocket at r230, walked the band west along a Flow path through the unseen wall at
+    y = 10, and stood at (22,12) above the king from r380 with 760 raw (8.6x cooldown). Next lead.
+  - mincemeat A vs Icarus (the x-line lost 25325, 25414, 25475, 25530; zj3 won 25293, 25309): xc6 picked 220 by
+    r100 to zj3's 675, delivered 40 by r150 and starved at r375. Local probes hs3 (zj3, xa5, xd3 vs agrab s190).
