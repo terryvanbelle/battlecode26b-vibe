@@ -10286,3 +10286,13 @@
   - keepout's shares match across all three builds to within 0.4 points. Nav.goTo asks for a BitFlow field only after FLOW_STALL turns without progress, so most mine walks are greedy steps. The long walks are distance, not stalls.
   - ziw's chain lead (27 of 36 vs zis 24 of 35) is re-rolls, not the switch.
   - Deliveries ('d') take 41-52% of baby turns on wallsofparadis (19-28% elsewhere). zix keeps its own registration and d-share bar; chains cq234/cq235 are queued.
+- 20:13 (11-10): **zix DROPPED (chains 25 of 40 vs ziw 29); ziv passes all local gates; ziu block 1 half done at net −2**
+  - zix chains cq234/cq235 (seeds 132/133, 40 games): zix 25, ziw 29, zis 27, zdb 24; 0 overruns. The bar was ziw − 1. s7 zd567: D 9, net +1, t +0.33. zix's s6 had already started; nothing else is queued behind it.
+  - ziw s7 zd565 (already dropped): D 10, net −4, t −1.27. Its tiny/evileye ledger cells were 12 of 12 identical to zdb's.
+  - ziv s6 zd564: n 44, D 3, net +1, t +0.57, 0 own overruns. All local gates passed; ziv is next after ziu.
+    - Extra check, registered before any game: chains cq236 (seed 134) and cq237 (seed 135) over ten maps. If ziv trails zdb by more than 2 wins, it skips its replica slot.
+  - ziu #366, first 8 of 16 matches (24403-24406, 24421-24424): 24 cells, D 2, both lost (spsquared rose A, Varun corridorofdoom B), net −2, t −1.41.
+    - rose A replayed zdb's game until r807, when the bank fell under 300 and the switch fired. The bank then ran out and the king starved at r1062. zdb's king lived to r2000 and won on points 67-32.
+  - zis's replica win on whatsthecatdoin B vs Merlin (rate 0.00) was a starvation race: Merlin's king starved at r322 with ours on 5 cheese. zdb's game starved at r325 against Merlin's 458 bank.
+  - Points census over zdb's set-3 anchors (scratch ptsflip.py): 3 of the r2000 points games were losses. One more king alive at r2000 would flip only FreeTheCheese B vs Merlin (2-2 kings, 47-52).
+  - Finals keepout: their rat traps fire on us 319-333 times a game (100 kills). Two thirds fire within one round of being laid (scratch trapage.py): reactive traps on the tile our rat is stepping into. TrapRisk and RISK_ADAPT were already tried against exactly this (u0u, zfg).
