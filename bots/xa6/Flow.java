@@ -82,7 +82,7 @@ public final class Flow {
     /** Tests run outside the engine, where Clock reports 0 bytecodes left. */
     public static boolean unlimited;
 
-    static int left() { return Clock.getBytecodesLeft() + G.debt; }
+    static int left() { return Clock.getBytecodesLeft(); }
 
     /** Cfg.FLOW_QUOTA: search loop steps left in round quotaRound (quotaMax a round; tests set it). */
     static int quota, quotaRound = -1, quotaMax = Cfg.FLOW_QUOTA;

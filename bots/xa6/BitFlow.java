@@ -59,7 +59,7 @@ public final class BitFlow {
     static void undirt(int x, int y) { dirtR[y] &= ~(1L << x); }
 
     /** Tests run outside the engine (Flow.unlimited). */
-    static int left() { return Clock.getBytecodesLeft() + G.debt; }
+    static int left() { return Clock.getBytecodesLeft(); }
 
     /** A field toward t is being grown or is fresh. */
     public static boolean active(MapLocation t) {

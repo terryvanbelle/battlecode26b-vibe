@@ -36,7 +36,7 @@ public final class KPath {
     /** With unlimited (tests): the bytecodes left that left() reports. */
     public static int fakeLeft = Integer.MAX_VALUE;
 
-    static int left() { return Clock.getBytecodesLeft() + G.debt; }
+    static int left() { return Clock.getBytecodesLeft(); }
 
     /** Side frame from our start: the signs of its offset from the map centre. */
     static void frame(MapLocation home) {

@@ -778,6 +778,8 @@ public final class Cfg {
      *  delivered 4374 to s7d's 3067). Merlin (24945 cheesefarm, 24990 DefaultLarge) made 76-83 pickups a 100 rounds to
      *  our 51-57 with as many babies, 32-67 of them 20+ tiles from its king in r0-300 (ours 12-13). */
     public static final boolean SCOUT_FRONTIER = true;
+    /** xa6: extra Flow reserve on a newborn's first turn while SCOUT_FRONTIER is on (RobotPlayer). */
+    public static final int FRONTIER_PAD = 1500;
     public static final int SCOUT_MINES = 4, SCOUT_MINES_UNTIL = 600;
     /** SCOUT_MINES scouting also stops once the team's known home mines have not grown for SCOUT_DRY rounds (counted
      *  from SCOUT_UNTIL; 0 = off). hb1, s9c (SCOUT_MINES 4) vs s7d: knifefight, cheesebottles and Stash hold 3 home

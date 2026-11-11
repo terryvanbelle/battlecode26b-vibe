@@ -38,7 +38,8 @@ public strictfp class RobotPlayer {
                 if (Debug.ON) e.printStackTrace();
             }
             try {
-                if (Cfg.FLOW && !G.king && rc.getRoundNum() == startRound) Flow.work(Cfg.FLOW_RESERVE);
+                // xa6: frontier scouting's search overshot the reserve on newborns' first turns (superioristhmus, 3 overruns)
+                if (Cfg.FLOW && !G.king && rc.getRoundNum() == startRound) Flow.work(Cfg.FLOW_RESERVE + (Cfg.SCOUT_FRONTIER ? Cfg.FRONTIER_PAD : 0));
                 if (Cfg.BFLOW && !G.king && rc.getRoundNum() == startRound) BitFlow.work(Cfg.FLOW_RESERVE);
             } catch (Exception e) {
                 exceptions++;

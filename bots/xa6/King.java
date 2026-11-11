@@ -147,7 +147,7 @@ public final class King {
         // KING_SENSE_RESERVE short of the limit rather than overrun; the rest is recorded next turn
         int floor = G.round <= 1 ? Cfg.KING_SENSE_RESERVE : 0;
         for (MapInfo mi : infos) {
-            if (floor > 0 && Clock.getBytecodesLeft() + (G.debt += 8) - 6 < floor) break;
+            if (floor > 0 && Clock.getBytecodesLeft() < floor) break;
             MapLocation l = mi.getMapLocation();
             boolean mine = mi.hasCheeseMine();
             Sym.record(l.x, l.y, mi.isWall(), mi.isDirt(), mine);
@@ -954,7 +954,7 @@ public final class King {
         int babies = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
         if (Cfg.END_KING > 0 && endKing(G.round, Comms.numKings, babies, G.rc.getGlobalCheese(), formStart)) {
             // the crowd count and the site checks cost several thousand: wait a turn rather than overrun (u0g, ZeroDay r1974)
-            if (Cfg.END_KING_CROWD && Clock.getBytecodesLeft() + (G.debt += 8) - 6 < Cfg.END_KING_LEFT) return;
+            if (Cfg.END_KING_CROWD && Clock.getBytecodesLeft() < Cfg.END_KING_LEFT) return;
             int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
             // END_KING_MINE: a home mine first (its 5x5 is wall-free and its gatherers already wait there)
             // END_KING_MSITE: FORM_MINE's site from the babies' mine list (pickFormSite wants tiles the king has seen)

@@ -36,7 +36,7 @@ final class Seal {
 
     static int left() {
         if (fakeLeft >= 0) return fakeLeft--;
-        return Clock.getBytecodesLeft() + G.debt;
+        return Clock.getBytecodesLeft();
     }
 
     /** seenOnly: the pile at tile index s has a fresh unknown verdict (not worth a walk for now). */

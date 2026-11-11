@@ -208,7 +208,7 @@ public final class Baby {
         pickUp();
         if (rc.getCarrying() != null && moved) {
             if (rc.getCarrying().team == G.us) dropAlly();
-            else if (Clock.getBytecodesLeft() + (G.debt += 8) - 6 > Cfg.THROW_BC) tryThrow(rc.senseNearbyRobots(-1, null));
+            else if (Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(rc.senseNearbyRobots(-1, null));
         }
         Debug.mark(21);
         if (hostile && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
@@ -534,7 +534,7 @@ public final class Baby {
 
     /** Re-sense after moving (new cone) only to refresh cheese; terrain is caught next turn. */
     static void sense2() throws GameActionException {
-        if (Clock.getBytecodesLeft() + (G.debt += 8) - 6 < Cfg.SENSE2_LEFT) return;
+        if (Clock.getBytecodesLeft() < Cfg.SENSE2_LEFT) return;
         sense();
     }
 
@@ -2295,7 +2295,7 @@ public final class Baby {
         int bs = 0;
         for (Message m : rc.readSqueaks(-1)) {
             // Cfg.CASH_READ_LEFT: stop reading once the turn runs low (a ledgered budget read, as END_KING_CROWD's)
-            if (Clock.getBytecodesLeft() + (G.debt += 8) - 6 < Cfg.CASH_READ_LEFT) break;
+            if (Clock.getBytecodesLeft() < Cfg.CASH_READ_LEFT) break;
             int c = m.getBytes();
             if (Comms.sqType(c) != Comms.SQ_CASH || G.round - m.getRound() > 2) continue;
             int x = Comms.sqX(c), y = Comms.sqY(c), e = Comms.sqExtra(c);
@@ -2651,7 +2651,7 @@ public final class Baby {
             MapLocation rf = ref(), tw = G.mirror(rf, firstSym());
             int k = sweepScan - 1, end = cap > 0 ? Math.min(n, k + cap) : n;
             for (; k < end; k++) {
-                if (cap == 0 && Clock.getBytecodesLeft() + (G.debt += 8) - 6 < Cfg.SWEEP_LEFT) break;
+                if (cap == 0 && Clock.getBytecodesLeft() < Cfg.SWEEP_LEFT) break;
                 int j = k / gw, i = k - j * gw;
                 int fx = Math.min(w - 1, i * c + c / 2), fy = Math.min(h - 1, j * c + c / 2);
                 int sc = sweepScore(fx, fy, sweepOx, sweepOy, ax, ay);
