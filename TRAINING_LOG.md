@@ -10333,3 +10333,9 @@
   - VM disk fell to 411 MB with the chains writing replays. Replica replays older than 15 h (947 files, listed in
     ~/diag26b/pruned_1111a.txt) were pruned, bringing it to 1.8 GB.
   - 8 stale ziv rows were taken out of research/panel/queue.tsv.
+- 21:42 (11-10): **zit dropped at block 1 (net -1); zj2 submitted (#369) ahead of its local gates**
+  - zit (#368) set-3 block 1: D 3, net -1, t -0.58, cellrate +0.13. It gained mincemeat B vs Icarus (rate 0.12) and
+    lost uneruesansfin A vs Xzibit (0.84) and rose A vs TSPAARK (0.89). Its registered falsifier (net < 0) drops it.
+    rose fell for zit, ziv and zj0 alike.
+  - With nothing else ready, zj2 went to the replica (#369) so it doesn't sit idle. Its screens and chains still bind:
+    if either fails, zj2 drops whatever the block shows.
