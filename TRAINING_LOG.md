@@ -10530,3 +10530,28 @@
     drain.
   - zj3 then plays the 10 set-1/2 matches as anchors.
   - Expectation from the chains: tiny cells may flip, and the other 20x20 maps net about zero.
+- 02:56 (11-11): **zjc's s7 replays its prediction exactly; zjd (zj3 + KING_FRONT 20 on 1600+ tile maps) registered**
+  - zd593 (zjc s7) equals zd575 with zj8's zd584 bed/evileye/tiny cells: 48 of 48, winner and rounds. n 48, D 5,
+    net +5, t +2.34, 0 own overruns. s6 zd594 is playing.
+  - clockwisdom vs Xzibit (set 4, both seats lost), reproduced locally (agrab vs zj3, seed 7):
+    - With no mine known, explore() ranks samples by closeness to the map centre, which is the spiral's core. The
+      explorers' 'E' turns stay in the bottom band (y 0-17) through r500.
+    - The home mines (56,27)/(56,33) are 18-24 tiles north of our king (56,9) along an open edge corridor. Only
+      attackers came within dist2 25 of them (r282-308).
+    - 61 earlier attempts targeted clockwisdom, including EXPLORE_CENTER_FROM (z9h, zd7), EXPLORE_LOCAL (zd6),
+      SCOUT_FRONTIER and SEEK_FRONTIER. Nothing new was built.
+  - Stash A vs YokoOno (rate 0.34) is chaotic. zj3's loss 24550 and the sibling wins 24467/24378 first differ at
+    r18 and r93, both on an enemy spawn tile, with no visible difference in our actions before it.
+  - collegejunior DefaultMedium (set 3, zj3 lost both seats, rate 0):
+    - Our king left its start for the centre mine, (22,26) in seat A and (22,18) in seat B, and died there at r355
+      and r332.
+    - In 24574 collegejunior grabbed our rats and threw them onto our king. Those hits did about 450 of the 580 hp
+      it lost; bites did 80. The bank stayed above 300, so the king did not starve.
+    - The centre mine's front value is 16. KING_FRONT (u4p, 25) skips a home mine under the threshold.
+    - u4p was rejected on u4e at +2 -1, unfenced and unledgered. KING_FRONT has never been on the z-line.
+  - zjd = zj3 + KING_FRONT 20, only on maps of 1600 tiles or more, ledgered K 11 in pickHomeMine.
+    - Panel maps it can change: DefaultMedium, EscapeTheNight, fullofsecrets and DefaultLarge. On DefaultLarge,
+      zj3's king did not pick the mine under 20.
+    - Falsifiers are in attempts.
+    - Chains cq259/cq260 (seeds 144/145): the four maps x agrab/atrap3 x A/B, zjd and zj3. Screens zd595/zd596 are
+      queued. Ledger-check games on DefaultMedium (zj3, zjdchk, zjd vs agrab, seed 144) are running.
