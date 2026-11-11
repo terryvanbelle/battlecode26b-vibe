@@ -10275,3 +10275,9 @@
 - 18:49 (11-10): **ziu passes all local gates and takes the zit/ziu replica slot**
   - ziu s6 zd562: n 44, D 3, net +1, t +0.57, 0 own overruns. With s7 (net −1) and its two chains (+1, +2), its chain+screen net is +3. zit's is 0, so by the registered rule ziu goes to the replica after zik, and zit stays parked.
   - zik #365: 4 of 16 set-3 rows sent; 12 wait in the drain.
+- 19:26 (11-10): **zik REJECTED at replica block 1 (net 0, t 0.00); ziu submitted (#366); ziv passes s7**
+  - zik #365, set 3 (24364-24367, 24378-24381, 24383-24390): 48 cells, 46 alike, D 2 (+YokoOno Stash A rate 0.38; −Varun corridorofdoom B rate 0.67), net 0, t 0.00. Rate score +1.12 (z +0.72), but zik's registered rule rejects at t ≤ 0. Replays: VM rp/zik_b1s3a.tgz, zik_b1s3b.tgz.
+  - Stash A vs YokoOno flipped for zik, zis and zio alike (rate 0.35-0.38), so on its own it is drift.
+  - ziu submitted as #366; 4 rows sent, 12 in the drain.
+  - ziv s7 zd563: n 48, D 2, net 0, t 0.00, 0 own overruns. Passes; s6 zd564 is running.
+  - ziw chains so far (cq232/cq233): ziw 27 of 36, zis 24 of 35, zdb 20 of 34; 0 overruns.
