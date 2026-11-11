@@ -10272,3 +10272,6 @@
   - ziw's first 28 chain games (cq232/cq233, seeds 132/133): ziw 20 wins, zis 20, zdb 16 of 27, 0 overruns. ziw transferred 103.5k cheese to zis's 94.2k (+10%).
   - zix adds BitFlowK, a copy of BitFlow with its own field on BitFlow's wall and dirt rows. Baby.deliver walks it toward the king, so each leg of a gather trip keeps its own field across trips. With u0c's single field, every mine/king switch restarted the field.
   - Gates: chains cq234/cq235 (zix rows on cq232/cq233's seeds and maps, queued behind them); screens zd567 (s7) / zd568 (s6). The mechanism bar is on the delivering-walk ('d') share.
+- 18:50 (11-10): **ziu passes all local gates and takes the zit/ziu replica slot**
+  - ziu s6 zd562: n 44, D 3, net +1, t +0.57, 0 own overruns. With s7 (net −1) and its two chains (+1, +2), its chain+screen net is +3. zit's is 0, so by the registered rule ziu goes to the replica after zik, and zit stays parked.
+  - zik #365: 4 of 16 set-3 rows sent; 12 wait in the drain.
