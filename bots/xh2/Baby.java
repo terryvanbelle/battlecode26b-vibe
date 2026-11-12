@@ -1481,7 +1481,12 @@ public final class Baby {
                     if (role == GATHER && idleSeek() && seek()) { why = 'x'; return; }
                     if (mineTarget == null) mineTarget = pickMine();
                 }
-                if (atMine(mineTarget, Cfg.MINE_KING_R)) {
+                // Cfg.WANDER_R: a rat that wandered at this mine last turn stays at it out to WANDER_R + 1 (a wander
+                // step around a wall can leave the ring; M straight back made a two-tile flip)
+                boolean held = Cfg.WANDER_R > 0 && wanderRound == G.round - 1 && mineTarget.equals(wanderMine)
+                        && G.cheb(G.me, mineTarget) <= Cfg.WANDER_R + 1;
+                if (held || atMine(mineTarget, Cfg.MINE_KING_R)) {
+                    wanderRound = G.round; wanderMine = mineTarget;
                     if (Cfg.TRIP_HALF != 0) tripArrive(mineTarget, G.round);
                     if (role == GATHER && startSeek(mineTarget) && seek()) { why = 'x'; return; }
                     if (Cfg.GATHER_STILL) {
@@ -2668,6 +2673,9 @@ public final class Baby {
         }
         return best != null ? best : new MapLocation((home.x + ek.x) / 2, (home.y + ek.y) / 2);
     }
+
+    static int wanderRound = -10;
+    static MapLocation wanderMine;
 
     static void wanderAround(MapLocation m) throws GameActionException {
         // Cfg.WANDER_R: the draw stays inside atMine's ring (Chebyshev 2), else a ring-3 tile flips W/M every turn

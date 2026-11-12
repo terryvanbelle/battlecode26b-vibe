@@ -635,7 +635,9 @@ public final class Cfg {
     /** xh2 (x-line): Baby.wanderAround draws its tile within Chebyshev WANDER_R of the mine (0 = the old 3). atMine
      *  holds at 2, so a ring-3 draw sent the rat out (W), then back in (M) the next turn: 2-11% of our rat turns in
      *  km43 (arrows 5-11%) and km45 (xg6 Stash A vs araid: gatherer 11461 two-tile flips for 10-20 rounds, 8 times
-     *  r326-579, at 15-17k bytecodes a turn and 2 overruns). */
+     *  r326-579, at 15-17k bytecodes a turn and 2 overruns). The draw alone left 3.3% (km46: arrows B (2,10) behind
+     *  a wall, the way to a ring-2 tile ran through ring 3), so a rat that wandered at the mine last turn also stays at
+     *  it out to WANDER_R + 1. */
     public static final int WANDER_R = 2;
     /** A delivery that has not got closer (Chebyshev) to the nearest king for FLOW_STALL turns walks back along the
      *  rat's own trail of walked tiles from its spawn instead (Trail). Flow paths to a pocketed king were rarely of
