@@ -1,0 +1,14 @@
+name=zdb
+source=bots/zd8
+source_sha=cfc8f889f8c7
+commit=bc9d9055
+created=2026-11-08 06:45 PST
+
+zdb = zd8's sources re-registered (code identical apart from the package name): z3x + CORE_SMALL 12 / CORE_SMALL_AREA 441 + CASH_READ_LEFT 6000. Lever and evidence as in bots/zd8/SNAPSHOT.
+Why: zd8 was dropped at its falsifier 2 by s6's per-round picks gate (ppr.py on zd337: z -2.10 <= -2), though zd337's paired t was +1.43 (D 2, +2 -0) and transfer per round 0.997x. Only 13 of zd337's 44 shared cells differ (the small maps; the rest run z3x's code), and the largest per-round drops are earlier king kills on bed: B vs araid won at r96 to z3x's r162 (400 picked to 1,220), B vs abrk r142 to r195, A vs araid r202 to r223, A vs abrk won at r270 where z3x lost at r302. ppr divides whole-game picks by game rounds, so a faster win reads as a weaker economy, the confound zb3's whole-game transfer clause had (zb5, 2026-11-07 22:26, re-registered with a matched-round clause). On zd8's own chains cq94 and cq95, picks at matched rounds (scratch mpick.py) were 0.975x z3x's, per-cell z -0.59 (design information, not a test of zdb).
+zd8's replica games (#292: set 2, 48 cells, D 2, +Xzibit canyoudig A and B; set 4's first 4 matches, +Finals averyfineline A and B) are not evidence for zdb. zdb is judged only on fresh data.
+Registered 2026-11-08 06:45 PST, before any zdb game.
+Falsifiers:
+  1. Chain ~/diag26b/cq98 (seed 25, fresh): zdb and z3x on bed, canyoudig, evileye and tiny, both seats vs abrk and araid (s6's opponents), 16 games each. Any zdb overrun or exception drops it. zdb winning fewer of its 16 games than z3x drops it. Picks at matched rounds (scratch mpick.py: per cell, each side's cumulative picks at R = the shorter game's last round, divided by R): per-cell z of the difference <= -2 drops it. This clause replaces s6's whole-game ppr.py gate.
+  2. Screens on seed 1 (fresh): s7 zd343 against a z3x control zd342, and s6 zd345 against a z3x control zd344 (zd296's and zd297's cells with seed 0 -> 1). Paired t <= -1.5 rejects; any overrun or exception rejects; transfer per round on the shared cells under 0.97x the control's rejects (xpr.py).
+  3. Replica, against z3x's set anchors, on new matches: block 1 on set 4 rejects at t <= 0, block 2 on set 2 at pooled t <= 1, block 3 at t <= 1.5; accept at pooled t >= 2 with D >= 4; transfer per round below 0.95x the twin's in a block rejects.

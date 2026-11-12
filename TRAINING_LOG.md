@@ -11464,3 +11464,26 @@
       seed 983. Submitted #396; its 12 panel rows are queued, and xj7's last 4 (Merlin, TSPAARK) are held.
   - Screen: xj5 s7 zd719 vs xi9 net -5 (39 vs 44 wins, t -1.70). The losses were kings killed by agrab/atrap3
     (cheesefarm x3, arrows, evileye, Stash, tiny).
+- 09:55 (11-12): **Shutdown (owner #33). xj7 and xj9 starvation panels scored, xk1 (king meets carriers) built and not submitted; replica, VM jobs and drain loop stopped**
+  - xj7 (#395, 26811-26818, 8 of 12 matches): W 10 L 14.
+    - Stash B still starved (r717). The fix worked as built: 20 babies to r150 and the bank spent to 615.
+    - But nothing was delivered by r150. Every later transfer came over the wall row from (18-20,8) to the king at
+      (19,4), and carriers holding 40-100 waited one tile out of reach.
+    - Meow A/B played exactly as xj6 did (L r941, L r815): the core cut never fired there.
+    - Starved kings: mincemeat A (r697), mincemeat B (r1551), Stash B. The other 11 losses were bites and throwHits.
+  - xj9 (#397, 26819-26830): W 14 L 22 (xj6 16-20).
+    - Against xj6: +3 (Meow A, averyfineline A, evileye A) and -5 (Icarus tiny A, externalsustenance B,
+      wallsofparadis B, Merlin sunandmoon B and whatsthecatdoin B).
+    - mincemeat A L r506, mincemeat B L r911, Stash B L r387.
+    - km87 (vs xj8): averyfineline traps 23/22/13/22 vs 13/18/11/18, same 7/8 wins.
+  - xk1 = xj9 + KING_MEET 25: with no enemy or cat in view, the king steps toward the nearest baby holding 30+ raw
+    cheese that is out of transfer reach. Compiled (4e7c9de44615) but never submitted; km89's results were lost.
+  - Shutdown:
+    - Stopped the laptop drain loop (pid 1065185) and the VM jobs: screenq (zd714 running), abort_watch and
+      abort_watch3 (6 days old), an old all_rp wait, and three orphaned game JVMs.
+    - Replica: `galaxy-setup.sh stop`, then bc26-replica-caddy and postgresql@15-bc26 stopped too. Units stay
+      enabled; egress stays active.
+    - When our last VM process exited, logind (RemoveIPC) emptied the VM's /dev/shm (12 GB). Lost: /dev/shm/dcx
+      dumps and the km73-km89 logs, the /dev/shm/kx scripts and extracted replays, and the unknown /dev/shm/kh
+      (4.1 GB). Replay archives (~/diag26b/rp, 638 files) and home are intact.
+    - The analysis scripts were copied from laptop /dev/shm/kd to research/diag26/.

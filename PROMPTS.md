@@ -146,3 +146,7 @@ High level idea:  If one or more opponents uses a very effective tactic against 
 ## 32. 2026-11-12 07:42 PST
 
 You still seem to be spinning your wheels.  I see a lot of analysis, but no launches.  I'd like you to focus on one problem with your bot behavior that's common among panel games and that's leading to losses.  I'd like you to focus on fixing that behavior until you start winning those games.  It's OK with me if doing so incurs losses elsewhere.  It's OK with me if you launch something that's slightly worse than the current champion.  We need to break out of this local maximum.
+
+## 33. 2026-11-12 09:47 PST
+
+OK, shutdown time.  I'd like you to bring down the replica and all running processes on the VM.  Update LEARNINGS, push all open state to Github, delete local files.

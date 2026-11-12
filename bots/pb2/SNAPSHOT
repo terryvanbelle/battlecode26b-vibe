@@ -1,0 +1,6 @@
+name=nul1
+source=bots/ratbot
+source_sha=d8d1066e8b13
+commit=88ff5a1
+created=2026-11-02 03:41 PST
+change=03:45 PST: null reference (no candidate change): today's source + exactly u4s's switches, to pair candidates against the same source (drift probe)

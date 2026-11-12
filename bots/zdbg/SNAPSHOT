@@ -1,0 +1,24 @@
+name=z3b
+source=bots/z3a
+source_sha=8c763bc4acbc
+commit=85adb40
+created=2026-11-06 12:27 PST
+
+z3b = z3a + RICH_FIX_KINGS 2 (= z2x + CASH_KINGS 1 + RICH_FIX_KINGS 2): no formation fixes for one-king sites, and
+CASH only while the team has one king. z2x was rejected at replica block 1 (set 3, 18116-18139 vs z1z's 17946-17961:
+48 cells, 45 alike, D 3 (+1 -2), net -1, t -0.58). Both losses were formations that starved the bank:
+- rose A vs spsquared (18116): CASH formed a second king at r970 and a third at r981 (bank 953 then 583 at r1000),
+  the bank was 0 by r1150 and all three kings starved by r1252. z1z (17946), on one king, sat at 85-165 banked
+  until its stuck carriers delivered (r1100-1200: x 1240 to 1960), formed END_KING's second king at r1915 and won.
+  CASH_KINGS 1 (z3a) blocks the third king.
+- minimaze A vs Xzibit (18124): the one-king RICH_FIX (from r600) formed a second king at r825 with 500 banked; it
+  took 7 of 20 babies at war (backstab r143), the bank was 0 by r950 and both kings starved at r1113-1114. z1z
+  (17954) kept one king, 8-10 babies and ~200 banked, and won. RICH_FIX_KINGS 2 removes that formation.
+- The gain (corridorofdoomanddespair B vs Varun, 18123) is CASH_END's lone-king second king at r1906: kept.
+
+Falsifiers, registered before any z3b game:
+1. Replica block 1 (set 3) must replay z1z on minimaze A (a win) and keep corridor B (a win); either cell lost
+   drops the line's diagnosis (the formation, not the switch, decided it).
+2. Replica t <= 0 at block 1 (TRAINING_ALGORITHM s4) rejects.
+3. Screen vs zd136 (z1z's control), s6 gates: a failed gate withdraws it from the replica.
+4. Local (VM ~/diag26b/zb, vs araid, seed 0): starvation B must equal z3a's game (no third king, win at r2000).

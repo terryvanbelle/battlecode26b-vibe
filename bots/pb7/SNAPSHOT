@@ -1,0 +1,6 @@
+name=pb7
+source=bots/ratbot
+source_sha=b1075c3cd03a
+commit=8dc4575
+created=2026-11-01 00:11 PDT
+change=u4e + DIG_COST 2 (probe)

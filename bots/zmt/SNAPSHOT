@@ -1,0 +1,6 @@
+name=zmt
+source=bots/z9f + MINE_MIRROR true, hook ledgered (K 18) with the call gated off (G.round < 0): never acts
+source_sha=0397cd5c736c
+commit=91f8909f
+created=2026-11-07 12:53 PST
+purpose=never-acting twin of zmm (ledger check): must replay z9f exactly.

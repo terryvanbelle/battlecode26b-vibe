@@ -45,3 +45,28 @@
 16. **Diagnose losses a candidate can flip.** Opponents who beat us 90%+ dominate any loss tally and drew much of the
     diagnosis time (abcdezyxwv_bestsofar). Losses against opponents in the 25-75% band are the ones a one-switch
     candidate turns (u3c's block 2: +6 -1, every gain against an in-band opponent).
+17. **A bank reserve must not gate the rats that are the income or the king's defence.** The starvation line
+    (2026-11-12) cut starved kings from 38 of 97 lost dumped replica games to 2 of 20 losses on xj6's starvation
+    panel. Its gates (austerity: core 4 while the projection is below 0; KING_RESERVE 600) then made death spirals.
+    - Stash B vs YokoOno (26804): 4 babies on a 1300 bank from r140 to r500; the king starved at r782.
+    - mincemeat A vs Icarus (26799): 4 babies for 900 rounds under the reserve, with income equal to the 2/round
+      upkeep; starved at r1329.
+    - The same gates cut combat rat traps on averyfineline vs Finals from xi9's 36/31 (won both) to xj6's 21/7. Our
+      king was bitten to death at r110 and r122.
+    A baby costs 20 cheese at 4-7 alive and repays itself; a reserve that blocks it starves the king slower but surely.
+18. **Delivery over a wall row depends on the king's exact tile.** Transfer reach is dist2 9 to the nearest tile of
+    the king's 3x3, across walls.
+    - Stash B (xj7, 26816): every transfer came from three tiles, (18-20,8), to the king at (19,4).
+    - Carriers holding 40-100 cheese waited one tile out of reach at (16-17,8-9) and (19-20,9).
+    - One step up, to (19,5), would reach y=8 from x=16 to 22. xi9's king sat at (21,5) and won the cell.
+    - Locally (agrab/araid/atrap3, same seed) the king parked against the wall and delivered 2400-8900. The local
+      archetypes do not reproduce the problem.
+19. **Identical end rounds mean the change never fired; early divergence re-rolls the whole cell.**
+    - The replica plays each map with one seed. xj7 (no austerity core cut) replayed xj6's Meow A/B exactly (L
+      r941, L r815).
+    - On Stash B, xi9 and xj6 differ from r16 (different first digs), so the two games share nothing after that.
+    - A single cell flipping after a change can be chaos rather than its mechanism. Check the mechanism in the dump.
+20. **VM /dev/shm is volatile: it empties when our last process on the VM exits.** logind's default RemoveIPC=yes
+    deleted all 12 GB of uid 1000's /dev/shm (dump caches, probe logs, scratch scripts, and the unknown /dev/shm/kh)
+    at 17:49 UTC on 11-12, when the shutdown killed the last long-running job and stopped user@1000. Keep anything
+    worth keeping under ~ (scripts in the repo, replays as ~/diag26b/rp/*.tgz).

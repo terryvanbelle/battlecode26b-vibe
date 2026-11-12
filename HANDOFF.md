@@ -96,7 +96,51 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
-## State (2026-11-08 17:54 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-12 09:55 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+- **Shut down (09:55 11-12, owner #33).** Nothing is running: the replica, the VM jobs and the laptop drain loop are
+  all stopped.
+  - **Replica:** stopped with `galaxy-setup.sh stop`, plus `bc26-replica-caddy` and `postgresql@15-bc26`. The units
+    stay enabled; `bc26-replica-egress` is still active.
+    - Restart: `gssh 'sudo systemctl start postgresql@15-bc26 bc26-replica-caddy'`, then
+      `tools/galaxy26/deploy/deploy.sh start`, then `deploy.sh activity on` (it was running) and
+      `deploy.sh scheduler on` if wanted.
+    - Check with `deploy.sh status`. 9 matches were left ready in the execute queue.
+  - **Drain loop** (laptop): stopped. Restart it as in "Request queue" above. research/panel/queue.tsv (untracked)
+    holds only stale held rows (4 xi9, 4 xj7); clear them first.
+  - **VM screen queue** (`tools/screenq.sh 3`): stopped. runs/screenq.txt holds zd714 (interrupted, re-queued at
+    the head), zd715 and zd716.
+    - Finished but unscored: zd720 (xj5 s6), zd721 (xj6 s7), zd722 (xj6 s6) and zd711-zd713 (xj1-xj3).
+    - Score them with `bash tools/score_screen.sh RUN CAND CTRLRUN CTRL`; ctrl xi9 is zd709 (s7) and zd710 (s6).
+  - **VM /dev/shm is empty** (LEARNINGS 20). The dumps, probe logs and scratch scripts are gone.
+    - Replays are archived in ~/diag26b/rp/*.tgz; regenerate dumps with ~/diag26b/dumpone.py.
+    - The analysis scripts are in research/diag26 (README there).
+  - **Laptop** /dev/shm/rp holds 456 replays (18519-22128, 789 MB) that are in none of the VM archives. They were kept.
+- **x-line, starvation focus (owner #32), where it stands:**
+  - The newest accepted submission, which plays every new match, is **xj9** (#397). The x-line's best scored block
+    is still xi9's #392 (anyrate +2.86 / +1.82).
+  - The starvation panel (research/panel/starve1.json; 6 opponents x 3 maps x 2 seats; same seed per map):
+
+    | Build | Result | Starved kings |
+    |---|---|---|
+    | xj6 | W 16 L 20 | 2 of 20 losses |
+    | xj7 (8 matches) | W 10 L 14 | 3 |
+    | xj9 | W 14 L 22 | not classified |
+
+    Most losses are now kings bitten or thrown at.
+  - Open threads:
+    1. **xk1** (KING_MEET; built, not submitted). Stash B: carriers wait just outside the king's transfer reach over
+       the wall row (LEARNINGS 18).
+    2. **mincemeat vs Icarus** still starves, and earlier with xj9 (A r506, B r911): find the bind in the dump.
+    3. **Kings killed by bites and throws** on small maps: tiny, DefaultMedium, averyfineline, sunandmoon.
+    4. The gates' death spirals (LEARNINGS 17): any reserve should leave out the income rats and defence traps.
+  - Next names:
+
+    | Kind | Next |
+    |---|---|
+    | Bot | xk2 |
+    | Screen | zd723 |
+    | Probe | km90 |
+    | Replica prune list | ~/diag26b/pruned_1111t.txt |
 - **Now (14:01 11-10):**
   - Incumbent still **zdb** (#334). Rejected or dropped at replica block 1 today: zij, zil (bundle, net -1), zih
     (net 0, t 0; rate score +1.34). **zio** (#362, zih + RESCUE_BLOCK) is on the replica: set-3 rows from 24072.
