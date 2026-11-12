@@ -11335,3 +11335,32 @@
   - xi5 = xi1 + WAR_NO_CAT_FIGHT: a fighter with an enemy rat in view skips the flee. Probe km67 (closeup, attack_on_cat, keepout, evileye x atrap3/agrab/araid); screens zd707/zd708 at the head of the queue.
   - VM /dev/shm fell to 387 MB. I deleted the finished probe dirs km55-km60r, km62 and km65, leaving 3.5 GB free.
   - clockwisdom vs agrab B (local, both bots starve by r1020): at r300 our king knows no mine (ml empty) and most rats explore the outer ring. Not pursued.
+- 06:30 (11-12): **xi9 stack built (xi6 + xi8: over-wall delivery, SWAP_LOADED 10); rose stem jam diagnosed; #391 partial**
+  - Rose (replica #390: 26466 A vs YokoOno, 26467 B): our pocket's only exit is (10,2), onto a 1-wide stem.
+    - In the losses, carriers queued in the stem behind empties parked in the dead end and on the exit.
+    - Two rats passed a carry back and forth at (9,3) on each carry expiry.
+    - YokoOno delivers to its king over the walls. Transfer reaches 9 (squared) from any tile of the king's body and needs vision, not a path.
+  - xi7 = xi1 + DELIVER_REACH (new): a delivery's reverse flow search roots at the open tiles in transfer reach of the king's body, not at the king's tile.
+    - km69: rose A transfer 8845 vs xi1's 6766 (vs araid).
+    - Rose B lost at r1047 on transfer 180 (xi1 won on 11186). The stem deadlocked from r180 around a carrier holding 20, which SWAP_LOADED 30 would not swap.
+  - xi8 = xi7 + SWAP_LOADED 10. km71 won all 6 rose cells (araid A/A2/B/B2, abrk A/B), as xi1 did.
+    - Transfer vs xi1: A 9326 vs 6766, B2 6024 vs 4280, A2 8981 vs 12138.
+  - km67: xi5 has the same W/L as xi1 in all 24 cells.
+  - km68 (xi6 vs the xi1/xh6 baselines): 35 the same, 7 gained, 2 lost.
+    - Gained: TheHeist x3, agrab evileye A, atrap3 FreeTheCheese A and keepout A/B.
+    - Lost: agrab evileye B and atrap3 cheesebottles A.
+  - xi4 admitted: zd705 (s7) net +3, t +1.77; zd706 (s6) net -1 (bed A), t -1.00; 0 overruns. xi5 zd707 (s7) net 0.
+  - xi9 = xi6 + xi8 (xi1 + xh9 + xi2 + xi4 + xi5 + DELIVER_REACH + SWAP_LOADED 10). Screens zd709/zd710 queued. It is the next replica block once #391 ends.
+  - #391 (xi1), first 20 matches: 37 of 60 games.
+    - Lost: rose B and TheHeist B vs TSPAARK; keepout, wallsofparadis and closeup A/B plus attack_on_cat vs Finals.
+    - Lost: externalsustenance A/B and Stash B vs YokoOno; thunderdome B vs Varun; DefaultMedium and tiny A/B vs collegejunior.
+    - Lost: averystrangespace B vs Icarus on points; FreeTheCheese A (points), cheesebottles A/B and whatsthecatdoin A/B vs Merlin.
+    - averystrangespace A vs Icarus was won.
+  - keepout vs Finals (26551 g0): war throughout. We led transfer to r1050, and Finals formed a second king around r1200. Most of our rat deaths were to their rat traps (87) and throws. Not pursued.
+  - averystrangespace B vs Icarus (26562 g1): cooperation to r2000; transfer 4640 vs 4425, cat damage 96 vs 0, kings 1 vs 2 (ours formed late).
+    - Both cats stayed inside the walled, dirt-ringed centre (x 17-41, y 23-35) all game.
+    - Our 33 rats stayed in the east and north bands, never within 5 of a cat.
+    - From r1500 they dug about 50 dirt tiles around the ring's edge without getting in.
+    - One Icarus rat dug a straight diagonal tunnel from (4,24) to (30,44) in r125-196, a dig every 2-3 rounds. Icarus bit the cats at r589, r1187 and r1698.
+    - Locally (km72, seed 1) xi1 dealt 8000 cat damage as B. km73 reruns the replica seed (452).
+  - VM /dev/shm was down to 1.2 GB free, so I deleted the finished xh6 probe dirs km63 and km64 (2.7 GB free).
