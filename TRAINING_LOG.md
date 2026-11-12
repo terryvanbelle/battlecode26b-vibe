@@ -11262,3 +11262,27 @@
     Grabs where the target saw the grabber and was weaker are equal (~35 each). Their surplus is grabs from behind,
     36 of them within 3 rounds of our rat landing from a throw (ours 10). In adjacent pairs their rat is the healthier
     257 times to our 187 (tiny A) while our mean health is higher. Their wounded stay out of contact, as Merlin's do.
+- 01:25 (11-12): **xh3 and xh4 admitted, xh4 is replica block #389; #388 set 4 anyrate -0.15; xh5 (WAR_NO_CAT) from Finals' and Merlin's losses**
+  - Screens:
+    - xh3 s6 zd686 vs xg7: n 44, D 3, net -1, t -0.57, 0 own overruns (xg7 4). With s7 (net +1) the xg8-xh3 stack is even. Admitted.
+    - km53/km54 placed zd685's two own overruns: Stash B at OVS 1620 (pre-existing) and evileye B at OVS 499 (stage 4, carry/GrabMicro, with an exception there). The 499 one first shows in xh2, whose change is gather movement only, so it is an old stage on a new game path.
+    - xh4 s7 zd687 and s6 zd688 vs xh3: D 0 and D 0. Its own overruns are evileye B (499) and Stash A vs araid (1620, km56).
+    - km52: wins 11/12 for both xh3 and xh4. Cat damage at r2000 on the seven cells that stay in cooperation to r2000: xh4 46.3k, xh3 21.4k. On averystrangespace B every cat was dead by r1920. xh4 admitted and submitted as block #389 (sets 3+4).
+  - #388 set 4 (26334-26349): anyrate -0.15 (set 3 +0.71).
+    - Gained: rose A vs YokoOno (rate 0.15), clockwisdom A vs Xzibit (0.15), Nofreecheese A vs collegejunior (0.14), RUN A vs Merlin (0.29).
+    - Lost: evileye B vs TSPAARK (1.00) and averyfineline B vs Finals (1.00).
+  - Merlin DefaultLarge (7 dumped games), what decides it:
+    - At r40 we field 32-37 rats to their 18-25. By r140 we are down to 6-16 and they still have 18-24.
+    - By r200 they grab 83-113 of our rats to our 37-64. By r120, 16-20 of our rats have died from throw landings, to their 6-8.
+    - Re-grab rates after a landing are alike (~45%). The gap is in first grabs, many from behind, and in throws into our own crowd: one throw costs us two hits of 42.
+    - The king kill (r192) took 11 throw hits of 42 using our own rats as ammo, picked up 3-4 tiles from our king.
+    - Over all dumps vs Merlin they land 366 throws on our kings to our 101 on theirs (collegejunior 481 to 264), with 260 rat-turns a game within Chebyshev 4 of our king to our 33.
+    - This is GrabMicro's class (blind-spot grabs, health edge), already tried six ways. No candidate.
+  - Finals keepout/wallsofparadis (26200/26201 dumped):
+    - Finals keeps a 1.2-1.9k bank all game and lays 54-82 rat traps by r600 to our 33-45. Their traps fire on our rats 50-77 times, ours on theirs 30-42.
+    - On keepout A they won at r2000 on kings 4 to 2 (three formed by r750-1000) and transfer 31.8k to 16.0k. Cat damage was about even.
+    - Deaths by r600 on keepout: cats killed 44 and 40 of our rats to their 18 and 13. 31 and 31 of ours had bitten a cat in the 10 rounds before, theirs 8 and 2.
+    - evileye B vs TSPAARK (26335) shows the same pattern: from r100 to r200 we did 1.4k cat damage while our rats fell from 20 to 8.
+  - xh5 = xh4 + WAR_NO_CAT: at war a FIGHT rat neither walks to a seen or known cat nor stays in its reach (it flees as gatherers do). These stay: the cat-at-king defence, bites on an adjacent cat, CAT_FEED/CARRY_CAT and END_CAT.
+    - Probe km55 (keepout, mincemeat, DefaultLarge, whatsthecatdoin x agrab/atrap3 x both seats). Screens zd689/zd690 queued.
+  - mincemeat vs Icarus (8 dumps): both sides lose 25-50 rats to cats by r400. Our losses are wars of attrition (our rats 19-20 to 0-2) followed by a starved king. No single lever found.
