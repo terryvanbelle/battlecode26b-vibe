@@ -11038,3 +11038,37 @@
       EscapeTheNight B (r2000 vs r642); overruns 3 vs 1.
     - Screen zd646 (xe2 s6) vs xd6: 44 of 44 each, net 0, 1 overrun.
     - Queue: zd647/zd648 (xe4), zd649/zd650 (xe5).
+- 17:07 (11-11): **x-line overrun fixes (xe9), scout-fan slot bug (xf1), CARRY_KING (xe8), collegejunior tiny diagnosis**
+  - Replica prune before block #383: 137 files, 192 MB (list ~/diag26b/pruned_1111n.txt).
+  - Overruns on the x-line (km4 xe5, km6 xe7, all vs agrab):
+    - Kings: OVS 4748/4799/4899 on Nofreecheese A (4 in xe7's game). The stretch is the cat dodge in King.move: 6-step
+      catRisk over 17 candidate tiles, 6.4-9.9k bytecodes; when it runs late, KPath.tick at the turn's end crosses.
+    - wallsofparadis A r634: the king's indicator (two characters per listed mine) needs over 1000 bytecodes, and
+      IND_LEFT was 1000. The king lost r635.
+    - Newborns: OVS 2021/1620/809 on clockwisdom and wallsofparadis. First turns average 13.5-15k of 17.5k in every
+      x-line build (6.4k init plus the Flow fill to its reserve), so this is the tail, not a new cost.
+  - xe9 = xe8 + bytecode fixes:
+    - catRisk keeps its scores, but footprints are built once per dodge (riskPrep) and catOverlap is inlined.
+    - The dodge's dig fallback needs 5000 left; KPath.tick returns at entry below KP_RESERVE.
+    - The king's indicator needs 2500 left; a newborn's first turn ends after its move below 1500.
+    - km8 (xe9 vs agrab): 0 overruns on Nofreecheese A, clockwisdom A and where_are_you A. 1 on wallsofparadis B, the
+      same newborn and round as xe7, inside its first gather move; left alone.
+  - xe8 (CARRY_KING 8, owner #31): km7 vs agrab, J used 92 turns on tiny (won r44 vs xe7's r57), 0-2 elsewhere.
+  - Scout fan (xe5-xe7) never sent a scout north on clockwisdom A. Debug bots xfan..xfan5 (untracked, indicator fs=):
+    - heardStart took the first SQ_START listed. Squeaks stay readable for rounds, so two newborns took rrSlot 2. xf1
+      takes only this round's, from the nearest sender.
+    - clockwisdom A spawns 5 gatherers by r150 among 12 rushers, so slots 2, 6, 10 gave one scout. Slots 2-4 plus the
+      slot-hashed rats gave four, and xfan5 lost both seats to agrab (xe9 won A).
+    - The north scout waits 20-31 turns per frontier search; the BFS expands most of the map. A first-leg waypoint
+      (axis turned 60 degrees, 50%) bug-walked into the east-edge dead end, and Flow's path took 42 turns. Waypoint off.
+    - xf1 now: scouts are gatherer slots 2 and 3 (both flanks), then every 4th from 8; a rat that didn't hear its slot
+      doesn't scout. km14 running (8 maps vs agrab).
+  - collegejunior tiny (d6 block, 25647): our king dies to bites r100-r175 after the army collapses (17 to 7 by
+    r130).
+    - Their naps 123 vs our 73, their throws 104 vs our 40. Our deaths: 36 throw landings and 6 throw hits, vs their 15
+      and 2.
+    - We bit the cat 112 times to their 7.
+    - Most of our grabbed rats were grabbed from behind (outside their 90-degree cone). The engine allows a grab when
+      the target can't see the grabber or is weaker.
+  - Screen zd647 (xe4) vs zd639 (xd6): 44 v 44 cells, 0 overruns. Queue: zd649/zd650 (xe5), zd651/zd652 (xf1).
+  - Block #383 (xe6) draining under the hourly limit: 16 still queued.
