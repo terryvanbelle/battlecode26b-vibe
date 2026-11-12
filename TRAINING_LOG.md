@@ -11364,3 +11364,38 @@
     - One Icarus rat dug a straight diagonal tunnel from (4,24) to (30,44) in r125-196, a dig every 2-3 rounds. Icarus bit the cats at r589, r1187 and r1698.
     - Locally (km72, seed 1) xi1 dealt 8000 cat damage as B. km73 reruns the replica seed (452).
   - VM /dev/shm was down to 1.2 GB free, so I deleted the finished xh6 probe dirs km63 and km64 (2.7 GB free).
+- 07:08 (11-12): **#391 scored (xi1 60/96, best base rate of the last three blocks); xi9 is block #392; xj1/xj2 fix averystrangespace's 0 cat damage; the replica's seeds are fixed per map**
+  - #391 (xi1): 60 of 96 games (set 3 28/48, set 4 32/48).
+    - anyrate sum(win - rate): S3 +0.90, S4 -2.55. On the same base: #390 (xh6) -0.14/-4.66, #389 (xh4) -5.34/-4.67.
+    - In-band losses (rate >= 0.67):
+      - averystrangespace B vs Icarus, both sets.
+      - Finals closeup A/B and attack_on_cat A/B (xi5 targets these; it is in xi9).
+      - sunandmoon B vs Merlin; TSPAARK TheHeist B and rose B.
+      - tiny B vs Icarus; t_minus B vs collegejunior; Meow A vs YokoOno.
+    - Replays xi1a-h.tgz. Replica prune: 159 files, 212 MB, cutoff before the block's first file (13:22 UTC). List ~/diag26b/pruned_1111r.txt; VM / at 2.3 GB.
+  - The replica plays every game of a map with one seed, whatever the opponent or seat. Examples: averystrangespace 452, rose 542, keepout 919, tiny 36.
+    - 26562 (set 3) and 26611 (set 4) averystrangespace B were the same game.
+    - Local probes with the map's replica seed reproduce its cats and mines.
+  - averystrangespace B (26562/26611): both cats stay in the dirt-ringed centre. Locally at seed 452 (km73), xi1 and xi9 also deal 0 cat damage.
+    - r750-1500: nearly all 33 babies walk toward the enemy home mine (10,7). MINE_BALANCE + IDLE_SHIFT send them there once the one home mine idles them. Stalls run 25-90, and the pick is dropped and re-made every turn.
+    - Their flow searches take 40-60 turns, and many never finish (fl=3:0).
+    - Nav.goTo skips DIG_FIRST whenever Flow.building, so they bug-walk without digging. The first rat reaches the ring at r1950.
+  - xj1 = xi9 + DIG_REV (new): DIG_FIRST also runs while a reverse flow search builds.
+    - km74 (seed 452): B cat damage 4646 (xi1 0), transfer 6275 (xi1 4725); A cat 1735 (xi1 2742), transfer 5920 (xi1 5315).
+    - Seed 1 A lost: a second king at r650 on a 775 bank, then both kings starved at r1497. km77: xi9, xi6, xh9 and xi2 all won that cell (one extra king, none starved), so this is a re-roll, not the stack.
+  - xj2 = xj1 + MINE_STALL_CAT 100 (new): in cooperation, a gatherer whose mine walk stalls past 25 takes the cat errand (nearest cat, else the centre) for 100 rounds.
+    - km76 (seed 452): A cat 7819, transfer 7307; B killed both cats (8000) and won at r1960, transfer 7116.
+    - km78 (xj2 vs xi9 on the replica seeds of rose, FreeTheCheese, whatsthecatdoin and cheesebottles) and screens zd711-714 are queued.
+  - Screens:
+    - xi5 zd708 (s6): net -1, t -1.00; 1 own overrun, on Stash, which has overrun before. Admitted.
+    - xi9 zd709 (s7) vs xi1: net +1, t +0.44, 0 overruns.
+      - Lost: agtr cheesefarm A, where a second king formed and both kings starved at r594; atrap3 bed B, where the king starved at r208.
+      - xi1 had no starved kings in that screen.
+  - Other #391 losses:
+    - sunandmoon B vs Merlin (26613): a cat scratched our king from r40 to r108, about 480 HP. Merlin then threw our own rats into it, 42 per hit, and the king died at r209.
+    - t_minus B vs collegejunior (26609) and tiny B vs Icarus (26611): the king starved.
+      - We fielded 27-34 babies by r40, and the bank fell from 2488 to about 900. collegejunior kept about 1950 with 20 babies.
+      - Cats killed all 54 of our babies on t_minus. With under 8 babies LOW_FLOOR let spawns take the bank to 1, and the king starved at r316.
+      - Locally (km75, replica seeds) t_minus B won and tiny B lost to an early throw kill, so neither loss reproduces.
+    - rose A vs YokoOno (26602): lost on points, transfer 9.8k vs 21.0k, cat damage 4.1k vs 9.4k. xi8's DELIVER_REACH is aimed at this delivery gap.
+  - Block #392 (xi9) submitted 06:45: 8 sent, 24 queued for the drain.
