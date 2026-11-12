@@ -11207,3 +11207,31 @@
     - Screens zd671 (s7) and zd672 (s6) are queued.
   - xg6 = xg5 + SWAP_YIELD for the loaded swap (babies keep off the tile next to an ally that is carrying a rat).
     Probes km40 on rose, both seats, against araid and abrk.
+- 23:57 (11-11): **Block #387 (xg2) anyrate -6.01; x-line stacks the field's cat feeding, cat carries and cheap traps (xg8-xh1, block #388); xh2 stops the W/M flip; xh3 keeps the king off bisector mines**
+  - Block #387 (xg2, archives ~/diag26b/rp/xg2a-h.tgz): anyrate -6.01 (xf3 #385 +3.16, xf7 #386 -4.20).
+    - In-band losses: rose x3 (TSPAARK A/B, YokoOno B; the loaded-swap fix came after xg2), YokoOno tornadoes A
+      (rate 1.00), YokoOno 5t4rv4t10n B (1.00), TSPAARK TheHeist B (0.98, coop, lost on points at r265), Icarus tiny
+      A/B (0.76).
+  - xg5/xg6 (loaded swap + SWAP_YIELD): km40 rose 4 of 4 (xg4 2 of 4). xg6 s7 zd673 net -2 t -0.81, s6 zd674 net -2
+    t -1.43 (both rush losses on tiny), own overruns 2 on Stash A at stages that already overran. Admitted 23:24.
+  - xg7 (MIRROR_ALL: every mine's twin listed, gatherers pick enemy-half mines, Merlin's raid): km42 cheesebottles
+    far-half picks 600/3125 (xg6 200/160). s7 zd675 net -1 t -0.57. s6 zd676 vs zd674: n 44, net 0, t +0.00,
+    picks/100 46.0 vs 39.5; own overruns keepout B (3) and cheesefarm A (1), probe km50 running.
+  - Owner #31, copying the field's tactics:
+    - xg8 CAT_FEED 150: a throw into a cat (the rat dies, the cat sleeps) scored 150 point-blank instead of -50. km43
+      feeds 60 vs xg7's 6; wins 14/16 both; arrows won sooner (r248 vs r1052).
+    - xg9 CARRY_CAT 6: a carrier walks its enemy to a cat in sight and holds the throw for a point-blank feed (final4
+      did this on arrows). km44: feeds as xg8, wins 14/16.
+    - xh1 RAT_TRAP_MIN_CHEESE 100 (from 900), TRAP_SPAWN_FIRST off: field bots lay 24-80 rat traps a game to our 8-10;
+      ours sat under the 900 floor. km44: traps 2-3x, ~90% hit, wins 15/16, 0 own overruns. Submitted as block #388.
+  - xh2 WANDER_R 2 + hysteresis: wanderAround drew tiles within 3 of the mine while atMine holds at 2, so ring-3
+    draws flipped a gatherer W/M every turn (xg6's Stash overruns were one such rat at 15-17k bytecodes).
+    - Our own rats' W/M two-cycles: xh1 3.16% of rat turns (km44), xh2 v1 0.14% (km46), xh2 0.01% (km47). km47 wins
+      15/16, as xh1.
+    - Correction: flipflop.py also counted the opponent's rats (agrab/araid share our indicators), so the 2-11% in
+      the xh2 attempts row is both sides.
+  - xh3 KP_NO_TIE: KPath.homeHalf counted bisector mines (d == e) as home under MINE_TIES. In #387's 5t4rv4t10n B the
+    king walked (19,19) to (5,12) toward the centre-line mine (9,10) and was bitten dead at r180. km49: xh3's king
+    stays home in all four 5t4rv4t10n games (xh2's walked to (16,5), (14,15), (7,13) and (16,12)); wins so far 3 of 3.
+  - Tornadoes 2-king spiral: form2.py does not support an income gate on the second king; dropped.
+  - Note: tools/score_screen.sh runs on the laptop (it ssh's to the VM itself).
