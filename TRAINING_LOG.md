@@ -11286,3 +11286,29 @@
   - xh5 = xh4 + WAR_NO_CAT: at war a FIGHT rat neither walks to a seen or known cat nor stays in its reach (it flees as gatherers do). These stay: the cat-at-king defence, bites on an adjacent cat, CAT_FEED/CARRY_CAT and END_CAT.
     - Probe km55 (keepout, mincemeat, DefaultLarge, whatsthecatdoin x agrab/atrap3 x both seats). Screens zd689/zd690 queued.
   - mincemeat vs Icarus (8 dumps): both sides lose 25-50 rats to cats by r400. Our losses are wars of attrition (our rats 19-20 to 0-2) followed by a starved king. No single lever found.
+- 03:25 (11-12): **xh5 and xh6 admitted, xh6 is replica block #390; #389 (xh4) anyrate -5.32/-5.14, led by averystrangespace vs Icarus 4 of 4 (coop cat errand never ran: xi1); multi-king line xh7-xh9**
+  - xh5 (WAR_NO_CAT):
+    - km55 vs xh4 (32 games): wins 14 vs 15. Cat deaths by r600 on keepout fell 59->35, 39->30, 51->24 and 44->27.
+    - But it lost keepout A and B vs atrap3 at r2000 on cat share (ours 5627 and 6002 vs 8000, cats alive at the end; xh4 won both 8000/8000).
+    - Over the whole game our pounce deaths rose (46 xh4, 69 xh5): cats that live longer keep killing.
+    - Screens: s7 zd689 net +3 (t +1.77), s6 zd690 net +2 (t +1.43). Its one own overrun is at OVS 2208 (km59), which overran before (xd5, u4r). Admitted.
+  - xh6 (WAR_NO_CAT_END 1200): km57 vs xh5 14-14. Keepout vs atrap3 cat share is back to 8000/8000, but both seats still lose 49-50 on transfer.
+    - Screens: s7 zd691 net -2 (t -1.43; two evileye A games that ended before r1200, where the two bots differ only by the round test's bytecodes), s6 zd692 net 0 with transfer 1.04x.
+    - Admitted and submitted as block #390 (sets 3+4).
+  - #389 (xh4), anyrate set 3 -5.32 and set 4 -5.14 (xh1: +0.71 / -0.15).
+    - averystrangespace vs Icarus lost 4 of 4 (rate 0.94-0.96). All four stayed in cooperation to r2000; Icarus had 224-230 cat damage by r200 and we had 0.
+    - We had one king and 600-900 banked from r400, so endCatBar held every baby for END_KING and END_CAT_COOP never ran. None of our 32 babies carried cheese from r400, and no cat traps were placed.
+    - xh1's win there (26346) placed 28 cat traps and formed its second king at r750, for 5.9k cat damage.
+    - Other in-band losses: FreeTheCheese B vs collegejunior (1.00), averyfineline B vs Finals (0.94), TheHeist B and rose B vs TSPAARK (0.87/0.83), t_minus_five_minutes B vs collegejunior (0.80), Meow A vs YokoOno (0.79).
+    - Local km62 (xh1-xh6 vs araid/agrab on averystrangespace) does not reproduce Icarus's early cat damage. It does show 9.8k rat-turns stuck walking to far mines after r1500 and only 96 errand turns.
+  - xi1 = xh6 + END_CAT_COOP_FREE 1750 (in cooperation a lone king's babies take cats until r1750) + END_CAT_CENTRE (with no cat known they walk to the map centre).
+    - Probe km63 (averystrangespace, clockwisdom, rose, TheHeist). Screens zd699/zd700 queued.
+  - Replica r2000 points games in our dumps (tools/r2k.py: 162 games, 125 won):
+    - Of 37 lost, 21 ended at equal kings (2-2, mostly vs Merlin, with cat share 0.29-0.55 and transfer 0.31-0.46) and 10 with fewer kings.
+    - 97 of the wins had more kings. At war kings are 0.5 of the points (GameWorld.setWinnerIfMorePoints), five kings are allowed before r1200 and two after.
+  - Multi-king line (owner #31, Finals keeps 1.2-1.9k banked and holds 3-4 kings):
+    - xh7 = xh4 + FORM_MAX 3 + FLOOR_PER_KING. km58 vs xh4: 15 vs 19 wins. Third kings starved their teams on cheesebottles A (r701 agrab, r1388 atrap3) and FreeTheCheese A atrap3 (r1557). The merges took 8 babies each, and the 900 floor blocked the respawn.
+    - xh7 screens: s7 zd693 net +1 with transfer 1.08x, s6 zd694 net 0. Not admitted alone.
+    - xh8 = xh7 + FORM3_BANK 1200: s7 zd695 net +1 with transfer 1.05x. km60 rerun pending.
+    - xh9 = xh6 + RICH_LATE 950/600/2000 (a third king r950-1150 while the r2000 projection with three kings keeps 2000): km61 and screens zd697/zd698 queued.
+  - VM /dev/shm filled to 0 at ~10:50 UTC (dumps 10.5 GB). I deleted probe dirs km1-km54 (finished and logged), which left 4.3 GB free. 11 km60 games had failed and are being rerun as km60r.
