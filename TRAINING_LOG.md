@@ -11098,3 +11098,22 @@
     r40). u3f/u3h (RICH off on small maps, RICH_BANK 1500) were rejected locally before; not retried yet.
   - Queue: screens zd651/zd652 (xf1) dropped; xf3 contains xf1. zd653 (s7) and zd654 (s6) now carry xf3. km16 = xf3
     on km15's 8 cells. Block #383 (xe6): 12 matches still queued behind the hourly limit.
+- 18:05 (11-11): **Block #383 (xe6) complete at 55 of 90 and 40 to zj3's 48 on 68 shared; fresh zj3 block #384 for a same-window line comparison; xf4 (GM_HEARD) was inert because TRAP_SHARE is off**
+  - Block #383 (xe6), 32 matches (25801-25832):
+    - 55 of 90 cells (xd6 #382 57, xc6 #381 58).
+    - Against zj3 #378 on 68 shared cells, 40 to 48.
+    - Set-3 cellrate z -0.45 (wins minus rate -0.80 on 54 cells). anyrate sum -3.28 (xd6 -1.15, xc6 -0.10, zj3 #378 +4.04).
+    - Cells all three x-line blocks lost but zj3 won: Icarus mincemeat A, Merlin sunandmoon A. All three won Varun arrows A, which zj3 lost.
+    - xe6 losses on cells every earlier draw had won (rate 1.00): TSPAARK TheHeist B, Icarus averyfineline A, Varun grove A, collegejunior t_minus B.
+    - On averyfineline A (25813 vs zj3's 25293), our babies fell 15 to 2 over r80-120 while theirs stayed at 13-15. 20 of our rats died to traps (zj3's game: 6). The king then starved: hp fell 10 a round from r160 to its death at r217.
+    - Replays are on the VM as xe6a-h.tgz. Prune after the fetch: 73 files, 102 MB (list ~/diag26b/pruned_1111o.txt).
+  - zj3 resubmitted as replica block #384 (build/block_zj3_fresh34b.sh, full sets 3 and 4). The x-line has now trailed zj3's single old block three times, so the line gets judged on same-window draws, per the #30 rule.
+  - xf3 screen zd653 (s7) vs xd6's zd639: t -0.44, 43 to 44 wins, 0 own overruns. km16 (xf3 vs agrab, 8 cells): 8 of 8 won, with 1 king overrun on Nofreecheese A.
+  - xf4 = xf3 + GM_HEARD 3 (GrabMicro counts unseen squeaked enemies within Chebyshev 3 as threats):
+    - The km18 probe (vs xf3, 4 maps, both seats) went 3 of 8, but the dumps show 0 ghost threats.
+    - Cause: Cfg.TRAP_SHARE is false, so no SQ_TRAP squeak was sent or read. The same holds for xf3's THREAT_THROW heard check and GUARD_MEMORY's heard positions: both are inert.
+    - Fixed in xf4: GM_HEARD sends and reads SQ_TRAP itself, with positions only (no trap marks). EKING and BURN reading stay under TRAP_SHARE. The rerun is probe km19.
+    - Squeaks reach only our team and cats (GameWorld.squeak), so enemy squeaks can't appear as ghosts.
+  - Merlin DefaultLarge (25799) is a grab war:
+    - We had 33 babies to their 19 at r40 and 6 to 17 at r160.
+    - By r300, 32 of our rats died on landing from a throw, against 20 of theirs.

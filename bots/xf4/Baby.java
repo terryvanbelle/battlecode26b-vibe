@@ -1254,7 +1254,7 @@ public final class Baby {
             ekRelayed = lastEKingRound;
             return;
         }
-        if (!G.coop && Cfg.TRAP_SHARE && nearestEnemy != null && nearestEnemy.direction != null) {
+        if (!G.coop && (Cfg.TRAP_SHARE || Cfg.GM_HEARD > 0) && nearestEnemy != null && nearestEnemy.direction != null) {
             int d = nearestEnemy.direction.ordinal();
             // Cfg.GM_HEARD (xf4): its health and whether it carries ride along for the hearers' grab micro
             if (Cfg.GM_HEARD > 0) d |= Math.min(nearestEnemy.health, 127) << 3 | (nearestEnemy.carryingRobot != null ? 1 << 10 : 0);

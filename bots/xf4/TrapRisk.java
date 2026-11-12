@@ -43,9 +43,10 @@ public final class TrapRisk {
             put(r.location.add(f.rotateLeft()));
             put(r.location.add(f.rotateRight()));
         }
-        // Cfg.GM_HEARD (xf4): this round's squeaks first, so the cap keeps the freshest
-        if (Cfg.TRAP_SHARE && Cfg.GM_HEARD > 0) heard(G.rc.readSqueaks(G.round));
-        if (Cfg.TRAP_SHARE) heard(G.rc.readSqueaks(G.round - 1));
+        // Cfg.GM_HEARD (xf4) reads them without TRAP_SHARE (positions only, no marks), this round's first so the cap
+        // keeps the freshest
+        if (Cfg.GM_HEARD > 0) heard(G.rc.readSqueaks(G.round));
+        if (Cfg.TRAP_SHARE || Cfg.GM_HEARD > 0) heard(G.rc.readSqueaks(G.round - 1));
         if (Cfg.TRAP_SHARE && Cfg.GM_HEARD == 0) heard(G.rc.readSqueaks(G.round));
         // clear marks we have proven safe: anything within 1 of our tile marked before we arrived
         if (Cfg.RISK_ROWS) { TrapRows.clear(me, arrived); return; }
@@ -62,14 +63,15 @@ public final class TrapRisk {
     static void heard(Message[] ms) {
         for (Message m : ms) {
             int c = m.getBytes();
-            if (Comms.sqType(c) == Comms.SQ_EKING) { Baby.heardEKing(c); continue; }
-            if (Cfg.BURN && Comms.sqType(c) == Comms.SQ_BURN) { if (Baby.burnRound == 0) Baby.burnRound = G.round; continue; }
+            if (Comms.sqType(c) == Comms.SQ_EKING) { if (Cfg.TRAP_SHARE) Baby.heardEKing(c); continue; }
+            if (Cfg.BURN && Comms.sqType(c) == Comms.SQ_BURN) { if (Cfg.TRAP_SHARE && Baby.burnRound == 0) Baby.burnRound = G.round; continue; }
             if (nHeard >= heardE.length) continue;   // bytecode cap: the nearest few squeaks are enough
             if (Comms.sqType(c) != Comms.SQ_TRAP) continue;
             int d = (c >> 12) & 7;
             MapLocation e = new MapLocation(Comms.sqX(c), Comms.sqY(c));
             heardX[nHeard] = c >> 12 & 0xFFFF;
             heardE[nHeard++] = e;
+            if (!Cfg.TRAP_SHARE) continue;
             Direction f = G.DIRS[d];
             put(e.add(f));
             put(e.add(f.rotateLeft()));
