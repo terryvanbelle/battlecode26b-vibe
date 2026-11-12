@@ -11235,3 +11235,30 @@
     stays home in all four 5t4rv4t10n games (xh2's walked to (16,5), (14,15), (7,13) and (16,12)); wins so far 3 of 3.
   - Tornadoes 2-king spiral: form2.py does not support an income gate on the second king; dropped.
   - Note: tools/score_screen.sh runs on the laptop (it ssh's to the VM itself).
+- 00:32 (11-12): **Block #388 (xh1) set 3 anyrate +0.71 (xg2 -4.51); xh3 stack screen net +1; xh4 (END_CAT_COOP) from coop points losses; TheHeist B is a cat-at-the-exit race**
+  - #388 set 3 (26198-26229): 28 of 48, anyrate +0.71 against xg2's -4.51 on the same set. Gained rose A/B vs
+    TSPAARK (the loaded swap), Stash A vs YokoOno, FreeTheCheese B vs Merlin, minimaze B vs Xzibit. In-band losses:
+    TheHeist B vs TSPAARK (0.91), externalsustenance B (0.52), thunderdome B (0.45), Icarus mincemeat A (0.48).
+  - Screens: xg7 s6 zd676 net 0, t 0.00; its four own overruns (km50 keepout B, cheesefarm A) are all at OVS 1620, a
+    stage that overran before, and xh2 has none there. xg7 admitted. xg8 s7 zd677 net +2, t +0.81. xh3 s7 zd685 vs
+    xg7 zd675 (the whole xg8-xh3 stack): n 48, D 7, net +1, t +0.37, 2 own overruns (km53 locating them).
+  - Coop points (engine setWinnerIfMorePoints): cat damage share 0.5, kings 0.3, transfer 0.2; at war 0.3/0.5/0.2.
+    In coop the game ends when the last cat dies.
+    - Replica since 24000: early MORE_POINTS 62 won, 8 lost (TheHeist 36-6); r2000 MORE_POINTS 393 won, 89 lost.
+    - #387 coop-all-game losses (backstab -1): clockwisdom A vs Xzibit (26157) cat damage 500 to 1150 with kings 2-1
+      and transfer 3855-3400 (46-54); rose B vs YokoOno (26154) 400 to 1350 (39-60).
+    - xh4 = xh3 + END_CAT_COOP 1500: END_CAT's errand (free babies walk to the nearest known cat and bite) also in
+      coop, from r1500, without the enemy-in-reach bar. Every earlier END_CAT test was war-only. Probe km52 (vs
+      clockwisdom/rose/averystrangespace, agrab/araid, both seats); local clockwisdom games end at r910-1017 when the
+      cats die, so it is inert there.
+  - TheHeist B vs TSPAARK (26199): both seats kill their own cat first (r250, r256) and TSPAARK's dies last (r289 as
+    A, r325 as B). Seat A had formed its second king by r325 and won; seat B had not by r289 and lost 49-50 on transfer.
+    - Locally (km51, xh3 B vs araid): the cat sits at our room's only exit (53,35). The king's mine list stays at one
+      mine to r225 and grows to 5-7 after the cat dies; income 73-215 a hundred rounds then 315-320; surplus goes
+      positive at r225.
+    - 12 of our 20 rats chase piles at y=27-28 seen through the room's south wall (y=29) from r200 to r240. Their
+      walk goes ~45 tiles out the east exit, and their stall never reaches 12. CHEESE_LOS (off since s5t) covers this.
+  - Tiny vs collegejunior (26115/26116, out of band): they grab 136/120 to our 81/90 and throw 105/96 to our 42/59.
+    Grabs where the target saw the grabber and was weaker are equal (~35 each). Their surplus is grabs from behind,
+    36 of them within 3 rounds of our rat landing from a throw (ours 10). In adjacent pairs their rat is the healthier
+    257 times to our 187 (tiny A) while our mean health is higher. Their wounded stay out of contact, as Merlin's do.
