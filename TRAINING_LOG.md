@@ -11169,3 +11169,41 @@
   - xf8 = xf7 + MINE_MIRROR (owner #31: use Merlin's raid ourselves): our sightings are listed with their twins, and
     MINE_ANY gatherers spread to the enemy half's mines. km28 cheesebottles vs agrab/atrap3 4/4, the same as xf7.
     zd662 (s7): 0 changed cells, 1 overrun (the same as xf7's). zd663 (s6) running.
+- 22:26 (11-11): **Block #386 (xf7) anyrate -4.20; rose lost both seats to a stem jam that RUSH_LIFE makes worse; scout pipe (xg1-xg4); xg2 is block #387; xg5/xg6 loaded swap**
+  - Block #386 (xf7 = xf3 + GM_GAP + RUSH_LIFE 150): 58 of 96 cells, anyrate -4.20 (xf3 #385 +3.16 on 78 known
+    cells).
+    - Gained: FreeTheCheese vs Merlin A+B and clockwisdom vs Xzibit A+B.
+    - Lost: minimaze vs Xzibit A+B, rose vs YokoOno A+B, and some single cells.
+  - rose vs YokoOno (26049/26050 g1, jam.py = rat-turns a rat carrying cheese stood 20+ turns):
+    - xf7 counts 2707 and 1810 such turns, xf3 513 and 237.
+    - With xf7, cooperation lasted the whole game (backstab -1) and our king starved at r1125/r1085. xf3's attackers
+      grabbed an enemy rat at r406 and r518, and it won both games at r2000.
+    - The king's room has one exit: the diagonal (11,1)-(10,2) into the 1-wide x=9 stem. (10,2) is the only stem tile
+      within transfer range (dist2 9) of the king at (14,1-3).
+    - A rat that delivers there steps into the (9,0)-(9,2) dead end. From r216, empty rats on (9,0)-(10,2) faced loaded
+      carriers on (9,3)-(8,8), and they stayed there to the end.
+  - Local km37 (rose, seed 1): xf3 and xf5 won all 8 games against araid and abrk (stuck turns 7-928). xf7 lost seat A
+    to both opponents, with 1839 stuck from r81 and transfer 1675; seat B had 1793 stuck. xg4 also lost seat A to both
+    (1571 stuck, king killed at r845). These numbers point at RUSH_LIFE (demoted attackers become gatherers that go
+    home through the stem), but that link is not shown directly yet.
+  - minimaze vs Xzibit (xf7 as B, 26050 g1): our rats never came within 4 of the west mines (9,43) and (13,37). xf3 as
+    B worked them from r315 and had transfer 17.9k to 8.6k. Locally against abrk (km39), every build reached them by
+    r142-402, so this was not reproduced.
+  - Scout freeze: fan scouts stood still for 63-80% of their turns while frontier searches ran.
+    - xg1 (SCOUT_PIPE): the scout walks its copy of each finished path while the next search grows from the path end.
+      Rejoin bug (wpos -1) fixed at 21:28. zd668 (s7) vs xf9: net -4, t -1.27.
+    - xg3 (FRONTIER_FAST, PIPE_HELD 20) was not screened.
+    - xg4 (PIPE_WAIT 5 / PIPE_REST 12): a scout held at its walk's end drops the search. Still-turns fell to 32-41%
+      and tiles seen rose 1.6-1.9x. zd669 (s7) vs xf9: net 0, t +0.00, picks/100 54.4 vs 52.4. zd670 (s6) running.
+  - xf9 (RICH_FROM 300): zd665 (s6) net -4, t -2.07, all on small maps. Area-gated in xg2 (RICH_FROM_AREA 1100):
+    zd667 net -1, t -0.57, admitted. xg2 was submitted as block #387 (build/block_xg2.sh). The hourly limit is pacing
+    the drain (24 rows queued at 22:02).
+  - xg5 = xg4 + SWAP_LOADED 30 / SWAP_HOME 10 (z7u's loaded swap, no ledger): a carrier with 30+ cheese within 10 of
+    our king carries an empty ally that blocks its step past it.
+    - km38 rose: seat A won against both opponents (transfer 9410, stuck 336, 77 ally grabs).
+    - Seat B lost against both (stuck 1136 from r147, king dead at r1227). Attackers heading for the enemy king
+      ('a>16,1'), chasers of cheese seen through the room wall ('C') and outbound gatherers ('M') filled the stem.
+      Carriers held allies they could not set down.
+    - Screens zd671 (s7) and zd672 (s6) are queued.
+  - xg6 = xg5 + SWAP_YIELD for the loaded swap (babies keep off the tile next to an ally that is carrying a rat).
+    Probes km40 on rose, both seats, against araid and abrk.
