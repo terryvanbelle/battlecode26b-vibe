@@ -11399,3 +11399,22 @@
       - Locally (km75, replica seeds) t_minus B won and tiny B lost to an early throw kill, so neither loss reproduces.
     - rose A vs YokoOno (26602): lost on points, transfer 9.8k vs 21.0k, cat damage 4.1k vs 9.4k. xi8's DELIVER_REACH is aimed at this delivery gap.
   - Block #392 (xi9) submitted 06:45: 8 sent, 24 queued for the drain.
+- 07:49 (11-12): **Owner #32: one behaviour, fixed until those games are won. King starvation is the top replica loss cause (32 of 85 lost dumped games); xj5 (KING_RESERVE) launched on a 12-match starvation panel; xj3/xj4 stacked**
+  - Loss causes over 147 dumped replica games since 26000 (85 lost): king starved 32, king bitten 20, points (coop) 13,
+    king throwHit 9, points (war) 7, cat scratch 4. The starved ones: mincemeat vs Icarus 7, tiny 3, t_minus 2,
+    externalsustenance 2, Meow 2, and one each on closeup, averyfineline, evileye, sunandmoon, DefaultLarge,
+    whatsthecatdoin and Stash. In the war ones our bank was 755-1585 at r50 to their 1024-2010 (RICH spawning from r0),
+    0-400 at r150 to their 46-1000, and 0-100 at r300 while theirs held 55-470 in 6 of them.
+  - xj3 (RICH_SMALL_COOP): t_minus B vs collegejunior lost 26345 (#388, xh1), 26400, 26478 and 26609 after winning
+    26160. Every time we fielded 33-34 babies by r40 (1530 cheese) to their 20 and laid 50-60 cat traps by r150; the bank
+    then sat at 23-330. km79: wins 15/18 (xj2 13/18).
+  - xj4 (AUSTERE): externalsustenance is a walled box with every mine outside it, so both kings starve. In 26636 we spent
+    47 spawns, 31 rat traps and 7 cat traps and starved first (r270). km80: wins 16/18 (xj3 13 plus 2 unparsed).
+  - xj5 = xj4 + KING_RESERVE 600 (spawn floors, babies' rat traps, lane and ring cat traps) + DIG_RESERVE 300 + RICH_FROM
+    300 on every map. It was submitted (submission 393) with research/panel/starve1.json: 6 opponents x 3 starvation maps,
+    both seats, 12 matches, 36 cells (build/block_xj5s.sh). The replica seed is fixed per map, so each cell compares
+    directly with its earlier results. All 12 matches are queued for the hourly drain; xi9's last 12 #392 matches are held.
+  - #392 (xi9), first 8 matches: lost rose B vs TSPAARK (cat damage 1398 to 3540: TSPAARK laid 39 cat traps in the rose
+    maze, 29 hits), keepout and wallsofparadis vs Finals in both seats (as always), and externalsustenance A. It won
+    externalsustenance B for the first time since 25970.
+  - xi2 screens: s7 zd701 net +0, s6 zd702 net +0.
