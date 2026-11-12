@@ -11418,3 +11418,26 @@
     maze, 29 hits), keepout and wallsofparadis vs Finals in both seats (as always), and externalsustenance A. It won
     externalsustenance B for the first time since 25970.
   - xi2 screens: s7 zd701 net +0, s6 zd702 net +0.
+- 08:21 (11-12): **Starvation focus, second build: xj6 (form a king only on +1/round net; RICH_LATE off) is playing the starvation panel (26799-26810); #392 (xi9) anyrate +2.86 / +1.82**
+  - Six more starved kings in #392's losses (38 of 97 lost dumped games are now starvation). Nine of the 38 had formed
+    a king the income could not feed:
+    - cheesebottles A vs Merlin (26657): formed at ~r150 on a trusted 3.3/round against 4 upkeep. The bank fell from
+      1924 at r201 to 84 at r1501 and the king starved at r1557; Merlin held 4018.
+    - Also 26658, 26055, 26081 RUN, 26120, 26153, Meow 26466/26602 and 26635.
+    - FORM_NET100 was -100, so a king could form on a net loss of 1 a round.
+  - xj6 = xj5 + FORM_NET100 100 + RICH_LATE off.
+    - km82 (with RICH_LATE still on): RICH_LATE formed a third king at r1144 in cheesebottles B vs agrab. The merge took
+      13 of 19 babies, transfer fell from 680 to 280 per 100 rounds, and all three kings starved by r1964.
+    - km83 (final xj6): 8 of 8 won on cheesebottles and FreeTheCheese vs agrab/araid, with no king deaths.
+  - Launch: xj6 was submitted (394) at 08:14. The 12 unsent xj5 starvation-panel rows were retagged xj6, and the drain
+    sent all 12 at 08:18 (26799-26810). xj5 itself was never played on the panel.
+  - km81 (xj5 vs xj4, 20 small-map games each): 18 = 18 wins. The reserve holds the bank: mincemeat B vs araid had
+    558-615 at r151-301 (xj4 263-347).
+  - #392 (xi9, 28 of 32 matches; the last 4 were held when xj5 was submitted):
+    - Set 3 anyrate +2.86 (xi1 +0.90, xh6 -0.10); set 4 +1.82 on 12 matches (xi1 -2.55, xh6 -4.82). This is the best
+      x-line block so far.
+    - Won t_minus B vs collegejunior (26691); lost Merlin 0-6 and collegejunior DefaultMedium/tiny in both seats.
+  - Screens: xj4 s7 zd717 vs xi9 net -1 (t -0.57); s6 zd718 net +2 (t +1.43), 0 starved kings (xi9 2); xi9 s6 zd710 vs
+    xi1 net -2 (t -1.43).
+  - Pruned 82 replica replays older than #392's first (14:57 UTC, 116 MB; list ~/diag26b/pruned_1111s.txt). VM / has
+    2.3 GB free.
