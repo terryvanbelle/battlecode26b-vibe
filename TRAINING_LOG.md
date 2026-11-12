@@ -11148,8 +11148,8 @@
     replays of 25837-25847 were deleted (HTTP 404). The 3-0 matches got match.json files built from the API
     ("synthetic": true). 25839/40 (1-2), 25843/44 (2-1, 1-2) and 25845/46 (2-1) have no per-map results. From now on
     the cutoff comes from the block's first replay file time.
-  - Block #385 (xf3, sets 3+4): known cells 56 of 78, anyrate +3.16; about 65 of 96 with the unknown cells at base
-    rate (xe6 59, xd6 61, xc6 62). zj3's anyrate is +3.88.
+  - Block #385 (xf3, sets 3+4): 56 of the 78 cells with per-map results won; anyrate +3.16, the best x-line block
+    (xe6 -3.28, xd6 -1.15, xc6 -0.10 at 18:05). About 65 of 96 if the 18 unknown cells go at base rate.
   - xf6 (wounded flee) dropped at 19:09: km22 2 of 8; its wounded sat next to healthier enemies as often as xf3's.
     woundpos.py on 25799: Merlin's wounded stay ~8 tiles from our rats (ours 1.7-3.7). That is an army-wide distance,
     not a local flee.
