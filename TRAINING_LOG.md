@@ -11072,3 +11072,29 @@
       the target can't see the grabber or is weaker.
   - Screen zd647 (xe4) vs zd639 (xd6): 44 v 44 cells, 0 overruns. Queue: zd649/zd650 (xe5), zd651/zd652 (xf1).
   - Block #383 (xe6) draining under the hourly limit: 16 still queued.
+- 17:31 (11-11): **xf1 committed; xf2 (deliver guard) and xf3 (threat throw) built; screens for the xf3 tip queued**
+  - km14 (xf1 vs agrab): wins Nofreecheese A, whatsthecatdoin A, rose A, tiny A, FreeTheCheese A, keepout A; loses
+    clockwisdom A/B. clockwisdom is mutual starvation (no fighting): every build since xe3 wins or loses it by chance.
+    keepout A had 2 own overruns inside GrabMicro (OVS 405). In km14 dumps that stage costs up to 9.6k, and the micro's
+    only guard is 12k left at entry.
+  - Screens: zd648 (xe4 s6) vs xd6: 43 of 44 vs 44, net -1, t -1.00, 0 overruns. zd649 (xe5 s7) vs xd6: 45 vs 44,
+    net +1, t +0.37, 0 overruns, transfer 182.6k vs 151.1k.
+  - Engine check (assertCanTransferCheese): a transfer needs any king tile within dist2 9 inside the 90-degree cone,
+    so a deliverer must face the king. A carrier that gets grabbed drops its rat (InternalRobot.getGrabbed).
+  - xf2 = xf1 + GM_DELIVER 20: with an enemy within Chebyshev 2, GrabMicro also scores the end tiles and facings that
+    can hand cheese to our king (KCONE table, +20, under one THREAT 25). When it takes none, Baby.deliver keeps its
+    facing (why 'Q') while the bank holds 150. Also GM_LEFT 1500: the scoring loop stops with fewer bytecodes left.
+    First build looked for our king only among sensed robots, and a deliverer facing its threat cannot see the king:
+    0 micro transfers in km15 whatsthecatdoin. Fixed to fall back to the comms king tile.
+  - xf3 = xf2 + THREAT_THROW 2: a carrier holding its throw (THROW_HOLD, CARRY_KING) throws now when an enemy baby
+    with free hands is within Chebyshev 2 (seen, or heard within dist2 8) and no flight hits one of ours. In km14/km15,
+    carriers (mv T) were grabbed at 8.6-11.9x the rate of all our war turns.
+  - km15 (xf2 first build) wallsofparadis A: 94 own overruns from one attacker stuck at (28,51) among 40-44 robots.
+    GrabMicro cost ~8k per turn and the rest of the turn overran (OVS 809/999). xf3 adds GM_BAIL 6500: a turn the
+    micro scored without acting ends under 6500 left. km17 runs xf1 on the same cell to see whether this is latent.
+  - Merlin DefaultLarge (25799 g0) is an economy collapse, not a throw kill. War from r28. We spawned 15 in r20-39 at
+    60-90 each (RICH tier, bank 1900 -> 895) to Merlin's 1. Our rats died 32:19 in throws to r150. The king took 6
+    throw hits (252) and then starved from r260 (bank 0). collegejunior tiny shows the same pattern (bank 880 vs 1910 at
+    r40). u3f/u3h (RICH off on small maps, RICH_BANK 1500) were rejected locally before; not retried yet.
+  - Queue: screens zd651/zd652 (xf1) dropped; xf3 contains xf1. zd653 (s7) and zd654 (s6) now carry xf3. km16 = xf3
+    on km15's 8 cells. Block #383 (xe6): 12 matches still queued behind the hourly limit.
