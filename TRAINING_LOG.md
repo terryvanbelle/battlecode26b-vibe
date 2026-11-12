@@ -11312,3 +11312,26 @@
     - xh8 = xh7 + FORM3_BANK 1200: s7 zd695 net +1 with transfer 1.05x. km60 rerun pending.
     - xh9 = xh6 + RICH_LATE 950/600/2000 (a third king r950-1150 while the r2000 projection with three kings keeps 2000): km61 and screens zd697/zd698 queued.
   - VM /dev/shm filled to 0 at ~10:50 UTC (dumps 10.5 GB). I deleted probe dirs km1-km54 (finished and logged), which left 4.3 GB free. 11 km60 games had failed and are being rerun as km60r.
+- 05:11 (11-12): **#390 (xh6) set 3 anyrate -0.10, set 4 -4.82; xi1 admitted and is block #391; xi3 dropped; xi5 from Finals closeup/attack_on_cat**
+  - #390 (xh6, 26411-26510): set 3 -0.10 (xh4 #389 -5.32, xh1 #388 +0.71), set 4 -4.82 (xh4 -5.14, xh1 -0.15).
+    - Icarus averystrangespace lost 4 of 4 again (rates 0.88-0.92). xi1 is aimed at it.
+    - New losses: Finals closeup A/B and attack_on_cat A/B (rates 0.71-1.00; the last five draws, xh4's included, all won).
+    - closeup A (26458): from the backstab at r46 our king's HP went 600 -> 140 by r220. Enemy rats bit it 46 times in r150-224; our rats bit the cat 41 times and no enemy rat. The cats sat beside our king.
+    - Since xh5 a fighter at war within the cat's reach flees it (WAR_NO_CAT), and that branch runs before rescue, retreat and Micro.
+    - Other in-band losses: TSPAARK TheHeist B (0.83) and rose B (0.79), YokoOno Meow A (0.73), collegejunior t_minus B (0.75), Icarus tiny B (0.76), Merlin sunandmoon B (0.88).
+    - Replays xh6a-h.tgz on the VM. Replica prune after the fetch: 543 files, 718 MB, cutoff before the block's first file (10:59 UTC); list ~/diag26b/pruned_1111q.txt. VM / back to 2.3 GB.
+  - xi1 (END_CAT_COOP_FREE + END_CAT_CENTRE) admitted.
+    - km63 vs xh6: wins 14 vs 14. averystrangespace cat damage as A 5395 (xh6 0); as B 8000 (xh6 7096; cats dead r1854).
+    - s7 zd699 identical to xh6 on all 48 cells (war cells, so the coop switch is inert); s6 zd700 43 vs 43 wins, net 0.
+    - Submitted as replica block #391 (build/block_xi1.sh).
+  - xh9 (RICH_LATE): km61 has the same wins as xh5/xh6 on 13 paired cells. Third kings formed on araid keepout and agrab FreeTheCheese B; none starved. FreeTheCheese B has 706 king overruns at OVS 4899, a stage that overran before.
+    - s7 zd697: 43 vs 43 wins, net 0. s6 zd698 running.
+  - xi2 (multi-king + FORM_CLOSE): km64 at 23 of 48. Same wins so far; three kings on FreeTheCheese B, minimaze B and wallsofparadis A, held to r2000. Screens queued.
+  - TheHeist (TSPAARK seat B, local araid B and agrab A/B):
+    - Cats end 4000-4000 and kings 1-1, so the game ends at the second cat's death (r265-322) on transfer.
+    - Seat A has been won since xh1 (26198, second king r325).
+    - xi3 = xh6 + COOP_FORM_BANK 1000 (in cooperation a second king's site opens on a 1000 bank, without the income test). Dropped: km65 lost averystrangespace A and B vs araid and agrab (xh6 won all 4). The king formed at r324-326 on income ~240 a hundred rounds, the bank fell 1715 -> 0 by r700, and both kings starved. TheHeist B still formed no king before the end.
+    - xi4 = xh6 + CHEESE_LOS (rejected at s5t). On TheHeist our rats walk the room's wall row chasing corridor piles for 200 rounds. Probe km66 and screens zd705/zd706 queued.
+  - xi5 = xi1 + WAR_NO_CAT_FIGHT: a fighter with an enemy rat in view skips the flee. Probe km67 (closeup, attack_on_cat, keepout, evileye x atrap3/agrab/araid); screens zd707/zd708 at the head of the queue.
+  - VM /dev/shm fell to 387 MB. I deleted the finished probe dirs km55-km60r, km62 and km65, leaving 3.5 GB free.
+  - clockwisdom vs agrab B (local, both bots starve by r1020): at r300 our king knows no mine (ml empty) and most rats explore the outer ring. Not pursued.
