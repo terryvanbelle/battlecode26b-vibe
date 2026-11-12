@@ -10997,3 +10997,44 @@
   - xe3's s7/s6 screens are queued as zd647/zd648. build/block_xe3.sh (sets 3+4) is ready to go once #382 ends.
   - Other #382 losses at rate about 0: collegejunior tiny and DefaultMedium. These are throw brawls: on tiny our king
     took 370 throw and 190 bite damage to 228 and 10 dealt. Finals keepout and wallsofparadis also stay at about 0.
+- 16:33 (11-11): **Block #382 ends at base rate; the king never learns the symmetry its rats know; xe6 (scout fan + symmetry courier) is replica block #383**
+  - Block #382 (xd6) complete, 32 matches: 57 of 90 cells. That's 57 to xc6 #381's 58 on the same 90, and 43 to zj3
+    #378's 48 on 68 shared (+2 -7). Set-3 cellrate z -0.45 (54 cells, wins minus rate -0.80); anyrate sum -1.39.
+    - Merlin took 5 of 6 in the last pair, including sunandmoon A and B (rate 0.83) and RUN B (0.92).
+    - Replays are on the VM as xd6f-h.tgz.
+  - km3 (xe4 = xe3 + KP_FRONT_LOW 1, vs agrab s1):
+    - Nofreecheese A/B won. The king now walks toward the centre: (19,18) as A, (40,41) as B by r200.
+    - krotus and wallsofparadis are the same as xe3.
+    - clockwisdom A lost: the king stayed at (56,9) all game with one mine listed, theirs at (2,25).
+  - clockwisdom diagnosis (xe4 dump, replica 25677/25678 vs Xzibit):
+    - Our two mines (56,27) and (56,33) sit 18-24 tiles up the outer corridor north of our king. No rat of ours came
+      within 4 of them until r656, because both scouts sampled targets inside the spiral, whose gate is at the bottom.
+    - Replica, as B, the same: our rats first reached our own mines at r614. Xzibit's king walked 25 tiles to its
+      mines by r600 (picks by r300: 39 vs our 25).
+  - xe5 = xe4 + SCOUT_FAN 35 (new): a scout's frontier search only ends at an unseen tile of our half in its own
+    bearing sector from home (ahead, left or right of the line to the enemy start).
+    - km4: 6 of 6 so far. clockwisdom A and B won (xe4 1 of 2).
+    - Its own mechanism failed on clockwisdom A. Both slot-hashed scouts drew the bottom, and the north mines were
+      first seen at r595.
+    - 4 overruns as A, all newborns' first turns at r624-687 (stage 16-20). These are not fan code, since scouting
+      ends by r600; xe6 on the same cell had 0.
+  - Symmetry knowledge, km1-km3 (40 games):
+    - Some rat of ours knew the symmetry 99-1986 rounds before our king did. The king never learned it on knifefight
+      B (a rat knew at r19), krotus B (r15), whatsthecatdoin B (r42) or clockwisdom A (r145).
+    - Only far rats (attackers, scouts) see twin pairs, and squeaks reach a king from dist2 16 only.
+    - On clockwisdom A, the king still had ROT|HOR at r637, so the enemy mine it listed never mirrored to our (56,33).
+  - xe6 = xe5 + SYM_GOSSIP (existing) + SYM_COURIER 30 (new): a rat that knows a sharper mask than the shared one,
+    with no enemy in view, walks to the nearest king within 30 and squeaks it there.
+    - km5: our king learned the symmetry 3, 9 and 37 rounds after the first rat on knifefight B, krotus B and
+      whatsthecatdoin B (never before), and 232 rounds after on clockwisdom A (never before).
+    - clockwisdom B: it never learned (xe5: 356 rounds after).
+    - 3 of 4 won so far (knifefight B lost to the r25 rush, as every build does). 0 overruns.
+  - xe6 submitted as replica block #383 (sets 3+4, build/block_xe6.sh).
+  - xe7 = xe6 with deterministic fan sectors. The king squeaks each newborn's place in its role's spawn order
+    (SQ_START + rrNext, as MINE_RR). Gatherers 2, 6, 10, ... scout and take one flank, the other flank, then the
+    sector ahead. Probe km6 is running.
+  - Other results:
+    - kp1 (xe3 vs xe2, 22 agrab cells): 21 of 22 each. xe3 was slower on dirtpassageway A (r1423 vs r248) and
+      EscapeTheNight B (r2000 vs r642); overruns 3 vs 1.
+    - Screen zd646 (xe2 s6) vs xd6: 44 of 44 each, net 0, 1 overrun.
+    - Queue: zd647/zd648 (xe4), zd649/zd650 (xe5).
