@@ -2744,7 +2744,7 @@ public final class Baby {
                     else if (Math.abs(t % W - G.me.x) <= 1 && Math.abs(t / W - G.me.y) <= 1) nxi = j;
                 }
                 if (nxi < 0) wlen = wpos = 0;
-                else wpos = nxi - 1;
+                else wpos = Math.max(0, nxi - 1); // beside walk[0]: step onto it (wpos -1 threw every turn, km32)
             }
         }
         if (nxi >= 0 && nxi < wlen) {
