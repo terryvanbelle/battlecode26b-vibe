@@ -11441,3 +11441,26 @@
     xi1 net -2 (t -1.43).
   - Pruned 82 replica replays older than #392's first (14:57 UTC, 116 MB; list ~/diag26b/pruned_1111s.txt). VM / has
     2.3 GB free.
+- 09:00 (11-12): **Starvation focus, rounds 3-4: xj6's panel W 16 L 20 with 2 starved kings in 20 losses; xj7 (no austerity core cut) and xj8 (no reserve under 8 babies) launched**
+  - xj6 starvation panel (#394, 26799-26810, 36 cells):
+    - Flipped to W (8): t_minus B, externalsustenance A+B, closeup A+B, wallsofparadis B, sunandmoon B, whatsthecatdoin B.
+    - Flipped to L (7): mincemeat A+B (Icarus), averyfineline A+B (Finals, king bitten r110/122), sunandmoon A,
+      evileye A, rose A.
+    - Only 2 of the 20 losses were starvation (Stash B, mincemeat A). The rest were bite, throwHit or scratch.
+  - Stash B vs YokoOno (26804): from r140 to r500 the king held 4 babies on a 1300-1500 bank.
+    - Transfer was 40 by r100 and 160 for the game; the king starved at r782. Austerity (BUDGET 0 from r60) cut the
+      core to AUSTERE_CORE 4.
+    - xi9 (26637, same seed) kept 20 babies, spent the bank down to ~200 and won at r818.
+    - The same hold (at most 4 babies on a 700+ bank) lasted 268 rounds on Meow A and 189 on Meow B (both lost). It
+      never happened in the 18 xi9 #392 games.
+  - mincemeat A vs Icarus (26799): 4 babies from r400 to r1300 with the bank at 386-96, under KING_RESERVE 600.
+    - Only LAST_FLOOR spawns (under 4 babies) got through. Transfer was ~2/round, the upkeep; the king starved at
+      r1329.
+    - Icarus kept 8-14 babies on a 450-650 bank.
+  - Builds:
+    - xj7 = xj6 + AUSTERE_CORE 99. km85: 6/6 vs agrab/araid on Stash, Meow and externalsustenance. Submitted #395;
+      the drain sent 8 of its 12 panel matches at 08:49.
+    - xj8 = xj7 + LOW_UNDER_RESERVE: under LOW_BABIES 8, every spawn floor is LOW_FLOOR 100. km86: 4/4 on mincemeat
+      seed 983. Submitted #396; its 12 panel rows are queued, and xj7's last 4 (Merlin, TSPAARK) are held.
+  - Screen: xj5 s7 zd719 vs xi9 net -5 (39 vs 44 wins, t -1.70). The losses were kings killed by agrab/atrap3
+    (cheesefarm x3, arrows, evileye, Stash, tiny).
