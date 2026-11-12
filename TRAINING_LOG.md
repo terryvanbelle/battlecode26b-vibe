@@ -11141,3 +11141,31 @@
     seats); screens zd658 (s7) and zd659 (s6) queued.
   - Laptop disk was full (9.5 MB). The 3,341 old gzip replays in bc26b-galaxy-replays (5.2 GB) are being recompressed
     losslessly to xz (~34% smaller; decompressed sha256 checked; README_XZ.txt in that folder), about 100 MB an hour.
+- 20:11 (11-11): **Block #385 (xf3) is the best x-line block; xf6 dropped, xf7 (RUSH_LIFE 150) is block #386; xf8 (MINE_MIRROR) from Merlin's home-mine raids; replays lost to a bad prune cutoff**
+  - VM disk fell to 43 MB. Pruned 76 replica replays (list ~/diag26b/pruned_1111p.txt) and the old cq run dirs (list
+    ~/diag26b/pruned_cq_1111.txt); 2.7 GB free.
+  - Mistake: the prune cutoff assumed block #385 started at 18:48, but its first matches were before 18:38, so the
+    replays of 25837-25847 were deleted (HTTP 404). The 3-0 matches got match.json files built from the API
+    ("synthetic": true). 25839/40 (1-2), 25843/44 (2-1, 1-2) and 25845/46 (2-1) have no per-map results. From now on
+    the cutoff comes from the block's first replay file time.
+  - Block #385 (xf3, sets 3+4): known cells 56 of 78, anyrate +3.16; about 65 of 96 with the unknown cells at base
+    rate (xe6 59, xd6 61, xc6 62). zj3's anyrate is +3.88.
+  - xf6 (wounded flee) dropped at 19:09: km22 2 of 8; its wounded sat next to healthier enemies as often as xf3's.
+    woundpos.py on 25799: Merlin's wounded stay ~8 tiles from our rats (ours 1.7-3.7). That is an army-wide distance,
+    not a local flee.
+  - Screens, x-line rules (t > -1.5, overruns only at stages that already overran):
+    - xf5 zd659 (s6): 44 cells, net 0, t +0.00, 0 overruns. Admitted.
+    - xf7 zd660 (s7): net +1, t +0.44, 1 overrun (arrows A vs agrab, OVS 405 in GrabMicro).
+    - xf7 zd661 (s6): net -1, t -1.00, 1 overrun (cheesefarm B vs abrk, OVS 2021 newborn, as at 17:07). Admitted.
+  - xf7 submitted as block #386 (build/block_xf7.sh); 24 rows in the drain.
+  - Merlin whatsthecatdoin draws: our king starves at r275-437 every time. Merlin picks about 3x what we pick and
+    delivers 55-68% of it (us 12-27%). Our home sealed mine goes unworked early; locally we first reach it at r321+.
+  - Merlin cheesebottles: their gatherers work our home-half mines from r0-200. In 11 of 15 replica games, the pocket
+    (39,17) had 0 of our rat-turns within Chebyshev 4 for 1000+ rounds. They took ~450 per 200 rounds there, 2-5k a
+    game, and contested (41,5). Their harassers by our king kept our army home (our king bitten 978 times, 123 kills).
+    At 2-2 kings, transfer was 15k to our 9k.
+  - Points (ptsloss.py): one more king would flip most of our MORE_POINTS losses, but our end banks against Merlin are
+    too low to form a third.
+  - xf8 = xf7 + MINE_MIRROR (owner #31: use Merlin's raid ourselves): our sightings are listed with their twins, and
+    MINE_ANY gatherers spread to the enemy half's mines. km28 cheesebottles vs agrab/atrap3 4/4, the same as xf7.
+    zd662 (s7): 0 changed cells, 1 overrun (the same as xf7's). zd663 (s6) running.
