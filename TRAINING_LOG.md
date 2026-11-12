@@ -11117,3 +11117,27 @@
   - Merlin DefaultLarge (25799) is a grab war:
     - We had 33 babies to their 19 at r40 and 6 to 17 at r160.
     - By r300, 32 of our rats died on landing from a throw, against 20 of theirs.
+- 18:48 (11-11): **Replica games are deterministic per build (zj3 block #384 cancelled); xf4 dropped; xf3 is block #385; xf5 (GM_GAP) from a Merlin exposure census**
+  - Correction to 18:05: an identical resubmission replays identical games (zj3 25293 = 25309, xc6 25530 = 25590), so
+    block #384 could not give fresh zj3 draws. It was cancelled after 4 matches (25833-25836); the 28 queued rows are in
+    /dev/shm/kd/queue_zj3_cancelled.tsv. Line comparisons use base rates (anyrate/cellrate), not zj3's single block.
+  - xf4 (GM_HEARD) km19 was still inert: TrapRisk.observe returns before reading squeaks whenever its marks are not yet
+    allocated, which on a 60x60 map is every turn (3*W*H + 8000 bytecodes needed). xf4 b23c reads squeaks first; ghosts
+    then showed in xf4dbg. km20 (b23c vs xf3, 4 maps x 2 seats): 2 of 8. Grabs on us that an ally had seen: 263 vs
+    xf3's 276. Screen zd656 (s6) vs zd654: n 44, net -2, t -1.43, 3 own overruns. Dropped; zd657 aborted.
+  - xf3 submitted as block #385 (sets 3+4, build/block_xf3.sh); 28 rows in the drain under the hourly limit.
+  - Merlin and collegejunior grab-war census (25799 DefaultLarge/sunandmoon, 25647 tiny/DefaultMedium; hploss.py and
+    expose.py, VM /dev/shm/dcx):
+    - Our king dies of starvation on DefaultLarge (bank 0 at r260): we spawned 27 rats by r100 to Merlin's 14, both had
+      ~19 babies at r100, and ours died 56 to 44 by r300, 32 of them landing from throws.
+    - 80% of grabs on our rats were on a rat no healthier than its grabber (mean gap 36-43 hp). Damage before the grab
+      came from thrown-rat hits, bites and traps; the cat is minor.
+    - War to r300, turns next to a strictly healthier free-handed enemy: our 41-70 hp rats 42-71%, theirs 14-32%; at
+      <= 40 hp ours 60-77%, theirs 41-60%. Their wounded keep their distance and ours do not.
+    - GrabMicro returns early when no enemy is within Chebyshev 2, so the normal move can end at 2 from a healthier
+      enemy, which then steps next to us and grabs first.
+  - xf5 = xf3 + GM_GAP: with the nearest enemy at Chebyshev 3, steps that end within 2 of a healthier free-handed enemy
+    baby go into Nav.avoid (indicator gp=). Probe km21 (vs xf3: DefaultLarge, sunandmoon, tiny, DefaultMedium, both
+    seats); screens zd658 (s7) and zd659 (s6) queued.
+  - Laptop disk was full (9.5 MB). The 3,341 old gzip replays in bc26b-galaxy-replays (5.2 GB) are being recompressed
+    losslessly to xz (~34% smaller; decompressed sha256 checked; README_XZ.txt in that folder), about 100 MB an hour.

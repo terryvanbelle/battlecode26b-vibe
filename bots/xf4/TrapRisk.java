@@ -26,13 +26,16 @@ public final class TrapRisk {
 
     /** Called once per turn with the robots we see. */
     public static void observe(RobotInfo[] robots) {
+        // Cfg.GM_HEARD (xf4): squeaked positions first; they need no marks (on a 60x60 map a rat never has the room to
+        // allocate them, so observe returned before reading on every turn: xf4dbg on Nofreecheese)
+        nHeard = 0;
+        if (Cfg.GM_HEARD > 0) { heard(G.rc.readSqueaks(G.round)); heard(G.rc.readSqueaks(G.round - 1)); }
         // allocating one int per tile costs ~2.5 bytecodes each: wait for a turn with room (a newborn's first has none)
         if (Cfg.RISK_ROWS) TrapRows.init();
         else {
             if (mark == null && Flow.left() < 3 * G.W * G.H + Cfg.BC_OPTIONAL) return;
             init();
         }
-        nHeard = 0;
         MapLocation me = G.rc.getLocation();
         if (last == null || !last.equals(me)) { last = me; arrived = G.round; }
         for (RobotInfo r : robots) {
@@ -43,11 +46,7 @@ public final class TrapRisk {
             put(r.location.add(f.rotateLeft()));
             put(r.location.add(f.rotateRight()));
         }
-        // Cfg.GM_HEARD (xf4) reads them without TRAP_SHARE (positions only, no marks), this round's first so the cap
-        // keeps the freshest
-        if (Cfg.GM_HEARD > 0) heard(G.rc.readSqueaks(G.round));
-        if (Cfg.TRAP_SHARE || Cfg.GM_HEARD > 0) heard(G.rc.readSqueaks(G.round - 1));
-        if (Cfg.TRAP_SHARE && Cfg.GM_HEARD == 0) heard(G.rc.readSqueaks(G.round));
+        if (Cfg.TRAP_SHARE && Cfg.GM_HEARD == 0) { heard(G.rc.readSqueaks(G.round - 1)); heard(G.rc.readSqueaks(G.round)); }
         // clear marks we have proven safe: anything within 1 of our tile marked before we arrived
         if (Cfg.RISK_ROWS) { TrapRows.clear(me, arrived); return; }
         for (int dx = -1; dx <= 1; dx++)
@@ -71,7 +70,7 @@ public final class TrapRisk {
             MapLocation e = new MapLocation(Comms.sqX(c), Comms.sqY(c));
             heardX[nHeard] = c >> 12 & 0xFFFF;
             heardE[nHeard++] = e;
-            if (!Cfg.TRAP_SHARE) continue;
+            if (!Cfg.TRAP_SHARE || !Cfg.RISK_ROWS && mark == null) continue;
             Direction f = G.DIRS[d];
             put(e.add(f));
             put(e.add(f.rotateLeft()));
