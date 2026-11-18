@@ -6,7 +6,7 @@ import java.util.*;
 import static ratbot.BotTest.*;
 
 /**
- * Tests for the audited fixes (Cfg.FIX_* and the FIX2 block; ids from research/audit/findings-*.md). Each test drives
+ * Tests for the audited fixes (ids from research/audit/findings-*.md and the bc26a0 pass 2B list). Each test drives
  * the helper the fix lives in through BotTest's fake RobotController. Plain main; exit code 1 on failure.
  */
 public class FixTest {
@@ -112,7 +112,6 @@ public class FixTest {
         King.turnC = p(10, 10);
         MapLocation moved = p(11, 10);
         check(!KPath.held(p(12, 10), moved), "K1: our old centre does not hold a mine near it after we moved");
-        check(!KPath.heldFix(p(12, 10), moved), "K1: heldFix skips our turn-start centre");
         check(KPath.held(p(19, 11), moved), "K1: another king still holds its mine");
         check(!KPath.held(p(15, 15), moved), "K1: a mine no king is near is free");
         // a king that did not move is skipped as before (me equals its slot)
@@ -137,7 +136,7 @@ public class FixTest {
         Comms.numKings = 0;
     }
 
-    /** FIX_KING_NEAR_CHEESE: the king's nearCheese skips piles under its own 3x3. */
+    /** KING_NEAR_CHEESE: the king's nearCheese skips piles under its own 3x3. */
     static void testKingNearCheese() throws GameActionException {
         kingWorld();
         King.start = me; King.homeMine = null;
@@ -150,7 +149,7 @@ public class FixTest {
         check(King.nearCheese == null, "KING_NEAR_CHEESE: only a pile under the 3x3: none");
     }
 
-    /** FIX_KING_PICKUP_INCOME: every pickUp counts its cheese as Econ income. */
+    /** KING_PICKUP_INCOME: every pickUp counts its cheese as Econ income. */
     static void testKingPickupIncome() throws GameActionException {
         kingWorld();
         cheeseAt.put(p(4, 4), 7); cheeseAt.put(p(6, 5), 3); cheeseAt.put(p(8, 5), 50);
@@ -159,7 +158,7 @@ public class FixTest {
         check(Econ.pending == 10 && pickedUp.size() == 2, "KING_PICKUP_INCOME: the 3x3's piles count as income (" + Econ.pending + ")");
     }
 
-    /** FIX_KING_BITE_KING: the king bites an enemy king on a body tile in reach, not only its centre. */
+    /** KING_BITE_KING: the king bites an enemy king on a body tile in reach, not only its centre. */
     static void testKingBiteKing() throws GameActionException {
         kingWorld();
         G.coop = false;
@@ -169,7 +168,7 @@ public class FixTest {
         check(bitten.size() == 1 && G.cheb(bitten.get(0), ek.location) == 1, "KING_BITE_KING: a body tile is bitten (" + bitten + ")");
     }
 
-    /** FIX_ALERT_MAX lives in King.turn (whole king turn): not unit-tested. FIX_FLOW_HELD: Flow.start resets held. */
+    /** ALERT_MAX lives in King.turn (whole king turn): not unit-tested. FLOW_HELD: Flow.start resets held. */
     static void testFlowHeldReset() {
         reset(); install();
         Flow.held = 2;
@@ -300,7 +299,7 @@ public class FixTest {
         babyWorld();
         round = 100; G.startTurn();
         Baby.role = Baby.GATHER; Baby.home = p(3, 3); Baby.origin = null; Baby.nearestEnemy = null; Baby.rescueT = null;
-        Baby.cashSite = null; Baby.raider = false; Baby.scout = false; Baby.mineTarget = null; Baby.cheeseTarget = null;
+        Baby.cashSite = null; Baby.scout = false; Baby.mineTarget = null; Baby.cheeseTarget = null;
         Baby.seekUntil = 0; Baby.stallCatUntil = -1; Baby.bfOn = false; Baby.idleTurns = 0; Baby.wanderRound = -10;
         Baby.wanderMine = null; Baby.birthRound = 0; Baby.exploreTarget = null; Baby.mineShift = 0;
         GrabMicro.round = -1;
@@ -342,7 +341,7 @@ public class FixTest {
         Comms.numMines = 0;
     }
 
-    /** FIX_STALL_SHIFT: a mine walk stalled past 25 turns bumps mineShift, so the re-pick is a different mine. */
+    /** STALL_SHIFT: a mine walk stalled past 25 turns bumps mineShift, so the re-pick is a different mine. */
     static void testStallShift() throws GameActionException {
         gatherer();
         MapLocation m = p(20, 5);
@@ -408,7 +407,7 @@ public class FixTest {
         }
     }
 
-    /** FIX_SWAP_HOLD: a carry held 12+ rounds after our last grab came from a role swap: its hold restarts now. */
+    /** SWAP_HOLD: a carry held 12+ rounds after our last grab came from a role swap: its hold restarts now. */
     static void testSwapHold() throws GameActionException {
         for (int k = 0; k < 2; k++) {
             gatherer();
@@ -424,7 +423,7 @@ public class FixTest {
     }
 
 
-    /** FIX_EKING_FORGET: an attacker that reaches its last enemy-king sighting and senses no king there forgets it. */
+    /** EKING_FORGET: an attacker that reaches its last enemy-king sighting and senses no king there forgets it. */
     static void testEKingForget() throws GameActionException {
         babyWorld();
         at(200); G.coop = false;
@@ -442,7 +441,7 @@ public class FixTest {
         Baby.role = Baby.GATHER; Baby.lastEKing = null;
     }
 
-    /** FIX_SEEK_NEWS: a seek ends only on real news (a mine the king lacked), not on sensing a listed mine. */
+    /** SEEK_NEWS: a seek ends only on real news (a mine the king lacked), not on sensing a listed mine. */
     static void testSeekNews() throws GameActionException {
         gatherer();
         Comms.kings[0] = p(3, 3); Comms.numKings = 1;
@@ -543,7 +542,7 @@ public class FixTest {
         carrying = null;
     }
 
-    /** FIX_BITE_KING_TILE: a baby bites any enemy-king tile it can attack, not only the nearest one. */
+    /** BITE_KING_TILE: a baby bites any enemy-king tile it can attack, not only the nearest one. */
     static void testBiteKingTile() throws GameActionException {
         babyWorld();
         facing = Direction.NORTH; G.startTurn();
@@ -604,7 +603,7 @@ public class FixTest {
         Nav.avoid = 0;
     }
 
-    /** FIX_DIG_FIRST_TGT: dig-first is blocked by a search toward this target only, not a stale one. */
+    /** DIG_FIRST_TGT: dig-first is blocked by a search toward this target only, not a stale one. */
     static void testDigFirstTgt() throws GameActionException {
         for (int stale = 0; stale < 2; stale++) {
             babyWorld();
@@ -746,7 +745,7 @@ public class FixTest {
         check(TrapRisk.mask(me) != 0, "S2: the kept marks make the avoid mask");
     }
 
-    /** FIX_TRAP_CARRIED: a carried or thrown rat neither moves its arrival nor clears marks. */
+    /** TRAP_CARRIED: a carried or thrown rat neither moves its arrival nor clears marks. */
     static void testTrapCarried() {
         babyWorld(); trapReset();
         RobotInfo e = bot(50, Team.B, UnitType.BABY_RAT, p(9, 3), Direction.NORTH);   // marks (8..10, 4)

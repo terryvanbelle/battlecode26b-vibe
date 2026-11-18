@@ -728,7 +728,7 @@ public class BotTest {
 
     static void testTrail() throws GameActionException {
         reset(); W = 30; H = 20; install();
-        Trail.alloc();
+        Trail.alloc(0);
         trailWalk(p(5, 5), p(6, 5), p(7, 5), p(7, 6), p(6, 6));
         check(Trail.n == 5, "trail: five tiles walked (" + Trail.n + ")");
         trailWalk(p(6, 5));
@@ -776,7 +776,7 @@ public class BotTest {
     static int homeRun(boolean trail, int extra, int gap) throws GameActionException {
         reset(); W = 30; H = 20; install();
         moveExtra = extra;
-        Trail.alloc();
+        Trail.alloc(0);
         int keep = Baby.trailGap;
         if (gap >= 0) Baby.trailGap = gap;
         for (int y = 0; y <= 16; y++) walls.add(p(10, y));
@@ -1215,25 +1215,13 @@ public class BotTest {
               "bite cheese: nothing for a bite that does not kill or is over budget");
     }
 
-    static void testRaid() throws GameActionException {
+    static void testHomeHalf() throws GameActionException {
         reset(); W = 20; H = 20; install();
         Sym.mask = Sym.ROT;
         Baby.home = new MapLocation(3, 3);
         Comms.numMines = 0;
         Comms.mines[Comms.numMines++] = new MapLocation(4, 6);    // our half: its ROT mirror (15, 13) is theirs
-        MapLocation t = Baby.pickRaid();
-        check(t.equals(new MapLocation(15, 13)), "raid: mirror of our mine on the enemy half (" + t + ")");
-        Comms.mines[Comms.numMines++] = new MapLocation(12, 17);  // enemy half
-        Comms.mines[Comms.numMines++] = new MapLocation(7, 2);    // mirror (12, 17) duplicates
-        int far = 0;
-        for (int i = 0; i < 20; i++) {
-            MapLocation c = Baby.pickRaid();
-            if (c.distanceSquaredTo(new MapLocation(16, 16)) >= c.distanceSquaredTo(Baby.home)) far++;
-        }
-        check(far == 0, "raid: never picks a spot on our half");
-        Comms.numMines = 0;
-        check(Baby.pickRaid().equals(new MapLocation(9, 9)), "raid: no mines -> map centre");
-        check(Baby.homeHalf(new MapLocation(5, 5)) && !Baby.homeHalf(new MapLocation(14, 14)), "raid: home half");
+        check(Baby.homeHalf(new MapLocation(5, 5)) && !Baby.homeHalf(new MapLocation(14, 14)), "home half");
     }
 
     static void testCatReach() {
@@ -1324,13 +1312,13 @@ public class BotTest {
         Comms.numMines = 0;
         Comms.addMine(25, 20);   // enemy half under ROT: twin (4, 9) is ours
         Comms.addMine(6, 4);     // our half: its twin (23, 25) is theirs, not listed
-        King.mirrorInto(home, Sym.ROT);
+        King.mirrorInto(Sym.ROT);
         // audit K5: every twin is listed (no own-half test; the fix kept that and made a full list report nothing)
         check(Comms.numMines == 4 && Comms.hasMine(4, 9) && Comms.hasMine(23, 25), "mine mirror: lists every twin");
-        King.mirrorInto(home, Sym.ROT);
+        King.mirrorInto(Sym.ROT);
         check(Comms.numMines == 4, "mine mirror: no duplicates");
         Comms.numMines = 0; Comms.addMine(25, 20);
-        King.mirrorInto(home, Sym.VER);   // x -> 29 - x: twin (4, 20)
+        King.mirrorInto(Sym.VER);   // x -> 29 - x: twin (4, 20)
         check(Comms.hasMine(4, 20), "mine mirror: follows the symmetry");
         Comms.numMines = 0;
     }
@@ -1698,7 +1686,7 @@ public class BotTest {
         testThrowDirection();
         testBiteTargets();
         testTransferReach();
-        testRaid();
+        testHomeHalf();
         testTrapTile();
         testKingFront();
         testCatReach();

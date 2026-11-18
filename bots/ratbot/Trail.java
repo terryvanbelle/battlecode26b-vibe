@@ -26,19 +26,9 @@ public final class Trail {
         if (at != null) add(G.me.x, G.me.y);
     }
 
-    /** Allocate the chain arrays at the end of a turn whose real bytecodes left cover them (RobotPlayer, after
-     *  Flow.work: no budget read follows). */
-    public static void alloc() {
-        if (at != null) return;
-        int c = G.W * G.H;
-        if (Clock.getBytecodesLeft() < 2 * c + Cfg.TRAIL_ALLOC_LEFT) return;
-        at = new int[c];
-        tiles = new int[c];
-        gen = 1;
-    }
-
-    /** Cfg.FIX_N8: alloc() before Flow.work (RobotPlayer), keeping keep bytecodes past the arrays. */
-    public static void allocKeep(int keep) {
+    /** Allocate the chain arrays before Flow.work (RobotPlayer) on a turn whose real bytecodes left cover them,
+     *  keeping keep bytecodes past the arrays. */
+    public static void alloc(int keep) {
         if (at != null) return;
         int c = G.W * G.H;
         if (Clock.getBytecodesLeft() < 2 * c + keep) return;

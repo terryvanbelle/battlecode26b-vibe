@@ -13,44 +13,35 @@ public final class TrapRisk {
     static int[] mark;            // round + 1 the tile was last marked, 0 = none
     static int arrived = -1;      // round we reached our current tile
     static MapLocation last;
-    /** Cfg.FIX_S2: the round of the last observe that got past the allocation gate. */
+    /** The round of the last observe that got past the allocation gate. */
     static int lastObs;
 
     static void init() {
         if (mark == null) mark = new int[G.W * G.H];
     }
 
-    /** Enemy positions allies squeaked this round and last (for guard facing). */
-    public static final MapLocation[] heardE = new MapLocation[8];
-    public static int nHeard;
-
     /** Called once per turn with the robots we see. */
     public static void observe(RobotInfo[] robots) {
         // allocating one int per tile costs ~2.5 bytecodes each: wait for a turn with room (a newborn's first has none)
         if (mark == null && Flow.left() < 3 * G.W * G.H + Cfg.BC_OPTIONAL) return;
         init();
-        nHeard = 0;
         MapLocation me = G.rc.getLocation();
-        // Cfg.FIX_TRAP_CARRIED: a carried or flying rat triggers no traps, so its tiles prove nothing;
-        // Cfg.FIX_TRAP_ARRIVED: the move came after last round's observe, so keep that round's marks
-        if (Cfg.FIX_TRAP_CARRIED || Cfg.FIX_TRAP_ARRIVED) {
-            boolean grounded = !Cfg.FIX_TRAP_CARRIED || !G.rc.isBeingCarried() && !G.rc.isBeingThrown();
-            // (Cfg.FIX_S2: to the last observe, which a budget-skipped turn leaves further back)
-            if (grounded && (last == null || !last.equals(me))) { last = me; arrived = Cfg.FIX_TRAP_ARRIVED ? (Cfg.FIX_S2 ? lastObs : G.round - 1) : G.round; }
-            if (Cfg.FIX_S2) lastObs = G.round;
-            if (!grounded) {
-                for (RobotInfo r : robots) {
-                    if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
-                    Direction f = r.direction;
-                    if (f == null || f == Direction.CENTER) continue;
-                    put(r.location.add(f));
-                    put(r.location.add(f.rotateLeft()));
-                    put(r.location.add(f.rotateRight()));
-                }
-                return;
+        // a carried or flying rat triggers no traps, so its tiles prove nothing; the move came after the last
+        // observe (a budget-skipped turn leaves it further back than last round), so keep that observe's marks
+        boolean grounded = !G.rc.isBeingCarried() && !G.rc.isBeingThrown();
+        if (grounded && (last == null || !last.equals(me))) { last = me; arrived = lastObs; }
+        lastObs = G.round;
+        if (!grounded) {
+            for (RobotInfo r : robots) {
+                if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
+                Direction f = r.direction;
+                if (f == null || f == Direction.CENTER) continue;
+                put(r.location.add(f));
+                put(r.location.add(f.rotateLeft()));
+                put(r.location.add(f.rotateRight()));
             }
-        } else
-        if (last == null || !last.equals(me)) { last = me; arrived = G.round; }
+            return;
+        }
         for (RobotInfo r : robots) {
             if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
             Direction f = r.direction;

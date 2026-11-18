@@ -33,7 +33,7 @@ public final class Debug {
               .append(" bc=").append(Baby.bitesCat)
               .append(" br=").append(Baby.bitesRat)
               .append(" tr=").append(Baby.trapsPlaced)
-              .append(" rt=").append(Baby.ratTraps).append(" nap=").append(Baby.naps).append(" th=").append(Baby.throwsDone).append(" gl=").append(Baby.glances)
+              .append(" rt=").append(Baby.ratTraps).append(" nap=").append(Baby.naps).append(" th=").append(Baby.throwsDone)
               .append(" dg=").append(Nav.digs).append(" fl=").append(Flow.builds).append(":").append(Flow.done).append(":").append(Flow.lastTurns).append(":").append(Flow.steps).append(" mv=").append(Baby.why);
             if (Baby.mineTarget != null) sb.append(" mt=").append(Baby.mineTarget.x).append(',').append(Baby.mineTarget.y);
             // navigation state: nav target and stall, flow target (b building, r ready, - stale) and robot-held turns
@@ -50,7 +50,6 @@ public final class Debug {
             if (Baby.cashSite != null)
                 sb.append(" cs=").append(Baby.cashSite.x).append(',').append(Baby.cashSite.y).append(Baby.cashLead ? 'L' : 'J').append(Baby.cashStart);
         }
-        if (Baby.raidTarget != null) sb.append(" rz=").append(Baby.raidTarget.x).append(',').append(Baby.raidTarget.y);
         sb.append(" sym=").append(Sym.mask);
         if (Sym.contradictions > 0) sb.append(" SYMX=").append(Sym.contradictions);
         if (!G.king && Baby.lowBc > 0) sb.append(" lb=").append(Baby.lowBc);

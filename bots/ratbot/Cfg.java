@@ -114,12 +114,6 @@ public final class Cfg {
      *  km2 Nofreecheese king stayed at (6,5) with km=n all game: its home mines (36,21), (42,15) and (50,8) all lie
      *  under 20 percent (about 5) from the bisector, so no seat passes. krotus keeps KP_FRONT's edge-side approach. */
     public static final int KP_FRONT_LOW = 1;
-    /** xh3 (x-line): KING_PATH seats no king at a mine on the bisector (as near the enemy start as ours), MINE_TIES or
-     *  not; pickHomeMine's KING_FRONT already skips them. Replica 26098 5t4rv4t10n_1337 B vs YokoOno (block #387,
-     *  base rate 1.00 over 41): the map's one mine (9,10) sits in the dividing wall row; KP_FRONT_LOW's search seated
-     *  the king beside it and it walked (19,19) -> (5,12) into their rats, bitten dead r180. km48 (xg2/xh1 vs
-     *  araid/agrab, B): km=P walks to (13,13)-(16,12). */
-    public static final boolean KP_NO_TIE = true;
     /** King.pickHomeMine skips a mine whose front value 100 (e - d) / L2 is under KING_FRONT (0 = off): d, e = dist2
      *  from the mine to our start and the enemy's, L2 = dist2 between the starts; 100 at our start, 0 on the bisector.
      *  The king takes the first such mine anyone lists and keeps it. dirtpassageway (kings (3,26) and (46,26) in an open
@@ -130,14 +124,6 @@ public final class Cfg {
     /** xa1 (explore line): KING_FRONT 20 on every map (zjd/zjf's switch, unledgered). zjd's king lived 160-310
      *  rounds longer on DefaultMedium vs final4 and collegejunior. */
     public static final int KING_FRONT = 20;
-    /** Moat (Moat.java): at war a king that sees an enemy rat within dist2 MOAT_D2 fills its Chebyshev-2 ring with
-     *  dirt (one tile per action, helped by babies beside the ring while its alert is under MOAT_IDLE rounds old),
-     *  keeping MOAT_PORT spawn tiles open, and holds still until MOAT_IDLE rounds pass without a sighting; no baby
-     *  digs that ring at war. Bites reach dist2 2 and a thrown rat stops at dirt. r1v vs AlexT101/abcdezyxwv (12
-     *  games, 11 king kills at r49-714): throws into our king did 84-480 a game (42-46 each, point blank, our own rats
-     *  thrown in 9 of 10), bites 30-316; an enemy rat reached Chebyshev 3 of our king at r7-145 with 3-138 dirt in
-     *  our stock (11-16 open ring tiles). */
-    public static final boolean MOAT = false;
     /** Footprints ahead of a cat that King.catRisk scores (2 = the old 250/75 pair). */
     public static final int CAT_RISK_STEPS = 6;
     /** The king steps off the flights of enemy babies within Chebyshev THROW_DODGE that hold one of ours (King.throwDodge;
@@ -187,7 +173,6 @@ public final class Cfg {
     /** Form only while the trusted income (x100 per round) beats every king's upkeep, the new one's included, by
      *  FORM_NET100 (Integer.MIN_VALUE = no income test). */
     public static final int FORM_NET100 = 100;   // xj6 (owner #32, starvation): was -100; see KING_RESERVE
-    public static final int FORM_GAP = 0;
     /** A baby outside the site's 3x3 joins only while it sees fewer than FORM_JOIN allied babies nearer the site;
      *  the rest keep working (0 = every baby within FORM_PULL_R2 joins). */
     public static final int FORM_JOIN = 8;
@@ -197,45 +182,19 @@ public final class Cfg {
      *  so a second king at 1-1 moves 8-16 points to us; s9s's set-4 limit games (9 of 42) all ended at 1-1 or less
      *  for us, and averystrangespace (3287) was lost 24-25 with no cat damage either side. */
     public static final int END_KING = 1850, END_KING_CHEESE = 400;
-    public static final int RAID_STAY = 60, RAID_SPREAD = 60;
     /** xa5: war strikers attack in waves (Baby.waveHold): rally WAVE_FRAC percent of the way to the enemy king spot
      *  for the first WAVE_GATHER rounds of every WAVE_P, then charge together (0 = off). */
     public static final int WAVE_P = 150, WAVE_GATHER = 100, WAVE_FRAC = 50;
     public static final int WAVE_MIN = 14;
-    /** One in RAID_EVERY fighters is a raider: on our half it ignores enemies beyond dist2 RAID_ENGAGE. */
-    public static final int RAID_EVERY = 0, RAID_ENGAGE = 8, RAID_HP = 60;
     /** Bytecodes the king's first-turn sense leaves for the rest of that turn (spawn first of all). 5000 can be short:
      *  on DefaultMedium an s7e king ended its first turn at 20001 of 20000 and missed the round-2 spawn (s7g: 7000). */
     public static final int KING_SENSE_RESERVE = 7000;
-    /** King press: at war a rat that sees the enemy king squeaks it (allies relay it PRESS_HOPS times); a rat with
-     *  PRESS_HP health or more walks to a king sighting at most PRESS_AGE rounds old within PRESS_D2 (gatherers
-     *  carrying less than DELIVER_AT: PRESS_GATHER_D2) and bites it, ahead of standoffs and facing. */
-    public static final boolean KING_PRESS = false;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */
     public static final int RETREAT_HP = 40;
     public static final int AMMO_HP = 50, AMMO_R = 3, AMMO_D2 = 8;
-    /** Fortress radius (Chebyshev, from the king) fighters hold at war; 0 = off. */
-    public static final int FORT_R = 0;
-    /** Squeak enemy positions/facings so nearby allies share TrapRisk marks. */
-    public static final boolean TRAP_SHARE = false;
-    /** While chasing a ratnappable enemy, ignore suspected trap tiles. */
-    public static final boolean HUNT_IGNORES_RISK = true;
-    /** Gatherers keep the trap-risk mask while engaged (RISK_IN_FIGHT false then drops it for fighters only): the
-     *  trap layers' front tiles are where our gatherers stepped in 50% of the enemy trap hits. */
-    public static final boolean RISK_GATHER = false;
-    /** Where the trap-risk mask is dropped (engaged, or hunting), still avoid the marks of the last RISK_FRESH rounds
-     *  (0 = off): the front tiles of the enemies in view now or just before, where a reactive trap lands; aimCarry's
-     *  steps keep to the mask too. s9s's 126 field games: the field laid 44 traps a game and our rats fired 37.8,
-     *  42% of them fatal (21% two or three at once); 62% within 2 rounds of the lay, 80% on combat moves (a/f/w/T/k)
-     *  with the mask dropped. RISK_IN_FIGHT (150-round marks) froze our fighters (s8h screen -8.1 pts). */
-    public static final int RISK_FRESH = 0;
     /** Guard facing: with an enemy rat within this squared distance, steps strafe so we keep facing it, and a
      *  turn ends facing it (rats are grabbed from behind). 0 = off. */
     public static final int GUARD_DIST2 = 13;
-    /** At war, a turn that ends with no enemy rat known near spends the unused turn facing back, when an enemy rat
-     *  was seen or heard within GLANCE_MEM rounds (0 = off). A rat is grabbed when it cannot see the grabber: on
-     *  knifefight 32 of bestsofar's 61 grabs came from behind, from enemies we never saw. */
-    public static final int GLANCE_MEM = 0;
     /** Bite cheese (c = k*k gives +k damage), only when it makes the bite a kill: a king pays up to KING_BITE_MAX
      *  above KING_BITE_FLOOR, a baby up to FINISH_K*FINISH_K above FINISH_FLOOR. */
     public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;
@@ -274,7 +233,6 @@ public final class Cfg {
      *  so far. Stash (local u4t vs araid, seed 0, A): a carrier's aimCarry spent 6623 of its last 7000 bytecodes, found no
      *  throw, and the turn ran over in the pick-up stage that came after (r136 and r317, OVS 2021/2122). */
     public static final int AIM_LEFT = 3000;
-    public static final boolean MICRO = false;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;
     public static final int KING_THREAT_D2 = 18, DEFEND_D2 = 100;
@@ -289,9 +247,6 @@ public final class Cfg {
      *  u4e's field games: our transfers average 27.5 in losses (77% at 10-29) to the opponents' 45.8, our cycle is
      *  27 cheese per 63 rounds to their 44 per 72, and both sides leave half of a worked mine's cheese unpicked. */
     public static final int LOAD_AT = 0;
-    /** Global cheese below which any rat carrying cheese delivers it before fighting or running errands (0 = off):
-     *  31 of our 45 king deaths on the replica were starvation, once with 728 cheese in our rats' paws. */
-    public static final int HUNGRY = 0;
     /** Breakout (0 = off): a baby that gives up two chases of walled-off cheese within 100 rounds, or whose explore
      *  search fails, spends BREAKOUT_TTL rounds with CHEESE_LOS on and exploring toward the never-seen tile nearest by
      *  path cost (Flow's frontier search; dirt on the way is dug). EscapeTheNight 2233 and local etn1: the king's
@@ -324,9 +279,6 @@ public final class Cfg {
      *  r160 to r700, outside the pocket wall at x 7 and y 29 round our king at (1-3, 32), while Nav's own stall stayed
      *  0-3 (each step of the roaming king is a new target). u4o (TRAIL at 4, unledgered) lost rose A/B on the replica. */
     public static final int TRAIL_STALL = 20;
-    /** TRAIL's chain arrays (2·W·H ints) are allocated at the end of the first turn with at least this many real
-     *  bytecodes left past their cost (Trail.alloc). */
-    public static final int TRAIL_ALLOC_LEFT = 1500;
     /** An attacker takes no pile that would lift it above this, empty-handed or not (0 = off). Attackers run the
      *  after-move pickUp but never deliver. s9s's 126 field games from r400: attack-move turns carried 43-82 cheese
      *  on average and 10-33% of them 100+, and those moved on 31-39% of turns (1% slower per unit carried). */
@@ -383,10 +335,6 @@ public final class Cfg {
     public static final int BREAK_ROUND = 30;
     /** Gatherers spread over every known mine, not only those on our half: the field rushers pick 600-700 cheese a game
      *  on our half in rounds 100-400 (abrk 156). */
-    /** xb7 (explore line, owner #31: Finals' economy): on. Replica 25067 keepout, Finals worked 10 mines in r0-500 (ours 5),
-     *  our home (28,47) from r32; we picked about 4,000 to its 8,600. u3c (u2g + MINE_ANY + MINE_TIES) pooled +12 -6 over
-     *  176 replica cells (Finals dirtpassageway A/B gained). xb7's chains: 35 of 40 to xb4's 30 (+5 -0). */
-    public static final boolean MINE_ANY = true;
     /** Squared distance (to the cat's 2x2 centre, doubled coords /4) a gatherer keeps from cats. */
     public static final int GATHER_CAT_DIST = 20;
     /** A cat within dist2 CAT_DEFEND_R2 of one of our kings draws every rat that sees it, gatherers included
@@ -431,11 +379,6 @@ public final class Cfg {
     public static final int FLOW_REV_TURNS = 60;
     /** FLOW_REV's search with the neighbour loop unrolled (621 bytecodes a node measured for the loop). */
     public static final boolean FLOW_FAST = true;
-    /** Flow search steps a rat may run per round (0: as many as its bytecodes allow). Mirrored rats have a few bytecodes
-     *  more or less left (Stash, t0q self-play: twin rats a turn apart from r38), so a search cut by bytecodes alone
-     *  finishes a turn earlier on one side and the twins walk different paths. A quota under the bytecode cut makes both
-     *  finish on the same turn. */
-    public static final int FLOW_QUOTA = 0;
     public static final int BFLOW_EXTRA = 12;
     /** Path cost of a dirt tile (a dig is 5 cheese and 2.5 turns of action cooldown, plus the step). */
     public static final int DIG_COST = 4;
@@ -453,9 +396,6 @@ public final class Cfg {
      *  that it listed never mirrored to our (56,33)). */
     public static final int SYM_COURIER = 30;
     public static final int SYM_GOSSIP_EVERY = 3;
-    /** A mine as near the enemy start as ours (on a HOR/VER axis: 7 of EscapeTheNight's 11) counts as ours for the
-     *  gatherers' pick and the king's home mine, instead of as theirs. */
-    public static final boolean MINE_TIES = true;   // xb7, with MINE_ANY
     /** Scouts: one in SCOUT_EVERY gatherers explores our half (never-seen tiles) until round SCOUT_UNTIL, then
      *  gathers (0 = off). */
     public static final int SCOUT_EVERY = 4, SCOUT_UNTIL = 150;
@@ -504,11 +444,6 @@ public final class Cfg {
     /** The king turns to face each spawn tile before it builds: a newborn takes its king's facing, and the maps'
      *  starting king facings are not mirrored (knifefight), so the first rats looked along unmirrored lines. */
     public static final boolean SYM_FACE = false;
-    /** Exact ties in tile picks (spawn, traps, dig, rescue, guard, mine site) go by G.tieFirst, an order every twin keeps,
-     *  not the loop order. superioristhmus, t0q self-play: the king's two best spawn tiles, a corner and an edge, scored
-     *  the same and had the same pick bit, so the dx/dy loop took the corner on one side and the edge on the other
-     *  (r27, the first move that differed). */
-    public static final boolean SYM_TIE = false;
     /** A rat held SWAP_HOLD turns behind an ally baby on its next step carries the ally, steps into its tile and sets
      *  it down behind once it can act (a carried rat leaves the grid), so two rats pass in a 1-wide corridor (0 = off).
      *  rose: s6m's outbound and inbound gatherers met head-on at r160 in the 1-wide stem out of the king's walled
@@ -576,28 +511,6 @@ public final class Cfg {
      *  king formed by then; 51 won, 42 lost without (~/diag26b/z1zb*.jsonl). z0k (u9p, drifting bytecodes) pooled
      *  D 27, net +5, t 0.96 over three blocks. */
     public static final int FORM_WAR_FROM = 300;
-    public static final int RICH_FIX_RETRY = 20;
-    /** Late rich king (0 = off): from round RICH_LATE to the r1150 cut, a team with two kings and RICH_LATE_BANK
-     *  banked names a third king's site (FORM_RICH's path) while Econ.surplus(3), the bank projected to r2000 with
-     *  three kings' upkeep, is RICH_LATE_SUR or more. Kings alive at r2000 weigh 0.5 of war points (2-2 is 25-25, 3-2
-     *  is 30-20), and after r1200 a team with two kings cannot form another. zc6 cheesefarm vs araid A and B: kings 2-2
-     *  from r200, lost 49-50 both (49.99 to 50.01 before truncation); u6x banked 1,682 at r1150 on 11.5 a round of
-     *  income (sur=5514 at r1100) and ended with 8,883 unspent, so FORM_RICH_BANK 3000 came at r1300, too late.
-     *  xh9 (x-line, owner #31: the top bots' king count): 950 / 600 / 2000. Replica r2000 points games in our dumps
-     *  (162, 125 won): of 37 lost, 21 ended at equal kings (2-2 mostly vs Merlin, cat 0.29-0.55, transfer 0.31-0.46)
-     *  and 10 with fewer; 97 of the wins had more. 3-2 is 30-20 of the kings' 50 war points, enough for most of the
-     *  2-2 losses. zfj's 950/300/0 starved minimaze B (third king r1008, bank 2 by r1200): here the r2000 projection
-     *  with three kings' upkeep at 75% trusted income must keep 2000. */
-    public static final int RICH_LATE = 0;   // xj6: off (was 950), see FORM_NET100
-    /** More late kings (0 = off): from round RICH_MORE to the r1150 cut, a team with three or four kings and
-     *  RICH_MORE_BANK banked names one more king's site (FORM_RICH's path) while Econ.surplus(kings + 1) is RICH_MORE_SUR
-     *  or more. Field r2000 losses (624 replica games): superioristhmus vs spsquared sat at 2-3 kings to their 3-4 with
-     *  3-15k banked; five kings to their four is 27-22 of the kings' 50 war points, four to four 25-25. */
-    public static final int RICH_MORE = 0;
-    /** Rich formation gap (0 = off): when a king forms at a site opened with two or more kings, the next site may open
-     *  RICH_GAP rounds later instead of after FORM_TTL + FORM_RETRY (210). Kings came 210 rounds apart (z2q,
-     *  superioristhmus A vs araid: r685, r904, r1111), so RICH_MORE's fifth king had no time before the r1150 cut. */
-    public static final int RICH_GAP = 0;
     /** Endgame cat damage (0 = off): from round END_CAT at war, a baby of any role that holds less than DELIVER_AT raw,
      *  carries no rat, is not needed at a threatened king and has no enemy rat within dist2 8 goes for the nearest seen
      *  or known cat (Baby.endCat), and the bite step bites it. At war the r2000 points are 0.5 kings, 0.3 cat damage and
@@ -628,8 +541,7 @@ public final class Cfg {
     /** xh6 (x-line): WAR_NO_CAT ends at this round. km55 keepout vs atrap3 A/B: xh5 kept 40% fewer cat deaths but
      *  lost both at r2000 on cat share (ours 5627 vs 8000 A, 6002 vs 8000 B) with cats still alive; xh4 won both 8000/8000. */
     public static final int WAR_NO_CAT_END = 1200;
-    /** Rescue formation (0 = off): while global cheese is under CASH_BANK (and at least CASH_FLOOR, the 50 a king costs
-     *  plus a margin), a baby holding CASH_RAW+ raw cheese, Chebyshev CASH_FAR+ from every king, that sees CASH_N-1 more
+    /** Rescue formation (run only as CASH_END's endgame rescue): a baby holding CASH_RAW+ raw cheese, Chebyshev CASH_FAR+ from every king, that sees CASH_N-1 more
      *  of our babies within Chebyshev CASH_R holding CASH_MIN raw with its own, none heavier, leads a formation on a
      *  clear 3x3 at or beside itself. It squeaks the site (SQ_CASH) and every baby that hears it within Chebyshev
      *  CASH_PULL walks into the 3x3 and relays it. The engine banks the raw cheese of every rat in the 3x3 when the
@@ -639,18 +551,13 @@ public final class Cfg {
      *  When the bank first fell under 150, a group of 7+ of ours within Chebyshev 5 held 320-935 raw in 11 games:
      *  fullofsecrets (outside the king's sealed pocket, 3-7 out), rose (the stem, 5-8 out), clockwisdom, uneasy_alliance.
      *  Local fullofsecrets (u9p vs araid A): attackers held 120-777 each around the centre mines from r400, 20 out. */
-    public static final int CASH_BANK = 250, CASH_FLOOR = 60, CASH_RAW = 60, CASH_N = 3, CASH_R = 4, CASH_MIN = 250,
+    public static final int CASH_FLOOR = 60, CASH_RAW = 60, CASH_N = 3, CASH_R = 4, CASH_MIN = 250,
         CASH_FAR = 5, CASH_PULL = 8, CASH_TTL = 50;
     /** Endgame rescue (0 = off): from this round a lone king's babies run CASH's formation for a second king, with no
      *  raw cheese needed, while the bank keeps the new king alive to round 2000 (Baby.cashEnd). At r2000 kings are half
      *  of the war points (0.3 in cooperation): 1 king to their 1 splits 25-25, 2 to 1 is 33-17. u6x's END_KING needs
      *  400 banked and the king to name a site; 9 of the 12 lone-king replica points losses never had 400. */
     public static final int CASH_END = 1880;
-    /** CASH's rescue runs only while the team has at most this many kings (CASH_END is lone-king anyway). With two
-     *  kings the bank sits at the spawn floor (250-300) for hundreds of rounds, so "under CASH_BANK" is no sign of
-     *  starvation: z2x on starvation B vs araid (zd151, ~/diag26b/zst) formed a third king by CASH at r970 with the
-     *  bank at 248-307, and all three starved together at r1373 (z1z, on two kings, banked 750-960 and won). */
-    public static final int CASH_KINGS = 0;
     /** Last stand (0 = off): with 3 or fewer live babies (the baby cost at its base 10) every spawn floor drops to
      *  LAST_FLOOR, so a king without income spends its upkeep reserve on rats instead of starving on it. Replica dumps
      *  (lowstand.py, 27 games with 10+ rounds of <= 2 babies and >= 20 banked): lost 25; the bank then was 22-104, the
@@ -664,106 +571,10 @@ public final class Cfg {
      *  stage 6 to 7 costing 11k; no trap laid that turn). z7m's rats overran the same way on arrows (z7u's evidence). */
     public static final int CASH_READ_LEFT = 6000;
 
-    // ---- bc26a0 pass 2B fixes (docs/bc26a0-lessons.md R1; bc26a0 commit 0bdf161), ported to xj9's code ----
-    /** All fixes on or off. Every FIX_* is a compile-time constant, so javac drops the off branches: FIX_ALL = false
-     *  compiles to xj9's bytecode. */
-    public static final boolean FIX_ALL = true;
-    /** Cheese the king picks up anywhere (move()'s pickUps after walking too) counts as Econ income, not only the
-     *  turn-start pickUp. */
-    public static final boolean FIX_KING_PICKUP_INCOME = FIX_ALL;
-    /** The king's nearCheese skips piles under its own 3x3 (pickUp empties them this turn). */
-    public static final boolean FIX_KING_NEAR_CHEESE = FIX_ALL;
-    /** The king bites an enemy king on any body tile in reach, not only its (never reachable) centre. */
-    public static final boolean FIX_KING_BITE_KING = FIX_ALL;
-    /** Dig-first is blocked only by a flow search toward this target, not by one toward an old target. */
-    public static final boolean FIX_DIG_FIRST_TGT = FIX_ALL;
-    /** Flow.start resets the robot-blocked counter held. */
-    public static final boolean FIX_FLOW_HELD = FIX_ALL;
-    /** ALERT keeps the round's most-threatened king instead of the last writer. */
-    public static final boolean FIX_ALERT_MAX = FIX_ALL;
-    /** TrapRisk dates arrival to the round before (the move followed that round's observe). */
-    public static final boolean FIX_TRAP_ARRIVED = FIX_ALL;
-    /** A carried or thrown baby neither updates its TrapRisk arrival nor clears marks. */
-    public static final boolean FIX_TRAP_CARRIED = FIX_ALL;
-    /** A baby bites any enemy-king tile it can attack, not only the one nearest it. */
-    public static final boolean FIX_BITE_KING_TILE = FIX_ALL;
-    /** A carry from the engine's role swap restarts carryRound, so THROW_HOLD applies to it. */
-    public static final boolean FIX_SWAP_HOLD = FIX_ALL;
-    /** An attacker forgets lastEKing once it senses that spot with no king in view. */
-    public static final boolean FIX_EKING_FORGET = FIX_ALL;
-    /** wanderAround draws within Chebyshev 2 (atMine's radius), not 3, ending the 2-tile bounce. */
-    public static final boolean FIX_WANDER_BOX = FIX_ALL;
-    /** A mine walk stalled past 25 turns bumps mineShift, so the re-pick is a different mine. */
-    public static final boolean FIX_STALL_SHIFT = FIX_ALL;
-    /** A seek ends only on real news (a mine the king lacked), not on sensing a listed mine. */
-    public static final boolean FIX_SEEK_NEWS = FIX_ALL;
-    /** A FORM_KING centre rat promotes when action-ready (not only movement-ready) and on its step-on turn. */
-    public static final boolean FIX_FORM_PROMOTE = FIX_ALL;
-
-    // ---- audit 2026-11-18 fixes (research/audit/findings-*.md, verified); FIX2_ALL = false compiles to the pre-fix bytecode ----
-    public static final boolean FIX2_ALL = true;
-    /** O1: a newborn's first turn bails under NB_BAIL (not BC_BAIL): it already paid Sym.init and its allocations. */
-    public static final boolean FIX_O1 = FIX2_ALL;
+    /** A newborn's first turn bails under NB_BAIL (not BC_BAIL): it already paid Sym.init and its allocations. */
     public static final int NB_BAIL = 6500;
-    /** N1: Flow's finish reserve counts path tiles (depth kept in par's high bits), not path cost (dirt 4). */
-    public static final boolean FIX_N1 = FIX2_ALL;
-    /** N2: a reverse search finishes from the rat's own tile when the rat walked into the closed region. */
-    public static final boolean FIX_N2 = FIX2_ALL;
-    /** N3: every baby dig needs digOk() (raw 5, or the bank over the dig reserve), not 5 raw+global. */
-    public static final boolean FIX_N3 = FIX2_ALL;
-    /** N4: a path whose next tile is dirt we may not dig is held FLOW_HOLD turns, then dropped (greedy/bug takes over). */
-    public static final boolean FIX_N4 = FIX2_ALL;
-    /** N5: a failed BitFlow field clears its target (no 200-round active() block). */
-    public static final boolean FIX_N5 = FIX2_ALL;
-    /** N6: BitFlow momentum only while its field is toward this target. */
-    public static final boolean FIX_N6 = FIX2_ALL;
-    /** N7: flee2 prefers steps outside Nav.avoid, then any. */
-    public static final boolean FIX_N7 = FIX2_ALL;
-    /** N8/S4: Trail.alloc runs before Flow.work (keeping Flow's reserve), not after the indicator and tag. */
-    public static final boolean FIX_N8 = FIX2_ALL;
-    /** S3: an overrun inside the indicator (or later end-of-turn work) is counted. */
-    public static final boolean FIX_S3 = FIX2_ALL;
-    /** S7: a rat that promoted this turn skips the baby end-of-turn work (G.king refreshed after the turn). */
-    public static final boolean FIX_S7 = FIX2_ALL;
-    /** S2: TrapRisk dates arrival to the last observe, not the round before (an observe may have been skipped). */
-    public static final boolean FIX_S2 = FIX2_ALL;
-    /** K1: KPath.held skips our own turn-start centre (Comms.kings is read before the king moves). */
-    public static final boolean FIX_K1 = FIX2_ALL;
-    /** K2: the lowest fresh king slot runs formation(), not slot 0 only (dead slot-0 king). */
-    public static final boolean FIX_K2 = FIX2_ALL;
-    /** K3/S1: kings zero stale KING/ALERT/CAT/FORM_T stamps every 16 rounds (round & 1023 aliasing). */
-    public static final boolean FIX_K3 = FIX2_ALL;
-    /** K7: the kings' babies estimate subtracts the promotions (numKings - 1) the rat cost still counts. */
-    public static final boolean FIX_K7 = FIX2_ALL;
-    /** K5a/S5/E3: with the mine list full no mine counts as unreported (no endless SQ_MINE, scouts' walks home). */
-    public static final boolean FIX_K5 = FIX2_ALL;
-    /** E2: wanderAround redraws a target under one of our kings (the MINE_KING_R gate is gone). */
-    public static final boolean FIX_E2 = FIX2_ALL;
-    /** E4: a rat stepping onto its rescue (CASH) centre promotes on that turn. */
-    public static final boolean FIX_E4 = FIX2_ALL;
-    /** E5: the held wander chain survives up to 3 rounds between wanders (cooldown turns). */
-    public static final boolean FIX_E5 = FIX2_ALL;
-    /** E6: report() reads every round's squeaks since it last read (skipped turns lost them). */
-    public static final boolean FIX_E6 = FIX2_ALL;
-    /** E7: a rat standing on a pile it cannot take drops the cheese target. */
-    public static final boolean FIX_E7 = FIX2_ALL;
-    /** C1: a carrier of an enemy with a cat to feed does not flee that cat. */
-    public static final boolean FIX_C1 = FIX2_ALL;
-    /** C3: the cat flee runs from the cat's 2x2 centre, not its low corner. */
-    public static final boolean FIX_C3 = FIX2_ALL;
-    /** C4: report() squeaks nothing with a cat in earshot (cats steer to squeaks). */
-    public static final boolean FIX_C4 = FIX2_ALL;
-    /** C5: throw damage assumes the thrown rat may act after the thrower (8 less at tiles 3-6, a landing beyond). */
-    public static final boolean FIX_C5 = FIX2_ALL;
-    /** C6: aimCarry's step avoids the cat's lane, unless the throw is ready and feeds that cat. */
-    public static final boolean FIX_C6 = FIX2_ALL;
-    /** C7a: the pre-move ATTACK king bite, cat bite and cat trap keep the action for a rescue grab (saving). */
-    public static final boolean FIX_C7A = FIX2_ALL;
-    /** C7b: a GrabMicro grab that fails bites its target instead. */
-    public static final boolean FIX_C7B = FIX2_ALL;
-    /** O2: a newborn's first turn defers pickMine (Baby.moveDecision) unless NB_PICK_PER bytecodes a known mine (its
+    /** A newborn's first turn defers pickMine (Baby.moveDecision) unless NB_PICK_PER bytecodes a known mine (its
      *  dedupe, home-half test and sort: 4.1k with 14 mines) plus NB_PICK_PAD (the Nav.goTo after it, ~1k) are left;
-     *  the O1 gate (NB_BAIL) let ~170 newborns a game on 60x60 maps overrun there and lose their second turn too. */
-    public static final boolean FIX_O2 = FIX2_ALL;
+     *  the NB_BAIL gate let ~170 newborns a game on 60x60 maps overrun there and lose their second turn too. */
     public static final int NB_PICK_PER = 320, NB_PICK_PAD = 1600;
 }

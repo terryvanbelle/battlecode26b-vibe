@@ -92,23 +92,15 @@ public final class KPath {
         fMin = (fa * home.x + fb * home.y + fc) * frontPct / 100;
     }
 
-    /** m is on our half: nearer our start home than the enemy start away (King.pickHomeMine's test; a mine on the
-     *  bisector only with Cfg.MINE_TIES and without Cfg.KP_NO_TIE). */
+    /** m is on our half: nearer our start home than the enemy start away (no mine on the bisector). */
     static boolean homeHalf(MapLocation m, MapLocation home, MapLocation away) {
         int d = home.distanceSquaredTo(m), e = m.distanceSquaredTo(away);
-        return d < e || d == e && Cfg.MINE_TIES && !Cfg.KP_NO_TIE;
+        return d < e;
     }
 
-    /** Another of our kings sits within Chebyshev 2 of m. */
+    /** Another of our kings sits within Chebyshev 2 of m (skipping our own centre now and at turn start: Comms.kings
+     *  was read before we moved). */
     static boolean held(MapLocation m, MapLocation me) {
-        if (Cfg.FIX_K1) return heldFix(m, me);
-        for (int k = 0; k < Comms.numKings; k++)
-            if (G.cheb(Comms.kings[k], m) <= 2 && !Comms.kings[k].equals(me)) return true;
-        return false;
-    }
-
-    /** Cfg.FIX_K1: held() also skipping our own turn-start centre (Comms.kings was read before we moved). */
-    static boolean heldFix(MapLocation m, MapLocation me) {
         for (int k = 0; k < Comms.numKings; k++) {
             MapLocation c = Comms.kings[k];
             if (G.cheb(c, m) <= 2 && !c.equals(me) && !c.equals(King.turnC)) return true;

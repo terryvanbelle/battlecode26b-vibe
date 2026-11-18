@@ -19,7 +19,7 @@ public final class Comms {
 
     // squeak types (top 4 bits)
     public static final int SQ_MINE = 1, SQ_SYM = 2, SQ_EKING = 3, SQ_CAT = 4, SQ_START = 6;
-    public static final int SQ_CASH = 9;                         // Cfg.CASH_BANK: rescue site x, y (extra: tag<<10 | start)
+    public static final int SQ_CASH = 9;                         // rescue formation (Cfg.CASH_END): site x, y (extra: tag<<10 | start)
 
     public static int squeak(int type, int x, int y, int extra) {
         return (type << 28) | (extra << 12) | (x << 6) | y;

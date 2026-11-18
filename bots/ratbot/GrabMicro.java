@@ -86,7 +86,7 @@ public final class GrabMicro {
     }
 
     /** Mirror-invariant tie key of offset (dx, dy) seen from a tile whose doubled centre offset is (px, py): the cross
-     *  product signed by the side chirality, then the dot product (SYM_TIE's order). Larger ranks first. */
+     *  product signed by the side chirality, then the dot product. Larger ranks first. */
     static int key(int px, int py, int chir, int dx, int dy) {
         return (px * dy - py * dx) * chir * 4096 + px * dx + py * dy;
     }
@@ -356,8 +356,8 @@ public final class GrabMicro {
                 Baby.naps++;
                 grabs++;
             }
-            // Cfg.FIX_C7B: the grab failed (the target turned or moved): bite it instead (the turn's bites stand down)
-            if (Cfg.FIX_C7B && rc.canAttack(l)) {
+            // the grab failed (the target turned or moved): bite it instead (the turn's bites stand down)
+            if (rc.canAttack(l)) {
                 int c = Baby.finishCheese(er[grabI].health, rc.getGlobalCheese());
                 if (c > 0 && rc.canAttack(l, c)) rc.attack(l, c); else rc.attack(l);
                 Baby.bitesRat++;
