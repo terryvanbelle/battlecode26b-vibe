@@ -37,6 +37,16 @@ public final class Trail {
         gen = 1;
     }
 
+    /** Cfg.FIX_N8: alloc() before Flow.work (RobotPlayer), keeping keep bytecodes past the arrays. */
+    public static void allocKeep(int keep) {
+        if (at != null) return;
+        int c = G.W * G.H;
+        if (Clock.getBytecodesLeft() < 2 * c + keep) return;
+        at = new int[c];
+        tiles = new int[c];
+        gen = 1;
+    }
+
     static void add(int x, int y) {
         int W = G.W, i = x + y * W;
         if (n > 0) {

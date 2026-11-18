@@ -101,8 +101,18 @@ public final class KPath {
 
     /** Another of our kings sits within Chebyshev 2 of m. */
     static boolean held(MapLocation m, MapLocation me) {
+        if (Cfg.FIX_K1) return heldFix(m, me);
         for (int k = 0; k < Comms.numKings; k++)
             if (G.cheb(Comms.kings[k], m) <= 2 && !Comms.kings[k].equals(me)) return true;
+        return false;
+    }
+
+    /** Cfg.FIX_K1: held() also skipping our own turn-start centre (Comms.kings was read before we moved). */
+    static boolean heldFix(MapLocation m, MapLocation me) {
+        for (int k = 0; k < Comms.numKings; k++) {
+            MapLocation c = Comms.kings[k];
+            if (G.cheb(c, m) <= 2 && !c.equals(me) && !c.equals(King.turnC)) return true;
+        }
         return false;
     }
 

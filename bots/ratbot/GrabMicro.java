@@ -356,6 +356,12 @@ public final class GrabMicro {
                 Baby.naps++;
                 grabs++;
             }
+            // Cfg.FIX_C7B: the grab failed (the target turned or moved): bite it instead (the turn's bites stand down)
+            if (Cfg.FIX_C7B && rc.canAttack(l)) {
+                int c = Baby.finishCheese(er[grabI].health, rc.getGlobalCheese());
+                if (c > 0 && rc.canAttack(l, c)) rc.attack(l, c); else rc.attack(l);
+                Baby.bitesRat++;
+            }
         } else if (biteI >= 0) {
             MapLocation l = er[biteI].location;
             if (rc.canAttack(l)) {

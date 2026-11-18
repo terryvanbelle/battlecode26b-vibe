@@ -13,6 +13,8 @@ public final class TrapRisk {
     static int[] mark;            // round + 1 the tile was last marked, 0 = none
     static int arrived = -1;      // round we reached our current tile
     static MapLocation last;
+    /** Cfg.FIX_S2: the round of the last observe that got past the allocation gate. */
+    static int lastObs;
 
     static void init() {
         if (mark == null) mark = new int[G.W * G.H];
@@ -33,7 +35,9 @@ public final class TrapRisk {
         // Cfg.FIX_TRAP_ARRIVED: the move came after last round's observe, so keep that round's marks
         if (Cfg.FIX_TRAP_CARRIED || Cfg.FIX_TRAP_ARRIVED) {
             boolean grounded = !Cfg.FIX_TRAP_CARRIED || !G.rc.isBeingCarried() && !G.rc.isBeingThrown();
-            if (grounded && (last == null || !last.equals(me))) { last = me; arrived = Cfg.FIX_TRAP_ARRIVED ? G.round - 1 : G.round; }
+            // (Cfg.FIX_S2: to the last observe, which a budget-skipped turn leaves further back)
+            if (grounded && (last == null || !last.equals(me))) { last = me; arrived = Cfg.FIX_TRAP_ARRIVED ? (Cfg.FIX_S2 ? lastObs : G.round - 1) : G.round; }
+            if (Cfg.FIX_S2) lastObs = G.round;
             if (!grounded) {
                 for (RobotInfo r : robots) {
                     if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;

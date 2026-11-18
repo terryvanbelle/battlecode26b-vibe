@@ -699,4 +699,71 @@ public final class Cfg {
     public static final boolean FIX_SEEK_NEWS = FIX_ALL;
     /** A FORM_KING centre rat promotes when action-ready (not only movement-ready) and on its step-on turn. */
     public static final boolean FIX_FORM_PROMOTE = FIX_ALL;
+
+    // ---- audit 2026-11-18 fixes (research/audit/findings-*.md, verified); FIX2_ALL = false compiles to the pre-fix bytecode ----
+    public static final boolean FIX2_ALL = true;
+    /** O1: a newborn's first turn bails under NB_BAIL (not BC_BAIL): it already paid Sym.init and its allocations. */
+    public static final boolean FIX_O1 = FIX2_ALL;
+    public static final int NB_BAIL = 6500;
+    /** N1: Flow's finish reserve counts path tiles (depth kept in par's high bits), not path cost (dirt 4). */
+    public static final boolean FIX_N1 = FIX2_ALL;
+    /** N2: a reverse search finishes from the rat's own tile when the rat walked into the closed region. */
+    public static final boolean FIX_N2 = FIX2_ALL;
+    /** N3: every baby dig needs digOk() (raw 5, or the bank over the dig reserve), not 5 raw+global. */
+    public static final boolean FIX_N3 = FIX2_ALL;
+    /** N4: a path whose next tile is dirt we may not dig is held FLOW_HOLD turns, then dropped (greedy/bug takes over). */
+    public static final boolean FIX_N4 = FIX2_ALL;
+    /** N5: a failed BitFlow field clears its target (no 200-round active() block). */
+    public static final boolean FIX_N5 = FIX2_ALL;
+    /** N6: BitFlow momentum only while its field is toward this target. */
+    public static final boolean FIX_N6 = FIX2_ALL;
+    /** N7: flee2 prefers steps outside Nav.avoid, then any. */
+    public static final boolean FIX_N7 = FIX2_ALL;
+    /** N8/S4: Trail.alloc runs before Flow.work (keeping Flow's reserve), not after the indicator and tag. */
+    public static final boolean FIX_N8 = FIX2_ALL;
+    /** S3: an overrun inside the indicator (or later end-of-turn work) is counted. */
+    public static final boolean FIX_S3 = FIX2_ALL;
+    /** S7: a rat that promoted this turn skips the baby end-of-turn work (G.king refreshed after the turn). */
+    public static final boolean FIX_S7 = FIX2_ALL;
+    /** S2: TrapRisk dates arrival to the last observe, not the round before (an observe may have been skipped). */
+    public static final boolean FIX_S2 = FIX2_ALL;
+    /** K1: KPath.held skips our own turn-start centre (Comms.kings is read before the king moves). */
+    public static final boolean FIX_K1 = FIX2_ALL;
+    /** K2: the lowest fresh king slot runs formation(), not slot 0 only (dead slot-0 king). */
+    public static final boolean FIX_K2 = FIX2_ALL;
+    /** K3/S1: kings zero stale KING/ALERT/CAT/FORM_T stamps every 16 rounds (round & 1023 aliasing). */
+    public static final boolean FIX_K3 = FIX2_ALL;
+    /** K7: the kings' babies estimate subtracts the promotions (numKings - 1) the rat cost still counts. */
+    public static final boolean FIX_K7 = FIX2_ALL;
+    /** K5a/S5/E3: with the mine list full no mine counts as unreported (no endless SQ_MINE, scouts' walks home). */
+    public static final boolean FIX_K5 = FIX2_ALL;
+    /** E2: wanderAround redraws a target under one of our kings (the MINE_KING_R gate is gone). */
+    public static final boolean FIX_E2 = FIX2_ALL;
+    /** E4: a rat stepping onto its rescue (CASH) centre promotes on that turn. */
+    public static final boolean FIX_E4 = FIX2_ALL;
+    /** E5: the held wander chain survives up to 3 rounds between wanders (cooldown turns). */
+    public static final boolean FIX_E5 = FIX2_ALL;
+    /** E6: report() reads every round's squeaks since it last read (skipped turns lost them). */
+    public static final boolean FIX_E6 = FIX2_ALL;
+    /** E7: a rat standing on a pile it cannot take drops the cheese target. */
+    public static final boolean FIX_E7 = FIX2_ALL;
+    /** C1: a carrier of an enemy with a cat to feed does not flee that cat. */
+    public static final boolean FIX_C1 = FIX2_ALL;
+    /** C3: the cat flee runs from the cat's 2x2 centre, not its low corner. */
+    public static final boolean FIX_C3 = FIX2_ALL;
+    /** C4: report() squeaks nothing with a cat in earshot (cats steer to squeaks). */
+    public static final boolean FIX_C4 = FIX2_ALL;
+    /** C5: throw damage assumes the thrown rat may act after the thrower (8 less at tiles 3-6, a landing beyond). */
+    public static final boolean FIX_C5 = FIX2_ALL;
+    /** C6: aimCarry's step avoids the cat's lane, unless the throw is ready and feeds that cat. */
+    public static final boolean FIX_C6 = FIX2_ALL;
+    /** C7a: the pre-move ATTACK king bite, cat bite and cat trap keep the action for a rescue grab (saving). */
+    public static final boolean FIX_C7A = FIX2_ALL;
+    /** C7b: a GrabMicro grab that fails bites its target instead. */
+    public static final boolean FIX_C7B = FIX2_ALL;
+    /** O2: a newborn's first turn defers pickMine (Baby.moveDecision) unless NB_PICK_PER bytecodes a known mine (its
+     *  dedupe, home-half test and sort: 4.1k with 14 mines) plus NB_PICK_PAD (the Nav.goTo after it, ~1k) are left;
+     *  the O1 gate (NB_BAIL) let ~170 newborns a game on 60x60 maps overrun there and lose their second turn too. */
+    public static final boolean FIX_O2 = FIX2_ALL;
+    public static final int NB_PICK_PER = 320, NB_PICK_PAD = 1600;
 }

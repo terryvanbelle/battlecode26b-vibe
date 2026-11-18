@@ -38,6 +38,8 @@ public final class BitFlow {
     /** The rat's tile when its wave was last found, that wave, and the wave at which the field first covered it. */
     static int meIdx = -1, meD = -1, meAt = -1;
     public static int held, builds, steps, fails, restarts;
+    /** Cfg.FIX_N4: turns held before a dirt step we may not dig. */
+    static int digHeld;
     /** The direction of this rat's last step down a field toward the current target (null: none since
      *  the errand began); a restart (a wall seen since the waves passed) keeps it for Nav.momentum. */
     static Direction heading;
@@ -144,7 +146,11 @@ public final class BitFlow {
             if (left() < reserve + 120 * span + 400) return;
             if (!grow()) {
                 building = false;
-                if ((done[y] >>> x & 1) == 0) { fails++; failTgt = tgt; failRound = G.round; }
+                if ((done[y] >>> x & 1) == 0) {
+                    fails++; failTgt = tgt; failRound = G.round;
+                    // Cfg.FIX_N5: a failed field is no field (active() blocked requests and dig-first 200 rounds)
+                    if (Cfg.FIX_N5) tgt = null;
+                }
                 return;
             }
         }
@@ -298,7 +304,15 @@ public final class BitFlow {
         MapLocation n = G.me.add(best);
         int ni = n.x + n.y * W;
         if ((mem[ni] & Sym.DIRT) != 0) {
-            if (G.globalCheese + G.rawCheese < 5 || !rc.isActionReady()) return true;
+            // Cfg.FIX_N4: a dig we may not pay for (Nav.digOk) holds FLOW_HOLD turns, then the field is dropped
+            if (Cfg.FIX_N4) {
+                if (!Nav.digOk()) {
+                    if (++digHeld > Cfg.FLOW_HOLD) { digHeld = 0; failTgt = tgt; failRound = G.round; tgt = null; building = false; return false; }
+                    return true;
+                }
+                digHeld = 0;
+            }
+            if (Cfg.FIX_N3 ? !Nav.digOk() || !rc.isActionReady() : G.globalCheese + G.rawCheese < 5 || !rc.isActionReady()) return true;
             if (rc.getDirection() != best && rc.canTurn(best)) { rc.turn(best); G.facing = best; }
             if (rc.canRemoveDirt(n)) {
 

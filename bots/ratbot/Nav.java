@@ -123,7 +123,10 @@ public final class Nav {
                 if (!G.me.equals(was)) stall = 0;
                 return !G.me.equals(was);
             }
-            if (BitFlow.building && BitFlow.heading != null && momentum(BitFlow.heading)) return true;
+            // (Cfg.FIX_N6: only while the field is toward t; a finished one keeps building set)
+            if (Cfg.FIX_N6
+                ? BitFlow.building && BitFlow.tgt != null && G.cheb(BitFlow.tgt, t) <= 1 && BitFlow.heading != null && momentum(BitFlow.heading)
+                : BitFlow.building && BitFlow.heading != null && momentum(BitFlow.heading)) return true;
         } else if (G.cheb(G.me, t) > 1) {
             if (stall >= Cfg.FLOW_STALL || bugging && bugTurns >= Cfg.FLOW_STALL) Flow.request(t);
             MapLocation was = G.me;
@@ -317,6 +320,7 @@ public final class Nav {
     /** Dig through dirt when stalled and the straight step is dirt. */
     static void tryDig(MapLocation t) throws GameActionException {
         if (stall < 6 || G.globalCheese + G.rawCheese < 60) return;
+        if (Cfg.FIX_N3 && !digOk()) return;
         Direction toT = G.me.directionTo(t);
         MapLocation n = G.me.add(toT);
         RobotController rc = G.rc;
@@ -329,6 +333,11 @@ public final class Nav {
         }
     }
 
+    /** Cfg.FIX_N3: a baby may dig (5 cheese, raw first): from its own raw, or from a bank above the dig reserve. */
+    static boolean digOk() {
+        return G.rawCheese >= 5 || G.globalCheese >= King.reserve(Cfg.DIG_RESERVE) + 5;
+    }
+
     /** Step away from a threat location, preferring directions that increase distance most. */
     public static boolean flee(MapLocation threat) throws GameActionException {
         return flee2(2 * threat.x, 2 * threat.y);
@@ -336,6 +345,7 @@ public final class Nav {
 
     /** flee() from a point in doubled coordinates (a 2x2 cat's centre, so mirror twins flee mirrored ways). */
     public static boolean flee2(int tx2, int ty2) throws GameActionException {
+        if (Cfg.FIX_N7) return flee2Avoid(tx2, ty2);
         if (!G.rc.isMovementReady()) return false;
         int ax = 2 * G.me.x - tx2, ay = 2 * G.me.y - ty2;
         Direction away = G.dirOf(ax, ay);
@@ -351,6 +361,27 @@ public final class Nav {
             int dx = ax + 2 * d.dx, dy = ay + 2 * d.dy, dd = dx * dx + dy * dy;
             if (dd > bd) { bd = dd; best = d; }
         }
+        return best != null && step(best);
+    }
+
+    /** Cfg.FIX_N7: flee2 over the steps outside the avoid mask first, then (none gaining) over all of them. */
+    static boolean flee2Avoid(int tx2, int ty2) throws GameActionException {
+        if (!G.rc.isMovementReady()) return false;
+        int ax = 2 * G.me.x - tx2, ay = 2 * G.me.y - ty2;
+        Direction away = G.dirOf(ax, ay);
+        if (away == Direction.CENTER) away = G.facing.opposite();
+        Direction best = null;
+        int bd = ax * ax + ay * ay;
+        int h = G.hand(G.me, away);
+        Direction[] cand = {away, h > 0 ? away.rotateLeft() : away.rotateRight(), h > 0 ? away.rotateRight() : away.rotateLeft(),
+            h > 0 ? away.rotateLeft().rotateLeft() : away.rotateRight().rotateRight(),
+            h > 0 ? away.rotateRight().rotateRight() : away.rotateLeft().rotateLeft()};
+        for (int pass = 0; pass < 2 && best == null; pass++)
+            for (Direction d : cand) {
+                if (pass == 0 && (avoid & (1 << d.ordinal())) != 0 || !G.rc.canMove(d)) continue;
+                int dx = ax + 2 * d.dx, dy = ay + 2 * d.dy, dd = dx * dx + dy * dy;
+                if (dd > bd) { bd = dd; best = d; }
+            }
         return best != null && step(best);
     }
 }

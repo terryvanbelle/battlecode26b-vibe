@@ -27,6 +27,10 @@ public final class King {
         }
         Debug.mark(41);
         Comms.readKings();
+        // Cfg.FIX_K1: our centre in Comms.kings (KPath.held skips it after we move)
+        if (Cfg.FIX_K1) turnC = G.me;
+        // Cfg.FIX_K3: every 16 rounds the stale stamps go (round & 1023 would make them fresh again 1024 rounds on)
+        if (Cfg.FIX_K3 && (G.round & 15) == 0) sweep();
         Econ.startTurn();
         Comms.readMines();
         Debug.mark(42);
@@ -87,6 +91,31 @@ public final class King {
         Comms.write(Comms.BUDGET, Math.max(0, Math.min(1023, Econ.surplus() / 4)));
         Econ.endTurn();
         KPath.tick();
+    }
+
+    /** Cfg.FIX_K1: our centre at the start of this turn (as Comms.kings lists it). */
+    static MapLocation turnC;
+
+    /** Cfg.FIX_K3: zero the stamps (KING, ALERT, CAT slots, FORM_T) older than 63 rounds; every reader takes 30 or less. */
+    static void sweep() {
+        for (int k = 0; k < Comms.KING_SLOTS; k++) stale(Comms.KING0 + 3 * k + 2);
+        stale(Comms.ALERT + 2);
+        for (int k = 0; k < Comms.CAT_SLOTS; k++) stale(Comms.CAT0 + 3 * k + 2);
+        stale(Comms.FORM_T);
+    }
+
+    static void stale(int i) {
+        int t = Comms.read(i);
+        if (t != 0 && !Comms.fresh(t, 63)) Comms.write(i, 0);
+    }
+
+    /** Cfg.FIX_K2: the lowest king slot with a fresh heartbeat (ours is), the formation leader. */
+    static int leadSlot() {
+        for (int k = 0; k < slot; k++) {
+            int b = Comms.KING0 + 3 * k;
+            if (Comms.read(b) != 0 && Comms.fresh(Comms.read(b + 2), 2)) return k;
+        }
+        return slot;
     }
 
     static int mirroredN = -1, mirroredMask;
@@ -306,8 +335,9 @@ public final class King {
     static boolean sawEnemy;
     static final int[] rrCount = new int[3];
 
-    /** The newborn's place in its role's spawn order, 1-based (the rat reads its role off the rat cost
-     *  after this spawn, as we do here). */
+    /** The newborn's place in its role's spawn order, 1-based, by the role the rat cost after this spawn gives in
+     *  this round. The newborn first acts next round (spawn order) and reads its role off that round's cost and parity,
+     *  so the two can differ, and it never hears this squeak (Baby.heardStart). */
     static int rrNext() throws GameActionException {
         int idx = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
         int r = Baby.roleFor(idx, G.round);
@@ -320,7 +350,8 @@ public final class King {
         spawnWhy = 'n';
         if (!rc.isActionReady()) return;
         int cost = rc.getCurrentRatCost();
-        int babies = (cost - 10) / 10 * 4; // lower bound of live babies (cost step)
+        // lower bound of live babies (cost step; Cfg.FIX_K7: the engine still counts each promoted rat as a baby)
+        int babies = Cfg.FIX_K7 ? (cost - 10) / 10 * 4 - Math.max(0, Comms.numKings - 1) : (cost - 10) / 10 * 4;
         // a few babies always (they pay for themselves on any map with cheese); beyond that the projected
         // end-of-game cheese at the measured income must stay positive after paying for this one
         // a core population always (rats pay for themselves and are the army); beyond it, the income test
@@ -859,7 +890,8 @@ public final class King {
     /** The first king names a formation site and keeps it fresh until the king cap is reached, a king forms there
      *  or it times out. */
     static void formation() throws GameActionException {
-        if (slot != 0) return;
+        // (Cfg.FIX_K2: the lowest live slot leads, so the role passes on when the slot-0 king dies)
+        if (Cfg.FIX_K2 ? slot != 0 && leadSlot() != slot : slot != 0) return;
         int cdw = G.debt, cbw = G.bc();   // ledger (K 11: 9, iload w and ifeq)
         boolean w = !G.coop && G.round < Cfg.FORM_WAR_FROM;
         G.debt = cdw + G.bc() - cbw + 11;
@@ -892,7 +924,8 @@ public final class King {
 
             return;
         }
-        int babies = (G.rc.getCurrentRatCost() - 10) / 10 * 4;
+        int babies = Cfg.FIX_K7 ? (G.rc.getCurrentRatCost() - 10) / 10 * 4 - Math.max(0, Comms.numKings - 1)
+            : (G.rc.getCurrentRatCost() - 10) / 10 * 4;
         if (endKing(G.round, Comms.numKings, babies, G.rc.getGlobalCheese(), formStart)) {
             int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
             formSite = null;
@@ -1044,8 +1077,9 @@ public final class King {
         return false;
     }
 
-    /** Site centres 3 tiles out from the king (its body and the site's 3x3 then leave a one-tile lane between them),
-     *  every site tile within the king's view; offsets are in the side frame, so mirrored kings scan alike. */
+    /** Site centres 3 tiles out from the king: the site's 3x3 touches the king's body (no lane between them; 4 out
+     *  would leave one, but its far tiles fail clearNow's view test), every site tile within the king's view; offsets
+     *  are in the side frame, so mirrored kings scan alike. */
     static final int[][] RING = {{3, 0}, {0, 3}, {3, 1}, {1, 3}, {3, -1}, {-1, 3}, {0, -3}, {-3, 0}, {1, -3}, {-3, 1}, {-1, -3}, {-3, -1}};
 
     /** The clear 3x3 off our king's body farthest from the enemy start, or null. */
