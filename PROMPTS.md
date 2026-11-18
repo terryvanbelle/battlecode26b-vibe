@@ -184,3 +184,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (22:02) Sounds good.  Once you're done, you should be in a good position to improve on a bot that is more or less bug-free, and clean.  Before you start improving it, I'd like you to re-read all the top-level documents in the battlecode-vibe repo and then your LEARNINGS doc.  The overall goal is to climb up the list of bots on the replica
 (asked which repo) https://github.com/terryvanbelle/battlecode-vibe
 (22:04) MISSED_IDEAS has its specifics labeled by year, so you can filter that one too
+(22:09) It's quite possible that some of your previous ideas were good ideas, but didn't work because they were sabotaged by bugs you've now fixed
