@@ -12,8 +12,8 @@ public final class Econ {
 
     static int kings() { return Math.max(1, Comms.numKings); }
 
-    /** A cheese floor f for our live kings (Cfg.FLOOR_PER_KING), else f. */
-    static int floor(int f) { return Cfg.FLOOR_PER_KING ? f * kings() : f; }
+    /** A cheese floor f for each of our live kings. */
+    static int floor(int f) { return f * kings(); }
 
     public static void startTurn() {
         int c = G.rc.getGlobalCheese();

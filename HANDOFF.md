@@ -103,6 +103,12 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `pull RUN`; checkout ~/projects/vibe/b26b (engine jar and ~/opt/jdk21 installed). ~/bc26-replica-runtime there holds
   a copy of the replica's runtime (engine jar, maps). bc26a0 also uses the box when it runs.
 
+## Owner #36 plan (2026-11-18)
+1. Fix all bugs (audit: research/audit/findings-*.md, verified), behind FIX_* switches while their effect is tested on the box.
+2. More tests (port test/ratbot/BotTest.java; one test per fixed bug), then refactor for clarity, then delete FIX_* flags and dead branches.
+3. Then a panel run on the replica to see where we stand.
+4. Deferred features (owner): K6/E1 newborn squeak timing / role-parity opening change: consider only after 1-3.
+
 ## State (2026-11-12 09:55 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - **Shut down (09:55 11-12, owner #33).** Nothing is running: the replica, the VM jobs and the laptop drain loop are
   all stopped.

@@ -172,3 +172,9 @@ Don't play panel matches on the box, for the sake of realism.  In an actual tour
 (13:58, on the box's WSL memory cap) Yeah, I lowered that because a higher limit (20G) was thrashing the box.  I can try raising it a bit more
 
 I'd like your initial focus to be fixing all bugs, writing more tests, and then refactoring the code to make it as clean and simple as possible so that bugs can't hide.  After that, I'd like to see where we're at against the panel
+
+(14:20) Once you've completed all your bugfixes, make sure that you remove the bug flags and dead code that results.  I understand why you want the flags while you're establishing that the bugfixes are effective, but after that it's just clutter
+
+(15:18, after an audit verifier loaded all 74 maps to count mines) You can use all the maps
+
+(15:20) Treat K6/E1 as a feature to consider after you've finished the debugging and cleanup and initial eval

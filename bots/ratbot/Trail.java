@@ -5,7 +5,7 @@ import battlecode.common.*;
 /**
  * Breadcrumbs home: the loop-free chain of tiles this baby has walked since it was spawned beside a king. Stepping
  * back onto a tile of the chain cuts off the loop after it, so the chain is always a simple, walked path from the
- * spawn tile to here: no walls on it, whatever the map. A carrier whose delivery stalls (Cfg.TRAIL) walks it back,
+ * spawn tile to here: no walls on it, whatever the map. A carrier whose delivery stalls walks it back,
  * each turn to the free neighbour earliest on the chain, which also cuts corners where the chain passes close to
  * itself. A jump of more than one tile (carried, thrown) starts a new chain where the rat lands.
  *

@@ -14,17 +14,10 @@ public final class Baby {
     static int stallSince, catHunters;
     static boolean catHunt;
     static MapLocation home;          // spawning king's location at birth
-    /** Cfg.TRIP_HALF: the round this rat's walk out began (birth or last delivery; 0: none under way), a timed walk not
-     *  squeaked yet (tripT steps to mine tripKey = x * 64 + y; 0: none), and Comms.tripSig at the last mine pick. */
-    static int tripFrom, tripKey, tripT, tripSigAtPick;
-    static MapLocation origin;        // our first king's start, squeaked by the spawning king (Cfg.HOME_START)
+    static MapLocation origin;        // our first king's start, squeaked by the spawning king
     static int fu = 1, fv = 1;        // side frame (signs of our king's offset from centre)
 
     static MapLocation cheeseTarget;  // last seen cheese tile
-    /** Cheese given up after a stall (Cfg.CHEESE_BAN): a ring of the latest, with the round each was banned. */
-    static final MapLocation[] banned = new MapLocation[4];
-    static final int[] bannedAt = new int[4];
-    static int banHead;
     /** Cfg.BREAKOUT_TTL: breaking out (no chase of walled-off cheese; explore by frontier search) until this round;
      *  wallStrikes counts chases of walled-off cheese given up on a stall, the last in round lastStrike. */
     static int breakoutUntil = -1, wallStrikes, lastStrike = -1000;
@@ -42,13 +35,11 @@ public final class Baby {
     static int catBanUntil = -1, reachTurns = Cfg.CAT_REACH;
     /** AIM_LEFT: aimCarry's bytecode floor (a field, so tests can set it). */
     static int aimLeft = Cfg.AIM_LEFT;
-    static MapLocation lastCatTarget;
 
     // mines this rat has sensed (to report to kings)
     static int[] myMines = new int[24];
     static int lowBc;   // turns cut short for lack of bytecodes
     static int myMineCount;
-    static int reportedSym = 7;
 
     public static int delivered, bitesCat, bitesRat, trapsPlaced, picked;
 
@@ -57,18 +48,15 @@ public final class Baby {
         if (role < 0) born();
         // Cfg.FIX_SWAP_HOLD: a carry we hold 12+ rounds after our last grab came from the engine's role swap: its hold starts now
         if (Cfg.FIX_SWAP_HOLD && rc.getCarrying() != null && G.round - carryRound > 11) carryRound = G.round;
-        if (Cfg.WAR_STRIKE > 0 && !G.coop && striker(role, birthRound, Cfg.WAR_STRIKE)) { role = ATTACK; waveRat = true; }
-        if (Cfg.TRAIL) { int cdt = G.debt, cbt = G.bc(); Trail.record(); G.debt = cdt + G.bc() - cbt + 9; }   // ledger (K 9)
+        { int cdt = G.debt, cbt = G.bc(); Trail.record(); G.debt = cdt + G.bc() - cbt + 9; }   // ledger (K 9)
         Comms.readKings();
-        if (Cfg.KING_BLOCK || Cfg.KING_FLOW) Nav.markKings();
+        Nav.markKings();
         Comms.readMines();
         int s = Comms.read(Comms.SYM);
         if (s != 0) Sym.merge(s);
 
         Debug.mark(1);
         sense();
-        if (Cfg.SYM_MINELIST && Flow.left() > Cfg.BC_OPTIONAL) Sym.listCheck(Comms.mines, Comms.numMines, false);
-        if (Cfg.CAT_BLIND && rc.isTurningReady() && catHit(hpEnd - rc.getHealth(), Cfg.CAT_BLIND_DMG) && blindHurt(rc.getHealth(), hpEnd, rc.senseNearbyRobots(-1, null), G.them)) glance();
         RobotInfo[] robots = rc.senseNearbyRobots(-1, null);
         seen = robots;
         RobotInfo enemyKing = null, enemy = null;
@@ -76,7 +64,7 @@ public final class Baby {
         int bestCat = Integer.MAX_VALUE;
         for (RobotInfo r : robots) {
             if (r.team == Team.NEUTRAL) {
-                if (Cfg.CAT_LAY && G.coop) CatLane.see(r.location, G.round);
+                if (G.coop) CatLane.see(r.location, G.round);
                 int d = catDist4(r.location, G.me);
                 if (d < bestCat) { bestCat = d; cat = r; }
             } else if (r.team == G.them) {
@@ -90,22 +78,20 @@ public final class Baby {
         Debug.mark(2);
         if (role != ATTACK) pickUp();
         Nav.avoid = cat != null ? laneMask(cat) : 0;
-        if (Cfg.SWAP_YIELD && (Nav.swapHold > 0 || Cfg.SWAP_LOADED > 0) && rc.getCarrying() == null) Nav.avoid |= carrierMask(robots);
+        if ((Nav.swapHold > 0 || Cfg.SWAP_LOADED > 0) && rc.getCarrying() == null) Nav.avoid |= carrierMask(robots);
         // a newborn's first turn pays for array allocation and a full first sense: skip optional work when short
-        if (!G.coop && Cfg.TRAP_RISK && (Cfg.RISK_MIN_AREA == 0 || G.W * G.H >= Cfg.RISK_MIN_AREA) && Flow.left() > Cfg.BC_OPTIONAL) {
+        if (!G.coop && Flow.left() > Cfg.BC_OPTIONAL) {
             TrapRisk.observe(robots);
         }
 
         Debug.mark(3);
         eKing = enemyKing;
-        if (Cfg.RUSH_LIFE > 0 && role == ATTACK) {
+        if (role == ATTACK) {
             if (enemyKing != null) ekSeen = G.round;
             // a rush that has not found the enemy king in RUSH_LIFE rounds has failed for this rat: it gathers
             else if (rushFailed(G.round, birthRound, ekSeen, Cfg.RUSH_LIFE)) { role = GATHER; demoted++; }
         }
-        if (Cfg.RUSH_BURN > 0 && role == ATTACK && trapsKnown(burnRound, Comms.read(Comms.SYM))
-                && rushStands(G.me, ref(), Cfg.RUSH_BURN)) { role = GATHER; demoted++; }
-        if (enemyKing != null && Cfg.KING_PRESS) { lastEKing = enemyKing.location; lastEKingRound = G.round; ekHops = 0; }
+        if (enemyKing != null && Cfg.KING_PRESS) { }   // never true; the test stays for identical bytecode
         nearestEnemy = null;
         hunting = false;
         if (!G.coop) {
@@ -113,10 +99,10 @@ public final class Baby {
             for (RobotInfo r : robots) {
                 if (r.team != G.them || r.type == UnitType.RAT_KING) continue;
                 int d = G.me.distanceSquaredTo(r.location);
-                if (d < bd && !(Cfg.WALL_BLIND && d > 2 && walled(G.me, r.location))) { bd = d; nearestEnemy = r; }
+                if (d < bd && !(d > 2 && walled(G.me, r.location))) { bd = d; nearestEnemy = r; }
             }
             // fighters close on a rat they can grab (lower health than ours: trapped or bitten) before anything else
-            if (Cfg.POUNCE && rc.getCarrying() == null) {
+            if (rc.getCarrying() == null) {
                 RobotInfo p = prey(robots, rc.getHealth());
                 // gatherers only grab prey that is close; fighters hunt it across their vision
                 if (p != null && (role != GATHER || G.me.distanceSquaredTo(p.location) <= 8)) {
@@ -125,10 +111,6 @@ public final class Baby {
                 }
             }
             guardKing = null;
-            if (Cfg.GUARD_KING_R > 0 && rc.getCarrying() == null) {
-                RobotInfo b = kingBiter(robots, Cfg.GUARD_KING_R);
-                if (b != null) { nearestEnemy = b; hunting = true; guards++; }
-            }
             rescueT = null;
             // ledger (K 9): zdb runs only the line above
             int crd = G.debt, crb = G.bc();
@@ -140,28 +122,17 @@ public final class Baby {
             }
             nearKR = G.round;
             G.debt = crd + G.bc() - crb + 9;
-            if (Cfg.GUARD_CARRY_R > 0) {
-                guardCarry = rescueT == null && rc.getCarrying() == null && (rescueT = kingCarrier(robots, Cfg.GUARD_CARRY_R, Cfg.GUARD_CARRY_REACH)) != null;
-                if (guardCarry) carryGuards++;
-            }
         }
         Debug.mark(30);
         if (Flow.left() < Cfg.BC_BAIL) { lowBc++; return; }
         Nav.guard = null;
-        if (!G.coop && Cfg.GUARD_DIST2 > 0 && nearestEnemy != null && rc.getCarrying() == null
+        if (!G.coop && nearestEnemy != null && rc.getCarrying() == null
                 && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
         boolean engaged = nearestEnemy != null && G.me.distanceSquaredTo(nearestEnemy.location) <= 20;
-        if (Cfg.RISK_ADAPT > 0) adaptRisk = false;
-        if (!G.coop && Cfg.TRAP_RISK && (Cfg.RISK_MIN_AREA == 0 || G.W * G.H >= Cfg.RISK_MIN_AREA) && Nav.stall < 8) {
-            if (!(hunting && Cfg.HUNT_IGNORES_RISK) && (Cfg.RISK_IN_FIGHT || !engaged || Cfg.RISK_GATHER && role == GATHER))
+        if (!G.coop && Nav.stall < 8) {
+            // the constant tests in this condition stay: javac leaves a jump for each, so dropping them changes bytecode
+            if (!(hunting && Cfg.HUNT_IGNORES_RISK) && (!engaged || Cfg.RISK_GATHER && role == GATHER))
                 Nav.avoid |= TrapRisk.mask(G.me);
-            else if (Cfg.RISK_FRESH > 0) Nav.avoid |= TrapRisk.mask(G.me, Cfg.RISK_FRESH);
-            else if (Cfg.RISK_ADAPT > 0 && (adaptRisk = trapsKnown(burnRound, Comms.read(Comms.SYM))))
-                Nav.avoid |= TrapRisk.mask(G.me, Cfg.RISK_ADAPT);
-        }
-        if (Cfg.WOUNDED_HP > 0 && !G.coop && rc.getHealth() <= Cfg.WOUNDED_HP && trapsKnown(burnRound, Comms.read(Comms.SYM))) {
-            Nav.avoid |= woundMask(G.me, robots);
-            wounded++;
         }
         Debug.mark(31);
         // 0. a carried enemy is thrown as soon as we can act
@@ -170,35 +141,35 @@ public final class Baby {
         //    Attackers open the war themselves, but only on the enemy king.
         Debug.mark(4);
         boolean hostile = hostile();
-        if (hostile && Cfg.NAP) tryCarry(robots);
+        if (hostile) tryCarry(robots);
         // a rescue one step away keeps the action for the grab after the move
         boolean saving = rescueT != null && rc.isMovementReady() && rc.isActionReady();
-        // Cfg.GRAB_MICRO (x-line, as zc6's GRAB_MICRO_L without the ledger): a turn the micro leaves under BC_BAIL ends
-        if (Cfg.GRAB_MICRO && hostile && !saving) {
+        // a turn the micro leaves under BC_BAIL ends
+        if (hostile && !saving) {
             if (GrabMicro.act(robots)) saving = true;
             if (Clock.getBytecodesLeft() < (GrabMicro.evalRound == G.round && GrabMicro.round != G.round ? Cfg.GM_BAIL : Cfg.BC_BAIL)) { lowBc++; return; }
         }
-        if (!G.coop && Cfg.BABY_RAT_TRAPS && trapOk && !saving) tryRatTrap();
+        if (!G.coop && trapOk && !saving) tryRatTrap();
         Debug.mark(5);
         if (hostile && !saving) biteEnemies(robots);
-        else if (!(Cfg.PEACE && G.coop) && role == ATTACK && enemyKing != null) biteEnemies(new RobotInfo[]{enemyKing});
+        else if (role == ATTACK && enemyKing != null) biteEnemies(new RobotInfo[]{enemyKing});
         if (cat != null) tryBiteCat(cat);
         // 2. cat trap ahead of an approaching cat
-        if (cat != null && Cfg.CAT_TRAPS) tryCatTrap(cat);
+        if (cat != null) tryCatTrap(cat);
 
         Debug.mark(6);
         // ledger (K = 20 with G.settle): the hook's bytecodes outside the two reads (u6x runs only the report() call)
         int cd0 = G.debt, cb0 = G.bc();
-        boolean cashSq = Cfg.CASH_BANK > 0 && cashTick();
+        boolean cashSq = cashTick();
         G.settle(cd0, cb0, 20);
         if (!cashSq) report();
 
         // 3. movement
         Debug.mark(7);
         MapLocation before = rc.getLocation();
-        // Cfg.CASH_BANK: the rat on a rescue site promotes once it can, movement-ready or not (heavy rats rarely are)
+        // the rat on a rescue site (CASH_BANK) promotes once it can, movement-ready or not (heavy rats rarely are)
         int cd1 = G.debt, cb1 = G.bc();   // ledger (K = 18 with G.settle)
-        if (Cfg.CASH_BANK > 0 && cashSite != null && G.me.equals(cashSite) && rc.canBecomeRatKing()) {
+        if (cashSite != null && G.me.equals(cashSite) && rc.canBecomeRatKing()) {
             rc.becomeRatKing();
             formed++;
             cashed++;
@@ -211,8 +182,6 @@ public final class Baby {
             if (fs != null && G.me.equals(fs)) { rc.becomeRatKing(); formed++; return; }
         }
         if (rc.isMovementReady()) moveDecision();
-        // TRIP_HALF times only walks spent walking to the mine: any other errand on the way voids the timing
-        if (Cfg.TRIP_HALF != 0 && tripFrom > 0 && tripFrom < G.round && why != 'M') tripFrom = 0;
         boolean moved = !rc.getLocation().equals(before);
         if (rc.getType() == UnitType.RAT_KING) return;   // just promoted: the king code runs from next turn
         // xe9: a newborn's first turn (init ~6.4k) that the move left short ends here (OVS 2021: pickUp/throw crossed)
@@ -224,40 +193,28 @@ public final class Baby {
             else if (Clock.getBytecodesLeft() > Cfg.THROW_BC) tryThrow(rc.senseNearbyRobots(-1, null));
         }
         Debug.mark(21);
-        if (hostile && Cfg.NAP) tryCarry(rc.senseNearbyRobots(2, G.them));
+        if (hostile) tryCarry(rc.senseNearbyRobots(2, G.them));
         Debug.mark(22);
-        if (Cfg.GRAB_MICRO && GrabMicro.round == G.round) { }
+        if (GrabMicro.round == G.round) { }
         else if (hostile) biteEnemies(rc.senseNearbyRobots(2, G.them));
-        else if (!(Cfg.PEACE && G.coop) && role == ATTACK) {
+        else if (role == ATTACK) {
             RobotInfo[] near = rc.senseNearbyRobots(8, G.them);
             for (RobotInfo r : near) if (r.type == UnitType.RAT_KING) biteEnemies(new RobotInfo[]{r});
         }
         if (cat != null) tryBiteCat(cat);
-        if (Cfg.CAT_LAY && G.coop) layLane();
+        if (G.coop) layLane();
         Debug.mark(8);
         tryDeliver();
         guardTurn();
-        if (Cfg.MOAT && !G.coop) Moat.baby(nearestEnemy != null ? nearestEnemy.location : null);
         Debug.mark(9);
-        if (Cfg.SEALED > 0) Seal.work();
         sense2();
         hpEnd = rc.getHealth();
     }
 
     static int threatRound = -1000, glances;
 
-    /** Cfg.CAT_BLIND: our health at the end of our last turn (0 before the first). */
+    /** Our health at the end of our last turn (written, no longer read). */
     static int hpEnd;
-
-    /** Cfg.CAT_BLIND_DMG: a health loss that may be a cat's (step, or twice it; any loss when step is 0). */
-    static boolean catHit(int loss, int step) { return step == 0 ? loss > 0 : loss == step || loss == 2 * step; }
-
-    /** Cfg.CAT_BLIND: health fell below last (the end of our last turn) and no cat or enemy robot is in view. */
-    static boolean blindHurt(int hp, int last, RobotInfo[] robots, Team them) {
-        if (hp >= last) return false;
-        for (RobotInfo r : robots) if (r.team == Team.NEUTRAL || r.team == them) return false;
-        return true;
-    }
 
     /** Whether a turn with no enemy known near should end facing back: an enemy was seen or heard within mem rounds. */
     static boolean glanceDue(int round, int threat, int mem) { return mem > 0 && round - threat <= mem; }
@@ -268,48 +225,15 @@ public final class Baby {
         if (back != Direction.CENTER && G.rc.canTurn(back)) { G.rc.turn(back); G.facing = back; glances++; }
     }
 
-    /** Cfg.RISK_ADAPT: health at the start of our turn; the round an enemy trap fired on us or we heard of one (0 = never);
-     *  our last SQ_BURN; whether this turn's fresh mask is on. */
-    static int hpStart, burnRound, burnSqueaked;
-    static boolean adaptRisk;
-
-    /** Cfg.RISK_ADAPT: enemy rat traps are known to be in play (our own burn or a heard one, or the kings' shared bit). */
-    static boolean trapsKnown(int burn, int sym) { return burn > 0 || (sym & Comms.SYM_BURN) != 0; }
-
-    /** Cfg.RUSH_BURN: a rusher at me farther than Chebyshev r from the enemy start (our start home mirrored by the
-     *  first live symmetry) stands down once enemy traps are known. */
-    static boolean rushStands(MapLocation me, MapLocation home, int r) {
-        return home != null && G.cheb(me, G.mirror(home, firstSym())) > r;
-    }
-
-    /** Cfg.WOUNDED_HP: turns held to the wound mask. */
-    static int wounded;
-
-    /** Cfg.WOUNDED_HP: Nav.avoid bits of the steps from me that end within Chebyshev 2 of a visible enemy baby. */
-    static int woundMask(MapLocation me, RobotInfo[] robots) {
-        int m = 0;
-        for (RobotInfo r : robots) {
-            if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
-            int ex = r.location.x - me.x, ey = r.location.y - me.y;
-            if (ex > 3 || ex < -3 || ey > 3 || ey < -3) continue;
-            for (int i = 0; i < 8; i++) {
-                int dx = ex - G.DIRS[i].dx, dy = ey - G.DIRS[i].dy;
-                if (dx <= 2 && dx >= -2 && dy <= 2 && dy >= -2) m |= 1 << i;
-            }
-        }
-        return m;
-    }
-
-    /** Whether this rat bites and grabs enemy rats now: after cooperation, or a RUSH_BREAK attacker at any time. */
+    /** Whether this rat bites and grabs enemy rats now: after cooperation, or an attacker at any time. */
     static boolean hostile() {
-        if (Cfg.PEACE && G.coop) return false;
-        return !G.coop || Cfg.RUSH_BREAK && role == ATTACK || Cfg.BREAK_ROUND > 0 && G.round >= Cfg.BREAK_ROUND;
+        return !G.coop || role == ATTACK || G.round >= Cfg.BREAK_ROUND;
     }
 
     /** End the turn facing the nearest enemy rat close enough to grab us next round. */
     static void guardTurn() throws GameActionException {
         RobotController rc = G.rc;
-        if (G.coop || Cfg.GUARD_DIST2 == 0 || !rc.isTurningReady() || rc.getCarrying() != null) return;
+        if (G.coop || !rc.isTurningReady() || rc.getCarrying() != null) return;
         RobotInfo best = null;
         int bd = Integer.MAX_VALUE;
         for (RobotInfo r : rc.senseNearbyRobots(Cfg.GUARD_DIST2, G.them)) {
@@ -318,7 +242,7 @@ public final class Baby {
             if (d < bd) { bd = d; best = r; }
         }
         MapLocation t = best != null ? best.location : null;
-        if (t == null && Cfg.GUARD_MEMORY) {
+        if (t == null) {
             // nothing in view: an enemy we saw at the start of the turn, or one an ally squeaked, may be behind us
             for (RobotInfo r : seen) {
                 if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
@@ -364,13 +288,12 @@ public final class Baby {
         return round - birth > life && round - seen > life;
     }
 
-    /** Cfg.RUSH_BFLOW: this rat was born a rusher and walks by BitFlow (Nav.goTo); its sense loop keeps the rows. */
+    /** This rat was born a rusher and walks by BitFlow (Nav.goTo); its sense loop keeps the rows. */
     public static boolean bfOn;
 
     static void born() {
         RobotController rc = G.rc;
         birthRound = G.round;
-        if (Cfg.TRIP_HALF != 0) tripFrom = G.round;
         int cost = rc.getCurrentRatCost();
         int idx = (cost - 10) / 10 * 4; // approximate spawn index from the cost step
         role = GATHER;
@@ -381,10 +304,9 @@ public final class Baby {
         Comms.readKings();
         home = Comms.nearestKing(G.me);
         if (home == null) home = G.me;
-        if (Cfg.RUSH_DIST > 0 && role == ATTACK && !rushNear(home, liveSyms(Comms.read(Comms.SYM)), Cfg.RUSH_DIST)) role = base;
-        if (Cfg.RUSH_BFLOW && role == ATTACK && rc.getMapWidth() * rc.getMapHeight() >= Cfg.RUSH_BFLOW_AREA) { bfOn = true; BitFlow.init(); }
+        if (role == ATTACK && rc.getMapWidth() * rc.getMapHeight() >= Cfg.RUSH_BFLOW_AREA) { bfOn = true; BitFlow.init(); }
         trapOk = trapsAllowed(home, Comms.read(Comms.SYM), Cfg.TRAP_DIST);
-        if (Cfg.HOME_START || Cfg.MINE_RR || Cfg.SCOUT_FAN > 0 || Cfg.FORM_MINE) origin = heardStart(rc.readSqueaks(-1));
+        origin = heardStart(rc.readSqueaks(-1));
         int px = 2 * home.x - G.cx2, py = 2 * home.y - G.cy2;
         fu = px >= 0 ? 1 : -1;
         fv = py >= 0 ? 1 : -1;
@@ -393,28 +315,28 @@ public final class Baby {
         // mirror-invariant seed: round and the unsigned offset from the king
         int seed = birthSeed(G.round, G.me, home);
         G.seed(seed);
-        slot = ((Cfg.SYM_SLOT ? seed : rc.getID()) * 0x9E3779B1) >>> 8;
-        scout = Cfg.SCOUT_EVERY > 0 && (slot >>> 4) % Cfg.SCOUT_EVERY == 0;
+        slot = (seed * 0x9E3779B1) >>> 8;
+        scout = (slot >>> 4) % Cfg.SCOUT_EVERY == 0;
         // SCOUT_FAN: with our place in the king's gatherer order heard, gatherers 2, 2 + SCOUT_EVERY, ... scout and
         // take the fan's sectors in turn (FAN_ORDER), so two scouts never share a flank
         // xf1: gatherers 2 and 3 take the two flanks, then every SCOUT_EVERY-th from 8 (the middle, then the flanks).
         // clockwisdom A spawns 5 gatherers by r150 among 12 rushers: 2, 6, 10 gave one scout (xfan3 fs=), and 2, 3, 4
         // plus the slot-hashed ones (no squeak heard) four, which lost both seats to agrab (xfan5). Unheard: no scout.
-        if (Cfg.SCOUT_FAN > 0 && Cfg.SCOUT_EVERY > 0 && role == GATHER) {
+        if (role == GATHER) {
             int k = rrSlot < 2 ? -1 : rrSlot <= 3 ? rrSlot - 2 : rrSlot >= 8 && rrSlot % Cfg.SCOUT_EVERY == 0 ? 2 + (rrSlot - 8) / Cfg.SCOUT_EVERY : -1;
             scout = k >= 0;
             fanBase = k;
         }
     }
 
-    /** Cfg.RUSH: a baby born with idx live babies in round r attacks the enemy king. */
+    /** rusher: a baby born with idx live babies in round r attacks the enemy king. */
     /** The role born() gives a rat with idx live babies in round r. */
     static int roleFor(int idx, int r) {
         if (rusher(idx, r)) return ATTACK;
         return idx >= Cfg.GATHER_FIRST && (r % Cfg.FIGHT_EVERY) == 0 ? FIGHT : GATHER;
     }
 
-    /** Cfg.RUSH_DIST: the symmetries the kings' SYM slot still allows (our own mask when the slot is empty). */
+    /** liveSyms: the symmetries the kings' SYM slot still allows (our own mask when the slot is empty). */
     /** Rat traps allowed for this baby (Cfg.TRAP_DIST), fixed at birth. */
     static boolean trapOk = true;
 
@@ -426,7 +348,7 @@ public final class Baby {
         return m == 0 ? Sym.mask : m;
     }
 
-    /** Cfg.RUSH_DIST: some symmetry in mask puts the enemy start (home mirrored) within Chebyshev d of home. */
+    /** Some symmetry in mask puts the enemy start (home mirrored) within Chebyshev d of home. */
     static boolean rushNear(MapLocation home, int mask, int d) {
         for (int s = Sym.ROT; s <= Sym.VER; s <<= 1)
             if ((mask & s) != 0 && G.cheb(home, G.mirror(home, s)) <= d) return true;
@@ -434,18 +356,12 @@ public final class Baby {
     }
 
     static boolean rusher(int idx, int r) {
-        return Cfg.RUSH && idx >= Cfg.RUSH_FROM && idx < Cfg.RUSH_TO && (Cfg.RUSH_UNTIL == 0 || r < Cfg.RUSH_UNTIL);
+        return idx >= Cfg.RUSH_FROM && idx < Cfg.RUSH_TO && r < Cfg.RUSH_UNTIL;
     }
 
     /** A rat's birth seed: its round and unsigned offset from the king that spawned it, the same for its mirror twin. */
     static int birthSeed(int round, MapLocation me, MapLocation home) {
         return round * 977 + Math.abs(me.x - home.x) * 31 + Math.abs(me.y - home.y) * 7 + 1;
-    }
-
-    /** Cfg.WAR_STRIKE k: whether a rat of this role born in this round is one of the 1 in k fighters that strike at
-     *  the enemy king once at war (k 0: none). */
-    static boolean striker(int role, int birth, int k) {
-        return k > 0 && role == FIGHT && (birth / Cfg.FIGHT_EVERY) % k == 0;
     }
 
     /** 4 x squared distance from a tile to a cat's 2x2 centre. */
@@ -458,8 +374,7 @@ public final class Baby {
         return p.x >= catBL.x && p.x <= catBL.x + 1 && p.y >= catBL.y && p.y <= catBL.y + 1;
     }
 
-    /** Bit d set when stepping in DIRS[d] lands in the cat's next two footprints along its facing. */
-    /** Cfg.SWAP_YIELD: the directions whose tile is next to an allied baby carrying an ally (its drop tile). */
+    /** The directions whose tile is next to an allied baby carrying an ally (its drop tile). */
     static int carrierMask(RobotInfo[] robots) {
         int mask = 0;
         for (RobotInfo r : robots) {
@@ -485,27 +400,25 @@ public final class Baby {
         return inCatBody(n1, p) || inCatBody(n2, p);
     }
 
-    /** Cfg.CHEESE_LOS: the piles seen this sense, judged once every wall in view is recorded. */
+    /** The piles seen this sense, judged once every wall in view is recorded. */
     static final MapLocation[] piles = new MapLocation[24];
 
     static void sense() throws GameActionException {
         MapInfo[] infos = G.rc.senseNearbyMapInfos();
         MapLocation bestCheese = null;
         int bd = Integer.MAX_VALUE, np = 0;
-        boolean los = Cfg.CHEESE_LOS || breakingOut() || Cfg.SCOUT_FRONTIER && scouting();
+        boolean los = true;   // always; the tests on it stay for identical bytecode
         for (MapInfo mi : infos) {
             MapLocation l = mi.getMapLocation();
             boolean mine = mi.hasCheeseMine(), wl = mi.isWall(), dt = mi.isDirt();
             if (Sym.record(l.x, l.y, wl, dt, mine)) { }
-            // Cfg.RUSH_BFLOW: BitFlow's rows take every wall and dirt tile in view (Sym.record clears a dug one)
+            // a rusher (bfOn): BitFlow's rows take every wall and dirt tile in view (Sym.record clears a dug one)
             if (bfOn && (wl || dt)) BitFlow.mark(l.x, l.y, (wl ? Sym.WALL : 0) | (dt ? Sym.DIRT : 0));
             if (mine) noteMine(l.x, l.y);
             if (mi.getCheeseAmount() > 0) {
                 if (los) { if (np < piles.length) piles[np++] = l; continue; }
                 int d = G.me.distanceSquaredTo(l);
-                if (d < bd && (Cfg.CHEESE_BAN == 0 || !bannedCheese(l, Cfg.CHEESE_BAN))
-                        && (Cfg.SEALED == 0 || (Sym.mem[l.x + l.y * G.W] & Sym.SEAL) == 0)
-                        && (!Cfg.SEAL_SEEN || !Seal.skipped(l.x + l.y * G.W))) { bd = d; bestCheese = l; }
+                if (d < bd) { bd = d; bestCheese = l; }
             } else if (cheeseTarget != null && cheeseTarget.equals(l)) {
                 cheeseTarget = null;
             }
@@ -514,30 +427,20 @@ public final class Baby {
             for (int i = 0; i < np; i++) {
                 MapLocation l = piles[i];
                 int d = G.me.distanceSquaredTo(l);
-                if (d < bd && (Cfg.CHEESE_BAN == 0 || !bannedCheese(l, Cfg.CHEESE_BAN)) && !walledOff(G.me, l)) { bd = d; bestCheese = l; }
+                if (d < bd && !walledOff(G.me, l)) { bd = d; bestCheese = l; }
             }
             if (cheeseTarget != null && walledOff(G.me, cheeseTarget)) cheeseTarget = null;
-        }
-        // SEALED: drop a pile judged sealed; name one not yet judged for the end-of-turn fill (Seal.work)
-        if (Cfg.SEALED > 0) {
-            if (bestCheese != null) {
-                int v = Seal.verdict(bestCheese.x + bestCheese.y * G.W);
-                if (v > 0) bestCheese = null; else if (v < 0) Seal.want(bestCheese);
-            }
-            if (cheeseTarget != null) {
-                int v = Seal.verdict(cheeseTarget.x + cheeseTarget.y * G.W);
-                if (v > 0) cheeseTarget = null; else if (v < 0) Seal.want(cheeseTarget);
-            }
         }
         if (bestCheese != null) {
             if ((cheeseTarget == null || G.me.distanceSquaredTo(cheeseTarget) > bd) && !keepTarget(bestCheese)) cheeseTarget = bestCheese;
         }
     }
 
-    /** Cfg.CHEESE_STICK: the current cheese target has a flow path searching or ready and the nearer pile n lies behind
+    /** The current cheese target has a flow path searching or ready and the nearer pile n lies behind
      *  a wall, so the target stays (a switch would drop the path). */
     static boolean keepTarget(MapLocation n) {
-        return Cfg.CHEESE_STICK && cheeseTarget != null && (Flow.ready(cheeseTarget) || Flow.searching(cheeseTarget))
+        return cheeseTarget != null
+ && (Flow.ready(cheeseTarget) || Flow.searching(cheeseTarget))
                 && walledOff(G.me, n);
     }
 
@@ -550,22 +453,6 @@ public final class Baby {
             if (c.equals(b)) return false;
             if ((mem[G.idx(c)] & Sym.WALL) != 0) return true;
         }
-    }
-
-    /** Give up on cheese at l for Cfg.CHEESE_BAN rounds, its Chebyshev-2 neighbourhood with it. */
-    static void banCheese(MapLocation l) {
-        banned[banHead] = l;
-        bannedAt[banHead] = G.round;
-        banHead = (banHead + 1) & 3;
-    }
-
-    /** Cheese at l lies within Chebyshev 2 of a pile banned less than ttl rounds ago. */
-    static boolean bannedCheese(MapLocation l, int ttl) {
-        for (int i = 0; i < 4; i++) {
-            MapLocation b = banned[i];
-            if (b != null && G.round - bannedAt[i] < ttl && G.cheb(b, l) <= 2) return true;
-        }
-        return false;
     }
 
     /** Re-sense after moving (new cone) only to refresh cheese; terrain is caught next turn. */
@@ -599,12 +486,11 @@ public final class Baby {
         G.rawCheese = rc.getRawCheese();
     }
 
-    /** Pick up the pile at l if canTake allows it; with Cfg.CARRY_CAP a non-attacker takes only what keeps it at
-     *  or under the cap. */
+    /** Pick up the pile at l if canTake allows it; a non-attacker takes only what keeps it at or under CARRY_CAP. */
     static void take(MapLocation l) throws GameActionException {
         RobotController rc = G.rc;
         if (!canTake(l)) return;
-        if (Cfg.CARRY_CAP > 0 && role != ATTACK) {
+        if (role != ATTACK) {
             int room = Cfg.CARRY_CAP - rc.getRawCheese();
             if (room <= 0) return;
             if (rc.senseMapInfo(l).getCheeseAmount() > room) { rc.pickUpCheese(l, room); picked++; return; }
@@ -613,29 +499,24 @@ public final class Baby {
         picked++;
     }
 
-    /** A pile we may take: any when empty-handed, else only one that keeps us within CARRY_MAX (each unit carried
-     *  slows moves and actions 1%: on fullofsecrets rats hauled 400-700 home at a fifth of their speed). */
+    /** A pile we may take: any, except that an attacker carries at most ATK_CARRY. */
     static boolean canTake(MapLocation l) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.canPickUpCheese(l)) return false;
-        if (Cfg.ATK_CARRY > 0 && role == ATTACK) return atkTake(rc.getRawCheese(), rc.senseMapInfo(l).getCheeseAmount(), Cfg.ATK_CARRY);
-        if (Cfg.CARRY_MAX <= 0) return true;
-        int raw = rc.getRawCheese();
-        return raw == 0 || takeOk(raw, rc.senseMapInfo(l).getCheeseAmount(), Cfg.CARRY_MAX);
+        if (role == ATTACK) return atkTake(rc.getRawCheese(), rc.senseMapInfo(l).getCheeseAmount(), Cfg.ATK_CARRY);
+        return true;
     }
-
-    static boolean takeOk(int raw, int pile, int cap) { return cap <= 0 || raw == 0 || raw + pile <= cap; }
 
     /** Cfg.ATK_CARRY: an attacker's take, capped even when empty-handed. */
     static boolean atkTake(int raw, int pile, int cap) { return raw + pile <= cap; }
 
     static RobotInfo eKing, nearestEnemy;
     static RobotInfo[] seen = new RobotInfo[0];
-    public static int naps, throwsDone, ratTraps, mineTraps;
+    public static int naps, throwsDone, ratTraps;
     static int carryRound = -100;
 
     /** Grab an adjacent enemy baby rat (the engine allows it when it cannot see us or is weaker): the healthiest,
-     *  or under Cfg.RESCUE first one carrying one of ours (it drops it). */
+     *  or first one carrying one of ours (it drops it). */
     static boolean tryCarry(RobotInfo[] robots) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady() || rc.getCarrying() != null) return false;
@@ -697,7 +578,7 @@ public final class Baby {
     static final Direction[] D3 = {Direction.SOUTHWEST, Direction.SOUTH, Direction.SOUTHEAST, Direction.WEST,
                                    Direction.CENTER, Direction.EAST, Direction.NORTHWEST, Direction.NORTH, Direction.NORTHEAST};
 
-    /** Carrying an enemy (Cfg.CARRY_AIM): from our tile or a neighbour we can step to, a throw whose point-blank tile
+    /** Carrying an enemy: from our tile or a neighbour we can step to, a throw whose point-blank tile
      *  (two out, the first one empty) holds an enemy robot: a baby 84, a king's body 126 (tryThrow's scale). Turn to
      *  it, step there (a strafe when it is not ahead) and throw now if the action is ready, else hold the aim for
      *  next turn. Only enemy tiles within Chebyshev 3 can be such targets, so the scan starts from them (a scan of
@@ -712,8 +593,8 @@ public final class Baby {
         for (RobotInfo r : seen) {
             int ox = r.location.x - me.x, oy = r.location.y - me.y;
             if (r.team != G.them) {
-                // Cfg.CAT_FEED: a cat's 2x2 body point-blank feeds the carried enemy to it
-                if (Cfg.CAT_FEED > 0 && r.type == UnitType.CAT && ox <= 3 && ox >= -4 && oy <= 3 && oy >= -4)
+                // a cat's 2x2 body point-blank feeds the carried enemy to it (CAT_FEED)
+                if (r.type == UnitType.CAT && ox <= 3 && ox >= -4 && oy <= 3 && oy >= -4)
                     for (int ex = 0; ex <= 1; ex++)
                         for (int ey = 0; ey <= 1; ey++) {
                             int x = ox + ex, y = oy + ey;
@@ -746,7 +627,6 @@ public final class Baby {
             if (!stay && !canMove) continue;
             Direction m = D3[j];
             if (!stay && Cfg.RISK_FRESH > 0 && (Nav.avoid & (1 << m.ordinal())) != 0) continue;
-            if (Cfg.RISK_ADAPT > 0 && adaptRisk && !stay && (Nav.avoid & (1 << m.ordinal())) != 0) continue;
             boolean checked = stay;
             for (int i = 0; i < n; i++) {
                 int vx = tx[i] - mx, vy = ty[i] - my;
@@ -772,9 +652,8 @@ public final class Baby {
     static final int[] AIM_TX = new int[24], AIM_TY = new int[24], AIM_TV = new int[24];
 
     /** A flight whose first obstacle is a cat at tile k: Cfg.CAT_FEED at tiles 1-2 (the throw's own turn), 60% at
-     *  3-4 and 30% beyond (the cat may have moved); -50 with CAT_FEED off. */
+     *  3-4 and 30% beyond (the cat may have moved). */
     static int feedScore(int k) {
-        if (Cfg.CAT_FEED <= 0) return -50;
         return k <= 2 ? Cfg.CAT_FEED : k <= 4 ? Cfg.CAT_FEED * 6 / 10 : Cfg.CAT_FEED * 3 / 10;
     }
 
@@ -828,7 +707,6 @@ public final class Baby {
     }
 
     static boolean tryThrow(RobotInfo[] robots) throws GameActionException {
-        if (Cfg.THROW_CHECK) return throwChecked(robots);
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return false;
         MapLocation me = rc.getLocation();
@@ -865,14 +743,14 @@ public final class Baby {
         }
         if (bestD == null) return false;
         // Cfg.THREAT_THROW (xf3): an enemy that could grab us next turn ends the hold (a grabbed carrier drops its rat)
-        boolean threat = Cfg.THREAT_THROW > 0 && bs >= 0 && carryThreat(robots, me);
+        boolean threat = bs >= 0 && carryThreat(robots, me);
         if (threat) threatThrows++;
         // no point-blank hit (42) yet: keep holding (the carried rat is out of the fight) while the carry lasts
         if (!threat && bs / 2 < Cfg.THROW_MIN && G.round - carryRound < Cfg.THROW_HOLD) return false;
         // CARRY_KING: on the way to an enemy king, only a throw that hits a king goes before the carry runs out
-        if (!threat && Cfg.CARRY_KING > 0 && bs / 2 < 3 * FLIGHT_DMG[6] && carryKing(robots) != null) return false;
+        if (!threat && bs / 2 < 3 * FLIGHT_DMG[6] && carryKing(robots) != null) return false;
         // CARRY_CAT: on the way to a cat, only a feed (or a better throw) goes before the carry runs out
-        if (!threat && Cfg.CARRY_CAT > 0 && bs / 2 < Cfg.CAT_FEED && carryCat(robots) != null) return false;
+        if (!threat && bs / 2 < Cfg.CAT_FEED && carryCat(robots) != null) return false;
         if (rc.getDirection() != bestD) { if (!rc.canTurn(bestD)) return false; rc.turn(bestD); G.facing = bestD; }
         if (!rc.canThrowRat()) return false;
         rc.throwRat();
@@ -880,8 +758,7 @@ public final class Baby {
         return true;
     }
 
-    static RobotInfo ownKing;
-    public static int throwAborts, threatThrows;
+    public static int threatThrows;
 
     /** Cfg.THREAT_THROW: an enemy baby with free hands within Chebyshev THREAT_THROW of us (seen, or heard from an
      *  ally within dist2 8): it can step next to us and grab, unseen or as the healthier one. */
@@ -896,96 +773,15 @@ public final class Baby {
         return false;
     }
 
-    /** Cfg.THROW_CHECK: tryThrow, with our unseen kings (the king channel) on the flights, a hit on our king scored
-     *  three times a rat's, no throw whose best flight hits one of ours until THROW_LATE rounds into the carry, and
-     *  the flight re-checked once the turn brings it into view. Field games (3934-3937, 3986-3992) threw into our own
-     *  robots 0-17 times a game, up to 370 damage and 4 hits on our own king. */
-    static boolean throwChecked(RobotInfo[] robots) throws GameActionException {
-        RobotController rc = G.rc;
-        if (!rc.isActionReady()) return false;
-        MapLocation me = rc.getLocation();
-        if (robots == null) robots = rc.senseNearbyRobots(-1, null);
-        int stamp = gridFill(me, robots);
-        // our kings we cannot see stand where the king channel last put them
-        for (int q = 0; q < Comms.numKings; q++) {
-            MapLocation k = Comms.kings[q];
-            int ox = k.x - me.x, oy = k.y - me.y;
-            if (ox < -9 || ox > 9 || oy < -9 || oy > 9) continue;
-            if (ownKing == null) ownKing = new RobotInfo(0, G.us, UnitType.RAT_KING, 600, k, Direction.NORTH, 0, 0, null);
-            for (int ex = -1; ex <= 1; ex++) for (int ey = -1; ey <= 1; ey++) {
-                int px = ox + ex, py = oy + ey;
-                if (px < -8 || px > 8 || py < -8 || py > 8 || gridAt[(px + 8) + 17 * (py + 8)] == stamp) continue;
-                gridPut(px, py, ownKing, stamp);
-            }
-        }
-        Direction bestD = null;
-        int bs = Integer.MIN_VALUE;
-        int[] mem = Sym.mem;
-        int w = G.W, h = G.H, blk = Sym.WALL | Sym.DIRT;
-        for (int i = 0; i < 8; i++) {
-            Direction d = G.DIRS[i];
-            int ddx = d.dx, ddy = d.dy;
-            int x = me.x + ddx, y = me.y + ddy;
-            if (x < 0 || y < 0 || x >= w || y >= h || (mem[x + w * y] & blk) != 0 || gridAt[(ddx + 8) + 17 * (ddy + 8)] == stamp) continue;
-            int s2 = 10;
-            for (int k = 2; k <= 8; k++) {
-                x += ddx; y += ddy;
-                int dmg = FLIGHT_DMG[k];
-                if (x < 0 || y < 0 || x >= w || y >= h) { s2 = 10; break; }
-                if ((mem[x + w * y] & blk) != 0) { s2 = dmg; break; }
-                int gi = (k * ddx + 8) + 17 * (k * ddy + 8);
-                if (gridAt[gi] == stamp) {
-                    RobotInfo r = grid[gi];
-                    // beyond tile 2 the hit lands next round: a baby has usually moved by then (kings are slow)
-                    boolean far = k > 2 && r.type == UnitType.BABY_RAT;
-                    if (r.team == G.them) s2 = far ? dmg * 2 * Cfg.THROW_FAR_PCT / 100 : dmg * (r.type == UnitType.RAT_KING ? 3 : 2);
-                    else if (r.team == G.us) s2 = r.type == UnitType.RAT_KING ? -3 * dmg : -dmg;
-                    else s2 = feedScore(k); // a cat eats the rat (it dies whatever its health) and sleeps
-                    break;
-                }
-            }
-            s2 = s2 * 2 + (G.hand(me, d) > 0 ? 1 : 0);
-            if (s2 > bs) { bs = s2; bestD = d; }
-        }
-        if (bestD == null) return false;
-        // no point-blank hit (42) yet: keep holding (the carried rat is out of the fight) while the carry lasts
-        if (bs / 2 < Cfg.THROW_MIN && G.round - carryRound < Cfg.THROW_HOLD) return false;
-        // every flight hits one of ours: hold while the carry lasts (at its end the victim wriggles free)
-        boolean late = G.round - carryRound >= Cfg.THROW_LATE;
-        if (bs < 0 && !late) return false;
-        if (rc.getDirection() != bestD) {
-            if (!rc.canTurn(bestD)) return false;
-            rc.turn(bestD);
-            G.facing = bestD;
-            // the flight is in view now: one of ours on it, unseen before the turn, stops the throw
-            if (!late) {
-                MapLocation l = me.add(bestD);
-                for (int k = 2; k <= 8; k++) {
-                    l = l.add(bestD);
-                    if (!rc.onTheMap(l) || !rc.canSenseLocation(l) || (mem[l.x + w * l.y] & blk) != 0) break;
-                    RobotInfo r = rc.senseRobotAtLocation(l);
-                    if (r == null) continue;
-                    if (r.team == G.us) { throwAborts++; return false; }
-                    break;
-                }
-            }
-        }
-        if (!rc.canThrowRat()) return false;
-        rc.throwRat();
-        throwsDone++;
-        return true;
-    }
-
     /** Rat trap on the front tile nearest an approaching enemy rat (50 damage + stun when it enters the 3x3). */
     static boolean tryRatTrap() throws GameActionException {
         RobotController rc = G.rc;
         if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= trapCap()) return false;
         if (rc.getAllCheese() < Econ.floor(Cfg.RAT_TRAP_MIN_CHEESE) || King.trapStarvesSpawn(rc)) return false;
         if ((rc.getAllCheese() < King.reserve(Cfg.KING_RESERVE) + 20 || King.austere()) && !nearKing(nearestEnemy.location, Cfg.DEF_TRAP_DIST2)) return false;
-        if (Cfg.TRAP_OPEN_TO > 0 && openTrapBlocked(rc.getRoundNum(), rc.getAllCheese(), Cfg.TRAP_OPEN_TO, Econ.floor(Cfg.TRAP_OPEN_FLOOR))) return false;
         int d0 = G.me.distanceSquaredTo(nearestEnemy.location);
-        if (Cfg.TRAP_ADJ ? d0 > Cfg.BABY_TRAP_DIST2 : d0 <= 2 || d0 > Cfg.BABY_TRAP_DIST2) return false;
-        MapLocation best = trapTile(rc.getLocation(), rc.getDirection(), nearestEnemy.location, d0, Cfg.TRAP_ADJ);
+        if (d0 > Cfg.BABY_TRAP_DIST2) return false;
+        MapLocation best = trapTile(rc.getLocation(), rc.getDirection(), nearestEnemy.location, d0, true);
         if (best == null) return false;
         rc.placeRatTrap(best);
         ratTraps++;
@@ -998,11 +794,8 @@ public final class Baby {
         return k != null && k.distanceSquaredTo(e) <= d2;
     }
 
-    /** Cfg.TRAP_OPEN_TO: before round `to` a rat trap needs `floor` banked (bodies first in the opening). */
-    static boolean openTrapBlocked(int round, int bank, int to, int floor) { return round < to && bank < floor; }
-
     /** The front tile for a rat trap against an enemy at e (d0 = our dist2 to it): the one nearest e if nearer than we
-     *  are, or with adj (Cfg.TRAP_ADJ) one within e's 3x3, nearest first (ties by pick bit, SYM_TIE); null if none. */
+     *  are, or with adj one within e's 3x3, nearest first (ties by pick bit); null if none. */
     static MapLocation trapTile(MapLocation me, Direction f, MapLocation e, int d0, boolean adj) throws GameActionException {
         RobotController rc = G.rc;
         MapLocation best = null;
@@ -1014,53 +807,16 @@ public final class Baby {
             if (adj) {
                 if (s2 > 2) continue;
                 s2 = s2 * 2 + (G.pickBit(me, l) ? 0 : 1);
-                if (s2 < bs || Cfg.SYM_TIE && s2 == bs && G.tieFirst(me, l, best)) { bs = s2; best = l; }
+                if (s2 < bs || Cfg.SYM_TIE) { bs = s2; best = l; }   // SYM_TIE: never true; the test stays for identical bytecode
             } else if (s2 < bs) { bs = s2; best = l; }
         }
         return adj || bs < d0 ? best : null;
     }
 
-    /** The live rat traps past which no combat trap is laid (TRAP_CAP, plus MINE_TRAP_CAP with trapped mines). */
-    static int trapCap() { return Cfg.MINE_TRAPS > 0 || Cfg.RAID_TRAPS > 0 ? Math.min(25, Cfg.TRAP_CAP + Cfg.MINE_TRAP_CAP) : Cfg.TRAP_CAP; }
+    /** The live rat traps past which no combat trap is laid (TRAP_CAP). */
+    static int trapCap() { return Cfg.TRAP_CAP; }
 
-    /** Trap sites around a mine in our side frame (offsets times fu, fv); the order breaks distance ties. */
-    static final int[][] MINE_SITES = {{-3, -3}, {-3, 0}, {0, -3}, {-3, 3}, {3, -3}, {0, 3}, {3, 0}, {3, 3}};
-
-    /** l's rank among mine m's eight trap sites by distance to ek (ties in MINE_SITES order), or 99 if l is no site. */
-    static int mineSiteRank(MapLocation m, MapLocation l, MapLocation ek) {
-        int ox = l.x - m.x, oy = l.y - m.y;
-        if (ox % 3 != 0 || oy % 3 != 0 || ox < -3 || ox > 3 || oy < -3 || oy > 3 || ox == 0 && oy == 0) return 99;
-        int dl = l.distanceSquaredTo(ek), rank = 0;
-        boolean seen = false;
-        for (int[] s : MINE_SITES) {
-            int sx = s[0] * fu, sy = s[1] * fv;
-            if (sx == ox && sy == oy) { seen = true; continue; }
-            int d = m.translate(sx, sy).distanceSquaredTo(ek);
-            if (d < dl || d == dl && !seen) rank++;
-        }
-        return rank;
-    }
-
-    /** A rat trap on a front tile that is one of mine m's first `sites` trap sites (MINE_TRAPS, RAID_TRAPS). */
-    static boolean mineTrap(MapLocation m, int sites) throws GameActionException {
-        RobotController rc = G.rc;
-        if (G.coop || !rc.isActionReady() || rc.getNumberRatTraps() >= Cfg.MINE_TRAP_CAP) return false;
-        if (rc.getAllCheese() < Math.max(Econ.floor(Cfg.MINE_TRAP_CHEESE), King.reserve(Cfg.KING_RESERVE) + 20) || King.trapStarvesSpawn(rc) || King.austere()) return false;
-        MapLocation ek = G.mirror(ref(), firstSym()), me = rc.getLocation();
-        for (Direction d : G.fan(me, rc.getDirection())) {
-            MapLocation l = me.add(d);
-            if (mineSiteRank(m, l, ek) < sites && rc.canPlaceRatTrap(l)) {
-                rc.placeRatTrap(l);
-                ratTraps++; mineTraps++;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /** Bite the best adjacent enemy: a king first, then the lowest health (BITE_CARRIER: a rat carrying one of ours
-     *  first among rats; BITE_GUARD: a rat our bite leaves no healthier than us, and so unable to grab us, right after
-     *  the kills); turn to face it when needed. */
+    /** Bite the best adjacent enemy: a king first, then the lowest health; turn to face it when needed. */
     static boolean biteEnemies(RobotInfo[] robots) throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return false;
@@ -1081,9 +837,7 @@ public final class Baby {
             }
             if (me.distanceSquaredTo(t) > 2) continue;
             int s = r.type == UnitType.RAT_KING ? r.health : biteScore(r.health, r.cheeseAmount, Cfg.CARRY_BITE);
-            if (Cfg.BITE_GUARD && r.type == UnitType.BABY_RAT && guardBite(r.health, myHp)) s = 1011;
-            // a rat carrying one of ours throws it next (often into our king): bite it before any other rat
-            if (Cfg.BITE_CARRIER && r.carryingRobot != null && r.carryingRobot.team == G.us) s = 1000;
+
             // a rat in reach of our king bites it next: after an enemy king, before any other rat
             if (guardKing != null && r.type == UnitType.BABY_RAT && G.cheb(r.location, guardKing) <= 2) s = 650 + r.health;
             if (rc.canAttack(t)) { if (s < bs) { bs = s; best = r; } }
@@ -1121,9 +875,6 @@ public final class Baby {
         return loot > 0 ? Math.max(1001, 1000 + hp - loot) : 1000 + hp;
     }
 
-    /** An enemy rat with hp can grab us (strictly healthier) and one bite (10) takes that away; not a kill. */
-    static boolean guardBite(int hp, int myHp) { return hp > myHp && hp <= myHp + 10 && hp > 10; }
-
     /** Cfg.FIX_BITE_KING_TILE: a tile of the king centred on c we can bite now, else its tile nearest us (to turn to). */
     static MapLocation kingTile(RobotController rc, MapLocation me, MapLocation c) throws GameActionException {
         for (int ex = -1; ex <= 1; ex++)
@@ -1141,19 +892,6 @@ public final class Baby {
         if (hp <= 10 || global < Cfg.FINISH_FLOOR) return 0;
         int k = hp - 10;
         return k <= Cfg.FINISH_K ? k * k : 0;
-    }
-
-    static boolean tryBite(RobotInfo r) throws GameActionException {
-        RobotController rc = G.rc;
-        if (!rc.isActionReady()) return false;
-        MapLocation l = r.location;
-        if (G.me.distanceSquaredTo(l) > 2) return false;
-        if (!rc.canAttack(l)) {
-            Direction d = G.me.directionTo(l);
-            if (rc.getDirection() != d && rc.canTurn(d)) rc.turn(d);
-        }
-        if (rc.canAttack(l)) { rc.attack(l); bitesRat++; return true; }
-        return false;
     }
 
     /** Bite any adjacent tile of the cat's 2x2 body, turning to face it when needed. */
@@ -1180,8 +918,7 @@ public final class Baby {
         return false;
     }
 
-    /** Place a cat trap on a visible adjacent tile in front of an approaching cat. */
-    /** Cfg.CAT_LAY: a cat trap on an adjacent cat-lane tile the cat left CAT_LAY_AGE+ rounds ago, the most recently
+    /** A cat trap on an adjacent cat-lane tile the cat left CAT_LAY_AGE+ rounds ago, the most recently
      *  walked first (laneKey). */
     static void layLane() throws GameActionException {
         RobotController rc = G.rc;
@@ -1194,7 +931,7 @@ public final class Baby {
             int a = CatLane.age(l.x, l.y, G.round);
             if (a < Cfg.CAT_LAY_AGE || !rc.canPlaceCatTrap(l)) continue;
             int s = laneKey(a, l, G.pickBit(me, l));
-            if (s < bs || Cfg.SYM_TIE && s == bs && G.tieFirst(me, l, best)) { bs = s; best = l; }
+            if (s < bs || Cfg.SYM_TIE) { bs = s; best = l; }   // SYM_TIE: never true; the test stays for identical bytecode
         }
         if (best != null) { rc.placeCatTrap(best); trapsPlaced++; }
     }
@@ -1212,7 +949,7 @@ public final class Baby {
         // defending a king is survival: traps there need only the floor; elsewhere they need projected surplus
         MapLocation k = Comms.nearestKing(G.me);
         boolean defend = k != null && k.distanceSquaredTo(c.location) <= Cfg.TRAP_DEFEND_DIST2;
-        if (!defend && (King.austere() || rc.getAllCheese() < King.reserve(Cfg.KING_RESERVE) + 10 || !(Cfg.CAT_RING && G.coop) && Comms.read(Comms.BUDGET) * 4 < Cfg.TRAP_SURPLUS)) return;
+        if (!defend && (King.austere() || rc.getAllCheese() < King.reserve(Cfg.KING_RESERVE) + 10 || !G.coop && Comms.read(Comms.BUDGET) * 4 < Cfg.TRAP_SURPLUS)) return;
         if (rc.getNumberCatTraps() >= 10) return;
         int d4 = catDist4(c.location, G.me);
         if (d4 > 4 * 36) return;
@@ -1227,7 +964,7 @@ public final class Baby {
             if (!rc.canPlaceCatTrap(l)) continue;
             // trigger zone is the 3x3 around the trap: the cat must pass within Chebyshev 1 of it
             int s = Math.min(Math.min(chebToBody(n1, l), chebToBody(n2, l)), chebToBody(n3, l));
-            if (Cfg.CAT_RING) s = Math.min(s, chebToBody(c.location, l));
+            s = Math.min(s, chebToBody(c.location, l));
             if (s > 1) continue;
             int score = s * 100 + catDist4(c.location, l);
             if (score < bs) { bs = score; best = l; }
@@ -1256,7 +993,6 @@ public final class Baby {
                         rc.transferCheese(t, raw);
                         delivered += raw;
                         G.rawCheese = 0;
-                        if (Cfg.TRIP_HALF != 0) tripFrom = G.round;
                         return;
                     }
                 }
@@ -1266,34 +1002,27 @@ public final class Baby {
     /** Squeak one fact: to a king in hearing range a mine it may not know or a sharper symmetry mask; at war, an enemy's front. */
     static void report() {
         MapLocation k = Comms.numKings == 0 ? null : Comms.nearestKing(G.me);
-        boolean near = k != null && (Cfg.SYM_HEAR_TILE ? kingInEarshot(G.me) : G.me.distanceSquaredTo(k) <= 16);
-        // RISK_ADAPT: news of an enemy trap goes rat to rat and to the kings until the shared bit is set
-        if (Cfg.BURN && burnRound > 0 && G.round - burnSqueaked >= Cfg.BURN_EVERY
-                && (Comms.read(Comms.SYM) & Comms.SYM_BURN) == 0) {
-            G.rc.squeak(Comms.squeak(Comms.SQ_BURN, G.me.x, G.me.y, 0));
-            burnSqueaked = G.round;
-            return;
-        }
-        if (Cfg.GOSSIP && Comms.numMines == 0) {
+        boolean near = k != null && G.me.distanceSquaredTo(k) <= 16;
+        if (Comms.numMines == 0) {
             // no mine known to the team yet: pass mine news rat to rat, which outruns a courier walking home
             for (Message m : G.rc.readSqueaks(-1)) {
                 int c = m.getBytes();
                 if (Comms.sqType(c) == Comms.SQ_MINE) noteMine(Comms.sqX(c), Comms.sqY(c));
-                else if (Cfg.SYM_GOSSIP && Comms.sqType(c) == Comms.SQ_SYM) Sym.merge(Comms.sqExtra(c) & 7);
+                else if (Comms.sqType(c) == Comms.SQ_SYM) Sym.merge(Comms.sqExtra(c) & 7);
             }
-            if (symGossip(Cfg.SYM_GOSSIP, near)) return;
+            if (symGossip(true, near)) return;
             if (myMineCount > 0 && !near) {
                 int key = myMines[G.round % myMineCount];
                 G.rc.squeak(Comms.squeak(Comms.SQ_MINE, key / 64, key % 64, 0));
                 return;
             }
-        } else if (Cfg.GOSSIP_ALWAYS) {
+        } else {
             for (Message m : G.rc.readSqueaks(G.round - 1)) {
                 int c = m.getBytes();
                 if (Comms.sqType(c) == Comms.SQ_MINE) noteMine(Comms.sqX(c), Comms.sqY(c));
-                else if (Cfg.SYM_GOSSIP && Comms.sqType(c) == Comms.SQ_SYM) Sym.merge(Comms.sqExtra(c) & 7);
+                else if (Comms.sqType(c) == Comms.SQ_SYM) Sym.merge(Comms.sqExtra(c) & 7);
             }
-            if (symGossip(Cfg.SYM_GOSSIP, near)) return;
+            if (symGossip(true, near)) return;
             if (!near) {
                 int key = unreported();
                 if (key >= 0) { G.rc.squeak(Comms.squeak(Comms.SQ_MINE, key / 64, key % 64, 0)); return; }
@@ -1301,7 +1030,7 @@ public final class Baby {
         }
         // a squeak reaches robots with any tile within dist2 16 of us: the king's centre within 16 is always heard
         if (near) {
-            int sharedSym = Cfg.BURN ? Comms.read(Comms.SYM) & 7 : Comms.read(Comms.SYM);
+            int sharedSym = Comms.read(Comms.SYM);
             if (sharedSym != 0 && (Sym.mask & sharedSym) != sharedSym) {
                 G.rc.squeak(Comms.squeak(Comms.SQ_SYM, 0, 0, Sym.mask));
                 return;
@@ -1310,37 +1039,16 @@ public final class Baby {
                 int x = myMines[i] / 64, y = myMines[i] % 64;
                 if (!Comms.hasMine(x, y)) { G.rc.squeak(Comms.squeak(Comms.SQ_MINE, x, y, 0)); return; }
             }
-            if (Cfg.TRIP_HALF != 0 && tripT > 0) { G.rc.squeak(Comms.squeak(Comms.SQ_TRIP, tripKey / 64, tripKey % 64, Math.min(tripT, 0xFFFF))); tripT = 0; return; }
         }
-        // at war: the enemy king first (seen, or news to relay once per sighting), then an enemy's front
-        if (!G.coop && Cfg.KING_PRESS && lastEKing != null && G.round - lastEKingRound <= 2
-                && (ekHops == 0 && eKing != null || ekHops < Cfg.PRESS_HOPS && ekRelayed != lastEKingRound)) {
-            int hops = eKing != null ? 0 : ekHops + 1;
-            G.rc.squeak(Comms.squeak(Comms.SQ_EKING, lastEKing.x, lastEKing.y, hops | (lastEKingRound & 1023) << 2));
-            ekRelayed = lastEKingRound;
-            return;
-        }
-        if (!G.coop && Cfg.TRAP_SHARE && nearestEnemy != null && nearestEnemy.direction != null) {
-            int d = nearestEnemy.direction.ordinal();
-            G.rc.squeak(Comms.squeak(Comms.SQ_TRAP, nearestEnemy.location.x, nearestEnemy.location.y, d));
-            return;
-        }
+        // never true; the two tests stay for identical bytecode
+        if (!G.coop && Cfg.KING_PRESS) { }
+        if (!G.coop && Cfg.TRAP_SHARE) { }
         if (k != null && G.me.distanceSquaredTo(k) <= 16 && catSeen != null && G.round - catSeenRound <= 2) {
             G.rc.squeak(Comms.squeak(Comms.SQ_CAT, catSeen.x, catSeen.y, 0));
         }
     }
 
     static int symSqueaked = -100;
-
-    /** Some tile of one of our kings (3x3) is within squeak range (d2 16) of p. */
-    static boolean kingInEarshot(MapLocation p) {
-        for (int i = 0; i < Comms.numKings; i++) {
-            MapLocation k = Comms.kings[i];
-            int dx = Math.max(0, Math.abs(p.x - k.x) - 1), dy = Math.max(0, Math.abs(p.y - k.y) - 1);
-            if (dx * dx + dy * dy <= 16) return true;
-        }
-        return false;
-    }
 
     /** Some tile of a cat (2x2 from catBL) is within squeak range (d2 16) of p. */
     static boolean catInEarshot(MapLocation catBL, MapLocation p) {
@@ -1352,7 +1060,7 @@ public final class Baby {
     /** Cfg.SYM_COURIER: walk to the nearest king within SYM_COURIER while we know a sharper symmetry mask than the
      *  shared one and no enemy is in view (report() squeaks it once in earshot). */
     static boolean symCourier() throws GameActionException {
-        int shared = Cfg.BURN ? Comms.read(Comms.SYM) & 7 : Comms.read(Comms.SYM);
+        int shared = Comms.read(Comms.SYM);
         if (shared == 0 || Sym.mask == 0 || (Sym.mask & shared) == shared || !G.coop && nearestEnemy != null) return false;
         MapLocation k = Comms.nearestKing(G.me);
         if (k == null || G.cheb(G.me, k) > Cfg.SYM_COURIER) return false;
@@ -1360,11 +1068,11 @@ public final class Baby {
         return true;
     }
 
-    /** SYM_GOSSIP: away from the kings, squeak a mask sharper than the shared one every SYM_GOSSIP_EVERY rounds,
+    /** Away from the kings, squeak a mask sharper than the shared one every SYM_GOSSIP_EVERY rounds,
      *  when an ally can hear it, no enemy is in view at war, and no cat can hear it. */
     static boolean symGossip(boolean on, boolean near) {
         if (!on || near || G.round - symSqueaked < Cfg.SYM_GOSSIP_EVERY) return false;
-        int shared = Cfg.BURN ? Comms.read(Comms.SYM) & 7 : Comms.read(Comms.SYM);
+        int shared = Comms.read(Comms.SYM);
         if (shared == 0 || (Sym.mask & shared) == shared) return false;
         if (!G.coop && nearestEnemy != null || cat != null && catInEarshot(cat.location, G.me)) return false;
         boolean ally = false;
@@ -1383,74 +1091,72 @@ public final class Baby {
     /** Which branch took the last movement decision (debug tag mv=). */
     static char why = '-';
 
-    /** Cfg.WAR_NO_CAT until Cfg.WAR_NO_CAT_END: at war, before that round, fighters leave cats alone */
-    static boolean warNoCat() { return Cfg.WAR_NO_CAT && !G.coop && G.round < Cfg.WAR_NO_CAT_END; }
+    /** At war, before round Cfg.WAR_NO_CAT_END, fighters leave cats alone */
+    static boolean warNoCat() { return !G.coop && G.round < Cfg.WAR_NO_CAT_END; }
 
     static void moveDecision() throws GameActionException {
-        if (Cfg.GRAB_MICRO && GrabMicro.round == G.round) return;
+        if (GrabMicro.round == G.round) return;
         why = '-';
         RobotController rc = G.rc;
         int raw = rc.getRawCheese();
         boolean late = G.round > 1960;
 
-        if (Cfg.CAT_DEFEND_R2 > 0 && cat != null && catReach() && catAtKing(cat.location) && approachCat(cat)) { why = 'g'; return; }
+        if (cat != null && catReach() && catAtKing(cat.location) && approachCat(cat)) { why = 'g'; return; }
         int cde = G.debt, cbe = G.bc();   // ledger (K 11: 9, iload endGo and ifeq)
-        boolean endGo = G.coop ? Cfg.END_CAT_COOP > 0 && G.round >= Cfg.END_CAT_COOP || G.round < stallCatUntil
-                : Cfg.END_CAT > 0 && G.round >= Cfg.END_CAT;
+        boolean endGo = G.coop ? G.round >= Cfg.END_CAT_COOP || G.round < stallCatUntil
+                : G.round >= Cfg.END_CAT;
         G.debt = cde + G.bc() - cbe + 11;
         if (endGo && endCat(raw)) { why = 'e'; return; }
         // keep gatherers out of cat reach
-        // Cfg.WAR_NO_CAT: at war fighters keep out of cat reach as gatherers do (Cfg.WAR_NO_CAT_FIGHT: not with an enemy
-        // rat in view, so the war branches below still run)
-        if (cat != null && (role == GATHER || role == FIGHT && warNoCat() && !(Cfg.WAR_NO_CAT_FIGHT && nearestEnemy != null))
+        // at war fighters keep out of cat reach as gatherers do (warNoCat), but not with an enemy rat in view, so the
+        // war branches below still run
+        if (cat != null && (role == GATHER || role == FIGHT && warNoCat() && nearestEnemy == null)
                 && catDist4(cat.location, G.me) <= 4 * Cfg.GATHER_CAT_DIST) {
             // flee the cat's centre (its location is the 2x2 body's low corner, which mirrors to the far corner)
-            if (Cfg.SYM_CENTRE ? Nav.flee2(2 * cat.location.x + 1, 2 * cat.location.y + 1) : Nav.flee(cat.location)) { why = 'c'; return; }
+            if (Nav.flee(cat.location)) { why = 'c'; return; }
         }
-        if (Cfg.YIELD_KING && cat != null && raw == 0 && yieldKing()) { why = 'y'; return; }
-        if (Cfg.CARRY_AIM && !G.coop && rc.getCarrying() != null && rc.getCarrying().team == G.them && aimCarry()) { why = 'T'; return; }
-        if (Cfg.CARRY_KING > 0 && !G.coop && rc.getCarrying() != null && rc.getCarrying().team == G.them) {
+        if (!G.coop && rc.getCarrying() != null && rc.getCarrying().team == G.them && aimCarry()) { why = 'T'; return; }
+        if (!G.coop && rc.getCarrying() != null && rc.getCarrying().team == G.them) {
             RobotInfo k = carryKing(seen);
             if (k != null) { Nav.goTo(k.location); why = 'J'; return; }
         }
-        if (Cfg.CARRY_CAT > 0 && !G.coop && rc.getCarrying() != null && rc.getCarrying().team == G.them) {
+        if (!G.coop && rc.getCarrying() != null && rc.getCarrying().team == G.them) {
             RobotInfo c = carryCat(seen);
             if (c != null) { Nav.goTo(c.location); why = 'F'; return; }
         }
         if (rescueT != null && rescue()) { why = 'R'; return; }
         Debug.mark(10);
-        if (Cfg.AMMO_AWAY && !G.coop && ammoAway()) { why = 'A'; return; }
+        if (!G.coop && ammoAway()) { why = 'A'; return; }
         if (!G.coop && retreat()) { why = 'r'; return; }
         // the bank is nearly empty and the king starves at 0: whatever we carry goes home before any fight or errand
         if (raw > 0 && G.globalCheese < Cfg.HUNGRY && deliver()) { why = 'H'; return; }
-        if (Cfg.FORM_KING && formKing()) { why = 'K'; return; }
+        if (formKing()) { why = 'K'; return; }
         int cd2 = G.debt, cb2 = G.bc();   // ledger (K = 20 with G.settle)
-        boolean cashMv = Cfg.CASH_BANK > 0 && cashSite != null && cashMove();
+        boolean cashMv = cashSite != null && cashMove();
         G.settle(cd2, cb2, 20);
         if (cashMv) { why = 'Q'; return; }
         Debug.mark(11);
         if (!G.coop && raider && raw == 0 && rc.getHealth() >= Cfg.RAID_HP && homeHalf(G.me)
                 && (nearestEnemy == null || G.me.distanceSquaredTo(nearestEnemy.location) > Cfg.RAID_ENGAGE) && raid()) { why = 'z'; return; }
         Debug.mark(12);
-        if (!G.coop && Cfg.FLANK && Cfg.NAP && flank(seen)) { why = 'k'; return; }
-        if (!G.coop && Cfg.KING_PRESS && pressKing()) { why = 'p'; return; }
+        if (!G.coop && flank(seen)) { why = 'k'; return; }
+        if (!G.coop && Cfg.KING_PRESS) { }   // never true; the test stays for identical bytecode
         Debug.mark(13);
-        if (!G.coop && Cfg.MICRO && role != ATTACK && Micro.act(seen)) { why = 'm'; return; }
+        if (!G.coop && Cfg.MICRO) { }   // never true; the test stays for identical bytecode
         Debug.mark(14);
-        if (!G.coop && Cfg.FACE_ENEMY && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) { why = 'f'; return; }
-        if (Cfg.ATK_DELIVER > 0 && atkHome(raw) && deliver()) return;
-        if (Cfg.ATK_STUCK > 0) {
+        if (!G.coop && (role != GATHER || Cfg.WAR_GATHER < 2 || nearEnemy(2)) && faceEnemy()) { why = 'f'; return; }
+        {
             int cds = G.debt, cbs = G.bc();   // ledger (K = 20 with G.settle)
             boolean stuck = atkStuck(raw);
             G.settle(cds, cbs, 20);
             if (stuck && deliver()) return;
         }
-        if (Cfg.STALL_CAT > 0 && role == ATTACK && G.coop && stallCat()) { why = 'g'; return; }
-        if (Cfg.SYM_COURIER > 0 && symCourier()) { why = 'y'; return; }
+        if (role == ATTACK && G.coop && stallCat()) { why = 'g'; return; }
+        if (symCourier()) { why = 'y'; return; }
         if (role == ATTACK && attack()) { why = 'a'; return; }
         Debug.mark(15);
         if (!G.coop && war()) { why = 'w'; return; }
-        if (!G.coop && role == FIGHT && Cfg.FORT_R > 0 && fort()) { why = 'h'; return; }
+        if (!G.coop && role == FIGHT && Cfg.FORT_R > 0) { }   // never true; the test stays for identical bytecode
         Debug.mark(16);
         why = 'g';
         if (cat != null && role == FIGHT && catReach() && !warNoCat()) {
@@ -1461,7 +1167,7 @@ public final class Baby {
             // full loads: no trip home with a part load; with no pile in sight the gatherer stays at its mine
             if (fullLoad(raw, late, loadAt) && deliver()) return;
         } else if ((raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= Cfg.DELIVER_IDLE))) && deliver()) return;
-        if (Cfg.COURIER && Comms.numMines == 0 && myMineCount > 0) {
+        if (Comms.numMines == 0 && myMineCount > 0) {
             // we found a mine nobody else knows: squeaks only reach the king from dist2 16, so carry the news home
             MapLocation k = Comms.nearestKing(G.me);
             if (k != null) { Nav.goTo(k); why = 'm'; return; }
@@ -1479,8 +1185,7 @@ public final class Baby {
             why = 'C';
             Nav.goTo(cheeseTarget);
             if (Nav.stall > 12) {
-                if (Cfg.CHEESE_BAN > 0 && (!Cfg.CHEESE_BAN_WALL || Flow.detour(cheeseTarget))) banCheese(cheeseTarget);
-                if (Cfg.BREAKOUT_TTL > 0 && walledOff(G.me, cheeseTarget)) wallStrike(G.round, Cfg.BREAKOUT_TTL);
+                if (walledOff(G.me, cheeseTarget)) wallStrike(G.round, Cfg.BREAKOUT_TTL);
                 cheeseTarget = null;
             }
             return;
@@ -1488,56 +1193,39 @@ public final class Baby {
         if (role == FIGHT) {
             MapLocation ct = catReach() && !warNoCat() ? knownCat() : null;
             if (ct != null) { Nav.goTo(ct); catStalled(ct); return; }
-            if (Cfg.RAID && raider && rc.getHealth() >= Cfg.RAID_HP && raid()) { why = 'z'; return; }
+            if (raider && rc.getHealth() >= Cfg.RAID_HP && raid()) { why = 'z'; return; }
         }
         if (scouting()) {
             // a scout with news the king lacks carries it home (squeaks reach the king from dist2 16 only)
             MapLocation k = Comms.nearestKing(G.me);
             if (k != null && unreported() >= 0) {
-                if (Cfg.SWEEP > 0) sweepCell = sweepScan = 0; // the cell's time budget restarts after the walk home
                 Nav.goTo(k); why = 's'; return;
             }
             why = 'S';
-            if (Cfg.SCOUT_FAN > 0) { if (fanFrontier()) return; }
-            else if (Cfg.SCOUT_FRONTIER && (!Cfg.FRONTIER_MINE || Comms.numMines > 0) && exploreFrontier()) return;
+            if (fanFrontier()) return;
             if (!exploreHome()) explore();
             return;
         }
         if (role == GATHER && G.round < seekUntil && seek()) { why = 'x'; return; }
-        if (Cfg.MINE_EXPLORE > 0 && role == GATHER && G.round < Cfg.MINE_EXPLORE_UNTIL
-                && explorer(slot, homeMineCount(), Cfg.MINE_EXPLORE) && exploreHome()) { mineTarget = null; why = 'x'; return; }
-        if (role == GATHER || role == FIGHT && Cfg.FIGHT_MINE) {
-            if (Cfg.MINE_BALANCE && mineTarget != null && (Cfg.HOME_ALL_SYM ? Comms.numMines != minesAtPick || Sym.mask != maskAtPick : Comms.numMines != minesAtPick)) mineTarget = null;
-            if (Cfg.MINE_ANY_COOP && !G.coop && mineTarget != null && !homeHalf(mineTarget)) mineTarget = null;
+        if (role == GATHER || role == FIGHT) {
+            if (mineTarget != null && Comms.numMines != minesAtPick) mineTarget = null;
             if (postMargin > 0 && role == FIGHT && coopAtPick && !G.coop) mineTarget = null;
-            if (Cfg.KMINE_SKIP > 0 && mineTarget != null && G.round % 10 == 0 && kingHeld(mineTarget)
-                    && homeMineCount() >= Cfg.KMINE_SKIP) mineTarget = null;
-            if (Cfg.TRIP_HALF != 0 && mineTarget != null && Comms.tripSig != tripSigAtPick) mineTarget = null;
             if (mineTarget == null) mineTarget = pickMine();
             if (mineTarget != null) {
-                if (Cfg.SEEK_IDLE > 0 && (role == GATHER || Cfg.FIGHT_SHIFT && role == FIGHT) && idle(mineTarget)) {
-                    if (Cfg.IDLE_SHIFT) { mineShift++; mineTarget = pickMine(); }
+                if ((role == GATHER || role == FIGHT) && idle(mineTarget)) {
+                    mineShift++; mineTarget = pickMine();
                     if (role == GATHER && idleSeek() && seek()) { why = 'x'; return; }
                     if (mineTarget == null) mineTarget = pickMine();
                 }
-                // Cfg.WANDER_R: a rat that wandered at this mine last turn stays at it out to WANDER_R + 1 (a wander
+                // a rat that wandered at this mine last turn stays at it out to WANDER_R + 1 (a wander
                 // step around a wall can leave the ring; M straight back made a two-tile flip)
-                boolean held = Cfg.WANDER_R > 0 && wanderRound == G.round - 1 && mineTarget.equals(wanderMine)
+                boolean held = wanderRound == G.round - 1 && mineTarget.equals(wanderMine)
                         && G.cheb(G.me, mineTarget) <= Cfg.WANDER_R + 1;
                 if (held || atMine(mineTarget, Cfg.MINE_KING_R)) {
                     wanderRound = G.round; wanderMine = mineTarget;
-                    if (Cfg.TRIP_HALF != 0) tripArrive(mineTarget, G.round);
                     if (role == GATHER && startSeek(mineTarget) && seek()) { why = 'x'; return; }
-                    if (Cfg.GATHER_STILL) {
-                        // hold still (moves set off traps laid at our mines) and sweep the cone around the spawn square
-                        Direction t = G.facing.rotateRight().rotateRight();
-                        if (rc.canTurn(t)) { rc.turn(t); G.facing = t; }
-                        if (Cfg.MINE_TRAPS > 0) mineTrap(mineTarget, Cfg.MINE_TRAPS);
-                        return;
-                    }
                     // wander inside the spawn square, facing outward to see new cheese
                     wanderAround(mineTarget);
-                    if (Cfg.MINE_TRAPS > 0) mineTrap(mineTarget, Cfg.MINE_TRAPS);
                     why = 'W';
                 } else {
                     why = 'M';
@@ -1545,7 +1233,8 @@ public final class Baby {
                     if (Nav.stall > 25) {
                         if (Cfg.FIX_STALL_SHIFT) mineShift++;   // the re-pick moves on to the next mine
                         mineTarget = null;
-                        if (Cfg.MINE_STALL_CAT > 0 && G.coop) stallCatUntil = G.round + Cfg.MINE_STALL_CAT;
+                        if (G.coop) stallCatUntil
+ = G.round + Cfg.MINE_STALL_CAT;
                     }
                 }
                 return;
@@ -1572,29 +1261,22 @@ public final class Baby {
         why = 'd';
         // ledger (K = 20 with G.settle): homeLeg counts the stall every delivery turn and acts once it reaches TRAIL_STALL
         int cdh = G.debt, cbh = G.bc();
-        boolean homed = Cfg.TRAIL && homeLeg(k);
+        boolean homed = homeLeg(k);
         G.settle(cdh, cbh, 20);
         if (homed) return true;
-        Nav.deliverK = Cfg.DELIVER_REACH;
-        try { Nav.goTo(Cfg.DELIVER_ANCHOR > 0 ? anchorFor(k, Cfg.DELIVER_ANCHOR) : k); } finally { Nav.deliverK = false; }
+        Nav.deliverK = true;
+        try { Nav.goTo(k); } finally { Nav.deliverK = false; }
         return true;
-    }
-
-    static MapLocation anchor;
-    /** Cfg.DELIVER_ANCHOR: the delivery target for king k, re-set to k once k is more than r from it. */
-    static MapLocation anchorFor(MapLocation k, int r) {
-        if (anchor == null || G.cheb(anchor, k) > r) anchor = k;
-        return anchor;
     }
 
     static int homeBest, homeStall, homeRound = -10, homeHeld;
     /** Cfg.TRAIL_GAP (a field so tests can set it). */
     static int trailGap = Cfg.TRAIL_GAP;
     static boolean homing;
-    /** Baby.delivered at the start of this delivery trip (TRAIL). */
+    /** Baby.delivered at the start of this delivery trip. */
     static int homeDl;
 
-    /** Cfg.TRAIL: after TRAIL_STALL turns of delivery without getting closer to the nearest king (a roaming king does
+    /** After TRAIL_STALL turns of delivery without getting closer to the nearest king (a roaming king does
      *  not reset the count, unlike Nav's stall), walk the trail back until it ends; while it is held by robots, wait
      *  FLOW_HOLD turns, then let Nav route around them. True when this took the turn. */
     static boolean homeLeg(MapLocation k) throws GameActionException {
@@ -1616,57 +1298,10 @@ public final class Baby {
     static int noKing;               // symmetry candidates whose enemy-king spot we saw empty
     static MapLocation lastEKing;
     static int lastEKingRound = -100;
-    /** Relay hops of lastEKing's news (0 = seen ourselves), and the sighting round we last relayed. */
-    static int ekHops, ekRelayed = -100;
     public static int presses;
 
-    /** An SQ_EKING squeak: extra = hops | (sighting round % 1024) << 2. A newer sighting (or the same one in fewer
-     *  hops) replaces ours. */
-    static void heardEKing(int c) {
-        int e = Comms.sqExtra(c), s = (e >> 2) & 1023;
-        int seenRound = G.round - (((G.round & 1023) - s + 1024) & 1023);
-        int hops = e & 3;
-        if (seenRound > lastEKingRound || seenRound == lastEKingRound && hops < ekHops) {
-            lastEKing = new MapLocation(Comms.sqX(c), Comms.sqY(c));
-            lastEKingRound = seenRound;
-            ekHops = hops;
-        }
-    }
-
-    /** King press movement (Cfg.KING_PRESS): walk to a fresh enemy-king sighting in range and stay against it. */
-    static boolean pressKing() throws GameActionException {
-        RobotController rc = G.rc;
-        MapLocation ek = eKing != null ? eKing.location : G.round - lastEKingRound <= Cfg.PRESS_AGE ? lastEKing : null;
-        if (ek == null && Cfg.PRESS_SHARED) ek = sharedEKing();
-        if (ek == null || rc.getHealth() < Cfg.PRESS_HP) return false;
-        if (role == GATHER && rc.getRawCheese() >= Cfg.DELIVER_AT) return false;
-        int d = G.me.distanceSquaredTo(ek);
-        if (d > (role == GATHER ? Cfg.PRESS_GATHER_D2 : Cfg.PRESS_D2)) return false;
-        if (eKing == null && d <= 8 && rc.canSenseLocation(ek)) {
-            RobotInfo r = rc.senseRobotAtLocation(ek);
-            if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { lastEKing = null; return false; }
-        }
-        presses++;
-        if (G.cheb(G.me, ek) <= 2) {
-            // touching the king's 3x3: face its nearest tile and bite (bites run before and after movement)
-            int dx = Math.max(-1, Math.min(1, G.me.x - ek.x)), dy = Math.max(-1, Math.min(1, G.me.y - ek.y));
-            Direction f = G.me.directionTo(ek.translate(dx, dy));
-            if (f != Direction.CENTER && rc.getDirection() != f && rc.canTurn(f)) { rc.turn(f); G.facing = f; }
-            return true;
-        }
-        Nav.goTo(ek);
-        return true;
-    }
-
-    /** The kings' shared enemy-king sighting (Comms.EKING) when at most PRESS_AGE rounds old, else null. */
-    static MapLocation sharedEKing() {
-        int x = Comms.read(Comms.EKING);
-        if (x == 0 || !Comms.fresh(Comms.read(Comms.EKING + 2), Cfg.PRESS_AGE)) return null;
-        return new MapLocation(x - 1, Comms.read(Comms.EKING + 1) - 1);
-    }
-
     /** Attacker movement: the visible enemy king, else the last place we saw it, else the nearest live mirror spot. */
-    /** Cfg.WAVE_P: a war striker (WAR_STRIKE) that has not charged yet; charged once its wave has gone. */
+    /** Cfg.WAVE_P: a war striker that has not charged yet (nothing sets waveRat now); charged once its wave has gone. */
     static boolean waveRat, charged;
 
     /** Cfg.WAVE_P: strikers wait at the rally point (WAVE_FRAC percent of the way from home to the enemy king spot)
@@ -1675,9 +1310,9 @@ public final class Baby {
      *  one at a time and died on the way. True when this took the turn. */
     static boolean waveHold() throws GameActionException {
         if (!waveRat || charged) return false;
-        // Cfg.WAVE_LATCH: a striker that has seen the enemy king charges for good (xa5's left a retreating king on
-        // thunderdome 25071 and walked back to the rally point; zj3 killed it at r40)
-        if (eKing != null) { if (Cfg.WAVE_LATCH) charged = true; return false; }
+        // a striker that has seen the enemy king charges for good (xa5's left a retreating king on thunderdome 25071
+        // and walked back to the rally point; zj3 killed it at r40)
+        if (eKing != null) { charged = true; return false; }
         if (G.round % Cfg.WAVE_P >= Cfg.WAVE_GATHER) { charged = true; return false; }
         MapLocation t = rushTarget();
         if (t == null || home == null) return false;
@@ -1688,7 +1323,7 @@ public final class Baby {
     }
 
     static boolean attack() throws GameActionException {
-        if (Cfg.WAVE_P > 0 && waveHold()) return true;
+        if (waveHold()) return true;
         if (eKing != null) { lastEKing = eKing.location; lastEKingRound = G.round; Nav.goTo(eKing.location); return true; }
         // Cfg.FIX_EKING_FORGET: reached the sighting and can sense it: no king there, so forget it
         if (Cfg.FIX_EKING_FORGET && lastEKing != null && G.me.distanceSquaredTo(lastEKing) <= 8
@@ -1704,8 +1339,6 @@ public final class Baby {
     }
 
     static MapLocation rushTarget() throws GameActionException {
-        if (Cfg.RUSH_STICK) return rushStick();
-        if (Cfg.RUSH_BAN > 0) return rushBan(Cfg.RUSH_BAN);
         RobotController rc = G.rc;
         MapLocation best = null;
         int bd = Integer.MAX_VALUE;
@@ -1717,72 +1350,10 @@ public final class Baby {
                 if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { noKing |= s; continue; }
             }
             int d = G.me.distanceSquaredTo(c) * 2 + (G.pickBit(G.me, c) ? 1 : 0);
-            if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(G.me, c, best)) { bd = d; best = c; }
+            if (d < bd || Cfg.SYM_TIE) { bd = d; best = c; }   // SYM_TIE: never true; the test stays for identical bytecode
         }
         if (best == null && noKing != 0) { noKing = 0; return null; }
         return best;
-    }
-
-    /** Cfg.RUSH_BAN: the round a flow search toward each symmetry's enemy-king spot last failed (index: symmetry bit
-     *  1, 2, 4 as 0, 1, 2), allocated on first use. */
-    static int[] rushFail;
-
-    /** rushTarget with Cfg.RUSH_BAN: the nearest live mirror spot, passing over spots whose search failed within
-     *  ttl (Cfg.RUSH_BAN) rounds while another is live. */
-    static MapLocation rushBan(int ttl) throws GameActionException {
-        RobotController rc = G.rc;
-        int[] rf = rushFail;
-        if (rf == null) { rf = rushFail = new int[3]; rf[0] = rf[1] = rf[2] = -100000; }
-        MapLocation ft = Flow.failTgt, best = null;
-        boolean fresh = ft != null && G.round - Flow.failRound <= 1;
-        int bd = Integer.MAX_VALUE;
-        for (int s = 1, i = 0; s <= 4; s <<= 1, i++) {
-            if ((Sym.mask & s) == 0 || (noKing & s) != 0) continue;
-            MapLocation c = G.mirror(ref(), s);
-            if (G.me.distanceSquaredTo(c) <= 13 && rc.canSenseLocation(c)) {
-                RobotInfo r = rc.senseRobotAtLocation(c);
-                if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { noKing |= s; continue; }
-            }
-            if (fresh && G.cheb(ft, c) <= 1) rf[i] = Flow.failRound;
-            int d = banKey(G.round - rf[i] < ttl, G.me.distanceSquaredTo(c), G.pickBit(G.me, c));
-            if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(G.me, c, best)) { bd = d; best = c; }
-        }
-        if (best == null && noKing != 0) { noKing = 0; return null; }
-        return best;
-    }
-
-    /** rushBan's order: spots not banned first, then by squared distance, then the mirror-invariant bit. */
-    static int banKey(boolean banned, int d2, boolean bit) {
-        return (banned ? 1 << 20 : 0) + d2 * 2 + (bit ? 1 : 0);
-    }
-
-    /** Cfg.RUSH_STICK: the symmetry whose enemy-king spot this attacker walks to (0 = none yet). */
-    static int rushSym;
-
-    /** rushTarget with Cfg.RUSH_STICK: the nearest live mirror spot is picked once and kept while it stays live. */
-    static MapLocation rushStick() throws GameActionException {
-        RobotController rc = G.rc;
-        MapLocation best = null;
-        int bd = Integer.MAX_VALUE, bs = 0, live = 0;
-        for (int s = 1; s <= 4; s <<= 1) {
-            if ((Sym.mask & s) == 0 || (noKing & s) != 0) continue;
-            MapLocation c = G.mirror(ref(), s);
-            if (G.me.distanceSquaredTo(c) <= 13 && rc.canSenseLocation(c)) {
-                RobotInfo r = rc.senseRobotAtLocation(c);
-                if (r == null || r.type != UnitType.RAT_KING || r.team != G.them) { noKing |= s; continue; }
-            }
-            live |= s;
-            int d = G.me.distanceSquaredTo(c) * 2 + (G.pickBit(G.me, c) ? 1 : 0);
-            if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(G.me, c, best)) { bd = d; best = c; bs = s; }
-        }
-        if (best == null && noKing != 0) { noKing = 0; rushSym = 0; return null; }
-        rushSym = stickSym(live, rushSym, bs);
-        return rushSym == bs ? best : G.mirror(ref(), rushSym);
-    }
-
-    /** The symmetry an attacker walks to: its current one while still live, else this turn's nearest. */
-    static int stickSym(int live, int cur, int best) {
-        return (live & cur) != 0 ? cur : best;
     }
 
     /**
@@ -1795,25 +1366,21 @@ public final class Baby {
         MapLocation e = nearestEnemy.location;
         int d = G.me.distanceSquaredTo(e);
         if (d > 8) return false;
-        if (Cfg.FACE_REACH && d > 2 && !reach1(G.me, e)) { faceSkips++; return false; }
         Direction to = G.me.directionTo(e);
         if (!rc.canSenseLocation(e) || (d > 2 && rc.getDirection() != to)) {
             if (rc.getDirection() != to && rc.canTurn(to)) { rc.turn(to); G.facing = to; }
             return true;
         }
         if (d > 2 && rc.canMove(to) && (Nav.avoid & (1 << to.ordinal())) == 0) {
-            if (Cfg.FACE_HOLD && faceHold()) { faceHolds++; return true; }
             rc.move(to);
             G.me = rc.getLocation();
         }
         return true;
     }
 
-    public static int faceHolds, faceSkips;
-
-    /** Cfg.FACE_REACH: some tile next to both a and e (on the map, not a known wall or dirt) is open, so e can get
+    /** reach1: some tile next to both a and e (on the map, not a known wall or dirt) is open, so e can get
      *  next to a in one move. */
-    /** Cfg.KING_WALL_THREAT (zgc/zik): e is behind a wall from a. At Chebyshev 2, no tile beside both is open (reach1:
+    /** behindWall (zgc/zik): e is behind a wall from a. At Chebyshev 2, no tile beside both is open (reach1:
      *  e cannot get next to a in one move); farther, the straight tile line between them crosses a known wall tile
      *  whose two neighbours across the line are wall, dirt or off the map, so the way around is long. */
     static boolean behindWall(MapLocation a, MapLocation e) {
@@ -1855,20 +1422,12 @@ public final class Baby {
         return false;
     }
 
-    /** Cfg.FACE_HOLD: hold at Chebyshev 2 instead of stepping into contact with nearestEnemy (see Cfg). */
-    static boolean faceHold() {
-        if (hunting || nearestEnemy.health < G.rc.getHealth() || !sees(nearestEnemy, G.me)) return false;
-        if (!trapsKnown(burnRound, Comms.read(Comms.SYM))) return false;
-        MapLocation th = threatenedKing();
-        return th == null || nearestEnemy.location.distanceSquaredTo(th) > Cfg.KING_THREAT_D2;
-    }
-
     /** War movement: close on a visible enemy king or nearby enemy rat, or answer a king's alert. */
     static boolean war() throws GameActionException {
         int raw = G.rc.getRawCheese();
         MapLocation threatened = threatenedKing();
         if (threatened != null) defends++;
-        if (role == GATHER && Cfg.WAR_GATHER > 0 && !hunting && threatened == null) {
+        if (role == GATHER && !hunting && threatened == null) {
             // gatherers keep the economy going: only an adjacent enemy stops them
             if (!nearEnemy(2)) return false;
             Direction f = G.me.directionTo(nearestEnemy.location);
@@ -1879,7 +1438,7 @@ public final class Baby {
             Nav.goTo(eKing.location);
             return true;
         }
-        if (nearestEnemy != null && !(role == FIGHT && Cfg.FORT_R > 0 && !nearHome(nearestEnemy.location, Cfg.FORT_R + 3))) {
+        if (nearestEnemy != null && !(role == FIGHT && Cfg.FORT_R > 0)) {   // FORT_R 0: a no-op test, kept for identical bytecode
             int d = G.me.distanceSquaredTo(nearestEnemy.location);
             if (d <= 2) {
                 // stay and face it: biting happens before and after movement
@@ -1892,7 +1451,8 @@ public final class Baby {
                 // traps and into a grab; hold, face it and let it come (flank and prey moves still engage)
                 // (not against a rat at our threatened king: it is biting the king while we wait)
                 boolean atKing = threatened != null && nearestEnemy.location.distanceSquaredTo(threatened) <= Cfg.KING_THREAT_D2;
-                if (Cfg.STANDOFF && !hunting && !atKing && sees(nearestEnemy, G.me) && nearestEnemy.health >= G.rc.getHealth()) {
+                if (!hunting
+ && !atKing && sees(nearestEnemy, G.me) && nearestEnemy.health >= G.rc.getHealth()) {
                     Direction f = G.me.directionTo(nearestEnemy.location);
                     if (G.rc.getDirection() != f && G.rc.canTurn(f)) { G.rc.turn(f); G.facing = f; }
                     standoffs++;
@@ -1917,7 +1477,7 @@ public final class Baby {
     /** Our king's location when it reported enemy rats close to it this or last round and we are near enough to
      *  help (gatherers then fight instead of gathering), else null. */
     static MapLocation threatenedKing() {
-        if (!Cfg.DEFEND || G.coop || !Comms.fresh(Comms.read(Comms.ALERT + 2), 2) || Comms.alertThreat() < 1) return null;
+        if (G.coop || !Comms.fresh(Comms.read(Comms.ALERT + 2), 2) || Comms.alertThreat() < 1) return null;
         MapLocation a = Comms.alertLoc();
         return a != null && G.me.distanceSquaredTo(a) <= Cfg.DEFEND_D2 ? a : null;
     }
@@ -1930,7 +1490,7 @@ public final class Baby {
         return dx * dx + dy * dy <= 20 && dx * f.dx + dy * f.dy >= Math.abs(dx * f.dy - dy * f.dx);
     }
 
-    /** Cfg.RESCUE: this turn's enemy carrier of one of ours within RESCUE_D2, or null. */
+    /** This turn's enemy carrier of one of ours within RESCUE_D2, or null. */
     static RobotInfo rescueT;
     /** Cfg.RESCUE_KING_R: this rat was within Chebyshev RESCUE_KING_R of our nearest king at round nearKR's war setup. */
     static boolean nearK;
@@ -1950,27 +1510,7 @@ public final class Baby {
             int d = G.me.distanceSquaredTo(r.location);
             if (d > Cfg.RESCUE_D2) continue;
             int s = (d * 128 + 100 - Math.min(100, r.carryingRobot.health)) * 2 + (G.pickBit(G.me, r.location) ? 0 : 1);
-            if (s < bd || Cfg.SYM_TIE && s == bd && G.tieFirst(G.me, r.location, best.location)) { bd = s; best = r; }
-        }
-        return best;
-    }
-
-    /** Cfg.GUARD_CARRY_R: rescueT came from kingCarrier this turn (rescue then walks toward a blind tile). */
-    static boolean guardCarry;
-    public static int carryGuards;
-
-    /** Cfg.GUARD_CARRY_R: within Chebyshev reach of our nearest king, the enemy baby nearest us holding one of ours
-     *  within Chebyshev rad of the king's centre (ties as rescueTarget), or null; none in cooperation. */
-    static RobotInfo kingCarrier(RobotInfo[] robots, int rad, int reach) {
-        if (G.coop) return null;
-        MapLocation k = Comms.nearestKing(G.me);
-        if (k == null || G.cheb(G.me, k) > reach) return null;
-        RobotInfo best = null;
-        int bd = Integer.MAX_VALUE;
-        for (RobotInfo r : robots) {
-            if (r.team != G.them || r.type != UnitType.BABY_RAT || !holdsOurs(r) || G.cheb(r.location, k) > rad) continue;
-            int s = (G.me.distanceSquaredTo(r.location) * 128 + 100 - Math.min(100, r.carryingRobot.health)) * 2 + (G.pickBit(G.me, r.location) ? 0 : 1);
-            if (s < bd || Cfg.SYM_TIE && s == bd && G.tieFirst(G.me, r.location, best.location)) { bd = s; best = r; }
+            if (s < bd || Cfg.SYM_TIE) { bd = s; best = r; }   // SYM_TIE: never true; the test stays for identical bytecode
         }
         return best;
     }
@@ -1980,7 +1520,6 @@ public final class Baby {
     static boolean rescue() throws GameActionException {
         RobotController rc = G.rc;
         if (!rc.isActionReady()) return false;
-        if (Cfg.GUARD_CARRY_HP && guardCarry && rescueT.health < rc.getHealth()) return rescueWeak();
         MapLocation c = rescueT.location;
         if (G.cheb(G.me, c) == 1 && !sees(rescueT, G.me)) {
             Direction f = G.me.directionTo(c);
@@ -1999,77 +1538,13 @@ public final class Baby {
             int sc = (d == rc.getDirection() ? 0 : 1) * 2 + (G.hand(G.me, d) > 0 ? 1 : 0);
             if (sc < bs) { bs = sc; bestD = d; }
         }
-        if (bestD == null) return Cfg.RESCUE_BLOCK && blockMuzzle(c) || Cfg.RESCUE_WALK && walkBehind(c)
-                || Cfg.GUARD_CARRY_R > 0 && guardCarry && walkBehind(c);
+        if (bestD == null) return false;
         MapLocation g = Nav.guard;
         Nav.guard = c;
         boolean moved = Nav.step(bestD);
         Nav.guard = g;
         if (moved) rescues++;
         return moved;
-    }
-
-    /** Cfg.GUARD_CARRY_HP: rescueT has less health than ours, so any tile next to it will do for the grab: beside it,
-     *  turn to it; else step next to it (tiles it cannot see first); else walk toward it. */
-    static boolean rescueWeak() throws GameActionException {
-        RobotController rc = G.rc;
-        MapLocation c = rescueT.location;
-        if (G.cheb(G.me, c) == 1) {
-            Direction f = G.me.directionTo(c);
-            if (rc.getDirection() != f && rc.canTurn(f)) { rc.turn(f); G.facing = f; }
-            rescues++;
-            return true;
-        }
-        if (!rc.isMovementReady()) return false;
-        Direction bestD = null;
-        int bs = Integer.MAX_VALUE;
-        for (int i = 0; i < 8; i++) {
-            Direction d = G.DIRS[i];
-            MapLocation t = G.me.add(d);
-            if (G.cheb(t, c) != 1) continue;
-            if ((Nav.avoid & (1 << i)) != 0 || !rc.canMove(d)) continue;
-            int sc = ((sees(rescueT, t) ? 1 : 0) * 2 + (d == rc.getDirection() ? 0 : 1)) * 2 + (G.hand(G.me, d) > 0 ? 1 : 0);
-            if (sc < bs) { bs = sc; bestD = d; }
-        }
-        if (bestD == null) { Nav.goTo(c); rescues++; return true; }
-        MapLocation g = Nav.guard;
-        Nav.guard = c;
-        boolean moved = Nav.step(bestD);
-        Nav.guard = g;
-        if (moved) rescues++;
-        return moved;
-    }
-
-    /** Cfg.RESCUE_BLOCK: a throw needs the tile in front of the carrier empty; step into it, facing the carrier. */
-    static boolean blockMuzzle(MapLocation c) throws GameActionException {
-        MapLocation m = c.add(rescueT.direction);
-        if (G.cheb(G.me, m) != 1) return false;
-        Direction d = G.me.directionTo(m);
-        if ((Nav.avoid & (1 << d.ordinal())) != 0 || !G.rc.canMove(d)) return false;
-        MapLocation g = Nav.guard;
-        Nav.guard = c;
-        boolean moved = Nav.step(d);
-        Nav.guard = g;
-        if (moved) blocks++;
-        return moved;
-    }
-
-    public static int blocks;
-
-    /** Cfg.RESCUE_WALK: no blind tile next to rescueT is one step away; walk toward the nearest open one. */
-    static boolean walkBehind(MapLocation c) throws GameActionException {
-        MapLocation best = null;
-        int bd = Integer.MAX_VALUE;
-        for (int i = 0; i < 8; i++) {
-            MapLocation t = c.add(G.DIRS[i]);
-            if (sees(rescueT, t) || !G.rc.onTheMap(t) || G.rc.canSenseLocation(t) && !G.rc.sensePassability(t)) continue;
-            int d = (G.me.distanceSquaredTo(t) * 2) + (G.pickBit(G.me, t) ? 0 : 1);
-            if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(G.me, t, best)) { bd = d; best = t; }
-        }
-        if (best == null) return false;
-        Nav.goTo(best);
-        rescues++;
-        return true;
     }
 
     /** Step onto a tile adjacent to an enemy baby that it cannot see, keeping it in view; the post-move carry grabs it. */
@@ -2103,14 +1578,12 @@ public final class Baby {
     public static int flanks, standoffs;
 
     /** Nearest enemy baby within dist2 20 that we could ratnap (strictly less health than ours), or null. */
-    /** Cfg.WALL_BLIND: b lies behind a wall from a. The segment a-b crosses a known wall, and so do both copies of it
+    /** b lies behind a wall from a. The segment a-b crosses a known wall, and so do both copies of it
      *  shifted one tile across (ends included, or off the map): a lone pillar leaves a way round, dirt can be dug. */
     static boolean walled(MapLocation a, MapLocation b) {
         // Cfg.WALL_BLIND_CAP: at most CAP traces a turn (~300 bytecodes each); past it an enemy counts as in the open
-        if (Cfg.WALL_BLIND_CAP > 0) {
-            if (wbRound != G.round) { wbRound = G.round; wbCalls = 0; }
-            if (++wbCalls > Cfg.WALL_BLIND_CAP) return false;
-        }
+        if (wbRound != G.round) { wbRound = G.round; wbCalls = 0; }
+        if (++wbCalls > Cfg.WALL_BLIND_CAP) return false;
         int dx = b.x - a.x, dy = b.y - a.y;
         int px = Math.abs(dx) >= Math.abs(dy) ? 0 : 1, py = 1 - px;
         return wallLine(a.x, a.y, dx, dy, 1) && wallLine(a.x + px, a.y + py, dx, dy, 0)
@@ -2138,51 +1611,16 @@ public final class Baby {
         for (RobotInfo r : robots) {
             if (r.team != G.them || r.type != UnitType.BABY_RAT || r.health >= hp) continue;
             int d = G.me.distanceSquaredTo(r.location);
-            if (d <= 20 && d < pd && !(Cfg.WALL_BLIND && d > 2 && walled(G.me, r.location))) { pd = d; prey = r; }
+            if (d <= 20 && d < pd && !(d > 2 && walled(G.me, r.location))) { pd = d; prey = r; }
         }
         return prey;
     }
 
-    /** A wounded rat near enemies falls back to its king instead of being finished off. */
-    /** An empty rat on the ring around our king's 3x3 (Chebyshev 2 from its centre) while the cat we see is near
-     *  that king: step to a tile off the ring and out of the cat's lane, farthest from the king. */
-    static boolean yieldKing() throws GameActionException {
-        MapLocation k = Comms.nearestKing(G.me);
-        if (k == null || G.cheb(G.me, k) != 2 || King.catGap(k, cat.location) > 3) return false;
-        RobotController rc = G.rc;
-        if (!rc.isMovementReady()) return false;
-        int lane = laneMask(cat), best = -1, bd = -1;
-        for (int i = 0; i < 8; i++) {
-            if ((lane & (1 << i)) != 0 || !rc.canMove(G.DIRS[i])) continue;
-            MapLocation t = G.me.add(G.DIRS[i]);
-            if (G.cheb(t, k) < 3) continue;
-            int d = 2 * t.distanceSquaredTo(k) + (G.hand(G.me, G.DIRS[i]) > 0 ? 1 : 0);
-            if (d > bd) { bd = d; best = i; }
-        }
-        return best >= 0 && Nav.step(G.DIRS[best]);
-    }
-
-    /** Our king's centre while this turn's nearestEnemy is a rat in reach of it (Cfg.GUARD_KING_R), else null. */
+    /** Our king's centre while this turn's nearestEnemy is a rat in reach of it, else null (nothing sets it now: always null). */
     static MapLocation guardKing;
     public static int guards;
 
-    /** Cfg.GUARD_KING_R: when we are within Chebyshev reach of our nearest king, the visible enemy baby nearest us among
-     *  those within Chebyshev 2 of its centre (they can bite it), else null. Ties: lower health, then G.pickBit. */
-    static RobotInfo kingBiter(RobotInfo[] robots, int reach) {
-        MapLocation k = Comms.nearestKing(G.me);
-        if (k == null || G.cheb(G.me, k) > reach) return null;
-        RobotInfo best = null;
-        int bk = Integer.MAX_VALUE;
-        for (RobotInfo r : robots) {
-            if (r.team != G.them || r.type != UnitType.BABY_RAT || G.cheb(r.location, k) > 2) continue;
-            int key = (G.me.distanceSquaredTo(r.location) * 128 + r.health) * 2 + (G.pickBit(G.me, r.location) ? 0 : 1);
-            if (key < bk || Cfg.SYM_TIE && key == bk && G.tieFirst(G.me, r.location, best.location)) { bk = key; best = r; }
-        }
-        if (best != null) guardKing = k;
-        return best;
-    }
-
-    /** Cfg.AMMO_AWAY: step away from our king (or hold) while ammo(...) holds; false when it doesn't. */
+    /** Step away from our king (or hold) while ammo(...) holds; false when it doesn't. */
     static boolean ammoAway() throws GameActionException {
         if (nearestEnemy == null) return false;
         MapLocation k = Comms.nearestKing(G.me);
@@ -2192,7 +1630,7 @@ public final class Baby {
     }
 
     /** True when a baby with health hp, cheb from our king's centre, is grabbable ammunition for an enemy rat with
-     *  health ehp at dist2 d2 (Cfg.AMMO_AWAY). */
+     *  health ehp at dist2 d2. */
     static boolean ammo(int hp, int ehp, int d2, int cheb) {
         return hp <= Cfg.AMMO_HP && ehp > hp && d2 <= Cfg.AMMO_D2 && cheb <= Cfg.AMMO_R;
     }
@@ -2202,28 +1640,6 @@ public final class Baby {
         MapLocation k = Comms.nearestKing(G.me);
         if (k == null || G.cheb(G.me, k) <= 2) return false;
         Nav.goTo(k);
-        return true;
-    }
-
-    /** True when l is within Chebyshev r of our nearest king. */
-    static boolean nearHome(MapLocation l, int r) {
-        MapLocation k = Comms.nearestKing(l);
-        return k != null && G.cheb(k, l) <= r;
-    }
-
-    /**
-     * Fortress: at war, fighters hold a ring around the king (where its traps are) instead of meeting the enemy
-     * in the open; war() engages anything that comes within FORT_R + 3 of the king.
-     */
-    static boolean fort() throws GameActionException {
-        MapLocation k = Comms.nearestKing(G.me);
-        if (k == null) return false;
-        if (cat != null && nearHome(cat.location, Cfg.FORT_R + 5)) return false; // defend against a cat at home
-        if (G.cheb(G.me, k) > Cfg.FORT_R) { Nav.goTo(k); return true; }
-        // on station: face outward, toward the map centre
-        MapLocation mid = new MapLocation(G.W / 2, G.H / 2);
-        Direction f = Cfg.SYM_CENTRE ? G.toCentre(k) : k.directionTo(mid);
-        if (f != Direction.CENTER && G.rc.getDirection() != f && G.rc.canTurn(f)) { G.rc.turn(f); G.facing = f; }
         return true;
     }
 
@@ -2250,8 +1666,8 @@ public final class Baby {
         if (Comms.numKings < 2 && G.globalCheese >= endCatBar(G.round) && !(G.coop && G.round < Cfg.END_CAT_COOP_FREE)) return false;
         if (cat != null) return approachCat(cat);
         MapLocation ct = knownCat();
-        // Cfg.END_CAT_CENTRE: in cooperation with no cat known, look for one at the map centre
-        if (ct == null && Cfg.END_CAT_CENTRE && G.coop) ct = new MapLocation(G.cx2 / 2, G.cy2 / 2);
+        // in cooperation with no cat known, look for one at the map centre
+        if (ct == null && G.coop) ct = new MapLocation(G.cx2 / 2, G.cy2 / 2);
         if (ct == null) return false;
         Nav.goTo(ct);
         catStalled(ct);
@@ -2299,7 +1715,7 @@ public final class Baby {
                 if (!G.onMap(t.x, t.y) || inLane(c, t)) continue;
                 if ((Sym.mem[G.idx(t)] & (Sym.WALL | Sym.DIRT)) != 0) continue;
                 int d = me.distanceSquaredTo(t) * 2 + (G.pickBit(me, t) ? 1 : 0);
-                if (d < bd || Cfg.SYM_TIE && d == bd && G.tieFirst(me, t, best)) { bd = d; best = t; }
+                if (d < bd || Cfg.SYM_TIE) { bd = d; best = t; }   // SYM_TIE: never true; the test stays for identical bytecode
             }
         if (best == null) return false;
         Nav.goTo(best);
@@ -2318,7 +1734,7 @@ public final class Baby {
 
     static MapLocation pickMine() {
         // A mine drops 20 cheese about every 12 rounds into its 9x9 square, however many rats wait there, so
-        // gatherers spread over the MINE_SPREAD nearest known mines on our half (cheesefarm: 4 mines, and every rat
+        // gatherers spread over the nearest known mines on our half (cheesefarm: 4 mines, and every rat
         // used to crowd the nearest). Order: distance from home, ties by the mirror-invariant offset.
         int n = 0;
         for (int i = 0; i < Comms.numMines && n < cand.length; i++) n = addCand(Comms.mines[i], n);
@@ -2326,9 +1742,9 @@ public final class Baby {
         if (n == 0) return null;
         int ours = 0;
         for (int i = 0; i < n; i++) if (homeHalf(cand[i])) { MapLocation t = cand[ours]; cand[ours++] = cand[i]; cand[i] = t; }
-        int m = ours > 0 && !(Cfg.MINE_ANY || Cfg.MINE_ANY_COOP && G.coop) ? ours : n;
+        int m = ours > 0 && !Cfg.MINE_ANY ? ours : n;   // MINE_ANY: always n; the test stays for identical bytecode
         long[] key = candKey;
-        boolean rr = Cfg.MINE_RR && rrSlot >= 0 && origin != null;
+        boolean rr = false;   // never true (MINE_RR is gone); kept for identical bytecode
         MapLocation kh = rr ? origin : home;
         for (int i = 0; i < m; i++) key[i] = mineKey(cand[i], kh);
         for (int i = 1; i < m; i++) {   // insertion sort of the first m by mineKey
@@ -2346,18 +1762,9 @@ public final class Baby {
             if (k > 0) m = k;
         }
         coopAtPick = G.coop;
-        if (Cfg.KMINE_SKIP > 0 && ours >= Cfg.KMINE_SKIP) {
-            // a king works its own mine: drop king-held mines from the pick, keeping the order (all held: keep all)
-            int k = 0;
-            for (int i = 0; i < m; i++) if (!kingHeld(cand[i])) cand[k++] = cand[i];
-            if (k > 0) m = k;
-        }
         minesAtPick = Comms.numMines;
-        if (Cfg.HOME_ALL_SYM) maskAtPick = Sym.mask;
-        if (Cfg.TRIP_HALF != 0) tripSigAtPick = Comms.tripSig;
         if (rr) return cand[rrSlot % m];
-        if (Cfg.MINE_BALANCE) return Cfg.IDLE_SHIFT ? cand[(slot % m + mineShift) % m] : cand[slot % m];
-        return cand[G.rand(Math.min(m, Cfg.MINE_SPREAD))];
+        return cand[(slot % m + mineShift) % m];
     }
 
     /** Cfg.LOAD_AT: a gatherer carrying raw cheese heads home once it holds at least the load, or late in the game. */
@@ -2374,22 +1781,6 @@ public final class Baby {
         return stuckHome;
     }
 
-    /** Cfg.ATK_DELIVER: an attacker carrying raw cheese at the threshold or more heads home with it. */
-    static boolean atkHome(int raw) {
-        return Cfg.ATK_DELIVER > 0 && role == ATTACK && raw >= Cfg.ATK_DELIVER;
-    }
-
-    /** Cfg.KMINE_SKIP: one of our kings stands within Chebyshev 4 of mine m. */
-    static boolean kingHeld(MapLocation m) {
-        for (int k = 0; k < Comms.numKings; k++) if (G.cheb(Comms.kings[k], m) <= 4) return true;
-        return false;
-    }
-
-    /** Cfg.MINE_EXPLORE: the rat with hash `slot` explores while it knows m mines on our half (extra exploring slots). */
-    static boolean explorer(int slot, int m, int extra) {
-        return slot % (m + extra) >= m;
-    }
-
     /** Distinct mines on our half that we know (the king's list and our own). */
     static int homeMineCount() {
         int n = 0;
@@ -2400,8 +1791,8 @@ public final class Baby {
         return ours;
     }
 
-    /** A per-rat hash (the scout pick, Cfg.MINE_BALANCE), and the team's known-mine count when mineTarget was picked. */
-    static int slot, minesAtPick, maskAtPick;
+    /** A per-rat hash (the scout and mine picks), and the team's known-mine count when mineTarget was picked. */
+    static int slot, minesAtPick;
 
     static final MapLocation[] cand = new MapLocation[40];
     static final long[] candKey = new long[40];
@@ -2429,7 +1820,7 @@ public final class Baby {
         MapLocation site = formSite();
         if (site == null) return false;
         int sd = G.me.distanceSquaredTo(site);
-        if (sd > Cfg.FORM_PULL_R2 && !(Cfg.FORM_MINE && nearestEnemy == null && minePull(sd, role, slot))) return false;
+        if (sd > Cfg.FORM_PULL_R2) return false;
         if (Cfg.FORM_JOIN > 0 && G.cheb(G.me, site) > 1 && nearerAllies(site) >= Cfg.FORM_JOIN) return false;
         RobotController rc = G.rc;
         if (G.me.equals(site)) {
@@ -2445,51 +1836,20 @@ public final class Baby {
             }
             // Cfg.FIX_FORM_PROMOTE: promote on the turn we step onto the centre
             if (Cfg.FIX_FORM_PROMOTE && G.me.equals(site) && rc.canBecomeRatKing()) { rc.becomeRatKing(); formed++; return true; }
-            // Cfg.RICH_FIX (a rich site: two or more kings): off the centre, go on the way we came in, onto a free
-            // tile of the 3x3 (holes drift to the joiners)
+            // (the RICH_FIX shift that stood here is gone; its ledger stays for identical bytecode)
             int cd0 = G.debt, cb0 = G.bc();   // ledger (K 9)
-            if (Cfg.RICH_FIX && G.fixOn(Comms.numKings) && !G.me.equals(site) && site.equals(fillSite) && fillHead != null)
-                shift(site, G.fan(G.me, fillHead));
             G.debt = cd0 + G.bc() - cb0 + 9;
             return true;
         }
         int cd1 = G.debt, cb1 = G.bc();   // ledger (K 11: 9, iload sh and ifne)
-        // Cfg.RICH_FIX: one tile out, step onto any free tile of the 3x3 rather than queue for the centre
+        // sh and was: never set or read now (RICH_FIX is gone); kept with the ledgers for identical bytecode
         MapLocation was = G.me;
-        boolean sh = Cfg.RICH_FIX && G.fixOn(Comms.numKings) && G.cheb(G.me, site) == 2 && shift(site, G.fan5(G.me, G.me.directionTo(site)));
+        boolean sh = false;
         G.debt = cd1 + G.bc() - cb1 + 11;
         if (!sh) Nav.goTo(site);
         int cd2 = G.debt, cb2 = G.bc();   // ledger (K 9)
-        if (Cfg.RICH_FIX && G.fixOn(Comms.numKings) && G.cheb(G.me, site) <= 1) { fillSite = site; fillHead = was.directionTo(G.me); }
         G.debt = cd2 + G.bc() - cb2 + 9;
         return true;
-    }
-
-    /** Cfg.RICH_FIX: the site we last walked into and the heading we entered its 3x3 with. */
-    static MapLocation fillSite;
-    static Direction fillHead;
-
-    /** Cfg.RICH_FIX: step to the first free tile of site's 3x3 (never its centre: that step is formKing's) among
-     *  dirs. Inside, dirs are the entry heading and its 45-degree neighbours, so every shift gains along the heading
-     *  and a rat shifts at most twice per site: no two rats trade tiles back and forth. */
-    static boolean shift(MapLocation site, Direction[] dirs) throws GameActionException {
-        RobotController rc = G.rc;
-        if (!rc.isMovementReady()) return false;
-        for (Direction d : dirs) {
-            MapLocation t = G.me.add(d);
-            if (G.cheb(t, site) > 1 || t.equals(site) || !rc.canMove(d)) continue;
-            if (rc.getDirection() != d && rc.canTurn(d)) { rc.turn(d); G.facing = d; }
-            if (!rc.canMove(d)) return false;
-            rc.move(d); G.me = rc.getLocation();
-            return true;
-        }
-        return false;
-    }
-
-    /** Cfg.FORM_MINE: a baby beyond FORM_PULL_R2 (d2 from the site) still joins within FORM_MINE_PULL_R2 when its
-     *  slot is drawn; attackers never. */
-    static boolean minePull(int d2, int role, int slot) {
-        return d2 <= Cfg.FORM_MINE_PULL_R2 && role != ATTACK && (slot >>> 3) % Cfg.FORM_MINE_SHARE == 0;
     }
 
     /** Allied babies in view strictly nearer the site than we are (no id tie-break: mirrored rats decide alike). */
@@ -2546,7 +1906,7 @@ public final class Baby {
         MapLocation best = null;
         int bs = 0;
         for (Message m : rc.readSqueaks(-1)) {
-            // Cfg.CASH_READ_LEFT: stop reading once the turn runs low (a ledgered budget read, as END_KING_CROWD's)
+            // Cfg.CASH_READ_LEFT: stop reading once the turn runs low (a ledgered budget read)
             if (Clock.getBytecodesLeft() < Cfg.CASH_READ_LEFT) break;
             int c = m.getBytes();
             if (Comms.sqType(c) != Comms.SQ_CASH || G.round - m.getRound() > 2) continue;
@@ -2644,22 +2004,13 @@ public final class Baby {
 
     /** l is closer to our king than to its mirror under the first live symmetry. */
     static boolean homeHalf(MapLocation l) {
-        if (Cfg.PATH_ORACLE) { int v = PathOracle.verdict(l, ref()); if (v != 0) return v > 0; }
-        if (Cfg.TRIP_HALF != 0) { int v = tripVerdict(l, Cfg.TRIP_HALF); if (v != 0) return v > 0; }
-        return Cfg.HOME_ALL_SYM ? nearerAll(l, ref(), Sym.mask) : nearer(l, ref(), firstSym());
-    }
-
-    /** Cfg.HOME_ALL_SYM: l is nearer h than h's twin under every symmetry in mask (the first live one if none is). */
-    static boolean nearerAll(MapLocation l, MapLocation h, int mask) {
-        if (mask == 0) return nearer(l, h, firstSym());
-        for (int s = Sym.ROT; s <= Sym.VER; s <<= 1) if ((mask & s) != 0 && !nearer(l, h, s)) return false;
-        return true;
+        return nearer(l, ref(), firstSym());
     }
 
     /** Whether l is nearer h than h's twin under symmetry s (ties count with Cfg.MINE_TIES). */
     static boolean nearer(MapLocation l, MapLocation h, int s) {
         int a = l.distanceSquaredTo(h), b = l.distanceSquaredTo(G.mirror(h, s));
-        return a < b || Cfg.MINE_TIES && a == b;
+        return a < b || a == b;
     }
 
     /** The king start squeaked to us (Comms.SQ_START), or null; sets rrSlot from its spawn-order field. */
@@ -2680,11 +2031,12 @@ public final class Baby {
         return new MapLocation(Comms.sqX(c), Comms.sqY(c));
     }
 
-    /** Cfg.MINE_RR: our place in our role's spawn order, squeaked by the king that spawned us (-1: not heard). */
+    /** Our place in our role's spawn order, squeaked by the king that spawned us (-1: not heard); read only by
+     *  pickMine's never-true rr pick. */
     static int rrSlot = -1;
 
-    /** Home for the half test and mirrors: our first king's start with Cfg.HOME_START once heard, else home. */
-    static MapLocation ref() { return (Cfg.HOME_START || Cfg.FORM_MINE) && origin != null ? origin : home; }
+    /** Home for the half test and mirrors. */
+    static MapLocation ref() { return home; }
 
     static int firstSym() {
         return (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
@@ -2703,7 +2055,6 @@ public final class Baby {
         if (G.cheb(G.me, raidTarget) <= 2) {
             if (raidSince < 0) raidSince = G.round;
             wanderAround(raidTarget);
-            if (Cfg.RAID_TRAPS > 0) mineTrap(raidTarget, Cfg.RAID_TRAPS);
         } else {
             Nav.goTo(raidTarget);
         }
@@ -2755,44 +2106,6 @@ public final class Baby {
         return false;
     }
 
-    /** Cfg.TRIP_HALF: this rat reached mine m in round r; a walk under way is timed, and kept for a king when the mine
-     *  is listed and the walk beats the one kept for it. */
-    static void tripArrive(MapLocation m, int r) {
-        if (tripFrom <= 0) return;
-        int t = r - tripFrom;
-        tripFrom = 0;
-        for (int k = 0; k < Comms.numMines; k++) {
-            if (Comms.mines[k].x != m.x || Comms.mines[k].y != m.y) continue;
-            if (Comms.trip[k] == 0 || 4 * Comms.trip[k] > t) { tripKey = m.x * 64 + m.y; tripT = t; }
-            return;
-        }
-    }
-
-    /** Cfg.TRIP_HALF: +1 when listed mine l is ours by timed walks (margin steps), -1 theirs, 0 without a verdict. */
-    static int tripVerdict(MapLocation l, int margin) {
-        MapLocation t = G.mirror(l, firstSym());
-        if (t.x == l.x && t.y == l.y) return 0;
-        int a = -1, b = -1;
-        for (int k = 0; k < Comms.numMines; k++) {
-            MapLocation m = Comms.mines[k];
-            if (m.x == l.x && m.y == l.y) a = Comms.trip[k];
-            else if (m.x == t.x && m.y == t.y) b = Comms.trip[k];
-        }
-        MapLocation r = ref();
-        return tripSide(a, b, G.cheb(l, r), G.cheb(t, r), margin);
-    }
-
-    /** Walks a to a mine and b to its twin (steps / 4; 0 not timed, -1 not listed) and their Chebyshev distances ca,
-     *  cb from our start (the least walk): +1 ours when its walk beats the twin's by margin, -1 when it trails by
-     *  margin and the twin is listed (so rats can go and time it), else 0. Untimed walks count at their least. */
-    static int tripSide(int a, int b, int ca, int cb, int margin) {
-        if (a < 0 || a == 0 && b <= 0) return 0;
-        int wa = a > 0 ? 4 * a : ca, wb = b > 0 ? 4 * b : cb;
-        if (wa + margin <= wb) return 1;
-        if (b >= 0 && wb + margin <= wa) return -1;
-        return 0;
-    }
-
     /** Cfg.BREAKOUT_TTL is on and this rat is breaking out. */
     static boolean breakingOut() { return Cfg.BREAKOUT_TTL > 0 && G.round < breakoutUntil; }
 
@@ -2814,7 +2127,7 @@ public final class Baby {
         return true;
     }
 
-    /** Cfg.SCOUT_PIPE: the scout's walk (tile indices, walk[wpos] where it stands), the Flow.done last taken into it,
+    /** The scout's walk (tile indices, walk[wpos] where it stands), the Flow.done last taken into it,
      *  and the turns a robot has held its next tile. */
     static int[] walk = new int[256];
     static int wlen, wpos, pipeDone, pipeHeld;
@@ -2823,7 +2136,7 @@ public final class Baby {
     /** Cfg.PIPE_WAIT: turns held at the walk's end for the search so far, and the round the pipe rests until. */
     static int pipeWait, pipeRestUntil;
 
-    /** Cfg.SCOUT_PIPE scout movement: walk the frontier paths found so far, each finished one (grown from the walk's
+    /** Scout movement: walk the frontier paths found so far, each finished one (grown from the walk's
      *  end) appended, a search running from the end while PIPE_AHEAD or fewer steps are left. False with no walk left
      *  and no search running (the last found nothing unseen). */
     static boolean pipeFrontier() throws GameActionException {
@@ -2860,7 +2173,7 @@ public final class Baby {
         if (nxi >= 0 && nxi < wlen) {
             int nx = walk[nxi], m = Sym.mem[nx];
             MapLocation n = new MapLocation(nx % W, nx / W);
-            if ((m & Sym.WALL) != 0 || Cfg.MOAT && (m & Sym.DIRT) != 0 && Moat.keep(n)) { wlen = wpos = 0; nxi = -1; }
+            if ((m & Sym.WALL) != 0 || Cfg.MOAT) { wlen = wpos = 0; nxi = -1; }   // MOAT: never true; the test stays for identical bytecode
             else if ((m & Sym.DIRT) != 0) {
                 if (G.globalCheese + G.rawCheese >= 5 && rc.isActionReady()) {
                     Direction d = G.me.directionTo(n);
@@ -2883,11 +2196,9 @@ public final class Baby {
                     else {
                         // Cfg.PIPE_HELD: the next searches go around the held tile a while (km34: two scouts held each
                         // other's next tile, re-found the same paths and stood r204-300 on cheesebottles B)
-                        if (Cfg.PIPE_HELD > 0) {
-                            if (pipeHeldAt >= 0) Sym.mem[pipeHeldAt] &= ~Sym.HELD;
-                            Sym.mem[nx] |= Sym.HELD;
-                            pipeHeldAt = nx; pipeHeldUntil = G.round + Cfg.PIPE_HELD;
-                        }
+                        if (pipeHeldAt >= 0) Sym.mem[pipeHeldAt] &= ~Sym.HELD;
+                        Sym.mem[nx] |= Sym.HELD;
+                        pipeHeldAt = nx; pipeHeldUntil = G.round + Cfg.PIPE_HELD;
                         wlen = wpos = 0; nxi = -1;
                     }
                 }
@@ -2921,18 +2232,7 @@ public final class Baby {
     /** Cfg.SCOUT_FAN: sectors in fan order (Flow.fanOk's 0 ahead, 1 left, -1 right), the scouts' turns through them
      *  (each starts at its slot's), and the last failed frontier search a turn was taken for. */
     static final int[] FAN = {0, 1, -1};
-    /** Cfg.FAN_WAY_PCT: the scout's first stop (fanWaypoint) and whether it got there or gave up. */
-    static MapLocation fanWay;
-    static boolean fanWayDone;
 
-    /** Cfg.FAN_WAY_PCT: home h plus FAN_WAY_PCT% of the home-to-enemy axis, turned FAN_WAY_DEG toward sector sec
-     *  (1: counter-clockwise, the side Flow.fanOk's cross product is positive), clamped to the map. */
-    static MapLocation fanWaypoint(MapLocation h, MapLocation e, int sec) {
-        double ax = e.x - h.x, ay = e.y - h.y, r = Math.toRadians(sec * Cfg.FAN_WAY_DEG), c = Math.cos(r), s = Math.sin(r);
-        int x = h.x + (int) Math.round((ax * c - ay * s) * Cfg.FAN_WAY_PCT / 100);
-        int y = h.y + (int) Math.round((ax * s + ay * c) * Cfg.FAN_WAY_PCT / 100);
-        return new MapLocation(Math.max(0, Math.min(G.W - 1, x)), Math.max(0, Math.min(G.H - 1, y)));
-    }
     static int fanStep, fanFailSeen = -1000;
     /** Cfg.SCOUT_FAN: the scout's place among the king's scouts (from rrSlot), -1 when not heard (the slot decides). */
     static int fanBase = -1;
@@ -2947,27 +2247,18 @@ public final class Baby {
      *  on to the next sector, and false this turn. */
     static boolean fanFrontier() throws GameActionException {
         MapLocation h = ref();
-        // xf1 (FAN_WAY_PCT): first walk to a point of the sector, then search. A frontier search that must end in a far
-        // sector expands most of the map: clockwisdom A's north scout waited 20-31 turns a search (xfan4 fl=)
-        if (Cfg.FAN_WAY_PCT > 0 && !fanWayDone) {
-            if (fanWay == null) fanWay = fanWaypoint(h, G.mirror(h, firstSym()), fanSec());
-            if (G.cheb(G.me, fanWay) <= 2 || Nav.target != null && Nav.target.equals(fanWay) && Nav.stall > Cfg.FAN_WAY_STALL) fanWayDone = true;
-            else { Nav.goTo(fanWay); why = 'S'; return true; }
-        }
         Flow.fanFrame(h, G.mirror(h, firstSym()));
         Flow.fanReq = fanSec();
-        boolean ok = Cfg.SCOUT_PIPE ? pipeFrontier() : exploreFrontier();
+        boolean ok = pipeFrontier();
         Flow.fanReq = Flow.NOFAN;
         if (!ok && Flow.frontierFail > fanFailSeen) { fanFailSeen = Flow.frontierFail; fanStep++; Flow.frontierFail = -1000; }
         return ok;
     }
 
     static void explore() throws GameActionException {
-        if (Cfg.BREAKOUT_TTL > 0) {
-            if (exploreTarget != null && Flow.failTgt != null && G.cheb(Flow.failTgt, exploreTarget) <= 1
-                    && G.round - Flow.failRound < Cfg.FLOW_RETRY) breakoutUntil = G.round + Cfg.BREAKOUT_TTL;
-            if (breakingOut() && exploreFrontier()) return;
-        }
+        if (exploreTarget != null && Flow.failTgt != null && G.cheb(Flow.failTgt, exploreTarget) <= 1
+                && G.round - Flow.failRound < Cfg.FLOW_RETRY) breakoutUntil = G.round + Cfg.BREAKOUT_TTL;
+        if (breakingOut() && exploreFrontier()) return;
         if (exploreTarget == null || G.cheb(G.me, exploreTarget) <= 2 || Nav.stall > 20) {
             // target in our side frame: mirrored rats pick mirrored targets. Take the nearest never-seen
             // sample: once open ground is mapped, what is left unseen is buried in dirt, and Flow digs to it.
@@ -2979,8 +2270,7 @@ public final class Baby {
             for (int k = 0; k < Cfg.EXPLORE_TRIES; k++) {
                 int ax = G.rand(G.W), ay = G.rand(G.H);
                 int cx = fu > 0 ? ax : G.W - 1 - ax, cy = fv > 0 ? ay : G.H - 1 - ay;
-                int d = Sym.known(G.idx(cx, cy)) ? 1 << 20 : Cfg.SYM_CENTRE && centre ? G.centreCheb2(cx, cy)
-                    : Math.max(Math.abs(cx - ox), Math.abs(cy - oy));
+                int d = Sym.known(G.idx(cx, cy)) ? 1 << 20 : Math.max(Math.abs(cx - ox), Math.abs(cy - oy));
                 if (d < bd) { bd = d; x = cx; y = cy; }
             }
             exploreTarget = new MapLocation(x, y);
@@ -2997,7 +2287,6 @@ public final class Baby {
         if (!scout || role != GATHER) return false;
         int until = scoutUntil(Cfg.SCOUT_AREA);
         if (G.round < until) return true;
-        if (Cfg.SWEEP > 0 && G.round < Cfg.SWEEP_UNTIL && !sweepDone) return true;
         if (!moreScouting(Cfg.SCOUT_MINES, G.round)) return false;
         int h = homeMineCount();
         if (scoutMines < 0) { scoutMines = h; scoutFound = until; }
@@ -3020,14 +2309,14 @@ public final class Baby {
     /** Scout movement: the never-seen tile of our half that Cfg.HOME_PICK takes from EXPLORE_TRIES samples; false
      *  (no move) when no sample is one. */
     static boolean exploreHome() throws GameActionException {
-        if (Cfg.SWEEP > 0) return sweep(Cfg.SWEEP, 0);
         if (exploreTarget == null || G.cheb(G.me, exploreTarget) <= 2 || Nav.stall > 20 || Sym.known(G.idx(exploreTarget.x, exploreTarget.y))) {
             int x = -1, y = -1, bd = Integer.MAX_VALUE;
             for (int k = 0; k < Cfg.EXPLORE_TRIES; k++) {
                 int ax = G.rand(G.W), ay = G.rand(G.H);
                 int cx = fu > 0 ? ax : G.W - 1 - ax, cy = fv > 0 ? ay : G.H - 1 - ay;
                 if (Sym.known(G.idx(cx, cy)) || !homeHalf(new MapLocation(cx, cy))) continue;
-                if (Cfg.SCOUT_FAN > 0 && scout && !Flow.fanOk(cx, cy, fanSec())) continue;
+                if (scout && !Flow.fanOk(cx, cy, fanSec())) continue;
+
                 int d = homeRank(Cfg.HOME_PICK, Math.max(Math.abs(cx - G.me.x), Math.abs(cy - G.me.y)));
                 if (d < bd) { bd = d; x = cx; y = cy; }
                 if (Cfg.HOME_PICK == 1) break;
@@ -3039,76 +2328,6 @@ public final class Baby {
         return true;
     }
 
-    /** Cfg.SWEEP: the cell being swept plus 1 (0 none), the round it is banned if still unseen, banned cells (lazy),
-     *  and whether no cell of our half is left. A pick scans the cells over as many turns as the bytecodes need
-     *  (sweepScan: the next cell plus 1, 0 = no scan under way; best score and cell so far; the scan's origin). */
-    static int sweepCell, sweepBy, sweepScan, sweepBest, sweepBi, sweepOx, sweepOy;
-    static boolean[] sweepBan;
-    static boolean sweepDone;
-
-    /** Cfg.SWEEP scout movement: toward the centre of the unseen, unbanned cell (c x c, in the side frame) of our half
-     *  that minimises the walk there plus its distance on to the lane anchor; false (sweepDone) once there is none.
-     *  cap > 0 (tests): scan at most cap cells a call; 0: scan while Cfg.SWEEP_LEFT bytecodes are left. */
-    static boolean sweep(int c, int cap) throws GameActionException {
-        int w = G.W, h = G.H, gw = (w + c - 1) / c, gh = (h + c - 1) / c, n = gw * gh;
-        if (sweepBan == null || sweepBan.length != n) sweepBan = new boolean[n];
-        if (sweepCell > 0 && (exploreTarget == null || Sym.known(G.idx(exploreTarget.x, exploreTarget.y)))) sweepCell = 0;
-        else if (sweepCell > 0 && (Nav.stall > 20 || G.round > sweepBy)) { sweepBan[sweepCell - 1] = true; sweepCell = 0; }
-        if (sweepCell == 0) {
-            if (sweepScan == 0) {
-                sweepScan = 1; sweepBest = Integer.MAX_VALUE; sweepBi = -1;
-                sweepOx = fu > 0 ? G.me.x : w - 1 - G.me.x; sweepOy = fv > 0 ? G.me.y : h - 1 - G.me.y;
-            }
-            int lane = sweepLane(slot);
-            int ax = sweepAnchor(lane, w, true), ay = sweepAnchor(lane, h, false);
-            // the half test hoisted out of the loop when it is the plain nearer-our-start one
-            boolean plain = !Cfg.PATH_ORACLE && Cfg.TRIP_HALF == 0 && !Cfg.HOME_ALL_SYM;
-            MapLocation rf = ref(), tw = G.mirror(rf, firstSym());
-            int k = sweepScan - 1, end = cap > 0 ? Math.min(n, k + cap) : n;
-            for (; k < end; k++) {
-                if (cap == 0 && Clock.getBytecodesLeft() < Cfg.SWEEP_LEFT) break;
-                int j = k / gw, i = k - j * gw;
-                int fx = Math.min(w - 1, i * c + c / 2), fy = Math.min(h - 1, j * c + c / 2);
-                int sc = sweepScore(fx, fy, sweepOx, sweepOy, ax, ay);
-                if (sc >= sweepBest || sweepBan[k]) continue;
-                int x = fu > 0 ? fx : w - 1 - fx, y = fv > 0 ? fy : h - 1 - fy;
-                if (Sym.known(G.idx(x, y))) continue;
-                if (plain) {
-                    int da = (x - rf.x) * (x - rf.x) + (y - rf.y) * (y - rf.y), db = (x - tw.x) * (x - tw.x) + (y - tw.y) * (y - tw.y);
-                    if (!(da < db || Cfg.MINE_TIES && da == db)) continue;
-                } else if (!homeHalf(new MapLocation(x, y))) continue;
-                sweepBest = sc; sweepBi = k;
-            }
-            if (k < n) { sweepScan = k + 1; return true; } // the scan goes on next turn
-            sweepScan = 0;
-            if (sweepBi < 0) { sweepDone = true; return false; }
-            int j = sweepBi / gw, i = sweepBi - j * gw;
-            int fx = Math.min(w - 1, i * c + c / 2), fy = Math.min(h - 1, j * c + c / 2);
-            sweepCell = sweepBi + 1;
-            exploreTarget = new MapLocation(fu > 0 ? fx : w - 1 - fx, fv > 0 ? fy : h - 1 - fy);
-            sweepBy = G.round + 2 * G.cheb(G.me, exploreTarget) + 20;
-        }
-        Nav.goTo(exploreTarget);
-        return true;
-    }
-
-    /** Cfg.SWEEP: a scout's lane from its (mirror-invariant) slot: 0 the map centre, 1-4 the corners. */
-    static int sweepLane(int slot) { return (slot >>> 10) % 5; }
-
-    /** Cfg.SWEEP: lane's anchor coordinate along a side of length n, in the side frame (our king near (n-1, n-1)):
-     *  lane 0 the centre, 1 (n-1, 0), 2 (0, n-1), 3 (n-1, n-1), 4 (0, 0). */
-    static int sweepAnchor(int lane, int n, boolean x) {
-        if (lane == 0) return (n - 1) / 2;
-        return (x ? lane == 1 || lane == 3 : lane == 2 || lane == 3) ? n - 1 : 0;
-    }
-
-    /** Cfg.SWEEP: a cell centre's rank (lower first): Chebyshev from the rat plus on to the anchor, then nearer the
-     *  rat, all in the frame. */
-    static int sweepScore(int fx, int fy, int mx, int my, int ax, int ay) {
-        int d = Math.max(Math.abs(fx - mx), Math.abs(fy - my));
-        return (d + Math.max(Math.abs(fx - ax), Math.abs(fy - ay))) * 64 + d;
-    }
-
     /** Mine seeking (Cfg.SEEK_CROWD) runs until round seekUntil and may start again from seekNext; seekMines is
      *  myMineCount when it started. */
     static int seekUntil, seekNext, seekMines;
@@ -3116,7 +2335,7 @@ public final class Baby {
     static boolean seekNews;
 
     /** Cfg.SEEK_IDLE: turns spent near the mine since the last pickup (idlePicked: Baby.picked then); mineShift is
-     *  Cfg.IDLE_SHIFT's offset into the pick list. */
+     *  the offset into the pick list. */
     static int idleTurns, idlePicked, mineShift;
 
     /** Cfg.SEEK_IDLE: count a turn within SEEK_IDLE_R of the mine with no pickup since the last; true (and the count
@@ -3159,15 +2378,14 @@ public final class Baby {
                 if (k != null && unreported() >= 0) { seekNews = true; Nav.goTo(k); return true; }
                 if (seekNews || k == null) { mineTarget = null; seekUntil = 0; return false; }
                 seekMines = myMineCount;   // only mines the king lists, no news: seek on
-                if (Cfg.SEEK_FRONTIER && exploreFrontier()) return true;
                 if (exploreHome()) return true;
                 seekUntil = 0;
                 return false;
             }
             if (k != null && unreported() >= 0) { Nav.goTo(k); return true; }
             mineTarget = null;
-        } else if (Cfg.SEEK_FRONTIER && exploreFrontier()) return true;
-        else if (exploreHome()) return true;
+        } else if (exploreHome()) return true;
+
         seekUntil = 0;
         return false;
     }

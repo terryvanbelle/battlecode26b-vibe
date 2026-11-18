@@ -3,7 +3,7 @@ package ratbot;
 import battlecode.common.*;
 
 /**
- * Cfg.KING_PATH: the king's walk to a home mine over its 3x3 body. A centre is blocked when a wall the king has seen
+ * The king's walk to a home mine over its 3x3 body. A centre is blocked when a wall the king has seen
  * lies within Chebyshev 1 of it or its 3x3 leaves the map (unseen tiles and dirt count as open). A reverse search
  * (Dial buckets on f = g + Chebyshev to the king, LIFO within a bucket) grows from every seat (a centre within
  * Chebyshev 1 of a home-half mine no other king holds) at once and stops when it reaches the king, so g is the
@@ -36,9 +36,6 @@ public final class KPath {
     static boolean low;
     static int lastScan = -1;
     public static int searches, fails, steps, digs;
-    public static boolean unlimited;
-    /** With unlimited (tests): the bytecodes left that left() reports. */
-    public static int fakeLeft = Integer.MAX_VALUE;
 
     static int left() { return Clock.getBytecodesLeft(); }
 
@@ -197,10 +194,9 @@ public final class KPath {
      *  start). */
     static void failed() {
         failRound = G.round;
-        if (Cfg.KP_FRONT_LOW >= 0 && Cfg.KP_FRONT_LOW < Cfg.KP_FRONT) {
-            low = !low;
-            if (low) minesAt = -1;
-        }
+        low = !low;
+        if (low) minesAt = -1;
+
     }
 
     /** Steps left from centre c to a seat by the current search, or -1 when c is off it. */
@@ -282,7 +278,7 @@ public final class KPath {
             return true;
         }
         // blocked: dig the dirt of the best step when that is all that stops it
-        if (Cfg.KING_DIG && rc.isActionReady() && rc.getGlobalCheese() >= Cfg.KING_DIG_MIN) {
+        if (rc.isActionReady() && rc.getGlobalCheese() >= Cfg.KING_DIG_MIN) {
             MapLocation t = c.add(ds[0]);
             MapLocation d = King.digTile(c, t);
             if (d != null && rc.canRemoveDirt(d)) {

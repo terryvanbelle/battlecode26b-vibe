@@ -3,7 +3,7 @@ package ratbot;
 import battlecode.common.*;
 
 /**
- * Cat lanes (Cfg.CAT_LAY): the tiles cats have walked, one map row at a time (a row is allocated on its first mark).
+ * Cat lanes: the tiles cats have walked, one map row at a time (a row is allocated on its first mark).
  * A cat walks a fixed waypoint loop by BFS, so a tile it covers on two passes at least Cfg.CAT_LAY_GAP rounds apart
  * is on its lap and it will come back. Each entry: (round + 1) the tile was last under a cat, plus LANE once two
  * passes were seen.

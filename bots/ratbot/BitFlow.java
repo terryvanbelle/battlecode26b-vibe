@@ -3,7 +3,7 @@ package ratbot;
 import battlecode.common.*;
 
 /**
- * Cfg.BFLOW: navigation down a distance field grown from the target one wave at a time over row bitboards (one long
+ * Navigation (a rusher with Baby.bfOn) down a distance field grown from the target one wave at a time over row bitboards (one long
  * per map row, bit x = column x; maps are at most 60 wide). A wave dilates the last wave's tiles one step in all eight
  * directions and keeps what is neither a known wall nor already reached; a dirt tile settles DIG_COST - 1 waves after
  * it is reached (its dig), so a tile's wave is its path cost to the target. Each wave's tiles are kept, so a rat finds
@@ -38,7 +38,7 @@ public final class BitFlow {
     /** The rat's tile when its wave was last found, that wave, and the wave at which the field first covered it. */
     static int meIdx = -1, meD = -1, meAt = -1;
     public static int held, builds, steps, fails, restarts;
-    /** Cfg.BF_MOMENTUM: the direction of this rat's last step down a field toward the current target (null: none since
+    /** The direction of this rat's last step down a field toward the current target (null: none since
      *  the errand began); a restart (a wall seen since the waves passed) keeps it for Nav.momentum. */
     static Direction heading;
 
@@ -300,7 +300,8 @@ public final class BitFlow {
         if ((mem[ni] & Sym.DIRT) != 0) {
             if (G.globalCheese + G.rawCheese < 5 || !rc.isActionReady()) return true;
             if (rc.getDirection() != best && rc.canTurn(best)) { rc.turn(best); G.facing = best; }
-            if (!(Cfg.MOAT && Moat.keep(n)) && rc.canRemoveDirt(n)) {
+            if (rc.canRemoveDirt(n)) {
+
                 rc.removeDirt(n);
                 Nav.digs++;
                 mem[ni] &= ~Sym.DIRT;

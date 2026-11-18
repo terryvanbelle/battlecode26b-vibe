@@ -3,7 +3,7 @@ package ratbot;
 import battlecode.common.*;
 
 /**
- * Cfg.GRAB_MICRO: grab-aware movement for the rat war. A rat grabs an adjacent enemy it can see (it faces it) when
+ * Grab-aware movement for the rat war. A rat grabs an adjacent enemy it can see (it faces it) when
  * that enemy cannot see the grabber (the grabber stands in its blind spot) or is weaker. Field replays (3934-3937)
  * showed our rats ending turns where enemies could step into their blind spots: with 0, 1, 2 and 3+ such enemies
  * 0.1%, 6-20%, 8-32% and 14-65% of them were grabbed before their next turn, while one-step grabs went unused.
@@ -71,8 +71,6 @@ public final class GrabMicro {
 
     static int b(int ox, int oy) { return (ox + 3) + 8 * (oy + 3); }
 
-    static long bit(int ox, int oy) { return 1L << b(ox, oy); }
-
     static long shift(long m, int ox, int oy) {
         int s = ox + 8 * oy;
         return s >= 0 ? m << s : m >>> -s;
@@ -87,23 +85,8 @@ public final class GrabMicro {
         return (int) (m >>> s & 7) | (int) (m >>> (s + 8) & 7) << 3 | (int) (m >>> (s + 16) & 7) << 6;
     }
 
-    /** The three tiles next to our tile that facing f (G.DIRS index) sees: ahead and the two front diagonals. */
-    static long vis(int f) {
-        int l = (f + 7) & 7, r = (f + 1) & 7;
-        return bit(DX[f], DY[f]) | bit(DX[l], DY[l]) | bit(DX[r], DY[r]);
-    }
-
-    /** Whether a rat at offset (x, y) facing f (G.DIRS index, -1 for none) sees offset (tx, ty): the engine's
-     *  90-degree cone of radius squared 20 (Baby.sees). */
-    static boolean sees(int x, int y, int f, int tx, int ty) {
-        int dx = tx - x, dy = ty - y;
-        if (f < 0) return true;
-        int fx = DX[f], fy = DY[f];
-        return dx * dx + dy * dy <= 20 && dx * fx + dy * fy >= Math.abs(dx * fy - dy * fx);
-    }
-
     /** Mirror-invariant tie key of offset (dx, dy) seen from a tile whose doubled centre offset is (px, py): the cross
-     *  product signed by the side chirality, then the dot product (G.tieFirst's order). Larger ranks first. */
+     *  product signed by the side chirality, then the dot product (SYM_TIE's order). Larger ranks first. */
     static int key(int px, int py, int chir, int dx, int dy) {
         return (px * dy - py * dx) * chir * 4096 + px * dx + py * dy;
     }
@@ -272,8 +255,8 @@ public final class GrabMicro {
         // no enemy within Chebyshev 2: nothing can be grabbed and staying is safe (skip the cost; the steps toward
         // a Chebyshev-3 enemy keep the normal move)
         if (minC > 2) {
-            // Cfg.GM_GAP (xf5): a step to Chebyshev 2 of a healthier free-handed enemy gives it the first grab
-            if (Cfg.GM_GAP && minC == 3 && rc.isMovementReady()) {
+            // xf5: a step to Chebyshev 2 of a healthier free-handed enemy gives it the first grab
+            if (minC == 3 && rc.isMovementReady()) {
                 int hp = rc.getHealth();
                 for (int j = 0; j < m; j++) {
                     RobotInfo r = cr[j];
