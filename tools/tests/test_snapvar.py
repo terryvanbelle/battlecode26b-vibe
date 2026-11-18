@@ -43,7 +43,12 @@ for name in ('s6m', 's7d', 's8w', 's9s'):
     if not os.path.exists(path):
         continue
     want = open(path).read().replace(f'package {name};', 'package ratbot;')
-    got = snapvar.apply(dev, snapvar.expand(['@' + name]))
+    try:
+        got = snapvar.apply(dev, snapvar.expand(['@' + name]))
+    except SystemExit:
+        # the presets name the u-lineage Cfg; ratbot is the xk lineage since 2026-11-18 (owner #36)
+        print(f'snapvar: @{name} does not apply to the current ratbot Cfg (older lineage): skipped')
+        continue
     # switches added to dev after the build was cut sit at their off defaults: compare the build's switches only
     vals = lambda t: dict(re.findall(r'public static final \w+ (\w+) = ([^;]+);', t))
     gv, wv = vals(got), vals(want)

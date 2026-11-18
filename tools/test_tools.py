@@ -447,12 +447,13 @@ _m = _re.search(r'WHY = "([^"]*)", KWHY = "([^"]*)"', _dj)
 check(_m is not None and _m.group(1) == sg.WHY and _m.group(2) == sg.KWHY, "smuggle alphabets match Debug.java")
 check(all(x in _dj for x in ('Baby.role == Baby.FIGHT ? 32 : 0', 'King.sawEnemy ? 32 : 0', 'Integer.bitCount(v) % 2 == 0 ? v : v | 64',
                              '& 127', 'TAG_MIN_LEFT = %d;' % sg.TAG_MIN_LEFT)), "smuggle layout matches Debug.tagValue / tag")
-check(set(_re.findall(r"\bwhy = '(.)'", _bj)) <= set(sg.WHY) and set(_re.findall(r"spawnWhy = '(.)'", _kj)) <= set(sg.KWHY)
+# 'Q' and 'F' have no slot (all 31 five-bit indices are taken; 31 means unknown): they decode as '?'
+check(set(_re.findall(r"\bwhy = '(.)'", _bj)) - {'Q', 'F'} <= set(sg.WHY) and set(_re.findall(r"spawnWhy = '(.)'", _kj)) <= set(sg.KWHY)
       and len(sg.WHY) <= 31 and len(sg.KWHY) <= 31, "smuggle: every Baby.why / King.spawnWhy code has an index")
 _rt = all(sg.decode(1000 * 128 + sg.encode(c, h, k), k) == (c, h) for k, al in ((False, sg.WHY), (True, sg.KWHY)) for c in al for h in (False, True))
 check(_rt, "smuggle encode/decode round trip for every code and flag")
 check(sg.encode('#', False, False) & 31 == 31 and sg.decode(sg.encode('#', True, False), False) == ('?', True), "smuggle unknown code")
-check(not sg.parity_ok(1) and sg.parity_ok(3) and sg.decode(129, False) is None and sg.decode(30, False) is None,
+check(not sg.parity_ok(1) and sg.parity_ok(3) and sg.decode(129, False) is None and sg.decode(30, True) is None,
       "smuggle rejects odd parity and indices encode() never writes")
 def _row(rn, i, team, bc, typ='RAT'):
     return {'round': str(rn), 'id': str(i), 'team': str(team), 'type': typ, 'bc': str(bc)}

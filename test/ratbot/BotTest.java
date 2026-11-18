@@ -33,6 +33,15 @@ public class BotTest {
     static List<MapLocation> bitten = new ArrayList<>();
     static Direction thrown;
     static RobotInfo carrying;
+    /** This rat is being carried / thrown (TrapRisk's grounded test). */
+    static boolean beingCarried, beingThrown;
+    /** Squeaks readable by round (readSqueaks(r): round r's; readSqueaks(-1): all). */
+    static Map<Integer, List<Message>> heard = new HashMap<>();
+    /** Rounds readSqueaks(r) was asked for. */
+    static List<Integer> heardAsked = new ArrayList<>();
+    static List<MapLocation> pickedUp = new ArrayList<>();
+    /** canCarryRat's answer when everything else allows it (false: the target turned to face us). */
+    static boolean carryOk = true;
 
     static boolean onMap(MapLocation l) { return l.x >= 0 && l.y >= 0 && l.x < W && l.y < H; }
 
@@ -52,13 +61,14 @@ public class BotTest {
     static void reset() {
         canPromote = promoted = false;
         walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null; carrying = null;
+        beingCarried = beingThrown = false; carryOk = true; heard.clear(); heardAsked.clear(); pickedUp.clear();
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = moveExtra = 0; type = UnitType.BABY_RAT; digsDone = 0; dirtStock = 0; ratCost = 10; built.clear();
-        Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0; Sym.listDone = 0;
+        Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0;
         Nav.target = null; Nav.bugging = false; Nav.avoid = 0; Nav.stall = 0; Nav.digs = 0; Nav.kingMarkN = 0;
         Flow.building = false; Flow.tgt = null; Flow.builtRound = -1; Flow.g = null; Flow.bucket = null; Flow.failTgt = null; Flow.lastTgt = null;
-        Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE; Flow.held1 = 0;
-        Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST; Flow.unseen = Cfg.FLOW_UNSEEN; King.faceSpawn = Cfg.SYM_FACE;
+        Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE; Flow.held = 0;
+        Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST; King.faceSpawn = Cfg.SYM_FACE;
         Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false; King.laneN = 0; King.lane0 = 0;
         Nav.swapHold = Cfg.SWAP_HOLD; Nav.swapFrom = null; Nav.swaps = 0; Baby.nearestEnemy = null;
     }
@@ -78,7 +88,7 @@ public class BotTest {
                     case "getCarrying": return carrying;
                     case "canCarryRat": {
                         MapLocation l = (MapLocation) a[0];
-                        return actCd < 10 && carrying == null && sensable(l) && me.distanceSquaredTo(l) <= 2 && robots.containsKey(l);
+                        return carryOk && actCd < 10 && carrying == null && sensable(l) && me.distanceSquaredTo(l) <= 2 && robots.containsKey(l);
                     }
                     case "carryRat": carrying = robots.remove((MapLocation) a[0]); actCd += 20; return null;
                     case "canDropRat": { MapLocation t = me.add((Direction) a[0]); return actCd < 10 && carrying != null && passable(t) && !robots.containsKey(t); }
@@ -138,7 +148,7 @@ public class BotTest {
                             for (int y = me.y - 5; y <= me.y + 5; y++) {
                                 MapLocation l = new MapLocation(x, y);
                                 if (!sensable(l) || me.distanceSquaredTo(l) > vr) continue;
-                                out.add(new MapInfo(l, passable(l), null, walls.contains(l), dirt.contains(l), 0, TrapType.NONE, false));
+                                out.add(new MapInfo(l, passable(l), null, walls.contains(l), dirt.contains(l), cheeseAt.getOrDefault(l, 0), TrapType.NONE, false));
                             }
                         return out.toArray(new MapInfo[0]);
                     }
@@ -159,7 +169,19 @@ public class BotTest {
                     case "throwRat": thrown = facing; actCd += 20; return null;
                     case "attack": bitten.add((MapLocation) a[0]); actCd += 10; return null;
                     case "squeak": squeaks.add((Integer) a[0]); return true;
-                    case "readSqueaks": return new Message[0];
+                    case "readSqueaks": {
+                        int r = (Integer) a[0];
+                        heardAsked.add(r);
+                        List<Message> out = new ArrayList<>();
+                        if (r == -1) for (List<Message> l : heard.values()) out.addAll(l);
+                        else out.addAll(heard.getOrDefault(r, List.of()));
+                        return out.toArray(new Message[0]);
+                    }
+                    case "getNumberCatTraps": case "getNumberRatTraps": return 0;
+                    case "isBeingCarried": return beingCarried;
+                    case "isBeingThrown": return beingThrown;
+                    case "canPickUpCheese": { MapLocation l = (MapLocation) a[0]; return cheeseAt.getOrDefault(l, 0) > 0; }
+                    case "pickUpCheese": { MapLocation l = (MapLocation) a[0]; global += cheeseAt.remove(l); pickedUp.add(l); return null; }
                     case "getCurrentRatCost": return ratCost;
                     case "canBuildRat": { MapLocation t = (MapLocation) a[0]; return actCd < 10 && passable(t) && !robots.containsKey(t) && global >= ratCost; }
                     case "buildRat": built.add((MapLocation) a[0]); global -= ratCost; actCd += 10; return null;
@@ -173,10 +195,20 @@ public class BotTest {
             });
     }
 
+    /** The fake bytecode clock: Clock.getBytecodesLeft() reads RobotMonitor's private static bytecodesLeft (0 outside
+     *  the engine), so tests set it (and bytecodeLimit, which getBytecodeNum subtracts from). Nothing spends it. */
+    static void clock(int left) {
+        try {
+            Class<?> c = Class.forName("battlecode.instrumenter.inject.RobotMonitor");
+            java.lang.reflect.Field f = c.getDeclaredField("bytecodesLeft"); f.setAccessible(true); f.setInt(null, left);
+            f = c.getDeclaredField("bytecodeLimit"); f.setAccessible(true); f.setInt(null, 1 << 30);
+        } catch (ReflectiveOperationException e) { throw new RuntimeException(e); }
+    }
+
     static void install() {
         G.init(fakeRc());
         Sym.init();
-        Flow.unlimited = true;
+        clock(1 << 30);
         G.startTurn();
     }
 
@@ -192,62 +224,6 @@ public class BotTest {
     }
 
     // ------------------------------------------------------------------ tests
-
-    static void testSymMineList() {
-        reset(); W = 20; H = 20; install();
-        // listed mine m = (3,4); twins: ROT (16,15), HOR (3,15), VER (16,4)
-        MapLocation[] ms = { new MapLocation(3, 4) };
-        Sym.record(16, 15, false, false, false);
-        Sym.listCheck(ms, 1, false);
-        check(Sym.mask == (Sym.HOR | Sym.VER) && !Sym.known(3 + 15 * W) && (Sym.mem[3 + 15 * W] & Sym.EXP) == Sym.HOR << 4,
-              "sym list: a mineless ROT twin rules out ROT; the unseen HOR twin is marked, not seen");
-        Sym.record(16, 4, false, false, false);
-        check(Sym.mask == Sym.HOR && Sym.contradictions == 0, "sym list: a marked twin first seen mineless rules out its symmetry");
-        reset(); install();
-        Sym.listCheck(ms, 1, false);
-        Sym.record(16, 15, false, false, true);
-        check(Sym.mask == 7 && Sym.listDone == 1, "sym list: a twin that holds a mine keeps every symmetry");
-        reset(); install();
-        Sym.listCheck(ms, 1, false);
-        Sym.record(3, 15, false, true, false);   // its own mirrors are all unseen: only the HOR mark can fire
-        check(Sym.mask == (Sym.ROT | Sym.VER) && (Sym.mem[3 + 15 * W] & (Sym.SEEN | Sym.DIRT | Sym.EXP)) == (Sym.SEEN | Sym.DIRT | Sym.HOR << 4),
-              "sym list: record keeps the marks, and the HOR mark fires on the first sighting");
-        Sym.record(3, 15, false, false, false);
-        check(Sym.mask == (Sym.ROT | Sym.VER) && Sym.contradictions == 0, "sym list: a second sighting changes nothing");
-        // spacing (kings): mirror_ROT(3,4) = (16,15) lies at d2 4 from the listed (16,13)
-        reset(); install();
-        MapLocation[] ms2 = { new MapLocation(3, 4), new MapLocation(16, 13) };
-        Sym.listCheck(ms2, 2, false);
-        check(Sym.mask == 7, "sym list: no spacing test for babies");
-        reset(); install();
-        Sym.listCheck(ms2, 2, true);
-        check(Sym.mask == (Sym.HOR | Sym.VER) && Sym.listDone == 2, "sym list: a twin closer than the mine spacing rules out its symmetry");
-        Sym.mask = Sym.HOR;
-        MapLocation[] ms3 = { new MapLocation(3, 4), new MapLocation(16, 13), new MapLocation(8, 8) };
-        Sym.listCheck(ms3, 3, true);
-        check(Sym.mask == Sym.HOR && Sym.listDone == 3 && Sym.contradictions == 0, "sym list: a unique mask skips the rest");
-    }
-
-    static void testKingHeld() {
-        reset(); W = 20; H = 20; install();
-        Comms.numKings = 0;
-        check(!Baby.kingHeld(new MapLocation(5, 5)), "king held: no king, no mine held");
-        Comms.numKings = 2; Comms.kings[0] = new MapLocation(9, 6); Comms.kings[1] = new MapLocation(15, 15);
-        check(Baby.kingHeld(new MapLocation(5, 5)) && Baby.kingHeld(new MapLocation(13, 10)) && !Baby.kingHeld(new MapLocation(4, 5))
-              && !Baby.kingHeld(new MapLocation(9, 1)) && Baby.kingHeld(new MapLocation(19, 19)),
-              "king held: a mine within Chebyshev 4 of any listed king's centre");
-        Comms.numKings = 0;
-    }
-
-    static void testAtkHome() {
-        int saved = Baby.role;
-        Baby.role = Baby.ATTACK;
-        int t = Math.max(1, Cfg.ATK_DELIVER);
-        check(Baby.atkHome(t) == (Cfg.ATK_DELIVER > 0) && !Baby.atkHome(t - 1), "atk home: an attacker heads home at the threshold, off at 0");
-        Baby.role = Baby.GATHER;
-        check(!Baby.atkHome(t + 100), "atk home: only attackers");
-        Baby.role = saved;
-    }
 
     static void testStallCentre() {
         // even width: the two centre tiles split by side; odd width: the one centre tile; mirror images map to mirror images
@@ -265,129 +241,6 @@ public class BotTest {
                     check(Math.abs(2 * c.x - cx2) <= 1 && Math.abs(2 * c.y - cy2) <= 1, "stall centre: a centre tile at " + h);
                 }
         }
-    }
-
-    static void testBabyCapArea() {
-        int rich = Math.max(Cfg.MAX_BABIES, Cfg.RICH_BABIES), small = Cfg.RICH_MIN_AREA > 0 ? Cfg.MAX_BABIES : rich;
-        reset(); W = 20; H = 20; install();
-        check(King.babyCap(false, Cfg.RICH_BANK) == small && King.babyCap(false, Cfg.RICH_BANK - 1) == Cfg.MAX_BABIES,
-              "baby cap: a 20x20 map keeps the base cap unless RICH_MIN_AREA is off");
-        reset(); W = 60; H = 60; install();
-        check(King.babyCap(false, Cfg.RICH_BANK) == rich && King.babyCap(true, 0) == Cfg.MAX_BABIES_WAR,
-              "baby cap: a 60x60 map takes the RICH tier at RICH_BANK");
-    }
-
-    static void testSymRelay() {
-        reset(); W = 20; H = 20; install();
-        Comms.numKings = 1; Comms.kings[0] = new MapLocation(9, 6);
-        check(Baby.kingInEarshot(new MapLocation(5, 5)) && new MapLocation(5, 5).distanceSquaredTo(Comms.kings[0]) > 16
-              && !Baby.kingInEarshot(new MapLocation(3, 5)) && Baby.kingInEarshot(new MapLocation(9, 11)),
-              "sym relay: a king is in earshot when any of its 9 tiles is within d2 16");
-        MapLocation c = new MapLocation(10, 10);
-        check(Baby.catInEarshot(c, new MapLocation(6, 10)) && !Baby.catInEarshot(c, new MapLocation(5, 10))
-              && Baby.catInEarshot(c, new MapLocation(15, 11)) && !Baby.catInEarshot(c, new MapLocation(16, 11)),
-              "sym relay: a cat hears from any of its 4 tiles");
-        G.us = Team.A; G.coop = true; G.round = 50; G.me = new MapLocation(5, 5);
-        Baby.cat = null; Baby.nearestEnemy = null; Baby.symSqueaked = -100;
-        RobotInfo ally = new RobotInfo(2, Team.A, UnitType.BABY_RAT, 100, new MapLocation(6, 7), Direction.NORTH, 0, 0, null);
-        Baby.seen = new RobotInfo[] { ally };
-        shared[Comms.SYM] = 7; Sym.mask = Sym.HOR;
-        check(!Baby.symGossip(false, false) && squeaks.isEmpty(), "sym relay: off by switch");
-        check(!Baby.symGossip(true, true) && squeaks.isEmpty(), "sym relay: within a king's earshot the king squeak handles it");
-        check(Baby.symGossip(true, false) && squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_SYM
-              && (Comms.sqExtra(squeaks.get(0)) & 7) == Sym.HOR, "sym relay: a sharper mask is squeaked to a nearby ally");
-        G.round = 52;
-        check(!Baby.symGossip(true, false), "sym relay: at most once per SYM_GOSSIP_EVERY rounds");
-        G.round = 50 + Cfg.SYM_GOSSIP_EVERY;
-        Baby.cat = new RobotInfo(3, Team.NEUTRAL, UnitType.CAT, 1000, new MapLocation(6, 8), Direction.NORTH, 0, 0, null);
-        check(!Baby.symGossip(true, false), "sym relay: never with a cat in earshot");
-        Baby.cat = null;
-        Baby.seen = new RobotInfo[0];
-        check(!Baby.symGossip(true, false), "sym relay: never with no ally to hear");
-        Baby.seen = new RobotInfo[] { ally };
-        shared[Comms.SYM] = Sym.HOR;
-        check(!Baby.symGossip(true, false), "sym relay: nothing new against the shared mask");
-        shared[Comms.SYM] = 7;
-        check(Baby.symGossip(true, false) && squeaks.size() == 2, "sym relay: squeaks again after the wait");
-        Baby.seen = new RobotInfo[0]; Comms.numKings = 0; squeaks.clear();
-    }
-
-    static void testHandMirror() {
-        reset(); W = 31; H = 24; install();
-        Random r = new Random(7);
-        int bad = 0;
-        for (int i = 0; i < 3000; i++) {
-            MapLocation p = new MapLocation(r.nextInt(W), r.nextInt(H));
-            Direction d = G.DIRS[r.nextInt(8)];
-            int h = G.hand(p, d);
-            // rotation: position and direction both negate -> same handedness
-            MapLocation pr = G.mirror(p, Sym.ROT);
-            int hr = G.hand(pr, d.opposite());
-            // horizontal reflection (y flips): handedness flips
-            MapLocation ph = G.mirror(p, Sym.HOR);
-            Direction dh = Direction.values()[0];
-            for (Direction q : G.DIRS) if (q.dx == d.dx && q.dy == -d.dy) dh = q;
-            int hh = G.hand(ph, dh);
-            MapLocation pv = G.mirror(p, Sym.VER);
-            Direction dv = dh;
-            for (Direction q : G.DIRS) if (q.dx == -d.dx && q.dy == d.dy) dv = q;
-            int hv = G.hand(pv, dv);
-            int px = 2 * p.x - G.cx2, py = 2 * p.y - G.cy2;
-            boolean cross0 = px * d.dy - py * d.dx == 0;
-            if (hr != h) bad++;
-            if (!cross0 && (hh != -h || hv != -h)) bad++;
-        }
-        check(bad == 0, "hand(): mirrored robots choose mirrored sides (bad=" + bad + ")");
-        // with the side chirality (Cfg.SYM_HAND: G.chir from the home king) the twin mirrors on the line through the
-        // centre too, for every symmetry
-        MapLocation home = new MapLocation(6, 17);
-        int[] ch = {G.chirOf(home), G.chirOf(G.mirror(home, Sym.ROT)), G.chirOf(G.mirror(home, Sym.HOR)), G.chirOf(G.mirror(home, Sym.VER))};
-        check(ch[1] == ch[0] && ch[2] == -ch[0] && ch[3] == -ch[0], "chirOf: same for the rotated king, opposite for reflected ones");
-        int bad2 = 0, ties = 0;
-        for (int i = 0; i < 3000; i++) {
-            MapLocation p = new MapLocation(r.nextInt(W), r.nextInt(H));
-            Direction d = G.DIRS[r.nextInt(8)];
-            if (i % 3 == 0) {
-                // aim at a tie: p on the centre column (x 15 of 31) gives one for N and S (H is even, so no other ties)
-                int k = r.nextInt(5) - 2;
-                p = new MapLocation(15 + 2 * k * d.dx, 11 + 2 * k * d.dy);
-            }
-            Direction dh = d, dv = d;
-            for (Direction q : G.DIRS) { if (q.dx == d.dx && q.dy == -d.dy) dh = q; if (q.dx == -d.dx && q.dy == d.dy) dv = q; }
-            G.chir = ch[0]; int h = G.hand(p, d);
-            G.chir = ch[1]; int hr = G.hand(G.mirror(p, Sym.ROT), d.opposite());
-            G.chir = ch[2]; int hh = G.hand(G.mirror(p, Sym.HOR), dh);
-            G.chir = ch[3]; int hv = G.hand(G.mirror(p, Sym.VER), dv);
-            int px = 2 * p.x - G.cx2, py = 2 * p.y - G.cy2;
-            if (px * d.dy - py * d.dx == 0) ties++;
-            if (hr != h || hh != -h || hv != -h) bad2++;
-        }
-        G.chir = 1;
-        check(bad2 == 0 && ties > 100, "hand() with chirality: every twin mirrors, ties included (bad=" + bad2 + " ties=" + ties + ")");
-    }
-
-    static void testCentreMirror() {
-        reset(); W = 30; H = 20; install();
-        Random r = new Random(11);
-        int bad = 0, oldBad = 0;
-        MapLocation half = new MapLocation(W / 2, H / 2);
-        for (int i = 0; i < 2000; i++) {
-            MapLocation l = new MapLocation(r.nextInt(W), r.nextInt(H)), cat = new MapLocation(r.nextInt(W - 1), r.nextInt(H - 1));
-            for (int s : new int[]{Sym.ROT, Sym.HOR, Sym.VER}) {
-                MapLocation m = G.mirror(l, s);
-                // a 2x2 cat's low corner mirrors to the far corner of the twin body: the twin's low corner is one less
-                MapLocation mc = G.mirror(cat, s);
-                mc = new MapLocation(s == Sym.HOR ? mc.x : mc.x - 1, s == Sym.VER ? mc.y : mc.y - 1);
-                if (G.centreD2x4(m) != G.centreD2x4(l) || G.centreCheb2(m.x, m.y) != G.centreCheb2(l.x, l.y)) bad++;
-                if (Baby.catDist4(mc, m) != Baby.catDist4(cat, l)) bad++;
-                Direction t = G.toCentre(l), tm = G.toCentre(m);
-                int sx = s == Sym.HOR ? 1 : -1, sy = s == Sym.VER ? 1 : -1;
-                if (tm.dx != sx * t.dx || tm.dy != sy * t.dy) bad++;
-                if (m.distanceSquaredTo(half) != l.distanceSquaredTo(half)) oldBad++;
-            }
-        }
-        check(bad == 0, "centre: true-centre distances, directions and cat-centre distances mirror (bad=" + bad + ")");
-        check(oldBad > 0, "centre: W / 2, H / 2 does not (it sits half a tile off on an even map)");
     }
 
     static void testWalledOff() {
@@ -419,58 +272,6 @@ public class BotTest {
             }
         }
         check(bad == 0, "walled off: mirrored walls and segments agree (bad=" + bad + ")");
-    }
-
-    static void testSymFill() {
-        check(Cfg.SYM_FILL == 0, "sym fill: off in ratbot");
-        reset(); W = 20; H = 20; install();
-        Sym.mask = Sym.ROT | Sym.HOR;
-        // wall at (2,3): twins ROT (17,16), HOR (2,16); each twin's other twin, (17,3) and (2,3)... (17,3) is unseen
-        Sym.record(2, 3, true, false, false);
-        Sym.fill(2, 3, Sym.WALL);
-        check((Sym.mem[17 + 16 * 20] & Sym.WALL) == 0 && (Sym.mem[2 + 16 * 20] & Sym.WALL) == 0, "sym fill: no fill while a live symmetry is unchecked");
-        Sym.record(17, 3, true, false, false);
-        Sym.fill(17, 3, Sym.WALL);
-        int a = Sym.mem[2 + 16 * 20], b = Sym.mem[17 + 16 * 20];
-        check((a & Sym.WALL) != 0 && (b & Sym.WALL) != 0, "sym fill: twins filled once every live symmetry agrees");
-        check((a & Sym.SEEN) == 0 && (b & Sym.SEEN) == 0, "sym fill: filled twins stay unseen");
-        check(Sym.mask == (Sym.ROT | Sym.HOR), "sym fill: filling eliminates nothing");
-        Sym.record(2, 16, false, false, false);
-        check((Sym.mem[2 + 16 * 20] & Sym.WALL) == 0, "sym fill: sensing a filled tile overwrites the guess");
-        // disagreement: (5,5) wall, (14,5) dirt -> the twins (14,14)/(5,14) get nothing
-        reset(); install();
-        Sym.mask = Sym.ROT | Sym.HOR;
-        Sym.record(5, 5, true, false, false);
-        Sym.record(14, 5, false, true, false);
-        Sym.fill(5, 5, Sym.WALL); Sym.fill(14, 5, Sym.DIRT);
-        check((Sym.mem[14 + 14 * 20] & (Sym.WALL | Sym.DIRT)) == 0 && (Sym.mem[5 + 14 * 20] & (Sym.WALL | Sym.DIRT)) == 0, "sym fill: disagreeing symmetries fill nothing");
-        // a seen twin is never overwritten
-        reset(); install();
-        Sym.mask = Sym.ROT;
-        Sym.record(14, 14, false, false, false);
-        Sym.fill(5, 5, Sym.WALL);
-        check((Sym.mem[14 + 14 * 20] & Sym.WALL) == 0, "sym fill: a seen twin keeps what was sensed");
-        Sym.fill(6, 6, Sym.DIRT);
-        check((Sym.mem[13 + 13 * 20] & (Sym.DIRT | Sym.SEEN)) == Sym.DIRT, "sym fill: unique symmetry fills dirt onto the unseen twin");
-        // backfill: tiles seen under mask 7 get their twins once VER is ruled out
-        reset(); install();
-        Sym.record(2, 3, true, false, false);
-        Sym.record(17, 3, true, false, false);
-        Sym.fill(2, 3, Sym.WALL); Sym.fill(17, 3, Sym.WALL);
-        check((Sym.mem[17 + 16 * 20] & Sym.WALL) == 0, "sym fill: VER live, its unseen twin blocks the fill");
-        Sym.backfill(400);
-        Sym.eliminate(Sym.VER);
-        Sym.backfill(100);
-        check((Sym.mem[17 + 16 * 20] & Sym.WALL) != 0 && (Sym.mem[2 + 16 * 20] & Sym.WALL) != 0, "sym fill: backfill after the mask shrank");
-        check(Sym.fillAt == 100 && Sym.fillMask == (Sym.ROT | Sym.HOR), "sym fill: backfill restarts at 0 on a new mask, n tiles a call (" + Sym.fillAt + ")");
-        Sym.backfill(1000);
-        check(Sym.fillAt == 400 && !Sym.fillDue(), "sym fill: backfill stops at the map's end");
-        Sym.backfill(100);
-        check(Sym.fillAt == 400, "sym fill: a finished pass stays idle while nothing new was seen");
-        Sym.fillDirty = true;
-        check(Sym.fillDue(), "sym fill: a newly seen wall makes a pass due");
-        Sym.backfill(100);
-        check(Sym.fillAt == 100 && !Sym.fillDirty, "sym fill: a dirty map restarts the pass at 0");
     }
 
     static void testSymElimination() {
@@ -670,96 +471,6 @@ public class BotTest {
               + diag + ", " + edge + ")");
     }
 
-    static void testFlowHeld() throws GameActionException {
-        for (int rv = 0; rv < 2; rv++) {
-            reset(); W = 20; H = 12; install();
-            Flow.rev = rv == 1;
-            for (int x = 1; x <= 5; x++) { walls.add(new MapLocation(x, 4)); walls.add(new MapLocation(x, 6)); }
-            walls.add(new MapLocation(5, 5));
-            for (MapLocation w : walls) if (w.x <= 4) Sym.record(w.x, w.y, true, false, false);
-            MapLocation t = new MapLocation(12, 5);
-            me = new MapLocation(2, 5); G.startTurn();
-            Flow.request(t); Flow.work(0);
-            boolean east = Flow.ready(t) && Flow.path[1] == G.idx(3, 5);
-            Flow.markHeld(G.idx(3, 5));
-            boolean bit = (Sym.mem[G.idx(3, 5)] & Sym.HELD) != 0 && Flow.held1 == G.idx(3, 5) + 1;
-            Flow.drop();
-            Flow.request(t);
-            Flow.block = Flow.heldBlock(Flow.block);
-            Flow.work(0);
-            boolean ok = Flow.ready(t), west = ok && Flow.path[1] % W == 1, avoids = ok;
-            for (int i = 0; ok && i < Flow.plen; i++) if (Flow.path[i] == G.idx(3, 5)) avoids = false;
-            check(east && bit && west && avoids, "flow held: a held strip tile sends the search out the open end (rev " + rv + ": "
-                  + east + ", " + bit + ", " + west + ", " + avoids + ")");
-        }
-        reset(); W = 20; H = 12; install();
-        Flow.tx = 12; Flow.ty = 5;
-        Flow.markHeld(G.idx(11, 5));
-        check(Flow.held1 == 0 && (Sym.mem[G.idx(11, 5)] & Sym.HELD) == 0, "flow held: a tile beside the target is not kept out");
-        Flow.markHeld(G.idx(6, 5));
-        Sym.record(6, 5, false, false, false);
-        int until = Flow.heldUntil;
-        boolean kept = (Sym.mem[G.idx(6, 5)] & Sym.HELD) != 0 && (Flow.heldBlock(Sym.WALL) & Sym.HELD) != 0;
-        Flow.markHeld(G.idx(7, 5));
-        boolean moved = (Sym.mem[G.idx(6, 5)] & Sym.HELD) == 0 && (Sym.mem[G.idx(7, 5)] & Sym.HELD) != 0;
-        round = Flow.heldUntil + 1; G.startTurn();
-        int b = Flow.heldBlock(Sym.WALL);
-        check(kept && moved && until == 1 + Cfg.FLOW_HELD && b == Sym.WALL && Flow.held1 == 0 && (Sym.mem[G.idx(7, 5)] & Sym.HELD) == 0,
-              "flow held: kept through a re-sense, one tile at a time, cleared once expired (" + kept + ", " + moved + ", " + b + ")");
-    }
-
-    /** Breakout: a walled room (x 3-9, y 3-9) whose one exit is a dirt tile at (9,6); inside and the ring are seen,
-     *  the rest is not. The frontier search from (5,6) ends on a never-seen tile just outside the exit, through the
-     *  dirt; the x-mirrored room in the mirrored side frame gives the mirrored path; a room of solid walls finds
-     *  nothing. Two walled-off chases given up within 100 rounds start a breakout, two 150 apart do not. */
-    static void testKingBiter() {
-        reset(); install();
-        G.round = 200; G.coop = false;
-        Comms.kings[0] = new MapLocation(8, 5); Comms.numKings = 1;   // we are at (5, 5), Chebyshev 3 from its centre
-        RobotInfo far = new RobotInfo(30, Team.B, UnitType.BABY_RAT, 100, new MapLocation(5, 8), Direction.NORTH, 0, 0, null);
-        RobotInfo b1 = new RobotInfo(31, Team.B, UnitType.BABY_RAT, 100, new MapLocation(7, 7), Direction.NORTH, 0, 0, null);
-        RobotInfo b2 = new RobotInfo(32, Team.B, UnitType.BABY_RAT, 60, new MapLocation(6, 4), Direction.NORTH, 0, 0, null);
-        RobotInfo b3 = new RobotInfo(34, Team.B, UnitType.BABY_RAT, 30, new MapLocation(6, 6), Direction.NORTH, 0, 0, null);
-        RobotInfo ally = new RobotInfo(33, Team.A, UnitType.BABY_RAT, 100, new MapLocation(6, 5), Direction.NORTH, 0, 0, null);
-        Baby.guardKing = null;
-        check(Baby.kingBiter(new RobotInfo[]{far, b1, ally, b2}, 4) == b2 && new MapLocation(8, 5).equals(Baby.guardKing),
-              "king guard: the nearest enemy rat in reach of our king (" + Baby.guardKing + ")");
-        Baby.guardKing = null;
-        check(Baby.kingBiter(new RobotInfo[]{far, ally}, 4) == null && Baby.guardKing == null,
-              "king guard: an enemy 3 from the king's centre is out of its reach");
-        check(Baby.kingBiter(new RobotInfo[]{far, b1, ally, b2}, 2) == null && Baby.guardKing == null,
-              "king guard: none when we are farther than the reach from our king");
-        check(Baby.kingBiter(new RobotInfo[]{b2, b3}, 4) == b3, "king guard: equal distance, the weaker rat first");
-        Comms.numKings = 0;
-    }
-
-    /** Carrier guard: our king's centre at (8, 5), we at (5, 5). Enemy carriers of ours within Chebyshev R of the
-     *  centre are targets, the nearest us first; carriers of their own, plain rats and carriers beyond R are not;
-     *  none when we are beyond the reach of the king, none in cooperation. */
-    static void testKingCarrier() {
-        reset(); install();
-        G.round = 200; G.coop = false;
-        me = new MapLocation(5, 5); G.me = me;
-        Comms.kings[0] = new MapLocation(8, 5); Comms.numKings = 1;
-        RobotInfo ours = new RobotInfo(40, Team.A, UnitType.BABY_RAT, 50, new MapLocation(5, 2), Direction.NORTH, 0, 0, null);
-        RobotInfo held = new RobotInfo(41, Team.B, UnitType.BABY_RAT, 50, new MapLocation(6, 6), Direction.NORTH, 0, 0, null);
-        RobotInfo cA = new RobotInfo(50, Team.B, UnitType.BABY_RAT, 90, new MapLocation(5, 2), Direction.NORTH, 0, 0, ours);
-        RobotInfo cB = new RobotInfo(51, Team.B, UnitType.BABY_RAT, 90, new MapLocation(11, 7), Direction.NORTH, 0, 0, ours);
-        RobotInfo own = new RobotInfo(52, Team.B, UnitType.BABY_RAT, 90, new MapLocation(6, 6), Direction.NORTH, 0, 0, held);
-        RobotInfo plain = new RobotInfo(53, Team.B, UnitType.BABY_RAT, 30, new MapLocation(6, 5), Direction.NORTH, 0, 0, null);
-        RobotInfo cFar = new RobotInfo(54, Team.B, UnitType.BABY_RAT, 90, new MapLocation(2, 5), Direction.NORTH, 0, 0, ours);
-        check(Baby.kingCarrier(new RobotInfo[]{plain, own, cFar, cB, cA}, 4, 8) == cA,
-              "carrier guard: the nearest enemy carrier of ours within R of our king, not a plain rat or their own carrier");
-        check(Baby.kingCarrier(new RobotInfo[]{plain, own, cFar, cB}, 4, 8) == cB, "carrier guard: a farther carrier in R");
-        check(Baby.kingCarrier(new RobotInfo[]{plain, own, cFar}, 4, 8) == null, "carrier guard: none beyond R of the king");
-        check(Baby.kingCarrier(new RobotInfo[]{cA}, 4, 2) == null, "carrier guard: none when we are beyond reach of the king");
-        G.coop = true;
-        check(Baby.kingCarrier(new RobotInfo[]{cA}, 4, 8) == null, "carrier guard: none in cooperation");
-        G.coop = false;
-        check(Cfg.GUARD_CARRY_R == 0, "carrier guard: off by default");
-        Comms.numKings = 0;
-    }
-
     /** Cfg.HOME_START / SYM_KING_GAP on uneasy_alliance's layout (30x30, kings start (11,15) and (18,15)). */
     static void testHomeStart() throws GameActionException {
         reset(); W = 30; H = 30; install();
@@ -771,7 +482,8 @@ public class BotTest {
         MapLocation[] far = {new MapLocation(8, 8), new MapLocation(8, 2), new MapLocation(2, 7)};
         for (MapLocation m : far)
             check(Baby.nearer(m, start, Sym.ROT) && Baby.nearer(m, start, Sym.VER), "half: " + m + " on our half from the start");
-        check(!Baby.nearer(far[0], king, Sym.ROT) && !Baby.nearer(far[1], king, Sym.ROT), "half: (8,8), (8,2) off it from the king's tile");
+        check(!Baby.nearer(far[1], king, Sym.ROT), "half: (8,2) off it from the king's tile");
+        check(Baby.nearer(far[0], king, Sym.ROT), "half: (8,8), on the bisector from the king's tile, counts as ours (ties)");
         check(!Baby.nearer(new MapLocation(21, 8), start, Sym.ROT) && !Baby.nearer(new MapLocation(21, 21), start, Sym.VER),
               "half: their mines stay theirs");
         Message other = new Message(Comms.squeak(Comms.SQ_MINE, 3, 4, 0), 7, 1, start);
@@ -817,36 +529,6 @@ public class BotTest {
         CatLane.rows = null;
     }
 
-    static void testFormMine() {
-        reset(); W = 30; H = 30; install();
-        check(King.siteKey(false, 50, false) < King.siteKey(true, 34, true), "form mine: a clean site before a nearer dirty one");
-        check(King.siteKey(false, 34, false) < King.siteKey(false, 50, true), "form mine: then the nearer");
-        check(King.siteKey(false, 34, true) < King.siteKey(false, 34, false), "form mine: then the tie bit");
-        check(Baby.minePull(400, Baby.GATHER, 0) && Baby.minePull(100, Baby.FIGHT, 8 * 4), "form mine: drawn babies within 400 join");
-        check(!Baby.minePull(401, Baby.GATHER, 0) && !Baby.minePull(100, Baby.ATTACK, 0) && !Baby.minePull(100, Baby.GATHER, 8),
-              "form mine: not beyond 400, never attackers, not undrawn slots");
-        MapLocation start = new MapLocation(3, 3), ek = new MapLocation(26, 26);
-        King.start = start;
-        King.nBans = 0;
-        Comms.numKings = 0;
-        // (3,6) is within 4 of us; (6,8) has dirt beside it; (10,4) is clean; (14,14) and (20,3) are too near the enemy
-        MapLocation[] ms = {new MapLocation(3, 6), new MapLocation(6, 8), new MapLocation(10, 4), new MapLocation(14, 14), new MapLocation(20, 3)};
-        for (int i = 0; i < ms.length; i++) Comms.mines[i] = ms[i];
-        Comms.numMines = ms.length;
-        Sym.mem[7 + W * 9] |= Sym.DIRT;
-        check(new MapLocation(10, 4).equals(King.mineSite(start, ek)), "form mine: the clean mine (10,4) over the nearer dirty (6,8)");
-        King.ban(new MapLocation(10, 4));
-        King.ban(new MapLocation(10, 4));
-        check(King.nBans == 1 && King.banned(new MapLocation(10, 4)), "form mine: a failed site is banned once");
-        check(new MapLocation(6, 8).equals(King.mineSite(start, ek)), "form mine: then the dirty one");
-        Comms.kings[0] = new MapLocation(6, 11);
-        Comms.numKings = 1;
-        check(King.mineSite(start, ek) == null, "form mine: none when a king holds the last one");
-        Comms.numKings = 0;
-        Comms.numMines = 0;
-        King.nBans = 0;
-    }
-
     static void testCatLane() throws GameActionException {
         reset(); W = 30; H = 30; install();
         type = UnitType.RAT_KING; me = new MapLocation(5, 6); G.startTurn();
@@ -858,7 +540,7 @@ public class BotTest {
               && King.laneCount(new MapLocation(5, 8)) == 4 && King.laneCount(new MapLocation(29, 29)) == 1, "lane: tiles under a 3x3");
         Sym.record(5, 7, false, false, false);
         check((Sym.mem[G.idx(new MapLocation(5, 7))] & Sym.CAT) != 0, "lane: survives a fresh sensing of the tile");
-        check(King.laneOk(me, Direction.NORTH), "lane: laneOk is a no-op with Cfg.CAT_LANE off");
+        check(!King.laneOk(me, Direction.NORTH) && King.laneOk(me, Direction.SOUTH), "lane: laneOk refuses a step adding lane to the 3x3");
         check(King.offLane(me, new RobotInfo[0]) && King.laneCount(me) == 0 && me.y == 5, "lane: steps off, south");
         check(!King.offLane(me, new RobotInfo[0]), "lane: off lane, no step");
         // the unrolled count matches a plain 3x3 count everywhere, edges included
@@ -878,337 +560,14 @@ public class BotTest {
         check(same, "lane: unrolled count = plain count on every tile");
     }
 
-    static void testAmmo() {
-        check(Baby.ammo(Cfg.AMMO_HP, Cfg.AMMO_HP + 10, Cfg.AMMO_D2, Cfg.AMMO_R), "ammo: low, weaker, close, near the king");
-        check(!Baby.ammo(Cfg.AMMO_HP + 1, 100, 2, 1), "ammo: healthy rats stay");
-        check(!Baby.ammo(30, 30, 2, 1), "ammo: an enemy with no more health can't grab us facing it");
-        check(!Baby.ammo(30, 100, Cfg.AMMO_D2 + 1, 1), "ammo: no enemy close");
-        check(!Baby.ammo(30, 100, 2, Cfg.AMMO_R + 1), "ammo: away from the king already");
-        check(!Cfg.AMMO_AWAY, "ammo: off by default");
-    }
-
-    static void testRoleFor() {
-        // MINE_RR: the king counts spawns per role with the same rule born() applies
-        check(Baby.roleFor(0, 10) == Baby.GATHER && Baby.roleFor(Cfg.GATHER_FIRST - 1, 10) == Baby.GATHER, "roleFor: the first babies gather");
-        check(Baby.roleFor(Cfg.GATHER_FIRST, Cfg.FIGHT_EVERY * 7) == Baby.FIGHT, "roleFor: later babies on FIGHT_EVERY rounds fight");
-        check(Baby.roleFor(Cfg.GATHER_FIRST, Cfg.FIGHT_EVERY * 7 + 1) == Baby.GATHER, "roleFor: later babies off those rounds gather");
-        int c = Comms.squeak(Comms.SQ_START, 11, 15, 4096);
-        check(Comms.sqType(c) == Comms.SQ_START && Comms.sqX(c) == 11 && Comms.sqY(c) == 15 && Comms.sqExtra(c) == 4096, "roleFor: the largest spawn place survives the squeak");
-        check(!Cfg.MINE_RR, "roleFor: MINE_RR off by default");
-    }
-
-    static void testScoutMore() {
-        check(!Baby.moreScouting(0, 100), "scouting: SCOUT_MINES 0 adds no scouting");
-        check(Baby.moreScouting(4, Cfg.SCOUT_MINES_UNTIL - 1) && !Baby.moreScouting(4, Cfg.SCOUT_MINES_UNTIL), "scouting: SCOUT_MINES runs until SCOUT_MINES_UNTIL");
-        check(!Cfg.SCOUT_FRONTIER && Cfg.SCOUT_MINES == 0, "scouting: frontier scouting off by default");
-        check(!Baby.scoutDry(0, 1999, 150), "scouting: SCOUT_DRY 0 never dries");
-        check(!Baby.scoutDry(100, 249, 150) && Baby.scoutDry(100, 250, 150), "scouting: dry SCOUT_DRY rounds after the last find");
-        check(Cfg.SCOUT_DRY == 0, "scouting: SCOUT_DRY off by default");
-    }
-
-    static void testRusher() {
-        // RUSH is off in the development Cfg: no baby attacks from birth, whatever its index or round
-        for (int idx = 0; idx < 20; idx += 4) check(!Baby.rusher(idx, 10) && !Baby.rusher(idx, 500), "rusher: off with RUSH off");
-        check(Cfg.RUSH_UNTIL == 0, "rusher: RUSH_UNTIL defaults to never");
-        // RUSH_DIST: on a 40x40 map a corner start's every mirror is 33 away; a mid-edge start's HOR twin is 1 away
-        reset(); W = 40; H = 40; install();
-        int all = Sym.ROT | Sym.HOR | Sym.VER;
-        MapLocation corner = new MapLocation(3, 3), edge = new MapLocation(3, 20);
-        check(!Baby.rushNear(corner, all, 20) && Baby.rushNear(corner, all, 33), "rushDist: a far start under every symmetry");
-        check(Baby.rushNear(edge, Sym.HOR, 20) && !Baby.rushNear(edge, Sym.ROT | Sym.VER, 20), "rushDist: only live symmetries count");
-        check(Baby.liveSyms(0) == all && Baby.liveSyms(Sym.ROT | Comms.SYM_BURN) == Sym.ROT, "rushDist: the kings' slot narrows the mask, empty = ours");
-        Sym.mask = Sym.ROT;
-        check(Baby.liveSyms(Sym.HOR) == Sym.ROT, "rushDist: a slot that rules out all of ours falls back to ours");
-        Sym.mask = all;
-        check(Cfg.RUSH_DIST == 0, "rushDist: off by default");
-        // RUSH_STAGE (the candidate's 24, last rusher r17, slack 4): the launch round, and who holds before it
-        MapLocation h = new MapLocation(3, 5), t = new MapLocation(36, 34);
-        int L = Baby.stageLaunch(h, t, 24, 17, 4);
-        check(L == 17 + 9 * 5 / 4 + 4 && Baby.stageLaunch(h, new MapLocation(6, 2), 24, 17, 4) == 21, "rushStage: launch = last birth + 5/4 of the walk to the line + slack");
-        check(Baby.staged(L - 1, new MapLocation(12, 20), h, t, 24, L) && !Baby.staged(L, new MapLocation(12, 20), h, t, 24, L), "rushStage: on the line it holds until the launch round");
-        check(!Baby.staged(L - 1, new MapLocation(11, 20), h, t, 24, L) && !Baby.staged(L - 1, new MapLocation(31, 30), h, t, 24, L), "rushStage: not before the line, nor within 6 of the target");
-        check(!Baby.staged(20, new MapLocation(5, 5), h, new MapLocation(20, 20), 24, 21) && Baby.staged(20, new MapLocation(6, 5), h, new MapLocation(20, 20), 24, 21), "rushStage: not within 2 of home (the spawn ring)");
-        for (int s = Sym.ROT; s <= Sym.VER; s <<= 1)
-            check(Baby.staged(L - 1, G.mirror(new MapLocation(12, 20), s), G.mirror(h, s), G.mirror(t, s), 24, Baby.stageLaunch(G.mirror(h, s), G.mirror(t, s), 24, 17, 4))
-                  && Baby.stageLaunch(G.mirror(h, s), G.mirror(t, s), 24, 17, 4) == L, "rushStage: holding mirrors under symmetry " + s);
-        check(Cfg.RUSH_STAGE == 0, "rushStage: off by default");
-        check(Baby.ourHalf(new MapLocation(10, 10), corner, Sym.ROT) && !Baby.ourHalf(new MapLocation(30, 30), corner, Sym.ROT), "ourHalf: nearer our reference than its mirror");
-        check(!Baby.ourHalf(new MapLocation(19, 20), corner, Sym.ROT) && Baby.ourHalf(new MapLocation(30, 3), corner, Sym.HOR) && !Baby.ourHalf(new MapLocation(30, 3), corner, Sym.VER), "ourHalf: a tie is not ours; the symmetry decides");
-        // TRAP_DIST: traps on far maps only; 0 allows them everywhere
-        check(Baby.trapsAllowed(corner, 0, 20) && !Baby.trapsAllowed(corner, 0, 33), "trapDist: a far start allows traps, a near one doesn't");
-        check(Baby.trapsAllowed(edge, Sym.VER, 20) && !Baby.trapsAllowed(edge, Sym.HOR, 20), "trapDist: the kings' live symmetry decides");
-        check(Baby.trapsAllowed(edge, Sym.HOR, 0) && Cfg.TRAP_DIST == 0, "trapDist: 0 allows traps everywhere, off by default");
-        // CARRY_BITE: loot lowers the bite rank, capped, never ahead of a carrier of ours (1000)
-        check(Baby.biteScore(60, 0, 50) == 1060 && Baby.biteScore(60, 80, 0) == 1060, "carryBite: no loot or off, health alone");
-        check(Baby.biteScore(60, 30, 50) == 1030 && Baby.biteScore(60, 80, 50) == 1010, "carryBite: loot counts up to the cap");
-        check(Baby.biteScore(20, 80, 50) == 1001 && Cfg.CARRY_BITE == 0, "carryBite: floor 1001, off by default");
-    }
-
-    /** A wall at x 15 with gaps at the bottom (y 0-2) and the top (y 17-19); every open tile at y <= 4 is unseen (the wall is known). Unseen tiles
-     *  at cost 1 take the short bottom route; at cost 3 the longer top route over seen tiles wins. */
-    static void testFlowUnseen() throws GameActionException {
-        boolean rev0 = Flow.rev, fast0 = Flow.fast;
-        for (int c = 0; c < 4; c++) {
-            int[] lo = new int[2];
-            for (int k = 0; k < 2; k++) {
-                reset(); W = 30; H = 20; install();
-                Flow.rev = (c & 1) != 0; Flow.fast = (c & 2) != 0;
-                for (int y = 3; y < 17; y++) walls.add(new MapLocation(15, y));
-                for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) { boolean w = walls.contains(new MapLocation(x, y)); if (w || y >= 5) Sym.record(x, y, w, false, false); }
-                Flow.unseen = k == 0 ? 1 : 3;
-                MapLocation t = new MapLocation(25, 6);
-                me = new MapLocation(5, 6); G.startTurn();
-                Flow.request(t);
-                for (int i = 0; i < 40 && !Flow.ready(t); i++) Flow.work(0);
-                int m = 99;
-                for (int i = 0; Flow.ready(t) && i < Flow.plen; i++) m = Math.min(m, Flow.path[i] / W);
-                lo[k] = Flow.ready(t) ? m : -1;
-            }
-            check(lo[0] >= 0 && lo[0] <= 2, "flow unseen " + c + ": at cost 1 the path takes the bottom gap (lowest y " + lo[0] + ")");
-            check(lo[1] >= 5, "flow unseen " + c + ": at cost 3 the path keeps to seen tiles over the top (lowest y " + lo[1] + ")");
-        }
-        Flow.rev = rev0; Flow.fast = fast0; Flow.unseen = Cfg.FLOW_UNSEEN;
-    }
-
-    static void testReserve() {
-        check(King.reserve(300, 1, 100, 0) == 300, "reserve: off leaves the floor");
-        check(King.reserve(300, 1, 100, 300) == 600, "reserve: one king, 300 rounds of upkeep");
-        check(King.reserve(300, 2, 100, 300) == 1200, "reserve: two kings eat twice");
-        check(King.reserve(100, 1, 100, 300) == 600, "reserve: the LOW_FLOOR collapse is held too");
-        check(King.reserve(300, 1, 1900, 300) == 300, "reserve: capped at the game's end, floor kept");
-        check(King.reserve(100, 1, 1900, 300) == 200, "reserve: 100 rounds left, one king");
-        check(King.reserve(900, 1, 100, 300) == 900, "reserve: a higher floor stays");
-        check(King.reserve(300, 0, 100, 300) == 600, "reserve: at least one king");
-    }
-
     static RobotInfo rat(Team t, int x, int y) { return new RobotInfo(9, t, UnitType.BABY_RAT, 100, new MapLocation(x, y), Direction.NORTH, 0, 0, null); }
 
     static RobotInfo hrat(Team t, int hp, RobotInfo held) { return new RobotInfo(9, t, UnitType.BABY_RAT, hp, new MapLocation(3, 3), Direction.NORTH, 0, 0, held); }
-
-    static void testKingEyes() {
-        MapLocation k = new MapLocation(10, 10);
-        RobotInfo near = rat(Team.B, 12, 10), far = rat(Team.B, 13, 13), out = rat(Team.B, 15, 10);
-        RobotInfo king = new RobotInfo(5, Team.B, UnitType.RAT_KING, 500, new MapLocation(11, 10), Direction.NORTH, 0, 0, null);
-        RobotInfo blind = new RobotInfo(6, Team.B, UnitType.BABY_RAT, 100, new MapLocation(11, 11), Direction.CENTER, 0, 0, null);
-        check(King.eyesTarget(new RobotInfo[] {far, near}, k, 18) == near, "eyes: nearest enemy baby");
-        check(King.eyesTarget(new RobotInfo[] {out}, k, 18) == null, "eyes: beyond r2 not squeaked");
-        check(King.eyesTarget(new RobotInfo[] {far}, k, 18) == far, "eyes: dist2 18 is in");
-        check(King.eyesTarget(new RobotInfo[] {king, far}, k, 18) == far, "eyes: kings skipped");
-        check(King.eyesTarget(new RobotInfo[] {blind}, k, 18) == null, "eyes: no facing, nothing to squeak");
-        check(King.eyesTarget(new RobotInfo[0], k, 18) == null, "eyes: no enemies");
-        MapLocation me = new MapLocation(5, 5);
-        MapLocation[] h = {new MapLocation(8, 5), new MapLocation(6, 7), new MapLocation(5, 6), null};
-        check(Baby.nearestHeard(me, h, 3, 8).equals(new MapLocation(5, 6)), "heard: nearest of n");
-        check(Baby.nearestHeard(me, h, 2, 8).equals(new MapLocation(6, 7)), "heard: only the first n");
-        check(Baby.nearestHeard(me, h, 1, 8) == null, "heard: beyond 8 ignored");
-        check(Baby.nearestHeard(me, h, 0, 8) == null, "heard: none");
-        check(Baby.nearestHeard(me, new MapLocation[] {new MapLocation(7, 7)}, 1, 8) != null, "heard: dist2 8 is in");
-    }
-
-    static void testFillKey() {
-        check(Baby.fillKey(1, 1, 1, 1, 1) < Baby.fillKey(2, -1, -1, 1, 1), "nearer ring tile first");
-        check(Baby.fillKey(5, 1, 0, 1, 1) < Baby.fillKey(5, -1, 0, 1, 1) == Baby.fillKey(5, -1, 0, -1, 1) < Baby.fillKey(5, 1, 0, -1, 1),
-            "x-mirrored rats break ties alike");
-        check(Baby.fillKey(5, 0, 1, 1, 1) < Baby.fillKey(5, 0, -1, 1, 1) == Baby.fillKey(5, 0, -1, 1, -1) < Baby.fillKey(5, 0, 1, 1, -1),
-            "y-mirrored rats break ties alike");
-        check(Baby.fillKey(5, 1, 1, 1, 1) == Baby.fillKey(5, -1, -1, -1, -1), "rotated rats score alike");
-        java.util.HashSet<Long> ks = new java.util.HashSet<>();
-        for (int dx = -1; dx <= 1; dx++) for (int dy = -1; dy <= 1; dy++) ks.add(Baby.fillKey(4, dx, dy, 1, -1));
-        check(ks.size() == 9, "distinct ring offsets, distinct keys");
-        check(Baby.fillKey(4, 1, 1, 1, 1) < Baby.fillKey(5, -1, -1, 1, 1), "offset never outweighs one unit of distance");
-    }
-
-    static void testSideTarget() {
-        MapLocation k = new MapLocation(5, 5);
-        check(Comms.sideTarget(k, 0, 20, 20) == null, "side 0: no target");
-        check(Comms.sideTarget(k, 9, 20, 20) == null, "side CENTER: no target");
-        check(Comms.sideTarget(null, 1, 20, 20) == null, "no king: no target");
-        for (Direction d : Direction.values()) {
-            if (d == Direction.CENTER) continue;
-            MapLocation t = Comms.sideTarget(k, d.ordinal() + 1, 20, 20);
-            check(t != null && t.x == 5 + 2 * d.dx && t.y == 5 + 2 * d.dy, "side " + d + " two steps out");
-            check(t != null && G.cheb(k, t) == 2, "side " + d + " just outside the 3x3");
-        }
-        check(Comms.sideTarget(new MapLocation(1, 1), Direction.SOUTHWEST.ordinal() + 1, 20, 20) == null, "off the map low");
-        check(Comms.sideTarget(new MapLocation(18, 18), Direction.NORTHEAST.ordinal() + 1, 20, 20) == null, "off the map high");
-        check(Comms.sideTarget(new MapLocation(17, 2), Direction.EAST.ordinal() + 1, 20, 20) != null, "x 19 on a 20-wide map");
-    }
-
-    static void testFormHold() {
-        check(!King.formHold(5, 0), "FORM_SAFE 0 never holds");
-        check(!King.formHold(0, 1), "no threat: no hold");
-        check(King.formHold(1, 1), "one threat at min 1 holds");
-        check(!King.formHold(1, 2), "one threat at min 2 does not");
-        check(King.formHold(3, 2), "three threats at min 2 hold");
-    }
-
-    static void testMayRetreat() {
-        check(Baby.mayRetreat(40, 40, false, false), "retreat at the threshold");
-        check(Baby.mayRetreat(10, 40, false, true), "adapt off: a seen thrower changes nothing");
-        check(!Baby.mayRetreat(41, 40, false, false), "no retreat above the threshold");
-        check(Baby.mayRetreat(10, 40, true, false), "adapt on, no thrower seen: retreat");
-        check(!Baby.mayRetreat(10, 40, true, true), "adapt on, thrower seen: no retreat");
-        check(!Baby.mayRetreat(1, 0, false, false), "RETREAT_HP 0 never retreats");
-        G.us = Team.A;
-        RobotInfo ours = rat(Team.A, 3, 3), carrier = hrat(Team.B, 90, ours), plain = hrat(Team.B, 90, null);
-        MapLocation near = new MapLocation(6, 6), far = new MapLocation(20, 3);
-        check(Baby.sawThrower(false, carrier, true, null, 0), "a carrier of ours is a thrower");
-        check(!Baby.sawThrower(false, plain, true, near, 0), "an empty-handed enemy is not");
-        check(!Baby.sawThrower(false, carrier, false, near, 0), "adapt off never sets it");
-        check(Baby.sawThrower(true, plain, true, null, 4), "the flag stays set");
-        check(Baby.sawThrower(false, carrier, true, near, 3), "a carrier at Chebyshev 3 of our king counts at rad 3");
-        check(!Baby.sawThrower(false, carrier, true, near, 2), "but not at rad 2");
-        check(!Baby.sawThrower(false, carrier, true, far, 4), "a carrier far from our king does not count");
-        check(!Baby.sawThrower(false, carrier, true, null, 4), "no known king: no count at rad > 0");
-    }
-
-    static void testBiteCarrier() {
-        G.us = Team.A;
-        RobotInfo ours = rat(Team.A, 3, 3), theirs = rat(Team.B, 3, 3);
-        RobotInfo weak = hrat(Team.B, 40, null), carrier = hrat(Team.B, 90, ours), carrierWeak = hrat(Team.B, 30, ours);
-        RobotInfo holdsTheirs = hrat(Team.B, 90, theirs);
-        check(King.holdsOurs(carrier), "holdsOurs carrier");
-        check(!King.holdsOurs(weak), "holdsOurs empty");
-        check(!King.holdsOurs(holdsTheirs), "holdsOurs own team rat");
-        check(King.betterBite(weak, carrier, false) && !King.betterBite(carrier, weak, false), "bite off: weaker wins");
-        check(King.betterBite(carrier, weak, true) && !King.betterBite(weak, carrier, true), "bite on: carrier over weaker");
-        check(King.betterBite(weak, holdsTheirs, true), "bite on: carrier of theirs not preferred");
-        check(King.betterBite(carrierWeak, carrier, true) && !King.betterBite(carrier, carrierWeak, true), "bite on: two carriers by health");
-        check(!King.betterBite(carrier, carrier, true), "bite on: equal not better");
-        G.us = Team.B;
-        check(King.holdsOurs(holdsTheirs) && !King.holdsOurs(carrier), "holdsOurs mirrored team");
-        G.us = Team.A;
-    }
-
-    static void testFlee() {
-        MapLocation c = new MapLocation(10, 10);
-        RobotInfo[] none = {};
-        RobotInfo[] two = {rat(Team.B, 13, 10), rat(Team.B, 13, 11)};
-        check(King.flee(c, two, none, 20) == Direction.WEST, "flee: two enemies east, none of ours: west");
-        check(King.flee(c, two, new RobotInfo[]{rat(Team.A, 9, 10), rat(Team.A, 9, 11)}, 20) == null, "flee: matched by our babies: stay");
-        check(King.flee(c, two, new RobotInfo[]{rat(Team.A, 10, 7)}, 20) == Direction.SOUTHWEST, "flee: toward our baby from the enemies' centroid");
-        check(King.flee(c, two, none, 4) == null, "flee: enemies beyond r do not count");
-        check(King.flee(c, two, new RobotInfo[]{rat(Team.A, 6, 13)}, 20) == Direction.WEST, "flee: the step uses our baby's x, not the king's");
-        RobotInfo k = new RobotInfo(9, Team.B, UnitType.RAT_KING, 500, new MapLocation(12, 10), Direction.NORTH, 0, 0, null);
-        check(King.flee(c, new RobotInfo[]{k}, none, 20) == null, "flee: an enemy king does not count");
-        check(King.flee(c, new RobotInfo[]{rat(Team.B, 10, 10)}, none, 20) == null, "flee: no direction from the centre");
-        // mirror twin (x -> 20 - x): the step mirrors too
-        check(King.flee(c, new RobotInfo[]{rat(Team.B, 7, 10), rat(Team.B, 7, 11)}, none, 20) == Direction.EAST, "flee: mirrored inputs, mirrored step");
-        check(King.flee(c, new RobotInfo[]{rat(Team.B, 7, 10), rat(Team.B, 7, 11)}, new RobotInfo[]{rat(Team.A, 10, 7)}, 20) == Direction.SOUTHEAST, "flee: mirrored toward-ally step");
-    }
-
-    static void testKeepRisk() {
-        int G = Baby.GATHER, F = Baby.FIGHT, A = Baby.ATTACK;
-        check(Baby.keepRisk(false, false, F, false, false, false), "keepRisk: free rat keeps the mask");
-        check(!Baby.keepRisk(true, false, G, true, true, true), "keepRisk: a hunt drops it");
-        check(!Baby.keepRisk(false, true, F, false, false, false), "keepRisk: engaged fighter drops it by default");
-        check(!Baby.keepRisk(false, true, A, false, false, false), "keepRisk: engaged attacker drops it by default");
-        check(Baby.keepRisk(false, true, F, true, false, false), "keepRisk: RISK_IN_FIGHT keeps it for fighters");
-        check(Baby.keepRisk(false, true, G, false, true, false), "keepRisk: RISK_GATHER keeps it for gatherers");
-        check(!Baby.keepRisk(false, true, A, false, true, false), "keepRisk: RISK_GATHER not for attackers");
-        check(Baby.keepRisk(false, true, A, false, false, true), "keepRisk: RISK_NONFIGHT keeps it for attackers");
-        check(Baby.keepRisk(false, true, G, false, false, true), "keepRisk: RISK_NONFIGHT keeps it for gatherers");
-        check(!Baby.keepRisk(false, true, F, false, false, true), "keepRisk: RISK_NONFIGHT not for fighters");
-    }
-
-    static void testGrabSafe() throws GameActionException {
-        reset(); install();
-        G.round = 200; G.coop = false; Nav.avoid = 0; health = 60;
-        me = new MapLocation(5, 5); facing = Direction.EAST; G.me = me;
-        RobotInfo target = new RobotInfo(50, Team.B, UnitType.BABY_RAT, 40, new MapLocation(6, 5), Direction.EAST, 0, 0, null);
-        // beside us, facing us (NORTH is +y: from (5, 6) it faces SOUTH to see us), healthier: it can grab the carrier
-        RobotInfo strong = new RobotInfo(51, Team.B, UnitType.BABY_RAT, 80, new MapLocation(5, 6), Direction.SOUTH, 0, 0, null);
-        RobotInfo weak = new RobotInfo(52, Team.B, UnitType.BABY_RAT, 50, new MapLocation(5, 6), Direction.SOUTH, 0, 0, null);
-        RobotInfo away = new RobotInfo(53, Team.B, UnitType.BABY_RAT, 80, new MapLocation(5, 6), Direction.NORTH, 0, 0, null);
-        RobotInfo far = new RobotInfo(54, Team.B, UnitType.BABY_RAT, 80, new MapLocation(5, 7), Direction.SOUTH, 0, 0, null);
-        RobotInfo busy = new RobotInfo(55, Team.B, UnitType.BABY_RAT, 80, new MapLocation(5, 6), Direction.SOUTH, 0, 0, weak);
-        RobotInfo ally = new RobotInfo(56, Team.A, UnitType.BABY_RAT, 80, new MapLocation(5, 6), Direction.SOUTH, 0, 0, null);
-        check(Baby.grabRisk(new RobotInfo[]{target, strong}, 60, me), "grab safe: a healthier enemy beside us that sees us is a risk");
-        check(!Baby.grabRisk(new RobotInfo[]{target}, 60, me), "grab safe: the target alone is no risk");
-        check(!Baby.grabRisk(new RobotInfo[]{target, weak}, 60, me), "grab safe: a weaker neighbour cannot grab us");
-        check(!Baby.grabRisk(new RobotInfo[]{target, strong}, 80, me), "grab safe: equal health cannot grab (threshold 0, strictly more)");
-        check(!Baby.grabRisk(new RobotInfo[]{target, away}, 60, me), "grab safe: a neighbour facing away does not see us");
-        check(!Baby.grabRisk(new RobotInfo[]{target, far}, 60, me), "grab safe: two tiles away is no risk this round");
-        check(!Baby.grabRisk(new RobotInfo[]{target, busy}, 60, me), "grab safe: a neighbour already carrying cannot grab");
-        check(!Baby.grabRisk(new RobotInfo[]{target, ally}, 60, me), "grab safe: our own rats are no risk");
-        check(!Cfg.GRAB_SAFE, "grab safe: off by default");
-        // GRAB_SAFE_R: any healthier enemy within the radius, whatever its facing
-        check(Baby.grabRisk(new RobotInfo[]{target, away}, 60, me, 2), "grab safe r: a healthier neighbour facing away counts");
-        check(Baby.grabRisk(new RobotInfo[]{target, far}, 60, me, 2) && !Baby.grabRisk(new RobotInfo[]{target, far}, 60, me, 1), "grab safe r: two tiles out counts at radius 2, not 1");
-        check(!Baby.grabRisk(new RobotInfo[]{target, weak}, 60, me, 2), "grab safe r: a weaker one does not count");
-        check(!Baby.grabRisk(new RobotInfo[]{target, busy}, 60, me, 2) && !Baby.grabRisk(new RobotInfo[]{target, ally}, 60, me, 2), "grab safe r: carriers and allies do not count");
-        check(Cfg.GRAB_SAFE_R == 0, "grab safe r: off by default");
-    }
-
-    static void testRescue() throws GameActionException {
-        reset(); install();
-        G.round = 200; G.coop = false; Nav.avoid = 0;
-        me = new MapLocation(5, 5); facing = Direction.NORTH; G.me = me;
-        RobotInfo ours = new RobotInfo(40, Team.A, UnitType.BABY_RAT, 50, new MapLocation(7, 5), Direction.NORTH, 0, 0, null);
-        RobotInfo carrier = new RobotInfo(41, Team.B, UnitType.BABY_RAT, 90, new MapLocation(7, 5), Direction.NORTH, 0, 0, ours);
-        RobotInfo held = new RobotInfo(43, Team.B, UnitType.BABY_RAT, 50, new MapLocation(4, 5), Direction.NORTH, 0, 0, null);
-        RobotInfo theirs = new RobotInfo(42, Team.B, UnitType.BABY_RAT, 90, new MapLocation(4, 5), Direction.NORTH, 0, 0, held);
-        RobotInfo near = new RobotInfo(44, Team.B, UnitType.BABY_RAT, 30, new MapLocation(5, 6), Direction.SOUTH, 0, 0, null);
-        RobotInfo far = new RobotInfo(45, Team.B, UnitType.BABY_RAT, 90, new MapLocation(9, 5), Direction.NORTH, 0, 0, ours);
-        check(Baby.rescueTarget(new RobotInfo[]{near, theirs, far, carrier}) == carrier,
-              "rescue: the enemy carrying one of ours, not a nearer rat or a carrier of their own");
-        check(Baby.rescueTarget(new RobotInfo[]{near, theirs, far}) == null, "rescue: none beyond RESCUE_D2");
-        G.coop = true;
-        check(Baby.rescueTarget(new RobotInfo[]{carrier}) == null, "rescue: none in cooperation");
-        G.coop = false;
-        // it faces north from (7, 5): (6, 5) and (6, 4) are beside or behind it, (6, 6) is in its cone
-        robots.put(carrier.location, carrier);
-        Baby.rescueT = carrier;
-        check(Baby.rescue() && G.cheb(me, carrier.location) == 1 && !Baby.sees(carrier, me)
-              && me.directionTo(carrier.location) == facing, "rescue: steps beside it, facing it (" + me + " " + facing + ")");
-        check(Baby.tryCarry(robots.values().toArray(new RobotInfo[0])) && carrying == carrier, "rescue: then grabs it");
-        // already beside it and unseen: only turns to it
-        reset(); install();
-        G.round = 200; G.coop = false; Nav.avoid = 0;
-        me = new MapLocation(6, 4); facing = Direction.WEST; G.me = me;
-        robots.put(carrier.location, carrier);
-        Baby.rescueT = carrier;
-        check(Baby.rescue() && me.equals(new MapLocation(6, 4)) && facing == Direction.NORTHEAST,
-              "rescue: beside it already, turns to it (" + me + " " + facing + ")");
-        // only tiles it sees are in reach: no rescue
-        me = new MapLocation(7, 7); facing = Direction.SOUTH; G.me = me; actCd = 0; moveCd = 0; turnCd = 0;
-        check(!Baby.rescue() && me.equals(new MapLocation(7, 7)), "rescue: no step when every tile next to it is in its view");
-        // RESCUE_BLOCK: from there, step into the tile in front of it (its throw needs that tile empty), facing it
-        check(Baby.blockMuzzle(carrier.location) && me.equals(new MapLocation(7, 6)) && facing == Direction.SOUTH,
-              "rescue block: in front of it (" + me + " " + facing + ")");
-        me = new MapLocation(5, 5); facing = Direction.NORTH; G.me = me; actCd = 0; moveCd = 0; turnCd = 0;
-        check(!Baby.blockMuzzle(carrier.location) && me.equals(new MapLocation(5, 5)), "rescue block: not from two steps away");
-        // RESCUE_WALK: from two steps out, walk toward the nearest blind tile beside it (not into its front)
-        me = new MapLocation(7, 8); facing = Direction.SOUTH; G.me = me; actCd = 0; moveCd = 0; turnCd = 0;
-        int before = me.distanceSquaredTo(carrier.location);
-        check(Baby.walkBehind(carrier.location) && me.distanceSquaredTo(carrier.location) < before && !me.equals(new MapLocation(7, 6)),
-              "rescue walk: closer, around its front (" + me + ")");
-        // GUARD_CARRY_HP: a weaker carrier is grabbed from any side; from (7, 7), where every tile beside it is in
-        // its view, step beside it, facing it, then grab it (it is in front of us and has less health)
-        reset(); install();
-        G.round = 200; G.coop = false; Nav.avoid = 0; health = 100;
-        me = new MapLocation(7, 7); facing = Direction.SOUTH; G.me = me;
-        robots.put(carrier.location, carrier);
-        Baby.rescueT = carrier;
-        check(Baby.rescueWeak() && G.cheb(me, carrier.location) == 1 && me.directionTo(carrier.location) == facing,
-              "rescue weak: steps beside a weaker carrier in its view, facing it (" + me + " " + facing + ")");
-        check(Baby.tryCarry(robots.values().toArray(new RobotInfo[0])) && carrying == carrier, "rescue weak: then grabs it");
-        reset(); install();
-        G.round = 200; G.coop = false; Nav.avoid = 0;
-        me = new MapLocation(7, 6); facing = Direction.WEST; G.me = me;
-        robots.put(carrier.location, carrier);
-        Baby.rescueT = carrier;
-        check(Baby.rescueWeak() && me.equals(new MapLocation(7, 6)) && facing == Direction.SOUTH,
-              "rescue weak: beside it already (in its front), turns to it (" + me + " " + facing + ")");
-        check(!Cfg.GUARD_CARRY_HP, "rescue weak: off by default");
-        Baby.rescueT = null;
-    }
 
     static void testFrontier() throws GameActionException {
         MapLocation[] tg = new MapLocation[2];
         for (int mir = 0; mir < 3; mir++) {
             reset(); W = 20; H = 20; install();
-            Flow.setFrame(mir == 1 ? -1 : 1, 1);
             for (int x = 3; x <= 9; x++)
                 for (int y = 3; y <= 9; y++) {
                     int mx = mir == 1 ? W - 1 - x : x;
@@ -1231,9 +590,7 @@ public class BotTest {
                   "frontier: the nearest unseen tile is outside the dirt exit (" + t + ", " + viaDirt + ")");
             tg[mir] = t;
         }
-        check(tg[0] != null && tg[1] != null && tg[1].x == W - 1 - tg[0].x && tg[1].y == tg[0].y,
-              "frontier: the mirrored room in the mirrored frame gives the mirrored target (" + tg[0] + ", " + tg[1] + ")");
-        Flow.setFrame(1, 1);
+        check(tg[0] != null && tg[1] != null, "frontier: both rooms give a target (" + tg[0] + ", " + tg[1] + ")");
         Baby.breakoutUntil = -1; Baby.wallStrikes = 0; Baby.lastStrike = -1000;
         Baby.wallStrike(100, 150);
         boolean one = Baby.breakoutUntil < 0;
@@ -1277,7 +634,6 @@ public class BotTest {
                         reset(); W = 30; H = 20; install();
                         for (MapLocation w : wl) if (!w.equals(a) && !w.equals(t) && !w.equals(moved)) { walls.add(w); Sym.record(w.x, w.y, true, false, false); }
                         for (MapLocation d : dl) if (!walls.contains(d)) Sym.record(d.x, d.y, false, true, false);
-                        Flow.setFrame(fr % 2 == 0 ? 1 : -1, fr < 2 ? 1 : -1);
                         Flow.rev = true; Flow.lifo = (v & 1) != 0; Flow.fast = fast == 1;
                         me = a; G.startTurn();
                         Flow.request(t);
@@ -1294,190 +650,6 @@ public class BotTest {
         Flow.ox = Flow.DX; Flow.oy = Flow.DY;
         check(same == runs && found * 4 > runs * 3, "flow fast: the unrolled search finds the plain loop's path (" + same + "/" + runs + ", "
               + found + " found" + (diff == null ? "" : ", " + diff) + ")");
-    }
-
-    /** FLOW_W: the weighted reverse search leaves a Stash-like pocket (a wall row with dirt at both ends, unseen
-     *  ground beyond) by a path as short as the plain search's while touching fewer tiles, and a mirrored rat in the
-     *  mirrored frame finds the mirrored path. */
-    static void testTripHalf() {
-        reset(); W = 60; H = 60; install();
-        type = UnitType.RAT_KING;   // kings write the shared array
-        Comms.numMines = 0;
-        Comms.addMine(32, 49);
-        Comms.addMine(27, 10);
-        Comms.readMinesTrip();
-        Comms.noteTrip(32, 49, 137);
-        Comms.readMinesTrip();
-        int sig = Comms.tripSig;
-        check(Comms.numMines == 2 && new MapLocation(32, 49).equals(Comms.mines[0]) && Comms.trip[0] == 35 && Comms.trip[1] == 0,
-              "trip half: a timed walk goes in its mine's slot (steps / 4, rounded up)");
-        Comms.noteTrip(32, 49, 200);
-        Comms.noteTrip(27, 10, 1000);
-        Comms.readMinesTrip();
-        check(Comms.trip[0] == 35 && Comms.trip[1] == 63 && new MapLocation(27, 10).equals(Comms.mines[1]) && Comms.tripSig != sig,
-              "trip half: a slower walk is ignored, a long one caps at 63, the coordinates survive");
-        Comms.noteTrip(27, 10, 92);
-        Comms.readMinesTrip();
-        check(Comms.trip[1] == 23, "trip half: a faster walk replaces the kept one");
-        check(Baby.tripSide(35, 23, 28, 44, 8) == -1 && Baby.tripSide(23, 35, 44, 28, 8) == 1, "trip half: timed walks decide");
-        check(Baby.tripSide(35, 0, 28, 44, 8) == -1 && Baby.tripSide(35, -1, 28, 44, 8) == 0,
-              "trip half: a long detour hands the half to an untimed listed twin, never to an unlisted one");
-        check(Baby.tripSide(8, 0, 28, 44, 8) == 1 && Baby.tripSide(10, 0, 28, 44, 8) == 0 && Baby.tripSide(0, 0, 28, 44, 8) == 0
-              && Baby.tripSide(-1, 5, 28, 44, 8) == 0, "trip half: within the margin, or with nothing timed, no verdict");
-        Sym.mask = Sym.ROT;
-        Baby.home = new MapLocation(4, 54); Baby.origin = null;
-        check(Baby.tripVerdict(new MapLocation(32, 49), 8) == -1 && Baby.tripVerdict(new MapLocation(27, 10), 8) == 1
-              && Baby.tripVerdict(new MapLocation(53, 53), 8) == 0, "trip half: uneruesansfin's verdicts by timed walks");
-        Baby.tripFrom = 10; Baby.tripT = 0;
-        Baby.tripArrive(new MapLocation(27, 10), 60);
-        check(Baby.tripT == 50 && Baby.tripKey == 27 * 64 + 10 && Baby.tripFrom == 0, "trip half: a faster walk is kept to squeak");
-        Baby.tripT = 0; Baby.tripFrom = 5;
-        Baby.tripArrive(new MapLocation(27, 10), 105);
-        check(Baby.tripT == 0 && Baby.tripFrom == 0, "trip half: a slower walk is not kept");
-        Baby.tripArrive(new MapLocation(27, 10), 120);
-        check(Baby.tripT == 0, "trip half: an arrival with no walk under way times nothing");
-        // the king lists every twin once the symmetry is known, on either half
-        Sym.mask = Sym.ROT; King.tripMirN = 0;
-        Comms.numMines = 0; Arrays.fill(shared, 0);
-        Comms.addMine(32, 49); Comms.addMine(53, 53);
-        King.mirrorAll();
-        check(Comms.numMines == 4 && Comms.hasMine(27, 10) && Comms.hasMine(6, 6), "trip half: the king lists both twins");
-        King.mirrorAll();
-        check(Comms.numMines == 4, "trip half: twins of twins are listed already");
-        Sym.mask = Sym.ROT | Sym.VER; Comms.numMines = 0; Arrays.fill(shared, 0); King.tripMirN = 0;
-        Comms.addMine(32, 49);
-        King.mirrorAll();
-        check(Comms.numMines == 1, "trip half: no twins while two symmetries are live");
-        Comms.numMines = 0; Baby.home = null;
-        reset();
-    }
-
-    static void testPathOracle() {
-        reset(); W = 60; H = 60; install();
-        MapLocation a = new MapLocation(4, 54), b = new MapLocation(55, 5);
-        check(PathOracle.verdict(new MapLocation(32, 49), a) == -1 && PathOracle.verdict(new MapLocation(27, 10), a) == 1
-              && PathOracle.verdict(new MapLocation(32, 49), b) == 1 && PathOracle.verdict(new MapLocation(27, 10), b) == -1,
-              "path oracle: uneruesansfin's path verdicts flip with the side");
-        check(PathOracle.verdict(new MapLocation(30, 3), new MapLocation(3, 2)) == 0, "path oracle: no verdict for an unlisted mine");
-        reset(); W = 59; H = 20; install();
-        check(PathOracle.verdict(new MapLocation(19, 2), new MapLocation(2, 11)) == -1
-              && PathOracle.verdict(new MapLocation(19, 2), new MapLocation(56, 8)) == 1, "path oracle: cheesebottles");
-        reset();
-    }
-
-    static void testFlowW() throws GameActionException {
-        int[] n = new int[3], L = new int[3];
-        int[][] got = new int[3][];
-        String bad = null;
-        for (int v = 0; v < 3; v++) {
-            reset(); W = 30; H = 30; install();
-            for (int x = 0; x < 30; x++) {
-                if (x >= 2 && x <= 27) { walls.add(new MapLocation(x, 22)); Sym.record(x, 22, true, false, false); }
-                else { dirt.add(new MapLocation(x, 22)); Sym.record(x, 22, false, true, false); }
-            }
-            boolean mir = v == 2;
-            Flow.setFrame(mir ? -1 : 1, 1);
-            Flow.rev = true; Flow.fast = true; Flow.lifo = false;
-            MapLocation a = new MapLocation(mir ? 15 : 14, 25), t = new MapLocation(mir ? 19 : 10, 18);
-            me = a; G.startTurn();
-            Flow.request(t); Flow.work(0);   // allocates the arrays (the plain search: Cfg.FLOW_W is 1 here)
-            if (v > 0) { Flow.drop(); Flow.wt = 2; Flow.request(t); Flow.workRevW(0); Flow.wt = 0; }
-            int c = 0;
-            for (int i = 0; i < W * H; i++) if (Flow.g[i] >= Flow.base) c++;
-            n[v] = c; L[v] = Flow.plen;
-            String b = Flow.ready(t) ? pathCheck(me, t) : "not ready";
-            if (b != null && bad == null) bad = v + ": " + b;
-            got[v] = java.util.Arrays.copyOf(Flow.path, Flow.plen);
-        }
-        Flow.ox = Flow.DX; Flow.oy = Flow.DY;
-        boolean same = got[1].length == got[2].length;
-        for (int i = 0; same && i < got[1].length; i++) same = got[2][i] == W - 1 - got[1][i] % W + got[1][i] / W * W;
-        check(bad == null && L[1] <= L[0] && n[1] < n[0], "flow w: the weighted search leaves the pocket as short, touching fewer tiles ("
-              + bad + ", " + L[0] + " " + L[1] + " tiles, " + n[0] + " " + n[1] + " touched)");
-        check(same, "flow w: a mirrored rat finds the mirrored path");
-    }
-
-    /** FLOW_SPLICE: a ready path cut by a newly seen wall is mended by a detour to the first clear tile past it, the
-     *  rest of the old path kept; a detour with no way starts the full search. */
-    static void testFlowSplice() throws GameActionException {
-        reset(); W = 30; H = 30; install();
-        Flow.rev = true; Flow.fast = true; Flow.lifo = false;
-        MapLocation a = new MapLocation(5, 10), t = new MapLocation(5, 25);
-        me = a; G.startTurn();
-        Flow.request(t); Flow.work(0);   // nothing known: straight up
-        int[] old = java.util.Arrays.copyOf(Flow.path, Flow.plen);
-        int cut = -1;
-        for (int i = 0; i < old.length; i++) if (old[i] / W == 15) cut = i;
-        for (int x = 0; x <= 12; x++) { walls.add(new MapLocation(x, 15)); Sym.record(x, 15, true, false, false); }
-        int e2 = Flow.ends[2];
-        boolean ok = Flow.ready(t) && cut > 0 && Flow.splice(cut, 1) && Flow.splicing && Flow.building;
-        check(ok && Flow.tgt.equals(t) && Flow.searching(t) && Flow.ends[2] == e2 + 1, "flow splice: a detour search starts, aimed at the errand's target (" + ok + ")");
-        Flow.workSplice(0);
-        if (Flow.splicing && Flow.builtRound >= 0) Flow.join();
-        String bad = Flow.ready(t) ? pathCheck(me, t) : "not ready";
-        boolean tail = Flow.plen > old.length;
-        for (int i = 1; tail && i < old.length - cut - 1; i++) tail = Flow.path[Flow.plen - i] == old[old.length - i];
-        check(bad == null && !Flow.splicing && tail && Flow.tIdx == G.idx(t), "flow splice: the detour joins the old path's rest (" + bad + ", "
-              + Flow.plen + " tiles to " + old.length + ")");
-        // a cut path whose clear tile past the wall is walled in: the detour fails and the full search starts
-        reset(); W = 30; H = 30; install();
-        Flow.rev = true; Flow.fast = true;
-        me = a; G.startTurn();
-        Flow.request(t); Flow.work(0);
-        old = java.util.Arrays.copyOf(Flow.path, Flow.plen);
-        cut = -1;
-        for (int i = 0; i < old.length; i++) if (old[i] / W == 15) cut = i;
-        MapLocation c = new MapLocation(old[cut + 1] % W, old[cut + 1] / W);
-        for (int dx = -1; dx <= 1; dx++) for (int dy = -1; dy <= 1; dy++)
-            if (dx != 0 || dy != 0) { MapLocation w = new MapLocation(c.x + dx, c.y + dy); walls.add(w); Sym.record(w.x, w.y, true, false, false); }
-        int f0 = Flow.fails;
-        ok = Flow.splice(cut, 1);
-        Flow.workSplice(0);
-        check(ok && !Flow.splicing && Flow.tgt.equals(t) && Flow.tIdx == G.idx(t) && (Flow.building || Flow.ready(t)) && Flow.failTgt == null && Flow.fails == f0 + 1,
-              "flow splice: a detour with no way starts the full search, with no failure kept for the target");
-        // the cut at the path's end tile is searched afresh
-        reset(); W = 30; H = 30; install();
-        Flow.rev = true; Flow.fast = true;
-        me = new MapLocation(5, 13); G.startTurn();
-        MapLocation t2 = new MapLocation(5, 16);
-        Flow.request(t2); Flow.work(0);
-        walls.add(new MapLocation(5, 15)); Sym.record(5, 15, true, false, false);
-        check(Flow.ready(t2) && !Flow.splice(Flow.plen - 2, 1) && !Flow.splicing, "flow splice: no detour when the clear tile is the end");
-    }
-
-    /** RUSH_BAN: an attacker passes over a mirror spot whose flow search just failed while another spot is live. */
-    static void testRushBan() throws GameActionException {
-        check(Baby.banKey(false, 7200, true) < Baby.banKey(true, 0, false), "rush ban: a banned spot comes after any other");
-        check(Baby.banKey(false, 10, false) < Baby.banKey(false, 10, true) && Baby.banKey(false, 10, true) < Baby.banKey(false, 11, false),
-              "rush ban: then by distance, then the mirror-invariant bit");
-        reset(); W = 60; H = 60; install();
-        Sym.mask = Sym.ROT | Sym.HOR | Sym.VER;
-        MapLocation h0 = Baby.home, o0 = Baby.origin;
-        int nk = Baby.noKing;
-        Baby.home = Baby.origin = new MapLocation(3, 3); Baby.noKing = 0; Baby.rushFail = null;
-        round = 100; me = new MapLocation(9, 20); G.startTurn();
-        // from (9, 20) the spots by distance: (3, 56), (56, 3), (56, 56)
-        MapLocation near = new MapLocation(3, 56), mid = new MapLocation(56, 3), far = new MapLocation(56, 56);
-        MapLocation p0 = Baby.rushBan(150);
-        Flow.failTgt = near; Flow.failRound = 100;
-        MapLocation p1 = Baby.rushBan(150);
-        Flow.failTgt = mid; Flow.failRound = 120; round = 121; G.startTurn();
-        MapLocation p2 = Baby.rushBan(150);
-        Flow.failTgt = far; Flow.failRound = 130; round = 130; G.startTurn();
-        MapLocation p3 = Baby.rushBan(150);
-        check(near.equals(p0), "rush ban: the nearest spot first (" + p0 + ")");
-        check(mid.equals(p1), "rush ban: a just-failed spot is passed over for the next nearest (" + p1 + ")");
-        check(far.equals(p2), "rush ban: then the last one (" + p2 + ")");
-        check(near.equals(p3), "rush ban: all failed: the nearest again (" + p3 + ")");
-        Baby.rushFail = null; Flow.failTgt = near; Flow.failRound = 300; round = 300; G.startTurn();
-        MapLocation q0 = Baby.rushBan(150);
-        round = 449; G.startTurn();
-        MapLocation q1 = Baby.rushBan(150);
-        round = 450; G.startTurn();
-        MapLocation q2 = Baby.rushBan(150);
-        check(mid.equals(q0) && mid.equals(q1) && near.equals(q2), "rush ban: a ban lasts its ttl (" + q0 + " " + q1 + " " + q2 + ")");
-        check(near.equals(Baby.rushBan(0)) || Baby.rushFail == null, "rush ban: ttl 0 bans nothing");
-        Baby.home = h0; Baby.origin = o0; Baby.noKing = nk; Baby.rushFail = null; Flow.failTgt = null; round = 1;
     }
 
     /** The reverse search (FLOW_REV) finds a path as short as the forward one, from wherever the rat stands when it
@@ -1510,47 +682,6 @@ public class BotTest {
         Flow.request(t); Flow.work(0);
         check(!Flow.ready(t) && !Flow.building && Flow.fails == f0 + 1 && Flow.searching(t) == false,
               "flow rev: a walled-in rat is unreachable: the search fails");
-    }
-
-    static void testKingBlock() {
-        reset(); W = 20; H = 12; install();
-        me = new MapLocation(5, 5); G.startTurn();
-        Comms.kings[0] = new MapLocation(10, 5); Comms.numKings = 1;
-        Nav.kingMarks = new MapLocation[Comms.KING_SLOTS]; Nav.kingMarkN = 0;
-        Nav.markKings();
-        int n = 0;
-        for (int i = 0; i < W * H; i++) if ((Sym.mem[i] & Sym.KING) != 0) n++;
-        check(n == 9 && (Sym.mem[G.idx(new MapLocation(11, 6))] & Sym.KING) != 0, "king block: the king's 3x3 is marked (" + n + ")");
-        Sym.record(11, 6, false, false, false);
-        Nav.terrain = Sym.WALL | Sym.DIRT | Sym.KING;
-        check((Sym.mem[G.idx(new MapLocation(11, 6))] & Sym.KING) != 0 && Nav.terrainBlocked(new MapLocation(11, 6)),
-              "king block: re-sensing a body tile keeps the mark; bug walks treat it as terrain");
-        Nav.terrain = Sym.WALL | Sym.DIRT;
-        check(!Nav.terrainBlocked(new MapLocation(11, 6)) && Nav.terrainBlocked(new MapLocation(-1, 6)),
-              "king flow: without KING_BLOCK a marked body tile is no terrain for greedy and bug walks");
-        Nav.terrain = Sym.WALL | Sym.DIRT | (Cfg.KING_BLOCK ? Sym.KING : 0);
-        check(Nav.atKing(new MapLocation(10, 5)) && Nav.atKing(new MapLocation(9, 6)) && !Nav.atKing(new MapLocation(12, 5)),
-              "king block: atKing covers the body only");
-        // a path past the king goes around its body when the search blocks king tiles
-        MapLocation t = new MapLocation(15, 5);
-        Flow.request(t);
-        Flow.block = Sym.WALL | Sym.KING;
-        Flow.work(0);
-        boolean crosses = false;
-        for (int i = 0; i < Flow.plen; i++) if ((Sym.mem[Flow.path[i]] & Sym.KING) != 0) crosses = true;
-        check(Flow.ready(t) && !crosses, "king block: the path goes around the king's body");
-        // the king moves two tiles east: its old column is cleared, the new one marked
-        Comms.kings[0] = new MapLocation(12, 5);
-        Nav.markKings();
-        n = 0;
-        for (int i = 0; i < W * H; i++) if ((Sym.mem[i] & Sym.KING) != 0) n++;
-        check(n == 9 && (Sym.mem[G.idx(new MapLocation(9, 5))] & Sym.KING) == 0 && (Sym.mem[G.idx(new MapLocation(13, 4))] & Sym.KING) != 0,
-              "king block: a moved king is re-marked (" + n + ")");
-        Comms.numKings = 0;
-        Nav.markKings();
-        n = 0;
-        for (int i = 0; i < W * H; i++) if ((Sym.mem[i] & Sym.KING) != 0) n++;
-        check(n == 0, "king block: marks clear when the king is gone (" + n + ")");
     }
 
     /** Walk toward a target that steps between three tiles every two turns, behind a wall; true if we got beside it. */
@@ -1597,10 +728,11 @@ public class BotTest {
 
     static void testTrail() throws GameActionException {
         reset(); W = 30; H = 20; install();
+        Trail.alloc();
         trailWalk(p(5, 5), p(6, 5), p(7, 5), p(7, 6), p(6, 6));
         check(Trail.n == 5, "trail: five tiles walked (" + Trail.n + ")");
         trailWalk(p(6, 5));
-        check(Trail.n == 2 && Trail.at[G.idx(p(7, 5))] == 0 && Trail.at[G.idx(p(6, 6))] == 0 && Trail.at[G.idx(p(6, 5))] == 2,
+        check(Trail.n == 2 && Trail.pos(G.idx(p(7, 5))) == 0 && Trail.pos(G.idx(p(6, 6))) == 0 && Trail.pos(G.idx(p(6, 5))) == 2,
             "trail: stepping back onto it cuts the loop (" + Trail.n + ")");
         trailWalk(p(7, 5), p(7, 6), p(6, 6));
         moveCd = 0;
@@ -1623,12 +755,14 @@ public class BotTest {
         trailWalk(me);
         check(Trail.back() == Trail.HELD && me.equals(p(6, 5)), "trail: HELD while movement is not ready");
         trailWalk(p(12, 12));
-        check(Trail.n == 1 && Trail.at[G.idx(p(5, 5))] == 0 && Trail.at[G.idx(p(12, 12))] == 1, "trail: a jump starts a new chain");
+        check(Trail.n == 1 && Trail.pos(G.idx(p(5, 5))) == 0 && Trail.pos(G.idx(p(12, 12))) == 1, "trail: a jump starts a new chain");
         int with = homeRun(true), without = homeRun(false);
         check(with > 0 && with <= 40, "trail: a stalled carrier walks its trail back to a king behind a wall (" + with + " turns)");
         check(with > 0 && (without < 0 || with <= without), "trail: no slower than nav alone (" + with + " vs " + without + ")");
         int gapped = homeRun(true, 6, 12), ungapped = homeRun(true, 6, 0), navOnly = homeRun(false, 6, 0);
-        check(gapped > 0 && (navOnly < 0 || gapped < navOnly), "trail gap: a slowed carrier skipping rounds walks its trail home ("
+        // the reverse, dig-aware Flow now brings the slowed carrier home without a TRAIL_STALL stall here, so the trail
+        // need not fire; it must never be slower
+        check(gapped > 0 && (navOnly < 0 || gapped <= navOnly), "trail gap: a slowed carrier skipping rounds gets home no slower ("
             + gapped + " turns, nav alone " + navOnly + ")");
         check(ungapped == navOnly, "trail gap: with TRAIL_GAP 0 the skipped rounds keep the trail from firing (" + ungapped + ")");
     }
@@ -1642,6 +776,7 @@ public class BotTest {
     static int homeRun(boolean trail, int extra, int gap) throws GameActionException {
         reset(); W = 30; H = 20; install();
         moveExtra = extra;
+        Trail.alloc();
         int keep = Baby.trailGap;
         if (gap >= 0) Baby.trailGap = gap;
         for (int y = 0; y <= 16; y++) walls.add(p(10, y));
@@ -1669,18 +804,6 @@ public class BotTest {
         return -1;
     }
 
-    static void testWarStrike() {
-        int n1 = 0, n2 = 0, g = 0;
-        for (int b = 0; b < 400; b += Cfg.FIGHT_EVERY) {
-            if (Baby.striker(Baby.FIGHT, b, 1)) n1++;
-            if (Baby.striker(Baby.FIGHT, b, 2)) n2++;
-            if (Baby.striker(Baby.GATHER, b, 1) || Baby.striker(Baby.FIGHT, b, 0)) g++;
-        }
-        int all = 400 / Cfg.FIGHT_EVERY;
-        check(n1 == all && n2 == all / 2 && g == 0, "war strike: every fighter at 1, half at 2, no gatherer, none at 0 ("
-            + n1 + " " + n2 + " " + g + ")");
-    }
-
     static void testAtMine() {
         reset(); W = 30; H = 30; install();
         MapLocation m = new MapLocation(15, 15);
@@ -1698,62 +821,6 @@ public class BotTest {
         me = new MapLocation(11, 15); G.startTurn();
         check(!Baby.atMine(m, 4), "at mine: a king 3 from the mine does not widen it");
         Comms.numKings = 0;
-    }
-
-    static void testCheeseBan() {
-        reset(); W = 20; H = 20; install();
-        Arrays.fill(Baby.banned, null); Baby.banHead = 0;
-        MapLocation a = new MapLocation(18, 21 - 10);
-        round = 100; G.startTurn();
-        Baby.banCheese(a);
-        check(Baby.bannedCheese(a, 60) && Baby.bannedCheese(new MapLocation(16, 13), 60) && !Baby.bannedCheese(new MapLocation(15, 11), 60),
-              "cheese ban: the pile and its Chebyshev-2 neighbourhood, nothing farther");
-        round = 159; G.startTurn();
-        check(Baby.bannedCheese(a, 60), "cheese ban: still banned on its last round");
-        round = 160; G.startTurn();
-        check(!Baby.bannedCheese(a, 60), "cheese ban: expires after ttl rounds");
-        for (int i = 0; i < 4; i++) Baby.banCheese(new MapLocation(2 + 5 * i, 2));
-        check(!Baby.bannedCheese(a, 1000) && Baby.bannedCheese(new MapLocation(17, 2), 60) && Baby.bannedCheese(new MapLocation(2, 2), 60),
-              "cheese ban: a ring of four, the oldest overwritten");
-        Arrays.fill(Baby.banned, null); Baby.banHead = 0;
-        // detour: a pile 3 tiles east through a wall whose path runs around it, against one in the open
-        reset(); W = 30; H = 20; install();
-        for (int y = 3; y <= 17; y++) walls.add(new MapLocation(10, y));
-        for (int y = 0; y < H; y++) for (int x = 0; x < W; x++) Sym.record(x, y, walls.contains(new MapLocation(x, y)), false, false);
-        me = new MapLocation(8, 10); G.startTurn();
-        MapLocation far = new MapLocation(11, 10), near = new MapLocation(8, 13);
-        Flow.request(far); Flow.work(0);
-        check(Flow.ready(far) && Flow.detour(far), "cheese ban: a path around the wall is a detour (" + Flow.plen + " tiles)");
-        Flow.request(near); Flow.work(0);
-        check(Flow.ready(near) && !Flow.detour(near) && !Flow.detour(far), "cheese ban: a straight path is not; only the last path counts");
-    }
-
-    static void testFlowJam() {
-        // a path straight east with an ally parked on its next tile: sidestep lands diagonally beside a later path
-        // tile, never on the ally; the ROT-mirrored scene picks the mirrored side
-        Direction[] got = new Direction[2];
-        for (int m = 0; m < 2; m++) {
-            reset(); W = 30; H = 20; install();
-            MapLocation a = new MapLocation(5, 10), t = new MapLocation(15, 10);
-            if (m == 1) { a = G.mirror(a, Sym.ROT); t = G.mirror(t, Sym.ROT); }
-            me = a; G.startTurn();
-            // a straight path, laid by hand (A* ties zigzag)
-            Flow.path = new int[1024];
-            int sx = Integer.signum(t.x - a.x);
-            for (int i = 0; i <= 10; i++) Flow.path[i] = G.idx(new MapLocation(a.x + sx * i, a.y));
-            Flow.plen = 11; Flow.ppos = 0;
-            MapLocation block = new MapLocation(Flow.path[1] % W, Flow.path[1] / W);
-            robots.put(block, new RobotInfo(2, Team.A, UnitType.BABY_RAT, 100, block, Direction.NORTH, 0, 0, null));
-            Direction d = Flow.sidestep(1);
-            got[m] = d;
-            MapLocation l = d == null ? null : me.add(d);
-            check(l != null && !l.equals(block) && Math.abs(l.x - Flow.path[2] % W) <= 1 && Math.abs(l.y - Flow.path[2] / W) <= 1,
-                  "flow jam: sidestep lands beside the next free path tile (" + d + ")");
-            // boxed in on every side: no sidestep
-            for (Direction e : G.DIRS) { MapLocation q = me.add(e); robots.put(q, new RobotInfo(3, Team.A, UnitType.BABY_RAT, 100, q, Direction.NORTH, 0, 0, null)); }
-            check(Flow.sidestep(1) == null, "flow jam: no sidestep when boxed in");
-        }
-        check(got[0] != null && got[1] != null && got[1] == got[0].opposite(), "flow jam: mirrored rats sidestep to mirrored sides (" + got[0] + ", " + got[1] + ")");
     }
 
     static void testFlowField() {
@@ -1792,7 +859,7 @@ public class BotTest {
         me = new MapLocation(2, 4); G.startTurn();
         Flow.request(t);
         check(Flow.searching(t), "flow: searching while the build runs");
-        round += Cfg.FLOW_MAX_TURNS + 1; G.startTurn();
+        round += (Flow.rev ? Cfg.FLOW_REV_TURNS : Cfg.FLOW_MAX_TURNS) + 1; G.startTurn();
         check(!Flow.searching(t) && !Flow.building, "flow: slow search times out");
     }
 
@@ -1911,67 +978,6 @@ public class BotTest {
         check(same && wav[0][1 + W] > 0, "bitflow: rotated map, rotated field");
     }
 
-    /** The path from a to t under frame (fu, fv), as tile indices, over cells {x, y, 1 wall | 2 dirt}. */
-    static int[] flowPath(MapLocation a, MapLocation t, int fu, int fv, int[][] cells) {
-        reset(); W = 15; H = 11; install();
-        for (int[] c : cells) Sym.record(c[0], c[1], c[2] == 1, c[2] == 2, false);
-        Flow.setFrame(fu, fv);
-        me = a; G.startTurn();
-        Flow.request(t);
-        Flow.work(0);
-        return Flow.ready(t) ? java.util.Arrays.copyOf(Flow.path, Flow.plen) : new int[0];
-    }
-
-    /** True when path q is path p mapped through (x, y) -> (sx < 0 ? W-1-x : x, sy < 0 ? H-1-y : y). */
-    static boolean mirrored(int[] p, int[] q, int sx, int sy) {
-        if (p.length == 0 || p.length != q.length) return false;
-        for (int i = 0; i < p.length; i++) {
-            int x = p[i] % W, y = p[i] / W;
-            if (q[i] != (sx < 0 ? W - 1 - x : x) + (sy < 0 ? H - 1 - y : y) * W) return false;
-        }
-        return true;
-    }
-
-    static int[][] mirrorCells(int[][] half, int sx, int sy) {
-        int[][] c = new int[2 * half.length][];
-        for (int i = 0; i < half.length; i++) {
-            c[2 * i] = half[i];
-            c[2 * i + 1] = new int[]{sx < 0 ? 14 - half[i][0] : half[i][0], sy < 0 ? 10 - half[i][1] : half[i][1], half[i][2]};
-        }
-        return c;
-    }
-
-    static void testFlowMirror() {
-        // a rotationally symmetric 15x11 layout (walls and dirt) where the fixed neighbour order breaks a tie between
-        // equal paths differently for the twin (1 of 211 random layouts did)
-        int[][] rot = mirrorCells(new int[][]{{14, 7, 1}, {2, 5, 2}, {4, 3, 1}, {7, 5, 2}, {2, 9, 2}, {5, 4, 2}, {13, 5, 1},
-            {14, 4, 2}, {14, 0, 1}, {8, 5, 1}, {0, 4, 1}, {1, 5, 1}, {7, 9, 1}, {2, 7, 2}}, -1, -1);
-        MapLocation a = new MapLocation(3, 10), t = new MapLocation(11, 1);
-        MapLocation ra = new MapLocation(14 - a.x, 10 - a.y), rt = new MapLocation(14 - t.x, 10 - t.y);
-        int[] p = flowPath(a, t, 1, 1, rot);
-        check(mirrored(p, flowPath(ra, rt, -1, -1, rot), -1, -1), "flow mirror: the rotated twin with the rotated frame takes the rotated path");
-        check(!mirrored(p, flowPath(ra, rt, 1, 1, rot), -1, -1), "flow mirror: without the frame this twin breaks the tie another way");
-        // horizontal symmetry (y flipped): the frame flips y only
-        int[][] hor = mirrorCells(new int[][]{{6, 2, 1}, {6, 3, 1}, {8, 7, 2}, {9, 1, 2}}, 1, -1);
-        a = new MapLocation(2, 3);
-        t = new MapLocation(12, 8);
-        p = flowPath(a, t, 1, 1, hor);
-        check(mirrored(p, flowPath(new MapLocation(a.x, 10 - a.y), new MapLocation(t.x, 10 - t.y), 1, -1, hor), 1, -1),
-            "flow mirror: the reflected twin with the reflected frame takes the reflected path");
-        Flow.ox = Flow.DX; Flow.oy = Flow.DY;
-    }
-
-    static void testFlowQuota() {
-        reset(); install();
-        Flow.quotaMax = 3; Flow.quotaRound = -1;
-        G.round = 7;
-        boolean a = Flow.step() && Flow.step() && Flow.step();
-        check(a && !Flow.step() && !Flow.step(), "flow quota: a round allows quotaMax search steps");
-        G.round = 8;
-        check(Flow.step(), "flow quota: the next round starts a fresh quota");
-        Flow.quotaMax = Cfg.FLOW_QUOTA; Flow.quotaRound = -1;
-    }
-
     static void testFlowAlloc() {
         reset(); W = 30; H = 20; install();
         int n = W * H;
@@ -1989,33 +995,6 @@ public class BotTest {
         Flow.start(new MapLocation(20, 10), false);
         Flow.par = new int[5];
         check(Flow.alloc(n, 0) && Flow.g.length == n && Flow.par.length == n, "flow alloc: a fresh g reallocates the other pieces");
-    }
-
-    static void testTieFirst() {
-        reset(); W = 60; H = 60; install();
-        // superioristhmus (rotational): the king at (49,56) had a corner (47,54) and an edge (47,55) of equal score
-        int[][] fr = {{1, 1}, {-1, -1}, {-1, 1}, {1, -1}};  // identity, rotation, x and y reflections
-        boolean first = false;
-        for (int k = 0; k < fr.length; k++) {
-            int sx = fr[k][0], sy = fr[k][1];
-            MapLocation c = tw(49, 56, sx, sy), a = tw(47, 54, sx, sy), b = tw(47, 55, sx, sy);
-            G.chir = G.chirOf(c);
-            boolean f = G.tieFirst(c, a, b);
-            if (k == 0) first = f;
-            check(f == first && G.tieFirst(c, b, a) == !f, "tie first: twin " + k + " ranks the two tiles the same way");
-        }
-        // a total order on the spawn ring: of two distinct tiles exactly one ranks first
-        MapLocation c = new MapLocation(49, 56);
-        G.chir = G.chirOf(c);
-        boolean total = true;
-        for (int i = 0; i < 25; i++)
-            for (int j = 0; j < 25; j++) {
-                if (i == j) continue;
-                MapLocation a = c.translate(i % 5 - 2, i / 5 - 2), b = c.translate(j % 5 - 2, j / 5 - 2);
-                if (G.tieFirst(c, a, b) == G.tieFirst(c, b, a)) total = false;
-            }
-        check(total, "tie first: a strict total order on the 5x5 around the king");
-        G.chir = 1;
     }
 
     static MapLocation tw(int x, int y, int sx, int sy) { return new MapLocation(sx > 0 ? x : W - 1 - x, sy > 0 ? y : H - 1 - y); }
@@ -2178,52 +1157,6 @@ public class BotTest {
         Baby.carryRound = -100;
     }
 
-    static void testMicroRetreatsWhenOutnumbered() throws GameActionException {
-        reset(); install();
-        // three healthy enemies two tiles north, we are alone: micro must not step toward them
-        for (int i = 0; i < 3; i++) { RobotInfo e = enemyRat(20 + i, 4 + i, 7, 100); robots.put(e.location, e); }
-        check(Micro.act(robots.values().toArray(new RobotInfo[0])), "micro: takes the decision with enemies near");
-        check(me.y <= 5, "micro: outnumbered rat does not advance (at " + me + ")");
-        // one weak enemy adjacent-diagonal reachable, we are healthy: micro closes / holds contact
-        reset(); install();
-        RobotInfo e = enemyRat(30, 6, 7, 20);
-        robots.put(e.location, e);
-        Micro.act(robots.values().toArray(new RobotInfo[0]));
-        check(me.distanceSquaredTo(e.location) <= 2, "micro: winning fight moves into bite range (at " + me + ")");
-        // outnumbered three tiles off: of the steps that keep the distance, the one onto cheese wins
-        reset(); install();
-        for (int i = 0; i < 3; i++) { RobotInfo f = enemyRat(40 + i, 4 + i, 9, 100); robots.put(f.location, f); }
-        cheeseAt.put(new MapLocation(4, 6), 20);
-        Micro.act(robots.values().toArray(new RobotInfo[0]));
-        check(me.equals(new MapLocation(4, 6)), "micro: a safe step onto visible cheese (at " + me + ")");
-    }
-
-    static void testWarRoles() throws GameActionException {
-        reset(); install();
-        RobotInfo strong = enemyRat(40, 5, 7, 100), weak = enemyRat(41, 7, 8, 40), far = enemyRat(42, 5, 12, 10);
-        RobotInfo[] rs = {strong, weak, far};
-        check(Baby.prey(rs, 100) == weak, "prey: nearest weaker enemy within dist2 20");
-        check(Baby.prey(rs, 40) == null, "prey: none when no enemy is strictly weaker in range");
-        // THIEF_LOAD: the nearest loaded enemy baby in range that is not healthier than us
-        RobotInfo loaded = new RobotInfo(43, Team.B, UnitType.BABY_RAT, 60, new MapLocation(7, 7), Direction.NORTH, 0, 30, null);
-        RobotInfo light = new RobotInfo(44, Team.B, UnitType.BABY_RAT, 60, new MapLocation(6, 6), Direction.NORTH, 0, 10, null);
-        RobotInfo strongLoaded = new RobotInfo(45, Team.B, UnitType.BABY_RAT, 100, new MapLocation(6, 7), Direction.NORTH, 0, 50, null);
-        RobotInfo farLoaded = new RobotInfo(46, Team.B, UnitType.BABY_RAT, 20, new MapLocation(5, 10), Direction.NORTH, 0, 50, null);
-        RobotInfo[] ts = {light, strongLoaded, loaded, farLoaded};
-        check(Baby.thief(ts, 80, 20) == loaded, "thief: nearest loaded, not healthier, within dist2 20");
-        check(Baby.thief(ts, 100, 20) == strongLoaded && Baby.thief(ts, 80, 40) == null, "thief: health and load bounds");
-        check(Baby.thief(new RobotInfo[]{farLoaded}, 80, 20) == null && Cfg.THIEF_LOAD == 0, "thief: range dist2 20; off by default");
-        // a gatherer ignores an enemy two tiles away, but turns to face an adjacent one
-        Baby.role = Baby.GATHER;
-        Baby.nearestEnemy = strong;
-        if (Cfg.WAR_GATHER > 0) check(!Baby.war(), "war: gatherer keeps gathering past a non-adjacent enemy");
-        else check(Baby.war(), "war: with WAR_GATHER 0 a gatherer engages an enemy two tiles away");
-        RobotInfo adj = enemyRat(43, me.x + 1, me.y, 100);
-        Baby.nearestEnemy = adj;
-        check(Baby.war(), "war: gatherer holds against an adjacent enemy");
-        check(facing == me.directionTo(adj.location), "war: gatherer faces the adjacent enemy");
-    }
-
     static void testRetreat() throws GameActionException {
         reset(); install();
         Baby.nearestEnemy = enemyRat(50, 5, 7, 100);
@@ -2232,34 +1165,6 @@ public class BotTest {
         Comms.kings[0] = new MapLocation(5, 0); Comms.numKings = 1;
         check(Baby.retreat(), "retreat: a wounded rat near an enemy falls back");
         check(me.y < 5, "retreat: it moved toward its king (at " + me + ")");
-    }
-
-    static void testFort() throws GameActionException {
-        reset(); install();
-        Baby.role = Baby.FIGHT; Baby.cat = null;
-        Comms.kings[0] = new MapLocation(5, 15); Comms.numKings = 1;
-        check(Baby.fort(), "fort: a fighter far from the king takes the decision");
-        check(me.y > 5, "fort: it heads back toward the king (at " + me + ")");
-        check(!Baby.nearHome(new MapLocation(5, 5), 4) && Baby.nearHome(new MapLocation(7, 12), 4), "fort: nearHome radius");
-    }
-
-    static void testStandoff() throws GameActionException {
-        reset(); install();
-        G.coop = false; Baby.role = Baby.FIGHT; Baby.hunting = false; Baby.eKing = null;
-        // an enemy three tiles north facing us (south)
-        RobotInfo e = new RobotInfo(64, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 8), Direction.SOUTH, 0, 0, null);
-        robots.put(e.location, e);
-        Baby.nearestEnemy = e;
-        MapLocation start = me;
-        check(Baby.war(), "standoff: war takes the turn");
-        if (Cfg.STANDOFF) check(me.equals(start) && facing == Direction.NORTH, "standoff: holds and faces a watching enemy (" + me + ")");
-        else check(!me.equals(start), "standoff off: closes on the enemy");
-        // an enemy looking away is approached
-        reset(); install(); G.coop = false; Baby.role = Baby.FIGHT; Baby.hunting = false; Baby.eKing = null;
-        e = new RobotInfo(64, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 8), Direction.NORTH, 0, 0, null);
-        robots.put(e.location, e);
-        Baby.nearestEnemy = e;
-        check(Baby.war() && !me.equals(new MapLocation(5, 5)), "standoff: closes on an enemy looking away");
     }
 
     static void testSpawnFloor() throws GameActionException {
@@ -2280,69 +1185,6 @@ public class BotTest {
         King.spawn(new RobotInfo[0], new RobotInfo[0]);
         check(built.size() == 1 && facing == me.directionTo(built.get(0)), "spawn face: the king faces the spawn tile before it builds (" + built + " " + facing + ")");
         King.faceSpawn = Cfg.SYM_FACE;
-    }
-
-    static void testMineExplore() {
-        int ex1 = 0, ex2 = 0;
-        for (int s = 0; s < 600; s++) { if (Baby.explorer(s, 1, 1)) ex1++; if (Baby.explorer(s, 2, 1)) ex2++; }
-        check(ex1 == 300 && ex2 == 200, "mine explore: half the gatherers explore with one mine known, a third with two");
-        check(Baby.explorer(7, 0, 1) && !Baby.explorer(3, 4, 1) && Baby.explorer(4, 4, 1) && Baby.explorer(4, 3, 2) && !Baby.explorer(5, 3, 2), "mine explore: no mine known -> explore; slot past m explores");
-    }
-
-    static void testSwapPast() throws GameActionException {
-        // a wall band y 6..8 with a 1-wide gap at x = 5 and an ally standing in the gap, facing us
-        reset(); install();
-        for (int y = 6; y <= 8; y++) for (int x = 0; x < W; x++) if (x != 5) walls.add(new MapLocation(x, y));
-        MapLocation a = new MapLocation(5, 7), t = new MapLocation(5, 11);
-        robots.put(a, new RobotInfo(77, Team.A, UnitType.BABY_RAT, 100, a, Direction.SOUTH, 0, 0, null));
-        for (int i = 0; i < 16; i++) tick(t);
-        check(me.y < a.y && robots.containsKey(a) && carrying == null && Nav.swaps == 0, "swap: off by default, the ally holds us (" + me + ")");
-        reset(); install();
-        for (int y = 6; y <= 8; y++) for (int x = 0; x < W; x++) if (x != 5) walls.add(new MapLocation(x, y));
-        robots.put(a, new RobotInfo(77, Team.A, UnitType.BABY_RAT, 100, a, Direction.SOUTH, 0, 0, null));
-        Nav.swapHold = 2;
-        RobotInfo after = null;
-        for (int i = 0; i < 16 && after == null; i++) {
-            tick(t);
-            if (carrying != null) {
-                for (int j = 0; j < 4 && carrying != null; j++) { round++; moveCd = Math.max(0, moveCd - 10); turnCd = Math.max(0, turnCd - 10); actCd = Math.max(0, actCd - 10); G.startTurn(); Baby.dropAlly(); }
-                for (RobotInfo r : robots.values()) if (r.ID == 77) after = r;
-            }
-        }
-        check(Nav.swaps == 1 && after != null && after.location.y < me.y && me.y >= a.y && carrying == null,
-              "swap: carry the ally past and set it down behind (" + me + " ally " + (after == null ? null : after.location) + ")");
-        // an enemy rat in the corridor is not carried
-        reset(); install();
-        for (int y = 6; y <= 8; y++) for (int x = 0; x < W; x++) if (x != 5) walls.add(new MapLocation(x, y));
-        robots.put(a, new RobotInfo(78, Team.B, UnitType.BABY_RAT, 100, a, Direction.SOUTH, 0, 0, null));
-        Nav.swapHold = 2;
-        for (int i = 0; i < 16; i++) tick(t);
-        check(Nav.swaps == 0 && carrying == null, "swap: never an enemy");
-        Nav.swapHold = Cfg.SWAP_HOLD;
-        // SWAP_YIELD's mask: the tiles next to an ally carrying an ally (not one carrying an enemy, not a plain ally)
-        reset(); install();
-        G.startTurn();
-        RobotInfo held = new RobotInfo(79, Team.A, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, null);
-        RobotInfo foe = new RobotInfo(80, Team.B, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, null);
-        RobotInfo carrier = new RobotInfo(81, Team.A, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, held);
-        int m = Baby.carrierMask(new RobotInfo[] { carrier });
-        int want = 0;
-        for (int i = 0; i < 8; i++) if (G.cheb(me.add(G.DIRS[i]), p(5, 7)) <= 1) want |= 1 << i;
-        check(want != 0 && m == want, "swap yield: avoid the carrier's neighbours (" + me + " mask " + m + " want " + want + ")");
-        RobotInfo thrower = new RobotInfo(82, Team.A, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, foe);
-        RobotInfo plain = new RobotInfo(83, Team.A, UnitType.BABY_RAT, 100, p(5, 7), Direction.SOUTH, 0, 0, null);
-        check(Baby.carrierMask(new RobotInfo[] { thrower, plain }) == 0, "swap yield: a rat carrying an enemy or nothing is passed as usual");
-        // SWAP_HEADON: only an ally facing back at our step (within 45 degrees) is head-on
-        check(Nav.headOn(Direction.SOUTH, Direction.NORTH) && Nav.headOn(Direction.SOUTHWEST, Direction.NORTH)
-              && Nav.headOn(Direction.SOUTHEAST, Direction.NORTH) && !Nav.headOn(Direction.NORTH, Direction.NORTH)
-              && !Nav.headOn(Direction.EAST, Direction.NORTH) && Nav.headOn(Direction.NORTHWEST, Direction.SOUTHEAST),
-              "swap head-on: opposite facings only");
-        // SWAP_NO_ALONG: an ally facing our step (within 45 degrees) is along; SWAP_PAIR: the same ally not twice soon
-        check(Nav.along(Direction.NORTH, Direction.NORTH) && Nav.along(Direction.NORTHEAST, Direction.NORTH)
-              && Nav.along(Direction.NORTHWEST, Direction.NORTH) && !Nav.along(Direction.EAST, Direction.NORTH)
-              && !Nav.along(Direction.SOUTH, Direction.NORTH), "swap along: same-way facings only");
-        check(Nav.pairBlocked(7, 110, 7, 100, 30) && !Nav.pairBlocked(7, 130, 7, 100, 30) && !Nav.pairBlocked(8, 110, 7, 100, 30)
-              && !Nav.pairBlocked(7, 110, 7, 100, 0), "swap pair: the last ally carried is skipped for ttl rounds");
     }
 
     static void testFlank() throws GameActionException {
@@ -2423,108 +1265,6 @@ public class BotTest {
         Flow.lastTgt = null; Baby.catBanUntil = -1; Baby.reachTurns = saved; Nav.stall = 0;
     }
 
-    static void testSeal() {
-        // a 7x7 wall ring at x, y 4..10 around a 5x5 room (5..9); the rat at (15, 15), outside
-        reset(); W = 20; H = 20; install();
-        me = new MapLocation(15, 15); G.startTurn();
-        for (int i = 4; i <= 10; i++) {
-            Sym.mem[G.idx(i, 4)] = Sym.mem[G.idx(i, 10)] = Sym.mem[G.idx(4, i)] = Sym.mem[G.idx(10, i)] = Sym.SEEN | Sym.WALL;
-        }
-        int saved = Seal.cap;
-        Seal.cap = 30; sealReset();
-        check(!Seal.sealed(new MapLocation(12, 12)), "seal: a pile outside the room is open");
-        check(Seal.sealed(new MapLocation(7, 7)), "seal: a pile in the walled room is sealed");
-        check((Sym.mem[G.idx(5, 9)] & Sym.SEAL) != 0 && (Sym.mem[G.idx(4, 7)] & Sym.SEAL) == 0, "seal: the room's tiles are marked, its walls not");
-        Sym.record(6, 6, false, false, false);
-        check((Sym.mem[G.idx(6, 6)] & Sym.SEAL) != 0, "seal: a fresh sighting keeps the mark");
-        // an unseen ring tile might be open: the room is not sealed
-        sealReset();
-        for (int x = 5; x <= 9; x++) for (int y = 5; y <= 9; y++) Sym.mem[G.idx(x, y)] &= ~Sym.SEAL;
-        Sym.mem[G.idx(10, 7)] = 0;
-        check(!Seal.sealed(new MapLocation(7, 7)), "seal: a gap of unseen tiles leaves the room open");
-        // ...unless its twin under the one symmetry left is a wall; the mirror room gets the mark too
-        Sym.mask = Sym.ROT;
-        Sym.mem[G.idx(19 - 10, 19 - 7)] = Sym.SEEN | Sym.WALL;
-        check(!Seal.sealed(new MapLocation(7, 7)), "seal: an open verdict is kept for a while");
-        round += Seal.OPEN_TTL; G.startTurn();
-        check(Seal.sealed(new MapLocation(7, 7)), "seal: a wall's twin closes the gap");
-        check((Sym.mem[G.idx(19 - 7, 19 - 7)] & Sym.SEAL) != 0, "seal: the twin room is marked");
-        // a room bigger than the cap is not sealed
-        Seal.cap = 20; sealReset();
-        for (int x = 5; x <= 9; x++) for (int y = 5; y <= 9; y++) Sym.mem[G.idx(x, y)] &= ~Sym.SEAL;
-        check(!Seal.sealed(new MapLocation(8, 8)), "seal: a 25-tile room is open under cap 20");
-        // short of bytecodes: the fill pauses, no other fill starts that turn, and it resumes on the next
-        Seal.cap = 30; sealReset();
-        int fills = Seal.fills, paused = Seal.paused;
-        Seal.fakeLeft = Seal.RESERVE + 3;
-        check(!Seal.sealed(new MapLocation(7, 7)) && Seal.paused == paused + 1 && Seal.pend == G.idx(7, 7) + 1, "seal: a fill pauses when short of bytecodes");
-        Seal.fakeLeft = 1 << 20;
-        check(!Seal.sealed(new MapLocation(16, 3)) && Seal.fills == fills + 1, "seal: no second fill in a turn after a pause");
-        round++; G.startTurn();
-        check(Seal.sealed(new MapLocation(7, 7)) && Seal.fills == fills + 1 && Seal.pend == 0, "seal: the paused fill resumes and finishes");
-        Seal.fakeLeft = Seal.RESERVE - 1;
-        Sym.mem[G.idx(13, 13)] &= ~Sym.SEAL;
-        check(!Seal.sealed(new MapLocation(13, 13)) && Seal.fills == fills + 1, "seal: no fill starts short of bytecodes");
-        sealReset(); Seal.fakeLeft = Seal.RESERVE - 1;
-        check(!Seal.sealed(new MapLocation(13, 13)) && Seal.seen == null, "seal: no arrays are allocated short of bytecodes");
-        Seal.fakeLeft = -1;
-        // SEAL_SEEN: only seen tiles carry the fill; the ring is seen, the room's inside not yet
-        reset(); W = 20; H = 20; install();
-        me = new MapLocation(15, 15); G.startTurn();
-        for (int i = 4; i <= 10; i++) {
-            Sym.mem[G.idx(i, 4)] = Sym.mem[G.idx(i, 10)] = Sym.mem[G.idx(4, i)] = Sym.mem[G.idx(10, i)] = Sym.SEEN | Sym.WALL;
-        }
-        for (int x = 11; x <= 16; x++) for (int y = 11; y <= 16; y++) Sym.mem[G.idx(x, y)] = Sym.SEEN;
-        Sym.mem[G.idx(7, 7)] = Sym.SEEN;
-        boolean savedSeen = Seal.seenOnly;
-        Seal.seenOnly = true; Seal.cap = 30; sealReset();
-        int unknown = Seal.unknown;
-        check(!Seal.sealed(new MapLocation(12, 12)), "seal seen: a pile with a seen path to us is open");
-        check(Seal.sealed(new MapLocation(7, 7)) && Seal.unknown == unknown + 1 && (Sym.mem[G.idx(7, 7)] & Sym.SEAL) == 0,
-              "seal seen: a pile walled off from us by what we have seen is skipped, not marked");
-        check(Seal.skipped(G.idx(7, 7)) && !Seal.skipped(G.idx(12, 12)), "seal seen: the skip is kept for the sense loop");
-        Sym.mem[G.idx(18, 2)] = Sym.SEEN;
-        check(Seal.sealed(new MapLocation(18, 2)), "seal seen: a pile beyond unseen tiles is skipped");
-        Seal.seenOnly = false;
-        check(!Seal.sealed(new MapLocation(18, 3)), "seal: without SEAL_SEEN unseen tiles are open");
-        Seal.seenOnly = true;
-        round += Seal.OPEN_TTL; G.startTurn();
-        check(!Seal.skipped(G.idx(7, 7)), "seal seen: the skip expires");
-        for (int x = 5; x <= 9; x++) for (int y = 5; y <= 9; y++) Sym.mem[G.idx(x, y)] = Sym.SEEN;
-        check(Seal.sealed(new MapLocation(7, 7)) && (Sym.mem[G.idx(5, 5)] & Sym.SEAL) != 0, "seal seen: a fully seen room is sealed and marked");
-        // work(): the pile sense() names is judged at the end of the turn; a paused fill goes on first, then the next
-        Seal.seenOnly = false; sealRoom(); sealReset();
-        int room = G.idx(7, 7), out = G.idx(12, 12);
-        Seal.want(new MapLocation(7, 7)); Seal.want(new MapLocation(12, 12));
-        check(Seal.want == room + 1 && Seal.verdict(room) == -1, "seal work: the first pile named waits for the end of the turn");
-        Seal.fakeLeft = Seal.RESERVE + 3;
-        Seal.work();
-        check(Seal.pend == room + 1 && Seal.want == 0 && Seal.verdict(room) == -1, "seal work: short of bytecodes the fill pauses");
-        Seal.want(new MapLocation(12, 12));
-        round++; G.startTurn(); Seal.fakeLeft = -1;
-        Seal.work();
-        check(Seal.verdict(room) == 1 && Seal.verdict(out) == 0 && Seal.pend == 0 && Seal.want == 0, "seal work: the paused fill finishes, then the next pile is judged");
-        // a fill paused too long is dropped
-        sealRoom(); sealReset();
-        Seal.want(new MapLocation(7, 7)); Seal.fakeLeft = Seal.RESERVE + 3; Seal.work();
-        round += Seal.PEND_MAX + 1; G.startTurn(); Seal.fakeLeft = -1;
-        Seal.work();
-        check(Seal.pend == 0 && Seal.verdict(room) == -1, "seal work: a stale paused fill is dropped");
-        Seal.seenOnly = savedSeen; Seal.cap = saved; sealReset();
-    }
-
-    static void sealReset() { Seal.seen = null; Seal.openT = Seal.openR = null; Seal.openN = 0; Seal.pend = 0; Seal.pendRound = -1; Seal.fakeLeft = -1; Seal.want = 0; }
-
-    /** A fresh 20x20 world: a 7x7 wall ring at x, y 4..10 around a 5x5 room, the rat at (15, 15), every tile seen. */
-    static void sealRoom() {
-        reset(); W = 20; H = 20; install();
-        me = new MapLocation(15, 15); G.startTurn();
-        for (int i = 0; i < 400; i++) Sym.mem[i] = Sym.SEEN;
-        for (int i = 4; i <= 10; i++) {
-            Sym.mem[G.idx(i, 4)] = Sym.mem[G.idx(i, 10)] = Sym.mem[G.idx(4, i)] = Sym.mem[G.idx(10, i)] = Sym.SEEN | Sym.WALL;
-        }
-    }
-
     static void testKingFront() {
         // dirtpassageway (50x50, x flipped): kings (3,26) and (46,26); the centre mine (20,26) has front value 20
         reset(); W = 50; H = 50; install();
@@ -2545,37 +1285,6 @@ public class BotTest {
         King.kingFront = saved;
     }
 
-    static void testKingMine() {
-        reset(); W = 60; H = 60; install();
-        Sym.mask = Sym.ROT;
-        Comms.numMines = 0;
-        Comms.mines[Comms.numMines++] = new MapLocation(30, 31);  // nearer the enemy start (56, 56)
-        Comms.mines[Comms.numMines++] = new MapLocation(3, 25);   // ours but beyond dist2 400
-        check(Cfg.KING_MINE_R2 < 484 && King.pickHomeMine(new MapLocation(3, 3)) == null, "king mine: none on our half in reach");
-        Comms.mines[Comms.numMines++] = new MapLocation(7, 6);
-        Comms.mines[Comms.numMines++] = new MapLocation(4, 7);
-        check(new MapLocation(4, 7).equals(King.pickHomeMine(new MapLocation(3, 3))), "king mine: the nearest one on our half");
-        Comms.numKings = 1; Comms.kings[0] = new MapLocation(4, 8);
-        check(new MapLocation(7, 6).equals(King.pickHomeMine(new MapLocation(3, 3))), "king mine: skips a mine another king holds");
-        Comms.numKings = 0;
-        // VER map: a mine on the x axis is as near the enemy start (56, 3) as ours
-        Sym.mask = Sym.VER;
-        Comms.numMines = 0;
-        Comms.mines[Comms.numMines++] = new MapLocation(29, 10);   // axis x = 29.5: d2 from (3,3) 725, from (56,3) 778
-        Comms.mines[Comms.numMines++] = new MapLocation(15, 3);    // d2 144 vs 1681: ours
-        W = 31; install(); Sym.mask = Sym.VER;                       // axis x = 15: (15, 3) ties
-        check((King.pickHomeMine(new MapLocation(3, 3)) != null) == Cfg.MINE_TIES, "king mine: an axis tie counts as ours only with MINE_TIES");
-        Baby.home = new MapLocation(3, 3);
-        check(Baby.homeHalf(new MapLocation(15, 9)) == Cfg.MINE_TIES && Baby.homeHalf(new MapLocation(14, 9))
-              && !Baby.homeHalf(new MapLocation(16, 9)), "home half: an axis tie is ours only with MINE_TIES");
-        // Meow (50x30, flip y): with rotation still live, (14,18) is ours under rotation only; (14,11) under both
-        W = 50; H = 30; install();
-        MapLocation k = new MapLocation(5, 5), em = new MapLocation(14, 18), om = new MapLocation(14, 11);
-        check(Baby.nearerAll(om, k, Sym.ROT | Sym.HOR) && !Baby.nearerAll(em, k, Sym.ROT | Sym.HOR) && Baby.nearerAll(em, k, Sym.ROT)
-              && !Baby.nearerAll(em, k, Sym.HOR), "home half: every live symmetry must agree (HOME_ALL_SYM)");
-        Comms.numMines = 0;
-    }
-
     static void testTrapTile() throws GameActionException {
         reset(); W = 30; H = 30; install();
         MapLocation e = new MapLocation(5, 7);
@@ -2591,179 +1300,6 @@ public class BotTest {
         check(Baby.trapTile(me, facing, e, 2, true) == null, "trap adj: (4,6) lies outside the enemy's 3x3");
         robots.clear();
         check(Baby.trapTile(me, facing, new MapLocation(5, 9), 16, true) == null, "trap adj: no front tile within 1 of a far enemy");
-    }
-
-    static void testReportPriority() {
-        reset(); install();
-        G.coop = false;
-        Comms.numKings = 1; Comms.kings[0] = new MapLocation(7, 8);   // dist2 13 from (5, 5)
-        Comms.numMines = 0; Baby.myMineCount = 0;
-        Baby.noteMine(12, 3);
-        Baby.nearestEnemy = enemyRat(80, 5, 7, 100);
-        Baby.report();
-        check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_MINE, "report: a king in hearing range learns the mine even at war");
-        squeaks.clear();
-        Comms.kings[0] = new MapLocation(15, 15);
-        Baby.report();
-        check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_MINE, "report: while the team knows no mine, relay ours even far from kings");
-        squeaks.clear();
-        Comms.numMines = 1;
-        Comms.mines[0] = new MapLocation(30, 31);
-        if (Cfg.GOSSIP_ALWAYS) {
-            Baby.report();
-            check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_MINE && Comms.sqX(squeaks.get(0)) == 12,
-                  "report: gossip passes on a mine the king's list lacks, away from kings");
-            squeaks.clear();
-            Comms.mines[0] = new MapLocation(12, 3);
-        }
-        Baby.report();
-        check(squeaks.size() == 1 && Comms.sqType(squeaks.get(0)) == Comms.SQ_TRAP, "report: away from kings, share the enemy front");
-        Comms.numMines = 0;
-        Comms.numKings = 0; Baby.myMineCount = 0; Baby.nearestEnemy = null; G.coop = true;
-    }
-
-    static void testFormation() throws GameActionException {
-        reset(); W = 30; H = 30; install();
-        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.record(x, y, false, false, false);
-        Sym.mask = Sym.ROT;
-        King.start = new MapLocation(3, 3);
-        Comms.numMines = 0;
-        Comms.mines[Comms.numMines++] = new MapLocation(4, 4);    // too close to the king
-        Comms.mines[Comms.numMines++] = new MapLocation(20, 22);  // enemy half
-        Comms.mines[Comms.numMines++] = new MapLocation(9, 6);
-        check(new MapLocation(9, 6).equals(King.pickFormSite(new MapLocation(3, 3))), "form: nearest clear home mine away from the king");
-        Comms.numMines = 0;
-        check(new MapLocation(6, 6).equals(King.pickFormSite(new MapLocation(10, 10))), "form: no mine -> four tiles behind the king");
-        // a baby on the site promotes when it can; one beside the free centre steps onto it
-        G.round = 100;
-        shared[Comms.FORM_X] = 6; shared[Comms.FORM_Y] = 6; shared[Comms.FORM_T] = Comms.stamp();
-        check(new MapLocation(5, 5).equals(Baby.formSite()), "form: site read from the shared array");
-        canPromote = true;
-        check(Baby.formKing() && promoted, "form: the centre rat becomes a king");
-        reset(); W = 30; H = 30; install();
-        G.round = 100;
-        shared[Comms.FORM_X] = 6; shared[Comms.FORM_Y] = 7; shared[Comms.FORM_T] = Comms.stamp();
-        check(Baby.formKing() && me.equals(new MapLocation(5, 6)), "form: steps onto the free centre (at " + me + ")");
-        shared[Comms.FORM_T] = 0;
-        check(!Baby.formKing(), "form: no site, no formation");
-        // FORM_RING: a clear 3x3 three tiles off the king, farthest from the enemy start, all in the king's view
-        reset(); W = 30; H = 30; install();
-        type = UnitType.RAT_KING; me = new MapLocation(5, 5);
-        MapLocation ek = new MapLocation(26, 26);
-        check(new MapLocation(2, 4).equals(King.ringSite(me, ek)), "form ring: the clear site farthest from the enemy (" + King.ringSite(me, ek) + ")");
-        walls.add(new MapLocation(1, 3));
-        check(new MapLocation(4, 2).equals(King.ringSite(me, ek)), "form ring: a wall in the 3x3 rules the site out");
-        robots.put(new MapLocation(5, 1), new RobotInfo(9, Team.NEUTRAL, UnitType.CAT, 4000, new MapLocation(5, 1), Direction.NORTH, 0, 0, null));
-        check(new MapLocation(2, 5).equals(King.ringSite(me, ek)), "form ring: a cat in the 3x3 rules the site out (" + King.ringSite(me, ek) + ")");
-        robots.put(new MapLocation(1, 5), new RobotInfo(8, Team.A, UnitType.BABY_RAT, 100, new MapLocation(1, 5), Direction.NORTH, 0, 0, null));
-        check(new MapLocation(2, 5).equals(King.ringSite(me, ek)), "form ring: our babies in the 3x3 are welcome");
-        reset(); W = 30; H = 30; install();
-        type = UnitType.RAT_KING; me = new MapLocation(24, 24);
-        check(new MapLocation(27, 25).equals(King.ringSite(me, new MapLocation(3, 3))), "form ring: the mirrored king picks the mirrored site (" + King.ringSite(me, new MapLocation(3, 3)) + ")");
-        me = new MapLocation(1, 1);
-        check(King.ringSite(me, ek) != null && King.clearNow(King.ringSite(me, ek)), "form ring: a corner king still finds a site");
-        check(!King.clearNow(new MapLocation(0, 5)), "form ring: a 3x3 off the map edge is not clear");
-        // Econ.surplus(k): each more king costs 2 a round to round 2000
-        G.round = 1000; global = 3000; Econ.n = 0; Econ.sum = 0;
-        check(Econ.surplus(1) == 1000 && Econ.surplus(2) == -1000, "econ: surplus with one more king (" + Econ.surplus(1) + ", " + Econ.surplus(2) + ")");
-        Comms.numKings = 3;
-        check(Econ.floor(300) == (Cfg.FLOOR_PER_KING ? 900 : 300), "econ: floors scale with live kings only under FLOOR_PER_KING");
-        Comms.numKings = 0;
-        check(Econ.floor(300) == 300, "econ: no live king counts as one");
-        type = UnitType.BABY_RAT;
-    }
-
-    static void testMineSpread() {
-        reset(); W = 30; H = 30; install();
-        Sym.mask = Sym.HOR; Baby.home = new MapLocation(1, 5); Baby.fu = -1; Baby.fv = -1;
-        Comms.numMines = 0; Baby.myMineCount = 0;
-        int[][] ms = {{6, 8}, {11, 2}, {14, 9}, {20, 2}, {6, 21}, {11, 27}, {14, 20}, {20, 27}, {26, 12}};
-        for (int[] m : ms) Comms.mines[Comms.numMines++] = new MapLocation(m[0], m[1]);
-        java.util.Set<MapLocation> got = new java.util.HashSet<>();
-        G.seed(12345);
-        for (int i = 0; i < 200; i++) got.add(Baby.pickMine());
-        java.util.Set<MapLocation> want = new java.util.HashSet<>(java.util.Arrays.asList(new MapLocation(6, 8),
-            new MapLocation(11, 2), new MapLocation(14, 9), new MapLocation(20, 2)));
-        if (!Cfg.MINE_BALANCE) check(got.equals(want), "mine spread: the 4 nearest home-half mines, never the enemy half " + got);
-        Comms.numMines = 0;
-        Comms.mines[Comms.numMines++] = new MapLocation(6, 21);
-        check(new MapLocation(6, 21).equals(Baby.pickMine()), "mine spread: only enemy-half mines known -> take one");
-        Comms.numMines = 0;
-        check(Baby.pickMine() == null, "mine spread: no mine known");
-        if (Cfg.MINE_BALANCE) {
-            for (int[] m : ms) Comms.mines[Comms.numMines++] = new MapLocation(m[0], m[1]);
-            java.util.Map<MapLocation, Integer> per = new java.util.HashMap<>();
-            for (int id = 10001; id < 10001 + 500; id++) {
-                Baby.slot = (id * 0x9E3779B1) >>> 8;
-                per.merge(Baby.pickMine(), 1, Integer::sum);
-            }
-            int lo = java.util.Collections.min(per.values()), hi = java.util.Collections.max(per.values());
-            check(per.size() == 5 && !per.containsKey(new MapLocation(6, 21)) && lo >= 70 && hi <= 130,
-                  "mine balance: every home-half mine, evenly " + per);
-            check(Baby.minesAtPick == Comms.numMines, "mine balance: remembers the mine count it picked at");
-        }
-        // SEEK_IDLE: idle() fires on the SEEK_IDLE-th near-mine turn without a pickup; a pickup restarts the count
-        MapLocation mine = new MapLocation(10, 10);
-        G.me = new MapLocation(12, 10);
-        Baby.picked = 0; Baby.idlePicked = 0; Baby.idleTurns = 0;
-        boolean early = false;
-        for (int i = 1; i < Cfg.SEEK_IDLE; i++) early |= Baby.idle(mine);
-        check(!early && Baby.idle(mine) && Baby.idleTurns == 0, "idle: fires on the SEEK_IDLE-th turn, then restarts");
-        Baby.idleTurns = 3; Baby.picked++;
-        Baby.idle(mine);
-        check(Baby.idlePicked == Baby.picked && (Cfg.SEEK_IDLE <= 1 || Baby.idleTurns == 1), "idle: a pickup restarts the count");
-        G.me = new MapLocation(10 + Cfg.SEEK_IDLE_R + 1, 10);
-        int was = Baby.idleTurns;
-        check(!Baby.idle(mine) && Baby.idleTurns == was, "idle: turns away from the mine do not count");
-        G.round = 500; Baby.seekNext = 600;
-        check(!Baby.idleSeek(), "idle: no seeking within SEEK_RETRY of the last");
-        Baby.seekNext = 0;
-        check(Baby.idleSeek() && Baby.seekUntil == 500 + Cfg.SEEK_TTL && Baby.seekNext == 500 + Cfg.SEEK_RETRY,
-              "idle: seeking starts for SEEK_TTL rounds");
-        Baby.seekUntil = 0; Baby.seekNext = 0; Baby.idleTurns = 0; Baby.picked = 0; Baby.idlePicked = 0;
-    }
-
-    static java.util.Set<MapLocation> picks() {
-        java.util.Set<MapLocation> got = new java.util.HashSet<>();
-        G.seed(4242);
-        for (int id = 10001; id < 10001 + 300; id++) {
-            Baby.slot = (id * 0x9E3779B1) >>> 8;
-            got.add(Baby.pickMine());
-        }
-        return got;
-    }
-
-    static void testFightPost() {
-        reset(); W = 30; H = 30; install();
-        Sym.mask = Sym.HOR; Baby.home = new MapLocation(1, 5); Baby.fu = -1; Baby.fv = -1;
-        Comms.numMines = 0; Baby.myMineCount = 0;
-        int[][] ms = {{6, 8}, {11, 2}, {14, 9}, {20, 2}, {6, 21}, {11, 27}, {14, 20}, {20, 27}, {26, 12}};
-        for (int[] m : ms) Comms.mines[Comms.numMines++] = new MapLocation(m[0], m[1]);
-        // steps from the mirrored start (1, 24) minus steps from home (1, 5): (6,8) 11, (11,2) 12, (14,9) 2, (20,2) 3, (26,12) 0
-        java.util.Set<MapLocation> contested = new java.util.HashSet<>(java.util.Arrays.asList(new MapLocation(14, 9),
-            new MapLocation(20, 2), new MapLocation(26, 12)));
-        int wasMargin = Baby.postMargin, wasRole = Baby.role;
-        boolean wasCoop = G.coop;
-        int all = Cfg.MINE_BALANCE ? 5 : Math.min(5, Cfg.MINE_SPREAD);   // home-half mines the pick spreads over
-        Baby.postMargin = 8; Baby.role = Baby.FIGHT; G.coop = false;
-        java.util.Set<MapLocation> got = picks();
-        check(got.equals(contested) && !Baby.coopAtPick, "fight post: a fighter at war picks only contested home mines " + got);
-        G.coop = true;
-        got = picks();
-        check(got.size() == all && Baby.coopAtPick, "fight post: in cooperation every home mine " + got);
-        Baby.role = Baby.GATHER; G.coop = false;
-        got = picks();
-        check(got.size() == all, "fight post: gatherers at war keep every home mine " + got);
-        Baby.role = Baby.FIGHT; Baby.postMargin = 0;
-        got = picks();
-        check(got.size() == all, "fight post: off at 0 " + got);
-        Baby.postMargin = 8; Comms.numMines = 0;
-        Comms.mines[Comms.numMines++] = new MapLocation(6, 8);
-        Comms.mines[Comms.numMines++] = new MapLocation(11, 2);
-        got = picks();
-        check(got.size() == 2, "fight post: no contested mine known -> every home mine " + got);
-        Baby.postMargin = wasMargin; Baby.role = wasRole; G.coop = wasCoop;
-        Comms.numMines = 0;
     }
 
     static void testScout() throws GameActionException {
@@ -2789,9 +1325,10 @@ public class BotTest {
         Comms.addMine(25, 20);   // enemy half under ROT: twin (4, 9) is ours
         Comms.addMine(6, 4);     // our half: its twin (23, 25) is theirs, not listed
         King.mirrorInto(home, Sym.ROT);
-        check(Comms.numMines == 3 && Comms.hasMine(4, 9) && !Comms.hasMine(23, 25), "mine mirror: lists our-half twins only");
+        // audit K5: every twin is listed (no own-half test; the fix kept that and made a full list report nothing)
+        check(Comms.numMines == 4 && Comms.hasMine(4, 9) && Comms.hasMine(23, 25), "mine mirror: lists every twin");
         King.mirrorInto(home, Sym.ROT);
-        check(Comms.numMines == 3, "mine mirror: no duplicates");
+        check(Comms.numMines == 4, "mine mirror: no duplicates");
         Comms.numMines = 0; Comms.addMine(25, 20);
         King.mirrorInto(home, Sym.VER);   // x -> 29 - x: twin (4, 20)
         check(Comms.hasMine(4, 20), "mine mirror: follows the symmetry");
@@ -2837,77 +1374,12 @@ public class BotTest {
         return out;
     }
 
-    static void testChiral() {
-        check(Sym.chiral(engineOrder(9, 11, 9, 11, false, false)) == 0, "chiral: natural order (chirality 0) tells nothing");
-        check(Sym.chiral(engineOrder(9, 11, 9, 11, false, true)) == Sym.HOR, "chiral: y reversed is HORIZONTAL (y mirrored)");
-        check(Sym.chiral(engineOrder(9, 11, 9, 11, true, false)) == Sym.VER, "chiral: x reversed is VERTICAL (x mirrored)");
-        check(Sym.chiral(engineOrder(9, 11, 9, 11, true, true)) == Sym.ROT, "chiral: both reversed is ROTATIONAL");
-        check(Sym.chiral(engineOrder(0, 1, 5, 7, true, true)) == Sym.ROT && Sym.chiral(engineOrder(0, 1, 0, 1, false, true)) == Sym.HOR,
-              "chiral: clipped at the map edge still reads");
-        check(Sym.chiral(engineOrder(4, 4, 3, 6, false, true)) == 0 && Sym.chiral(engineOrder(2, 5, 7, 7, true, false)) == 0
-              && Sym.chiral(new MapLocation[]{new MapLocation(3, 3)}) == 0, "chiral: one column, one row or one tile tells nothing");
-        // a cone keeps a subsequence of the order: drop tiles and the reading stands
-        MapLocation[] f = engineOrder(9, 11, 9, 11, true, false);
-        check(Sym.chiral(new MapLocation[]{f[1], f[2], f[4], f[8]}) == Sym.VER, "chiral: a filtered subsequence reads the same");
-    }
-
-    static void testHostile() {
-        int r0 = Baby.role; boolean c0 = G.coop;
-        G.coop = false; Baby.role = Baby.GATHER;
-        boolean war = Baby.hostile();
-        G.coop = true;
-        boolean gatherCoop = Baby.hostile();
-        Baby.role = Baby.ATTACK;
-        boolean attackCoop = Baby.hostile();
-        check(war && !gatherCoop && attackCoop == (Cfg.RUSH_BREAK && !Cfg.PEACE), "hostile: after cooperation all; during it only RUSH_BREAK attackers, none under PEACE");
-        Baby.role = r0; G.coop = c0;
-    }
-
-    static void testGlance() {
-        check(!Baby.glanceDue(500, 495, 0) && Baby.glanceDue(500, 495, 10) && Baby.glanceDue(500, 490, 10)
-              && !Baby.glanceDue(500, 489, 10) && !Baby.glanceDue(500, -1000, 10), "glance: only within GLANCE_MEM rounds of a threat, never when 0");
-        {
-            MapLocation l = new MapLocation(5, 5);
-            RobotInfo[] none = new RobotInfo[0];
-            RobotInfo[] ally = {new RobotInfo(3, Team.A, UnitType.BABY_RAT, 100, l, Direction.NORTH, 0, 0, null)};
-            RobotInfo[] cat = {ally[0], new RobotInfo(4, Team.NEUTRAL, UnitType.CAT, 4000, l, Direction.NORTH, 0, 0, null)};
-            RobotInfo[] foe = {new RobotInfo(5, Team.B, UnitType.BABY_RAT, 100, l, Direction.NORTH, 0, 0, null)};
-            check(Baby.blindHurt(80, 100, none, Team.B) && Baby.blindHurt(80, 100, ally, Team.B), "blind: hurt with nothing hostile in view");
-            check(!Baby.blindHurt(100, 100, none, Team.B) && !Baby.blindHurt(100, 0, none, Team.B), "blind: not when unhurt or on the first turn");
-            check(!Baby.blindHurt(80, 100, cat, Team.B) && !Baby.blindHurt(80, 100, foe, Team.B), "blind: not with a cat or an enemy in view");
-            check(Baby.catHit(20, 20) && Baby.catHit(40, 20) && Baby.catHit(10, 0) && !Baby.catHit(0, 0), "blind: a scratch's loss, or any loss at step 0");
-            check(!Baby.catHit(10, 20) && !Baby.catHit(50, 20) && !Baby.catHit(60, 20) && !Baby.catHit(0, 20), "blind: not a bite's, a trap's or none");
-        }
-    }
-
     static void testFullLoad() {
         check(!Baby.fullLoad(0, false, 40) && !Baby.fullLoad(0, true, 40), "full load: nothing carried, no trip home");
         check(!Baby.fullLoad(39, false, 40) && !Baby.fullLoad(10, false, 40), "full load: a part load stays out");
         check(Baby.fullLoad(40, false, 40) && Baby.fullLoad(65, false, 40), "full load: at the load or more, home");
         check(Baby.fullLoad(10, true, 40), "full load: late, any load goes home");
         check(Cfg.LOAD_AT >= 0 && Baby.loadAt == Cfg.LOAD_AT, "full load: switch non-negative, the test field mirrors it");
-    }
-
-    static void testCarryCap() {
-        check(Baby.takeOk(0, 500, 120) && Baby.takeOk(100, 20, 120) && !Baby.takeOk(100, 40, 120) && Baby.takeOk(400, 400, 0),
-              "carry cap: empty-handed takes any pile; loaded only within the cap; 0 = no cap");
-        check(Cfg.CARRY_MAX >= 0 && Cfg.HUNGRY >= 0, "carry cap / hungry: switches non-negative");
-    }
-
-    static void testBabyCap() {
-        check(King.babyCap(false, 0) == Cfg.MAX_BABIES && King.babyCap(true, 0) == Cfg.MAX_BABIES_WAR
-              && King.babyCap(false, Cfg.RICH_BANK - 1) == Cfg.MAX_BABIES, "baby cap: the base caps below RICH_BANK");
-        check(King.babyCap(false, Cfg.RICH_BANK) == Math.max(Cfg.MAX_BABIES, Cfg.RICH_BABIES)
-              && King.babyCap(true, Cfg.RICH2_BANK - 1) == Math.max(Cfg.MAX_BABIES_WAR, Cfg.RICH_BABIES), "baby cap: a rich bank raises it, never lowers it");
-        check(King.babyCap(true, 1 << 20) == Math.max(Math.max(Cfg.MAX_BABIES_WAR, Cfg.RICH_BABIES), Cfg.RICH2_BABIES)
-              && Cfg.RICH2_BANK > Cfg.RICH_BANK, "baby cap: the second tier (RICH2) only raises it, above RICH_BANK");
-        // trap vs spawn: cost 50 = 16-19 babies; the next spawn plus SPAWN_FLOOR plus the trap must remain
-        int need = 50 + Cfg.SPAWN_FLOOR + 20;
-        check(King.starves(50, need - 1, 30) && !King.starves(50, need, 30), "trap/spawn: a trap waits below the next spawn + floor");
-        check(!King.starves(50, 0, 16) && King.starves(50, 0, 17), "trap/spawn: at the cap (count from the cost step) traps never wait");
-        check(King.spawnFloor(300, false, 0) == 300 && King.spawnFloor(300, true, 0) == Cfg.LOW_FLOOR, "spawn floor: off, and low babies");
-        check(King.spawnFloor(300, false, 20) == 20 && King.spawnFloor(300, true, 20) == Math.min(20, Cfg.LOW_FLOOR)
-              && King.spawnFloor(10, false, 20) == 10, "spawn floor: a siege floor caps every floor, never raises one");
     }
 
     static void testNearKing() {
@@ -3002,43 +1474,6 @@ public class BotTest {
         King.strict = Cfg.KING_STRICT;
     }
 
-    static void testBiteGuard() {
-        check(Baby.guardBite(95, 90) && Baby.guardBite(100, 90), "bite guard: healthier by up to one bite");
-        check(!Baby.guardBite(90, 90) && !Baby.guardBite(101, 90), "bite guard: not equal, not out of one bite's reach");
-        check(!Baby.guardBite(10, 5), "bite guard: a kill is ranked as a kill");
-    }
-
-    static void testKingDodge() {
-        // the sunandmoon death: cat at (13,25) facing north, king at (14,28) in its next footprint
-        RobotInfo cat = new RobotInfo(6, Team.NEUTRAL, UnitType.CAT, 4000, new MapLocation(13, 25), Direction.NORTH, 0, 0, null);
-        RobotInfo[] cats = {cat};
-        MapLocation k = new MapLocation(14, 28);
-        check(King.catGap(k, new MapLocation(13, 26)) == 0 && King.catGap(k, cat.location) == 1, "king dodge: gap 0 in the lane, 1 touching");
-        check(King.catGap(new MapLocation(17, 28), cat.location) == 2, "king dodge: gap 2 two columns off");
-        int stay = King.catRisk(k, cats), east = King.catRisk(k.add(Direction.EAST), cats), west = King.catRisk(k.add(Direction.WEST), cats);
-        check(King.catOverlap(k, new MapLocation(13, 26)) == 2 && King.catOverlap(k.add(Direction.EAST), new MapLocation(13, 26)) == 1
-                && King.catOverlap(new MapLocation(16, 28), new MapLocation(13, 26)) == 0, "king dodge: overlap tiles 2, 1, 0");
-        check(east < stay && east < west, "king dodge: a step east is half out of the lane " + stay + " " + east + " " + west);
-        check(King.catRisk(new MapLocation(16, 28), cats) < east, "king dodge: two steps east is out");
-        check(King.catRisk(new MapLocation(20, 28), cats) < King.catRisk(new MapLocation(17, 28), cats) || King.catRisk(new MapLocation(20, 28), cats) == 0,
-                "king dodge: farther is no worse");
-        check(King.catRisk(new MapLocation(40, 40), cats) == 0, "king dodge: a far cat is no risk");
-        reset(); W = 30; H = 30; install();
-        for (int i = 0; i < W * H; i++) Sym.mem[i] = Sym.SEEN;
-        MapLocation c = new MapLocation(10, 10);
-        check(King.dirtStep(c, Direction.NORTH) == null, "king dodge: an open step needs no dig");
-        Sym.mem[10 + W * 12] |= Sym.DIRT;
-        MapLocation dn = King.dirtStep(c, Direction.NORTH);
-        check(dn != null && dn.x == 10 && dn.y == 12, "king dodge: dig the dirt the step adds " + dn);
-        check(King.dirtStep(c, Direction.SOUTH) == null, "king dodge: a step away adds no dirt");
-        Sym.mem[9 + W * 12] |= Sym.WALL;
-        check(King.dirtStep(c, Direction.NORTH) == null, "king dodge: never into a wall");
-        check(King.dirtStep(new MapLocation(1, 1), Direction.SOUTHWEST) == null, "king dodge: not off the map");
-        // mirrored (rotation about the 60x40 centre): the same score
-        RobotInfo mc = new RobotInfo(6, Team.NEUTRAL, UnitType.CAT, 4000, new MapLocation(59 - 14, 39 - 26), Direction.SOUTH, 0, 0, null);
-        check(King.catRisk(new MapLocation(59 - 15, 39 - 28), new RobotInfo[]{mc}) == east, "king dodge: rotation-symmetric score");
-    }
-
     static void testBirthSeed() {
         // the same for a rat and its mirror twin under each symmetry (60x40 map), different for another offset or round
         MapLocation me = new MapLocation(12, 7), home = new MapLocation(10, 8);
@@ -3054,64 +1489,6 @@ public class BotTest {
               "birth seed: another offset or round differs");
     }
 
-    static void testKingPress() throws GameActionException {
-        reset(); install();
-        G.round = 200; G.coop = false; G.me = me; Baby.role = Baby.FIGHT; Baby.eKing = null; Baby.lastEKing = null;
-        Baby.lastEKingRound = -100; Baby.ekHops = 0;
-        // codec: hops | (sighting round % 1024) << 2 in the 16-bit extra
-        Baby.heardEKing(Comms.squeak(Comms.SQ_EKING, 5, 12, 1 | (198 & 1023) << 2));
-        check(new MapLocation(5, 12).equals(Baby.lastEKing) && Baby.lastEKingRound == 198 && Baby.ekHops == 1,
-              "king press: heard sighting decoded " + Baby.lastEKing + " r" + Baby.lastEKingRound + " h" + Baby.ekHops);
-        Baby.heardEKing(Comms.squeak(Comms.SQ_EKING, 9, 9, 0 | (190 & 1023) << 2));
-        check(new MapLocation(5, 12).equals(Baby.lastEKing), "king press: an older sighting is ignored");
-        Baby.heardEKing(Comms.squeak(Comms.SQ_EKING, 6, 12, 0 | (198 & 1023) << 2));
-        check(new MapLocation(6, 12).equals(Baby.lastEKing) && Baby.ekHops == 0, "king press: same sighting in fewer hops wins");
-        G.round = 1024 + 2; Baby.lastEKingRound = -100;
-        Baby.heardEKing(Comms.squeak(Comms.SQ_EKING, 6, 12, 0 | (1023 & 1023) << 2));
-        check(Baby.lastEKingRound == 1023, "king press: sighting round across the 1024 wrap " + Baby.lastEKingRound);
-        // a fighter walks to a fresh sighting in range
-        G.round = 200; Baby.lastEKing = new MapLocation(5, 12); Baby.lastEKingRound = 198;
-        MapLocation start = me;
-        check(Baby.pressKing() && me.distanceSquaredTo(Baby.lastEKing) < start.distanceSquaredTo(Baby.lastEKing),
-              "king press: a fighter closes on the king (" + me + ")");
-        // too old, too far for a gatherer, or too weak: no press
-        reset(); install(); G.coop = false; G.me = me; Baby.eKing = null; Baby.role = Baby.FIGHT;
-        Baby.lastEKing = new MapLocation(5, 12); Baby.lastEKingRound = 198; G.round = 198 + Cfg.PRESS_AGE + 1;
-        check(!Baby.pressKing(), "king press: a stale sighting is not chased");
-        G.round = 200; Baby.role = Baby.GATHER;
-        check(!Baby.pressKing(), "king press: a gatherer only presses a king within PRESS_GATHER_D2");
-        Baby.role = Baby.FIGHT; health = Cfg.PRESS_HP - 1;
-        check(!Baby.pressKing(), "king press: a weak rat does not press");
-        // against the king's 3x3: hold and face its nearest tile
-        reset(); install(); G.coop = false; G.me = me; Baby.role = Baby.FIGHT; G.round = 200; facing = Direction.EAST;
-        RobotInfo k = new RobotInfo(70, G.them, UnitType.RAT_KING, 600, new MapLocation(5, 7), Direction.SOUTH, 0, 0, null);
-        robots.put(k.location, k); Baby.eKing = k;
-        check(Baby.pressKing() && me.equals(new MapLocation(5, 5)) && facing == Direction.NORTH,
-              "king press: touching the 3x3, faces it (" + me + " " + facing + ")");
-        // the sighting spot is empty when we get there: forget it
-        reset(); install(); G.coop = false; G.me = me; Baby.role = Baby.FIGHT; G.round = 200; Baby.eKing = null;
-        Baby.lastEKing = new MapLocation(5, 7); Baby.lastEKingRound = 199;
-        check(!Baby.pressKing() && Baby.lastEKing == null, "king press: an empty sighting spot is forgotten");
-        // the kings' shared slot: what a king sees itself, read back by any rat while fresh
-        reset(); install(); G.coop = false; G.me = me; G.round = 300;
-        check(Baby.sharedEKing() == null, "king press: no shared sighting");
-        RobotInfo ek2 = new RobotInfo(71, G.them, UnitType.RAT_KING, 600, new MapLocation(20, 9), Direction.SOUTH, 0, 0, null);
-        RobotInfo er = new RobotInfo(72, G.them, UnitType.BABY_RAT, 100, new MapLocation(6, 6), Direction.SOUTH, 0, 0, null);
-        type = UnitType.RAT_KING;   // only kings write the shared array
-        King.noteEKing(new RobotInfo[]{er});
-        check(shared[Comms.EKING] == 0, "king press: a king seeing only rats writes no sighting");
-        King.noteEKing(new RobotInfo[]{er, ek2});
-        check(new MapLocation(20, 9).equals(Baby.sharedEKing()), "king press: a seen king is shared " + Baby.sharedEKing());
-        G.round = 300 + Cfg.PRESS_AGE;
-        check(new MapLocation(20, 9).equals(Baby.sharedEKing()), "king press: shared sighting PRESS_AGE old still counts");
-        G.round = 300 + Cfg.PRESS_AGE + 1;
-        check(Baby.sharedEKing() == null, "king press: a stale shared sighting is not chased");
-        G.round = 1023; King.noteEKing(new RobotInfo[]{ek2}); G.round = 1024 + 3;
-        check(new MapLocation(20, 9).equals(Baby.sharedEKing()), "king press: shared sighting across the 1024 wrap");
-        type = UnitType.BABY_RAT;
-        Baby.eKing = null; Baby.lastEKing = null; Baby.lastEKingRound = -100;
-    }
-
     static void testDefend() throws GameActionException {
         reset(); W = 30; H = 30; install();
         G.round = 200; G.coop = false; G.me = me;
@@ -3125,168 +1502,6 @@ public class BotTest {
         check(Baby.threatenedKing() == null, "defend: enemies seen but none close to the king: keep gathering");
         shared[Comms.ALERT] = (me.x + 3 + 1) | (2 << 6); G.round = 203;
         check(Baby.threatenedKing() == null, "defend: a stale alert is ignored");
-    }
-
-    static void testGuard() throws GameActionException {
-        reset(); install();
-        Nav.avoid = 0;
-        Nav.guard = new MapLocation(8, 5);
-        check(Nav.step(Direction.SOUTH), "guard: the step is taken");
-        check(me.equals(new MapLocation(5, 4)) && facing != Direction.SOUTH, "guard: it strafes, still facing the enemy (" + facing + ")");
-        Nav.guard = null;
-        reset(); install();
-        RobotInfo e = enemyRat(61, 7, 5, 100);
-        robots.put(e.location, e); G.coop = false;
-        Baby.guardTurn();
-        check(facing == me.directionTo(e.location), "guard: the turn ends facing the nearest enemy rat (" + facing + ")");
-        // out of view (behind us): an enemy heard from an ally's squeak
-        reset(); install(); G.coop = false; turnCd = 0;
-        TrapRisk.nHeard = 1; TrapRisk.heardE[0] = new MapLocation(4, 4);
-        Baby.seen = new RobotInfo[0];
-        Baby.guardTurn();
-        check(!Cfg.GUARD_MEMORY || facing == Direction.SOUTHWEST, "guard: faces a squeaked enemy behind it (" + facing + ")");
-        TrapRisk.nHeard = 0;
-    }
-
-    static void testTrapRisk() throws GameActionException {
-        reset(); install();
-        G.round = 100;
-        TrapRisk.mark = null; TrapRisk.last = null;
-        // an enemy at (5,9) facing south marks (4..6, 8); risky tiles reach one further, to row 7
-        RobotInfo e = new RobotInfo(60, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 9), Direction.SOUTH, 0, 0, null);
-        TrapRisk.observe(new RobotInfo[]{e});
-        check(TrapRisk.risky(new MapLocation(5, 7)), "traprisk: tile next to the enemy's front is risky");
-        check(!TrapRisk.risky(new MapLocation(5, 6)), "traprisk: two tiles off the front is safe");
-        check(TrapRisk.mask(me) == 0, "traprisk: our neighbours (row 4..6) are not risky");
-        G.round = 100 + TrapRisk.TTL + 1;
-        check(!TrapRisk.risky(new MapLocation(5, 7)), "traprisk: marks expire");
-        // an ally's squeak about an enemy at (12,12) facing west marks (11, 11..13)
-        int c = Comms.squeak(Comms.SQ_TRAP, 12, 12, Direction.WEST.ordinal());
-        TrapRisk.heard(new Message[]{new Message(c, 7, G.round, new MapLocation(10, 10))});
-        check(TrapRisk.risky(new MapLocation(10, 12)), "traprisk: a squeaked enemy front marks tiles");
-        check(!TrapRisk.risky(new MapLocation(14, 12)), "traprisk: behind a squeaked enemy is safe");
-        // mask() agrees with risky() on every neighbour, for many tiles and random marks
-        java.util.Random rnd = new java.util.Random(7);
-        for (int i = 0; i < 60; i++) TrapRisk.put(new MapLocation(rnd.nextInt(W), rnd.nextInt(H)));
-        int bad = 0;
-        for (int x = 0; x < W; x++)
-            for (int y = 0; y < H; y++) {
-                MapLocation l = new MapLocation(x, y);
-                int m = 0;
-                for (int k = 0; k < 8; k++) if (TrapRisk.risky(l.add(G.DIRS[k]))) m |= 1 << k;
-                if (m == 0xFF) m = 0;
-                if (m != TrapRisk.mask(l)) bad++;
-            }
-        check(bad == 0, "traprisk: mask matches risky() everywhere (bad=" + bad + ")");
-        // mask(me, ttl) keeps only the marks of the last ttl rounds (RISK_FRESH)
-        TrapRisk.mark = null; TrapRisk.last = null;
-        G.round = 200;
-        MapLocation at = new MapLocation(5, 5);
-        TrapRisk.observe(new RobotInfo[]{new RobotInfo(61, G.them, UnitType.BABY_RAT, 100, new MapLocation(5, 8), Direction.SOUTH, 0, 0, null)});
-        int full = TrapRisk.mask(at);
-        check(full != 0 && (full & (1 << Direction.NORTH.ordinal())) != 0, "traprisk: an enemy front two rows up taints our north step");
-        check(TrapRisk.mask(at, 2) == full, "traprisk: a fresh mark is in the short-ttl mask");
-        G.round = 203;
-        check(TrapRisk.mask(at) == full, "traprisk: a 3-round-old mark is still in the full mask");
-        check(TrapRisk.mask(at, 2) == 0, "traprisk: a 3-round-old mark is out of the 2-round mask");
-        check(TrapRisk.mask(at, 3) == full, "traprisk: and in the 3-round mask");
-        // RUSH_LIFE: an attacker turns gatherer only when both its age and its time since it saw the enemy king pass
-        check(!Baby.rushFailed(160, 20, -10000, 150), "rush life: 140 rounds old is still rushing");
-        check(Baby.rushFailed(171, 20, -10000, 150), "rush life: 151 rounds old, never saw the king: failed");
-        check(!Baby.rushFailed(300, 20, 200, 150), "rush life: saw the enemy king 100 rounds ago: still rushing");
-        check(Baby.rushDemote(true, false, 171, 20, -10000, 150) && Baby.rushDemote(false, true, 171, 20, -10000, 150), "rush life war: a failed rush demotes at war, and in peace without the switch");
-        check(!Baby.rushDemote(true, true, 171, 20, -10000, 150) && !Baby.rushDemote(false, true, 160, 20, -10000, 150), "rush life war: never during cooperation; a live rush stays");
-        check(!Cfg.RUSH_LIFE_WAR, "rush life war: off by default");
-        check(Baby.rushFailed(351, 20, 200, 150), "rush life: 151 rounds since it saw the king: failed");
-        // RUSH_STICK: an attacker keeps its symmetry while that spot is live, else takes this turn's nearest
-        check(Baby.stickSym(Sym.ROT | Sym.VER, Sym.ROT, Sym.VER) == Sym.ROT, "rush stick: a live target is kept");
-        check(Baby.stickSym(Sym.VER, Sym.ROT, Sym.VER) == Sym.VER, "rush stick: a target seen empty gives way");
-        check(Baby.stickSym(Sym.ROT | Sym.HOR, 0, Sym.HOR) == Sym.HOR, "rush stick: the first pick is the nearest");
-        // KING_CAT_BITE: the weakest cat in reach, the nearer on equal health
-        check(King.betterCat(100, 50, 200, 10), "king cat bite: less health first");
-        check(!King.betterCat(200, 10, 100, 50), "king cat bite: more health loses even if nearer");
-        check(King.betterCat(100, 10, 100, 50) && !King.betterCat(100, 50, 100, 50), "king cat bite: equal health, nearer");
-        int ek = Math.max(Cfg.END_KING, Cfg.FORM_TTL + 1), ec = Cfg.END_KING_CHEESE;
-        check(King.endKing(ek, 1, 8, ec, -1000), "end king: a lone king with 8 babies and the cheese names a site");
-        check(!King.endKing(ek, 2, 8, ec, -1000) && !King.endKing(ek, 1, 4, ec, -1000) && !King.endKing(ek, 1, 8, ec - 1, -1000),
-              "end king: not at two kings, under 7 babies or short of cheese");
-        check(!King.endKing(ek, 1, 8, ec, ek - Cfg.FORM_TTL) && King.endKing(ek, 1, 8, ec, ek - Cfg.FORM_TTL - 1),
-              "end king: a site that timed out waits only FORM_TTL");
-        if (Cfg.END_KING > 0) check(!King.endKing(Cfg.END_KING - 1, 1, 8, ec, -1000), "end king: not before END_KING");
-        // FORM_RICH_BANK: one more king while the bank holds the threshold, to r1150, below FORM_RICH_MAX kings
-        int rb = Math.max(Cfg.FORM_RICH_BANK, 1), rk = Comms.numKings, rr = G.round, rg = global;
-        G.round = 1000; global = rb; Comms.numKings = 2;
-        check(King.rich(), "rich king: the bank pays for a third king at r1000");
-        global = rb - 1; boolean poor = Cfg.FORM_RICH_BANK == 0 || !King.rich(); global = rb;
-        G.round = 1151; boolean late = !King.rich(); G.round = 1000;
-        Comms.numKings = Math.min(Cfg.FORM_RICH_MAX, Comms.KING_SLOTS); boolean capped = !King.rich();
-        check(poor && late && capped, "rich king: not under the bank, after r1150 or at FORM_RICH_MAX kings");
-        Comms.numKings = rk; G.round = rr; global = rg;
-        check(King.crowdBetter(3, 10, 2, 50) && King.crowdBetter(2, 50, 2, 10) && !King.crowdBetter(2, 10, 2, 50) && !King.crowdBetter(1, 99, 2, 10),
-              "end king crowd site: more babies first, then farther from the enemy");
-        int ff = Cfg.FORAGE_FROM, fe = Cfg.FORAGE_EVERY;
-        check(King.forageDue(ff, -1000, -1) && !King.forageDue(ff - 1, -1000, -1) && !King.forageDue(ff, -1000, 0),
-              "king forage: from FORAGE_FROM, only while the projected bank is negative");
-        check(!King.forageDue(ff + fe - 1, ff, -1) && King.forageDue(ff + fe, ff, -1), "king forage: every FORAGE_EVERY rounds");
-        check(!Baby.trapsKnown(0, 7) && Baby.trapsKnown(5, 7) && Baby.trapsKnown(0, 7 | Comms.SYM_BURN),
-              "risk adapt: traps known from our own burn or the kings' shared bit");
-        check((Comms.SYM_BURN & 7) == 0 && Comms.SYM_BURN < 1024 && Comms.SQ_BURN < 16, "risk adapt: the burn bit misses the symmetry mask and fits a slot");
-        // TrapRows (RISK_ROWS) keeps the same marks one row at a time: risky/mask/clear agree with the flat array
-        TrapRisk.mark = null; TrapRisk.init(); TrapRows.rows = null; TrapRows.init();
-        rnd = new java.util.Random(11);
-        G.round = 300;
-        for (int i = 0; i < 80; i++) {
-            if (i == 40) G.round = 305;
-            MapLocation l = new MapLocation(rnd.nextInt(W + 2) - 1, rnd.nextInt(H + 2) - 1);
-            TrapRisk.put(l); TrapRows.put(l);
-        }
-        int rowsUsed = 0;
-        for (int[] row : TrapRows.rows) if (row != null) rowsUsed++;
-        check(rowsUsed > 0 && rowsUsed < H, "traprows: only marked rows are allocated (" + rowsUsed + " of " + H + ")");
-        G.round = 307;
-        MapLocation stood = new MapLocation(W / 2, H / 2);
-        TrapRisk.put(stood.add(Direction.EAST)); TrapRows.put(stood.add(Direction.EAST));
-        G.round = 308;
-        TrapRows.clear(stood, 308);
-        for (int dx = -1; dx <= 1; dx++)
-            for (int dy = -1; dy <= 1; dy++) {
-                int x = stood.x + dx, y = stood.y + dy;
-                if (TrapRisk.mark[x + W * y] - 1 < 308) TrapRisk.mark[x + W * y] = 0;
-            }
-        bad = 0;
-        for (int x = 0; x < W; x++)
-            for (int y = 0; y < H; y++) {
-                MapLocation l = new MapLocation(x, y);
-                if (TrapRisk.risky(l) != TrapRows.risky(l)) bad++;
-                if (TrapRisk.mask(l, TrapRisk.TTL) != TrapRows.mask(l, TrapRisk.TTL)) bad++;
-                if (TrapRisk.mask(l, 4) != TrapRows.mask(l, 4)) bad++;
-            }
-        check(bad == 0, "traprows: risky and mask match the flat array everywhere (bad=" + bad + ")");
-        check(!TrapRows.risky(stood.add(Direction.EAST).add(Direction.EAST)) || TrapRisk.risky(stood.add(Direction.EAST).add(Direction.EAST)),
-                "traprows: a cleared mark is gone in both");
-        TrapRisk.mark = null; TrapRows.rows = null;
-    }
-
-    static void testMineTraps() {
-        reset(); W = 20; H = 20; install();
-        Sym.mask = Sym.ROT;
-        Baby.home = new MapLocation(3, 3); Baby.fu = -1; Baby.fv = -1;
-        MapLocation m = new MapLocation(5, 5), ek = new MapLocation(16, 16);
-        check(Baby.mineSiteRank(m, new MapLocation(8, 8), ek) == 0, "mine traps: the site toward the enemy first");
-        check(Baby.mineSiteRank(m, new MapLocation(8, 5), ek) == 1 && Baby.mineSiteRank(m, new MapLocation(5, 8), ek) == 2,
-            "mine traps: a distance tie goes by the side-frame order");
-        check(Baby.mineSiteRank(m, new MapLocation(2, 2), ek) == 7, "mine traps: the site away from the enemy last");
-        check(Baby.mineSiteRank(m, new MapLocation(6, 5), ek) == 99 && Baby.mineSiteRank(m, m, ek) == 99
-            && Baby.mineSiteRank(m, new MapLocation(11, 5), ek) == 99, "mine traps: no site off the 3-grid, on the mine, or past 3");
-        // the mirrored twin (ROT about the centre of 20x20) ranks the mirrored sites the same
-        int[] ranks = new int[9];
-        for (int i = 0; i < 9; i++) ranks[i] = Baby.mineSiteRank(m, m.translate(3 * (i / 3) - 3, 3 * (i % 3) - 3), ek);
-        Baby.home = new MapLocation(16, 16); Baby.fu = 1; Baby.fv = 1;
-        MapLocation m2 = new MapLocation(14, 14), ek2 = new MapLocation(3, 3);
-        boolean same = true;
-        for (int i = 0; i < 9; i++)
-            same &= ranks[i] == Baby.mineSiteRank(m2, m2.translate(3 - 3 * (i / 3), 3 - 3 * (i % 3)), ek2);
-        check(same, "mine traps: mirrored twins rank mirrored sites alike");
     }
 
     static void testScoutUntil() {
@@ -3320,27 +1535,6 @@ public class BotTest {
         for (int[] w : walls) Sym.mem[G.idx(W - 1 - w[0], H - 1 - w[1])] |= Sym.WALL;
         check(King.ringArcs(new MapLocation(W - 1 - 13, H - 1 - 1)) == 2 && King.ringArcs(new MapLocation(W - 1 - 16, H - 1 - 1)) == 1,
               "ring arcs: the rotated pocket counts the same");
-    }
-
-    /** Cfg.PLUG_FAST: ringArcsFast and arcsOf give ringArcs's answers, and the king's own count follows the round. */
-    static void testAnchorFor() {
-        // the anchor holds while the king stays within r of it, and moves to the king once it is farther
-        Baby.anchor = null;
-        MapLocation a = new MapLocation(10, 10);
-        check(Baby.anchorFor(a, 3).equals(a), "anchor: first call takes the king's tile");
-        check(Baby.anchorFor(new MapLocation(13, 7), 3).equals(a), "anchor: kept at Chebyshev 3");
-        check(Baby.anchorFor(new MapLocation(12, 11), 3).equals(a), "anchor: kept at Chebyshev 2");
-        MapLocation b = new MapLocation(14, 10);
-        check(Baby.anchorFor(b, 3).equals(b), "anchor: re-set at Chebyshev 4");
-        check(Baby.anchorFor(new MapLocation(15, 10), 0).equals(new MapLocation(15, 10)), "anchor: r 0 follows the king");
-        // with r <= 3 a rat standing on the anchor is in transfer reach of the king (off its body)
-        for (int dx = -3; dx <= 3; dx++)
-            for (int dy = -3; dy <= 3; dy++) {
-                MapLocation k = new MapLocation(20 + dx, 20 + dy), p = new MapLocation(20, 20);
-                if (Math.abs(dx) <= 1 && Math.abs(dy) <= 1) continue;
-                check(Baby.inTransferReach(p, k), "anchor: reach from the anchor at " + dx + "," + dy);
-            }
-        Baby.anchor = null;
     }
 
     static void testRingArcsFast() {
@@ -3397,165 +1591,10 @@ public class BotTest {
         check(ok && TrapRisk.NEAR.length == 25, "TrapRisk.NEAR literal = the neighbours within Chebyshev 1 of each 5x5 offset");
     }
 
-    static void testPickBit() {
-        // every twin pair under each symmetry gets the same bit when each side's chirality comes from its own king
-        int[][] sizes = {{30, 20}, {45, 45}, {60, 60}, {21, 33}};
-        java.util.Random rnd = new java.util.Random(11);
-        boolean ok = true; int n = 0;
-        for (int[] wh : sizes) {
-            W = wh[0]; H = wh[1]; reset(); install();
-            for (int s : new int[]{Sym.ROT, Sym.HOR, Sym.VER}) {
-                for (int t = 0; t < 40; t++) {
-                    MapLocation home = new MapLocation(rnd.nextInt(W), rnd.nextInt(H));
-                    MapLocation homeM = new MapLocation(G.mirX(home.x, s), G.mirY(home.y, s));
-                    if (home.equals(homeM) || 2 * home.x == W - 1 || 2 * home.y == H - 1) continue;
-                    MapLocation f = new MapLocation(rnd.nextInt(W), rnd.nextInt(H));
-                    MapLocation l = f.translate(rnd.nextInt(5) - 2, rnd.nextInt(5) - 2);
-                    if (l.equals(f)) continue;
-                    G.chir = G.chirOf(home);
-                    boolean a = G.pickBitSym(f, l);
-                    G.chir = G.chirOf(homeM);
-                    boolean b = G.pickBitSym(new MapLocation(G.mirX(f.x, s), G.mirY(f.y, s)), new MapLocation(G.mirX(l.x, s), G.mirY(l.y, s)));
-                    ok &= a == b; n++;
-                }
-            }
-        }
-        G.chir = 1; W = 30; H = 20; reset(); install();
-        check(ok && n > 300, "pickBit: twins under rotation and both reflections get the same tie bit (" + n + " pairs)");
-        // the knight's-move pair that split where_are_you: one gets the bit, the other not
-        W = 60; H = 60; reset(); install();
-        G.chir = G.chirOf(new MapLocation(2, 2));
-        MapLocation k = new MapLocation(2, 2);
-        check(G.pickBitSym(k, new MapLocation(4, 3)) != G.pickBitSym(k, new MapLocation(3, 4)), "pickBit: (4,3) and (3,4) seen from (2,2) differ");
-        G.chir = 1; W = 30; H = 20; reset(); install();
-    }
-
-    static void testWoundMask() {
-        Team us0 = G.us, them0 = G.them;
-        G.us = Team.A; G.them = Team.B;
-        MapLocation me = new MapLocation(10, 10);
-        RobotInfo e3 = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, new MapLocation(13, 10), Direction.WEST, 0, 0, null);
-        RobotInfo e1 = new RobotInfo(8, Team.B, UnitType.BABY_RAT, 50, new MapLocation(11, 11), Direction.WEST, 0, 0, null);
-        RobotInfo far = new RobotInfo(7, Team.B, UnitType.BABY_RAT, 100, new MapLocation(14, 10), Direction.WEST, 0, 0, null);
-        RobotInfo ally = new RobotInfo(6, Team.A, UnitType.BABY_RAT, 100, new MapLocation(11, 10), Direction.WEST, 0, 0, null);
-        RobotInfo king = new RobotInfo(5, Team.B, UnitType.RAT_KING, 600, new MapLocation(12, 10), Direction.WEST, 0, 0, null);
-        // an enemy 3 east: the east-side steps (NE, E, SE) end at Chebyshev 2 of it, the rest stay at 3 or 4
-        int ne = 1 << 1, ea = 1 << 2, se = 1 << 3;
-        check(Baby.woundMask(me, new RobotInfo[]{e3}) == (ne | ea | se), "woundMask: an enemy 3 east bars NE, E and SE");
-        check(Baby.woundMask(me, new RobotInfo[]{far, ally, king}) == 0, "woundMask: enemies 4 off, allies and kings bar nothing");
-        check(Baby.woundMask(me, new RobotInfo[]{e1}) == 255, "woundMask: an adjacent enemy bars every step (the rat holds and bites)");
-        int m = Baby.woundMask(me, new RobotInfo[]{e3, far});
-        boolean mirror = true;
-        // mirror-invariance: the mask of the 180-degree mirror case is the rotated mask
-        RobotInfo e3m = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, new MapLocation(7, 10), Direction.EAST, 0, 0, null);
-        int mm = Baby.woundMask(me, new RobotInfo[]{e3m});
-        for (int i = 0; i < 8; i++) mirror &= ((m >> i) & 1) == ((mm >> ((i + 4) & 7)) & 1);
-        check(mirror, "woundMask: the 180-degree mirror of the case gives the opposite steps");
-        G.us = us0; G.them = them0;
-    }
-
-    static void testBugDig() throws GameActionException {
-        // a wall row y = 8 below us, dirt at (6,9) east along it; hand > 0 sweeps counter-clockwise from S: S, SE, E
-        reset(); W = 12; H = 12; me = new MapLocation(5, 9); facing = Direction.EAST;
-        for (int x = 0; x < W; x++) walls.add(new MapLocation(x, 8));
-        MapLocation e = new MapLocation(6, 9);
-        dirt.add(e);
-        install();
-        for (MapInfo mi : G.rc.senseNearbyMapInfos()) Sym.record(mi.getMapLocation().x, mi.getMapLocation().y, mi.isWall(), mi.isDirt(), false);
-        Nav.bugHand = 1;
-        check(Nav.bugDig(Direction.SOUTH) && digsDone == 1 && !dirt.contains(e) && !Nav.isDirt(e),
-              "bug dig: the first dirt in the sweep (past the wall) is dug, and our map forgets it");
-        dirt.add(e); Sym.mem[G.idx(e)] |= Sym.DIRT;
-        check(Nav.bugDig(Direction.SOUTH) && digsDone == 1, "bug dig: dirt next in the sweep with our action spent: hold");
-        actCd = 0;
-        Nav.bugHand = -1;   // clockwise from S: S, SW (wall), W (free)
-        check(!Nav.bugDig(Direction.SOUTH) && digsDone == 1, "bug dig: a free step before any dirt is walked, not dug");
-        global = 40; G.startTurn();
-        Nav.bugHand = 1;
-        check(!Nav.bugDig(Direction.SOUTH) && digsDone == 1, "bug dig: not under DIG_MIN_CHEESE");
-        reset();
-    }
-
-    static void testOpenTrap() {
-        check(Baby.openTrapBlocked(50, 1400, 150, 1500), "open trap: opening, bank under the floor");
-        check(!Baby.openTrapBlocked(50, 1500, 150, 1500), "open trap: opening, bank at the floor");
-        check(!Baby.openTrapBlocked(150, 300, 150, 1500), "open trap: after the opening");
-        check(!Baby.openTrapBlocked(10, 300, 0, 1500), "open trap: off");
-    }
-
-    /** KPath on a 30x20 map with a wall at x 10 for y 0..14: mine A (14,5) is nearer the king (4,5) by Chebyshev
-     *  and dist2 but 23 king steps away round the wall's top; mine B (4,17) is 12 away and 11 steps: the search
-     *  takes B and walks there; a wall seen across the way stops the downhill step and a new search is due. */
-    static void testMoat() throws GameActionException {
-        // king at (5,5) on 20x20: the ring tile farthest from the centre (9.5,9.5) is (3,3), the port
-        reset(); W = 20; H = 20; install();
-        type = UnitType.RAT_KING; G.coop = false; G.round = 200; Moat.seen = -1000; dirtStock = 30;
-        for (MapInfo mi : G.rc.senseNearbyMapInfos()) Sym.record(mi.getMapLocation().x, mi.getMapLocation().y, mi.isWall(), mi.isDirt(), false);
-        RobotInfo e = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, new MapLocation(10, 5), Direction.WEST, 0, 0, null);
-        robots.put(e.location, e);
-        RobotInfo[] en = { e };
-        Moat.king(en);
-        check(Moat.up() && dirt.contains(new MapLocation(7, 5)) && dirtStock == 29 && actCd == 25,
-              "moat: a king seeing an enemy rat at war fills the ring tile nearest it first");
-        for (int t = 0; t < 60; t++) { actCd = Math.max(0, actCd - 10); G.round++; Moat.king(en); }
-        int ring = 0;
-        for (int dx = -2; dx <= 2; dx++) for (int dy = -2; dy <= 2; dy++)
-            if (Math.max(Math.abs(dx), Math.abs(dy)) == 2 && dirt.contains(new MapLocation(5 + dx, 5 + dy))) ring++;
-        check(ring == 15 && !dirt.contains(new MapLocation(3, 3)), "moat: the king fills 15 of 16 ring tiles and keeps the port (3,3)");
-        G.round = 300; Moat.seen = 300 - Cfg.MOAT_IDLE;
-        check(Moat.up(), "moat: up MOAT_IDLE rounds after the last sighting");
-        G.round++;
-        check(!Moat.up(), "moat: down after MOAT_IDLE rounds without a sighting");
-
-        // a wall on the best tile moves the port to the next one, (3,4) or (4,3)
-        reset(); W = 20; H = 20; walls.add(new MapLocation(3, 3)); install();
-        type = UnitType.RAT_KING; G.coop = false; G.round = 200; Moat.seen = -1000; dirtStock = 30;
-        for (MapInfo mi : G.rc.senseNearbyMapInfos()) Sym.record(mi.getMapLocation().x, mi.getMapLocation().y, mi.isWall(), mi.isDirt(), false);
-        robots.put(e.location, e);
-        for (int t = 0; t < 60; t++) { actCd = Math.max(0, actCd - 10); G.round++; Moat.king(en); }
-        boolean a34 = dirt.contains(new MapLocation(3, 4)), a43 = dirt.contains(new MapLocation(4, 3));
-        check(dirt.size() == 14 && a34 != a43, "moat: with the best tile a wall, the next one stays open");
-
-        // babies: our king at (5,5) alerted; a baby at (4,2) beside ring tiles (3,3) (4,3) (5,3)
-        reset(); W = 20; H = 20; install();
-        dirtStock = 30; me = new MapLocation(4, 2); facing = Direction.NORTH; G.startTurn(); G.coop = false; G.round = 200;
-        shared[Comms.KING0] = 6; shared[Comms.KING0 + 1] = 6; shared[Comms.KING0 + 2] = Comms.stamp();
-        shared[Comms.ALERT] = 6 | (1 << 6); shared[Comms.ALERT + 1] = 6; shared[Comms.ALERT + 2] = Comms.stamp();
-        Comms.readKings();
-        Sym.record(4, 3, false, false, false); Sym.record(5, 3, false, false, false);
-        Moat.baby(null);
-        check(dirt.size() == 1 && dirt.contains(new MapLocation(5, 3)),
-              "moat: a baby that has not seen (3,3) treats its best known open tile (4,3) as the port");
-        Sym.record(3, 3, false, false, false); actCd = 0;
-        Moat.baby(null);
-        check(dirt.size() == 2 && dirt.contains(new MapLocation(4, 3)) && !dirt.contains(new MapLocation(3, 3)),
-              "moat: once it has seen (3,3) the baby fills (4,3) and never the port");
-        check(Moat.keep(new MapLocation(3, 3)) && Moat.keep(new MapLocation(7, 7)) && !Moat.keep(new MapLocation(4, 2)),
-              "moat: babies keep the dirt of the alerting king's ring, not beyond");
-        actCd = 0; me = new MapLocation(4, 1); G.startTurn(); G.coop = false; G.round = 200; dirt.clear();
-        Moat.baby(null);
-        check(dirt.isEmpty(), "moat: a baby four from the king places nothing");
-        shared[Comms.ALERT + 2] = (Comms.stamp() - Cfg.MOAT_IDLE - 1 + 1024) & 1023;
-        check(!Moat.keep(new MapLocation(3, 3)), "moat: a stale alert keeps nothing");
-        G.coop = true; shared[Comms.ALERT + 2] = Comms.stamp();
-        check(!Moat.keep(new MapLocation(3, 3)), "moat: nothing kept in cooperation");
-        G.coop = false;
-        // MOAT_DIG: a baby with nothing to fill digs the dirt next to it, never a ring tile
-        shared[Comms.ALERT + 2] = Comms.stamp(); dirt.clear(); dirtStock = 0; actCd = 0; global = 1000;
-        me = new MapLocation(5, 9); facing = Direction.SOUTH; G.startTurn(); G.coop = false; G.round = 200;
-        dirt.add(new MapLocation(5, 8)); dirt.add(new MapLocation(5, 10)); dirt.add(new MapLocation(6, 8));
-        check(Moat.dig(new MapLocation(5, 5)) && !dirt.contains(new MapLocation(5, 8)) && dirt.contains(new MapLocation(6, 8)) && Moat.dug == 1,
-              "moat dig: digs the seen dirt next to it nearest the king");
-        actCd = 0; dirt.clear(); dirt.add(new MapLocation(5, 7)); me = new MapLocation(5, 8); G.startTurn(); G.coop = false; G.round = 200;
-        check(!Moat.dig(new MapLocation(5, 5)) && dirt.contains(new MapLocation(5, 7)), "moat dig: never digs the king's ring");
-        actCd = 0; global = 50; dirt.add(new MapLocation(5, 9)); me = new MapLocation(5, 10); G.startTurn(); G.coop = false; G.round = 200;
-        check(!Moat.dig(new MapLocation(5, 5)), "moat dig: not under MOAT_DIG_CHEESE");
-    }
-
     static void testKingPath() {
         reset(); W = 30; H = 20; install();
         int c0 = Comms.numKings; Comms.numKings = 0;
-        KPath.kb = null; KPath.g = null; KPath.poolV = null; KPath.poolN = null; KPath.unlimited = true;
+        KPath.kb = null; KPath.g = null; KPath.poolV = null; KPath.poolN = null;
         KPath.ox = KPath.DX; KPath.oy = KPath.DY; KPath.lastScan = -1;
         check(KPath.alloc(0), "king path: arrays allocated");
         for (int y = 0; y < 15; y++) Sym.record(10, y, true, false, false);
@@ -3564,7 +1603,7 @@ public class BotTest {
               "king path: centres touching the wall or the edge are blocked");
         MapLocation k = new MapLocation(4, 5), a = new MapLocation(14, 5), b = new MapLocation(4, 17);
         MapLocation[] ms = { a, b };
-        MapLocation home = k, away = new MapLocation(25, 14);
+        MapLocation home = k, away = new MapLocation(100, 100);   // far off: KP_FRONT's line clears the whole map
         check(KPath.start(k, ms, 2, home, away), "king path: seeds from both mines");
         KPath.work(0);
         check(KPath.ready && KPath.cost(k) == 11, "king path: the search reaches the king, 11 steps to mine B (" + KPath.cost(k) + ")");
@@ -3589,13 +1628,13 @@ public class BotTest {
         check(!KPath.start(k, new MapLocation[]{ new MapLocation(24, 14) }, 1, home, new MapLocation(25, 14)),
               "king path: no seat on the enemy's half");
         // short of bytecodes: a scan stops before a row and leaves lastScan unset; seeding gives up without a search
-        KPath.fakeLeft = 100; KPath.lastScan = -1;
+        clock(100); KPath.lastScan = -1;
         check(!KPath.scan(k, 2500) && KPath.lastScan == -1, "king path: a scan short of bytecodes stops and scans again");
         check(!KPath.start(k, ms, 2, home, away) && !KPath.building && KPath.minesAt == -1,
               "king path: seeding short of bytecodes searches nothing and is due again");
-        KPath.fakeLeft = Integer.MAX_VALUE;
+        clock(1 << 30);
         // KP_FRONT's line: 2 * |home - away| times the signed distance from the bisector, |home - away|^2 at home
-        KPath.front(new MapLocation(1, 1), new MapLocation(29, 1));
+        KPath.frontPct = Cfg.KP_FRONT; KPath.front(new MapLocation(1, 1), new MapLocation(29, 1));
         check(KPath.fa * 1 + KPath.fb * 1 + KPath.fc == 28 * 28 && KPath.fa * 15 + KPath.fb * 7 + KPath.fc == 0
               && KPath.fa * 9 + KPath.fb * 20 + KPath.fc == 2 * 28 * 6 && KPath.fMin == 28 * 28 * Cfg.KP_FRONT / 100,
               "king path: the front line is the bisector, scaled by twice the start gap");
@@ -3612,429 +1651,58 @@ public class BotTest {
         Comms.numKings = c0;
     }
 
-    static void testRushStands() {
-        reset(); W = 20; H = 20; install();
-        int m0 = Sym.mask;
-        Sym.mask = Sym.VER; // mirror x on a 20-wide map: home (3,5) -> enemy start (16,5)
-        MapLocation home = new MapLocation(3, 5);
-        check(G.mirror(home, Baby.firstSym()).equals(new MapLocation(16, 5)), "rush stands: enemy start is the VER mirror");
-        check(Baby.rushStands(new MapLocation(9, 5), home, 6), "rush stands: 7 from the enemy start stands down at r 6");
-        check(!Baby.rushStands(new MapLocation(10, 8), home, 6), "rush stands: 6 from the enemy start keeps rushing");
-        check(!Baby.rushStands(new MapLocation(9, 5), null, 6), "rush stands: no home, no stand-down");
-        Sym.mask = m0;
-    }
-
-    static void testFaceHold() {
-        reset(); install();
-        Team us0 = G.us, them0 = G.them;
-        G.us = Team.A; G.them = Team.B;
-        G.me = me = new MapLocation(10, 10); health = 100;
-        int b0 = Baby.burnRound;
-        // an enemy 2 north facing south (it sees us) at our health
-        RobotInfo e = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, new MapLocation(10, 12), Direction.SOUTH, 0, 0, null);
-        Baby.nearestEnemy = e; Baby.hunting = false; Baby.burnRound = 0; shared[Comms.SYM] = 7;
-        check(!Baby.faceHold(), "face hold: not before enemy traps are known");
-        Baby.burnRound = 5;
-        check(Baby.faceHold(), "face hold: a watching, not weaker enemy 2 off holds us once traps are known");
-        Baby.burnRound = 0; shared[Comms.SYM] = 7 | Comms.SYM_BURN;
-        check(Baby.faceHold(), "face hold: the kings' shared burn bit is enough");
-        Baby.hunting = true;
-        check(!Baby.faceHold(), "face hold: a hunter still closes on its prey");
-        Baby.hunting = false;
-        Baby.nearestEnemy = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 90, e.location, Direction.SOUTH, 0, 0, null);
-        check(!Baby.faceHold(), "face hold: a weaker enemy is engaged");
-        Baby.nearestEnemy = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, e.location, Direction.NORTH, 0, 0, null);
-        check(!Baby.faceHold(), "face hold: an enemy facing away is engaged");
-        Baby.burnRound = b0; G.us = us0; G.them = them0; reset();
-    }
-
-    /** Cfg.SWEEP (constant 0, so sweep(c) is driven directly): cells of our half by walk plus anchor distance,
-     *  mirrored for the other side, banned on a stall, done when our half is seen. */
-    static void testSweep() throws GameActionException {
-        reset(); W = 30; H = 20; install();
-        Sym.mask = Sym.VER; Baby.slot = 0; G.us = Team.A;
-        check(Baby.sweepLane(0) == 0 && Baby.sweepLane(3 << 10) == 3, "sweep: lane from the slot");
-        check(Baby.sweepAnchor(0, 30, true) == 14 && Baby.sweepAnchor(1, 30, true) == 29 && Baby.sweepAnchor(1, 20, false) == 0
-            && Baby.sweepAnchor(2, 30, true) == 0 && Baby.sweepAnchor(3, 20, false) == 19, "sweep: lane anchors in the frame");
-        check(Baby.sweepScore(22, 7, 26, 10, 14, 9) < Baby.sweepScore(17, 7, 26, 10, 14, 9), "sweep: on the anchor line, nearer first");
-        MapLocation[] got = new MapLocation[2];
-        for (int side = 0; side < 2; side++) {
-            reset(); W = 30; H = 20; install(); Sym.mask = Sym.VER; Baby.slot = 0;
-            Baby.home = side == 0 ? new MapLocation(27, 10) : new MapLocation(2, 10);
-            Baby.fu = side == 0 ? 1 : -1; Baby.fv = 1;
-            G.me = side == 0 ? new MapLocation(26, 10) : new MapLocation(3, 10);
-            Baby.sweepCell = 0; Baby.sweepScan = 0; Baby.sweepBan = null; Baby.sweepDone = false; Baby.exploreTarget = null; Nav.stall = 0;
-            check(Baby.sweep(5, 20000), "sweep: a target while our half is unseen");
-            got[side] = Baby.exploreTarget;
-        }
-        check(new MapLocation(22, 7).equals(got[0]), "sweep: the cell toward the centre anchor, nearest first: " + got[0]);
-        check(got[1] != null && got[1].equals(new MapLocation(29 - got[0].x, got[0].y)), "sweep: the other side takes the mirror cell: " + got[1]);
-        // B side again: its cell seen, the next; a stall bans it
-        Sym.mem[got[1].x + W * got[1].y] |= Sym.SEEN;
-        Baby.sweep(5, 20000);
-        MapLocation t2 = Baby.exploreTarget;
-        check(t2 != null && !t2.equals(got[1]), "sweep: a seen cell centre is left for the next: " + t2);
-        int c2 = Baby.sweepCell;
-        Nav.stall = 25; Baby.sweep(5, 20000); Nav.stall = 0;
-        check(Baby.sweepBan[c2 - 1] && !t2.equals(Baby.exploreTarget), "sweep: a stalled cell is banned");
-        for (int x = 0; x < W; x++) for (int y = 0; y < H; y++) Sym.mem[x + W * y] |= Sym.SEEN;
-        Baby.sweepCell = 0;
-        check(!Baby.sweep(5, 20000) && Baby.sweepDone, "sweep: done once our half is seen");
-        // a scan of 7 cells a call goes on over several calls and lands on the one-call scan's cell
-        reset(); W = 30; H = 20; install(); Sym.mask = Sym.VER; Baby.slot = 0;
-        Baby.home = new MapLocation(27, 10); Baby.fu = 1; Baby.fv = 1; G.me = new MapLocation(26, 10);
-        Baby.sweepCell = 0; Baby.sweepScan = 0; Baby.sweepBan = null; Baby.sweepDone = false; Baby.exploreTarget = null;
-        int calls = 0;
-        while (Baby.sweepCell == 0 && calls < 40) { Baby.sweep(5, 7); calls++; }
-        check(calls == 4 && Baby.sweepScan == 0 && new MapLocation(22, 7).equals(Baby.exploreTarget),
-            "sweep: a 24-cell scan at 7 a call picks on call 4, the same cell: " + calls + " " + Baby.exploreTarget);
-        Baby.sweepCell = 0; Baby.sweepScan = 0; Baby.sweepBan = null; Baby.sweepDone = false; Baby.exploreTarget = null; reset();
-    }
-
     static void testHomeRank() {
         check(Baby.homeRank(0, 3) < Baby.homeRank(0, 9) && Baby.homeRank(1, 3) < Baby.homeRank(1, 9), "home pick 0/1: nearer ranks first");
         check(Baby.homeRank(2, 9) < Baby.homeRank(2, 3), "home pick 2: farther ranks first");
     }
 
 
-    /** GrabMicro enemies: offsets, health, facing (G.DIRS index, -1 none), can grab; returns the count. */
-    static int gmSet(int[][] es) {
-        for (int i = 0; i < es.length; i++) {
-            GrabMicro.ex[i] = es[i][0]; GrabMicro.ey[i] = es[i][1]; GrabMicro.ehp[i] = es[i][2];
-            GrabMicro.edir[i] = es[i][3]; GrabMicro.ecan[i] = true;
-        }
-        return es.length;
-    }
 
-    /** The steps that do not land on one of the enemies (rc.canMove's mask never has them). */
-    static int gmSteps(int[][] es) {
-        int m = 255;
-        for (int[] e : es) for (int d = 0; d < 8; d++) if (GrabMicro.DX[d] == e[0] && GrabMicro.DY[d] == e[1]) m &= ~(1 << d);
-        return m;
-    }
-
-    /** All window tiles within Chebyshev 2 free except ours and the listed offsets. */
-    static long gmFree(int... blocked) {
-        long f = GrabMicro.INNER & ~GrabMicro.CBIT;
-        for (int i = 0; i < blocked.length; i += 2) f &= ~GrabMicro.bit(blocked[i], blocked[i + 1]);
-        return f;
-    }
-
-    /** The first GrabMicro.evaluate (bitboard loops), kept as the reference the table version must match. */
-    static final long[] r0 = new long[8], r1 = new long[8], eb = new long[8], rt = new long[8];
-    static final boolean[] gr = new boolean[8];
-    static int rS, rD, rF, rG, rB, rCur;
-    static final int[] rDir = new int[9];
-
-    static int gmRef(int myHp, int cur, boolean turnOk, int moveMask, boolean actOk, int n, long free,
-                        int px, int py, int chir) {
-        for (int i = 0; i < n; i++) {
-            long e = GrabMicro.bit(GrabMicro.ex[i], GrabMicro.ey[i]), nb = GrabMicro.shift(GrabMicro.K3, GrabMicro.ex[i], GrabMicro.ey[i]);
-            eb[i] = e;
-            r0[i] = nb & (free | e) & GrabMicro.INNER;
-            r1[i] = r0[i] | (nb & GrabMicro.CBIT);
-        }
-        rS = Integer.MIN_VALUE; rD = 8; rF = cur; rG = -1; rB = -1; rCur = 0;
-        int rKey = 0, rFKey = 0;
-        for (int d = 8; d >= 0; d--) {
-            rDir[d] = Integer.MIN_VALUE;
-            if (d < 8 && (moveMask & (1 << d)) == 0) continue;
-            int tx = d < 8 ? GrabMicro.DX[d] : 0, ty = d < 8 ? GrabMicro.DY[d] : 0;
-            long at = GrabMicro.shift(GrabMicro.ADJ, tx, ty);
-            for (int i = 0; i < n; i++) {
-                rt[i] = (d == 8 ? r0[i] : r1[i]) & at;
-                gr[i] = actOk && (eb[i] & at) != 0 && (GrabMicro.ehp[i] < myHp || !GrabMicro.sees(GrabMicro.ex[i], GrabMicro.ey[i], GrabMicro.edir[i], tx, ty));
-            }
-            int tKey = d == 8 ? Integer.MAX_VALUE : GrabMicro.key(px, py, chir, tx, ty);
-            for (int f = turnOk ? 0 : cur, f1 = turnOk ? 7 : cur; f <= f1; f++) {
-                long v = GrabMicro.shift(GrabMicro.vis(f), tx, ty);
-                int g = -1, gv = 0, gk = 0, bi = -1, bv = 0, bh = 0, bk = 0;
-                for (int i = 0; i < n; i++) {
-                    if ((eb[i] & v) == 0) continue;
-                    // equal choices fall to the mirror-invariant key of the victim's tile
-                    if (gr[i]) {
-                        int x = GrabMicro.GRAB + GrabMicro.ehp[i] / 10, k = GrabMicro.key(px, py, chir, GrabMicro.ex[i], GrabMicro.ey[i]);
-                        if (x > gv || x == gv && k > gk) { gv = x; g = i; gk = k; }
-                    } else if (actOk) {
-                        int h = GrabMicro.ehp[i], k = GrabMicro.key(px, py, chir, GrabMicro.ex[i], GrabMicro.ey[i]);
-                        int x = h <= 10 ? GrabMicro.KILL : h >= myHp && h - 10 < myHp ? GrabMicro.FLIP : GrabMicro.BITE;
-                        if (x > bv || x == bv && (h < bh || h == bh && k > bk)) { bv = x; bi = i; bh = h; bk = k; }
-                    }
-                }
-                if (g >= 0) { bi = -1; bv = 0; }
-                int th = 0;
-                for (int i = 0; i < n; i++) {
-                    if (i == g || !GrabMicro.ecan[i] || rt[i] == 0) continue;
-                    int h = GrabMicro.ehp[i] - (i == bi ? 10 : 0);
-                    if (h <= 0) continue;
-                    if (h > myHp || (rt[i] & ~v) != 0) th++;
-                }
-                int s = gv + bv - GrabMicro.THREAT * th - (d < 8 && f != d && cur != d ? 1 : 0);
-                if (d == 8 && f == cur) rCur = s;
-                if (s > rDir[d]) rDir[d] = s;
-                int fKey = f == cur ? Integer.MAX_VALUE : GrabMicro.key(px, py, chir, GrabMicro.DX[f], GrabMicro.DY[f]);
-                if (s > rS || s == rS && (tKey > rKey || tKey == rKey && fKey > rFKey)) {
-                    rS = s; rD = d; rF = f; rG = g; rB = bi; rKey = tKey; rFKey = fKey;
-                }
-            }
-        }
-        return rS;
-    }
-
-
-    static void testGrabMicro() {
-        // facing sets and the cone
-        check(GrabMicro.vis(0) == (GrabMicro.bit(0, 1) | GrabMicro.bit(-1, 1) | GrabMicro.bit(1, 1))
-                && GrabMicro.vis(1) == (GrabMicro.bit(1, 1) | GrabMicro.bit(0, 1) | GrabMicro.bit(1, 0)),
-                "grab micro: a facing sees ahead and the two front diagonals");
-        check(GrabMicro.sees(0, 2, 4, 0, 0) && !GrabMicro.sees(2, 0, 2, 1, 0) && GrabMicro.sees(2, 0, 6, 1, 0)
-                && !GrabMicro.sees(0, 1, 4, 1, 1) && GrabMicro.sees(0, 0, -1, 3, 3),
-                "grab micro: an enemy's cone (ahead within 45 degrees, radius squared 20)");
-        check(GrabMicro.shift(GrabMicro.CBIT, 2, -1) == GrabMicro.bit(2, -1) && GrabMicro.shift(GrabMicro.CBIT, -3, -3) == 1L,
-                "grab micro: window shifts");
-        int px = 7, py = 3;
-        // an enemy two ahead facing us: facing it, every tile it can step to next to us is in view
-        int n = gmSet(new int[][] {{0, 2, 100, 4}});
-        GrabMicro.evaluate(100, 0, true, 255, false, n, gmFree(), px, py, 1);
-        check(GrabMicro.curS == 0 && GrabMicro.bestD == 8 && GrabMicro.bestF == 0 && GrabMicro.grabI < 0,
-                "grab micro: facing an enemy two ahead is safe; stay");
-        // with the action: a diagonal step next to it, facing it, bites with every tile it can reach in view
-        GrabMicro.evaluate(100, 0, true, 255, true, n, gmFree(), px, py, 1);
-        check(GrabMicro.biteI == 0 && GrabMicro.bestS == GrabMicro.FLIP - 1 && Math.abs(GrabMicro.DX[GrabMicro.bestD]) == 1
-                && GrabMicro.DY[GrabMicro.bestD] == 1, "grab micro: a safe step to bite");
-        // the same enemy behind us: one threat now; turning to it is the fix
-        GrabMicro.evaluate(100, 4, true, 255, false, n, gmFree(), px, py, 1);
-        check(GrabMicro.curS == -GrabMicro.THREAT && GrabMicro.bestS == 0 && GrabMicro.bestD == 8 && GrabMicro.bestF == 0,
-                "grab micro: an enemy that can step into our blind spot is a threat; turn to it");
-        // no turn and no step: walls on our blind tiles next to its reach make it safe
-        n = gmSet(new int[][] {{2, 0, 100, 6}});
-        GrabMicro.evaluate(100, 0, false, 0, true, n, gmFree(), px, py, 1);
-        int open = GrabMicro.curS;
-        GrabMicro.evaluate(100, 0, false, 0, true, n, gmFree(1, 0, 1, -1), px, py, 1);
-        check(open == -GrabMicro.THREAT && GrabMicro.curS == 0, "grab micro: walls and robots block the enemy's step");
-        // an enemy facing away two tiles east: step behind it, face it and grab
-        n = gmSet(new int[][] {{2, 0, 100, 2}});
-        GrabMicro.evaluate(100, 0, true, 255, true, n, gmFree(), px, py, 1);
-        check(GrabMicro.bestD == 2 && GrabMicro.bestF == 2 && GrabMicro.grabI == 0 && GrabMicro.bestS == GrabMicro.GRAB + 10,
-                "grab micro: a step into an enemy's blind spot grabs it");
-        GrabMicro.evaluate(100, 0, true, 255, false, n, gmFree(), px, py, 1);
-        check(GrabMicro.grabI < 0, "grab micro: no grab without the action");
-        // a weaker enemy in front of us is grabbed from where we stand
-        n = gmSet(new int[][] {{0, 1, 80, 4}});
-        GrabMicro.evaluate(100, 0, true, 255, true, n, gmFree(), px, py, 1);
-        check(GrabMicro.bestD == 8 && GrabMicro.bestF == 0 && GrabMicro.grabI == 0, "grab micro: a weaker enemy ahead is grabbed");
-        // a healthier enemy two ahead threatens us even in view: back off out of its reach
-        n = gmSet(new int[][] {{0, 2, 100, 4}});
-        GrabMicro.evaluate(50, 0, true, 255, true, n, gmFree(), px, py, 1);
-        check(GrabMicro.curS == -GrabMicro.THREAT && GrabMicro.bestS >= -1 && GrabMicro.bestD != 8
-                && Math.max(Math.abs(GrabMicro.DX[GrabMicro.bestD]), Math.abs(GrabMicro.DY[GrabMicro.bestD] - 2)) >= 3,
-                "grab micro: a healthier enemy grabs from anywhere next to us; step away");
-        // an equal enemy adjacent ahead: the bite ends its health edge
-        n = gmSet(new int[][] {{0, 1, 100, 4}});
-        GrabMicro.evaluate(100, 0, false, 0, true, n, gmFree(), px, py, 1);
-        check(GrabMicro.biteI == 0 && GrabMicro.curS == GrabMicro.FLIP - GrabMicro.THREAT, "grab micro: a flip bite on an equal enemy");
-        // a carrier cannot grab
-        n = gmSet(new int[][] {{0, -2, 100, 0}});
-        GrabMicro.ecan[0] = false;
-        GrabMicro.evaluate(100, 0, false, 0, true, n, gmFree(), px, py, 1);
-        check(GrabMicro.curS == 0, "grab micro: an enemy carrying a rat is no threat");
-
-        // mirrored and rotated twins choose mirrored options, whatever the enemy order
-        java.util.Random rnd = new java.util.Random(7);
-        int bad = 0, cases = 0;
-        int[] mirX = {0, 7, 6, 5, 4, 3, 2, 1}, mirY = {4, 3, 2, 1, 0, 7, 6, 5}, rot = {4, 5, 6, 7, 0, 1, 2, 3};
-        for (int c = 0; c < 3000; c++) {
-            int ne = 1 + rnd.nextInt(4);
-            int[][] es = new int[ne][];
-            for (int i = 0; i < ne; i++) {
-                int x, y;
-                do { x = rnd.nextInt(7) - 3; y = rnd.nextInt(7) - 3; } while (x == 0 && y == 0);
-                es[i] = new int[] {x, y, 10 * (1 + rnd.nextInt(10)), rnd.nextInt(8)};
-            }
-            int hp = 10 * (1 + rnd.nextInt(10)), cur = rnd.nextInt(8), mm = rnd.nextInt(256);
-            boolean tOk = rnd.nextBoolean(), aOk = rnd.nextInt(4) != 0;
-            long fr = GrabMicro.INNER & ~GrabMicro.CBIT;
-            for (int k = 0; k < 4; k++) fr &= ~GrabMicro.bit(rnd.nextInt(5) - 2, rnd.nextInt(5) - 2);
-            for (int[] e : es) if (Math.abs(e[0]) <= 2 && Math.abs(e[1]) <= 2) fr &= ~GrabMicro.bit(e[0], e[1]);
-            mm &= gmSteps(es);
-            int qx = rnd.nextInt(41) - 20, qy = rnd.nextInt(41) - 20, ch = rnd.nextBoolean() ? 1 : -1;
-            if (qx == 0 && qy == 0) qx = 3;
-            GrabMicro.evaluate(hp, cur, tOk, mm, aOk, gmSet(es), fr, qx, qy, ch);
-            int d0 = GrabMicro.bestD, f0 = GrabMicro.bestF, s0 = GrabMicro.bestS;
-            for (int t = 0; t < 3; t++) {
-                int[] m = t == 0 ? mirX : t == 1 ? mirY : rot;
-                int sx = t == 1 ? 1 : -1, sy = t == 0 ? 1 : -1;
-                int[][] ms = new int[ne][];
-                for (int i = 0; i < ne; i++) { int[] e = es[(i + t + 1) % ne]; ms[i] = new int[] {sx * e[0], sy * e[1], e[2], m[e[3]]}; }
-                long mf = 0;
-                for (int oy = -2; oy <= 2; oy++) for (int ox = -2; ox <= 2; ox++)
-                    if ((fr & GrabMicro.bit(ox, oy)) != 0) mf |= GrabMicro.bit(sx * ox, sy * oy);
-                int mmm = 0;
-                for (int d = 0; d < 8; d++) if ((mm & (1 << d)) != 0) mmm |= 1 << m[d];
-                GrabMicro.evaluate(hp, m[cur], tOk, mmm, aOk, gmSet(ms), mf, sx * qx, sy * qy, t == 2 ? ch : -ch);
-                cases++;
-                if (GrabMicro.bestS != s0 || GrabMicro.bestF != m[f0] || GrabMicro.bestD != (d0 == 8 ? 8 : m[d0])) bad++;
-            }
-        }
-        check(bad == 0, "grab micro: mirrored twins pick mirrored options (bad=" + bad + " of " + cases + ")");
-
-        // the lookup tables match their definitions
-        int tb = 0;
-        for (int r = 0; r < 256; r++) {
-            int m = 0;
-            for (int f = 0; f < 8; f++) if ((r & ~GrabMicro.arc(f) & 255) == 0) m |= 1 << f;
-            if (GrabMicro.SAFE.charAt(r) != m) tb++;
-        }
-        for (int dx = -4; dx <= 4; dx++) for (int dy = -4; dy <= 4; dy++) {
-            int m = 0;
-            for (int k = 0; k < 8; k++) if (Math.max(Math.abs(GrabMicro.DX[k] - dx), Math.abs(GrabMicro.DY[k] - dy)) <= 1) m |= 1 << k;
-            if (GrabMicro.NEAR.charAt((dx + 4) * 9 + dy + 4) != m) tb++;
-        }
-        for (int v = 0; v < 512; v++) {
-            int m = 0;
-            for (int k = 0; k < 8; k++) if ((v >> ((GrabMicro.DX[k] + 1) + 3 * (GrabMicro.DY[k] + 1)) & 1) != 0) m |= 1 << k;
-            if (GrabMicro.RING9.charAt(v) != m) tb++;
-        }
-        for (int k = 0; k < 8; k++) if (GrabMicro.DIRK.charAt((GrabMicro.DX[k] + 1) * 3 + GrabMicro.DY[k] + 1) != k) tb++;
-        if (GrabMicro.DIRK.charAt(4) != 8) tb++;
-        long blk = GrabMicro.bit(-1, 0) | GrabMicro.bit(1, 2) | GrabMicro.bit(0, 1);
-        if (GrabMicro.block(blk, 0, 1) != (1 << 0 | 1 << 8 | 1 << 4)) tb++;
-        check(tb == 0, "grab micro: SAFE, NEAR, RING9, DIRK and block() match their definitions (bad=" + tb + ")");
-
-        // the table version scores exactly as the bitboard reference
-        int diff = 0;
-        for (int c = 0; c < 4000; c++) {
-            int ne = 1 + rnd.nextInt(GrabMicro.MAXE);
-            int[][] es = new int[ne][];
-            for (int i = 0; i < ne; i++) {
-                int x, y;
-                do { x = rnd.nextInt(7) - 3; y = rnd.nextInt(7) - 3; } while (x == 0 && y == 0);
-                es[i] = new int[] {x, y, 10 * (1 + rnd.nextInt(10)), rnd.nextInt(9) - 1};
-            }
-            int hp = 10 * (1 + rnd.nextInt(10)), cur = rnd.nextInt(8), mm = rnd.nextInt(256);
-            boolean tOk = rnd.nextBoolean(), aOk = rnd.nextInt(4) != 0;
-            long fr = GrabMicro.INNER & ~GrabMicro.CBIT;
-            for (int k = 0; k < 5; k++) fr &= ~GrabMicro.bit(rnd.nextInt(5) - 2, rnd.nextInt(5) - 2);
-            for (int[] e : es) if (Math.abs(e[0]) <= 2 && Math.abs(e[1]) <= 2) fr &= ~GrabMicro.bit(e[0], e[1]);
-            mm &= gmSteps(es);
-            int qx = rnd.nextInt(41) - 20, qy = rnd.nextInt(41) - 20, ch = rnd.nextBoolean() ? 1 : -1;
-            int nn = gmSet(es);
-            for (int i = 0; i < nn; i++) GrabMicro.ecan[i] = rnd.nextInt(5) != 0;
-            gmRef(hp, cur, tOk, mm, aOk, nn, fr, qx, qy, ch);
-            GrabMicro.evaluate(hp, cur, tOk, mm, aOk, nn, fr, qx, qy, ch);
-            boolean same = rS == GrabMicro.bestS && rD == GrabMicro.bestD && rF == GrabMicro.bestF && rG == GrabMicro.grabI
-                    && rB == GrabMicro.biteI && rCur == GrabMicro.curS;
-            for (int d = 0; d < 9; d++) same &= rDir[d] == GrabMicro.dirBest[d];
-            if (!same) diff++;
-        }
-        check(diff == 0, "grab micro: the table version matches the bitboard reference (diff=" + diff + " of 4000)");
-    }
 
     public static void main(String[] args) throws Exception {
-        testGrabMicro();
         testFlowProgress();
         testFlowCache();
-        testFlowHeld();
         testFaceReach();
         testFlowRev();
         testFlowFast();
-        testFlowW();
-        testPathOracle();
-        testTripHalf();
-        testFlowSplice();
-        testRushBan();
         testTrapRiskNear();
         testCarryAim();
-        testPickBit();
         testSpawnFace();
-        testSwapPast();
-        testMineExplore();
         testFrontier();
-        testKingBiter();
-        testKingCarrier();
-        testRescue();
-        testGrabSafe();
-        testKeepRisk();
-        testReserve();
-        testFlee();
-        testBiteCarrier();
-        testMayRetreat();
-        testFormHold();
-        testSideTarget();
-        testFillKey();
-        testKingEyes();
-        testFlowUnseen();
         testHomeStart();
-        testFormMine();
         testCatLay();
         testAtkCarry();
         testCatLane();
-        testRusher();
-        testAmmo();
-        testRoleFor();
-        testScoutMore();
         testRingArcs();
         testRingArcsFast();
-        testAnchorFor();
         testHomeRank();
-        testSweep();
-        testWoundMask();
-        testFaceHold();
-        testOpenTrap();
-        testBugDig();
-        testRushStands();
         testKingPath();
-        testMoat();
         testScoutUntil();
-        testMineTraps();
-        testTrapRisk();
-        testMineSpread();
-        testFightPost();
         testScout();
         testSeek();
-        testHostile();
-        testGlance();
         testMineMirror();
         testKingDig();
         testKingPile();
-        testKingDodge();
-        testBiteGuard();
-        testCarryCap();
         testFullLoad();
-        testBabyCap();
         testWalledOff();
         testNearKing();
         testFormIncome();
         testCatAtKing();
         testNearerAllies();
-        testBirthSeed(); testKingPress();
+        testBirthSeed();
         testDefend();
-        testGuard();
         testBiteCheese();
         testFlank();
         testSpawnFloor();
-        testStandoff();
-        testFort();
         testRetreat();
-        testWarRoles();
-        testMicroRetreatsWhenOutnumbered();
         testThrowDirection();
         testBiteTargets();
         testTransferReach();
         testRaid();
-        testFormation();
-        testReportPriority();
         testTrapTile();
-        testKingMine(); testKingFront(); testSeal(); testCatReach();
-        testHandMirror(); testCentreMirror();
+        testKingFront();
+        testCatReach();
         testSymElimination();
-        testSymFill();
-        testChiral();
-        testSymMineList();
-        testSymRelay();
-        testKingHeld();
-        testBabyCapArea();
-        testAtkHome();
         testStallCentre();
         testSqueakCodec();
         testFresh();
@@ -4043,15 +1711,14 @@ public class BotTest {
         testNavDigsDirt();
         testNavUShape();
         testNavFlowSealedRoom();
-        testFlowField(); testFlowMirror(); testFlowQuota(); testTieFirst(); testFlowAlloc();
-        testBitFlow(); testBitFlowWalk(); testBitFlowMirror();
-        testFlowJam();
-        testCheeseBan();
+        testFlowField();
+        testFlowAlloc();
+        testBitFlow();
+        testBitFlowWalk();
+        testBitFlowMirror();
         testNavSameTarget();
         testAtMine();
         testTrail();
-        testWarStrike();
-        testKingBlock();
         testExploreUnseen();
         testKingNeverWritesOutOfRange();
         System.out.println("BotTest: " + (checks - fails) + "/" + checks + " passed");
