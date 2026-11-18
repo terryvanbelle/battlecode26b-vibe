@@ -11499,3 +11499,16 @@
     xj9 (javap -c, package normalised). Submitted #398; starvation panel 21961-21972 (pairs with xj9 #397).
   - Box screens: zd724 self-play xk2 vs xj9 (296 cells), zd723 archetypes x 74 maps x both seats for xj9 and xk2
     (3256 cells). First 16 self-play games: xk2 7-9; overruns xk2 5, xj9 3; no exceptions.
+- 16:40 (11-18): **Owner #36: audit, fix bundle, tests. xk4 = 29 verified fixes; self-play 52.0% vs xk2, overruns -95%**
+  - ratbot = xk2's code (package ratbot); dead code removed 9924 -> 7098 lines (bcsame: every remaining method
+    bytecode-identical; static initializers cheaper). zd725 (592 box games vs agrab/arush): 278/296 pairs identical,
+    3 win flips, 277 vs 278: neutral. A cheaper class init alone shifts Flow.work's budget-driven work.
+  - Audit: five area reviewers, then an adversarial verifier per area (research/audit/findings-*.md). 36 findings;
+    none refuted outright, several downgraded; K4 and C5 fixes corrected. K6/E1 (newborn misses its own SQ_START;
+    opening role parity) deferred by the owner as a feature for after the initial eval. S6 by design.
+  - xk3 = 28 fixes each behind Cfg.FIX_<id> on FIX2_ALL (off state bytecode-identical). xk4 = xk3 + FIX_O2: a newborn's
+    pickMine (~300 bc per known mine, no budget gate) overran nearly every first turn on 60x60 maps and the paused turn
+    ate turn 2; first-turn overruns 240/312 -> 0/310 on superioristhmus.
+  - Tests: BotTest ported (1411 checks), FixTest new (513 checks; 48 fail with the fixes off); unit-tests.sh exit 0.
+  - zd726 (box, xk4 vs xk2, 74 maps x 2 seats x 2 seeds): xk4 154/296 = 52.0% +-5.7; overruns 77 vs 1584; 0 exceptions.
+    zd727 (xk4 vs 11 archetypes, pairs with zd723's xk2 half) running.
