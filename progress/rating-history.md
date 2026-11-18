@@ -1,6 +1,6 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-11 00:05 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-18 15:00 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
 
@@ -12,7 +12,7 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 - M4 2026-10-28 08:50 PDT: method: benchmark games only on the replica; local games are self-play
 - M5 2026-10-31 07:46 PDT: panel: v4 (8 opponents u2g beats 25-75%)
 
-476 rated matches; latest rating 1,653 (2026-11-10 23:54 PDT).
+533 rated matches; latest rating 1,668 (2026-11-18 14:39 PDT).
 
 | Submission | Build | Uploaded (PDT) | Accepted | Rating at upload | Rated matches since |
 |---:|---|---|---|---:|---:|
@@ -326,4 +326,33 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 | #367 | ziv | 2026-11-10 20:24 | yes | 1,645 | 0 |
 | #368 | zit | 2026-11-10 20:41 | yes | 1,645 | 0 |
 | #369 | zj2 | 2026-11-10 21:42 | yes | 1,645 | 0 |
-| #370 | zj3 | 2026-11-10 22:00 | yes | 1,645 | 2 |
+| #370 | zj3 | 2026-11-10 22:00 | yes | 1,645 | 6 |
+| #371 | zj8 | 2026-11-11 00:09 | yes | 1,645 | 0 |
+| #372 | zja | 2026-11-11 01:53 | yes | 1,645 | 0 |
+| #373 | zjc | 2026-11-11 02:38 | yes | 1,645 | 1 |
+| #374 | zj3 | 2026-11-11 03:53 | yes | 1,641 | 0 |
+| #375 | zjd | 2026-11-11 04:27 | yes | 1,641 | 0 |
+| #376 | zjf | 2026-11-11 05:10 | yes | 1,641 | 2 |
+| #377 | xa5 | 2026-11-11 06:02 | yes | 1,628 | 1 |
+| #378 | zj3 | 2026-11-11 07:43 | yes | 1,632 | 4 |
+| #379 | xb8 | 2026-11-11 09:26 | yes | 1,644 | 0 |
+| #380 | xc3 | 2026-11-11 11:12 | yes | 1,644 | 4 |
+| #381 | xc6 | 2026-11-11 13:08 | yes | 1,643 | 1 |
+| #382 | xd6 | 2026-11-11 14:39 | yes | 1,646 | 6 |
+| #383 | xe6 | 2026-11-11 16:31 | yes | 1,639 | 0 |
+| #384 | zj3 | 2026-11-11 18:00 | yes | 1,639 | 0 |
+| #385 | xf3 | 2026-11-11 18:25 | yes | 1,639 | 6 |
+| #386 | xf7 | 2026-11-11 20:07 | yes | 1,644 | 3 |
+| #387 | xg2 | 2026-11-11 21:50 | yes | 1,639 | 1 |
+| #388 | xh1 | 2026-11-11 23:30 | yes | 1,651 | 4 |
+| #389 | xh4 | 2026-11-12 01:25 | yes | 1,649 | 0 |
+| #390 | xh6 | 2026-11-12 02:49 | yes | 1,649 | 0 |
+| #391 | xi1 | 2026-11-12 05:10 | yes | 1,649 | 1 |
+| #392 | xi9 | 2026-11-12 06:45 | yes | 1,660 | 0 |
+| #393 | xj5 | 2026-11-12 07:48 | yes | 1,660 | 5 |
+| #394 | xj6 | 2026-11-12 08:15 | yes | 1,676 | 0 |
+| #395 | xj7 | 2026-11-12 08:44 | yes | 1,676 | 0 |
+| #396 | xj8 | 2026-11-12 08:59 | yes | 1,676 | 0 |
+| #397 | xj9 | 2026-11-12 09:19 | yes | 1,676 | 0 |
+| #398 | xk2 | 2026-11-18 05:41 | yes | 1,676 | 10 |
+| #399 | xk6 | 2026-11-18 12:14 | yes | 1,657 | 4 |

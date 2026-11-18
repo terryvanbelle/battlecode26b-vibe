@@ -164,7 +164,8 @@ class Client:
             return json.loads(out) if out else None
         raise ApiError(0, 'unreachable')
 
-    def pages(self, path, token=None, limit=None):
+    def pages(self, path, token=None, limit=None, stop=None):
+        """Every page's results; stop(page_results) True ends the walk after that page."""
         out, url, n = [], path, 0
         while url and (limit is None or n < limit):
             r = self.request('GET', url, token=token)
@@ -173,6 +174,8 @@ class Client:
             out += r.get('results', [])
             url = r.get('next')
             n += 1
+            if stop and stop(r.get('results', [])):
+                break
         return out
 
     def login(self, username, password):
@@ -410,12 +413,12 @@ def fetch(c, match, out_dir):
     url = match.get('replay_url')
     if not url or match.get('status') != 'OK!':
         return None
-    os.makedirs(out_dir, exist_ok=True)
     p = os.path.join(out_dir, f'{match["id"]}.bc26')
     if not os.path.exists(p):
         data = c.request('GET', url, raw=True, timeout=600)
         if data[:2] != b'\x1f\x8b':
             raise ApiError(0, f'match {match["id"]}: the replay is not a gzip file')
+        os.makedirs(out_dir, exist_ok=True)    # only after a download, so a failed one is retried next time
         with open(p + '.tmp', 'wb') as fh:
             fh.write(data)
         os.replace(p + '.tmp', p)

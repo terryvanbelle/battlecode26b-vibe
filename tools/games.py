@@ -136,7 +136,17 @@ def fetch_replica(out):
     ep = c.episode
     raw = [x for x in s.pages(f'/api/compete/{ep}/submission/') if x.get('accepted')]
     subs = {x['id']: codename(x['package'], x['description']) for x in raw}
-    ms = [m for m in c.pages(f'/api/compete/{ep}/match/') if m.get('status') == 'OK!']
+    # incremental: the list is newest first; keep the cached finished matches and page only until 500 ids below the
+    # newest cached one (a match queued before the last refresh may have finished since). A full walk of ~28k
+    # matches no longer fits progress-refresh's 600 s step.
+    old = {}
+    if os.path.exists(out):
+        old = {m['id']: m for m in json.load(open(out)).get('matches', [])}
+    floor = max(old) - 500 if old else None
+    stop = (lambda page: any(m['id'] < floor for m in page)) if floor is not None else None
+    new = {m['id']: m for m in c.pages(f'/api/compete/{ep}/match/', stop=stop) if m.get('status') == 'OK!'}
+    old.update(new)
+    ms = [old[k] for k in sorted(old, reverse=True)]
     with open(out, 'w') as f:
         json.dump({'packages': {str(k): v for k, v in subs.items()},
                    'subs': [[when_utc(x['created']), subs[x['id']]] for x in raw], 'matches': ms}, f)

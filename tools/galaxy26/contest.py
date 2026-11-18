@@ -661,7 +661,11 @@ def main(argv=None):
                 print(f'{m["id"]}: no replay (status {m.get("status")})')
                 continue
             d = os.path.join(a.out, str(m['id']))
-            p = cl.fetch(c, m, d)              # d/<id>.bc26
+            try:
+                p = cl.fetch(c, m, d)          # d/<id>.bc26
+            except cl.ApiError as e:           # one missing replay (404) must not stop the rest
+                print(f'{m["id"]}: replay fetch failed (HTTP {e.code})')
+                continue
             rp = os.path.join(d, 'replay.bc26')
             os.replace(p, rp)
             with open(rp, 'rb') as fh:
