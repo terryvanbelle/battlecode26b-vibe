@@ -150,3 +150,15 @@ You still seem to be spinning your wheels.  I see a lot of analysis, but no laun
 ## 33. 2026-11-12 09:47 PST
 
 OK, shutdown time.  I'd like you to bring down the replica and all running processes on the VM.  Update LEARNINGS, push all open state to Github, delete local files.
+
+## 34. 2026-11-18 13:20 PST
+
+I'm starting you up again to continue you work after the shutdown.  Before continuing, I'd like you to read docs/bc26a0-lessons.md, which is a doc of advice placed there by another project you and I worked on in the interim.  Follow anything you think useful.  You should know that we figured out a way to hook up my Windows box for extra compute.  Look into the repository terryvanbelle/battlecode26-alpha0 for details, and I can also help you hook into it
+
+(mid-turn) bc26a0 is shut down for now
+
+(mid-turn) Remember that you're only allowed to play panel games through the replica, which you'll need to start up again
+
+## 35. 2026-11-18 13:40 PST
+
+Don't play panel matches on the box, for the sake of realism.  In an actual tournament, you will be heavily constrained by how many games you can play on the actual environment, and we want to replicate that experience
