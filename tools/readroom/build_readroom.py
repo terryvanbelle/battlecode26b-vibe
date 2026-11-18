@@ -10,7 +10,7 @@ SRC = {'bc22': 'reference/battlecode22-vibe', 'bc25': 'reference/battlecode25-vi
        'advice': 'reference/battlecode-vibe', 'bcenv': 'reference/bcenv'}
 # Whole files left out: a synthesis across seasons that includes 2026 carries 2026 evidence in untagged
 # "every year" claims, so block filtering cannot clean it (scope line "(2020-2026)"; seen 2026-11-06).
-EXCLUDE = {'advice/MISSED_IDEAS.md'}
+EXCLUDE = set()   # owner 11-18: MISSED_IDEAS.md labels its specifics by year, so the 2026 filter cleans it too
 SKIP = {'.git', '.venv', 'node_modules', 'gauntlet', 'matches', 'build', 'site-packages', '__pycache__', 'benchmarks'}
 RR = sys.argv[1] if len(sys.argv) > 1 else f'{V}/reference/readroom-no2026'
 tot = hits = 0

@@ -178,3 +178,9 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (15:18, after an audit verifier loaded all 74 maps to count mines) You can use all the maps
 
 (15:20) Treat K6/E1 as a feature to consider after you've finished the debugging and cleanup and initial eval
+
+(19:14) Sounds good!  After the panel run, don't forget to update all the graphs in the progress/ directory
+
+(22:02) Sounds good.  Once you're done, you should be in a good position to improve on a bot that is more or less bug-free, and clean.  Before you start improving it, I'd like you to re-read all the top-level documents in the battlecode-vibe repo and then your LEARNINGS doc.  The overall goal is to climb up the list of bots on the replica
+(asked which repo) https://github.com/terryvanbelle/battlecode-vibe
+(22:04) MISSED_IDEAS has its specifics labeled by year, so you can filter that one too
