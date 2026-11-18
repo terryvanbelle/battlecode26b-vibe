@@ -185,3 +185,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (asked which repo) https://github.com/terryvanbelle/battlecode-vibe
 (22:04) MISSED_IDEAS has its specifics labeled by year, so you can filter that one too
 (22:09) It's quite possible that some of your previous ideas were good ideas, but didn't work because they were sabotaged by bugs you've now fixed
+(23:23) Can you remove any candidate from the ELO graphs whose rating wasn't obtained via a panel?

@@ -25,6 +25,9 @@ import elolib, games as G
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+PANEL_MIN = 12   # replica matches a build needs to be listed and plotted (the smallest panel)
+
+
 def build_order(attempts_csv):
     if not os.path.exists(attempts_csv):
         return []
@@ -103,6 +106,7 @@ def render(rt, field, fs, order, nrows, srcs, rec=None, h=None, local_field=Fals
          f'stock players{" (and, with --local-field, the local games against field bots played before 2026-10-28 08:50 PDT)" if local_field else ""}. '
          'Record = games won and lost.', '',
          '![ratings of our builds](elo.png)', '',
+         f'Only builds with at least {PANEL_MIN} replica matches (a full panel) are listed and plotted; all games are still fitted. '
          f'Our builds, in attempt order (rating +- 95%; field score = expected score against each of the {len(field)} '
          'field players, one game each):', '',
          '| build | rating | rank | games | record | field score |', '|---|---|---|---|---|---|']
@@ -172,6 +176,17 @@ def main(argv=None):
     for r in rows:
         srcs[r['source']] = srcs.get(r['source'], 0) + 1
     rt, field, fs, h = compute(rows, maps=True)
+    # owner 11-18: list and plot only builds rated through replica panel matches. Every game stays in the fit (local
+    # games anchor our builds to each other), but a build with no replica match is not shown.
+    # A probe of a few matches leaves the rating resting on local games: require PANEL_MIN replica matches, the size of
+    # the smallest panel (starve1, 12 matches).
+    nrep = {}
+    for r in rows:
+        if r.get('source') == 'replica':
+            for t in (r['teamA'], r['teamB']):
+                nrep[t] = nrep.get(t, 0) + 1
+    panel = {t for t, k in nrep.items() if k >= PANEL_MIN}
+    rt = {p: v for p, v in rt.items() if not p.startswith('us:') or p in panel}
     md, ours = render(rt, field, fs, build_order(a.attempts), len(rows), srcs, records(rows), h, a.local_field)
     open(os.path.join(a.out, 'ELO.md'), 'w').write(md)
     write_ratings(rt, fs, os.path.join(a.out, 'ratings.csv'))
