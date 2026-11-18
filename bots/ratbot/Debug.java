@@ -16,7 +16,8 @@ public final class Debug {
     public static void begin(int round) { startRound = round; stage = 0; crossed = false; lastBc = 0; hotBc = 0; }
 
     public static void mark(int k) {
-        int bc = battlecode.common.Clock.getBytecodeNum();
+        // ledger (z2h): u6x's count at this point; the hot-stage branch below costs bytecodes, so it must branch as u6x's
+        int bc = battlecode.common.Clock.getBytecodeNum() - (G.debt += 8) + 6;
         if (!crossed && G.rc.getRoundNum() != startRound) { crossed = true; ovStage = stage * 100 + k; }
         else if (bc - lastBc > hotBc) { hotBc = bc - lastBc; hotStage = stage * 100 + k; }
         lastBc = bc;
@@ -43,17 +44,21 @@ public final class Debug {
             if (Nav.target != null) sb.append(" nt=").append(Nav.target.x).append(',').append(Nav.target.y).append('/').append(Nav.stall);
             if (Flow.tgt != null) sb.append(" ft=").append(Flow.tgt.x).append(',').append(Flow.tgt.y)
               .append(Flow.building ? 'b' : Flow.builtRound >= 0 ? 'r' : '-').append(Flow.held).append('/').append(Flow.plen - Flow.ppos);
-            if (Cfg.BFLOW && BitFlow.tgt != null) sb.append(" bf=").append(BitFlow.tgt.x).append(',').append(BitFlow.tgt.y)
+            if (Cfg.SCOUT_PIPE && Baby.wlen > 0) sb.append(" wk=").append(Baby.wpos).append('/').append(Baby.wlen);
+            if ((Cfg.BFLOW || Baby.bfOn) && BitFlow.tgt != null) sb.append(" bf=").append(BitFlow.tgt.x).append(',').append(BitFlow.tgt.y)
               .append(BitFlow.building ? 'b' : '-').append(BitFlow.wave).append(':').append(BitFlow.meD).append(':').append(BitFlow.builds)
               .append(':').append(BitFlow.steps).append(':').append(BitFlow.fails).append(':').append(BitFlow.restarts).append(':').append(BitFlow.held);
             int[] fe = Flow.ends;
             sb.append(" fe=").append(fe[0]).append(':').append(fe[1]).append(':').append(fe[2]).append(':').append(fe[3]).append(':').append(fe[4]).append(':').append(fe[5]).append(':').append(Flow.fails).append(':').append(Flow.hits);
             if (PROBE) sb.append(" fx=").append(Flow.pops).append(':').append(Flow.workBc).append(':').append(indBc);
+            if (Cfg.CASH_BANK > 0 && Baby.cashSite != null)
+                sb.append(" cs=").append(Baby.cashSite.x).append(',').append(Baby.cashSite.y).append(Baby.cashLead ? 'L' : 'J').append(Baby.cashStart);
         }
         if (Baby.raidTarget != null) sb.append(" rz=").append(Baby.raidTarget.x).append(',').append(Baby.raidTarget.y);
         sb.append(" sym=").append(Sym.mask);
         if (Sym.contradictions > 0) sb.append(" SYMX=").append(Sym.contradictions);
         if (!G.king && Baby.lowBc > 0) sb.append(" lb=").append(Baby.lowBc);
+        if (!G.king && Nav.bfQuit > 0) sb.append(" bq=1");
         if (Cfg.FACE_HOLD) sb.append(" fh=").append(Baby.faceHolds);
         if (Cfg.BURN) sb.append(" burn=").append(G.king ? (King.burnHeard ? 1 : 0) : Baby.burnRound).append(Baby.adaptRisk ? "*" : "");
         if (Cfg.WOUNDED_HP > 0 && !G.king && Baby.wounded > 0) sb.append(" wd=").append(Baby.wounded);
@@ -62,6 +67,7 @@ public final class Debug {
         if (Cfg.GUARD_CARRY_R > 0 && !G.king && Baby.carryGuards > 0) sb.append(" cg=").append(Baby.carryGuards);
         if (!G.king && Baby.presses > 0) sb.append(" pk=").append(Baby.presses);
         if (!G.king && Baby.guards > 0) sb.append(" gd=").append(Baby.guards);
+        if (Cfg.GM_GAP && !G.king && GrabMicro.gaps > 0) sb.append(" gp=").append(GrabMicro.gaps);
         if (RobotPlayer.overruns > 0) sb.append(" OVR=").append(RobotPlayer.overruns).append(" OVS=").append(ovStage);
         if (RobotPlayer.nearMiss > 0) sb.append(" NEAR=").append(RobotPlayer.nearMiss);
         if (RobotPlayer.exceptions > 0) sb.append(" EXC=").append(RobotPlayer.exceptions).append(':').append(lastExc);
@@ -76,7 +82,7 @@ public final class Debug {
      *  bit 6: even parity of bits 0-5.
      *  tools/smuggle.py decodes it; keep the alphabets in step with it. */
     public static final boolean TAG = true;
-    public static final String WHY = "-CDEHKMPSWacdfghkmprswyzxTRA", KWHY = "-nsfcbd";
+    public static final String WHY = "-CDEHKMPSWacdfghkmprswyzxTRAeJG", KWHY = "-nsfcbd";
     /** Bytecodes the engine counts after tag()'s getBytecodeNum() read, the pad aside (calibrated on a local game:
      *  11 in tag() plus its return). Recalibrate if the engine jar or javac changes (smuggle.py: decode rate < 98%). */
     static final int TAG_K = 12;

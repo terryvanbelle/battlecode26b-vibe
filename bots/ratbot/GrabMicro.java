@@ -17,7 +17,7 @@ import battlecode.common.*;
  * neighbours of a tile are an 8-bit ring, bit k the neighbour in G.DIRS direction k.
  */
 public final class GrabMicro {
-    static final int GRAB = 100, THREAT = Cfg.GRAB_THREAT, BITE = Cfg.GRAB_BITE, FLIP = BITE + 15, KILL = BITE + 40,
+    static final int GRAB = 100, DLV = Cfg.GM_DELIVER, THREAT = Cfg.GRAB_THREAT, BITE = Cfg.GRAB_BITE, FLIP = BITE + 15, KILL = BITE + 40,
                      MARGIN = Cfg.GRAB_MARGIN;
     static final int[] DX = {0, 1, 1, 1, 0, -1, -1, -1}, DY = {1, 1, 0, -1, -1, -1, 0, 1};
     static final long CBIT = 1L << 27;
@@ -50,13 +50,24 @@ public final class GrabMicro {
     static final String NEAR = "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\040\140\340\300\200\000\000\000\000\060\160\361\301\201\000\000\000\000\070\174\377\307\203\000\000\000\000\030\034\037\007\003\000\000\000\000\010\014\016\006\002\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000";
     static final String RING9 = "\000\040\020\060\010\050\030\070\100\140\120\160\110\150\130\170\000\040\020\060\010\050\030\070\100\140\120\160\110\150\130\170\004\044\024\064\014\054\034\074\104\144\124\164\114\154\134\174\004\044\024\064\014\054\034\074\104\144\124\164\114\154\134\174\200\240\220\260\210\250\230\270\300\340\320\360\310\350\330\370\200\240\220\260\210\250\230\270\300\340\320\360\310\350\330\370\204\244\224\264\214\254\234\274\304\344\324\364\314\354\334\374\204\244\224\264\214\254\234\274\304\344\324\364\314\354\334\374\001\041\021\061\011\051\031\071\101\141\121\161\111\151\131\171\001\041\021\061\011\051\031\071\101\141\121\161\111\151\131\171\005\045\025\065\015\055\035\075\105\145\125\165\115\155\135\175\005\045\025\065\015\055\035\075\105\145\125\165\115\155\135\175\201\241\221\261\211\251\231\271\301\341\321\361\311\351\331\371\201\241\221\261\211\251\231\271\301\341\321\361\311\351\331\371\205\245\225\265\215\255\235\275\305\345\325\365\315\355\335\375\205\245\225\265\215\255\235\275\305\345\325\365\315\355\335\375\002\042\022\062\012\052\032\072\102\142\122\162\112\152\132\172\002\042\022\062\012\052\032\072\102\142\122\162\112\152\132\172\006\046\026\066\016\056\036\076\106\146\126\166\116\156\136\176\006\046\026\066\016\056\036\076\106\146\126\166\116\156\136\176\202\242\222\262\212\252\232\272\302\342\322\362\312\352\332\372\202\242\222\262\212\252\232\272\302\342\322\362\312\352\332\372\206\246\226\266\216\256\236\276\306\346\326\366\316\356\336\376\206\246\226\266\216\256\236\276\306\346\326\366\316\356\336\376\003\043\023\063\013\053\033\073\103\143\123\163\113\153\133\173\003\043\023\063\013\053\033\073\103\143\123\163\113\153\133\173\007\047\027\067\017\057\037\077\107\147\127\167\117\157\137\177\007\047\027\067\017\057\037\077\107\147\127\167\117\157\137\177\203\243\223\263\213\253\233\273\303\343\323\363\313\353\333\373\203\243\223\263\213\253\233\273\303\343\323\363\313\353\333\373\207\247\227\267\217\257\237\277\307\347\327\367\317\357\337\377\207\247\227\267\217\257\237\277\307\347\327\367\317\357\337\377";
     static final String DIRK = "\005\006\007\004\010\000\003\002\001";
+    /** KCONE[(x + 3) * 7 + y + 3]: the facings whose cone holds offset (x, y) within transfer range (dist2 9), the
+     *  engine's 45-degree half angle with its boundary (Cfg.GM_DELIVER). */
+    static final String KCONE = "\000\000\000\340\000\000\000\000\160\140\340\300\301\000\000\060\160\340\301\201\000\070\070\070\000\203\203\203\000\030\034\016\007\003\000\000\034\014\016\006\007\000\000\000\000\016\000\000\000";
+    /** Per end tile: the facings that can hand cheese to our king from it (Cfg.GM_DELIVER), and whether any can. */
+    static final int[] DM = new int[9];
+    static boolean dlv;
+    /** xf2: the round the micro weighed a transfer under threat and found none worth taking (Baby.deliver then keeps
+     *  its facing instead of turning its back to the threat). */
+    public static int holdRound = -1;
     /** The best option: end tile (0-7 a step in G.DIRS order, 8 stay), facing, the enemy grabbed or bitten (-1). */
     static int bestD, bestF, grabI, biteI, bestS, curS;
     /** Best score per end tile (Integer.MIN_VALUE: not reachable). */
     static final int[] dirBest = new int[9];
     /** The round the micro took this turn's movement (Baby.moveDecision then stands down). */
     public static int round = -1;
-    public static int acts, steps, grabs, avoids;
+    /** xf3: the round the micro last scored (Cfg.GM_BAIL). */
+    public static int evalRound = -1;
+    public static int acts, steps, grabs, avoids, gaps;
 
     static int b(int ox, int oy) { return (ox + 3) + 8 * (oy + 3); }
 
@@ -116,6 +127,8 @@ public final class GrabMicro {
         for (int i = 0; i < n; i++) { eseen[i] = edir[i] < 0 ? 255 : arc(edir[i]); ekey[i] = key(px, py, chir, ex[i], ey[i]); }
         int allowed = turnOk ? 255 : 1 << cur;
         for (int d = 8; d >= 0; d--) {
+            // xf2: a crowd can run this past GRAB_BC (keepout overruns, OVS 405): the tiles left unscored stay unavoided
+            if (Clock.getBytecodesLeft() < Cfg.GM_LEFT) { for (int e = d; e >= 0; e--) dirBest[e] = Integer.MAX_VALUE; break; }
             dirBest[d] = Integer.MIN_VALUE;
             if (d < 8 && (moveMask & (1 << d)) == 0) continue;
             int tx = d < 8 ? DX[d] : 0, ty = d < 8 ? DY[d] : 0;
@@ -160,6 +173,21 @@ public final class GrabMicro {
             }
             int tKey = d == 8 ? Integer.MAX_VALUE : dk[d];
             boolean strafe = d < 8 && cur != d;
+            int dmd = dlv ? DM[d] : 0;
+            if (na == 0 && dmd != 0) {
+                // a transfer is possible from t: each facing's threats against GM_DELIVER for the ones that see our king
+                int f = -1, s = Integer.MIN_VALUE;
+                for (int g = turnOk ? 0 : cur, g1 = turnOk ? 7 : cur; g <= g1; g++) {
+                    int sg = (dmd >> g & 1) * DLV - THREAT * ((s0 >> g & 1) + 2 * (s1 >> g & 1) + 4 * (s2 >> g & 1)) - (strafe && g != d ? 1 : 0);
+                    if (d == 8 && g == cur) curS = sg;
+                    if (sg > s || sg == s && fk[g] > fk[f]) { s = sg; f = g; }
+                }
+                dirBest[d] = s;
+                if (s > bestS || s == bestS && (tKey > bestKey || tKey == bestKey && fk[f] > bestFKey)) {
+                    bestS = s; bestD = d; bestF = f; bestKey = tKey; bestFKey = fk[f]; grabI = -1; biteI = -1;
+                }
+                continue;
+            }
             if (na == 0) {
                 // no grab or bite at t: the facings with the fewest threats, then no strafe, our facing, the key
                 int m = allowed & ~(s0 | s1 | s2), c = 0;
@@ -186,7 +214,7 @@ public final class GrabMicro {
                 int g = pg[f], bi = -1;
                 if (g >= 0) { v = av[g]; cnt -= atf[g] >> f & 1; }
                 else if ((bi = pb[f]) >= 0) { v = av[bi]; cnt += (atfb[bi] >> f & 1) - (atf[bi] >> f & 1); }
-                int s = v - THREAT * cnt - (strafe && f != d ? 1 : 0);
+                int s = v - THREAT * cnt - (strafe && f != d ? 1 : 0) + (v == 0 ? (dmd >> f & 1) * DLV : 0);
                 if (d == 8 && f == cur) curS = s;
                 if (s > dirBest[d]) dirBest[d] = s;
                 if (s > bestS || s == bestS && (tKey > bestKey || tKey == bestKey && fk[f] > bestFKey)) {
@@ -209,7 +237,7 @@ public final class GrabMicro {
         if (rc.getCarrying() != null || Flow.left() < Cfg.GRAB_BC) return false;
         MapLocation me = rc.getLocation();
         int mx = me.x, my = me.y, px = 2 * mx - G.cx2, py = 2 * my - G.cy2, chir = G.chir;
-        int m = 0, minC = 9;
+        int m = 0, minC = 9, kox = 99, koy = 99;
         long occ = 0;
         Team them = G.them;
         RobotInfo[] cr = CR;
@@ -218,13 +246,17 @@ public final class GrabMicro {
             MapLocation l = r.location;
             int ox = l.x - mx, oy = l.y - my;
             if (ox < -3 || ox > 3 || oy < -3 || oy > 3) {
-                if (r.type == UnitType.RAT_KING && ox >= -4 && ox <= 4 && oy >= -4 && oy <= 4) occ |= shift(K3, ox, oy);
+                if (r.type == UnitType.RAT_KING) {
+                    if (ox >= -4 && ox <= 4 && oy >= -4 && oy <= 4) occ |= shift(K3, ox, oy);
+                    if (r.team != them) { kox = ox; koy = oy; }
+                }
                 continue;
             }
             if (r.type == UnitType.RAT_KING) {
                 // an enemy king next to us is bitten, not danced around
                 if (r.team == them && ox >= -2 && ox <= 2 && oy >= -2 && oy <= 2) return false;
                 occ |= shift(K3, ox, oy);
+                if (r.team != them) { kox = ox; koy = oy; }
             } else if (r.team == Team.NEUTRAL) {
                 occ |= shift(K3 & ((3L << 27) | (3L << 35)), ox, oy);
             } else {
@@ -239,7 +271,45 @@ public final class GrabMicro {
         }
         // no enemy within Chebyshev 2: nothing can be grabbed and staying is safe (skip the cost; the steps toward
         // a Chebyshev-3 enemy keep the normal move)
-        if (minC > 2) return false;
+        if (minC > 2) {
+            // Cfg.GM_GAP (xf5): a step to Chebyshev 2 of a healthier free-handed enemy gives it the first grab
+            if (Cfg.GM_GAP && minC == 3 && rc.isMovementReady()) {
+                int hp = rc.getHealth();
+                for (int j = 0; j < m; j++) {
+                    RobotInfo r = cr[j];
+                    if (r.health <= hp || r.carryingRobot != null || r.type != UnitType.BABY_RAT) continue;
+                    int ox = r.location.x - mx, oy = r.location.y - my;
+                    for (int d = 0; d < 8; d++) {
+                        int ax = ox - DX[d], ay = oy - DY[d];
+                        if (ax >= -2 && ax <= 2 && ay >= -2 && ay <= 2 && (Nav.avoid & (1 << d)) == 0) { Nav.avoid |= 1 << d; gaps++; }
+                    }
+                }
+            }
+            return false;
+        }
+        // Cfg.GM_DELIVER (xf2): with cheese, the action ready and our king near, the end tiles and facings that can hand
+        // it over (any king tile within dist2 9 in our cone) score GM_DELIVER when they take no grab or bite
+        dlv = false;
+        if (Cfg.GM_DELIVER > 0 && rc.getRawCheese() > 0 && rc.isActionReady()) {
+            // a deliverer that faces its threat does not see the king: then the king's last shared tile
+            if (kox == 99) {
+                MapLocation k = Comms.nearestKing(me);
+                if (k != null) { kox = k.x - mx; koy = k.y - my; }
+            }
+        }
+        if (kox != 99 && Cfg.GM_DELIVER > 0 && rc.getRawCheese() > 0 && rc.isActionReady()) {
+            int[] dm = DM;
+            for (int d = 0; d < 9; d++) {
+                int bx = kox - (d < 8 ? DX[d] : 0), by = koy - (d < 8 ? DY[d] : 0), k = 0;
+                if (bx >= -4 && bx <= 4 && by >= -4 && by <= 4)
+                    for (int a = bx - 1; a <= bx + 1; a++) {
+                        if (a < -3 || a > 3) continue;
+                        for (int c = by - 1; c <= by + 1; c++) if (c >= -3 && c <= 3) k |= KCONE.charAt((a + 3) * 7 + c + 3);
+                    }
+                dm[d] = k;
+                if (k != 0) dlv = true;
+            }
+        }
         // the nearest MAXE by (Chebyshev, key): enemy order does not change the scores, only which ones are kept
         int n = m < MAXE ? m : MAXE;
         for (int j = 0; j < n; j++) {
@@ -271,8 +341,10 @@ public final class GrabMicro {
         int moveMask = 0;
         if (moveOk) for (int d = 0; d < 8; d++) if ((Nav.avoid & (1 << d)) == 0 && rc.canMove(G.DIRS[d])) moveMask |= 1 << d;
         int cur = rc.getDirection().ordinal();
+        evalRound = G.round;
         evaluate(rc.getHealth(), cur, rc.isTurningReady(), moveMask, rc.isActionReady(), n, free, px, py, chir);
         if (grabI < 0 && bestS < curS + MARGIN) {
+            if (dlv) holdRound = G.round;
             for (int d = 0; d < 8; d++)
                 if ((moveMask & (1 << d)) != 0 && dirBest[d] <= curS - MARGIN) { Nav.avoid |= 1 << d; avoids++; }
             return false;

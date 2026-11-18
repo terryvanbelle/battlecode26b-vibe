@@ -53,11 +53,16 @@ public final class Flow {
     static boolean rev = Cfg.FLOW_REV;
     /** The rat's tile when a reverse search began: the goal its heuristic aims at. */
     static int sx0, sy0;
+    /** Cfg.DELIVER_REACH: the current search (and path) roots at the transfer reach of the king at the target, and its
+     *  roots are still to be put in (seedReach, once the bytecodes allow). */
+    static boolean reach, rootsDue;
+    static final int[] RX = new int[64], RY = new int[64], RH = new int[64];
+
+    /** Whether a search for t now would root at its transfer reach (Baby.deliver's goTo). */
+    static boolean wantReach() { return Cfg.DELIVER_REACH && Nav.deliverK; }
     /** Cfg.FLOW_FAST (a field so tests can set it), and its distance table: AB[d + AC] = |d| for |d| <= AC (maps are
      *  at most 60 wide), built once with the search arrays. */
     static boolean fast = Cfg.FLOW_FAST;
-    /** Cfg.FLOW_UNSEEN (a field so tests can set it): the path cost of a never-seen tile. */
-    static int unseen = Cfg.FLOW_UNSEEN;
     static final int AC = 64;
     static int[] AB;
     static int[][] bucket;
@@ -84,7 +89,7 @@ public final class Flow {
     /** Tests run outside the engine, where Clock reports 0 bytecodes left. */
     public static boolean unlimited;
 
-    static int left() { return unlimited ? Integer.MAX_VALUE : Clock.getBytecodesLeft(); }
+    static int left() { return Clock.getBytecodesLeft(); }
 
     /** Cfg.FLOW_QUOTA: search loop steps left in round quotaRound (quotaMax a round; tests set it). */
     static int quota, quotaRound = -1, quotaMax = Cfg.FLOW_QUOTA;
@@ -99,7 +104,8 @@ public final class Flow {
 
     /** True when a complete, fresh path toward t exists. */
     public static boolean ready(MapLocation t) {
-        return builtRound >= 0 && tgt != null && G.cheb(tgt, t) <= 1 && G.round - builtRound <= Cfg.FLOW_TTL;
+        return builtRound >= 0 && tgt != null && G.cheb(tgt, t) <= 1 && G.round - builtRound <= Cfg.FLOW_TTL
+                && (!Cfg.DELIVER_REACH || reach == wantReach());
     }
 
     /** True while a search toward t is running. */
@@ -112,12 +118,12 @@ public final class Flow {
             failTgt = tgt;
             failRound = G.round;
         }
-        return building && tgt != null && G.cheb(tgt, t) <= 1;
+        return building && tgt != null && G.cheb(tgt, t) <= 1 && (!Cfg.DELIVER_REACH || reach == wantReach());
     }
 
     /** Ask for a path toward t (no-op if one is ready or already being built toward t). */
     public static void request(MapLocation t) {
-        if (tgt != null && G.cheb(tgt, t) <= 1 && (building || ready(t))) return;
+        if (tgt != null && G.cheb(tgt, t) <= 1 && (building && (!Cfg.DELIVER_REACH || reach == wantReach()) || ready(t))) return;
         if (cache && adopt(t)) return;
         if (failTgt != null && G.cheb(failTgt, t) <= 1 && G.round - failRound < Cfg.FLOW_RETRY) return;
         start(t, false);
@@ -128,6 +134,27 @@ public final class Flow {
     static boolean frontier;
     /** Round the last frontier search found nothing reachable that is unseen. */
     static int frontierFail = -1000;
+    /** Cfg.SCOUT_FAN: the sector the next frontier search must end in (fanReq, set by the caller; NOFAN: any), the one
+     *  the current search uses, and the frame of the test: home, the bearing to the enemy start and its twin home. */
+    static final int NOFAN = 9;
+    static int fanReq = NOFAN, fanS = NOFAN, fhx, fhy, fax, fay, fex, fey;
+    static long fanC2;
+
+    /** Cfg.SCOUT_FAN: (x, y) lies on our half (nearer home than the enemy start) and in sector sec of home's fan:
+     *  0 within SCOUT_FAN degrees of the bearing to the enemy start, 1 counterclockwise of that, -1 clockwise. */
+    static boolean fanOk(int x, int y, int sec) {
+        int bx = x - fhx, by = y - fhy, ex = x - fex, ey = y - fey;
+        if (bx * bx + by * by >= ex * ex + ey * ey) return false;
+        long dot = (long) fax * bx + (long) fay * by, cr = (long) fax * by - (long) fay * bx;
+        boolean mid = dot > 0 && dot * dot * 1000 >= fanC2 * ((long) fax * fax + (long) fay * fay) * (bx * bx + by * by);
+        return sec == 0 ? mid : !mid && (sec > 0 ? cr > 0 : cr < 0);
+    }
+
+    /** Cfg.SCOUT_FAN: the frame fanOk tests against: home h and the enemy start e. */
+    static void fanFrame(MapLocation h, MapLocation e) {
+        fhx = h.x; fhy = h.y; fex = e.x; fey = e.y; fax = e.x - h.x; fay = e.y - h.y;
+        if (fanC2 == 0) { double c = Math.cos(Math.toRadians(Cfg.SCOUT_FAN)); fanC2 = Math.round(1000 * c * c); }
+    }
 
     /** Ask for a path to the never-seen tile nearest by path cost over what we know (open 1, dirt DIG_COST, walls
      *  blocked); no-op while one is being built or one is ready toward a still-unseen tile. */
@@ -143,14 +170,23 @@ public final class Flow {
         return frontier && (building || builtRound >= 0 && !Sym.known(tIdx) && G.round - builtRound <= Cfg.FLOW_TTL);
     }
 
+    /** Cfg.SCOUT_PIPE: the root the next frontier search grows from (-1: where the rat stands), and the current one's. */
+    static int nextRoot = -1, sRoot = -1;
+
     static void start(MapLocation t, boolean front) {
         if (Cfg.FLOW_SPLICE > 0) splicing = false;
         if (building) ends[5]++;
         else if (tgt != null && builtRound >= 0 && G.round - builtRound <= Cfg.FLOW_TTL) ends[4]++;
         frontier = front;
+        sRoot = nextRoot; nextRoot = -1;
+        fanS = front ? fanReq : NOFAN;
         tgt = t;
         tIdx = G.idx(t);
         block = (Cfg.KING_BLOCK || Cfg.KING_FLOW) && !Nav.atKing(t) ? Sym.WALL | Sym.KING : Sym.WALL;
+        // Cfg.DELIVER_REACH: the roots lie off the king's body, which no path crosses
+        reach = Cfg.DELIVER_REACH && !front && rev && Nav.deliverK;
+        rootsDue = false;
+        if (reach) block = Sym.WALL | Sym.KING;
         if (Cfg.FLOW_HELD > 0) block = heldBlock(block);
         tx = t.x; ty = t.y;
         builtRound = -1;
@@ -160,12 +196,20 @@ public final class Flow {
         base = gen * SPAN;
         for (int b = 0; b < NB; b++) { head[b] = 0; tail[b] = 0; }
         pending = 0;
+        if (Cfg.FIX_FLOW_HELD) held = 0;
         builds++;
         startRound = G.round;
         if (g != null && bucket != null) seed();
     }
 
     static void seed() {
+        if (rev && !frontier && reach) {
+            // the roots go in at the next work() with the bytecodes for them (seedReach)
+            sx0 = G.me.x; sy0 = G.me.y;
+            rootsDue = true;
+            pending = 0;
+            return;
+        }
         if (rev && !frontier) {
             // the target is the root; the heuristic aims at where the rat stands now
             sx0 = G.me.x; sy0 = G.me.y;
@@ -177,7 +221,7 @@ public final class Flow {
             pending = 1;
             return;
         }
-        int s = sIdx = G.idx(G.me);
+        int s = sIdx = sRoot >= 0 ? sRoot : G.idx(G.me);
         g[s] = base;
         curF = frontier ? 0 : Math.max(Math.abs(G.me.x - tx), Math.abs(G.me.y - ty));
         int b = curF & BMASK;
@@ -251,7 +295,7 @@ public final class Flow {
         if (frontier) { workFrontier(reserve); return; }
         if (rev) { workRev(reserve); return; }
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
-        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, un = unseen, X = tx, Y = ty, blk = block;
+        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = tx, Y = ty, blk = block;
         while (pending > 0) {
             if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) return;
             int b = curF & BMASK, u;
@@ -273,7 +317,7 @@ public final class Flow {
                 if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
                 int v = vx + vy * W, m = mem[v];
                 if ((m & blk) != 0 && v != tIdx) continue;
-                int ng = gu + ((m & Sym.DIRT) != 0 ? dig : (m & Sym.SEEN) == 0 ? un : 1);
+                int ng = gu + ((m & Sym.DIRT) != 0 ? dig : 1);
                 int gv = gg[v];
                 if (gv >= bs && gv - bs <= ng) continue;
                 gg[v] = bs + ng;
@@ -296,7 +340,9 @@ public final class Flow {
      *  target; nothing unseen reachable sets frontierFail. Neighbours expand in the side frame order (ox/oy). */
     static void workFrontier(int reserve) {
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
-        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, un = unseen, blk = block, s = sIdx;
+        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, blk = block, s = sIdx, W1 = W - 1, H1 = H - 1;
+        int d0 = OX[0] + OY[0] * W, d1 = OX[1] + OY[1] * W, d2 = OX[2] + OY[2] * W, d3 = OX[3] + OY[3] * W;
+        int d4 = OX[4] + OY[4] * W, d5 = OX[5] + OY[5] * W, d6 = OX[6] + OY[6] * W, d7 = OX[7] + OY[7] * W;
         while (pending > 0) {
             if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) return;
             int b = curF & BMASK, u;
@@ -305,7 +351,7 @@ public final class Flow {
             pending--;
             int gu = gg[u] - bs;
             if (gu != curF) continue; // stale entry
-            if ((mem[u] & Sym.SEEN) == 0 && u != s) {
+            if ((mem[u] & Sym.SEEN) == 0 && u != s && (fanS == NOFAN || fanOk(u % W, u / W, fanS))) {
                 if (left() < reserve + (cache ? 50 : 40) * (gu + 2)) { head[b]--; pending++; return; }
                 tIdx = u; tx = u % W; ty = u / W;
                 tgt = new MapLocation(tx, ty);
@@ -313,6 +359,55 @@ public final class Flow {
                 return;
             }
             int ux = u % W, uy = u / W;
+            if (Cfg.FRONTIER_FAST && ux > 0 && uy > 0 && ux < W1 && uy < H1) {
+                // off the map's edge: the eight neighbours by index offset, unrolled (same order and costs as below)
+                int n1 = gu + 1, nd = gu + dig, b1 = bs + n1, bd = bs + nd, f1 = n1 & BMASK, fd = nd & BMASK, c = 0, v, m, gv;
+                int[] r1 = bucket[f1], rd = bucket[fd];
+                int t1 = tail[f1];
+                v = u + d0; m = mem[v];
+                if ((m & blk) == 0) {
+                    if ((m & Sym.DIRT) == 0) { if ((gv = gg[v] - bs) < 0 || gv > n1) { gg[v] = b1; pp[v] = 0; r1[t1++ & RMASK] = v; c++; } }
+                    else if ((gv = gg[v] - bs) < 0 || gv > nd) { gg[v] = bd; pp[v] = 0; rd[tail[fd]++ & RMASK] = v; c++; }
+                }
+                v = u + d1; m = mem[v];
+                if ((m & blk) == 0) {
+                    if ((m & Sym.DIRT) == 0) { if ((gv = gg[v] - bs) < 0 || gv > n1) { gg[v] = b1; pp[v] = 1; r1[t1++ & RMASK] = v; c++; } }
+                    else if ((gv = gg[v] - bs) < 0 || gv > nd) { gg[v] = bd; pp[v] = 1; rd[tail[fd]++ & RMASK] = v; c++; }
+                }
+                v = u + d2; m = mem[v];
+                if ((m & blk) == 0) {
+                    if ((m & Sym.DIRT) == 0) { if ((gv = gg[v] - bs) < 0 || gv > n1) { gg[v] = b1; pp[v] = 2; r1[t1++ & RMASK] = v; c++; } }
+                    else if ((gv = gg[v] - bs) < 0 || gv > nd) { gg[v] = bd; pp[v] = 2; rd[tail[fd]++ & RMASK] = v; c++; }
+                }
+                v = u + d3; m = mem[v];
+                if ((m & blk) == 0) {
+                    if ((m & Sym.DIRT) == 0) { if ((gv = gg[v] - bs) < 0 || gv > n1) { gg[v] = b1; pp[v] = 3; r1[t1++ & RMASK] = v; c++; } }
+                    else if ((gv = gg[v] - bs) < 0 || gv > nd) { gg[v] = bd; pp[v] = 3; rd[tail[fd]++ & RMASK] = v; c++; }
+                }
+                v = u + d4; m = mem[v];
+                if ((m & blk) == 0) {
+                    if ((m & Sym.DIRT) == 0) { if ((gv = gg[v] - bs) < 0 || gv > n1) { gg[v] = b1; pp[v] = 4; r1[t1++ & RMASK] = v; c++; } }
+                    else if ((gv = gg[v] - bs) < 0 || gv > nd) { gg[v] = bd; pp[v] = 4; rd[tail[fd]++ & RMASK] = v; c++; }
+                }
+                v = u + d5; m = mem[v];
+                if ((m & blk) == 0) {
+                    if ((m & Sym.DIRT) == 0) { if ((gv = gg[v] - bs) < 0 || gv > n1) { gg[v] = b1; pp[v] = 5; r1[t1++ & RMASK] = v; c++; } }
+                    else if ((gv = gg[v] - bs) < 0 || gv > nd) { gg[v] = bd; pp[v] = 5; rd[tail[fd]++ & RMASK] = v; c++; }
+                }
+                v = u + d6; m = mem[v];
+                if ((m & blk) == 0) {
+                    if ((m & Sym.DIRT) == 0) { if ((gv = gg[v] - bs) < 0 || gv > n1) { gg[v] = b1; pp[v] = 6; r1[t1++ & RMASK] = v; c++; } }
+                    else if ((gv = gg[v] - bs) < 0 || gv > nd) { gg[v] = bd; pp[v] = 6; rd[tail[fd]++ & RMASK] = v; c++; }
+                }
+                v = u + d7; m = mem[v];
+                if ((m & blk) == 0) {
+                    if ((m & Sym.DIRT) == 0) { if ((gv = gg[v] - bs) < 0 || gv > n1) { gg[v] = b1; pp[v] = 7; r1[t1++ & RMASK] = v; c++; } }
+                    else if ((gv = gg[v] - bs) < 0 || gv > nd) { gg[v] = bd; pp[v] = 7; rd[tail[fd]++ & RMASK] = v; c++; }
+                }
+                tail[f1] = t1;
+                pending += c;
+                continue;
+            }
             for (int k = 0; k < 8; k++) {
                 int vx = ux + OX[k], vy = uy + OY[k];
                 if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
@@ -337,10 +432,11 @@ public final class Flow {
     /** The reverse search: pops in f order (g from the target + Chebyshev to where the rat stood at the start) until a
      *  tile beside the rat's current tile comes up; the cost of a step is that of the tile entered (the popped one). */
     static void workRev(int reserve) {
+        if (rootsDue) { if (left() < reserve + 3000) return; seedReach(); }
         if (Cfg.FLOW_W > 1 && fast) { workRevW(reserve); return; }
         if (fast) { workRevFast(reserve); return; }
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
-        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, un = unseen, X = sx0, Y = sy0, blk = block, mx = G.me.x, my = G.me.y;
+        int W = G.W, H = G.H, bs = base, dig = Cfg.DIG_COST, X = sx0, Y = sy0, blk = block, mx = G.me.x, my = G.me.y;
         while (pending > 0) {
             if (left() < reserve || Cfg.FLOW_QUOTA > 0 && !step()) return;
             int b = curF & BMASK, u;
@@ -361,7 +457,7 @@ public final class Flow {
                 finishRev(u);
                 return;
             }
-            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : (mem[u] & Sym.SEEN) == 0 ? un : 1);
+            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : 1);
             for (int k = 0; k < 8; k++) {
                 int vx = ux + OX[k], vy = uy + OY[k];
                 if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
@@ -391,7 +487,7 @@ public final class Flow {
     static void workRevFast(int reserve) {
         int[] gg = g, pp = par, mem = Sym.mem, ab = AB, hd = head, tl = tail, OX = ox, OY = oy;
         int[][] bk = bucket;
-        int W = G.W, W1 = W - 1, H1 = G.H - 1, bs = base, dig = Cfg.DIG_COST, un = unseen, blk = block, cf = curF, pend = pending;
+        int W = G.W, W1 = W - 1, H1 = G.H - 1, bs = base, dig = Cfg.DIG_COST, blk = block, cf = curF, pend = pending;
         int FU = OX[1], FV = OY[0], WV = FV * W, cx = AC - sx0, cy = AC - sy0;
         int mx0 = G.me.x - 1, mx1 = G.me.x + 1, my0 = G.me.y - 1, my1 = G.me.y + 1;
         boolean st = lifo;
@@ -415,7 +511,7 @@ public final class Flow {
                 finishRev(u);
                 return;
             }
-            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : (mem[u] & Sym.SEEN) == 0 ? un : 1), nb = bs + ng, v, gv, f, fb;
+            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : 1), nb = bs + ng, v, gv, f, fb;
             if (ux > 0 && uy > 0 && ux < W1 && uy < H1) {
                 // xr/yu: the heuristic one step along +ox/+oy
                 int xr = ab[bx + FU], xl = ab[bx - FU], yu = ab[by + FV], yd = ab[by - FV];
@@ -509,7 +605,7 @@ public final class Flow {
         }
         int[] gg = g, pp = par, mem = Sym.mem, ab = ABW, hd = head, tl = tail, OX = ox, OY = oy;
         int[][] bk = bucket;
-        int W = G.W, W1 = W - 1, H1 = G.H - 1, bs = base, dig = Cfg.DIG_COST, un = unseen, blk = block, cf = curF, pend = pending;
+        int W = G.W, W1 = W - 1, H1 = G.H - 1, bs = base, dig = Cfg.DIG_COST, blk = block, cf = curF, pend = pending;
         int FU = OX[1], FV = OY[0], WV = FV * W, cx = AC - sx0, cy = AC - sy0;
         int mx0 = G.me.x - 1, mx1 = G.me.x + 1, my0 = G.me.y - 1, my1 = G.me.y + 1;
         boolean st = lifo;
@@ -535,7 +631,7 @@ public final class Flow {
                 return;
             }
             int bx = ux + cx, by = uy + cy, a = ab[bx], c = ab[by];
-            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : (mem[u] & Sym.SEEN) == 0 ? un : 1), nb = bs + ng, ge = ng << 12, v, gv, f, fb;
+            int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : 1), nb = bs + ng, ge = ng << 12, v, gv, f, fb;
             if (ux > 0 && uy > 0 && ux < W1 && uy < H1) {
                 int xr = ab[bx + FU], xl = ab[bx - FU], yu = ab[by + FV], yd = ab[by - FV];
                 v = u + WV; // N
@@ -604,12 +700,15 @@ public final class Flow {
         int W = G.W, me = G.idx(G.me), v = u, len = 0, T = tIdx;
         int[] p = buf;
         if (u != me) p[len++] = me;
-        while (v != T && len < p.length - 1) {
+        // a root has cost 0 (Cfg.DELIVER_REACH: any tile in transfer reach; else the target T alone)
+        int[] gg = g;
+        int bs = base;
+        while (v != T && gg[v] != bs && len < p.length - 1) {
             p[len++] = v;
             int k = par[v];
             v = v - ox[k] - oy[k] * W;
         }
-        p[len++] = T;
+        p[len++] = v;
         if (cache) {
             int[] c = new int[len];
             for (int i = 0; i < len; i++) c[i] = p[i];
@@ -626,6 +725,40 @@ public final class Flow {
         done++;
         lastTurns = G.round - startRound;
         if (Cfg.FLOW_SPLICE > 0 && splicing) join();
+    }
+
+    /** Cfg.DELIVER_REACH: root a reverse search at the open tiles off the king's body (centre (tx, ty)) within dist2 9
+     *  of it, those whose Chebyshev distance to the rat is within 2 of the nearest's (Dial's ring of NB buckets holds
+     *  f values within NB - 1 of curF; a step adds at most DIG_COST + 1). None: the search fails. */
+    static void seedReach() {
+        rootsDue = false;
+        int W = G.W, H = G.H, mx = sx0, my = sy0, bs = base, blk = block, n = 0, min = Integer.MAX_VALUE;
+        int[] gg = g, mem = Sym.mem, rx = RX, ry = RY, rh = RH;
+        for (int dy = -4; dy <= 4; dy++) {
+            int y = ty + dy;
+            if (y < 0 || y >= H) continue;
+            int ay = dy < 0 ? -dy : dy, xr = ay <= 1 ? 4 : ay <= 3 ? 3 : 1;
+            for (int dx = -xr; dx <= xr; dx++) {
+                int x = tx + dx;
+                if (x < 0 || x >= W || ay <= 1 && dx >= -1 && dx <= 1 || (mem[x + y * W] & blk) != 0) continue;
+                int hx = x - mx, hy = y - my;
+                if (hx < 0) hx = -hx;
+                if (hy < 0) hy = -hy;
+                int h = hx > hy ? hx : hy;
+                rx[n] = x; ry[n] = y; rh[n] = h; n++;
+                if (h < min) min = h;
+            }
+        }
+        curF = min;
+        for (int i = 0; i < n; i++) {
+            int h = rh[i];
+            if (h > min + 2) continue;
+            int v = rx[i] + ry[i] * W, b = h & BMASK;
+            gg[v] = bs;
+            bucket[b][tail[b] & RMASK] = v;
+            tail[b]++;
+            pending++;
+        }
     }
 
     /** Cfg.FLOW_SPLICE: the next path tile (index nxi) is a newly seen wall. Start a detour search toward the path tile
@@ -857,6 +990,8 @@ public final class Flow {
         if ((Nav.avoid & (1 << d.ordinal())) != 0 || !rc.canMove(d)) {
             // an ally baby on the path is carried past (Cfg.SWAP_HOLD)
             if (Nav.swapHold > 0 && held + 1 >= Nav.swapHold && Nav.swapPast(d)) { held = 0; steps++; ppos = nxi; return true; }
+            // a loaded rat near home carries an empty ally past (Cfg.SWAP_LOADED)
+            if (Cfg.SWAP_LOADED > 0 && held >= 1 && Nav.swapPast(d)) { held = 0; steps++; ppos = nxi; return true; }
             // blocked by a robot: hold briefly, then step around it on the path (FLOW_JAM) or let greedy route around it
             if (++held > Cfg.FLOW_HOLD) {
                 if (Cfg.FLOW_JAM && held <= Cfg.FLOW_JAM_HOLD) {

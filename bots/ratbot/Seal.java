@@ -36,7 +36,7 @@ final class Seal {
 
     static int left() {
         if (fakeLeft >= 0) return fakeLeft--;
-        return Flow.unlimited ? Integer.MAX_VALUE : Clock.getBytecodesLeft();
+        return Clock.getBytecodesLeft();
     }
 
     /** seenOnly: the pile at tile index s has a fresh unknown verdict (not worth a walk for now). */

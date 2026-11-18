@@ -164,3 +164,11 @@ I'm starting you up again to continue you work after the shutdown.  Before conti
 Don't play panel matches on the box, for the sake of realism.  In an actual tournament, you will be heavily constrained by how many games you can play on the actual environment, and we want to replicate that experience
 
 (mid-turn, 13:45) I would like you to find ways to use the box as much as possible, given that constraint
+
+## 36. 2026-11-18 14:00 PST
+
+(13:55) Have you fixed all the bugs?
+
+(13:58, on the box's WSL memory cap) Yeah, I lowered that because a higher limit (20G) was thrashing the box.  I can try raising it a bit more
+
+I'd like your initial focus to be fixing all bugs, writing more tests, and then refactoring the code to make it as clean and simple as possible so that bugs can't hide.  After that, I'd like to see where we're at against the panel

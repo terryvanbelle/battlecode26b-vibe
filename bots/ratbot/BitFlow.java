@@ -38,6 +38,9 @@ public final class BitFlow {
     /** The rat's tile when its wave was last found, that wave, and the wave at which the field first covered it. */
     static int meIdx = -1, meD = -1, meAt = -1;
     public static int held, builds, steps, fails, restarts;
+    /** Cfg.BF_MOMENTUM: the direction of this rat's last step down a field toward the current target (null: none since
+     *  the errand began); a restart (a wall seen since the waves passed) keeps it for Nav.momentum. */
+    static Direction heading;
 
     /** Row masks for the map (Sym.init). */
     static void init() {
@@ -59,7 +62,7 @@ public final class BitFlow {
     static void undirt(int x, int y) { dirtR[y] &= ~(1L << x); }
 
     /** Tests run outside the engine (Flow.unlimited). */
-    static int left() { return Flow.unlimited ? Integer.MAX_VALUE : Clock.getBytecodesLeft(); }
+    static int left() { return Clock.getBytecodesLeft(); }
 
     /** A field toward t is being grown or is fresh. */
     public static boolean active(MapLocation t) {
@@ -69,6 +72,7 @@ public final class BitFlow {
     public static void request(MapLocation t) {
         if (active(t)) return;
         if (failTgt != null && G.cheb(failTgt, t) <= 1 && G.round - failRound < Cfg.FLOW_RETRY) return;
+        heading = null;
         start(t);
     }
 
@@ -248,6 +252,9 @@ public final class BitFlow {
      */
     public static boolean follow(MapLocation t) throws GameActionException {
         if (!seeded || tgt == null || G.cheb(tgt, t) > 1) return false;
+        // xb4: rushers fighting at the enemy king reach here with ~1000 left and the neighbour scan overran (Stash,
+        // 1-2 a game): hold the step this turn instead
+        if (Clock.getBytecodesLeft() < Cfg.BF_FOLLOW_LEFT) return true;
         if (G.round - startRound > Cfg.FLOW_TTL) { tgt = null; building = false; return false; }
         int x = G.me.x, y = G.me.y, W = G.W, H = G.H;
         if ((done[y] >>> x & 1) == 0) return false;
@@ -303,6 +310,7 @@ public final class BitFlow {
         }
         if (Nav.step(best)) {
             steps++;
+            heading = best;
             meIdx = ni;
             meD = bd;
         }

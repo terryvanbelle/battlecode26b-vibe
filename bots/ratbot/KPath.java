@@ -30,13 +30,17 @@ public final class KPath {
     /** Cfg.KP_FRONT: front(x, y) = fa * x + fb * y + fc is 2 * |home - away| times the signed distance from the
      *  bisector (positive on our side); centres below fMin are off the path. */
     static int fa, fb, fc, fMin = Integer.MIN_VALUE;
+    /** The front percent of the current search (Cfg.KP_FRONT, or Cfg.KP_FRONT_LOW after a search at KP_FRONT found
+     *  no path), and whether the next search uses the low one. */
+    static int frontPct = Cfg.KP_FRONT;
+    static boolean low;
     static int lastScan = -1;
     public static int searches, fails, steps, digs;
     public static boolean unlimited;
     /** With unlimited (tests): the bytecodes left that left() reports. */
     public static int fakeLeft = Integer.MAX_VALUE;
 
-    static int left() { return unlimited ? fakeLeft : Clock.getBytecodesLeft(); }
+    static int left() { return Clock.getBytecodesLeft(); }
 
     /** Side frame from our start: the signs of its offset from the map centre. */
     static void frame(MapLocation home) {
@@ -79,7 +83,7 @@ public final class KPath {
     /** A centre whose 3x3 lies on the map and touches no seen wall (nor, with Cfg.KP_FRONT, lies too near the front). */
     static boolean open(int x, int y) {
         return x >= 1 && y >= 1 && x < G.W - 1 && y < G.H - 1 && !kb[x + G.W * y]
-            && (Cfg.KP_FRONT == 0 || fa * x + fb * y + fc >= fMin);
+            && (frontPct == 0 || fa * x + fb * y + fc >= fMin);
     }
 
     /** Cfg.KP_FRONT: the front line from our start home and the enemy's away: |v - away|^2 - |v - home|^2 is linear
@@ -88,13 +92,14 @@ public final class KPath {
         fa = 2 * (home.x - away.x);
         fb = 2 * (home.y - away.y);
         fc = away.x * away.x + away.y * away.y - home.x * home.x - home.y * home.y;
-        fMin = (fa * home.x + fb * home.y + fc) * Cfg.KP_FRONT / 100;
+        fMin = (fa * home.x + fb * home.y + fc) * frontPct / 100;
     }
 
-    /** m is on our half: nearer our start home than the enemy start away (King.pickHomeMine's test). */
+    /** m is on our half: nearer our start home than the enemy start away (King.pickHomeMine's test; a mine on the
+     *  bisector only with Cfg.MINE_TIES and without Cfg.KP_NO_TIE). */
     static boolean homeHalf(MapLocation m, MapLocation home, MapLocation away) {
         int d = home.distanceSquaredTo(m), e = m.distanceSquaredTo(away);
-        return d < e || d == e && Cfg.MINE_TIES;
+        return d < e || d == e && Cfg.MINE_TIES && !Cfg.KP_NO_TIE;
     }
 
     /** Another of our kings sits within Chebyshev 2 of m. */
@@ -126,7 +131,8 @@ public final class KPath {
         kx = c.x; ky = c.y; kIdx = c.x + W * c.y;
         startRound = G.round; minesAt = Comms.numMines; searches++;
         ready = false; seated = false;
-        if (Cfg.KP_FRONT != 0) front(home, away);
+        frontPct = low ? Cfg.KP_FRONT_LOW : Cfg.KP_FRONT;
+        if (frontPct != 0) front(home, away);
         int[] gg = g;
         for (int i = 0; i < n; i++) {
             if (left() < Cfg.KP_RESERVE) { building = false; pending = 0; minesAt = -1; return false; }
@@ -145,7 +151,7 @@ public final class KPath {
             }
         }
         building = pending > 0;
-        if (!building) failRound = G.round;
+        if (!building) failed();
         return building;
     }
 
@@ -164,14 +170,14 @@ public final class KPath {
             pending--;
             int u = pv[e - 1], ux = u % W, uy = u / W, gu = gg[u] - bs;
             if (gu + Math.max(Math.abs(ux - X), Math.abs(uy - Y)) != curF) continue; // stale entry
-            if (u == K) { building = false; ready = true; builtRound = G.round; return; }
+            if (u == K) { building = false; ready = true; builtRound = G.round; low = false; return; }
             int ng = gu + 1;
             for (int k = 0; k < 8; k++) {
                 int vx = ux + OX[k], vy = uy + OY[k];
                 if (vx < 1 || vy < 1 || vx >= W - 1 || vy >= H - 1) continue;
                 int v = vx + W * vy;
                 if (b[v] && v != K) continue;
-                if (Cfg.KP_FRONT != 0 && A * vx + B * vy + C < F && v != K) continue;
+                if (frontPct != 0 && A * vx + B * vy + C < F && v != K) continue;
                 int gv = gg[v];
                 if (gv >= bs && gv - bs <= ng) continue;
                 int f = ng + Math.max(Math.abs(vx - X), Math.abs(vy - Y));
@@ -182,7 +188,19 @@ public final class KPath {
         }
         building = false;
         fails++;
+        failed();
+    }
+
+    /** A search found no path: with Cfg.KP_FRONT_LOW the next one (due at once) tries the low front margin, and after
+     *  a low search fails the next waits KP_RETRY at KP_FRONT again. A search that reaches the king clears the low
+     *  flag, so each new search tries KP_FRONT first (the low path stays in use until then: frontPct changes only in
+     *  start). */
+    static void failed() {
         failRound = G.round;
+        if (Cfg.KP_FRONT_LOW >= 0 && Cfg.KP_FRONT_LOW < Cfg.KP_FRONT) {
+            low = !low;
+            if (low) minesAt = -1;
+        }
     }
 
     /** Steps left from centre c to a seat by the current search, or -1 when c is off it. */
@@ -218,6 +236,7 @@ public final class KPath {
      *  A turn that allocates does nothing else (the charge for an array lands at once; EscapeTheNight r4 ran over
      *  when the scan and the seeding followed the last allocation), and a scan cut short waits for the next turn. */
     static void tick() {
+        if (left() < Cfg.KP_RESERVE) return;   // xe9: a dodge-heavy turn arrives here short (km4 Nofreecheese OVS 4899)
         if (poolN == null) { alloc(Cfg.KP_RESERVE); return; }
         MapLocation c = G.rc.getLocation();
         if (ox == DX && King.start != null) frame(King.start);
@@ -228,7 +247,7 @@ public final class KPath {
             int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
             start(c, Comms.mines, Comms.numMines, home, G.mirror(home, s));
         }
-        if (building && G.round - startRound > Cfg.KP_TURNS) { building = false; fails++; failRound = G.round; }
+        if (building && G.round - startRound > Cfg.KP_TURNS) { building = false; fails++; failed(); }
         work(Cfg.KP_RESERVE);
     }
 

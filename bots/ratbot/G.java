@@ -4,6 +4,34 @@ import battlecode.common.*;
 
 /** Globals shared by every layer. Refreshed once per turn by {@link #startTurn()}. */
 public final class G {
+    /** Bytecode ledger (z2h): the bytecodes this robot spent this turn on code its base (u6x) does not run, minus 2.
+     *  Every budget read adds it back, so the base's budget checks (Flow.work above all, which spends whatever a turn
+     *  leaves) see the same counts as in the base, and games replay the base's until the new code acts. The left()
+     *  variants read the clock 2 bytecodes earlier than the base's (no test-only unlimited check, same length), which
+     *  the minus 2 absorbs; RobotPlayer resets it after Flow.work. */
+    public static int debt;
+
+    /** The bytecode count, read in a method of its own: the engine counts a basic block's instructions only at its end
+     *  (a jump, label, return or call of our own code), and a Clock read is no block end, so a read inline would see a
+     *  count that depends on javac's line labels. The call to bc() ends the caller's block; its own return counts 1. */
+    static int bc() { return Clock.getBytecodeNum(); }
+
+    /** Ledger: close a hook opened with {@code int cd = G.debt, cb = G.bc();}. The hook's cost, plus k (its counted
+     *  instructions outside the two reads), is credited only while the cost is at most SETTLE_CAP: a hook that costs
+     *  more has acted, and its bytecodes must reach the budget reads. Crediting an acting hook made left() overstate the
+     *  budget by thousands, and Seal.work/sense2 overran (z2j on wallsofparadis B: 219 overrun turns from r1888, when
+     *  CASH_END's formation ran). */
+    static void settle(int cd, int cb, int k) {
+        int c = bc() - cb;
+        debt = cd;
+        if (c <= SETTLE_CAP) debt = cd + c + k;
+    }
+
+    static final int SETTLE_CAP = 300;
+
+    /** Cfg.RICH_FIX applies at a site opened with k kings: always from two, from Cfg.RICH_FIX_FROM with one. */
+    static boolean fixOn(int k) { return k >= 2 || k >= Cfg.RICH_FIX_KINGS && round >= Cfg.RICH_FIX_FROM; }
+
     public static RobotController rc;
     public static Team us, them;
     public static int W, H, myId;

@@ -32,6 +32,25 @@ public final class TrapRisk {
         }
         nHeard = 0;
         MapLocation me = G.rc.getLocation();
+        // Cfg.FIX_TRAP_CARRIED: a carried or flying rat triggers no traps, so its tiles prove nothing;
+        // Cfg.FIX_TRAP_ARRIVED: the move came after last round's observe, so keep that round's marks
+        if (Cfg.FIX_TRAP_CARRIED || Cfg.FIX_TRAP_ARRIVED) {
+            boolean grounded = !Cfg.FIX_TRAP_CARRIED || !G.rc.isBeingCarried() && !G.rc.isBeingThrown();
+            if (grounded && (last == null || !last.equals(me))) { last = me; arrived = Cfg.FIX_TRAP_ARRIVED ? G.round - 1 : G.round; }
+            if (!grounded) {
+                for (RobotInfo r : robots) {
+                    if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
+                    Direction f = r.direction;
+                    if (f == null || f == Direction.CENTER) continue;
+                    put(r.location.add(f));
+                    put(r.location.add(f.rotateLeft()));
+                    put(r.location.add(f.rotateRight()));
+                }
+                if (Cfg.TRAP_SHARE) heard(G.rc.readSqueaks(G.round - 1));
+                if (Cfg.TRAP_SHARE) heard(G.rc.readSqueaks(G.round));
+                return;
+            }
+        } else
         if (last == null || !last.equals(me)) { last = me; arrived = G.round; }
         for (RobotInfo r : robots) {
             if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
