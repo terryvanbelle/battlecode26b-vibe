@@ -21,6 +21,7 @@ public final class Nav {
     static int bestDist;
     /** Avoid-mask: bit d set means do not step in DIRS[d] this turn (cat lanes etc). */
     public static int avoid;
+    /** Dirt tiles this rat dug (indicator dg=). */
     public static int digs;
     /** Cfg.NAV_SAME_R (a field so tests can set it). */
     static int sameR = Cfg.NAV_SAME_R;
@@ -30,7 +31,6 @@ public final class Nav {
     static int swapHold = Cfg.SWAP_HOLD;
     /** The tile the ally we carry past was taken from (where Baby sets it down when it is still beside us), or null. */
     static MapLocation swapFrom;
-    public static int swaps;
     /** Baby.deliver's goTo toward the king is a delivery (its flow search roots at the transfer reach). */
     static boolean deliverK;
 
@@ -98,14 +98,14 @@ public final class Nav {
         if (!G.rc.isMovementReady()) return false;
         // Cfg.BF_GIVEUP: a rusher this stalled on BitFlow walks by Flow from now on
         if (Baby.bfOn && stall >= Cfg.BF_GIVEUP) { Baby.bfOn = false; stall = 0; bfQuit++; }
-        // a dirt tile straight ahead with no closer free side step is dug and entered at once; flow (below) is for
-        // stalls the local rule cannot see past. Not while a flow path is being followed or searched.
+        // a dirt tile straight ahead with no closer free side step is dug and entered at once; the path searches
+        // (below) are for stalls the local rule cannot see past. Not while a path toward t is followed or searched
+        // (a search toward an old target does not block the dig).
         if (Baby.bfOn) {
             if (!BitFlow.active(t) && digToward(t)) {
                 Direction d = G.me.directionTo(t);
                 return free(d) && step(d);
             }
-        // (only a search toward t blocks the dig, not a stale one toward an old target)
         } else if (Cfg.DIG_FIRST && !(Cfg.FLOW && (Flow.ready(t) || Flow.building && !(Cfg.DIG_REV && Flow.rev)
                        && Flow.tgt != null && G.cheb(Flow.tgt, t) <= 1)) && digToward(t)) {
             Direction d = G.me.directionTo(t);
@@ -136,7 +136,6 @@ public final class Nav {
             if (Flow.rev && Flow.searching(t)) stall = Math.min(stall, s0);
             // hold while a search toward t runs: it starts from here, so moving would strand the path
             // (a reverse search grows from the target and takes the path from wherever we are: walk on)
-
             if (Flow.searching(t) && !Flow.rev) { if (progress) stall = Math.min(stall, s0); return false; }
         }
         Direction d = choose(t);
@@ -170,23 +169,18 @@ public final class Nav {
         return ttl > 0 && id == lastId && round - lastRound < ttl;
     }
 
-    /** Whether the SWAP filters let us carry past an ally facing f with id `id` on our step d. */
-    static boolean swapAllowed(Direction f, int id, Direction d) {
-        return !pairBlocked(id, G.round, swapId, swapRound, Cfg.SWAP_PAIR);
-    }
-
     /** The ally we last carried past and the round. */
     static int swapId = -1, swapRound = -1000;
 
-    /** Cfg.SWAP_HOLD: carry the ally baby on the next step (direction d, not avoided) and step into its tile, unless
-     *  an enemy rat is near (the carry costs 20 action cooldown, the drop 20 more). True when we moved. */
+    /** Cfg.SWAP_HOLD / SWAP_LOADED: carry the ally baby on the next step (direction d, not avoided) and step into its
+     *  tile, when loadedSwap allows it and no enemy rat is near (the carry costs 20 action cooldown, the drop 20 more).
+     *  True when we moved. */
     static boolean swapPast(Direction d) throws GameActionException {
         RobotController rc = G.rc;
         if ((avoid & (1 << d.ordinal())) != 0 || rc.getCarrying() != null || Baby.nearestEnemy != null
                 || !rc.isActionReady() || !rc.isMovementReady()) return false;
         MapLocation n = G.me.add(d);
         if (!loadedSwap(n)) return false;
-
         if (rc.getDirection() != d) {
             if (!rc.canTurn(d)) return false;
             rc.turn(d);
@@ -194,12 +188,11 @@ public final class Nav {
         }
         RobotInfo r = rc.canSenseLocation(n) ? rc.senseRobotAtLocation(n) : null;
         if (r == null || r.team != G.us || r.type != UnitType.BABY_RAT || r.carryingRobot != null || !rc.canCarryRat(n)) return false;
-        if (!swapAllowed(r.direction, r.ID, d)) return false;
+        if (pairBlocked(r.ID, G.round, swapId, swapRound, Cfg.SWAP_PAIR)) return false;
         rc.carryRat(n);
         swapFrom = G.me;
         swapId = r.ID;
         swapRound = G.round;
-        swaps++;
         return step(d);
     }
 
@@ -274,7 +267,6 @@ public final class Nav {
         }
         // Wall follow: start pointing back into the wall, then sweep away from it.
         Direction d = bugHand > 0 ? bugDir.rotateRight().rotateRight() : bugDir.rotateLeft().rotateLeft();
-
         for (int i = 0; i < 8; i++) {
             if (free(d)) { bugDir = d; return d; }
             d = bugHand > 0 ? d.rotateLeft() : d.rotateRight();

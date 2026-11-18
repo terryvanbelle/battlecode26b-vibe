@@ -70,7 +70,7 @@ public class BotTest {
         Flow.cpath = new int[Flow.CK][]; Flow.cnext = 0; Flow.hits = 0; Flow.cache = Cfg.FLOW_CACHE; Flow.held = 0;
         Flow.rev = Cfg.FLOW_REV; Flow.lifo = Cfg.FLOW_LIFO; Flow.fast = Cfg.FLOW_FAST; King.faceSpawn = Cfg.SYM_FACE;
         Trail.at = null; Trail.tiles = null; Trail.n = 0; Baby.homeRound = -10; Baby.homing = false; King.laneN = 0; King.lane0 = 0;
-        Nav.swapHold = Cfg.SWAP_HOLD; Nav.swapFrom = null; Nav.swaps = 0; Baby.nearestEnemy = null;
+        Nav.swapHold = Cfg.SWAP_HOLD; Nav.swapFrom = null; Baby.nearestEnemy = null;
     }
 
     static RobotController fakeRc() {

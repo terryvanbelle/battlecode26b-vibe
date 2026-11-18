@@ -8,25 +8,30 @@ import battlecode.common.*;
  * (Dial buckets on f = g + Chebyshev to the king, LIFO within a bucket) grows from every seat (a centre within
  * Chebyshev 1 of a home-half mine no other king holds) at once and stops when it reaches the king, so g is the
  * remaining steps to the mine nearest by path; the king steps to a neighbour of lower g. It searches again when a
- * new mine is listed or a newly seen wall blocks the way, and holds still while a search runs. King.homeMine's pick
- * was the first listed mine within dist2 400 of the start, walked to greedily: rift (4342) took (6,12), 13 away,
- * not (12,26), 8 away, and stopped at (6,19) under a wall row for 2000 rounds while spsquared's kings sat on mines
- * (its kings picked up 2680 cheese to ours 60); wallsofparadis (4344-4345) has no home mine within 400, so our king
- * stayed 26 from its nearest mine and our deliveries were 1490 to AdamTan12's 7281.
+ * new mine is listed or a newly seen wall blocks the way, and holds still while a search runs. A greedy walk to the
+ * nearest listed mine stalls under wall rows and misses mines farther by air but nearer by path.
  */
 public final class KPath {
+    /** g values of the current search lie in [base, base + SPAN); POOL bounds the bucket entries of a search. */
     static final int SPAN = 1 << 12, POOL = 4096;
     static final int[] DX = {0, 1, 1, 1, 0, -1, -1, -1}, DY = {1, 1, 0, -1, -1, -1, 0, 1};
-    /** Neighbour order in our side frame, so mirrored kings expand mirrored neighbours in the same order. */
+    /** Neighbour order in our side frame (set by frame once King.start is known), so mirrored kings expand mirrored
+     *  neighbours in the same order. */
     static int[] ox = DX, oy = DY;
     /** Centre blocked by a seen wall within Chebyshev 1. */
     static boolean[] kb;
+    /** g: base + steps left to a seat; the bucket pool (entry e: tile poolV[e], next poolN[e]; head[f] = first
+     *  entry + 1 of bucket f). */
     static int[] g, poolV, poolN, head;
+    /** Search generation (base = gen * SPAN), pool entries used, current and largest bucket, entries pending. */
     static int gen, base, pn, curF, pending, maxF;
+    /** A search is running / has reached the king (its g is usable) / the king sits on a seat. */
     static boolean building, ready, seated;
     /** The king's centre the current search aims at, and its index. */
     static int kx, ky, kIdx;
-    static int startRound = -1000, failRound = -1000, builtRound = -1000, minesAt = -1;
+    /** Rounds the current search started and the last one failed; the mine count the search
+     *  started with (-1: a new search is due). */
+    static int startRound = -1000, failRound = -1000, minesAt = -1;
     /** Cfg.KP_FRONT: front(x, y) = fa * x + fb * y + fc is 2 * |home - away| times the signed distance from the
      *  bisector (positive on our side); centres below fMin are off the path. */
     static int fa, fb, fc, fMin = Integer.MIN_VALUE;
@@ -34,8 +39,8 @@ public final class KPath {
      *  no path), and whether the next search uses the low one. */
     static int frontPct = Cfg.KP_FRONT;
     static boolean low;
+    /** The tile index of the king's centre at the last full scan. */
     static int lastScan = -1;
-    public static int searches, fails, steps, digs;
 
     static int left() { return Clock.getBytecodesLeft(); }
 
@@ -94,8 +99,7 @@ public final class KPath {
 
     /** m is on our half: nearer our start home than the enemy start away (no mine on the bisector). */
     static boolean homeHalf(MapLocation m, MapLocation home, MapLocation away) {
-        int d = home.distanceSquaredTo(m), e = m.distanceSquaredTo(away);
-        return d < e;
+        return home.distanceSquaredTo(m) < m.distanceSquaredTo(away);
     }
 
     /** Another of our kings sits within Chebyshev 2 of m (skipping our own centre now and at turn start: Comms.kings
@@ -108,6 +112,7 @@ public final class KPath {
         return false;
     }
 
+    /** Queue tile v in bucket f (dropped when the pool is full). */
     static void push(int v, int f) {
         if (pn >= POOL) return;
         int e = pn++;
@@ -128,7 +133,7 @@ public final class KPath {
         for (int f = 0; f < head.length; f++) head[f] = 0;
         pn = 0; pending = 0; maxF = max + 1; curF = maxF + 1;
         kx = c.x; ky = c.y; kIdx = c.x + W * c.y;
-        startRound = G.round; minesAt = Comms.numMines; searches++;
+        startRound = G.round; minesAt = Comms.numMines;
         ready = false; seated = false;
         frontPct = low ? Cfg.KP_FRONT_LOW : Cfg.KP_FRONT;
         if (frontPct != 0) front(home, away);
@@ -169,7 +174,7 @@ public final class KPath {
             pending--;
             int u = pv[e - 1], ux = u % W, uy = u / W, gu = gg[u] - bs;
             if (gu + Math.max(Math.abs(ux - X), Math.abs(uy - Y)) != curF) continue; // stale entry
-            if (u == K) { building = false; ready = true; builtRound = G.round; low = false; return; }
+            if (u == K) { building = false; ready = true; low = false; return; }
             int ng = gu + 1;
             for (int k = 0; k < 8; k++) {
                 int vx = ux + OX[k], vy = uy + OY[k];
@@ -186,7 +191,6 @@ public final class KPath {
             }
         }
         building = false;
-        fails++;
         failed();
     }
 
@@ -198,7 +202,6 @@ public final class KPath {
         failRound = G.round;
         low = !low;
         if (low) minesAt = -1;
-
     }
 
     /** Steps left from centre c to a seat by the current search, or -1 when c is off it. */
@@ -234,7 +237,7 @@ public final class KPath {
      *  A turn that allocates does nothing else (the charge for an array lands at once; EscapeTheNight r4 ran over
      *  when the scan and the seeding followed the last allocation), and a scan cut short waits for the next turn. */
     static void tick() {
-        if (left() < Cfg.KP_RESERVE) return;   // xe9: a dodge-heavy turn arrives here short (km4 Nofreecheese OVS 4899)
+        if (left() < Cfg.KP_RESERVE) return;   // a dodge-heavy turn can arrive here short
         if (poolN == null) { alloc(Cfg.KP_RESERVE); return; }
         MapLocation c = G.rc.getLocation();
         if (ox == DX && King.start != null) frame(King.start);
@@ -242,10 +245,10 @@ public final class KPath {
         if (seated && King.homeMine != null && G.cheb(c, King.homeMine) > Cfg.KING_ROAM + 2) seated = false;
         if (!seated && !building && due(c)) {
             MapLocation home = King.start != null ? King.start : c;
-            int s = (Sym.mask & Sym.ROT) != 0 ? Sym.ROT : (Sym.mask & Sym.HOR) != 0 ? Sym.HOR : Sym.VER;
+            int s = King.guessSym();
             start(c, Comms.mines, Comms.numMines, home, G.mirror(home, s));
         }
-        if (building && G.round - startRound > Cfg.KP_TURNS) { building = false; fails++; failed(); }
+        if (building && G.round - startRound > Cfg.KP_TURNS) { building = false; failed(); }
         work(Cfg.KP_RESERVE);
     }
 
@@ -276,7 +279,7 @@ public final class KPath {
         RobotController rc = G.rc;
         for (Direction d : ds) {
             if (!rc.canMove(d) || !King.unplugged(c, d) || !King.laneOk(c, d)) continue;
-            rc.move(d); G.me = rc.getLocation(); steps++; King.mineWhy = 'P'; King.pickUp();
+            rc.move(d); G.me = rc.getLocation(); King.mineWhy = 'P'; King.pickUp();
             return true;
         }
         // blocked: dig the dirt of the best step when that is all that stops it
@@ -284,7 +287,7 @@ public final class KPath {
             MapLocation t = c.add(ds[0]);
             MapLocation d = King.digTile(c, t);
             if (d != null && rc.canRemoveDirt(d)) {
-                rc.removeDirt(d); digs++; King.digs++; Sym.mem[G.idx(d)] &= ~Sym.DIRT; King.mineWhy = 'G';
+                rc.removeDirt(d); King.digs++; Sym.mem[G.idx(d)] &= ~Sym.DIRT; King.mineWhy = 'G';
                 return true;
             }
         }

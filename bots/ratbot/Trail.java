@@ -9,12 +9,10 @@ import battlecode.common.*;
  * each turn to the free neighbour earliest on the chain, which also cuts corners where the chain passes close to
  * itself. A jump of more than one tile (carried, thrown) starts a new chain where the rat lands.
  *
- * The chain is recorded at the start of the turn in a ledgered hook (a record is O(1): a tile's entry carries the
- * chain generation, and a cut or a new chain only moves n or bumps gen). The arrays are allocated at the end of a
- * turn (alloc, after Flow.work and every budget read of the base), since an allocation costs its length, 2·W·H, more
- * than the ledger may credit. z7s recorded at the end of the turn and skipped the record when under 1,500 bytecodes
- * were left; on fullofsecrets a gatherer's skipped records at a mine (16,000 used) cut its chain there, and its walk
- * home ended at the mine.
+ * The chain is recorded at the start of every turn, never skipped for lack of bytecodes (a skipped record cuts the
+ * chain, and the walk home then ends there). A record is O(1): a tile's entry carries the chain generation, and a cut
+ * or a new chain only moves n or bumps gen. The arrays (2·W·H ints) are allocated at the end of a turn with room for
+ * them (alloc, from RobotPlayer before Flow.work).
  */
 public final class Trail {
     /** Chain tiles in walk order (tiles[0] = start), and tile -> gen << 16 | chain position + 1. */

@@ -31,17 +31,6 @@ public final class TrapRisk {
         boolean grounded = !G.rc.isBeingCarried() && !G.rc.isBeingThrown();
         if (grounded && (last == null || !last.equals(me))) { last = me; arrived = lastObs; }
         lastObs = G.round;
-        if (!grounded) {
-            for (RobotInfo r : robots) {
-                if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
-                Direction f = r.direction;
-                if (f == null || f == Direction.CENTER) continue;
-                put(r.location.add(f));
-                put(r.location.add(f.rotateLeft()));
-                put(r.location.add(f.rotateRight()));
-            }
-            return;
-        }
         for (RobotInfo r : robots) {
             if (r.team != G.them || r.type != UnitType.BABY_RAT) continue;
             Direction f = r.direction;
@@ -50,6 +39,7 @@ public final class TrapRisk {
             put(r.location.add(f.rotateLeft()));
             put(r.location.add(f.rotateRight()));
         }
+        if (!grounded) return;
         // clear marks we have proven safe: anything within 1 of our tile marked before we arrived
         for (int dx = -1; dx <= 1; dx++)
             for (int dy = -1; dy <= 1; dy++) {
@@ -69,7 +59,6 @@ public final class TrapRisk {
 
     /** mask() from the marks made within the last ttl rounds only. */
     public static int mask(MapLocation me, int ttl) {
-
         if (mark == null) return 0;
         // one pass over the 5x5 around us: a live mark at offset (dx, dy) taints every neighbour within Chebyshev 1
         int m = 0, w = G.W, x0 = me.x, y0 = me.y, r = G.round - ttl;
@@ -88,8 +77,8 @@ public final class TrapRisk {
     }
 
     /** NEAR[offset] = bits of the 8 neighbour directions (G.DIRS order) within Chebyshev 1 of that offset in the 5x5.
-     *  A literal: computing it in a static block cost ~6000 bytecodes at the class's first use, a newborn's first turn
-     *  once the war starts, and pushed 51 of 52 cheeseguardians overruns past the limit (BotTest checks the values). */
+     *  A literal: computing it in a static block cost ~6000 bytecodes at the class's first use (often a newborn's first
+     *  turn) and overran (BotTest checks the values). */
     static final int[] NEAR = {32, 48, 56, 24, 8, 96, 112, 124, 28, 12, 224, 241, 255, 31, 14, 192, 193, 199, 7, 6, 128,
                                129, 131, 3, 2};
 }

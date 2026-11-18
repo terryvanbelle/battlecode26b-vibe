@@ -3,17 +3,19 @@ package ratbot;
 /** Indicator-string telemetry. Tags are stable so replay tools can grep them. */
 public final class Debug {
 
-    /** Overrun locator: mark(k) at turn stages; the first stage reached after the round advanced is kept. */
+    /** Overrun locator: mark(k) at turn stages; the first stage reached after the round advanced is kept (OVS=,
+     *  as stage * 100 + k). */
     public static int stage, ovStage = -1, startRound;
     public static boolean crossed;
 
-    public static int lastBc, hotStage, hotBc;   // the costliest stage segment this turn
+    /** The bytecode count at the last mark, and the costliest stage segment this turn (hot=stage:bytecodes). */
+    public static int lastBc, hotStage, hotBc;
 
     public static void begin(int round) { startRound = round; stage = 0; crossed = false; lastBc = 0; hotBc = 0; }
 
+    /** Reached stage k: record the overrun stage, or time the segment since the last mark. */
     public static void mark(int k) {
-        // ledger (z2h): u6x's count at this point; the hot-stage branch below costs bytecodes, so it must branch as u6x's
-        int bc = battlecode.common.Clock.getBytecodeNum() - (G.debt += 8) + 6;
+        int bc = battlecode.common.Clock.getBytecodeNum();
         if (!crossed && G.rc.getRoundNum() != startRound) { crossed = true; ovStage = stage * 100 + k; }
         else if (bc - lastBc > hotBc) { hotBc = bc - lastBc; hotStage = stage * 100 + k; }
         lastBc = bc;
@@ -56,10 +58,7 @@ public final class Debug {
         if (!G.king && Nav.bfQuit > 0) sb.append(" bq=1");
         if (!G.king && Baby.defends > 0) sb.append(" df=").append(Baby.defends);
         if (!G.king && Baby.rescues > 0) sb.append(" rs=").append(Baby.rescues);
-        if (!G.king && Baby.presses > 0) sb.append(" pk=").append(Baby.presses);
-        if (!G.king && Baby.guards > 0) sb.append(" gd=").append(Baby.guards);
-        if (!G.king
- && GrabMicro.gaps > 0) sb.append(" gp=").append(GrabMicro.gaps);
+        if (!G.king && GrabMicro.gaps > 0) sb.append(" gp=").append(GrabMicro.gaps);
         if (RobotPlayer.overruns > 0) sb.append(" OVR=").append(RobotPlayer.overruns).append(" OVS=").append(ovStage);
         if (RobotPlayer.nearMiss > 0) sb.append(" NEAR=").append(RobotPlayer.nearMiss);
         if (RobotPlayer.exceptions > 0) sb.append(" EXC=").append(RobotPlayer.exceptions).append(':').append(lastExc);

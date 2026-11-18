@@ -427,14 +427,14 @@ public class FixTest {
     static void testEKingForget() throws GameActionException {
         babyWorld();
         at(200); G.coop = false;
-        Baby.role = Baby.ATTACK; Baby.eKing = null; Baby.waveRat = false; Baby.home = p(3, 3); Sym.mask = Sym.ROT;
+        Baby.role = Baby.ATTACK; Baby.eKing = null; Baby.home = p(3, 3); Sym.mask = Sym.ROT;
         facing = Direction.NORTH; G.startTurn();
         Baby.lastEKing = p(5, 7); Baby.lastEKingRound = 195;
         Baby.attack();
         check(Baby.lastEKing == null, "EKING_FORGET: the sighting 2 ahead, sensed empty, is forgotten");
         babyWorld();
         at(200); G.coop = false;
-        Baby.role = Baby.ATTACK; Baby.eKing = null; Baby.waveRat = false; facing = Direction.NORTH; G.startTurn();
+        Baby.role = Baby.ATTACK; Baby.eKing = null; facing = Direction.NORTH; G.startTurn();
         Baby.lastEKing = p(5, 15); Baby.lastEKingRound = 195;
         Baby.attack();
         check(p(5, 15).equals(Baby.lastEKing) && me.y == 6, "EKING_FORGET: a far sighting is kept and walked to (" + me + ")");

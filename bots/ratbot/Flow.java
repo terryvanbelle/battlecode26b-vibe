@@ -12,10 +12,9 @@ import battlecode.common.*;
 public final class Flow {
     static final int SPAN = 1 << 16, RING = 1024, RMASK = RING - 1, NB = 8, BMASK = NB - 1;
     static final int[] DX = {0, 1, 1, 1, 0, -1, -1, -1}, DY = {1, 1, 0, -1, -1, -1, 0, 1};
-    /** Neighbour order of the search. */
+    /** Neighbour order of the searches (the k-th neighbour of (x, y) is (x + ox[k], y + oy[k])). Always DX/DY: the
+     *  searches read it through these fields, which tests reset. */
     static int[] ox = DX, oy = DY;
-
-    static void frame(int fu, int fv) { }
 
     static int[] g, par;
     static int gen;
@@ -284,7 +283,7 @@ public final class Flow {
     }
 
     /** The frontier search: Dijkstra from the rat (Dial buckets on g) until it pops a never-seen tile, which becomes the
-     *  target; nothing unseen reachable sets frontierFail. Neighbours expand in the side frame order (ox/oy). Depths
+     *  target; nothing unseen reachable sets frontierFail. Neighbours expand in ox/oy order. Depths
      *  in par as in work0. */
     static void workFrontier(int reserve) {
         int[] gg = g, pp = par, mem = Sym.mem, OX = ox, OY = oy;
@@ -438,8 +437,8 @@ public final class Flow {
     }
 
     /** workRev with the eight neighbours unrolled off the map edge, the heuristic from AB and the queue state
-     *  in locals (Cfg.FLOW_FAST): the same pops in the same order. The neighbour order is ox/oy (k's step is
-     *  (DX[k]·fu, DY[k]·fv)), so a mirrored rat runs the mirrored search at the same cost. Depths in par as in work0. */
+     *  in locals (Cfg.FLOW_FAST): the same pops in the same order. The neighbour order is ox/oy (FU and FV
+     *  are its x and y unit steps). Depths in par as in work0. */
     static void workRevFast(int reserve) {
         int[] gg = g, pp = par, mem = Sym.mem, ab = AB, hd = head, tl = tail, OX = ox, OY = oy;
         int[][] bk = bucket;
@@ -468,7 +467,7 @@ public final class Flow {
             }
             int ng = gu + ((mem[u] & Sym.DIRT) != 0 ? dig : 1), nb = bs + ng, v, gv, f, fb, pd = (pp[u] | 7) + 1;
             if (ux > 0 && uy > 0 && ux < W1 && uy < H1) {
-                // xr/yu: the heuristic one step along +ox/+oy
+                // the heuristic's x and y terms one step along +FU (xr), -FU (xl), +FV (yu) and -FV (yd)
                 int xr = ab[bx + FU], xl = ab[bx - FU], yu = ab[by + FV], yd = ab[by - FV];
                 v = u + WV; // N
                 if ((mem[v] & blk) == 0 && ((gv = gg[v]) < bs || gv > nb)) {
@@ -708,7 +707,7 @@ public final class Flow {
             }
             if (found < 0) { ends[3]++; drop(); request(t); return false; }
             if (path[found] == me) { ppos = found; nxi = found + 1; }
-            else { ppos = Math.max(0, found - 1); nxi = found; }   // found 0: beside the start tile (ppos -1 threw every turn)
+            else { ppos = Math.max(0, found - 1); nxi = found; }   // found 0: beside the start tile, ppos stays 0
         }
         if (nxi >= plen) { ends[0]++; drop(); return false; }
         int nx = path[nxi];
@@ -723,7 +722,7 @@ public final class Flow {
                 if (++held > Cfg.FLOW_HOLD) { held = 0; ends[1]++; if (cache) uncache(); failTgt = tgt; failRound = G.round; drop(); return false; }
                 return true;
             }
-            if (!Nav.digOk() || !rc.isActionReady()) return true; // wait for the dig
+            if (!rc.isActionReady()) return true; // wait for the dig
             if (rc.getDirection() != d && rc.canTurn(d)) { rc.turn(d); G.facing = d; }
             if (rc.canRemoveDirt(n)) {
                 rc.removeDirt(n);
@@ -740,7 +739,6 @@ public final class Flow {
             // blocked by a robot: hold briefly, then let greedy route around it
             if (++held > Cfg.FLOW_HOLD) {
                 held = 0; ends[1]++; drop(); return false;
-
             }
             return true;
         }

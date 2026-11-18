@@ -35,8 +35,10 @@ public final class BitFlow {
     static int startRound = -10000, failRound = -10000;
     /** A search toward tgt is under way (waves left to grow); seeded once its arrays are set for tgt. */
     static boolean building, seeded;
-    /** The rat's tile when its wave was last found, that wave, and the wave at which the field first covered it. */
+    /** The rat's tile when its wave was last found, that wave, and the wave at which the field first covered it
+     *  (work grows BFLOW_EXTRA waves past that). */
     static int meIdx = -1, meD = -1, meAt = -1;
+    /** Turns held by robots on every downhill step, and debug counts (indicator bf=). */
     public static int held, builds, steps, fails, restarts;
     /** Turns held before a dirt step we may not dig. */
     static int digHeld;
@@ -63,7 +65,7 @@ public final class BitFlow {
     /** The dirt at (x, y) was dug. */
     static void undirt(int x, int y) { dirtR[y] &= ~(1L << x); }
 
-    /** Tests run outside the engine (Flow.unlimited). */
+    /** Bytecodes left this turn. */
     static int left() { return Clock.getBytecodesLeft(); }
 
     /** A field toward t is being grown or is fresh. */
@@ -148,7 +150,7 @@ public final class BitFlow {
                 building = false;
                 if ((done[y] >>> x & 1) == 0) {
                     fails++; failTgt = tgt; failRound = G.round;
-                    // a failed field is no field (active() blocked requests and dig-first 200 rounds)
+                    // a failed field is no field: left as tgt, active() would block requests and dig-first for FLOW_TTL
                     tgt = null;
                 }
                 return;
@@ -258,8 +260,8 @@ public final class BitFlow {
      */
     public static boolean follow(MapLocation t) throws GameActionException {
         if (!seeded || tgt == null || G.cheb(tgt, t) > 1) return false;
-        // xb4: rushers fighting at the enemy king reach here with ~1000 left and the neighbour scan overran (Stash,
-        // 1-2 a game): hold the step this turn instead
+        // too few bytecodes left for the neighbour scan (rushers fighting at the enemy king arrive with ~1000 and
+        // overran): hold the step this turn
         if (Clock.getBytecodesLeft() < Cfg.BF_FOLLOW_LEFT) return true;
         if (G.round - startRound > Cfg.FLOW_TTL) { tgt = null; building = false; return false; }
         int x = G.me.x, y = G.me.y, W = G.W, H = G.H;
@@ -310,10 +312,9 @@ public final class BitFlow {
                 return true;
             }
             digHeld = 0;
-            if (!Nav.digOk() || !rc.isActionReady()) return true;
+            if (!rc.isActionReady()) return true;   // wait for the dig
             if (rc.getDirection() != best && rc.canTurn(best)) { rc.turn(best); G.facing = best; }
             if (rc.canRemoveDirt(n)) {
-
                 rc.removeDirt(n);
                 Nav.digs++;
                 mem[ni] &= ~Sym.DIRT;

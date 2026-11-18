@@ -17,10 +17,6 @@ public final class Sym {
     public static final int CAT = 256;
     /** A tile a robot held on our flow path (Baby's scout walk, PIPE_HELD): searches go around it for a while. */
     public static final int HELD = 512;
-    /** A tile in a sealed pocket (nothing sets it now). */
-    public static final int SEAL = 1024;
-    /** Mine spacing the map validator enforces (GameConstants.MIN_CHEESE_MINE_SPACING_SQUARED). */
-    public static final int MINE_SPACING2 = 25;
 
     public static int[] mem;
     public static int mask = ROT | HOR | VER;
@@ -31,21 +27,19 @@ public final class Sym {
 
     public static boolean known(int i) { return (mem[i] & SEEN) != 0; }
 
-    /** Record a sensed tile; returns true when the symmetry mask shrank. */
-    public static boolean record(int x, int y, boolean wall, boolean dirt, boolean mine) {
+    /** Record a sensed tile, and rule out the symmetries its mirror tiles (or an expected mine) contradict. */
+    public static void record(int x, int y, boolean wall, boolean dirt, boolean mine) {
         int i = x + y * G.W;
         int v = SEEN | (wall ? WALL : 0) | (dirt ? DIRT : 0) | (mine ? MINE : 0);
         int old = mem[i];
-        mem[i] = v | (old & (EXP | KING | CAT | HELD | SEAL));
+        mem[i] = v | (old & (EXP | KING | CAT | HELD));
         if (Baby.bfOn && ((old ^ v) & (WALL | DIRT)) != 0) BitFlow.mark(x, y, v);
-        if ((old & SEEN) != 0 || mask == ROT || mask == HOR || mask == VER) return false;
-        int before = mask;
+        if ((old & SEEN) != 0 || mask == ROT || mask == HOR || mask == VER) return;
         if (!mine && (old & EXP) != 0) { int e = (old >> 4) & mask; if (e != 0) eliminate(e); }
         int stat = v & (WALL | MINE);
         if ((mask & ROT) != 0) check(stat, G.W - 1 - x, G.H - 1 - y, ROT);
         if ((mask & HOR) != 0) check(stat, x, G.H - 1 - y, HOR);
         if ((mask & VER) != 0) check(stat, G.W - 1 - x, y, VER);
-        return mask != before;
     }
 
     private static void check(int stat, int mx, int my, int s) {

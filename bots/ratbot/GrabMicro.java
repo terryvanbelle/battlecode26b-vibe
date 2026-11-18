@@ -4,9 +4,9 @@ import battlecode.common.*;
 
 /**
  * Grab-aware movement for the rat war. A rat grabs an adjacent enemy it can see (it faces it) when
- * that enemy cannot see the grabber (the grabber stands in its blind spot) or is weaker. Field replays (3934-3937)
- * showed our rats ending turns where enemies could step into their blind spots: with 0, 1, 2 and 3+ such enemies
- * 0.1%, 6-20%, 8-32% and 14-65% of them were grabbed before their next turn, while one-step grabs went unused.
+ * that enemy cannot see the grabber (the grabber stands in its blind spot) or is weaker. In field replays, of our
+ * rats that ended a turn where 0, 1, 2 or 3+ enemies could step into their blind spots, 0.1%, 6-20%, 8-32% and 14-65%
+ * were grabbed before their next turn, while one-step grabs went unused.
  *
  * Every reachable end tile (stay or one step) and final facing is scored: a grab there (+GRAB), a bite (+BITE, more
  * when it makes the target grabbable by us or ends its health edge, or kills), and minus THREAT for each enemy that can
@@ -23,14 +23,12 @@ public final class GrabMicro {
     static final long CBIT = 1L << 27;
     /** The 3x3 around our tile, and its 8 neighbours. */
     static final long K3 = (7L << 18) | (7L << 26) | (7L << 34), ADJ = K3 & ~CBIT;
-    /** Tiles within Chebyshev 2 of us: the only ones next to an end tile. */
-    static final long INNER = 0x00003E3E3E3E3E00L;
     /** The nearest MAXE enemy babies within Chebyshev 3 (ties: the mirror-invariant key). */
     static final int MAXE = 6;
     static final int[] ex = new int[MAXE], ey = new int[MAXE], ehp = new int[MAXE], edir = new int[MAXE];
     static final boolean[] ecan = new boolean[MAXE];
     static final RobotInfo[] er = new RobotInfo[MAXE];
-    static final int[] ech = new int[MAXE], ekey = new int[MAXE];
+    static final int[] ekey = new int[MAXE];
     /** The enemy babies within Chebyshev 3 (at most the 7x7 window), their Chebyshev distances and keys. */
     static final RobotInfo[] CR = new RobotInfo[49];
     static final int[] CC = new int[49], CK = new int[49];
@@ -56,7 +54,7 @@ public final class GrabMicro {
     /** Per end tile: the facings that can hand cheese to our king from it (Cfg.GM_DELIVER), and whether any can. */
     static final int[] DM = new int[9];
     static boolean dlv;
-    /** xf2: the round the micro weighed a transfer under threat and found none worth taking (Baby.deliver then keeps
+    /** The round the micro weighed a transfer under threat and found none worth taking (Baby.deliver then keeps
      *  its facing instead of turning its back to the threat). */
     public static int holdRound = -1;
     /** The best option: end tile (0-7 a step in G.DIRS order, 8 stay), facing, the enemy grabbed or bitten (-1). */
@@ -65,9 +63,10 @@ public final class GrabMicro {
     static final int[] dirBest = new int[9];
     /** The round the micro took this turn's movement (Baby.moveDecision then stands down). */
     public static int round = -1;
-    /** xf3: the round the micro last scored (Cfg.GM_BAIL). */
+    /** The round the micro last scored (Cfg.GM_BAIL). */
     public static int evalRound = -1;
-    public static int acts, steps, grabs, avoids, gaps;
+    /** Steps avoided next to a healthier enemy at Chebyshev 3 (indicator gp=). */
+    public static int gaps;
 
     static int b(int ox, int oy) { return (ox + 3) + 8 * (oy + 3); }
 
@@ -97,8 +96,7 @@ public final class GrabMicro {
      * moveMask: bit d for each legal step d (stay is always legal). Sets bestD/bestF/grabI/biteI/bestS, curS (stay,
      * current facing) and dirBest; returns bestS. Per end tile, each enemy that can reach a tile next to it gets an
      * 8-bit mask of the facings that leave it a threat (SAFE: the facings whose cone covers every tile it reaches),
-     * so a facing costs a few bit tests per enemy (the bitboard loops of the first version overran: 58 turns in one
-     * tiny game, gm1).
+     * so a facing costs a few bit tests per enemy (bitboard loops per facing overran).
      */
     static int evaluate(int myHp, int cur, boolean turnOk, int moveMask, boolean actOk, int n, long free,
                         int px, int py, int chir) {
@@ -110,7 +108,7 @@ public final class GrabMicro {
         for (int i = 0; i < n; i++) { eseen[i] = edir[i] < 0 ? 255 : arc(edir[i]); ekey[i] = key(px, py, chir, ex[i], ey[i]); }
         int allowed = turnOk ? 255 : 1 << cur;
         for (int d = 8; d >= 0; d--) {
-            // xf2: a crowd can run this past GRAB_BC (keepout overruns, OVS 405): the tiles left unscored stay unavoided
+            // a crowd can run this past GRAB_BC: stop at GM_LEFT; the tiles left unscored stay unavoided
             if (Clock.getBytecodesLeft() < Cfg.GM_LEFT) { for (int e = d; e >= 0; e--) dirBest[e] = Integer.MAX_VALUE; break; }
             dirBest[d] = Integer.MIN_VALUE;
             if (d < 8 && (moveMask & (1 << d)) == 0) continue;
@@ -255,7 +253,7 @@ public final class GrabMicro {
         // no enemy within Chebyshev 2: nothing can be grabbed and staying is safe (skip the cost; the steps toward
         // a Chebyshev-3 enemy keep the normal move)
         if (minC > 2) {
-            // xf5: a step to Chebyshev 2 of a healthier free-handed enemy gives it the first grab
+            // a step to Chebyshev 2 of a healthier free-handed enemy gives it the first grab: avoid those steps
             if (minC == 3 && rc.isMovementReady()) {
                 int hp = rc.getHealth();
                 for (int j = 0; j < m; j++) {
@@ -270,7 +268,7 @@ public final class GrabMicro {
             }
             return false;
         }
-        // Cfg.GM_DELIVER (xf2): with cheese, the action ready and our king near, the end tiles and facings that can hand
+        // Cfg.GM_DELIVER: with cheese, the action ready and our king near, the end tiles and facings that can hand
         // it over (any king tile within dist2 9 in our cone) score GM_DELIVER when they take no grab or bite
         dlv = false;
         if (Cfg.GM_DELIVER > 0 && rc.getRawCheese() > 0 && rc.isActionReady()) {
@@ -279,18 +277,18 @@ public final class GrabMicro {
                 MapLocation k = Comms.nearestKing(me);
                 if (k != null) { kox = k.x - mx; koy = k.y - my; }
             }
-        }
-        if (kox != 99 && Cfg.GM_DELIVER > 0 && rc.getRawCheese() > 0 && rc.isActionReady()) {
-            int[] dm = DM;
-            for (int d = 0; d < 9; d++) {
-                int bx = kox - (d < 8 ? DX[d] : 0), by = koy - (d < 8 ? DY[d] : 0), k = 0;
-                if (bx >= -4 && bx <= 4 && by >= -4 && by <= 4)
-                    for (int a = bx - 1; a <= bx + 1; a++) {
-                        if (a < -3 || a > 3) continue;
-                        for (int c = by - 1; c <= by + 1; c++) if (c >= -3 && c <= 3) k |= KCONE.charAt((a + 3) * 7 + c + 3);
-                    }
-                dm[d] = k;
-                if (k != 0) dlv = true;
+            if (kox != 99) {
+                int[] dm = DM;
+                for (int d = 0; d < 9; d++) {
+                    int bx = kox - (d < 8 ? DX[d] : 0), by = koy - (d < 8 ? DY[d] : 0), k = 0;
+                    if (bx >= -4 && bx <= 4 && by >= -4 && by <= 4)
+                        for (int a = bx - 1; a <= bx + 1; a++) {
+                            if (a < -3 || a > 3) continue;
+                            for (int c = by - 1; c <= by + 1; c++) if (c >= -3 && c <= 3) k |= KCONE.charAt((a + 3) * 7 + c + 3);
+                        }
+                    dm[d] = k;
+                    if (k != 0) dlv = true;
+                }
             }
         }
         // the nearest MAXE by (Chebyshev, key): enemy order does not change the scores, only which ones are kept
@@ -304,7 +302,7 @@ public final class GrabMicro {
                 v = ck[b]; ck[b] = ck[j]; ck[j] = v;
             }
             RobotInfo r = cr[j];
-            ex[j] = r.location.x - mx; ey[j] = r.location.y - my; ehp[j] = r.health; er[j] = r; ech[j] = cc[j];
+            ex[j] = r.location.x - mx; ey[j] = r.location.y - my; ehp[j] = r.health; er[j] = r;
             Direction f = r.direction;
             edir[j] = f == null || f == Direction.CENTER ? -1 : f.ordinal();
             ecan[j] = r.carryingRobot == null;
@@ -329,7 +327,7 @@ public final class GrabMicro {
         if (grabI < 0 && bestS < curS + MARGIN) {
             if (dlv) holdRound = G.round;
             for (int d = 0; d < 8; d++)
-                if ((moveMask & (1 << d)) != 0 && dirBest[d] <= curS - MARGIN) { Nav.avoid |= 1 << d; avoids++; }
+                if ((moveMask & (1 << d)) != 0 && dirBest[d] <= curS - MARGIN) Nav.avoid |= 1 << d;
             return false;
         }
         execute();
@@ -343,7 +341,7 @@ public final class GrabMicro {
         if (bestD < 8) {
             Direction d = G.DIRS[bestD];
             if (cur != d && f == d && rc.canTurn(d)) { rc.turn(d); cur = d; }
-            if (rc.canMove(d)) { rc.move(d); steps++; }
+            if (rc.canMove(d)) rc.move(d);
         }
         if (cur != f && rc.canTurn(f)) rc.turn(f);
         G.me = rc.getLocation();
@@ -354,7 +352,6 @@ public final class GrabMicro {
                 rc.carryRat(l);
                 Baby.carryRound = G.round;
                 Baby.naps++;
-                grabs++;
             }
             // the grab failed (the target turned or moved): bite it instead (the turn's bites stand down)
             if (rc.canAttack(l)) {
@@ -371,7 +368,6 @@ public final class GrabMicro {
             }
         }
         round = G.round;
-        acts++;
         Baby.why = 'm';
     }
 }

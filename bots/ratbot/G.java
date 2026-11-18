@@ -4,34 +4,9 @@ import battlecode.common.*;
 
 /** Globals shared by every layer. Refreshed once per turn by {@link #startTurn()}. */
 public final class G {
-    /** Bytecode ledger (z2h): the bytecodes this robot spent this turn on code its base (u6x) does not run, minus 2.
-     *  Every budget read adds it back, so the base's budget checks (Flow.work above all, which spends whatever a turn
-     *  leaves) see the same counts as in the base, and games replay the base's until the new code acts. The left()
-     *  variants read the clock 2 bytecodes earlier than the base's (no test-only unlimited check, same length), which
-     *  the minus 2 absorbs; RobotPlayer resets it after Flow.work. */
-    public static int debt;
-
-    /** The bytecode count, read in a method of its own: the engine counts a basic block's instructions only at its end
-     *  (a jump, label, return or call of our own code), and a Clock read is no block end, so a read inline would see a
-     *  count that depends on javac's line labels. The call to bc() ends the caller's block; its own return counts 1. */
-    static int bc() { return Clock.getBytecodeNum(); }
-
-    /** Ledger: close a hook opened with {@code int cd = G.debt, cb = G.bc();}. The hook's cost, plus k (its counted
-     *  instructions outside the two reads), is credited only while the cost is at most SETTLE_CAP: a hook that costs
-     *  more has acted, and its bytecodes must reach the budget reads. Crediting an acting hook made left() overstate the
-     *  budget by thousands, and Seal.work/sense2 overran (z2j on wallsofparadis B: 219 overrun turns from r1888, when
-     *  CASH_END's formation ran). */
-    static void settle(int cd, int cb, int k) {
-        int c = bc() - cb;
-        debt = cd;
-        if (c <= SETTLE_CAP) debt = cd + c + k;
-    }
-
-    static final int SETTLE_CAP = 300;
-
     public static RobotController rc;
     public static Team us, them;
-    public static int W, H, myId;
+    public static int W, H;
     public static int round;
     public static MapLocation me;
     public static Direction facing;
@@ -53,7 +28,6 @@ public final class G {
         them = us.opponent();
         W = r.getMapWidth();
         H = r.getMapHeight();
-        myId = r.getID();
         cx2 = W - 1;
         cy2 = H - 1;
     }
@@ -100,15 +74,14 @@ public final class G {
     /**
      * Side-symmetric handedness for a robot at {@code from} heading along {@code d}: +1 or -1.
      * cross(from - centre, d) is invariant under 180-degree rotation and flips sign under a reflection,
-     * so mirrored robots on the two sides make mirrored choices. Exact zero falls back to the
-     * parity of the doubled offset, which is also mirror-consistent for rotation.
+     * so mirrored robots on the two sides make mirrored choices. When d points along the line through the
+     * centre (cross product 0), the sign of the dot product decides.
      */
     public static int hand(MapLocation from, Direction d) {
         int px = 2 * from.x - cx2, py = 2 * from.y - cy2;
         int c = px * d.dy - py * d.dx;
         if (c > 0) return 1;
         if (c < 0) return -1;
-        // d points along the line through the centre: the side chirality and the dot product break the tie
         int dot = px * d.dx + py * d.dy;
         return dot >= 0 ? chir : -chir;
     }
@@ -119,11 +92,9 @@ public final class G {
         return hand(from, from.directionTo(l)) > 0;
     }
 
-    /** Side chirality for hand()'s tie (nothing sets it now: always 1). */
+    /** Chirality multiplier for hand() and GrabMicro's tie keys: always 1 (a field, as the keys' arithmetic reads it). */
     public static int chir = 1;
 
-
-    public static void frame(MapLocation home) { }
 
     /** Mirror of a location under symmetry s (Sym.ROT/HOR/VER bit). */
     public static int mirX(int x, int s) { return s == Sym.HOR ? x : W - 1 - x; }
