@@ -11487,3 +11487,15 @@
       dumps and the km73-km89 logs, the /dev/shm/kx scripts and extracted replays, and the unknown /dev/shm/kh
       (4.1 GB). Replay archives (~/diag26b/rp, 638 files) and home are intact.
     - The analysis scripts were copied from laptop /dev/shm/kd to research/diag26/.
+- 13:50 (11-18): **Restart (owner #34-#36). Replica up; the Windows box is the local game machine; xk2 (bc26a0's audited fixes) submitted**
+  - Read docs/bc26a0-lessons.md. Adopted: R1/R2 (port bc26a0's 16 audited zdb fixes, gate them as one bundle) first.
+  - Replica restarted (postgres, caddy, `deploy.sh start`, activity on); saturn resumed the 9 matches left queued.
+  - The Windows box (owner #35/#36): never plays replica or panel matches, even ones the replica queued (a filler into
+    saturn's resume directory was built and removed). It runs every local game: `tools/box.sh` (checkout
+    ~/projects/vibe/b26b, own screen queue, 6 games at once; a 246-round game takes 5 s).
+  - Dropped stale VM screens zd714-zd716 (xj2/xj3, superseded) and the stale queue rows (build/queue.stale.tsv).
+  - xk2 = xj9 + 14 of the 16 fixes (THROW_CAT and WANDER_BOX were already in xj9), all behind compile-time FIX_*
+    constants on FIX_ALL. Proof of the off state: FIX_ALL=false compiles every existing method bytecode-identical to
+    xj9 (javap -c, package normalised). Submitted #398; starvation panel 21961-21972 (pairs with xj9 #397).
+  - Box screens: zd724 self-play xk2 vs xj9 (296 cells), zd723 archetypes x 74 maps x both seats for xj9 and xk2
+    (3256 cells). First 16 self-play games: xk2 7-9; overruns xk2 5, xj9 3; no exceptions.

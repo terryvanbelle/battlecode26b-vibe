@@ -162,3 +162,5 @@ I'm starting you up again to continue you work after the shutdown.  Before conti
 ## 35. 2026-11-18 13:40 PST
 
 Don't play panel matches on the box, for the sake of realism.  In an actual tournament, you will be heavily constrained by how many games you can play on the actual environment, and we want to replicate that experience
+
+(mid-turn, 13:45) I would like you to find ways to use the box as much as possible, given that constraint

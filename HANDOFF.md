@@ -96,6 +96,13 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 - Records: `TRAINING_LOG.md` (per attempt), `progress/attempts.csv` (`attempts.py set NAME outcome=...`),
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
+## Compute (2026-11-18, owner #35/#36)
+- **Replica**: the only place panel or field games run (4 execute slots on the VM). Never more.
+- **Windows box** (WSL2, 20 threads, 8 GB; `ssh -i ~/.ssh/wsl_box terry@100.93.26.126`, Tailscale, from the laptop
+  only): every local game and analysis, never replica matches. `tools/box.sh queue RUN` / `start` / `status` /
+  `pull RUN`; checkout ~/projects/vibe/b26b (engine jar and ~/opt/jdk21 installed). ~/bc26-replica-runtime there holds
+  a copy of the replica's runtime (engine jar, maps). bc26a0 also uses the box when it runs.
+
 ## State (2026-11-12 09:55 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
 - **Shut down (09:55 11-12, owner #33).** Nothing is running: the replica, the VM jobs and the laptop drain loop are
   all stopped.
