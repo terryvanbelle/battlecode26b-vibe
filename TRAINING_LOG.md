@@ -11512,3 +11512,5 @@
   - Tests: BotTest ported (1411 checks), FixTest new (513 checks; 48 fail with the fixes off); unit-tests.sh exit 0.
   - zd726 (box, xk4 vs xk2, 74 maps x 2 seats x 2 seeds): xk4 154/296 = 52.0% +-5.7; overruns 77 vs 1584; 0 exceptions.
     zd727 (xk4 vs 11 archetypes, pairs with zd723's xk2 half) running.
+  - 18:50: zd727 done: on all 1628 archetype cells xk4 1512 vs xk2 1511 (xj9 1491), flips +68/-67; overruns 559 vs 7952.
+    Fixes established (verified mechanisms, neutral-to-positive on both screens, overruns -93%): owner #36 flag removal next.
