@@ -14,6 +14,6 @@ for f in "$SRC"/*.java; do sed -e "s/^package $OLD;/package $NAME;/" -e "s/\b$OL
 grep -L "^package $NAME;" "$DST"/*.java | grep -q . && { echo "snapshot: package rename failed" >&2; rm -rf "$DST"; exit 1; }
 SRCHASH=$(cd "$SRC" && cat $(ls *.java | sort) | sha256sum | cut -c1-12)
 printf 'name=%s\nsource=%s\nsource_sha=%s\ncommit=%s\ncreated=%s\n' "$NAME" "${SRC#$REPO/}" "$SRCHASH" \
-  "$(git -C "$REPO" rev-parse --short HEAD)" "$(TZ=America/Los_Angeles date '+%Y-%m-%d %H:%M %Z')" > "$DST/SNAPSHOT"
+  "$(git -C "$REPO" rev-parse --short HEAD)" "$(TZ=America/Vancouver date '+%Y-%m-%d %H:%M PDT')" > "$DST/SNAPSHOT"
 "${BC_JDK:-$HOME/opt/jdk21}/bin/javac" -nowarn --release 21 -proc:none -d "$(mktemp -d)" -cp "$REPO/engine/battlecode26-java-1.2.6.jar" "$DST"/*.java
 echo "snapshot: bots/$NAME"

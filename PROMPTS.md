@@ -186,6 +186,7 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (22:04) MISSED_IDEAS has its specifics labeled by year, so you can filter that one too
 (22:09) It's quite possible that some of your previous ideas were good ideas, but didn't work because they were sabotaged by bugs you've now fixed
 (23:23) Can you remove any candidate from the ELO graphs whose rating wasn't obtained via a panel?
-(05:29) It doesn't look like you accomplished much overnight.  What did you work on?
-(05:29) I want you to put together a script that periodically prods you to continue working.  It's not acceptable for you to sit idle for 7 hours
-(05:29) Also, please report all times as PDT
+(06:29) It doesn't look like you accomplished much overnight.  What did you work on?
+(06:29) I want you to put together a script that periodically prods you to continue working.  It's not acceptable for you to sit idle for 7 hours
+(06:29) Also, please report all times as PDT
+(06:33) PDT, not PST.  I live in British Columbia

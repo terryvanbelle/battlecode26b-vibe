@@ -9,14 +9,14 @@ Q="${1:-research/panel/queue.tsv}"
 TEAM="${BUMP_TEAM-vibe26b}"
 while [ ! -e build/drain.stop ]; do
   if [ -s "$Q" ]; then
-    echo "== $(TZ=America/Los_Angeles date '+%m-%d %H:%M PDT')"
+    echo "== $(TZ=America/Vancouver date '+%m-%d %H:%M PDT')"
     timeout 600 python3 -I tools/galaxy26/contest.py drain "$Q" 2>&1 | grep -v '^request ' | tail -3
   fi
   if [ -n "$TEAM" ]; then
     n=$( (source tools/vm.sh && ensure_vm >/dev/null && timeout 120 ssh "${SSHO[@]}" "$USER_NAME@$IP" \
           "cd /opt/bc26-galaxy/galaxy26 && sudo -u bc26replica python3 -I spool_bump.py --team $TEAM" < /dev/null) \
           2>/dev/null | grep -c ' -> ')
-    [ "${n:-0}" -gt 0 ] && echo "== $(TZ=America/Los_Angeles date '+%m-%d %H:%M PDT') bumped $n of our queued matches"
+    [ "${n:-0}" -gt 0 ] && echo "== $(TZ=America/Vancouver date '+%m-%d %H:%M PDT') bumped $n of our queued matches"
   fi
   sleep "${DRAIN_EVERY:-300}"
 done

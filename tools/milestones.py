@@ -14,7 +14,7 @@ from zoneinfo import ZoneInfo
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSV = os.path.join(REPO, 'progress', 'milestones.csv')
-PDT = ZoneInfo('America/Los_Angeles')
+PDT = ZoneInfo('America/Vancouver')
 COLOR = '#343a40'   # not in any chart's series palette
 FMT = '%Y-%m-%d %H:%M'
 

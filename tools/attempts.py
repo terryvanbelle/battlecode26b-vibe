@@ -50,7 +50,7 @@ def git_date(repo, path):
                          capture_output=True, text=True).stdout.split()
     if not out:
         return ''
-    env = dict(os.environ, TZ='America/Los_Angeles')
+    env = dict(os.environ, TZ='America/Vancouver')
     return subprocess.run(['date', '-d', '@' + out[-1], '+%Y-%m-%d %H:%M'], capture_output=True, text=True,
                           env=env).stdout.strip()
 

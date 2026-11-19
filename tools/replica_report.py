@@ -18,7 +18,7 @@ import milestones as MS
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEAM = G.TEAM
-PDT = ZoneInfo('America/Los_Angeles')
+PDT = ZoneInfo('America/Vancouver')
 
 
 def ts(s):

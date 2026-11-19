@@ -6,11 +6,11 @@ cd "$(dirname "$0")/.." || exit 1
 st=$(bash tools/box.sh status 2>/dev/null)
 q=$(echo "$st" | sed -n 's/^queue: *//p')
 load=$(echo "$st" | sed -n 's/.*load average: \([0-9.]*\).*/\1/p')
-echo "now: $(TZ=America/Los_Angeles date '+%m-%d %H:%M %Z')"
+echo "now: $(TZ=America/Vancouver date '+%m-%d %H:%M PDT')"
 echo "box queue: ${q:-<empty>}   load: ${load:-?}"
-# box log stamps are UTC "MM-DD HH:MM"; show them in Pacific time (owner 11-19: report all times as PDT)
+# box log stamps are UTC "MM-DD HH:MM"; show them in PDT (UTC-7, BC's year-round time) (owner 11-19: report all times as PDT)
 echo "$st" | grep -E ' (start|end) ' | tail -2 | while read -r d t rest; do
-  echo "  $(TZ=America/Los_Angeles date -d "$(date -u +%Y)-$d $t UTC" '+%m-%d %H:%M %Z') $rest"; done
+  echo "  $(TZ=America/Vancouver date -d "$(date -u +%Y)-$d $t UTC" '+%m-%d %H:%M PDT') $rest"; done
 done=$(bash tools/box.sh sh 'for d in runs/*/DONE; do echo ${d%/DONE}; done' 2>/dev/null | sed 's#runs/##' | sort)
 unpulled=$(for r in $done; do [ -f runs/$r/DONE ] || echo -n "$r "; done)
 echo "finished on box, not pulled: ${unpulled:-none}"
