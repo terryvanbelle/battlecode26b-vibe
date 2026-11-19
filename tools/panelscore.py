@@ -2,12 +2,16 @@
 """Running score of a panel run on the replica: games won per panel for the build's matches (ids > START), each
 compared with the latest earlier match on the same cell (opponent, maps, our seat).
 
-  panelscore.py START [PANEL.json ...] [--pages N]     defaults: v4-set3, v4-set4, starve1
+  panelscore.py START [PANEL.json ...] [--pages N] [--ref LO:HI]     defaults: v4-set3, v4-set4, starve1
+  --ref LO:HI: compare only with earlier matches whose ids are in LO..HI (the champion's own panel, e.g. xk6 27474:27718)
 """
 import json, os, re, subprocess, sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 args = sys.argv[1:]
+rlo, rhi = 0, 10 ** 9
+if '--ref' in args:
+    i = args.index('--ref'); rlo, rhi = map(int, args[i + 1].split(':')); del args[i:i + 2]
 pages = '40'
 if '--pages' in args:
     i = args.index('--pages'); pages = args[i + 1]; del args[i:i + 2]
@@ -35,7 +39,7 @@ for line in out.splitlines():
     key = (p, opp, seat)
     if mid > start:
         ours[key] = (mid, w)
-    elif key not in ref or ref[key][0] < mid:
+    elif rlo <= mid <= rhi and (key not in ref or ref[key][0] < mid):
         ref[key] = (mid, w)
 tot = [0, 0, 0, 0]
 for p in panels:
