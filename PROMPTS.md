@@ -193,3 +193,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (08:27) Take a look at the VM disk and see if it has any leftover files from other years.  You can clean those out.  You can also clean out any leftover files from battlecode26-alpha0
 (08:29) Approve deleting bc23-galaxy directories and loose home directory files before October
 (10:58) Any bot that ties the current champion on the panel should be accepted
+(16:37) I'd like you to add an item to terryvanbelle/battlecode-vibe/BEST_PRACTICES to the effect that a tie on the panel versus the current champion is sufficient to make it the new champion.  There was a reason why the tying challenger was given a panel run, and that evidence is sufficient to tip the balance
