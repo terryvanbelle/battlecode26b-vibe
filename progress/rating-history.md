@@ -1,6 +1,6 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-19 09:29 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-19 15:15 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
 
@@ -12,7 +12,7 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 - M4 2026-10-28 08:50 PDT: method: benchmark games only on the replica; local games are self-play
 - M5 2026-10-31 07:46 PDT: panel: v4 (8 opponents u2g beats 25-75%)
 
-570 rated matches; latest rating 1,676 (2026-11-19 09:17 PDT).
+579 rated matches; latest rating 1,713 (2026-11-19 14:43 PDT).
 
 | Submission | Build | Uploaded (PDT) | Accepted | Rating at upload | Rated matches since |
 |---:|---|---|---|---:|---:|
@@ -358,3 +358,5 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 | #399 | xk6 | 2026-11-18 13:14 | yes | 1,657 | 39 |
 | #400 | xr6 | 2026-11-19 07:05 | yes | 1,677 | 2 |
 | #401 | xk6 | 2026-11-19 09:27 | yes | 1,676 | 0 |
+| #402 | xr8 | 2026-11-19 09:48 | yes | 1,676 | 9 |
+| #403 | xr13 | 2026-11-19 15:13 | yes | 1,713 | 0 |
