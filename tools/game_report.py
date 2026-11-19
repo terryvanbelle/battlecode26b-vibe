@@ -20,7 +20,7 @@ tools/build-tools.sh), so a rebuilt dumper never serves an old dump. A dump is w
 place, so a directory that exists is complete; callers must never delete it (it is made read-only, so a stray
 rmtree(ignore_errors=True) removes nothing). Every dump() removes the cache's dumps by any other dumper (of every
 replay) and temp dirs of crashed dumps once they are an hour old; the current dumper's dumps are kept up to
-BC_DUMPCACHE_MAX_MB (2500), least recently used first out (_trim). rows(), own(),
+BC_DUMPCACHE_MAX_MB (1000; the VM's 20 GB disk filled at 2.3 GB of dumps on 11-19), least recently used first out (_trim). rows(), own(),
 games(), summary(), bank() read the files; need() gives the columns a reader requires of a dumpVersion 2+ dump.
 """
 import argparse, collections, fcntl, glob, hashlib, json, os, re, shutil, subprocess, sys, tempfile, time
@@ -34,7 +34,7 @@ ENGINE = os.path.join(REPO, 'engine', 'battlecode26-java-1.2.6.jar')
 TOOLS = os.path.join(REPO, 'build', 'tools')
 STALL = 8
 STALE_AGE = 3600        # seconds before another dumper's dump (or a crashed dump's temp dir) is removed
-CACHE_MAX_MB = int(os.environ.get('BC_DUMPCACHE_MAX_MB', '2500'))   # the current dumper's dumps are trimmed to this
+CACHE_MAX_MB = int(os.environ.get('BC_DUMPCACHE_MAX_MB', '1000'))   # the current dumper's dumps are trimmed to this
 
 
 class DumpError(RuntimeError):

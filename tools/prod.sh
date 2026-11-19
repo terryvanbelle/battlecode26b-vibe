@@ -18,5 +18,8 @@ echo "finished on box, not pulled: ${unpulled:-none}"
 # screens started but not ended (screenq takes a run off the queue when it starts it)
 running=$(bash tools/box.sh sh 'awk "\$3==\"start\"{s[\$4]=1} \$3==\"end\"{delete s[\$4]} END{for(r in s) printf r\" \"}" runs/screenq.log' 2>/dev/null)
 echo "running on box: ${running:-none}"
+# VM root disk (owner: keep >= 2 GB; a full disk takes the replica down with HTTP 500s, as on 11-01 and 11-19)
+vmfree=$(source tools/vm.sh && ensure_vm >/dev/null 2>&1 && gssh -o ConnectTimeout=8 "df -BM --output=avail / | tail -1" 2>/dev/null | tr -dc 0-9)
+echo "VM disk free: ${vmfree:-?} MB$( [ -n "$vmfree" ] && [ "$vmfree" -lt 2500 ] && echo '  !! LOW: trim build/dumpcache on the VM / prune replica replays (memory: replica-storage-prunable)')"
 idle=0; [ -z "$q" ] && [ -z "$running" ] && idle=1
 [ $idle = 1 ] && echo "VERDICT: IDLE - box has no queue and no games running" || echo "VERDICT: BUSY"
