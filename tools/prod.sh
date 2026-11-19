@@ -15,5 +15,8 @@ done=$(bash tools/box.sh sh 'for d in runs/*/DONE; do echo ${d%/DONE}; done' 2>/
 unpulled=$(for r in $done; do [ -f runs/$r/DONE ] || echo -n "$r "; done)
 echo "finished on box, not pulled: ${unpulled:-none}"
 [ -f research/panel/queue.tsv ] && echo "replica rows queued for the drain: $(grep -vc '^#' research/panel/queue.tsv)"
-idle=0; [ -z "$q" ] && awk "BEGIN{exit !(${load:-0} < 4)}" && idle=1
+# screens started but not ended (screenq takes a run off the queue when it starts it)
+running=$(bash tools/box.sh sh 'awk "\$3==\"start\"{s[\$4]=1} \$3==\"end\"{delete s[\$4]} END{for(r in s) printf r\" \"}" runs/screenq.log' 2>/dev/null)
+echo "running on box: ${running:-none}"
+idle=0; [ -z "$q" ] && [ -z "$running" ] && idle=1
 [ $idle = 1 ] && echo "VERDICT: IDLE - box has no queue and no games running" || echo "VERDICT: BUSY"
