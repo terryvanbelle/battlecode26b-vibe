@@ -191,3 +191,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:29) Also, please report all times as PDT
 (06:33) PDT, not PST.  I live in British Columbia
 (08:27) Take a look at the VM disk and see if it has any leftover files from other years.  You can clean those out.  You can also clean out any leftover files from battlecode26-alpha0
+(08:29) Approve deleting bc23-galaxy directories and loose home directory files before October
