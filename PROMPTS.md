@@ -190,3 +190,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:29) I want you to put together a script that periodically prods you to continue working.  It's not acceptable for you to sit idle for 7 hours
 (06:29) Also, please report all times as PDT
 (06:33) PDT, not PST.  I live in British Columbia
+(08:27) Take a look at the VM disk and see if it has any leftover files from other years.  You can clean those out.  You can also clean out any leftover files from battlecode26-alpha0
