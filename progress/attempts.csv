@@ -1089,3 +1089,4 @@ xr9,2026-11-19 08:48,xr8,xr8 + LOW_BABIES 12: every spawn floor drops to LOW_FLO
 xr10,2026-11-19 09:08,xr8,"xr8 with CORE_FLOOR 450 (core spawns leave 450, between xr8 300 and xk6 600)",screen zd741 vs zd730
 xr11,2026-11-19 10:16,xk6,"xk6 + FLOOR_EXTRA_KING 150: Econ.floor = f + (kings-1) x min(f, 150) instead of f x kings (replica 2-3 king losses banked 600 x kings with 8-12 rats)",screen zd742 vs zd730
 xr12,2026-11-19 10:55,xk6,"xk6 + RICH_BANK 700 (cap 18->40 from a 700 bank, not 1000): bodies sooner vs the field's 20-57 rats",screen zd743 vs zd730
+xr13,2026-11-19 11:12,xk6,"xk6 + BIG_AREA 2000 / BIG_BABIES 26: baby cap >= 26 on maps of 2000+ tiles (constants by map size; xk6 lost 21 replica games on 28 large maps vs 11 on 26 mid, 11 on 20 small)",screen zd744 vs zd730
