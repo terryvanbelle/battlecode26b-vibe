@@ -194,3 +194,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (08:29) Approve deleting bc23-galaxy directories and loose home directory files before October
 (10:58) Any bot that ties the current champion on the panel should be accepted
 (16:37) I'd like you to add an item to terryvanbelle/battlecode-vibe/BEST_PRACTICES to the effect that a tie on the panel versus the current champion is sufficient to make it the new champion.  There was a reason why the tying challenger was given a panel run, and that evidence is sufficient to tip the balance
+(18:56) I'm going to need the box for a few hours, so I'm shutting down the Ubuntu.  I'll bring it back up when I'm done
