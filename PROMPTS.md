@@ -200,3 +200,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (21:39) Can you give me a scatterplot for local advantage vs. panel advantage?
 (21:43) Maybe archetype scores correlate better with panel scores?
 (21:48) OK, that's fine, carry on
+(06:14) Good morning!  How did last night go?
