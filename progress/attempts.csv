@@ -1092,6 +1092,6 @@ xr12,2026-11-19 10:55,xk6,"xk6 + RICH_BANK 700 (cap 18->40 from a 700 bank, not 
 xr13,2026-11-19 11:12,xk6,"xk6 + BIG_AREA 2000 / BIG_BABIES 26: baby cap >= 26 on maps of 2000+ tiles (constants by map size; xk6 lost 21 replica games on 28 large maps vs 11 on 26 mid, 11 on 20 small)","REJECTED 11-19 17:29 PDT: replica #403 panel 91/132 vs xk6 93/132 on the same cells (set 3 32 vs 32, set 4 37 vs 40, starve1 22 vs 21); screen zd744 +3 t +0.54; xk6 resubmitted"
 xr14,2026-11-19 15:16,xr13,xr13 with BIG_BABIES 34,screen zd745 vs zd730
 xr15,2026-11-19 15:16,xr13,xr13 with BIG_AREA 1200 (cap 26 from 1200 tiles),screen zd746 vs zd730
-xr16,2026-11-19 15:54,xr13,"xr13 + CORE_BIG 24: core count 24 (not 18) on 2000+ tile maps, so more rats spawn under the 300 core floor",screen zd747 vs zd730
+xr16,2026-11-19 15:54,xr13,"xr13 + CORE_BIG 24: core count 24 (not 18) on 2000+ tile maps, so more rats spawn under the 300 core floor","screen zd747 +9 t +1.97 at 1050 cells; submitted as replica #405 11-19 18:10 PDT, panel build/block_xr16.sh, score: panelscore.py 30277 --ref 27474:27718"
 xk6 null,2026-11-19 17:09,xk6,xk6 rerun on the zd730 cells (zd748): the screen noise floor for net/t,stopped 11-19 17:50 PDT: 103/103 cells identical to zd730 (games are deterministic per cell)
 xr17,2026-11-19 17:52,xr16,xr16 with BIG_AREA 1200 (cap 26 and core 24 from 1200 tiles: xr15 + xr16),screen zd749 vs zd730
