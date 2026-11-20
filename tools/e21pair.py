@@ -2,7 +2,7 @@
 """Interleaved e21 panels (owner 11-20): champion vs challenger, cell by cell, on cells (opponent, 3 maps, our seat)
 both builds played. Replica games are deterministic, so a shared cell compares exactly.
 
-  e21pair.py CHAMP CHAL [--json build/replica-matches.json]
+  e21pair.py CHAMP CHAL [--panel e21|n3] [--json build/replica-matches.json]
 Refresh the match file first: python3 tools/games.py replica.  Builds are attributed by submission time (d['subs']).
 Prints per-opponent and total games won on shared cells, cells each build still lacks, and the challenger's verdict:
 ACCEPT when it ties or beats the champion with every cell played, REJECT once winning all its remaining cells (3 games
@@ -16,6 +16,9 @@ args = sys.argv[1:]
 path = os.path.join(REPO, 'build', 'replica-matches.json')
 if '--json' in args:
     i = args.index('--json'); path = args[i + 1]; del args[i:i + 2]
+panel = 'e21'
+if '--panel' in args:
+    i = args.index('--panel'); panel = args[i + 1]; del args[i:i + 2]
 champ, chal = args[:2]
 d = json.load(open(path))
 subs = sorted((datetime.fromisoformat(t).timestamp(), b) for t, b in d['subs'])
@@ -29,7 +32,7 @@ def build_at(created):
 
 cells = set()
 for k in range(7):
-    for o, m in json.load(open(os.path.join(REPO, 'research', 'panel', f'e21-{k}.json'))).items():
+    for o, m in json.load(open(os.path.join(REPO, 'research', 'panel', f'{panel}-{k}.json'))).items():
         cells.add((o, ','.join(m)))
 res = collections.defaultdict(dict)   # build -> (opp, maps, seat) -> (id, games won)
 for m in d['matches']:
