@@ -1102,3 +1102,4 @@ xr21,2026-11-20,xk6,"GRAB_MARGIN 10->4: GrabMicro moves off grab threats for sma
 xr22,2026-11-20,xk6,"THROW_DODGE 9->16: the king steps off flights of enemy carriers from further away (king deaths by throwHit in xk6 field losses)",SCREENING zd767
 xr23,2026-11-20,xk6,"THREAT_THROW 2->3: a holding carrier throws when an enemy with free hands is within 3 (was 2), so our carriers are grabbed less",SCREENING zd768
 xr24,2026-11-20,xk6,"GUARD_DIST2 13->20: guards keep facing enemy rats from further (rats are grabbed from behind)",SCREENING zd769
+xk2-relabel,2026-11-20,xk2,"label panel: xk2 on xk6's 132-game panel for the archetype model (owner 11-20); resubmit xk6 when done",PANEL #407
