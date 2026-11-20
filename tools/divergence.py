@@ -3,13 +3,16 @@ outcome fingerprint (winner, rounds, every per-team stat) matches the champion's
 played identically. Per map: share of shared local cells that diverge. With --panel, lists each panel match
 (opponent, maps, seat) and whether any of its maps diverged locally: a match on maps with no local divergence is
 predicted to repeat the champion's replica result, so its replica games can be skipped.
-usage: divergence.py CTRL_RUN CTRL_BOT RUN BOT [--panel]   (runs/RUN/results.jsonl)"""
+usage: divergence.py CTRL_RUN CTRL_BOT RUN BOT [--panel] [--maps FILE]   (runs/RUN/results.jsonl)"""
 import json, sys, collections, re
 SKIP = {'a', 'b', 'a_hash', 'b_hash', 'a_spec', 'b_spec', 'wall', 'seed'}
 BC = re.compile(r'(meanBc|maxBc|near90|overrun|Bc)')   # bytecode use changes with any code edit; not play
 def clean(r):
     if isinstance(r, dict): return {k: clean(v) for k, v in r.items() if k not in SKIP and not BC.search(k)}
     return r
+MAPS = None
+if '--maps' in sys.argv:
+    i = sys.argv.index('--maps'); MAPS = {l.strip() for l in open(sys.argv[i + 1]) if l.strip()}; del sys.argv[i:i + 2]
 def load(run, bot):
     d = {}
     for l in open(f'runs/{run}/results.jsonl'):
@@ -21,7 +24,7 @@ def per_map(cr, cb, r, b):
     c, x = load(cr, cb), load(r, b)
     m = collections.defaultdict(lambda: [0, 0])
     for k in x:
-        if k in c:
+        if k in c and (MAPS is None or k[1] in MAPS):
             m[k[1]][0] += 1; m[k[1]][1] += x[k] != c[k]
     return m
 if __name__ == '__main__':

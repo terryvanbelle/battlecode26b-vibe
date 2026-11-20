@@ -211,3 +211,10 @@ Paths:
 
 Secrets live only on the VM and in the driver's home: `~/.bc26b-replica-password` (gate + `owner`),
 `~/.bc26b-galaxy-team` (our team), `~/.bc26-galaxy/accounts.json` (all team accounts). None is in git.
+
+## Map restriction (owner 11-20)
+Only the 21 maps the engine bundled by 2026-01-13 (`maps-early21.txt`, see research/maps-timeline.tsv) are public on
+the replica: ranked draws, autoscrims and scrim requests all use public maps only (siarnaq filters on Map.is_public;
+a request naming a hidden map is refused). Set with
+`sudo bc26-galaxy-manage shell -c "...Map.objects.filter(episode='bc26').exclude(name__in=keep).update(is_public=False)"`.
+`bootstrap episode` would only re-publish the maps in the file it reads, so pass it maps-early21.txt, not maps.txt.

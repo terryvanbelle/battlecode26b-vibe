@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """screen_t.py CTRL_RUN CTRL_BOT RUN BOT (on the VM, repo root): the TRAINING_ALGORITHM s6 screen numbers on the cells
 the run shares with its control: paired t on per-cell win/loss (d in {-1, 0, +1}) and picks/100 rat-turns (cheese
-picked up per 100 baby turns), pooled and as a per-cell paired difference with its standard error and z."""
+picked up per 100 baby turns), pooled and as a per-cell paired difference with its standard error and z.
+--maps FILE: only cells on the maps FILE lists (e.g. tools/galaxy26/maps-early21.txt)."""
 import json, math, sys
+
+MAPS = None
+if '--maps' in sys.argv:
+    i = sys.argv.index('--maps'); MAPS = {l.strip() for l in open(sys.argv[i + 1]) if l.strip()}; del sys.argv[i:i + 2]
 
 def load(path, me):
     out = {}
@@ -16,7 +21,7 @@ def load(path, me):
 
 c = load('runs/%s/results.jsonl' % sys.argv[1], sys.argv[2])
 d = load('runs/%s/results.jsonl' % sys.argv[3], sys.argv[4])
-k = sorted(set(c) & set(d))
+k = sorted(x for x in set(c) & set(d) if MAPS is None or x[1] in MAPS)
 n = len(k)
 x = [int(d[i][0]) - int(c[i][0]) for i in k]
 D = sum(1 for v in x if v)
