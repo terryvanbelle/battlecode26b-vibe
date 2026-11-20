@@ -201,3 +201,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (21:43) Maybe archetype scores correlate better with panel scores?
 (21:48) OK, that's fine, carry on
 (06:14) Good morning!  How did last night go?
+(06:45) Do you have enough data to build a basic model from the archetypes to predict panel performance?  I wonder if there are any other archetypes that might help there.  If we had such a model, we'd be able to put the box compute to good use vetting candidates.  Though it sounds like the panel hasn't been a bottleneck recently
