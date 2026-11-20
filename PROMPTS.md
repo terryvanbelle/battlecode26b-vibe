@@ -198,3 +198,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (18:57) Done
 (20:58) OK, you can have the box again
 (21:39) Can you give me a scatterplot for local advantage vs. panel advantage?
+(21:43) Maybe archetype scores correlate better with panel scores?
