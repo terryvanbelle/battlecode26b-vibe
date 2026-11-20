@@ -11560,3 +11560,4 @@
 - 02:29 PDT (11-20): correlation screens: xc6 -26/550 (t -2.89; replica -10.4/100), xi1 -21/550 (t -2.50; replica -12.5/100); 8 of 13 done. xr19 +1 (n 502). Queued zd765 = xr20 (xk6 + GRAB_THREAT 25->50: GrabMicro steps away from enemies that can grab us more readily).
 - 03:49 PDT (11-20): correlation screens: xg2 -17/550 (t -2.15; replica -16.7/100), xh4 -24/550 (t -2.81; replica -20.8/100); 10 of 13 done. xr19 -3 (n 609). Queued zd766 = xr21 (GRAB_MARGIN 10->4).
 - 05:09 PDT (11-20): correlation screens: u6x -128/550 (replica -26.0/100), u2g -135/550 (replica -32.3/100); 11 of 13 done (xa5 zd760, zj3 zd754, zdb zd755 still running). xr19 -2 (n 732). Queued zd767 = xr22 (THROW_DODGE 9->16).
+- 05:29 PDT (11-20): correlation screen zdb done (see below; zj3, xa5 running). Partials: xr19 -3 (n 760), xr20 +2 (n 235), xr21 +1 (n 223). Queued zd768 = xr23 (THREAT_THROW 2->3).

@@ -1100,3 +1100,4 @@ xr19,2026-11-19 21:40,xk6,"xk6 + WAR_GATHER 1 (from 2): at war gatherers freeze 
 xr20,2026-11-20,xk6,"GRAB_THREAT 25->50: GrabMicro weighs enemies that can grab us 2x (field early losses are grab-and-throw)",SCREENING zd765
 xr21,2026-11-20,xk6,"GRAB_MARGIN 10->4: GrabMicro moves off grab threats for smaller gains (field early losses are grab-and-throw)",SCREENING zd766
 xr22,2026-11-20,xk6,"THROW_DODGE 9->16: the king steps off flights of enemy carriers from further away (king deaths by throwHit in xk6 field losses)",SCREENING zd767
+xr23,2026-11-20,xk6,"THREAT_THROW 2->3: a holding carrier throws when an enemy with free hands is within 3 (was 2), so our carriers are grabbed less",SCREENING zd768
