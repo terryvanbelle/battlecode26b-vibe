@@ -11595,3 +11595,4 @@
 - 13:12 PDT (11-20): replica: xk6 batch sent 12:59 (100/224 cells); xr25 19/224. Partials: xr26 +8 (342), xr31 0 (85), xr32 +4 (192), xr33 (BIG_AREA 400) +7 (199), xr34 +1 (36).
 - 13:32 PDT (11-20): partials: xr33 (BIG_AREA 400) +11 t +2.69 (337), xr32 (xr25+THREAT_THROW 3) +9 (329), xr26 +8 (385), xr31 +1 (112), xr34 +1 (61). Replica: xk6 batch 12:59; switch to xr25 at ~14:00.
 - 13:52 PDT (11-20): finals: xr32 +10, xr33 (BIG_AREA 400) +13. Queued on xr30: zd786 xr37 (MAX_BABIES 20), zd787 xr38 (RICH_FROM 200). Replica: switched to xr25 (#411) for its 2nd batch; xk6 100/224, xr25 19/224.
+- 14:12 PDT (11-20): e21 pairs: xr25 34 cells shared with xk6: 6 vs 8 games (-2). Partials: xr26 +10 (430), xr31 +2 (172), xr34/xr35/xr36 +2 (115-146).
