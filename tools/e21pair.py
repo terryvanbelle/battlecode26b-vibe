@@ -5,8 +5,8 @@ both builds played. Replica games are deterministic, so a shared cell compares e
   e21pair.py CHAMP CHAL [--panel e21|n3] [--json build/replica-matches.json]
 Refresh the match file first: python3 tools/games.py replica.  Builds are attributed by submission time (d['subs']).
 Prints per-opponent and total games won on shared cells, cells each build still lacks, and the challenger's verdict:
-ACCEPT when it ties or beats the champion with every cell played, REJECT once winning all its remaining cells (3 games
-each) cannot reach a tie.
+ACCEPT when it ties or beats the champion with every cell played, REJECT once winning all its remaining cells (all
+their games) cannot reach a tie.
 """
 import bisect, collections, json, os, sys
 from datetime import datetime
@@ -31,9 +31,11 @@ def build_at(created):
 
 
 cells = set()
-for k in range(7):
-    for o, m in json.load(open(os.path.join(REPO, 'research', 'panel', f'{panel}-{k}.json'))).items():
+import glob
+for f in sorted(glob.glob(os.path.join(REPO, 'research', 'panel', f'{panel}-[0-9]*.json'))):
+    for o, m in json.load(open(f)).items():
         cells.add((o, ','.join(m)))
+nmaps = {(o, m): len(m.split(',')) for o, m in cells}
 res = collections.defaultdict(dict)   # build -> (opp, maps, seat) -> (id, games won)
 for m in d['matches']:
     if m['status'] != 'OK!':
@@ -63,11 +65,11 @@ wa = sum(A[c][1] for c in shared); wb = sum(B[c][1] for c in shared)
 total = 2 * len(cells)
 left_b = total - len(B)
 print(f'{champ} played {len(A)}/{total} cells, {chal} {len(B)}/{total}; shared {len(shared)} '
-      f'({3 * len(shared)} games): {champ} {wa}  {chal} {wb}  net {wb - wa:+d}')
+      f'({sum(nmaps[c[:2]] for c in shared)} games): {champ} {wa}  {chal} {wb}  net {wb - wa:+d}')
 # Upper bound on the final net (challenger minus champion over every cell): a cell only the challenger played adds at
-# most its wins (champion >= 0); one only the champion played at most 3 - champion; one neither played at most 3.
+# most its wins (champion >= 0); one only the champion played at most its games - champion; one neither, all its games.
 allc = {(o, m, s) for o, m in cells for s in 'AB'}
-best = sum((B[c][1] if c in B else 3) - (A[c][1] if c in A else 0) for c in allc)
+best = sum((B[c][1] if c in B else nmaps[c[:2]]) - (A[c][1] if c in A else 0) for c in allc)
 if len(A) == total and len(B) == total:
     print('VERDICT', 'ACCEPT' if wb >= wa else 'REJECT', '(complete)')
 elif best < 0:

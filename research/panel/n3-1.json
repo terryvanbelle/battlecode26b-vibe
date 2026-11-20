@@ -1,17 +1,29 @@
 {
  "AdamTan12_Icarus": [
-  "Meow",
-  "Nofreecheese",
-  "ZeroDay"
- ],
- "bman12345678_goonv23": [
-  "arrows",
   "cheesefarm",
-  "cheeseguardians"
- ],
- "AlexT101_usqualsbot": [
+  "cheeseguardians",
   "dirtfulcat",
   "dirtpassageway",
-  "evileye"
+  "evileye",
+  "keepout",
+  "pipes"
+ ],
+ "bman12345678_goonv23": [
+  "popthecork",
+  "rift",
+  "sittingducks",
+  "starvation",
+  "thunderdome",
+  "trapped",
+  "wallsofparadis"
+ ],
+ "AlexT101_usqualsbot": [
+  "DefaultLarge",
+  "DefaultMedium",
+  "DefaultSmall",
+  "Meow",
+  "Nofreecheese",
+  "ZeroDay",
+  "arrows"
  ]
 }

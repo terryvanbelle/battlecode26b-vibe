@@ -211,3 +211,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (08:34) I'm in favor of replacing our panel with the bots that are above us in the rankings, with one caveat:  In the past you've sometimes started to obsess with analyzing games against bots far above us in the rankings, which wasn't productive.  So by all means evaluate us against bots above us, but for getting ideas, stick to bots in the 25% - 75% win range
 (10:12) Maybe once we have a challenger to xk6, we can interleave 40-run batches between the incumbent and the challenger
 (14:40) This is going to take far too long to evaluate each possible candidate.  How about we choose, say, the three bots immediately above us, and focus just on them?
+(14:45) Can we get it down to 40 matches per build?  That way we can do it all in one batch
