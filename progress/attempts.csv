@@ -1094,6 +1094,6 @@ xr14,2026-11-19 15:16,xr13,xr13 with BIG_BABIES 34,screen zd745 vs zd730
 xr15,2026-11-19 15:16,xr13,xr13 with BIG_AREA 1200 (cap 26 from 1200 tiles),zd746 final: net +7 t +0.96 vs zd730 (its 1200-2000 band +7/-6; large band = xr13); not submitted (xr16 stronger)
 xr16,2026-11-19 15:54,xr13,"xr13 + CORE_BIG 24: core count 24 (not 18) on 2000+ tile maps, so more rats spawn under the 300 core floor","REJECTED 11-19 20:33 PDT: replica #405 panel 92/132 vs xk6 93/132 on the same cells (set 3 31 vs 32, set 4 39 vs 40, starve1 22 vs 21); screen zd747 +13 t +2.51 at 1421 cells; xk6 resubmitted"
 xk6 null,2026-11-19 17:09,xk6,xk6 rerun on the zd730 cells (zd748): the screen noise floor for net/t,stopped 11-19 17:50 PDT: 103/103 cells identical to zd730 (games are deterministic per cell)
-xr17,2026-11-19 17:52,xr16,xr16 with BIG_AREA 1200 (cap 26 and core 24 from 1200 tiles: xr15 + xr16),screen zd749 vs zd730
-xr18,2026-11-19 18:33,xr16,xr16 dose: cap 34 and core 30 on 2000+ tile maps,screen zd750 vs zd730
+xr17,2026-11-19 17:52,xr16,xr16 with BIG_AREA 1200 (cap 26 and core 24 from 1200 tiles: xr15 + xr16),"STOPPED 11-19 22:49 PDT at 586 cells: net +4 t +1.00; the large-map army line was neutral on the panel (xr13 91, xr16 92 vs xk6 93)"
+xr18,2026-11-19 18:33,xr16,xr16 dose: cap 34 and core 30 on 2000+ tile maps,"STOPPED 11-19 22:49 PDT at 528 cells: net -5 t -1.39, picks z -2.46; large-map army line neutral on the panel"
 xr19,2026-11-19 21:40,xk6,"xk6 + WAR_GATHER 1 (from 2): at war gatherers freeze to face an adjacent enemy (a grab needs the target not to see the grabber, or to be weaker); early field losses: our rats die by throwLand 653 vs their side ~1/3 of that",screen zd751 vs zd730
