@@ -1110,8 +1110,10 @@ xr28,2026-11-20,xk6,FIGHT_EVERY 2->3: one in three later babies fights cats inst
 xr29,2026-11-20,xk6,xr15 line with BIG_AREA 600 (cap 26 from 600 tiles),21 maps final +14 t +2.77 (462): e21 challenger queue
 xr30,2026-11-20,xk6,xr15 line with BIG_AREA 800 + BIG_BABIES 30,21 maps final +16 t +3.30 (462): best on 21 maps; next e21 challenger
 xr31,2026-11-20,xr25,"xr25 + WAR_GATHER 1 (xr19, +9 on 21 maps)",SCREENING zd780 (21 maps)
-xr32,2026-11-20,xr25,xr25 + THREAT_THROW 3 (xr23),SCREENING zd781 (21 maps)
-xr33,2026-11-20,xk6,xr15 line with BIG_AREA 400 (cap 26),SCREENING zd782 (21 maps)
+xr32,2026-11-20,xr25,xr25 + THREAT_THROW 3 (xr23),21 maps final +10 t +1.72 (462): below xr25 alone (+14): THREAT_THROW adds nothing on xr25
+xr33,2026-11-20,xk6,xr15 line with BIG_AREA 400 (cap 26),21 maps final +13 t +2.43 (462): BIG_AREA 400 ~ 600 ~ 800 (+13/+14/+14); xr30 (cap 30) +16 best
 xr34,2026-11-20,xk6,xr15 line with BIG_AREA 600 + BIG_BABIES 30,SCREENING zd783 (21 maps)
 xr35,2026-11-20,xk6,xr30 with BIG_BABIES 34 (cap 34 from 800 tiles),SCREENING zd784 (21 maps)
 xr36,2026-11-20,xk6,xr30 with BIG_AREA 1000 (cap 30),SCREENING zd785 (21 maps)
+xr37,2026-11-20,xk6,xr30 with MAX_BABIES 20/20 (base cap 18->20),SCREENING zd786 (21 maps)
+xr38,2026-11-20,xk6,xr30 with RICH_FROM 200 (rich cap 40 opens at round 200),SCREENING zd787 (21 maps)
