@@ -1103,7 +1103,9 @@ xr22,2026-11-20,xk6,THROW_DODGE 9->16: the king steps off flights of enemy carri
 xr23,2026-11-20,xk6,"THREAT_THROW 2->3: a holding carrier throws when an enemy with free hands is within 3 (was 2), so our carriers are grabbed less",SCREENING zd768
 xr24,2026-11-20,xk6,GUARD_DIST2 13->20: guards keep facing enemy rats from further (rats are grabbed from behind),SCREENING zd769
 xk2-relabel,2026-11-20,xk2,label panel: xk2 on xk6's 132-game panel for the archetype model (owner 11-20); resubmit xk6 when done,PANEL #407
-xr25,2026-11-20,xk6,"xr15 with BIG_AREA 800 (cap 26 from 800 tiles; 21-map sweep of the xr15 line, xr15 +14 there)",SCREENING zd774 (21 maps)
+xr25,2026-11-20,xk6,"xr15 with BIG_AREA 800 (cap 26 from 800 tiles; 21-map sweep of the xr15 line, xr15 +14 there)","21 maps final +14 t +2.77 (462): e21 challenger, interleaved with xk6 from ~11:12 PDT 11-20"
 xr26,2026-11-20,xk6,xr15 with BIG_BABIES 34 (cap 34 from 1200 tiles),SCREENING zd775 (21 maps)
 xr27,2026-11-20,xk6,GATHER_FIRST 6->4: fighters start two spawns earlier (21-map sweep),SCREENING zd776 (21 maps)
 xr28,2026-11-20,xk6,FIGHT_EVERY 2->3: one in three later babies fights cats instead of one in two (21-map sweep),SCREENING zd777 (21 maps)
+xr29,2026-11-20,xk6,"xr15 line with BIG_AREA 600 (cap 26 from 600 tiles)",SCREENING zd778 (21 maps)
+xr30,2026-11-20,xk6,"xr15 line with BIG_AREA 800 + BIG_BABIES 30",SCREENING zd779 (21 maps)
