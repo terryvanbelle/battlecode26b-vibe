@@ -11558,3 +11558,4 @@
 - 01:09 PDT (11-20): correlation screens: xf3 local -24/550 (t -2.81; replica -7.3/100 on 96 games), xh1 -15/550 (t -1.78; replica -9.4/100). So far 4 of 13 done. xr14 +5 (n 1576), xr19 -2 (n 399, picks z +2.0).
 - 02:09 PDT (11-20): xr14 (BIG_BABIES 34) final +5 t +0.87, below xr16's +16 (panel 92 < 93): rejected without a panel. Large-map army line closed. xr19 +2 (n 474, picks z +2.0).
 - 02:29 PDT (11-20): correlation screens: xc6 -26/550 (t -2.89; replica -10.4/100), xi1 -21/550 (t -2.50; replica -12.5/100); 8 of 13 done. xr19 +1 (n 502). Queued zd765 = xr20 (xk6 + GRAB_THREAT 25->50: GrabMicro steps away from enemies that can grab us more readily).
+- 03:49 PDT (11-20): correlation screens: xg2 -17/550 (t -2.15; replica -16.7/100), xh4 -24/550 (t -2.81; replica -20.8/100); 10 of 13 done. xr19 -3 (n 609). Queued zd766 = xr21 (GRAB_MARGIN 10->4).
