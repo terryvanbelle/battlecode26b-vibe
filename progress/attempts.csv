@@ -1116,8 +1116,10 @@ xr34,2026-11-20,xk6,xr15 line with BIG_AREA 600 + BIG_BABIES 30,SCREENING zd783 
 xr35,2026-11-20,xk6,xr30 with BIG_BABIES 34 (cap 34 from 800 tiles),21 maps final +12 t +2.28 (462): cap 34 no better than 30
 xr36,2026-11-20,xk6,xr30 with BIG_AREA 1000 (cap 30),21 maps final +16 t +3.45 (462): ties xr30 (BIG_AREA 1000 ~ 800)
 xr37,2026-11-20,xk6,xr30 with MAX_BABIES 20/20 (base cap 18->20),SCREENING zd786 (21 maps)
-xr38,2026-11-20,xk6,xr30 with RICH_FROM 200 (rich cap 40 opens at round 200),SCREENING zd787 (21 maps)
-xr39,2026-11-20,xk6,xr30 with RICH_BANK 700 (rich cap 40 from 700 banked),SCREENING zd788 (21 maps)
+xr38,2026-11-20,xk6,xr30 with RICH_FROM 200 (rich cap 40 opens at round 200),21 maps final +15 t +3.16 (462)
+xr39,2026-11-20,xk6,xr30 with RICH_BANK 700 (rich cap 40 from 700 banked),21 maps final +17 t +3.44 (462): best on 21 maps; challenger after xr25
 xr40,2026-11-20,xk6,xr30 with MAX_BABIES_WAR 22 (war cap 18->22),SCREENING zd789 (21 maps)
 xr41,2026-11-20,xk6,xr30 with BIG_AREA 1200 (cap 30 at xk6 area),SCREENING zd790 (21 maps)
 xr42,2026-11-20,xk6,xr30 with BIG_BABIES 32,SCREENING zd791 (21 maps)
+xr43,2026-11-20,xk6,xr39 with RICH_FROM 200,SCREENING zd792 (21 maps)
+xr44,2026-11-20,xk6,xr39 with RICH_BANK 500,SCREENING zd793 (21 maps)
