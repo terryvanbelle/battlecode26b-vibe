@@ -6,7 +6,7 @@ def load(p,b):
         d[(op.split('/')[-1],r['map'],me)]=r['winner']==me
     return d
 c=load('runs/zd730/results.jsonl','xk6')
-B={"xi9":("zd736",-6.0,84),"xr8":("zd739",-6.8,132),"xr13":("zd744",-1.5,132),"xr16":("zd747",-0.8,132),"xk2":("zd752",2.8,36),"zjc":("zd753",0.0,36),"zj3":("zd754",-4.2,96),"zdb":("zd755",-6.2,96),"xf3":("zd756",-7.3,96),"xh1":("zd757",-9.4,96),"xc6":("zd758",-10.4,96),"xi1":("zd759",-12.5,96),"xg2":("zd761",-16.7,96),"xh4":("zd762",-20.8,96)}
+B={"xi9":("zd736",-6.0,84),"xr8":("zd739",-6.8,132),"xr13":("zd744",-1.5,132),"xr16":("zd747",-0.8,132),"xk2":("zd752",2.8,36),"zjc":("zd753",0.0,36),"zj3":("zd754",-4.2,96),"zdb":("zd755",-6.2,96),"xf3":("zd756",-7.3,96),"xh1":("zd757",-9.4,96),"xc6":("zd758",-10.4,96),"xi1":("zd759",-12.5,96),"xg2":("zd761",-16.7,96),"xh4":("zd762",-20.8,96),"xa5":("zd760",-11.5,96)}
 arch=sorted({k[0] for k in c})
 X={};y=[];names=list(B)
 maps=set(json.loads(l)['map'] for l in open('runs/zd752/results.jsonl'))  # the 25 reduced maps: compare all builds on the same cells
