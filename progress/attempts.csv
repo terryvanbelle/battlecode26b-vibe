@@ -1096,7 +1096,7 @@ xr16,2026-11-19 15:54,xr13,"xr13 + CORE_BIG 24: core count 24 (not 18) on 2000+ 
 xk6 null,2026-11-19 17:09,xk6,xk6 rerun on the zd730 cells (zd748): the screen noise floor for net/t,stopped 11-19 17:50 PDT: 103/103 cells identical to zd730 (games are deterministic per cell)
 xr17,2026-11-19 17:52,xr16,xr16 with BIG_AREA 1200 (cap 26 and core 24 from 1200 tiles: xr15 + xr16),"STOPPED 11-19 22:49 PDT at 586 cells: net +4 t +1.00; the large-map army line was neutral on the panel (xr13 91, xr16 92 vs xk6 93)"
 xr18,2026-11-19 18:33,xr16,xr16 dose: cap 34 and core 30 on 2000+ tile maps,"STOPPED 11-19 22:49 PDT at 528 cells: net -5 t -1.39, picks z -2.46; large-map army line neutral on the panel"
-xr19,2026-11-19 21:40,xk6,"xk6 + WAR_GATHER 1 (from 2): at war gatherers freeze to face an adjacent enemy (a grab needs the target not to see the grabber, or to be weaker); early field losses: our rats die by throwLand 653 vs their side ~1/3 of that",screen zd751 vs zd730
+xr19,2026-11-19 21:40,xk6,"xk6 + WAR_GATHER 1 (from 2): at war gatherers freeze to face an adjacent enemy (a grab needs the target not to see the grabber, or to be weaker); early field losses: our rats die by throwLand 653 vs their side ~1/3 of that",21 maps final +9 t +1.80 (462): candidate for an e21 panel on its diverging maps once xk6 table is in
 xr20,2026-11-20,xk6,GRAB_THREAT 25->50: GrabMicro weighs enemies that can grab us 2x (field early losses are grab-and-throw),REJECTED 11-20 08:16 PDT: 21 maps +1 t +0.24 (462); far below past builds (xj9/xr15 +14)
 xr21,2026-11-20,xk6,GRAB_MARGIN 10->4: GrabMicro moves off grab threats for smaller gains (field early losses are grab-and-throw),"REJECTED 11-20 08:16 PDT: 21 maps +2 t +1.00 (462), diverges on 72 cells only; below past builds"
 xr22,2026-11-20,xk6,THROW_DODGE 9->16: the king steps off flights of enemy carriers from further away (king deaths by throwHit in xk6 field losses),STOPPED 11-20 07:09 PDT: identical to xk6 on all 181 local cells (divergence.py): the wider dodge never triggers vs the archetypes; a field-only question
@@ -1104,6 +1104,6 @@ xr23,2026-11-20,xk6,"THREAT_THROW 2->3: a holding carrier throws when an enemy w
 xr24,2026-11-20,xk6,GUARD_DIST2 13->20: guards keep facing enemy rats from further (rats are grabbed from behind),SCREENING zd769
 xk2-relabel,2026-11-20,xk2,label panel: xk2 on xk6's 132-game panel for the archetype model (owner 11-20); resubmit xk6 when done,PANEL #407
 xr25,2026-11-20,xk6,"xr15 with BIG_AREA 800 (cap 26 from 800 tiles; 21-map sweep of the xr15 line, xr15 +14 there)",SCREENING zd774 (21 maps)
-xr26,2026-11-20,xk6,"xr15 with BIG_BABIES 34 (cap 34 from 1200 tiles)",SCREENING zd775 (21 maps)
-xr27,2026-11-20,xk6,"GATHER_FIRST 6->4: fighters start two spawns earlier (21-map sweep)",SCREENING zd776 (21 maps)
-xr28,2026-11-20,xk6,"FIGHT_EVERY 2->3: one in three later babies fights cats instead of one in two (21-map sweep)",SCREENING zd777 (21 maps)
+xr26,2026-11-20,xk6,xr15 with BIG_BABIES 34 (cap 34 from 1200 tiles),SCREENING zd775 (21 maps)
+xr27,2026-11-20,xk6,GATHER_FIRST 6->4: fighters start two spawns earlier (21-map sweep),SCREENING zd776 (21 maps)
+xr28,2026-11-20,xk6,FIGHT_EVERY 2->3: one in three later babies fights cats instead of one in two (21-map sweep),SCREENING zd777 (21 maps)
