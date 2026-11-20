@@ -206,3 +206,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:55) I think all three ideas are excellent.  I'd be thrilled if we could find a way to approximate our ultimate goal with local games
 (07:20) I'm not surprised that you found the panel games deterministic.  We're deterministic, so the only other source of randomness would come from opponents, which isn't completely out of the question, but I would suspect that most of the top players are deterministic for the same reason that we are
 (07:29) Just want to double check that things are still happening on the VM and box, and that you haven't stopped because of this discussion
+(07:32) In an actual contest, this problem will be alleviated somewhat because usually only a small subset of the overall map set is available to contestants until the sprints.  So we'll have no choice but to optimize on a smaller map set.  Are you able to figure out which maps were initially available in 2026?
