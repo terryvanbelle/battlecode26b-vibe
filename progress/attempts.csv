@@ -1101,15 +1101,17 @@ xr20,2026-11-20,xk6,GRAB_THREAT 25->50: GrabMicro weighs enemies that can grab u
 xr21,2026-11-20,xk6,GRAB_MARGIN 10->4: GrabMicro moves off grab threats for smaller gains (field early losses are grab-and-throw),"REJECTED 11-20 08:16 PDT: 21 maps +2 t +1.00 (462), diverges on 72 cells only; below past builds"
 xr22,2026-11-20,xk6,THROW_DODGE 9->16: the king steps off flights of enemy carriers from further away (king deaths by throwHit in xk6 field losses),STOPPED 11-20 07:09 PDT: identical to xk6 on all 181 local cells (divergence.py): the wider dodge never triggers vs the archetypes; a field-only question
 xr23,2026-11-20,xk6,"THREAT_THROW 2->3: a holding carrier throws when an enemy with free hands is within 3 (was 2), so our carriers are grabbed less",21 maps final +7 t +1.18 (462): below the +8 builds; folded into xr32 (on xr25)
-xr24,2026-11-20,xk6,GUARD_DIST2 13->20: guards keep facing enemy rats from further (rats are grabbed from behind),SCREENING zd769
+xr24,2026-11-20,xk6,GUARD_DIST2 13->20: guards keep facing enemy rats from further (rats are grabbed from behind),21 maps final +7 t +1.18 (462): below the +8 builds
 xk2-relabel,2026-11-20,xk2,label panel: xk2 on xk6's 132-game panel for the archetype model (owner 11-20); resubmit xk6 when done,PANEL #407
 xr25,2026-11-20,xk6,"xr15 with BIG_AREA 800 (cap 26 from 800 tiles; 21-map sweep of the xr15 line, xr15 +14 there)","21 maps final +14 t +2.77 (462); e21 challenger: submitted #409 11:12 PDT 11-20, interleaved with xk6"
 xr26,2026-11-20,xk6,xr15 with BIG_BABIES 34 (cap 34 from 1200 tiles),SCREENING zd775 (21 maps)
 xr27,2026-11-20,xk6,GATHER_FIRST 6->4: fighters start two spawns earlier (21-map sweep),21 maps final +1 (462; only ~11 cells diverge): REJECTED (inert)
 xr28,2026-11-20,xk6,FIGHT_EVERY 2->3: one in three later babies fights cats instead of one in two (21-map sweep),21 maps final +4 t +0.76 (462): REJECTED (below the +8 builds)
-xr29,2026-11-20,xk6,xr15 line with BIG_AREA 600 (cap 26 from 600 tiles),SCREENING zd778 (21 maps)
-xr30,2026-11-20,xk6,xr15 line with BIG_AREA 800 + BIG_BABIES 30,SCREENING zd779 (21 maps)
+xr29,2026-11-20,xk6,xr15 line with BIG_AREA 600 (cap 26 from 600 tiles),21 maps final +14 t +2.77 (462): e21 challenger queue
+xr30,2026-11-20,xk6,xr15 line with BIG_AREA 800 + BIG_BABIES 30,21 maps final +16 t +3.30 (462): best on 21 maps; next e21 challenger
 xr31,2026-11-20,xr25,"xr25 + WAR_GATHER 1 (xr19, +9 on 21 maps)",SCREENING zd780 (21 maps)
 xr32,2026-11-20,xr25,xr25 + THREAT_THROW 3 (xr23),SCREENING zd781 (21 maps)
 xr33,2026-11-20,xk6,xr15 line with BIG_AREA 400 (cap 26),SCREENING zd782 (21 maps)
 xr34,2026-11-20,xk6,xr15 line with BIG_AREA 600 + BIG_BABIES 30,SCREENING zd783 (21 maps)
+xr35,2026-11-20,xk6,xr30 with BIG_BABIES 34 (cap 34 from 800 tiles),SCREENING zd784 (21 maps)
+xr36,2026-11-20,xk6,xr30 with BIG_AREA 1000 (cap 30),SCREENING zd785 (21 maps)
