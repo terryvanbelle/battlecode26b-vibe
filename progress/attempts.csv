@@ -1099,3 +1099,4 @@ xr18,2026-11-19 18:33,xr16,xr16 dose: cap 34 and core 30 on 2000+ tile maps,"STO
 xr19,2026-11-19 21:40,xk6,"xk6 + WAR_GATHER 1 (from 2): at war gatherers freeze to face an adjacent enemy (a grab needs the target not to see the grabber, or to be weaker); early field losses: our rats die by throwLand 653 vs their side ~1/3 of that",screen zd751 vs zd730
 xr20,2026-11-20,xk6,"GRAB_THREAT 25->50: GrabMicro weighs enemies that can grab us 2x (field early losses are grab-and-throw)",SCREENING zd765
 xr21,2026-11-20,xk6,"GRAB_MARGIN 10->4: GrabMicro moves off grab threats for smaller gains (field early losses are grab-and-throw)",SCREENING zd766
+xr22,2026-11-20,xk6,"THROW_DODGE 9->16: the king steps off flights of enemy carriers from further away (king deaths by throwHit in xk6 field losses)",SCREENING zd767
