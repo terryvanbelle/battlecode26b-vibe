@@ -1123,3 +1123,4 @@ xr41,2026-11-20,xk6,xr30 with BIG_AREA 1200 (cap 30 at xk6 area),SCREENING zd790
 xr42,2026-11-20,xk6,xr30 with BIG_BABIES 32,SCREENING zd791 (21 maps)
 xr43,2026-11-20,xk6,xr39 with RICH_FROM 200,SCREENING zd792 (21 maps)
 xr44,2026-11-20,xk6,xr39 with RICH_BANK 500,SCREENING zd793 (21 maps)
+ag6,2026-11-20,xk6,"grab-rush archetype (MAX_BABIES 40/40, RICH 0, RUSH 2-40 until 600) as a replica-tracking opponent",validation zd770 (15 builds x 25 maps x 2 seats): win rate vs ag6 vs replica per100 r -0.05: does not track the replica; dropped
