@@ -11593,3 +11593,4 @@
 - 12:32 PDT (11-20): xr23 final +7 (462). Big-army line: xr29 (BIG_AREA 600) +13 t +3.40 (419), xr30 (800, cap 30) +11 t +3.36 (396); queued zd782 xr33 (BIG_AREA 400), zd783 xr34 (600, cap 30). xr24 +5 (437), xr26 +7 (284). Replica: xr25 batch 11:58; switch to xk6 at the next prod.
 - 12:52 PDT (11-20): finals: xr30 (BIG_AREA 800, cap 30) +16 t +3.30 = best on the 21 maps; xr29 (600) +14; xr24 +7. Queued zd784 xr35 (800, cap 34), zd785 xr36 (1000, cap 30). Replica: switched back to xk6 (#410) for its next batch; xr25 has 19/224 cells (-1 vs xk6).
 - 13:12 PDT (11-20): replica: xk6 batch sent 12:59 (100/224 cells); xr25 19/224. Partials: xr26 +8 (342), xr31 0 (85), xr32 +4 (192), xr33 (BIG_AREA 400) +7 (199), xr34 +1 (36).
+- 13:32 PDT (11-20): partials: xr33 (BIG_AREA 400) +11 t +2.69 (337), xr32 (xr25+THREAT_THROW 3) +9 (329), xr26 +8 (385), xr31 +1 (112), xr34 +1 (61). Replica: xk6 batch 12:59; switch to xr25 at ~14:00.
