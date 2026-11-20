@@ -1,0 +1,5 @@
+name=xr32
+source=bots/ratbot
+source_sha=ed1fbfb39653
+commit=d3a69b45
+created=2026-11-20 11:33 PDT
