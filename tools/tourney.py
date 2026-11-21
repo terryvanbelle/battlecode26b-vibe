@@ -3,7 +3,7 @@
 
 The pool is research/tourney/pool.txt (one bot per line). Every local game in runs/*/results.jsonl between two pool
 bots on the 21 early maps counts (any seat, any map seed), so earlier screens and calibration runs seed the ladder.
-The leader becomes the local champion once it has MIN_GAMES games; research/tourney/champion.txt holds the current one,
+The leader becomes the local champion once it has MIN_GAMES games and leads the champion by one combined SE; research/tourney/champion.txt holds the current one,
 and a change is submitted to the replica without any gate (prod does the submit).
 
   tourney.py rank [--runs-root DIR]        ladder with SE, games; flags a new champion
@@ -70,7 +70,16 @@ def cmd_rank(root):
         print(f'{i:2d}. {b:6s} {r.rating:6.0f} +-{r.se:3.0f}  games {r.games:5.0f}  ({r.wins:g}-{r.losses:g})')
     ch = champion()
     elig = [(b, r) for b, r in lad if r.games >= MIN_GAMES]
-    if elig and elig[0][0] != ch:
+    rc = dict(lad).get(ch)
+    if elig and elig[0][0] != ch and rc is not None:
+        b, r = elig[0]
+        margin = math.hypot(r.se, rc.se)   # hysteresis (11-21 10:13): lead the champion by one combined SE
+        if r.rating - rc.rating > margin:
+            print(f'NEW CHAMPION {b} (was {ch}): leads the bots with >= {MIN_GAMES} games by '
+                  f'{r.rating - rc.rating:.0f} > {margin:.0f}')
+        else:
+            print(f'champion {ch} (held: {b} leads it by {r.rating - rc.rating:.0f}, needs > {margin:.0f})')
+    elif elig and elig[0][0] != ch:
         print(f'NEW CHAMPION {elig[0][0]} (was {ch}): leads the bots with >= {MIN_GAMES} games')
     else:
         print(f'champion {ch}')
