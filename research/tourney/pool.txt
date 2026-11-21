@@ -1,10 +1,10 @@
 xk6
 xr53
 xr49
-xr40
-xr43
+# xr40  (retired 11-21 09:33: xk6-based, off the champion line)
+# xr43  (retired 11-21 09:33: xk6-based, off the champion line)
 xr65
-xr69
+# xr69  (retired 11-21 09:33: xk6-based, off the champion line)
 xr75
 xr59
 xj9
@@ -19,3 +19,4 @@ zdb
 xs1
 xs2
 xs3
+xs4
