@@ -1165,9 +1165,9 @@ xr81,2026-11-21,xr53,xr53 + DEFEND_D2 144,STOPPED early (11-21 06:0x) to free sl
 xr82,2026-11-21,xr53,xr53 + KING_THREAT_D2 26 (xr67 on xk6: +3),21 maps final +2 vs xr53 (462)
 xr83,2026-11-21,xr53,xr53 + GRAB_MARGIN 13,STOPPED early (11-21 ~06:30 PDT) to free slots for the xi9 self-play predictor runs zd837-848
 xr84,2026-11-21,xr53,xr53 + RETREAT_HP 50 (xr66 55 on xk6: +6),STOPPED early (11-21 ~06:30 PDT) to free slots for the xi9 self-play predictor runs zd837-848
-xr85,2026-11-21,xr53,"xr53 on seed 0x6C8E9CF5 (paired with xk6 xr56 47, cap14 xr68 45): is GUARD 8 real or xr53's seed?",n3 submitted 05:51 PDT 11-21 (#428)
+xr85,2026-11-21,xr53,"xr53 on seed 0x6C8E9CF5 (paired with xk6 xr56 47, cap14 xr68 45): is GUARD 8 real or xr53's seed?","n3 37/126 vs xr53 48 (-11) 11-21 06:51 PDT. xr53 seeds 48, 37 (mean 42.5) vs xk6 seeds 47, 40, 47, 48 (mean 45.5); paired on this seed xk6 (xr56) 47 vs 37: GUARD_DIST2 8 is not better than 13 on a seed average"
 xr86,2026-11-21,xr53,xr53 + GATHER_FIRST 8,STOPPED early (11-21 ~06:30 PDT) to free slots for the xi9 self-play predictor runs zd837-848
-xr87,2026-11-21,xr59,xr59 on seed 0x6C8E9CF5: second n3 seed for the local->n3 predictor target (owner 11-21),BUILT; n3 queued behind xr85
+xr87,2026-11-21,xr59,xr59 on seed 0x6C8E9CF5: second n3 seed for the local->n3 predictor target (owner 11-21),n3 submitted 06:51 PDT 11-21 (#429)
 xr88,2026-11-21,xj9,xj9 on seed 0x6C8E9CF5: second n3 seed for the local->n3 predictor target (owner 11-21),BUILT; n3 queued behind xr85
 xr89,2026-11-21,xr25,xr25 on seed 0x6C8E9CF5: second n3 seed for the local->n3 predictor target (owner 11-21),BUILT; n3 queued behind xr85
 xr90,2026-11-21,xr39,xr39 on seed 0x6C8E9CF5: second n3 seed for the local->n3 predictor target (owner 11-21),BUILT; n3 queued behind xr85
