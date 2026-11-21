@@ -1144,3 +1144,4 @@ xr60,2026-11-20,xk6,RNG seed constant only (0x1B873593): third xk6 re-draw on n3
 xr61,2026-11-20,xk6,GRAB_MARGIN 6,SCREENING zd808 (21 maps)
 xr62,2026-11-20,xk6,THREAT_THROW 4,SCREENING zd809 (21 maps)
 xr63,2026-11-20,xk6,"MAX_BABIES_WAR 20 (war cap only, no BIG_*)",SCREENING zd810 (21 maps)
+xr64,2026-11-20,xk6,GRAB_THREAT 35,SCREENING zd811 (21 maps)
