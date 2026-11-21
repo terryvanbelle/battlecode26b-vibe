@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Continuous local tournament of our own bots, ranked by Bradley-Terry (owner 11-21).
 
-The pool is research/tourney/pool.txt (one bot per line). Every local game in runs/*/results.jsonl between two pool
+The pool is research/tourney/pool.txt (one bot per line; '# NAME (why)' = retired: unscheduled and unlisted,
+but its games still count in the fit). Every local game in runs/*/results.jsonl between two pool
 bots on the 21 early maps counts (any seat, any map seed), so earlier screens and calibration runs seed the ladder.
 The leader becomes the local champion once it has MIN_GAMES games and leads the champion by one combined SE; research/tourney/champion.txt holds the current one,
 and a change is submitted to the replica without any gate (prod does the submit).
@@ -30,8 +31,18 @@ def pool():
     return [l.split('#')[0].strip() for l in open(POOL) if l.split('#')[0].strip()]
 
 
+def retired():
+    # '# NAME  (why)' lines: no longer scheduled or listed, but their games still anchor the fit (11-21 15:07)
+    out = []
+    for l in open(POOL):
+        t = l.strip()
+        if t.startswith('#') and len(t.split()) > 1:
+            out.append(t.split()[1])
+    return out
+
+
 def games(root=R):
-    P, ms = set(pool()), set(MAPS)
+    P, ms = set(pool()) | set(retired()), set(MAPS)
     out = []
     for f in glob.glob(os.path.join(root, 'runs', '*', 'results.jsonl')):
         for line in open(f):

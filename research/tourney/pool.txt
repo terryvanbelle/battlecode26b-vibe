@@ -34,14 +34,17 @@ xt5
 # xt6  (retired 11-21 13:47: -46 to -77 vs champion xt2)
 # xt7  (retired 11-21 13:07: cap 17 on xs2, -154 on 65 g)
 # xt8  (FIGHT_EVERY 1 on xs2: re-entered on xt2 as xu1)
-xu1
+# xu1  (retired 11-21 15:07: xt2-based, below or superseded)
 xu2
-xu3
-xu4
-xu5
-xu6
+# xu3  (retired 11-21 15:07: xt2-based, below or superseded)
+# xu4  (retired 11-21 15:07: xt2-based, below or superseded)
+# xu5  (retired 11-21 15:07: xt2-based, below or superseded)
+# xu6  (retired 11-21 15:07: xt2-based, below or superseded)
 # xu7  (withdrawn 11-21 14:29: FORM_CHEESE is inert while FORM_BABIES 16 > cap)
-xu8
-xu9
-xv0
-xv1
+# xu8  (xt2-based; re-entered on xu2 as xw0-xw2 11-21 15:07)
+# xu9  (xt2-based; re-entered on xu2 as xw0-xw2 11-21 15:07)
+# xv0  (xt2-based; re-entered on xu2 as xw0-xw2 11-21 15:07)
+# xv1  (retired 11-21 15:07: xt2-based, below or superseded)
+xw0
+xw1
+xw2
