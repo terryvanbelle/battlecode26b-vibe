@@ -11639,3 +11639,4 @@
 - 02:11 PDT (11-21): n3 xr68 (cap 14, xr56 seed) 45 vs xr56 47: REJECTED. Paired seeds: cap 14 45/45 vs xk6 47/47: small army -2, consistent. Sent xr59 (GUARD_DIST2 18, local +9 t +2.52 at 306) to n3 for the ~03:00 window. Partials xr66 +3, xr67 +3 (both ~410).
 - 02:31 PDT (11-21): n3 xr59 (GUARD_DIST2 18) 6/18: 13 vs 16 (-3); 12 rows for ~03:00. Finals xr66 +6, xr67 +3. Queued zd818 xr72 (THROW_DODGE 12), zd819 xr73 (RESCUE_D2 13).
 - 02:51 PDT (11-21): n3 xr59 (GUARD_DIST2 18; local +8) 12/18: 23 vs 31 (-8); another local-positive build losing on n3. xr54 final 0. Queued zd820 xr74 (ALERT_DIST2 400).
+- 03:11 PDT (11-21): n3 xr59 (GUARD_DIST2 13->18) REJECTED 35 vs 47 (-12; usqualsbot -8, goonv23 -5): far outside the seed band (40-48): a real effect, and the first single knob with a clear n3 signal. Testing the opposite direction: sent xr53 (GUARD_DIST2 8, local +4; #425) for ~04:00. Stopped zd817 xr71 (inert, 0/346).
