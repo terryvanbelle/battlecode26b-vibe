@@ -11637,3 +11637,4 @@
 - 01:31 PDT (11-21): n3 xr68 (xr49 on xr56's seed) 4/18: 7 vs 10 (xr56 same 10). Stopped zd810 xr63 (inert, 0/183). Partials: xr59 (GUARD_DIST2 18) +7 t +2.13 (253).
 - 01:51 PDT (11-21): n3 xr68 (cap 14 on xr56 seed) 11/18: 25 vs xr56 29 (-4); 6 rows at ~02:00. Partials: xr59 +7 t +2.12 (276), xr66 +4, xr67 +4. Queued zd817 xr71 (CARRY_KING 11).
 - 02:11 PDT (11-21): n3 xr68 (cap 14, xr56 seed) 45 vs xr56 47: REJECTED. Paired seeds: cap 14 45/45 vs xk6 47/47: small army -2, consistent. Sent xr59 (GUARD_DIST2 18, local +9 t +2.52 at 306) to n3 for the ~03:00 window. Partials xr66 +3, xr67 +3 (both ~410).
+- 02:31 PDT (11-21): n3 xr59 (GUARD_DIST2 18) 6/18: 13 vs 16 (-3); 12 rows for ~03:00. Finals xr66 +6, xr67 +3. Queued zd818 xr72 (THROW_DODGE 12), zd819 xr73 (RESCUE_D2 13).
