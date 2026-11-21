@@ -216,3 +216,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:14) I'd still like to find a more reliable way to predict panel success based on local success.  Do you have enough data to evaluate the archetypes we have as predictors, and maybe add a few more?  You can use averaged multiple seeds on panels to smooth out the target function if you like.  Until we've solved this problem, it feels like we're just basically guessing when we submit a bot to the panel
 (06:14) To keep things tractable, the target remains the three opponent bots in the current panel
 (06:14) Perhaps there are metrics obtained from the local games that would be good inputs to the prediction function
+(06:23) I feel like the success of reinforcement learning as a general problem solving technique (e.g. AlphaGo) suggests that self-play can provide a useful signal.  Agreed that archetypes aren't providing necessary signal.  Do wins against, say, xi9 provide any signal?
