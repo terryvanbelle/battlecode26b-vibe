@@ -1155,13 +1155,15 @@ xr71,2026-11-21,xk6,CARRY_KING 11,STOPPED zd817 at 346 cells: inert (0 diverging
 xr72,2026-11-21,xk6,THROW_DODGE 12,STOPPED zd818 at 179: inert (0 diverging)
 xr73,2026-11-21,xk6,RESCUE_D2 13,21 maps final -3 (462)
 xr74,2026-11-21,xk6,ALERT_DIST2 400,STOPPED zd820 at 148: inert (0 diverging)
-xr75,2026-11-21,xk6,GUARD_DIST2 10 (dose between xr53 8 and xk6 13; xr59 18 was -12 on n3),"21 maps final +9 t +1.62 (462); n3 submitted 04:51 PDT 11-21 (#427), judged vs xr53"
+xr75,2026-11-21,xk6,GUARD_DIST2 10 (dose between xr53 8 and xk6 13; xr59 18 was -12 on n3),"REJECTED n3 44/126 vs xr53 48 (-4; goonv23 -4, Icarus -2, usqualsbot +2) 11-21 05:51 PDT; local +9 vs xk6"
 xr76,2026-11-21,xk6,GUARD_DIST2 5 (guard dose sweep down; xr59 18 was -12 on n3),REJECTED n3 42/126 vs xr53 48 (-6) 11-21 04:51 PDT; local screen stopped zd822 at 80
 xr77,2026-11-21,xk6,GUARD_DIST2 2 (guard only adjacent enemies),"STOPPED zd823 at 158: guard 5 already lost on n3, 2 moot"
-xr78,2026-11-21,xr53,xr53 + RETREAT_HP 30 (xr69 on xk6: +5 at 235),SCREENING zd824 (21 maps; control zd802 xr53)
+xr78,2026-11-21,xr53,xr53 + RETREAT_HP 30 (xr69 on xk6: +5 at 235),21 maps final +1 vs xr53 (462)
 xr79,2026-11-21,xr53,xr53 + THREAT_THROW 4 (xr62 on xk6: +4),SCREENING zd825 (21 maps; control zd802 xr53)
 xr80,2026-11-21,xr53,xr53 + DEFEND_D2 64,SCREENING zd826 (21 maps; control zd802 xr53)
 xr81,2026-11-21,xr53,xr53 + DEFEND_D2 144,SCREENING zd827 (21 maps; control zd802 xr53)
 xr82,2026-11-21,xr53,xr53 + KING_THREAT_D2 26 (xr67 on xk6: +3),SCREENING zd828 (21 maps; control zd802 xr53)
 xr83,2026-11-21,xr53,xr53 + GRAB_MARGIN 13,SCREENING zd829 (21 maps; control zd802 xr53)
 xr84,2026-11-21,xr53,xr53 + RETREAT_HP 50 (xr66 55 on xk6: +6),SCREENING zd830 (21 maps; control zd802 xr53)
+xr85,2026-11-21,xr53,"xr53 on seed 0x6C8E9CF5 (paired with xk6 xr56 47, cap14 xr68 45): is GUARD 8 real or xr53's seed?",n3 submitted 05:51 PDT 11-21 (#428)
+xr86,2026-11-21,xr53,xr53 + GATHER_FIRST 8,SCREENING zd831 (21 maps; control zd802 xr53)
