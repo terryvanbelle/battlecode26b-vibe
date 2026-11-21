@@ -1207,3 +1207,5 @@ xw1,2026-11-21,xu2,"SPAWN_FLOOR 200 (xv0 idea, +35 on xt2)",tournament newcomer 
 xw2,2026-11-21,xu2,"FORM_BABIES 15 (xu9 idea, +12 on xt2)",tournament newcomer 15:09 PDT
 xw3,2026-11-21,xu2,"Baby carry-throw: a flight that hits our own king scores -1000 (was -dmg, same as our baby) (replica idea: own throws cost our king 174 HP vs Icarus, 68 on evileye)",tournament newcomer 15:55 PDT
 xw4,2026-11-21,xu2,"KING_RESERVE 900 (replica idea: kings starved after cheese ran out, cheesefarm r782, DefaultMedium r1138)",tournament newcomer 15:55 PDT
+xw5,2026-11-21,xu2,"MAX_BABIES 16 (xt5 idea: cap 16 on xs2 is #1 at +14 vs xu2)",tournament newcomer 16:29 PDT
+xw6,2026-11-21,xu2,"THROW_HOLD 10 (carriers hold longer for a better throw; pairs with the own-king throw finding)",tournament newcomer 16:29 PDT

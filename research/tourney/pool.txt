@@ -47,6 +47,8 @@ xu2
 # xv1  (retired 11-21 15:07: xt2-based, below or superseded)
 # xw0  (retired 11-21 16:07: LOW_BABIES 10 on xu2, -79 on 81 g)
 xw1
-xw2
+# xw2  (retired 11-21 16:27: FORM_BABIES 15 on xu2, -25 on 257 g)
 xw4
 xw3
+xw5
+xw6
