@@ -1135,3 +1135,4 @@ xr51,2026-11-20,xk6,WAR_GATHER 3 (opposite of xr19),SCREENING zd800 (21 maps)
 xr52,2026-11-20,xk6,THREAT_THROW 1 (opposite of xr23),SCREENING zd801 (21 maps)
 xr53,2026-11-20,xk6,GUARD_DIST2 8 (opposite of xr24),SCREENING zd802 (21 maps)
 xr54,2026-11-20,xk6,GRAB_MARGIN 16 (opposite of xr21),SCREENING zd803 (21 maps)
+xr55,2026-11-20,xk6,"RNG seed constant only (0x7F4A7C15 -> 0x2545F491): pure re-roll control, same strategy",SCREENING zd804 (21 maps); then n3 as the strategy-free re-roll control
