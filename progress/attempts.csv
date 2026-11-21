@@ -1119,10 +1119,12 @@ xr37,2026-11-20,xk6,xr30 with MAX_BABIES 20/20 (base cap 18->20),SCREENING zd786
 xr38,2026-11-20,xk6,xr30 with RICH_FROM 200 (rich cap 40 opens at round 200),21 maps final +15 t +3.16 (462)
 xr39,2026-11-20,xk6,xr30 with RICH_BANK 700 (rich cap 40 from 700 banked),"21 maps +17 t +3.44 locally; REJECTED on n3 11-20 17:35 PDT: 41/126 vs xk6 47 (-6; Icarus +3, usqualsbot -7, goonv23 -2)"
 xr40,2026-11-20,xk6,xr30 with MAX_BABIES_WAR 22 (war cap 18->22),SCREENING zd789 (21 maps)
-xr41,2026-11-20,xk6,xr30 with BIG_AREA 1200 (cap 30 at xk6 area),SCREENING zd790 (21 maps)
-xr42,2026-11-20,xk6,xr30 with BIG_BABIES 32,SCREENING zd791 (21 maps)
+xr41,2026-11-20,xk6,xr30 with BIG_AREA 1200 (cap 30 at xk6 area),"21 maps final +16 t +3.45 (462): big-army line, not sent to n3 (line rejected twice)"
+xr42,2026-11-20,xk6,xr30 with BIG_BABIES 32,"21 maps final +16 t +3.30 (462): big-army line, not sent to n3"
 xr43,2026-11-20,xk6,xr39 with RICH_FROM 200,SCREENING zd792 (21 maps)
 xr44,2026-11-20,xk6,xr39 with RICH_BANK 500,SCREENING zd793 (21 maps)
 ag6,2026-11-20,xk6,"grab-rush archetype (MAX_BABIES 40/40, RICH 0, RUSH 2-40 until 600) as a replica-tracking opponent",validation zd770 (15 builds x 25 maps x 2 seats): win rate vs ag6 vs replica per100 r -0.05: does not track the replica; dropped
 xr45,2026-11-20,xk6,xk6 + RICH_BANK 700 alone (no big-army change): separates the rich-cap gain from BIG_*,SCREENING zd794 (21 maps)
 xr46,2026-11-20,xk6,xk6 + RICH_FROM 200 alone,SCREENING zd795 (21 maps)
+xr47,2026-11-20,xk6,MAX_BABIES 16/16 (smaller army: big-army builds lost to usqualsbot on n3),SCREENING zd796 (21 maps)
+xr48,2026-11-20,xk6,MAX_BABIES_WAR 15 (smaller army at war),SCREENING zd797 (21 maps)
