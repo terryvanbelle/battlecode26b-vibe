@@ -1200,3 +1200,5 @@ xu6,2026-11-21,xt2,FORM_BABIES 12,tournament newcomer 14:15 PDT
 xu7,2026-11-21,xt2,FORM_CHEESE 200,WITHDRAWN 11-21 14:29 PDT before playing: inert while FORM_BABIES 16 > cap 15
 xu8,2026-11-21,xt2,LOW_BABIES 10,tournament newcomer 14:29 PDT
 xu9,2026-11-21,xt2,FORM_BABIES 15 (= cap),tournament newcomer 14:29 PDT
+xv0,2026-11-21,xt2,SPAWN_FLOOR 200,tournament newcomer 14:49 PDT
+xv1,2026-11-21,xt2,THROW_DODGE 7,tournament newcomer 14:49 PDT

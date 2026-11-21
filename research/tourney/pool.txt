@@ -23,7 +23,7 @@ xs2
 # xs5  (retired 11-21 11:52: RETREAT_HP 55 on xr49, -69 on 147 g)
 # xs6  (retired 11-21 11:12: DEFEND_D2 64 on xr49, -72 on 195 g)
 # xs7  (retired 11-21 13:47: -46 to -77 vs champion xt2)
-xs8
+# xs8  (retired 11-21 14:47: on xr49, -34)
 # xs9  (retired 11-21 13:07: -114)
 # xt0  (retired 11-21 13:07: -71)
 # xt1  (retired 11-21 12:47: GRAB_THREAT 35 on xs2, -74 on 82 g)
@@ -43,3 +43,5 @@ xu6
 # xu7  (withdrawn 11-21 14:29: FORM_CHEESE is inert while FORM_BABIES 16 > cap)
 xu8
 xu9
+xv0
+xv1
