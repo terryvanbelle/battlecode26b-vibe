@@ -5,9 +5,9 @@
 # xr43  (retired 11-21 09:33: xk6-based, off the champion line)
 xr65
 # xr69  (retired 11-21 09:33: xk6-based, off the champion line)
-xr75
+# xr75  (retired 11-21 13:27)
 # xr59  (retired 11-21 12:47: -49 on 393 g)
-xj9
+# xj9  (retired 11-21 13:27)
 # xi9  (retired 11-21 11:32: ~-80 vs champion xs2 on 480+ g)
 xi1
 # xk5  (retired 11-21 11:32: ~-80 vs champion xs2 on 480+ g)
@@ -33,4 +33,6 @@ xt4
 xt5
 xt6
 # xt7  (retired 11-21 13:07: cap 17 on xs2, -154 on 65 g)
-xt8
+# xt8  (FIGHT_EVERY 1 on xs2: re-entered on xt2 as xu1)
+xu1
+xu2

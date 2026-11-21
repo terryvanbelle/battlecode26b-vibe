@@ -1184,10 +1184,12 @@ xs8,2026-11-21,xr49,KING_THREAT_D2 34 (further along xs2 line),tournament newcom
 xs9,2026-11-21,xr49,GATHER_FIRST 8,tournament newcomer 10:55 PDT
 xt0,2026-11-21,xr49,TRAP_FLOOR 400,tournament newcomer 10:55 PDT
 xt1,2026-11-21,xs2,GRAB_THREAT 35 (xs4 idea on xs2),tournament newcomer 11:14 PDT
-xt2,2026-11-21,xs2,MAX_BABIES 15/15 (xr65 idea on xs2),tournament newcomer 11:14 PDT
+xt2,2026-11-21,xs2,MAX_BABIES 15/15 (xr65 idea on xs2),"ACCEPTED as LOCAL TOURNAMENT CHAMPION 11-21 13:27 PDT (BT 1549+-21 on 265 games vs xs2 1514+-13, +35 > 25); submitted #434"
 xt3,2026-11-21,xs2,TRAP_FLOOR 400,tournament newcomer 11:34 PDT
 xt4,2026-11-21,xs2,KING_ROAM 6,tournament newcomer 11:34 PDT
 xt5,2026-11-21,xs2,MAX_BABIES 16/16,tournament newcomer 11:55 PDT
 xt6,2026-11-21,xs2,DEFEND_D2 144,tournament newcomer 11:55 PDT
 xt7,2026-11-21,xs2,MAX_BABIES 17/17,RETIRED 11-21 13:07 PDT: cap 17 on xs2 1383+-46 on 65 games (-154): the cap peaks at 15-16
 xt8,2026-11-21,xs2,FIGHT_EVERY 1,tournament newcomer 12:49 PDT
+xu1,2026-11-21,xt2,FIGHT_EVERY 1 (xt8 idea on xt2),tournament newcomer 13:29 PDT
+xu2,2026-11-21,xt2,KING_THREAT_D2 30,tournament newcomer 13:29 PDT
