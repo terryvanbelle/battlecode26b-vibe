@@ -1,5 +1,5 @@
 # xk6  (retired 11-21 11:32: ~-80 vs champion xs2 on 480+ g)
-xr53
+# xr53  (retired 11-21 11:52: -141)
 xr49
 # xr40  (retired 11-21 09:33: xk6-based, off the champion line)
 # xr43  (retired 11-21 09:33: xk6-based, off the champion line)
@@ -20,7 +20,7 @@ xi1
 xs2
 # xs3  (retired 11-21 11:12: cap 13 on xr49, -69 vs champion xs2 on 241 g)
 xs4
-xs5
+# xs5  (retired 11-21 11:52: RETREAT_HP 55 on xr49, -69 on 147 g)
 # xs6  (retired 11-21 11:12: DEFEND_D2 64 on xr49, -72 on 195 g)
 xs7
 xs8
@@ -30,3 +30,5 @@ xt1
 xt2
 xt3
 xt4
+xt5
+xt6
