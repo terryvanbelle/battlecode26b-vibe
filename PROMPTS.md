@@ -225,3 +225,5 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (08:21) I predict that this approach will sometimes lead to worse scores on the replica, but that it's necessary to traverse these valleys in the fitness landscape in order to reach the global maximum
 (08:26) At each prod, I'd like a report of recent ideas tried, whether any new local bot took the top spot, and our current position in the ladder
 (08:28) Actually, instead of just top spot, I'd like to see the top 5 in the local tournament, with any new champions noted
+(10:43) Something's gone wrong with the replica.  Can you fix it?
+(10:43) I'm good with that  [hourly low-disk replay prune]

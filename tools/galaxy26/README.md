@@ -195,6 +195,11 @@ fails to bind. Freeing the ports means stopping the 2023 unit, and only the owne
 
 ## Units and paths on battlecode-dev
 
+Disk guard (owner 11-21, after a disk-full outage): `/etc/cron.d/bc26-replay-prune` runs `/usr/local/sbin/bc26-replay-prune`
+(`deploy/replay-prune.sh`) hourly at :17; when / has under 4 GB free it deletes replays older than one day and logs each
+file to `/var/log/bc26-replay-prune.log`.
+
+
 Units: `bc26-galaxy-web` (gunicorn 127.0.0.1:8026), `bc26-galaxy-relay`, `bc26-galaxy-saturn`,
 `bc26-replica-egress`, `postgresql@15-bc26` (unix socket only, port 5426, database `siarnaq26`; `pg_hba` host lines set
 to reject), `bc26-replica-caddy`, `bc26-replica-hostname`, plus `bc26-galaxy-scheduler.timer` and
