@@ -1115,7 +1115,7 @@ xr33,2026-11-20,xk6,xr15 line with BIG_AREA 400 (cap 26),21 maps final +13 t +2.
 xr34,2026-11-20,xk6,xr15 line with BIG_AREA 600 + BIG_BABIES 30,"21 maps final +16 (462): big-army line, not sent to n3"
 xr35,2026-11-20,xk6,xr30 with BIG_BABIES 34 (cap 34 from 800 tiles),21 maps final +12 t +2.28 (462): cap 34 no better than 30
 xr36,2026-11-20,xk6,xr30 with BIG_AREA 1000 (cap 30),21 maps final +16 t +3.45 (462): ties xr30 (BIG_AREA 1000 ~ 800)
-xr37,2026-11-20,xk6,xr30 with MAX_BABIES 20/20 (base cap 18->20),SCREENING zd786 (21 maps)
+xr37,2026-11-20,xk6,xr30 with MAX_BABIES 20/20 (base cap 18->20),"21 maps final +16 (462): big-army line, not sent"
 xr38,2026-11-20,xk6,xr30 with RICH_FROM 200 (rich cap 40 opens at round 200),21 maps final +15 t +3.16 (462)
 xr39,2026-11-20,xk6,xr30 with RICH_BANK 700 (rich cap 40 from 700 banked),"21 maps +17 t +3.44 locally; REJECTED on n3 11-20 17:35 PDT: 41/126 vs xk6 47 (-6; Icarus +3, usqualsbot -7, goonv23 -2)"
 xr40,2026-11-20,xk6,xr30 with MAX_BABIES_WAR 22 (war cap 18->22),SCREENING zd789 (21 maps)
@@ -1126,8 +1126,10 @@ xr44,2026-11-20,xk6,xr39 with RICH_BANK 500,"21 maps final +16 (462): big-army l
 ag6,2026-11-20,xk6,"grab-rush archetype (MAX_BABIES 40/40, RICH 0, RUSH 2-40 until 600) as a replica-tracking opponent",validation zd770 (15 builds x 25 maps x 2 seats): win rate vs ag6 vs replica per100 r -0.05: does not track the replica; dropped
 xr45,2026-11-20,xk6,xk6 + RICH_BANK 700 alone (no big-army change): separates the rich-cap gain from BIG_*,"21 maps final +2 (462; plays differently on 174 cells, outcome-neutral locally): n3 re-roll control after xr19"
 xr46,2026-11-20,xk6,xk6 + RICH_FROM 200 alone,SCREENING zd795 (21 maps)
-xr47,2026-11-20,xk6,MAX_BABIES 16/16 (smaller army: big-army builds lost to usqualsbot on n3),SCREENING zd796 (21 maps)
-xr48,2026-11-20,xk6,MAX_BABIES_WAR 15 (smaller army at war),SCREENING zd797 (21 maps)
+xr47,2026-11-20,xk6,MAX_BABIES 16/16 (smaller army: big-army builds lost to usqualsbot on n3),21 maps final +14 t +2.49 (462)
+xr48,2026-11-20,xk6,MAX_BABIES_WAR 15 (smaller army at war),21 maps final +2 (462)
 xj9-n3,2026-11-20,xk6,"xj9 (older build, +14 on the local 21-map screen) on the n3 replica panel","REJECTED 11-20 18:35 PDT: 35/126 vs xk6 47 (-12; Icarus -2, usqualsbot -3, goonv23 -7)"
 xr49,2026-11-20,xk6,MAX_BABIES 14/14,SCREENING zd798 (21 maps)
 xr50,2026-11-20,xk6,MAX_BABIES 17/17,SCREENING zd799 (21 maps)
+xr51,2026-11-20,xk6,WAR_GATHER 3 (opposite of xr19),SCREENING zd800 (21 maps)
+xr52,2026-11-20,xk6,THREAT_THROW 1 (opposite of xr23),SCREENING zd801 (21 maps)
