@@ -28,7 +28,7 @@ xs8
 # xt0  (retired 11-21 13:07: -71)
 # xt1  (retired 11-21 12:47: GRAB_THREAT 35 on xs2, -74 on 82 g)
 xt2
-xt3
+# xt3  (retired 11-21 14:27: -38 on 204 g)
 # xt4  (retired 11-21 13:47: -46 to -77 vs champion xt2)
 xt5
 # xt6  (retired 11-21 13:47: -46 to -77 vs champion xt2)
@@ -40,3 +40,6 @@ xu3
 xu4
 xu5
 xu6
+# xu7  (withdrawn 11-21 14:29: FORM_CHEESE is inert while FORM_BABIES 16 > cap)
+xu8
+xu9
