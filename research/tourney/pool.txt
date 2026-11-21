@@ -1,12 +1,12 @@
 # xk6  (retired 11-21 11:32: ~-80 vs champion xs2 on 480+ g)
 # xr53  (retired 11-21 11:52: -141)
-xr49
+# xr49  (retired 11-21 12:47: -41 on 584 g)
 # xr40  (retired 11-21 09:33: xk6-based, off the champion line)
 # xr43  (retired 11-21 09:33: xk6-based, off the champion line)
 xr65
 # xr69  (retired 11-21 09:33: xk6-based, off the champion line)
 xr75
-xr59
+# xr59  (retired 11-21 12:47: -49 on 393 g)
 xj9
 # xi9  (retired 11-21 11:32: ~-80 vs champion xs2 on 480+ g)
 xi1
@@ -26,9 +26,11 @@ xs7
 xs8
 xs9
 xt0
-xt1
+# xt1  (retired 11-21 12:47: GRAB_THREAT 35 on xs2, -74 on 82 g)
 xt2
 xt3
 xt4
 xt5
 xt6
+xt7
+xt8
