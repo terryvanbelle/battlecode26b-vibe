@@ -24,13 +24,13 @@ xs4
 # xs6  (retired 11-21 11:12: DEFEND_D2 64 on xr49, -72 on 195 g)
 xs7
 xs8
-xs9
-xt0
+# xs9  (retired 11-21 13:07: -114)
+# xt0  (retired 11-21 13:07: -71)
 # xt1  (retired 11-21 12:47: GRAB_THREAT 35 on xs2, -74 on 82 g)
 xt2
 xt3
 xt4
 xt5
 xt6
-xt7
+# xt7  (retired 11-21 13:07: cap 17 on xs2, -154 on 65 g)
 xt8
