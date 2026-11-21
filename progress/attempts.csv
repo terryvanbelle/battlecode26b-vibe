@@ -1173,9 +1173,11 @@ xr89,2026-11-21,xr25,xr25 on seed 0x6C8E9CF5: second n3 seed for the local->n3 p
 xr90,2026-11-21,xr39,xr39 on seed 0x6C8E9CF5: second n3 seed for the local->n3 predictor target (owner 11-21),NOT SENT: predictor study closed 11-21 08:2x PDT (owner switched to the local tournament)
 xr91,2026-11-21,xr45,xr45 on seed 0x6C8E9CF5: second n3 seed for the local->n3 predictor target (owner 11-21),NOT SENT: predictor study closed 11-21 08:2x PDT (owner switched to the local tournament)
 xr92,2026-11-21,xr75,xr75 on seed 0x6C8E9CF5: second n3 seed for the local->n3 predictor target (owner 11-21),NOT SENT: predictor study closed 11-21 08:2x PDT (owner switched to the local tournament)
-xs1,2026-11-21,xr49,THREAT_THROW 4,tournament newcomer 09:14 PDT
+xs1,2026-11-21,xr49,THREAT_THROW 4,RETIRED 11-21 10:33 PDT: tournament 1399+-44 on 70 games vs champion xr49 1544 (-145)
 xs2,2026-11-21,xr49,KING_THREAT_D2 26,tournament newcomer 09:14 PDT
 xs3,2026-11-21,xr49,MAX_BABIES 13/13,tournament newcomer 09:14 PDT
 xs4,2026-11-21,xr49,GRAB_THREAT 35,tournament newcomer 09:35 PDT
 xs5,2026-11-21,xr49,RETREAT_HP 55,tournament newcomer 09:55 PDT
 xs6,2026-11-21,xr49,DEFEND_D2 64,tournament newcomer 09:55 PDT
+xs7,2026-11-21,xr49,GRAB_THREAT 45 (further along xs4 line),tournament newcomer 10:35 PDT
+xs8,2026-11-21,xr49,KING_THREAT_D2 34 (further along xs2 line),tournament newcomer 10:35 PDT

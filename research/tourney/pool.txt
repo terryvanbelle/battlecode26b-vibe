@@ -11,14 +11,16 @@ xj9
 xi9
 xi1
 xk5
-xg2
+# xg2  (retired 11-21 10:33: 1438 on 261 games, -106 vs champion)
 xa5
 zdb
 # xr62  (xk6-based; re-entered on xr49 as xs1/xs2)
 # xr67  (xk6-based; re-entered on xr49 as xs1/xs2)
-xs1
+# xs1  (retired 11-21 10:33: THREAT_THROW 4 on xr49, 1399 on 70 games, -145)
 xs2
 xs3
 xs4
 xs5
 xs6
+xs7
+xs8
