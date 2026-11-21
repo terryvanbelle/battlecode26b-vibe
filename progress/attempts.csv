@@ -1139,7 +1139,7 @@ xr55,2026-11-20,xk6,"RNG seed constant only (0x7F4A7C15 -> 0x2545F491): pure re-
 xr56,2026-11-20,xk6,RNG seed constant only (0x6C8E9CF5): second xk6 re-draw on n3,"seed-only control: n3 47/126 = xk6 47 (Icarus +4, usqualsbot -4, goonv23 0) 11-20 22:31 PDT; a tie, but a control (same strategy), not accepted"
 xr57,2026-11-20,xk6,MAX_BABIES 12/12 (smaller army trend: cap 14 +14 locally),STOPPED zd805 at 384 cells: -16 t -2.49 (cap 12 too small)
 xr58,2026-11-20,xk6,GRAB_THREAT 15 (opposite of xr20),SCREENING zd806 (21 maps)
-xr59,2026-11-20,xk6,GUARD_DIST2 18,SCREENING zd807 (21 maps)
+xr59,2026-11-20,xk6,GUARD_DIST2 18,21 maps partial +9 t +2.52 (306); n3 submitted 02:11 PDT 11-21
 xr60,2026-11-20,xk6,RNG seed constant only (0x1B873593): third xk6 re-draw on n3,"seed-only control: n3 48/126 vs xk6 47 (Icarus +6, usqualsbot -5, goonv23 0) 11-20 23:31 PDT; control, not accepted"
 xr61,2026-11-20,xk6,GRAB_MARGIN 6,21 maps final -1 (462; 1 diverging): inert
 xr62,2026-11-20,xk6,THREAT_THROW 4,21 maps final +4 (462)
@@ -1148,7 +1148,7 @@ xr64,2026-11-20,xk6,GRAB_THREAT 35,21 maps final +2 (462)
 xr65,2026-11-20,xk6,"MAX_BABIES 15/15 (between cap 14 and 16, both +14)",21 maps final +14 t +2.49 (462)
 xr66,2026-11-21,xk6,RETREAT_HP 55,SCREENING zd813 (21 maps)
 xr67,2026-11-21,xk6,KING_THREAT_D2 26,SCREENING zd814 (21 maps)
-xr68,2026-11-21,xr49,"xr49 with seed constant 0x6C8E9CF5 (= xr56 seed): second seed of the small-army build, paired with xr56 47",submitted 01:11 PDT 11-21 (#423)
+xr68,2026-11-21,xr49,"xr49 with seed constant 0x6C8E9CF5 (= xr56 seed): second seed of the small-army build, paired with xr56 47","REJECTED n3 45 vs xr56 47 (same seed; -2) 11-21 02:11 PDT: cap 14 = 45, 45 on two seeds vs xk6 47, 47 on the same seeds: a consistent -2"
 xr69,2026-11-21,xk6,RETREAT_HP 30,SCREENING zd815 (21 maps)
 xr70,2026-11-21,xk6,FIGHT_EVERY 1,SCREENING zd816 (21 maps)
 xr71,2026-11-21,xk6,CARRY_KING 11,SCREENING zd817 (21 maps)
