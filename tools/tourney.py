@@ -8,9 +8,10 @@ and a change is submitted to the replica without any gate (prod does the submit)
 
   tourney.py rank [--runs-root DIR]        ladder with SE, games; flags a new champion
   tourney.py plan RUN [--games N]          write runs/RUN/cells.tsv: N games chosen where the ladder is least sure
-  tourney.py add BOT                       enter BOT into the pool (it is scheduled first until it has NEW_GAMES games)
+  tourney.py add BOT                       enter BOT into the pool (it is scheduled first until it has NEW_MIN games)
 
-Pairing: a bot with fewer than 40 games gets half the run, spread over the current top TOP bots; the rest
+Pairing: bots with fewer than NEW_MIN games get half the run, weighted by their missing games, half of those games
+against the champion and the rest against the current top TOP bots; the rest
 goes to pairs among the top TOP, weighted toward close ratings and large standard errors (the places that decide
 first place). Each game: a random map of the 21, a random map seed in 0..SEEDS-1, random seats.
 """
@@ -22,7 +23,7 @@ R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 POOL = os.path.join(R, 'research', 'tourney', 'pool.txt')
 CHAMP = os.path.join(R, 'research', 'tourney', 'champion.txt')
 MAPS = open(os.path.join(R, 'tools', 'galaxy26', 'maps-early21.txt')).read().split()
-MIN_GAMES, NEW_GAMES, TOP, SEEDS = 200, 120, 6, 10
+MIN_GAMES, NEW_MIN, TOP, SEEDS = 200, 40, 6, 10
 
 
 def pool():
@@ -78,13 +79,16 @@ def cmd_rank(root):
 def cmd_plan(run, n):
     lad, _ = ladder()
     rate = {b: r for b, r in lad}
-    top = [b for b, r in lad if r.games >= 40][:TOP] or [b for b, _ in lad[:TOP]]
-    new = [b for b, r in lad if r.games < 40 and b not in top]
+    top = [b for b, r in lad if r.games >= NEW_MIN][:TOP] or [b for b, _ in lad[:TOP]]
+    new = [b for b, r in lad if r.games < NEW_MIN and b not in top]
     pairs = []
-    if new:
+    ch = champion()
+    if new:   # weight by missing games (a fresh bot outweighs a half-rated one); half its games vs the champion
+        nw = [NEW_MIN - rate[b].games for b in new]
         for k in range(n // 2):
-            b = new[k % len(new)]
-            pairs.append((b, random.choice([t for t in top if t != b] or [x for x, _ in lad if x != b])))
+            b = random.choices(new, nw)[0]
+            opp = [t for t in top if t != b] or [x for x, _ in lad if x != b]
+            pairs.append((b, ch if ch in rate and ch != b and random.random() < 0.5 else random.choice(opp)))
     cand = [(a, b) for i, a in enumerate(top) for b in top[i + 1:]]
     w = [(rate[a].se + rate[b].se + 10) * math.exp(-abs(rate[a].rating - rate[b].rating) / 100) for a, b in cand]
     while len(pairs) < n and cand:

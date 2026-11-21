@@ -14,5 +14,8 @@ xk5
 xg2
 xa5
 zdb
-xr62
-xr67
+# xr62  (xk6-based; re-entered on xr49 as xs1/xs2)
+# xr67  (xk6-based; re-entered on xr49 as xs1/xs2)
+xs1
+xs2
+xs3
