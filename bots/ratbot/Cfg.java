@@ -192,7 +192,7 @@ public final class Cfg {
     public static final int AMMO_HP = 50, AMMO_R = 3, AMMO_D2 = 8;
     /** Guard facing: with an enemy rat within this dist2, steps strafe to keep facing it and a turn ends facing it
      *  (rats are grabbed from behind; 0 = off). */
-    public static final int GUARD_DIST2 = 13;
+    public static final int GUARD_DIST2 = 8;
     /** Rescue only for a rat within RESCUE_KING_R of our nearest king (the rescue walk and tryCarry's carrier bonus);
      *  the enemy carrier must be within dist2 RESCUE_D2. */
     public static final int RESCUE_KING_R = 7;

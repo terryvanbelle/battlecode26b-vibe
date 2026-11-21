@@ -1133,7 +1133,7 @@ xr49,2026-11-20,xk6,MAX_BABIES 14/14,"REJECTED n3 45/126 vs xk6 47 (-2; Icarus +
 xr50,2026-11-20,xk6,MAX_BABIES 17/17,STOPPED zd799 at 219 cells: inert (0 diverging; cap 17 never binds differently)
 xr51,2026-11-20,xk6,WAR_GATHER 3 (opposite of xr19),STOPPED zd800 at 253 cells: inert (0 diverging cells; WAR_GATHER 3 never binds)
 xr52,2026-11-20,xk6,THREAT_THROW 1 (opposite of xr23),21 maps final +8 (462)
-xr53,2026-11-20,xk6,GUARD_DIST2 8 (opposite of xr24),21 maps final +4 (462); n3 submitted 03:11 PDT 11-21 (#425): opposite direction of xr59 (-12)
+xr53,2026-11-20,xk6,GUARD_DIST2 8 (opposite of xr24),"ACCEPTED 2026-11-21 04:11 PDT over xk6: n3 panel 48/126 vs xk6 47 (+1; Icarus +2, goonv23 +3, usqualsbot -4), tie-or-better on 18 cells. Caveat: xk6 seed re-draws scored 47, 40, 47, 48 (mean 45.5), so +1 is inside seed spread; mechanism support: the opposite dose xr59 (GUARD_DIST2 18) scored 35 (-12). Local 21-map screen zd802 +4 t +0.76 (462) = the new control screen. Earlier: n3 submitted 03:11 PDT (#425)."
 xr54,2026-11-20,xk6,GRAB_MARGIN 16 (opposite of xr21),21 maps final +0 (462; 10 diverging): near-inert
 xr55,2026-11-20,xk6,"RNG seed constant only (0x7F4A7C15 -> 0x2545F491): pure re-roll control, same strategy",seed-only control: n3 40/126 vs xk6 47; local 21 maps +4 (462): local seed noise small
 xr56,2026-11-20,xk6,RNG seed constant only (0x6C8E9CF5): second xk6 re-draw on n3,"seed-only control: n3 47/126 = xk6 47 (Icarus +4, usqualsbot -4, goonv23 0) 11-20 22:31 PDT; a tie, but a control (same strategy), not accepted"
@@ -1156,5 +1156,6 @@ xr72,2026-11-21,xk6,THROW_DODGE 12,SCREENING zd818 (21 maps)
 xr73,2026-11-21,xk6,RESCUE_D2 13,SCREENING zd819 (21 maps)
 xr74,2026-11-21,xk6,ALERT_DIST2 400,SCREENING zd820 (21 maps)
 xr75,2026-11-21,xk6,GUARD_DIST2 10 (dose between xr53 8 and xk6 13; xr59 18 was -12 on n3),SCREENING zd821 (21 maps)
-xr76,2026-11-21,xk6,GUARD_DIST2 5 (guard dose sweep down; xr59 18 was -12 on n3),SCREENING zd822 (21 maps)
+xr76,2026-11-21,xk6,GUARD_DIST2 5 (guard dose sweep down; xr59 18 was -12 on n3),"SCREENING zd822; n3 submitted 04:11 PDT 11-21 (#426): = xr53 with GUARD_DIST2 5 (dose continuation), judged vs xr53"
 xr77,2026-11-21,xk6,GUARD_DIST2 2 (guard only adjacent enemies),SCREENING zd823 (21 maps)
+xr78,2026-11-21,xr53,xr53 + RETREAT_HP 30 (xr69 on xk6: +5 at 235),SCREENING zd824 (21 maps; control zd802 xr53)

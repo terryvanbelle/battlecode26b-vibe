@@ -1,6 +1,6 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-19 20:35 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-21 04:13 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
 
@@ -12,7 +12,7 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 - M4 2026-10-28 08:50 PDT: method: benchmark games only on the replica; local games are self-play
 - M5 2026-10-31 07:46 PDT: panel: v4 (8 opponents u2g beats 25-75%)
 
-593 rated matches; latest rating 1,689 (2026-11-19 20:04 PDT).
+646 rated matches; latest rating 1,702 (2026-11-21 04:05 PDT).
 
 | Submission | Build | Uploaded (PDT) | Accepted | Rating at upload | Rated matches since |
 |---:|---|---|---|---:|---:|
@@ -362,4 +362,23 @@ Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 | #403 | xr13 | 2026-11-19 15:13 | yes | 1,713 | 7 |
 | #404 | xk6 | 2026-11-19 17:30 | yes | 1,703 | 1 |
 | #405 | xr16 | 2026-11-19 18:10 | yes | 1,706 | 6 |
-| #406 | xk6 | 2026-11-19 20:34 | yes | 1,689 | 0 |
+| #406 | xk6 | 2026-11-19 20:34 | yes | 1,689 | 23 |
+| #407 | xk2 | 2026-11-20 06:52 | yes | 1,713 | 4 |
+| #408 | xk6 | 2026-11-20 07:39 | yes | 1,734 | 6 |
+| #409 | xr25 | 2026-11-20 11:13 | yes | 1,707 | 5 |
+| #410 | xk6 | 2026-11-20 12:53 | yes | 1,701 | 0 |
+| #411 | xr25 | 2026-11-20 13:53 | yes | 1,701 | 1 |
+| #412 | xk6 | 2026-11-20 15:16 | yes | 1,688 | 4 |
+| #413 | xr39 | 2026-11-20 16:36 | yes | 1,708 | 1 |
+| #414 | xj9 | 2026-11-20 17:36 | yes | 1,703 | 0 |
+| #415 | xr19 | 2026-11-20 18:36 | yes | 1,703 | 1 |
+| #416 | xk6 | 2026-11-20 19:11 | yes | 1,699 | 2 |
+| #417 | xr45 | 2026-11-20 19:51 | yes | 1,703 | 0 |
+| #418 | xr55 | 2026-11-20 20:31 | yes | 1,703 | 1 |
+| #419 | xr56 | 2026-11-20 21:31 | yes | 1,699 | 1 |
+| #420 | xr60 | 2026-11-20 22:31 | yes | 1,686 | 1 |
+| #421 | xr49 | 2026-11-20 23:31 | yes | 1,682 | 0 |
+| #422 | xr47 | 2026-11-21 00:11 | yes | 1,682 | 1 |
+| #423 | xr68 | 2026-11-21 01:12 | yes | 1,684 | 1 |
+| #424 | xr59 | 2026-11-21 02:11 | yes | 1,693 | 0 |
+| #425 | xr53 | 2026-11-21 03:11 | yes | 1,693 | 1 |
