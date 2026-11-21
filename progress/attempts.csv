@@ -1181,3 +1181,5 @@ xs5,2026-11-21,xr49,RETREAT_HP 55,tournament newcomer 09:55 PDT
 xs6,2026-11-21,xr49,DEFEND_D2 64,tournament newcomer 09:55 PDT
 xs7,2026-11-21,xr49,GRAB_THREAT 45 (further along xs4 line),tournament newcomer 10:35 PDT
 xs8,2026-11-21,xr49,KING_THREAT_D2 34 (further along xs2 line),tournament newcomer 10:35 PDT
+xs9,2026-11-21,xr49,GATHER_FIRST 8,tournament newcomer 10:55 PDT
+xt0,2026-11-21,xr49,TRAP_FLOOR 400,tournament newcomer 10:55 PDT
