@@ -10,7 +10,7 @@ and a change is submitted to the replica without any gate (prod does the submit)
   tourney.py plan RUN [--games N]          write runs/RUN/cells.tsv: N games chosen where the ladder is least sure
   tourney.py add BOT                       enter BOT into the pool (it is scheduled first until it has NEW_GAMES games)
 
-Pairing: a bot with fewer than NEW_GAMES games gets half the run, spread over the current top TOP bots; the rest
+Pairing: a bot with fewer than 40 games gets half the run, spread over the current top TOP bots; the rest
 goes to pairs among the top TOP, weighted toward close ratings and large standard errors (the places that decide
 first place). Each game: a random map of the 21, a random map seed in 0..SEEDS-1, random seats.
 """
@@ -79,7 +79,7 @@ def cmd_plan(run, n):
     lad, _ = ladder()
     rate = {b: r for b, r in lad}
     top = [b for b, r in lad if r.games >= 40][:TOP] or [b for b, _ in lad[:TOP]]
-    new = [b for b, r in lad if r.games < NEW_GAMES and b not in top]
+    new = [b for b, r in lad if r.games < 40 and b not in top]
     pairs = []
     if new:
         for k in range(n // 2):
