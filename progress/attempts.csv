@@ -1126,7 +1126,7 @@ xr44,2026-11-20,xk6,xr39 with RICH_BANK 500,"21 maps final +16 (462): big-army l
 ag6,2026-11-20,xk6,"grab-rush archetype (MAX_BABIES 40/40, RICH 0, RUSH 2-40 until 600) as a replica-tracking opponent",validation zd770 (15 builds x 25 maps x 2 seats): win rate vs ag6 vs replica per100 r -0.05: does not track the replica; dropped
 xr45,2026-11-20,xk6,xk6 + RICH_BANK 700 alone (no big-army change): separates the rich-cap gain from BIG_*,"re-roll control (local +2, diverges on 174/462 cells): n3 40/126 vs xk6 47 (-7; Icarus -1, usqualsbot -4, goonv23 -2) 11-20 20:31 PDT"
 xr46,2026-11-20,xk6,xk6 + RICH_FROM 200 alone,21 maps final +1 (462; 3 diverging): near-inert
-xr47,2026-11-20,xk6,MAX_BABIES 16/16 (smaller army: big-army builds lost to usqualsbot on n3),21 maps final +14 t +2.49 (462)
+xr47,2026-11-20,xk6,MAX_BABIES 16/16 (smaller army: big-army builds lost to usqualsbot on n3),21 maps final +14 (462); n3 submitted 00:11 PDT 11-21 (#422)
 xr48,2026-11-20,xk6,MAX_BABIES_WAR 15 (smaller army at war),21 maps final +2 (462)
 xj9-n3,2026-11-20,xk6,"xj9 (older build, +14 on the local 21-map screen) on the n3 replica panel","REJECTED 11-20 18:35 PDT: 35/126 vs xk6 47 (-12; Icarus -2, usqualsbot -3, goonv23 -7)"
 xr49,2026-11-20,xk6,MAX_BABIES 14/14,21 maps final +14 t +2.49 (462); n3 submitted 23:31 PDT 11-20 (#421)
@@ -1141,8 +1141,10 @@ xr57,2026-11-20,xk6,MAX_BABIES 12/12 (smaller army trend: cap 14 +14 locally),ST
 xr58,2026-11-20,xk6,GRAB_THREAT 15 (opposite of xr20),SCREENING zd806 (21 maps)
 xr59,2026-11-20,xk6,GUARD_DIST2 18,SCREENING zd807 (21 maps)
 xr60,2026-11-20,xk6,RNG seed constant only (0x1B873593): third xk6 re-draw on n3,"seed-only control: n3 48/126 vs xk6 47 (Icarus +6, usqualsbot -5, goonv23 0) 11-20 23:31 PDT; control, not accepted"
-xr61,2026-11-20,xk6,GRAB_MARGIN 6,SCREENING zd808 (21 maps)
-xr62,2026-11-20,xk6,THREAT_THROW 4,SCREENING zd809 (21 maps)
+xr61,2026-11-20,xk6,GRAB_MARGIN 6,21 maps final -1 (462; 1 diverging): inert
+xr62,2026-11-20,xk6,THREAT_THROW 4,21 maps final +4 (462)
 xr63,2026-11-20,xk6,"MAX_BABIES_WAR 20 (war cap only, no BIG_*)",SCREENING zd810 (21 maps)
 xr64,2026-11-20,xk6,GRAB_THREAT 35,SCREENING zd811 (21 maps)
 xr65,2026-11-20,xk6,"MAX_BABIES 15/15 (between cap 14 and 16, both +14)",SCREENING zd812 (21 maps)
+xr66,2026-11-21,xk6,RETREAT_HP 55,SCREENING zd813 (21 maps)
+xr67,2026-11-21,xk6,KING_THREAT_D2 26,SCREENING zd814 (21 maps)
