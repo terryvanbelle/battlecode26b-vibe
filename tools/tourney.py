@@ -66,9 +66,17 @@ def champion():
 def cmd_rank(root):
     lad, n = ladder(root)
     print(f'{n} games among {len(lad)} pool bots')
-    for i, (b, r) in enumerate(lad, 1):
-        print(f'{i:2d}. {b:6s} {r.rating:6.0f} +-{r.se:3.0f}  games {r.games:5.0f}  ({r.wins:g}-{r.losses:g})')
     ch = champion()
+    rc0 = dict(lad).get(ch)
+    for i, (b, r) in enumerate(lad, 1):
+        tail = ''
+        if rc0 is not None and b != ch:   # vs champion: lead, and the lead needed to replace it (one combined SE)
+            need = math.hypot(r.se, rc0.se)
+            gl = max(0, MIN_GAMES - r.games)
+            tail = f'  vs {ch} {r.rating - rc0.rating:+5.0f} (needs > +{need:.0f}' + (f', {gl:.0f} more games)' if gl else ')')
+        elif b == ch:
+            tail = '  CHAMPION'
+        print(f'{i:2d}. {b:6s} {r.rating:6.0f} +-{r.se:3.0f}  games {r.games:5.0f}  ({r.wins:g}-{r.losses:g}){tail}')
     elig = [(b, r) for b, r in lad if r.games >= MIN_GAMES]
     rc = dict(lad).get(ch)
     if elig and elig[0][0] != ch and rc is not None:

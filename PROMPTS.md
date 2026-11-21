@@ -228,3 +228,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (10:43) Something's gone wrong with the replica.  Can you fix it?
 (10:43) I'm good with that  [hourly low-disk replay prune]
 (10:44) I'd like you to add a report of free VM space to the prod
+(12:32) For each challenger, can you also show point difference from the champion, as well as points necessary to replace them?
