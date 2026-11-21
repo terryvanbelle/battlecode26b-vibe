@@ -11632,3 +11632,4 @@
 - 23:51 PDT (11-20): n3 xr49 (cap 14): 7/18: 19 vs xk6 18 (+1); 10 rows wait for ~00:00. xr46 final +1 (near-inert). Queued zd812 xr65 (cap 15).
 - 00:11 PDT (11-21): n3 xr49 (cap 14): 15/18: 37 vs xk6 40 (-3; goonv23 -4); last 3 matches running. Sent xr47 (cap 16, local +14; #422) for the ~01:00 batch. Finals xr61 -1 (inert), xr62 +4. Queued zd813 xr66 (RETREAT_HP 55), zd814 xr67 (KING_THREAT_D2 26).
 - 00:31 PDT (11-21): n3 xr49 (cap 14) REJECTED 45 vs 47 (-2; goonv23 -4, Icarus +2). First changed build inside the xk6 seed band (40-48, mean 45.5): smaller army does no harm vs n3, unlike the big-army line (35-41). xr47 (cap 16) 2/18: 4 vs 4; 16 rows for the ~01:00 window.
+- 00:51 PDT (11-21): n3 xr47 (cap 16): 8/18: 20 vs xk6 19 (+1; goonv23 -2 again, as xr49 -4); 8 rows for ~01:00. Partials: xr65 (cap 15) +10 t +2.37 (330), xr59 +3, rest ~0. Box: 6 running, zd813/zd814 queued.
