@@ -1109,7 +1109,7 @@ xr27,2026-11-20,xk6,GATHER_FIRST 6->4: fighters start two spawns earlier (21-map
 xr28,2026-11-20,xk6,FIGHT_EVERY 2->3: one in three later babies fights cats instead of one in two (21-map sweep),21 maps final +4 t +0.76 (462): REJECTED (below the +8 builds)
 xr29,2026-11-20,xk6,xr15 line with BIG_AREA 600 (cap 26 from 600 tiles),21 maps final +14 t +2.77 (462): e21 challenger queue
 xr30,2026-11-20,xk6,xr15 line with BIG_AREA 800 + BIG_BABIES 30,21 maps final +16 t +3.30 (462): best on 21 maps; next e21 challenger
-xr31,2026-11-20,xr25,"xr25 + WAR_GATHER 1 (xr19, +9 on 21 maps)",SCREENING zd780 (21 maps)
+xr31,2026-11-20,xr25,"xr25 + WAR_GATHER 1 (xr19, +9 on 21 maps)",21 maps final +11 t +1.98 (462); base xr25 rejected on n3
 xr32,2026-11-20,xr25,xr25 + THREAT_THROW 3 (xr23),21 maps final +10 t +1.72 (462): below xr25 alone (+14): THREAT_THROW adds nothing on xr25
 xr33,2026-11-20,xk6,xr15 line with BIG_AREA 400 (cap 26),21 maps final +13 t +2.43 (462): BIG_AREA 400 ~ 600 ~ 800 (+13/+14/+14); xr30 (cap 30) +16 best
 xr34,2026-11-20,xk6,xr15 line with BIG_AREA 600 + BIG_BABIES 30,SCREENING zd783 (21 maps)
@@ -1124,3 +1124,5 @@ xr42,2026-11-20,xk6,xr30 with BIG_BABIES 32,SCREENING zd791 (21 maps)
 xr43,2026-11-20,xk6,xr39 with RICH_FROM 200,SCREENING zd792 (21 maps)
 xr44,2026-11-20,xk6,xr39 with RICH_BANK 500,SCREENING zd793 (21 maps)
 ag6,2026-11-20,xk6,"grab-rush archetype (MAX_BABIES 40/40, RICH 0, RUSH 2-40 until 600) as a replica-tracking opponent",validation zd770 (15 builds x 25 maps x 2 seats): win rate vs ag6 vs replica per100 r -0.05: does not track the replica; dropped
+xr45,2026-11-20,xk6,xk6 + RICH_BANK 700 alone (no big-army change): separates the rich-cap gain from BIG_*,SCREENING zd794 (21 maps)
+xr46,2026-11-20,xk6,xk6 + RICH_FROM 200 alone,SCREENING zd795 (21 maps)
