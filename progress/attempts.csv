@@ -1129,7 +1129,7 @@ xr46,2026-11-20,xk6,xk6 + RICH_FROM 200 alone,21 maps final +1 (462; 3 diverging
 xr47,2026-11-20,xk6,MAX_BABIES 16/16 (smaller army: big-army builds lost to usqualsbot on n3),21 maps final +14 (462); n3 submitted 00:11 PDT 11-21 (#422)
 xr48,2026-11-20,xk6,MAX_BABIES_WAR 15 (smaller army at war),21 maps final +2 (462)
 xj9-n3,2026-11-20,xk6,"xj9 (older build, +14 on the local 21-map screen) on the n3 replica panel","REJECTED 11-20 18:35 PDT: 35/126 vs xk6 47 (-12; Icarus -2, usqualsbot -3, goonv23 -7)"
-xr49,2026-11-20,xk6,MAX_BABIES 14/14,21 maps final +14 t +2.49 (462); n3 submitted 23:31 PDT 11-20 (#421)
+xr49,2026-11-20,xk6,MAX_BABIES 14/14,"REJECTED n3 45/126 vs xk6 47 (-2; Icarus +2, usqualsbot 0, goonv23 -4) 11-21 00:31 PDT; local +14. Inside xk6 seed family (47,40,47,48; mean 45.5): best changed build so far, not separable from xk6"
 xr50,2026-11-20,xk6,MAX_BABIES 17/17,STOPPED zd799 at 219 cells: inert (0 diverging; cap 17 never binds differently)
 xr51,2026-11-20,xk6,WAR_GATHER 3 (opposite of xr19),STOPPED zd800 at 253 cells: inert (0 diverging cells; WAR_GATHER 3 never binds)
 xr52,2026-11-20,xk6,THREAT_THROW 1 (opposite of xr23),21 maps final +8 (462)
