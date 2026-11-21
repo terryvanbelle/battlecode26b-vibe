@@ -1149,7 +1149,7 @@ xr65,2026-11-20,xk6,"MAX_BABIES 15/15 (between cap 14 and 16, both +14)",21 maps
 xr66,2026-11-21,xk6,RETREAT_HP 55,21 maps final +6 (462)
 xr67,2026-11-21,xk6,KING_THREAT_D2 26,21 maps final +3 (462)
 xr68,2026-11-21,xr49,"xr49 with seed constant 0x6C8E9CF5 (= xr56 seed): second seed of the small-army build, paired with xr56 47","REJECTED n3 45 vs xr56 47 (same seed; -2) 11-21 02:11 PDT: cap 14 = 45, 45 on two seeds vs xk6 47, 47 on the same seeds: a consistent -2"
-xr69,2026-11-21,xk6,RETREAT_HP 30,SCREENING zd815 (21 maps)
+xr69,2026-11-21,xk6,RETREAT_HP 30,21 maps final +11 t +2.30 (462) vs xk6
 xr70,2026-11-21,xk6,FIGHT_EVERY 1,21 maps final +1 (462)
 xr71,2026-11-21,xk6,CARRY_KING 11,STOPPED zd817 at 346 cells: inert (0 diverging)
 xr72,2026-11-21,xk6,THROW_DODGE 12,STOPPED zd818 at 179: inert (0 diverging)
@@ -1162,7 +1162,7 @@ xr78,2026-11-21,xr53,xr53 + RETREAT_HP 30 (xr69 on xk6: +5 at 235),21 maps final
 xr79,2026-11-21,xr53,xr53 + THREAT_THROW 4 (xr62 on xk6: +4),STOPPED early (11-21 06:0x) to free slots for the predictor calibration runs zd832-835
 xr80,2026-11-21,xr53,xr53 + DEFEND_D2 64,STOPPED early (11-21 06:0x) to free slots for the predictor calibration runs zd832-835
 xr81,2026-11-21,xr53,xr53 + DEFEND_D2 144,STOPPED early (11-21 06:0x) to free slots for the predictor calibration runs zd832-835
-xr82,2026-11-21,xr53,xr53 + KING_THREAT_D2 26 (xr67 on xk6: +3),SCREENING zd828 (21 maps; control zd802 xr53)
+xr82,2026-11-21,xr53,xr53 + KING_THREAT_D2 26 (xr67 on xk6: +3),21 maps final +2 vs xr53 (462)
 xr83,2026-11-21,xr53,xr53 + GRAB_MARGIN 13,SCREENING zd829 (21 maps; control zd802 xr53)
 xr84,2026-11-21,xr53,xr53 + RETREAT_HP 50 (xr66 55 on xk6: +6),SCREENING zd830 (21 maps; control zd802 xr53)
 xr85,2026-11-21,xr53,"xr53 on seed 0x6C8E9CF5 (paired with xk6 xr56 47, cap14 xr68 45): is GUARD 8 real or xr53's seed?",n3 submitted 05:51 PDT 11-21 (#428)
