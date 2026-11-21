@@ -219,3 +219,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:23) I feel like the success of reinforcement learning as a general problem solving technique (e.g. AlphaGo) suggests that self-play can provide a useful signal.  Agreed that archetypes aren't providing necessary signal.  Do wins against, say, xi9 provide any signal?
 (06:27) That approach sounds good to me, and tracks what most contestants do in actual contests.  I supported exploring the idea of archetypes, because it increased the diversity of data, but perhaps old school is best.  I'll be especially interested to see the data on this one
 (06:30) Sounds good.  What I most want is your assessment of whether data from playing against previous champions can serve as a good predictor of panel success, as you did with the archetypes
+(06:31) For other champions, you'll also want to check how correlated their contributions are to xi9.  High correlation == less signal
