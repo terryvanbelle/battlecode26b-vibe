@@ -212,3 +212,7 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (10:12) Maybe once we have a challenger to xk6, we can interleave 40-run batches between the incumbent and the challenger
 (14:40) This is going to take far too long to evaluate each possible candidate.  How about we choose, say, the three bots immediately above us, and focus just on them?
 (14:45) Can we get it down to 40 matches per build?  That way we can do it all in one batch
+(06:14) Good morning!  How did last night go?
+(06:14) I'd still like to find a more reliable way to predict panel success based on local success.  Do you have enough data to evaluate the archetypes we have as predictors, and maybe add a few more?  You can use averaged multiple seeds on panels to smooth out the target function if you like.  Until we've solved this problem, it feels like we're just basically guessing when we submit a bot to the panel
+(06:14) To keep things tractable, the target remains the three opponent bots in the current panel
+(06:14) Perhaps there are metrics obtained from the local games that would be good inputs to the prediction function
