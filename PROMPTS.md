@@ -227,3 +227,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (08:28) Actually, instead of just top spot, I'd like to see the top 5 in the local tournament, with any new champions noted
 (10:43) Something's gone wrong with the replica.  Can you fix it?
 (10:43) I'm good with that  [hourly low-disk replay prune]
+(10:44) I'd like you to add a report of free VM space to the prod
