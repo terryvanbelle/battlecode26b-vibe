@@ -115,7 +115,7 @@ public final class Cfg {
     public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;
     /** Enemy rats within KING_THREAT_D2 of a king count as its threat (Comms.ALERT); a baby within DEFEND_D2 of an
      *  alerting king defends it. */
-    public static final int KING_THREAT_D2 = 26, DEFEND_D2 = 100;
+    public static final int KING_THREAT_D2 = 30, DEFEND_D2 = 100;
     /** Squared distance within which a baby answers a king's alert. */
     public static final int ALERT_DIST2 = 225;
 
