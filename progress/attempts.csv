@@ -1135,4 +1135,5 @@ xr51,2026-11-20,xk6,WAR_GATHER 3 (opposite of xr19),STOPPED zd800 at 253 cells: 
 xr52,2026-11-20,xk6,THREAT_THROW 1 (opposite of xr23),SCREENING zd801 (21 maps)
 xr53,2026-11-20,xk6,GUARD_DIST2 8 (opposite of xr24),SCREENING zd802 (21 maps)
 xr54,2026-11-20,xk6,GRAB_MARGIN 16 (opposite of xr21),SCREENING zd803 (21 maps)
-xr55,2026-11-20,xk6,"RNG seed constant only (0x7F4A7C15 -> 0x2545F491): pure re-roll control, same strategy",n3 re-roll control: submitted 20:31 PDT 11-20 (local screen zd804 queued)
+xr55,2026-11-20,xk6,"RNG seed constant only (0x7F4A7C15 -> 0x2545F491): pure re-roll control, same strategy","seed-only re-roll control: n3 40/126 vs xk6 47 (-7; Icarus 0, usqualsbot -6, goonv23 -1) 11-20 21:31 PDT: xk6 47 is a lucky draw"
+xr56,2026-11-20,xk6,RNG seed constant only (0x6C8E9CF5): second xk6 re-draw on n3,submitted 21:31 PDT 11-20 (#419)
