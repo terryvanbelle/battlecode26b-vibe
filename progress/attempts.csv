@@ -1135,11 +1135,12 @@ xr51,2026-11-20,xk6,WAR_GATHER 3 (opposite of xr19),STOPPED zd800 at 253 cells: 
 xr52,2026-11-20,xk6,THREAT_THROW 1 (opposite of xr23),21 maps final +8 (462)
 xr53,2026-11-20,xk6,GUARD_DIST2 8 (opposite of xr24),21 maps final +4 (462)
 xr54,2026-11-20,xk6,GRAB_MARGIN 16 (opposite of xr21),SCREENING zd803 (21 maps)
-xr55,2026-11-20,xk6,"RNG seed constant only (0x7F4A7C15 -> 0x2545F491): pure re-roll control, same strategy","seed-only re-roll control: n3 40/126 vs xk6 47 (-7; Icarus 0, usqualsbot -6, goonv23 -1) 11-20 21:31 PDT: xk6 47 is a lucky draw"
+xr55,2026-11-20,xk6,"RNG seed constant only (0x7F4A7C15 -> 0x2545F491): pure re-roll control, same strategy",seed-only control: n3 40/126 vs xk6 47; local 21 maps +4 (462): local seed noise small
 xr56,2026-11-20,xk6,RNG seed constant only (0x6C8E9CF5): second xk6 re-draw on n3,"seed-only control: n3 47/126 = xk6 47 (Icarus +4, usqualsbot -4, goonv23 0) 11-20 22:31 PDT; a tie, but a control (same strategy), not accepted"
-xr57,2026-11-20,xk6,MAX_BABIES 12/12 (smaller army trend: cap 14 +14 locally),SCREENING zd805 (21 maps)
+xr57,2026-11-20,xk6,MAX_BABIES 12/12 (smaller army trend: cap 14 +14 locally),STOPPED zd805 at 384 cells: -16 t -2.49 (cap 12 too small)
 xr58,2026-11-20,xk6,GRAB_THREAT 15 (opposite of xr20),SCREENING zd806 (21 maps)
 xr59,2026-11-20,xk6,GUARD_DIST2 18,SCREENING zd807 (21 maps)
 xr60,2026-11-20,xk6,RNG seed constant only (0x1B873593): third xk6 re-draw on n3,submitted 22:31 PDT 11-20 (#420)
 xr61,2026-11-20,xk6,GRAB_MARGIN 6,SCREENING zd808 (21 maps)
 xr62,2026-11-20,xk6,THREAT_THROW 4,SCREENING zd809 (21 maps)
+xr63,2026-11-20,xk6,"MAX_BABIES_WAR 20 (war cap only, no BIG_*)",SCREENING zd810 (21 maps)
