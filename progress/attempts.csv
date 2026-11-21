@@ -1177,3 +1177,5 @@ xs1,2026-11-21,xr49,THREAT_THROW 4,tournament newcomer 09:14 PDT
 xs2,2026-11-21,xr49,KING_THREAT_D2 26,tournament newcomer 09:14 PDT
 xs3,2026-11-21,xr49,MAX_BABIES 13/13,tournament newcomer 09:14 PDT
 xs4,2026-11-21,xr49,GRAB_THREAT 35,tournament newcomer 09:35 PDT
+xs5,2026-11-21,xr49,RETREAT_HP 55,tournament newcomer 09:55 PDT
+xs6,2026-11-21,xr49,DEFEND_D2 64,tournament newcomer 09:55 PDT
