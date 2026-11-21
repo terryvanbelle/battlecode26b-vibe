@@ -9,7 +9,7 @@
 # xr59  (retired 11-21 12:47: -49 on 393 g)
 # xj9  (retired 11-21 13:27)
 # xi9  (retired 11-21 11:32: ~-80 vs champion xs2 on 480+ g)
-xi1
+# xi1  (retired 11-21 14:07: -116)
 # xk5  (retired 11-21 11:32: ~-80 vs champion xs2 on 480+ g)
 # xg2  (retired 11-21 10:33: 1438 on 261 games, -106 vs champion)
 # xa5  (retired 11-21 11:12)
@@ -38,3 +38,5 @@ xu1
 xu2
 xu3
 xu4
+xu5
+xu6
