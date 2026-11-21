@@ -1163,3 +1163,5 @@ xr79,2026-11-21,xr53,xr53 + THREAT_THROW 4 (xr62 on xk6: +4),SCREENING zd825 (21
 xr80,2026-11-21,xr53,xr53 + DEFEND_D2 64,SCREENING zd826 (21 maps; control zd802 xr53)
 xr81,2026-11-21,xr53,xr53 + DEFEND_D2 144,SCREENING zd827 (21 maps; control zd802 xr53)
 xr82,2026-11-21,xr53,xr53 + KING_THREAT_D2 26 (xr67 on xk6: +3),SCREENING zd828 (21 maps; control zd802 xr53)
+xr83,2026-11-21,xr53,xr53 + GRAB_MARGIN 13,SCREENING zd829 (21 maps; control zd802 xr53)
+xr84,2026-11-21,xr53,xr53 + RETREAT_HP 50 (xr66 55 on xk6: +6),SCREENING zd830 (21 maps; control zd802 xr53)
