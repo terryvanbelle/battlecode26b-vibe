@@ -1231,3 +1231,5 @@ xy5,2026-11-21,xw9,"GRAB_THREAT 0 (xy2 GRAB_THREAT 8 leads +69: probe the end)",
 xy6,2026-11-21,xw9,"SPAWN_FLOOR 450 (replica review: xw9 starved early, cheese out r195 thunderdome vs finalsbot, r167 dirtfulcat vs VarunVejalla)",tournament newcomer 20:59 PDT
 xy7,2026-11-21,xw9,"SPAWN_FLOOR 600 (xy6 SPAWN_FLOOR 450 +153 on 38 g: probe further)",tournament newcomer 21:17 PDT
 xy8,2026-11-21,xw9,"WAR_FLOOR 450 (the spawn floor under attack; same cheese-reserve line as xy6)",tournament newcomer 21:17 PDT
+xy9,2026-11-21,xw9,"SPAWN_FLOOR 375 (450 +65, 600 -61: bracket below)",tournament newcomer 21:37 PDT
+xz0,2026-11-21,xw9,"LOW_FLOOR 200 (the spawn floor with few babies; same early-starvation line)",tournament newcomer 21:37 PDT

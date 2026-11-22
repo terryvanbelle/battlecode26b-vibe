@@ -66,11 +66,13 @@ xw9
 # xx8  (retired 11-21 19:55: xw6-based, below xw6)
 xx9
 # xy0  (retired 11-21 21:15: KING_THREAT_D2 36 on xw9, +6 on 234 g, flat)
-xy1
+# xy1  (retired 11-21 21:35: GRAB_MARGIN 5 on xw9, +10 on 210 g, flat)
 xy2
 # xy3  (retired 11-21 21:15: GRAB_MARGIN 0 on xw9, +5 on 134 g)
 # xy4  (retired 11-21 21:15: GRAB_BC 8000 on xw9, -10 on 99 g)
 xy5
 xy6
-xy7
+# xy7  (retired 11-21 21:35: SPAWN_FLOOR 600 on xw9, -61 on 44 g)
 xy8
+xy9
+xz0
