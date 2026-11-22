@@ -1,15 +1,15 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 11968 games in one fit as of 2026-11-21 20:17 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 12294 games in one fit as of 2026-11-21 20:37 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
 | Champion from (PDT) | Bot | Change on base | Submission | Rating +- SE | Games |
 |---|---|---|---:|---:|---:|
-| 2026-11-21 08:20 | xk6 | starting champion (tournament began) |  | 1456 +- 14 | 662 |
-| 2026-11-21 09:13 | xr49 | MAX_BABIES 14 on xk6 | #432 | 1502 +- 10 | 1167 |
-| 2026-11-21 11:12 | xs2 | KING_THREAT_D2 26 on xr49 | #433 | 1532 +- 8 | 1848 |
-| 2026-11-21 13:27 | xt2 | MAX_BABIES 15 on xs2 | #434 | 1536 +- 9 | 1689 |
-| 2026-11-21 15:07 | xu2 | KING_THREAT_D2 30 on xt2 | #435 | 1540 +- 8 | 2034 |
-| 2026-11-21 17:50 | xw6 | THROW_HOLD 10 on xu2 | #436 | 1584 +- 10 | 1322 |
-| 2026-11-21 19:55 | xw9 | MAX_BABIES 16 on xw6 | #437 | 1604 +- 15 | 536 |
+| 2026-11-21 08:20 | xk6 | starting champion (tournament began) |  | 1453 +- 14 | 662 |
+| 2026-11-21 09:13 | xr49 | MAX_BABIES 14 on xk6 | #432 | 1499 +- 10 | 1167 |
+| 2026-11-21 11:12 | xs2 | KING_THREAT_D2 26 on xr49 | #433 | 1528 +- 8 | 1848 |
+| 2026-11-21 13:27 | xt2 | MAX_BABIES 15 on xs2 | #434 | 1533 +- 9 | 1689 |
+| 2026-11-21 15:07 | xu2 | KING_THREAT_D2 30 on xt2 | #435 | 1536 +- 8 | 2042 |
+| 2026-11-21 17:50 | xw6 | THROW_HOLD 10 on xu2 | #436 | 1580 +- 9 | 1422 |
+| 2026-11-21 19:55 | xw9 | MAX_BABIES 16 on xw6 | #437 | 1588 +- 13 | 716 |
