@@ -1209,3 +1209,5 @@ xw3,2026-11-21,xu2,"Baby carry-throw: a flight that hits our own king scores -10
 xw4,2026-11-21,xu2,"KING_RESERVE 900 (replica idea: kings starved after cheese ran out, cheesefarm r782, DefaultMedium r1138)",tournament newcomer 15:55 PDT
 xw5,2026-11-21,xu2,"MAX_BABIES 16 (xt5 idea: cap 16 on xs2 is #1 at +14 vs xu2)",tournament newcomer 16:29 PDT
 xw6,2026-11-21,xu2,"THROW_HOLD 10 (carriers hold longer for a better throw; pairs with the own-king throw finding)",tournament newcomer 16:29 PDT
+xw7,2026-11-21,xu2,"THROW_HOLD 14 (xw6 THROW_HOLD 10 leads at +90/85 g: probe further)",tournament newcomer 17:09 PDT
+xw8,2026-11-21,xu2,"THROW_MIN 120 (hold for a better throw by score instead of time)",tournament newcomer 17:09 PDT

@@ -17,7 +17,7 @@
 # xr62  (xk6-based; re-entered on xr49 as xs1/xs2)
 # xr67  (xk6-based; re-entered on xr49 as xs1/xs2)
 # xs1  (retired 11-21 10:33: THREAT_THROW 4 on xr49, 1399 on 70 games, -145)
-xs2
+# xs2  (retired 11-21 17:07: old champion, -15 vs xu2 on 1769 g)
 # xs3  (retired 11-21 11:12: cap 13 on xr49, -69 vs champion xs2 on 241 g)
 # xs4  (retired 11-21 13:47: -46 to -77 vs champion xt2)
 # xs5  (retired 11-21 11:52: RETREAT_HP 55 on xr49, -69 on 147 g)
@@ -52,3 +52,5 @@ xw4
 xw3
 xw5
 xw6
+xw7
+xw8
