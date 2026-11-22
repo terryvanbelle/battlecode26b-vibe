@@ -1251,3 +1251,5 @@ ya5,2026-11-22,ya0,"AUSTERE_CORE 8 (was 99 = no cut): while the kings project st
 ya6,2026-11-22,ya0,"AUSTERE_CORE 6 (probe below ya5s 8, which leads +91 on 60)",tournament newcomer 01:38 PDT
 ya7,2026-11-22,ya0,"MAX_BABIES 17 / MAX_BABIES_WAR 17 (the bot-cap line: 14, 15, 16 each took the title)",tournament newcomer 01:58 PDT
 ya8,2026-11-22,ya0,"WAR_NO_CAT_END 1600 (was 1200: fighters leave cats alone at war until r1600); replica 35096 and 34861 cheeseguardians points losses: 178 and 143 of our rats died to cats",tournament newcomer 02:20 PDT
+ya9,2026-11-22,ya0,"GATHER_CAT_DIST 32 (was 20: gatherers keep further from cats; cheeseguardians cat deaths 143/178)",tournament newcomer 02:38 PDT
+yb0,2026-11-22,ya0,"GATHER_CAT_DIST 13 (the other side of 20)",tournament newcomer 02:38 PDT
