@@ -242,3 +242,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:35) I think this is a great idea.  Can you also distinguish between big swings and incremental changes in your candidate naming convention?
 (06:47) Looking at our last 7 submissions, I noticed they've all been submitted at a time that ends with a '6'.  This seems like it would be a big coincidence if it were random.  Are you doing something different now?
 (06:48) Ah, it's the prod.  No worries, carry on
+(06:49) Are we keeping the VM busy with the replica runs as well?
