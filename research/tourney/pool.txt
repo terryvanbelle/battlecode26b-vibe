@@ -93,7 +93,7 @@ ya0
 # ya5  (retired 11-22 02:55: AUSTERE_CORE 8 on ya0, +6 on 318 g, neutral)
 # ya6  (retired 11-22 02:35: AUSTERE_CORE 6 on ya0, +2 on 211 g, neutral)
 # ya7  (retired 11-22 02:55: MAX_BABIES 17 on ya0, -6 on 276 g)
-ya8
+# ya8  (retired 11-22 03:15: WAR_NO_CAT_END 1600 on ya0, -28 on 246 g)
 ya9
 yb0
 yb1
