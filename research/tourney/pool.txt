@@ -127,8 +127,8 @@ sw08
 yc7
 # sw13  (retired 11-22 10:15: greed -102 on 51 g, 2 SE below; with the blitz failing, yb9 sits near the balance)
 # yc8  (retired 11-22 10:35: GRAB_BITE 40 -39 vs new champion sw08 on 116 g, -17 vs yb9; dose past yc7 overshoots)
-sw14
-yc9
+# sw14  (retired 11-22 12:35: late surge on yb9, -25 vs sw08 on 283 g)
+# yc9  (retired 11-22 12:35: THROW_MIN 72 on yb9, -22 vs sw08 on 277 g)
 # yd0  (retired 11-22 12:15: GRAB_BITE 30 on sw08 -34 on 212 g; yc7's gain on yb9 did not carry)
 # sw15  (retired 11-22 11:35: points endgame -62 vs sw08 on 176 g; points record 29-37 vs sw08 98-87)
 yd1
@@ -137,3 +137,5 @@ yd2
 sw17
 yd3
 sw18
+yd4
+sw19
