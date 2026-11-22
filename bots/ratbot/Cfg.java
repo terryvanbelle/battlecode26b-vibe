@@ -63,7 +63,7 @@ public final class Cfg {
     public static final int INCOME_WINDOW = 100;
     /** Every optional spend (spawns over the floors, babies' traps away from a king) leaves KING_RESERVE per king,
      *  never more than the upkeep to round 2000 (0 = off); digs leave DIG_RESERVE. Starvation was the top loss cause. */
-    public static final int KING_RESERVE = 600, DIG_RESERVE = 300;
+    public static final int KING_RESERVE = 400, DIG_RESERVE = 300;
     /** Austerity from round AUSTERE_FROM (0 = off) while the kings' projection (Comms.BUDGET) is 0 or less: babies lay
      *  no rat traps and no cat traps away from a king, and the king's core count drops to AUSTERE_CORE (99: no cut). */
     public static final int AUSTERE_FROM = 60, AUSTERE_CORE = 99;
