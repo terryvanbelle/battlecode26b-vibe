@@ -261,7 +261,7 @@ public final class Cfg {
     public static final int CAT_REACH = 0, CAT_REACH_TTL = 100;
     /** Endgame cat damage (0 = off): from round END_CAT at war a baby that is not needed elsewhere goes for the nearest
      *  seen or known cat (Baby.endCat). */
-    public static final int END_CAT = 1600;
+    public static final int END_CAT = 1400;
     /** END_CAT during cooperation, from this round (0 = off): cat damage weighs 0.5 of cooperation points. */
     public static final int END_CAT_COOP = 1200;
     /** A lone king's babies take END_CAT_COOP too, until this round (0 = off); with no cat known they walk to the map
