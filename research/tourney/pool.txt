@@ -87,9 +87,10 @@
 # xz9  (retired 11-22 00:55: LOW_BABIES 10 on xz2, +9 on 289 g, superseded)
 ya0
 # ya1  (retired 11-22 00:55: END_KING 1600 on xz2, +7 on 269 g, superseded)
-ya2
-ya3
+# ya2  (retired 11-22 02:15: GRAB_THREAT 11 on ya0, -23 on 273 g)
+# ya3  (retired 11-22 02:15: KING_RESERVE 250 on ya0, -33 on 263 g)
 ya4
 ya5
 ya6
 ya7
+ya8
