@@ -35,3 +35,4 @@
 | sw21 | siege economy: SIEGE_FLOOR 50 + DEF_TRAP_DIST2 400 | yd1 |
 | sw22 | throw doctrine: far hits 70%, THROW_MIN 60, hold 5 | yd1 |
 | sw23 | active king: roam 10, home mine within dist2 900 | yd1 |
+| sw24 | king defence radius: threat dist2 64, defend dist2 225 | sw19 |
