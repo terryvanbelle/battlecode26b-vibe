@@ -18,7 +18,8 @@
 | sw04 | empire v2: yb9's early game and gates, only the caps rise (5 kings, rich 2000/5, babies 20) (retired: -73) | yb9 |
 | sw05 | home guard: every baby answers the king's alarm (ALERT_DIST2 3600), threat 50, defend 400, war cap 24 | yb9 |
 | sw06 | empire v3: sw04's king caps (5, rich 2000/5) with yb9's baby caps 16 | yb9 |
-| sw07 | blitz v2: every baby from index 2 rushes until r700, caps 16 | yb9 |
+| sw07 | blitz v2: every baby from index 2 rushes until r700, caps 16 (retired: -114) | yb9 |
 | sw08 | forward hold: fighters take contested mines at war (FIGHT_POST 8), everyone fights (WAR_GATHER 0) | yb9 |
 | sw09 | trap-first: rat traps at dist2 40, from 40 cheese, reserve gate skipped within dist2 400 of our king | yb9 |
 | sw10 | king finisher: carriers seek a king within 16 and hold for a king hit to the last round, THROW_MIN 60 | yb9 |
+| sw11 | forward hold + trap-first (sw08 + sw09) | yb9 |

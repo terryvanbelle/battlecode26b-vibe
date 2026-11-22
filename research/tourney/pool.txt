@@ -115,8 +115,9 @@ yb9
 # sw04  (retired 11-22 07:40: empire v2 -73 on 155 g; replay study: top teams form 0-0.2 kings, empire unsupported; sw06 tests the rest)
 sw05
 sw06
-sw07
+# sw07  (retired 11-22 08:15: blitz v2 -114 on 53 g; blitz failed in two versions)
 yc4
 sw08
 sw09
 sw10
+sw11
