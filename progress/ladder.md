@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 10:39 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 10:43 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -21,27 +21,27 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 10:39 
 | 11 | TeamSPAARK\_SPAARK | 1820.3 | 1771-1631 | accepted |
 | 12 | thewaxmango\_PhD | 1790.6 | 1720-1652 | accepted |
 | 13 | quesswho\_bot16 | 1790.2 | 1723-1685 | accepted |
-| 14 | daannte\_v47\_Skadoosh | 1769.1 | 1838-1720 | accepted |
-| 15 | AlexT101\_finalsbot | 1762.8 | 1678-1628 | accepted |
-| 16 | quesswho\_quals | 1761.2 | 1699-1541 | accepted |
-| 17 | AdamTan12\_Icarus | 1757.3 | 2899-2997 | accepted |
-| 18 | AdamTan12\_Finals | 1734.2 | 2990-2716 | accepted |
-| 19 | bman12345678\_goonv23 | 1734.1 | 2240-1799 | accepted |
+| 14 | daannte\_v47\_Skadoosh | 1772.8 | 1838-1720 | accepted |
+| 15 | quesswho\_quals | 1761.2 | 1699-1541 | accepted |
+| 16 | AlexT101\_finalsbot | 1759.0 | 1678-1628 | accepted |
+| 17 | bman12345678\_goonv23 | 1746.9 | 2240-1799 | accepted |
+| 18 | AdamTan12\_Icarus | 1744.5 | 2899-2997 | accepted |
+| 19 | AdamTan12\_Finals | 1734.2 | 2990-2716 | accepted |
 | 20 | thewaxmango\_collegejunior | 1725.1 | 2682-2556 | accepted |
 | 21 | **vibe26b** | 1714.7 | 12694-11723 | accepted |
 | 22 | AlexT101\_usqualsbot | 1706.8 | 2691-1984 | accepted |
 | 23 | VarunVejalla\_final4\_run\_away10 | 1694.8 | 2532-2820 | accepted |
-| 24 | HugoIngelsson\_YokoOno | 1636.9 | 2732-2716 | accepted |
-| 25 | HugoIngelsson\_Xzibit | 1616.9 | 2278-2846 | accepted |
+| 24 | HugoIngelsson\_YokoOno | 1640.2 | 2732-2716 | accepted |
+| 25 | HugoIngelsson\_Xzibit | 1613.6 | 2278-2846 | accepted |
 | 26 | spsquared\_TSPAARK\_QUALS | 1569.5 | 2254-3557 | accepted |
 | 27 | outercloudstudio\_v\_1\_18 | 1504.6 | 1709-2140 | accepted |
-| 28 | CS50Crab\_protoSaberV7 | 1455.5 | 1667-1639 | accepted |
-| 29 | amcsz\_fighterrats | 1453.0 | 1706-1909 | accepted |
-| 30 | CS50Crab\_rapierV1 | 1431.5 | 1763-1996 | accepted |
-| 31 | PixelRifts\_mushakraj\_mk3 | 1426.4 | 1669-1775 | accepted |
-| 32 | ask8000\_bumchit67 | 1333.7 | 1738-1874 | accepted |
-| 33 | XSercia\_genies | 1333.1 | 1730-1897 | accepted |
-| 34 | C0derTang\_v6 | 1326.2 | 1660-1817 | accepted |
+| 28 | amcsz\_fighterrats | 1457.0 | 1706-1909 | accepted |
+| 29 | CS50Crab\_protoSaberV7 | 1451.4 | 1667-1639 | accepted |
+| 30 | PixelRifts\_mushakraj\_mk3 | 1435.3 | 1669-1775 | accepted |
+| 31 | CS50Crab\_rapierV1 | 1431.5 | 1763-1996 | accepted |
+| 32 | XSercia\_genies | 1333.1 | 1730-1897 | accepted |
+| 33 | C0derTang\_v6 | 1326.2 | 1660-1817 | accepted |
+| 34 | ask8000\_bumchit67 | 1324.8 | 1738-1874 | accepted |
 | 35 | bc26vibe\_bot | 1323.8 | 1766-2101 | accepted |
 | 36 | justinottesen\_alfredo | 1319.3 | 1592-1672 | accepted |
 | 37 | Naton-Cai\_ratplayer | 1306.6 | 1732-1763 | accepted |
@@ -49,11 +49,11 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 10:39 
 | 39 | vincentwang60\_javabot | 1242.4 | 1749-1815 | accepted |
 | 40 | bc26-example-copy | 1217.1 | 1629-1713 | accepted |
 | 41 | Victor-Ramirez-Garcia\_battleca | 1205.9 | 2019-1365 | accepted |
-| 42 | bc26-example | 1199.0 | 1638-1698 | accepted |
+| 42 | bc26-example | 1201.2 | 1638-1698 | accepted |
 | 43 | Camleaf\_mk1 | 1193.3 | 1658-1759 | accepted |
 | 44 | j2399\_weighted\_micro\_v9 | 1182.3 | 1694-1525 | accepted |
-| 45 | justinottesen\_carbonara | 1147.3 | 1704-1704 | accepted |
-| 46 | battlecode-archive\_result\_408 | 1146.0 | 1686-1662 | accepted |
+| 45 | battlecode-archive\_result\_408 | 1146.0 | 1686-1662 | accepted |
+| 46 | justinottesen\_carbonara | 1145.1 | 1704-1704 | accepted |
 | 47 | GuzziFlipFlops\_Hermesv8 | 1087.5 | 1710-1770 | accepted |
 | 48 | quanticsoul4772\_ratbot | 1039.2 | 1878-1497 | accepted |
 | 49 | seru9\_TOTAL\_AGGRO | 983.5 | 1740-1674 | accepted |
