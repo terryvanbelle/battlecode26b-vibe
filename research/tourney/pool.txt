@@ -99,7 +99,10 @@ ya9
 # yb1  (ya0-based throw dodge, +16 on 195; re-entered on champion ya9 as yb4 11-22 03:55)
 # yb2  (retired 11-22 03:55: KING_DODGE_R2 41 on ya0, -19 on 156 g)
 # yb3  (retired 11-22 03:55: FORM_BABIES 14 on ya0, +1 on 137 g, superseded)
-yb4
-yb5
-yb6
+# yb4  (ya9-based throw dodge, +18 on 192; re-entered on champion yb7 as yb9 11-22 04:55)
+# yb5  (retired 11-22 04:55: GATHER_CAT_DIST 45 on ya9, +12 on 240 g)
+# yb6  (ya9-based KING_RESERVE 500, +34 on 193; re-entered on champion yb7 as yb8 11-22 04:55)
 yb7
+yb8
+yb9
+yc0
