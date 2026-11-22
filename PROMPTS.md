@@ -238,3 +238,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:09) Is it just me, or does it look like the 20th place ELO has been rising over time?
 (06:14) I see, so basically those of us above the median are cannibalizing the ratings from those bots below the median, but the higher the bot goes the more successful it is at that
 (06:23) In an actual tournament, are there any structural advantages to coming out on top early?  I think one of your advantages will be that you can get a competent bot on the boards much more quickly than a human can
+(06:29) OK, you say that the human advantage is in new strategies.  I'm throwing that down as a challenge to you.  Can you start adding some big swings to the local tournament, instead of just incremental tunings?  Because we can play so many local games, it's low stakes to try something that's high-risk high-reward

@@ -1267,3 +1267,6 @@ yc1,2026-11-22,yb7,"SPAWN_FLOOR 375 (was 300; replica starvations since KING_RES
 yb9,2026-11-22,yb7,"ACCEPTED as LOCAL TOURNAMENT CHAMPION 11-22 06:17 PDT (BT 1660+-23 on 234 games vs yb7 1634+-11, +26 > 25); submitted #443",ACCEPTED as local champion
 yc2,2026-11-22,yb9,THROW_DODGE 13 (the dodge now covers every loaded enemy carrier; 12 was inert when it covered only carriers of ours),tournament newcomer 06:20 PDT
 yc3,2026-11-22,yb9,THROW_DODGE 5 (other side of the same retune),tournament newcomer 06:20 PDT
+yc4,2026-11-22,yb9,"BIG SWING empire (owner 11-22 challenge): up to 5 kings, formed at war from r0 too, no income test, FORM3_BANK 400, FORM_RICH 1500/5, FORM_BABIES 12, baby caps 20/20 (living kings weigh 0.5 of war points)",tournament newcomer 06:45 PDT
+yc5,2026-11-22,yb9,"BIG SWING blitz: all-in rush: rushers spawn index 2-25 until r700, baby caps and core 26 (small maps 20): kill the king, win outright",tournament newcomer 06:45 PDT
+yc6,2026-11-22,yb9,"BIG SWING cat army: every baby after the first 3 fights cats (FIGHT_EVERY 1, GATHER_FIRST 3), caps 22 (cat damage 0.5 coop / 0.3 war)",tournament newcomer 06:45 PDT
