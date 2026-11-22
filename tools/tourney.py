@@ -109,21 +109,44 @@ def cmd_rank(root):
         print(f'champion {ch}')
 
 
+def pending():
+    """bot -> games planned in runs/*/cells.tsv but not yet in their results (unfinished runs), so consecutive plans
+    do not each give a newcomer its full NEW_MIN (11-22 11:15: sw15 got 60 games in each of five plans)."""
+    out = collections.Counter()
+    for c in glob.glob(os.path.join(R, 'runs', 'tr*', 'cells.tsv')):
+        d = os.path.dirname(c)
+        if os.path.exists(os.path.join(d, 'DONE')):
+            continue
+        cells = [l.split('\t')[:2] for l in open(c) if l.strip()]
+        rf = os.path.join(d, 'results.jsonl')
+        done = sum(1 for _ in open(rf)) if os.path.exists(rf) else 0
+        left = max(0.0, 1 - done / len(cells)) if cells else 0
+        for a, b in cells:
+            for x in (a, b):
+                out[x.split('/')[-1]] += left
+    return out
+
+
 def cmd_plan(run, n):
     lad, _ = ladder()
     rate = {b: r for b, r in lad}
-    top = [b for b, r in lad if r.games >= NEW_MIN][:TOP] or [b for b, _ in lad[:TOP]]
-    new = [b for b, r in lad if r.games < NEW_MIN and b not in top]
+    pend = pending()
+    have = {b: r.games + pend[b] for b, r in lad}   # games played + games already planned
+    top = [b for b, r in lad if have[b] >= NEW_MIN][:TOP] or [b for b, _ in lad[:TOP]]
+    new = [b for b, r in lad if have[b] < NEW_MIN and b not in top]
     pairs = []
     ch = champion()
     if new:   # weight by missing games (a fresh bot outweighs a half-rated one); half its games vs the champion
-        nw = [max(NEW_MIN - rate[b].games, NEW_MIN // 4) for b in new]   # floor: a bot 2 games short still plays (11-21 21:15)
+        nw = [max(NEW_MIN - have[b], NEW_MIN // 4) for b in new]   # floor: a bot 2 games short still plays (11-21 21:15)
         for k in range(n // 2 if len(top) >= 3 else n * 5 // 6):   # few rated bots: newcomers take most of the run
             b = random.choices(new, nw)[0]
             opp = [t for t in top if t != b] or [x for x, _ in lad if x != b]
             pairs.append((b, ch if ch in rate and ch != b and random.random() < 0.5 else random.choice(opp)))
     cand = [(a, b) for i, a in enumerate(top) for b in top[i + 1:]]
-    w = [(rate[a].se + rate[b].se + 10) * math.exp(-abs(rate[a].rating - rate[b].rating) / 100) for a, b in cand]
+    # SE expected once the planned games are in (~350/sqrt(games)): an unplayed bot's prior SE of 400 would otherwise
+    # pull every top-pair game in each of several consecutive plans (11-22 11:20)
+    se = {x: min(rate[x].se, 350 / math.sqrt(max(have[x], 1))) for x in top}
+    w = [(se[a] + se[b] + 10) * math.exp(-abs(rate[a].rating - rate[b].rating) / 100) for a, b in cand]
     while len(pairs) < n and cand:
         pairs.append(random.choices(cand, w)[0])
     os.makedirs(os.path.join(R, 'runs', run), exist_ok=True)

@@ -120,7 +120,7 @@
 sw08
 # sw09  (retired 11-22 09:15: trap-first -34 on 230 g)
 sw10
-sw11
+# sw11  (retired 11-22 11:15: forward hold + trap-first on yb9, settled -28 vs sw08 on 414 g)
 sw12
 yc5
 # yc6  (retired 11-22 09:55: FORM_FROM 150 -174 on 49 g, 3 SE below)
@@ -131,3 +131,4 @@ sw14
 yc9
 yd0
 sw15
+yd1

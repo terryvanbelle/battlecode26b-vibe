@@ -22,7 +22,7 @@
 | sw08 | forward hold: fighters take contested mines at war (FIGHT_POST 8), everyone fights (WAR_GATHER 0) | yb9 |
 | sw09 | trap-first: rat traps at dist2 40, from 40 cheese, reserve gate skipped within dist2 400 of our king (retired: -34) | yb9 |
 | sw10 | king finisher: carriers seek a king within 16 and hold for a king hit to the last round, THROW_MIN 60 | yb9 |
-| sw11 | forward hold + trap-first (sw08 + sw09) | yb9 |
+| sw11 | forward hold + trap-first (sw08 + sw09) (retired: -28 vs sw08) | yb9 |
 | sw12 | pressure: forward hold + king finisher (sw08 + sw10) | yb9 |
 | sw13 | greed: 10 gatherers first, 1 in 4 fights cats, 6 rushers (retired: -102) | yb9 |
 | sw14 | late surge: richer tiers open at bank 500 / 1500, war cap 20 | yb9 |
