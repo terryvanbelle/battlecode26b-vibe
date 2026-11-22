@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 05:58 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 05:59 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -17,10 +17,10 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 05:58 
 | 7 | nzjt\_TheComplexMerlin | 1868.1 | 3044-2029 | accepted |
 | 8 | abcdezyxwv\_bestsofar | 1863.3 | 2113-1778 | accepted |
 | 9 | battlecode-archive\_testplayer | 1837.5 | 1689-1614 | accepted |
-| 10 | TeamSPAARK\_SPAARK | 1821.2 | 1724-1588 | accepted |
-| 11 | daannte\_v52\_ThisGuy | 1791.1 | 1714-1658 | accepted |
+| 10 | TeamSPAARK\_SPAARK | 1815.9 | 1724-1588 | accepted |
+| 11 | quesswho\_quals | 1789.9 | 1679-1516 | accepted |
 | 12 | thewaxmango\_PhD | 1789.2 | 1691-1621 | accepted |
-| 13 | quesswho\_quals | 1780.3 | 1679-1516 | accepted |
+| 13 | daannte\_v52\_ThisGuy | 1786.8 | 1714-1658 | accepted |
 | 14 | quesswho\_bot16 | 1775.0 | 1696-1661 | accepted |
 | 15 | daannte\_v47\_Skadoosh | 1766.5 | 1809-1692 | accepted |
 | 16 | AlexT101\_finalsbot | 1762.2 | 1646-1600 | accepted |
