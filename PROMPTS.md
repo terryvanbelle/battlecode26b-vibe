@@ -236,3 +236,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:03) Actually, instead of using the past 24h, can you just hard code the start of the more recent graphs to 8am Nov 21?  That's about when we started this new approach
 (06:04) And can you add the ELO of the 10th, 15th and 20th place replica bots, for reference?
 (06:09) Is it just me, or does it look like the 20th place ELO has been rising over time?
+(06:14) I see, so basically those of us above the median are cannibalizing the ratings from those bots below the median, but the higher the bot goes the more successful it is at that
