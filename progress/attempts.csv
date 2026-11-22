@@ -1253,3 +1253,4 @@ ya7,2026-11-22,ya0,"MAX_BABIES 17 / MAX_BABIES_WAR 17 (the bot-cap line: 14, 15,
 ya8,2026-11-22,ya0,"WAR_NO_CAT_END 1600 (was 1200: fighters leave cats alone at war until r1600); replica 35096 and 34861 cheeseguardians points losses: 178 and 143 of our rats died to cats",tournament newcomer 02:20 PDT
 ya9,2026-11-22,ya0,"GATHER_CAT_DIST 32 (was 20: gatherers keep further from cats; cheeseguardians cat deaths 143/178)",tournament newcomer 02:38 PDT
 yb0,2026-11-22,ya0,"GATHER_CAT_DIST 13 (the other side of 20)",tournament newcomer 02:38 PDT
+yb1,2026-11-22,ya0,"King.throwDodge dodges every enemy baby carrying a robot (was: only one carrying ours). Engine hitTarget damages whatever a thrown rat lands on, either team; AlexT101 bots killed ya0s king with throws 3 times (35096 DefaultSmall 456 HP, 35148 DefaultSmall 458, starvation 438)",tournament newcomer 02:45 PDT
