@@ -1260,7 +1260,7 @@ yb4,2026-11-22,ya9,King.throwDodge dodges every loaded enemy carrier (yb1 idea: 
 yb5,2026-11-22,ya9,GATHER_CAT_DIST 45 (continue the champion change 20 to 32),tournament newcomer 03:58 PDT
 yb6,2026-11-22,ya9,KING_RESERVE 500 (between 400 and 600: ya0 starved 3 times on the replica),tournament newcomer 03:58 PDT
 yb7,2026-11-22,ya9,CAT_DEFEND_R2 64 (was 36: a cat within dist2 64 of our king draws every rat that sees it; the cat line just took the title),"ACCEPTED as LOCAL TOURNAMENT CHAMPION 11-22 04:55 PDT (BT 1669+-24 on 218 games vs ya9 1634+-13, +35 > 27); submitted #442"
-yb8,2026-11-22,yb7,KING_RESERVE 500 (yb6 idea: +34 vs ya9 on 193 g; replica starvations 5 of 12 king deaths at 400),tournament newcomer 04:58 PDT
+yb8,2026-11-22,yb7,KING_RESERVE 500 (yb6 idea: +34 vs ya9 on 193 g; replica starvations 5 of 12 king deaths at 400),RETIRED 11-22 06:15 PDT: -17 vs yb7 on 266 g
 yb9,2026-11-22,yb7,King.throwDodge dodges every loaded enemy carrier (yb4 idea: +18 vs ya9 on 192 g),tournament newcomer 04:58 PDT
 yc0,2026-11-22,yb7,CAT_DEFEND_R2 100 (continue the champion change 36 to 64),tournament newcomer 04:58 PDT
 yc1,2026-11-22,yb7,"SPAWN_FLOOR 375 (was 300; replica starvations since KING_RESERVE 400: 35423 ZeroDay cheese out r1530, starved r1561)",tournament newcomer 05:40 PDT

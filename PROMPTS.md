@@ -237,3 +237,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:04) And can you add the ELO of the 10th, 15th and 20th place replica bots, for reference?
 (06:09) Is it just me, or does it look like the 20th place ELO has been rising over time?
 (06:14) I see, so basically those of us above the median are cannibalizing the ratings from those bots below the median, but the higher the bot goes the more successful it is at that
+(06:23) In an actual tournament, are there any structural advantages to coming out on top early?  I think one of your advantages will be that you can get a competent bot on the boards much more quickly than a human can
