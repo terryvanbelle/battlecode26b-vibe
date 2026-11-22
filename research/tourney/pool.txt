@@ -134,13 +134,15 @@
 yd1
 sw16
 # yd2  (retired 11-22 12:55: FIGHT_POST 16 -18 vs sw08 on 147 g; 12 is the better dose)
-sw17
+# sw17  (retired 11-22 13:35: forward king on sw08, settled -25 vs yd1 on 224 g; its port to yd1 is sw20)
 # yd3  (retired 11-22 12:55: WAR_GATHER 1 -57 vs sw08 on 68 g)
 # sw18  (retired 11-22 12:55: cat feeding -59 vs sw08 on 80 g)
 yd4
 sw19
-yd5
+# yd5  (retired 11-22 13:35: FIGHT_POST 14 -95 vs yd1 on 50 g)
 yd6
 yd7
 sw20
 sw21
+yd8
+yd9

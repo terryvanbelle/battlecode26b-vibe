@@ -1292,13 +1292,15 @@ sw15,2026-11-22,sw08,"BIG SWING points endgame (sw08 loses more games on points 
 yd1,2026-11-22,sw08,"FIGHT_POST 12 (from 8; dose on the champion's forward hold: more home-half mines count as contested posts)","ACCEPTED 11-22 12:55 PDT as local champion: +47 over sw08 on 230 g (needs > +25); submission 445"
 sw16,2026-11-22,sw08,"BIG SWING cat endgame (points endgame v2: sw15 lost on points; keep only the cat-damage push, drop the early endgame kings and rescue): END_CAT 1600 (from 1850), END_CAT_COOP 1200 (from 1500)",tournament newcomer 11:38 PDT
 yd2,2026-11-22,sw08,"FIGHT_POST 16 (dose: yd1 FIGHT_POST 12 leads sw08 +25 on 107 g)","RETIRED 11-22 12:55 PDT: -18 vs sw08 on 147 g"
-sw17,2026-11-22,sw08,"BIG SWING forward king (high risk): KING_FRONT 5 and KP_FRONT 5 (from 20): the king may seat and path nearer the bisector, closer to the held mines and the fight; the 20 guard was set because kings near the bisector were bitten to death",tournament newcomer 11:58 PDT
+sw17,2026-11-22,sw08,"BIG SWING forward king (high risk): KING_FRONT 5 and KP_FRONT 5 (from 20): the king may seat and path nearer the bisector, closer to the held mines and the fight; the 20 guard was set because kings near the bisector were bitten to death","RETIRED 11-22 13:35 PDT: settled -25 vs yd1 on 224 g (ported to yd1 as sw20)"
 yd3,2026-11-22,sw08,"WAR_GATHER 1 (from 0; sw08 set 0 = everyone fights at war; 1 = gatherers ignore non-adjacent enemies but still face)","RETIRED 11-22 12:55 PDT: -57 vs sw08 on 68 g"
 sw18,2026-11-22,sw08,"BIG SWING cat feeding: carriers walk enemy rats to cats seen within 12 (from 6) and value a cat feed at 300 (from 150): kill grabbed rats on cats","RETIRED 11-22 12:55 PDT: -59 vs sw08 on 80 g"
 yd4,2026-11-22,sw08,"RETREAT_HP 55 (from 40; forward-held fighters fall back to the king sooner)",tournament newcomer 12:38 PDT
 sw19,2026-11-22,sw08,"BIG SWING combination of the two leaders on sw08: yd1 (FIGHT_POST 12, +45) + sw16 cat endgame (END_CAT 1600, END_CAT_COOP 1200, +31)",tournament newcomer 12:38 PDT
-yd5,2026-11-22,yd1,"FIGHT_POST 14 (dose between yd1's 12, which won, and yd2's 16, which lost)",tournament newcomer 12:58 PDT
+yd5,2026-11-22,yd1,"FIGHT_POST 14 (dose between yd1's 12, which won, and yd2's 16, which lost)","RETIRED 11-22 13:35 PDT: -95 vs yd1 on 50 g"
 yd6,2026-11-22,yd1,"MAX_BABIES_WAR 18 (from 16; more fighters for the held posts)",tournament newcomer 12:58 PDT
 yd7,2026-11-22,yd1,"KING_RESERVE 300 (from 400; frees bank for spawns)",tournament newcomer 12:58 PDT
 sw20,2026-11-22,yd1,"BIG SWING forward king on the new champion (sw17 on sw08 led +29 on 130 g): KING_FRONT 5, KP_FRONT 5",tournament newcomer 12:58 PDT
 sw21,2026-11-22,yd1,"BIG SWING siege economy (replica: AlexT101 sieges our king with 7-14 rats): SIEGE_FLOOR 50 (spawn floors drop to 50 while enemies are in the king's sight at war) + DEF_TRAP_DIST2 400 (rat traps near our king skip the reserve gates)",tournament newcomer 13:18 PDT
+yd8,2026-11-22,yd1,"GATHER_FIRST 5 (from 6; one more early fighter for the held posts)",tournament newcomer 13:38 PDT
+yd9,2026-11-22,yd1,"ALERT_DIST2 400 (from 225; babies answer the king's alarm from farther: a mild home guard, unlike sw05's 3600 bundle)",tournament newcomer 13:38 PDT
