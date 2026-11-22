@@ -109,6 +109,6 @@ yb9
 # yc1  (retired 11-22 06:45: SPAWN_FLOOR 375 on yb7, -0 on 174 g; base superseded)
 yc2
 yc3
-yc4
-yc5
-yc6
+sw01
+sw02
+sw03
