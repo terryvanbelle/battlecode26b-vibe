@@ -123,6 +123,7 @@ sw10
 sw11
 sw12
 yc5
-yc6
+# yc6  (retired 11-22 09:55: FORM_FROM 150 -174 on 49 g, 3 SE below)
 yc7
 sw13
+yc8
