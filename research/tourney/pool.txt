@@ -95,7 +95,10 @@ ya0
 # ya7  (retired 11-22 02:55: MAX_BABIES 17 on ya0, -6 on 276 g)
 # ya8  (retired 11-22 03:15: WAR_NO_CAT_END 1600 on ya0, -28 on 246 g)
 ya9
-yb0
-yb1
-yb2
-yb3
+# yb0  (retired 11-22 03:55: GATHER_CAT_DIST 13 on ya0, +16 on 301; the other side, 32, became champion)
+# yb1  (ya0-based throw dodge, +16 on 195; re-entered on champion ya9 as yb4 11-22 03:55)
+# yb2  (retired 11-22 03:55: KING_DODGE_R2 41 on ya0, -19 on 156 g)
+# yb3  (retired 11-22 03:55: FORM_BABIES 14 on ya0, +1 on 137 g, superseded)
+yb4
+yb5
+yb6

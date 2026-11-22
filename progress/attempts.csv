@@ -1247,12 +1247,15 @@ ya1,2026-11-21,xz2,"END_KING 1600 (lone king forms a second from r1600, was 1850
 ya2,2026-11-22,ya0,GRAB_THREAT 11 (xz7 idea: +47 vs xz2 on 255 g),tournament newcomer 00:58 PDT
 ya3,2026-11-22,ya0,KING_RESERVE 250 (continue the champion change: 600 to 400 gained +55),tournament newcomer 00:58 PDT
 ya4,2026-11-22,ya0,"DIG_RESERVE 200 (the matching dig reserve, was 300)",tournament newcomer 00:58 PDT
-ya5,2026-11-22,ya0,"AUSTERE_CORE 8 (was 99 = no cut): while the kings project starvation the core count drops to 8; replica 35005: ya0 starved on DefaultMedium (cheese out r510) and popthecork (r577) vs AdamTan12_Finals",tournament newcomer 01:20 PDT
+ya5,2026-11-22,ya0,AUSTERE_CORE 8 (was 99 = no cut): while the kings project starvation the core count drops to 8; replica 35005: ya0 starved on DefaultMedium (cheese out r510) and popthecork (r577) vs AdamTan12_Finals,tournament newcomer 01:20 PDT
 ya6,2026-11-22,ya0,"AUSTERE_CORE 6 (probe below ya5s 8, which leads +91 on 60)",tournament newcomer 01:38 PDT
 ya7,2026-11-22,ya0,"MAX_BABIES 17 / MAX_BABIES_WAR 17 (the bot-cap line: 14, 15, 16 each took the title)",tournament newcomer 01:58 PDT
-ya8,2026-11-22,ya0,"WAR_NO_CAT_END 1600 (was 1200: fighters leave cats alone at war until r1600); replica 35096 and 34861 cheeseguardians points losses: 178 and 143 of our rats died to cats",tournament newcomer 02:20 PDT
-ya9,2026-11-22,ya0,"GATHER_CAT_DIST 32 (was 20: gatherers keep further from cats; cheeseguardians cat deaths 143/178)",tournament newcomer 02:38 PDT
-yb0,2026-11-22,ya0,"GATHER_CAT_DIST 13 (the other side of 20)",tournament newcomer 02:38 PDT
+ya8,2026-11-22,ya0,WAR_NO_CAT_END 1600 (was 1200: fighters leave cats alone at war until r1600); replica 35096 and 34861 cheeseguardians points losses: 178 and 143 of our rats died to cats,tournament newcomer 02:20 PDT
+ya9,2026-11-22,ya0,GATHER_CAT_DIST 32 (was 20: gatherers keep further from cats; cheeseguardians cat deaths 143/178),"ACCEPTED as LOCAL TOURNAMENT CHAMPION 11-22 03:55 PDT (BT 1649+-22 on 257 games vs ya0 1609+-8, +40 > 23); submitted #441"
+yb0,2026-11-22,ya0,GATHER_CAT_DIST 13 (the other side of 20),tournament newcomer 02:38 PDT
 yb1,2026-11-22,ya0,"King.throwDodge dodges every enemy baby carrying a robot (was: only one carrying ours). Engine hitTarget damages whatever a thrown rat lands on, either team; AlexT101 bots killed ya0s king with throws 3 times (35096 DefaultSmall 456 HP, 35148 DefaultSmall 458, starvation 438)",tournament newcomer 02:45 PDT
-yb2,2026-11-22,ya0,"KING_DODGE_R2 41 (was 25: the king dodges cats from further away)",tournament newcomer 02:58 PDT
+yb2,2026-11-22,ya0,KING_DODGE_R2 41 (was 25: the king dodges cats from further away),tournament newcomer 02:58 PDT
 yb3,2026-11-22,ya0,"FORM_BABIES 14 (was 16: the first king opens a formation site with 14 babies; lone-king points losses 34861, 34908, 35096)",tournament newcomer 03:38 PDT
+yb4,2026-11-22,ya9,King.throwDodge dodges every loaded enemy carrier (yb1 idea: +16 vs ya0 on 195 g),tournament newcomer 03:58 PDT
+yb5,2026-11-22,ya9,GATHER_CAT_DIST 45 (continue the champion change 20 to 32),tournament newcomer 03:58 PDT
+yb6,2026-11-22,ya9,KING_RESERVE 500 (between 400 and 600: ya0 starved 3 times on the replica),tournament newcomer 03:58 PDT
