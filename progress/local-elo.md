@@ -1,22 +1,22 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 27042 games in one fit as of 2026-11-22 11:58 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 27349 games in one fit as of 2026-11-22 12:18 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
 | Champion from (PDT) | Bot | Change on base | Submission | Rating +- SE | Games |
 |---|---|---|---:|---:|---:|
-| 2026-11-21 08:20 | xk6 | starting champion (tournament began) |  | 1402 +- 14 | 662 |
-| 2026-11-21 09:13 | xr49 | MAX_BABIES 14 on xk6 | #432 | 1446 +- 10 | 1167 |
-| 2026-11-21 11:12 | xs2 | KING_THREAT_D2 26 on xr49 | #433 | 1473 +- 8 | 1848 |
-| 2026-11-21 13:27 | xt2 | MAX_BABIES 15 on xs2 | #434 | 1476 +- 9 | 1689 |
-| 2026-11-21 15:07 | xu2 | KING_THREAT_D2 30 on xt2 | #435 | 1478 +- 8 | 2042 |
-| 2026-11-21 17:50 | xw6 | THROW_HOLD 10 on xu2 | #436 | 1517 +- 9 | 1747 |
-| 2026-11-21 19:55 | xw9 | MAX_BABIES 16 on xw6 | #437 | 1525 +- 8 | 1872 |
-| 2026-11-21 21:55 | xx9 | GRAB_THREAT 15 on xw9 | #438 | 1521 +- 9 | 1666 |
-| 2026-11-21 23:15 | xz2 | LOW_FLOOR 200 on xx9 | #439 | 1540 +- 10 | 1373 |
-| 2026-11-22 00:55 | ya0 | KING_RESERVE 400 on xz2 | #440 | 1564 +- 8 | 2087 |
-| 2026-11-22 03:55 | ya9 | GATHER_CAT_DIST 32 on ya0 | #441 | 1593 +- 10 | 1176 |
-| 2026-11-22 04:55 | yb7 | CAT_DEFEND_R2 64 on ya9 | #442 | 1592 +- 11 | 1175 |
-| 2026-11-22 06:17 | yb9 | throw dodge: dodge any carrying enemy rat on yb7 | #443 | 1600 +- 7 | 2721 |
-| 2026-11-22 10:36 | sw08 | forward hold: FIGHT_POST 8 + WAR_GATHER 0 (big swing) on yb9 | #444 | 1624 +- 11 | 957 |
+| 2026-11-21 08:20 | xk6 | starting champion (tournament began) |  | 1401 +- 14 | 662 |
+| 2026-11-21 09:13 | xr49 | MAX_BABIES 14 on xk6 | #432 | 1445 +- 10 | 1167 |
+| 2026-11-21 11:12 | xs2 | KING_THREAT_D2 26 on xr49 | #433 | 1472 +- 8 | 1848 |
+| 2026-11-21 13:27 | xt2 | MAX_BABIES 15 on xs2 | #434 | 1475 +- 9 | 1689 |
+| 2026-11-21 15:07 | xu2 | KING_THREAT_D2 30 on xt2 | #435 | 1477 +- 8 | 2042 |
+| 2026-11-21 17:50 | xw6 | THROW_HOLD 10 on xu2 | #436 | 1516 +- 9 | 1747 |
+| 2026-11-21 19:55 | xw9 | MAX_BABIES 16 on xw6 | #437 | 1524 +- 8 | 1872 |
+| 2026-11-21 21:55 | xx9 | GRAB_THREAT 15 on xw9 | #438 | 1519 +- 9 | 1666 |
+| 2026-11-21 23:15 | xz2 | LOW_FLOOR 200 on xx9 | #439 | 1538 +- 10 | 1373 |
+| 2026-11-22 00:55 | ya0 | KING_RESERVE 400 on xz2 | #440 | 1562 +- 8 | 2087 |
+| 2026-11-22 03:55 | ya9 | GATHER_CAT_DIST 32 on ya0 | #441 | 1590 +- 10 | 1176 |
+| 2026-11-22 04:55 | yb7 | CAT_DEFEND_R2 64 on ya9 | #442 | 1589 +- 11 | 1175 |
+| 2026-11-22 06:17 | yb9 | throw dodge: dodge any carrying enemy rat on yb7 | #443 | 1596 +- 7 | 2736 |
+| 2026-11-22 10:36 | sw08 | forward hold: FIGHT_POST 8 + WAR_GATHER 0 (big swing) on yb9 | #444 | 1619 +- 11 | 1064 |
