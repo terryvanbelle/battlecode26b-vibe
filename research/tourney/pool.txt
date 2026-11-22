@@ -85,7 +85,7 @@
 # xz7  (xz2-based GRAB_THREAT 11, +47 on 255; re-entered on champion ya0 as ya2 11-22 00:55)
 # xz8  (retired 11-22 00:55: LOW_FLOOR 300 on xz2, -17 on 273 g)
 # xz9  (retired 11-22 00:55: LOW_BABIES 10 on xz2, +9 on 289 g, superseded)
-ya0
+# ya0  (retired 11-22 04:15: old champion, -38 vs ya9 on 1959 g)
 # ya1  (retired 11-22 00:55: END_KING 1600 on xz2, +7 on 269 g, superseded)
 # ya2  (retired 11-22 02:15: GRAB_THREAT 11 on ya0, -23 on 273 g)
 # ya3  (retired 11-22 02:15: KING_RESERVE 250 on ya0, -33 on 263 g)
@@ -102,3 +102,4 @@ ya9
 yb4
 yb5
 yb6
+yb7
