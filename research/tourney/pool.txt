@@ -51,7 +51,7 @@
 # xw4  (xu2-based; superseded by champion xw6 11-21 17:50)
 # xw3  (retired 11-21 17:27: own-king throw guard on xu2, -6 on 339 g)
 # xw5  (xu2-based; superseded by champion xw6 11-21 17:50)
-xw6
+# xw6  (retired 11-21 21:55: below or superseded by champion xx9)
 # xw7  (retired 11-21 17:47: THROW_HOLD 14 on xu2, -161 on 81 g)
 # xw8  (xu2-based; superseded by champion xw6 11-21 17:50)
 xw9
@@ -67,12 +67,16 @@ xw9
 xx9
 # xy0  (retired 11-21 21:15: KING_THREAT_D2 36 on xw9, +6 on 234 g, flat)
 # xy1  (retired 11-21 21:35: GRAB_MARGIN 5 on xw9, +10 on 210 g, flat)
-xy2
+# xy2  (retired 11-21 21:55: below or superseded by champion xx9)
 # xy3  (retired 11-21 21:15: GRAB_MARGIN 0 on xw9, +5 on 134 g)
 # xy4  (retired 11-21 21:15: GRAB_BC 8000 on xw9, -10 on 99 g)
-xy5
-xy6
+# xy5  (retired 11-21 21:55: below or superseded by champion xx9)
+# xy6  (xw9-based; idea re-entered on champion xx9 11-21 21:55)
 # xy7  (retired 11-21 21:35: SPAWN_FLOOR 600 on xw9, -61 on 44 g)
-xy8
-xy9
-xz0
+# xy8  (retired 11-21 21:55: below or superseded by champion xx9)
+# xy9  (retired 11-21 21:55: below or superseded by champion xx9)
+# xz0  (xw9-based; idea re-entered on champion xx9 11-21 21:55)
+xz1
+xz2
+xz3
+xz4
