@@ -103,7 +103,7 @@
 # yb5  (retired 11-22 04:55: GATHER_CAT_DIST 45 on ya9, +12 on 240 g)
 # yb6  (ya9-based KING_RESERVE 500, +34 on 193; re-entered on champion yb7 as yb8 11-22 04:55)
 yb7
-yb8
+# yb8  (retired 11-22 06:15: KING_RESERVE 500, -17 vs yb7 on 266 g)
 yb9
 yc0
 yc1

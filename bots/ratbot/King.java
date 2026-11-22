@@ -434,7 +434,7 @@ public final class King {
         RobotController rc = G.rc;
         int[] hits = null;
         for (RobotInfo e : enemies) {
-            if (e.type != UnitType.BABY_RAT || !Baby.holdsOurs(e) || G.cheb(e.location, c) > Cfg.THROW_DODGE) continue;
+            if (e.type != UnitType.BABY_RAT || e.carryingRobot == null || G.cheb(e.location, c) > Cfg.THROW_DODGE) continue;
             if (hits == null) {
                 hits = new int[9];
                 if (DODGE_MASK == null) {
