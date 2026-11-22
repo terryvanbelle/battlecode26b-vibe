@@ -232,3 +232,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (18:33) Please add graphs to progress/ for local ELO whenever we have a new champion.  Also graphs for replica ELO and position on the ladder.  Use wall clock time for the horizontal axis for all of them
 (18:34) Make sure to keep these graphs up to date
 (05:54) Good morning!  I see from the graphs that you've improved a lot on the local and replica ELO, and no improvement on the ranking.  I'm pretty happy with that so far.  I suspect that there's a large cliff in the fitness landscape between us and the top bots, and we're slowly climbing up it
+(05:57) Yes, please do.  And let's get rid of the orange vertical bars, they're not really contributing

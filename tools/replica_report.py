@@ -5,8 +5,8 @@
 
 Writes progress/ladder.md + ladder.png (the Rankings page: galaxy's displayed rating, with each team's game W-L
 from the replica rows of progress/games.csv) and progress/rating-history.md + rating-history.png (our displayed
-rating after each rated match, from /match/historical_rating/, with our submissions and the milestones of
-progress/milestones.csv marked), and progress/ladder-position.png + ladder-position.csv (our rank on the ladder over
+rating after each rated match, from /match/historical_rating/: whole history and last 24 h, milestones of
+progress/milestones.csv dashed; no submission bars, owner 11-22), and progress/ladder-position.png + ladder-position.csv (our rank on the ladder over
 time, rebuilt from every ladder team's rating history: at each of our rated matches, 1 + the teams whose latest rating
 by then is higher; owner 11-21). Regenerate, do not edit. Charts need matplotlib (tools/.venv).
 """
@@ -61,7 +61,7 @@ def ladder_md(teams, wl, now):
 def history_md(hist, subs, now, marks=()):
     L = ['# Rating history (replica)', '',
          f'Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, '
-         f'with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched '
+         f'over the whole history and the last 24 hours, with milestones dashed. Regenerate with `tools/replica_report.py`; data fetched '
          f'{now:%Y-%m-%d %H:%M} PDT. Times are Pacific.', '',
          '![rating history](rating-history.png)', '',
          'Our position on the ladder over time (rebuilt from every team\'s rating history; `ladder-position.csv`):', '',
@@ -105,29 +105,43 @@ def charts(teams, hist, subs, out, marks=(), now=None):
     fig.tight_layout()
     fig.savefig(os.path.join(out, 'ladder.png'), dpi=110)
     plt.close(fig)
-    fig, ax = plt.subplots(figsize=(10, 4))
-    if hist:
-        ax.plot([w for w, _ in hist], [r for _, r in hist], 'o-', color='#2a6fdb', ms=3)
-    for s in subs:
-        t = ts(s['created'])
-        ax.axvline(t, color='#d9480f', alpha=0.4, lw=1)
-        ax.text(t, ax.get_ylim()[1], f' #{s["id"]} {s["package"] or ""}', rotation=90, va='top', fontsize=7,
-                color='#d9480f')
-    for i, (when, label) in enumerate(marks):
-        ax.axvline(when, color=MS.COLOR, ls='--', lw=1.3)
-        t = ax.text(when, 0.01, MS.tag(i), transform=ax.get_xaxis_transform(), va='bottom', ha='center', fontsize=7,
-                    color='white', clip_on=True, bbox=dict(boxstyle='round,pad=0.15', fc=MS.COLOR, ec='none'))
-        t.set_in_layout(False)
-    times = [w for w, _ in hist] + [ts(s['created']) for s in subs] + [w for w, _ in marks] + ([now] if now else [])
-    if times:
-        pad = max((max(times) - min(times)) / 40, dt.timedelta(minutes=10))
-        ax.set_xlim(min(times) - pad, max(times) + pad)
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M', tz=PDT))
-    ax.set_xlabel('time (PDT)')
-    ax.set_ylabel('displayed rating')
-    ax.set_title(f'{TEAM} rating on the replica (orange: submissions; dashed: milestones)')
-    ax.grid(color='#e9ecef')
-    fig.autofmt_xdate()
+    rating_chart(hist, out, marks, now)
+    return True
+
+
+def rating_chart(hist, out, marks=(), now=None, recent_h=24):
+    """Two panels on wall-clock axes: our displayed rating over the whole history, and the last recent_h hours."""
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    import matplotlib.dates as mdates
+    if not hist:
+        return
+    now = now or hist[-1][0]
+    t0 = now - dt.timedelta(hours=recent_h)
+    fig, axs = plt.subplots(2, 1, figsize=(10, 7))
+    for k, ax in enumerate(axs):
+        hh = hist if k == 0 else [x for x in hist if x[0] >= t0]
+        if k == 1:   # carry the rating held at the window start, and hold the last one to now
+            before = [x for x in hist if x[0] < t0]
+            hh = ([(t0, before[-1][1])] if before else []) + hh
+            hh = hh + [(now, hh[-1][1])] if hh else hist[-1:]
+        ax.plot([w for w, _ in hh], [r for _, r in hh], '-', color='#2a6fdb', lw=1.4)
+        pts = hist if k == 0 else [x for x in hist if x[0] >= t0]
+        ax.plot([w for w, _ in pts], [r for _, r in pts], 'o', color='#2a6fdb', ms=2.5)
+        if k == 1:
+            ax.set_xlim(t0, now + dt.timedelta(minutes=20))
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M', tz=PDT))
+            ax.set_title(f'last {recent_h} h', fontsize=9)
+        else:
+            marks_on(ax, marks)
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d', tz=PDT))
+            ax.set_title(f'{TEAM} rating on the replica (dashed: milestones)')
+        w, r = hh[-1]
+        ax.annotate(f'{r:.1f}', (w, r), xytext=(-40, 8), textcoords='offset points', fontsize=8, color='#212529')
+        ax.set_ylabel('displayed rating')
+        ax.grid(color='#e9ecef')
+    axs[1].set_xlabel('time (PDT)')
     if marks:
         fig.text(0.01, 0.005, 'Milestones: ' + MS.footnote(marks), fontsize=7, color=MS.COLOR, va='bottom', wrap=True)
         fig.tight_layout(rect=(0, 0.05, 1, 1))
@@ -135,7 +149,6 @@ def charts(teams, hist, subs, out, marks=(), now=None):
         fig.tight_layout()
     fig.savefig(os.path.join(out, 'rating-history.png'), dpi=110)
     plt.close(fig)
-    return True
 
 
 def rank_history(s, ep, teams, hist):
@@ -170,7 +183,7 @@ def marks_on(ax, marks):
 
 
 def rank_chart(ranks, subs, out, marks=(), now=None, recent_h=24):
-    """Two panels on wall-clock axes: the whole history, and the last recent_h hours with each submission labeled."""
+    """Two panels on wall-clock axes: the whole history, and the last recent_h hours."""
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -189,15 +202,9 @@ def rank_chart(ranks, subs, out, marks=(), now=None, recent_h=24):
         ax.step([w for w, _, _ in rr], [n for _, _, n in rr], where='post', color='#adb5bd', lw=1, label='teams rated')
         ax.set_ylim(max(n for _, _, n in rr) + 1, 0.5)
         if k == 1:
-            for sub in subs:
-                t = ts(sub['created'])
-                if t >= t0:
-                    ax.axvline(t, color='#d9480f', alpha=0.5, lw=1)
-                    ax.text(t, 1, f' #{sub["id"]} {sub["package"] or ""}', rotation=90, va='top', fontsize=7,
-                            color='#d9480f')
             ax.set_xlim(t0, now + dt.timedelta(minutes=20))
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M', tz=PDT))
-            ax.set_title(f'last {recent_h} h (orange: submissions)', fontsize=9)
+            ax.set_title(f'last {recent_h} h', fontsize=9)
         else:
             marks_on(ax, marks)
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d', tz=PDT))
@@ -243,9 +250,9 @@ def main(argv=None):
     with open(os.path.join(a.out, 'ladder-position.csv'), 'w') as f:
         f.write('time_pdt,rank,teams\n')
         f.writelines(f'{w:%Y-%m-%d %H:%M:%S},{r},{n}\n' for w, r, n in ranks)
-    if png and ranks:
-        rank_chart(ranks, subs, a.out, marks, now)
     me = next((i for i, t in enumerate(teams, 1) if t['name'] == TEAM), None)
+    if png and ranks:   # end the line at the live ladder (other teams move between our matches)
+        rank_chart(ranks + ([(now, me, len(teams))] if me else []), subs, a.out, marks, now)
     print(f'ladder: {len(teams)} teams, {TEAM} #{me}; history: {len(hist)} rated matches, {len(subs)} submissions'
           f'{"" if png else " (no matplotlib: charts skipped)"}')
 
