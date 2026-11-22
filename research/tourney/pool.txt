@@ -77,7 +77,7 @@
 # xy9  (retired 11-21 21:55: below or superseded by champion xx9)
 # xz0  (xw9-based; idea re-entered on champion xx9 11-21 21:55)
 # xz1  (retired 11-21 22:55: SPAWN_FLOOR 450 on xx9, -25 on 127 g)
-xz2
+# xz2  (retired 11-22 01:36: old champion, -41 vs ya0 on 1244 g)
 # xz3  (xx9-based GRAB_THREAT 11; re-entered on champion xz2 as xz7 11-21 23:15)
 # xz4  (retired 11-21 22:35: DEFEND_D2 144 on xx9, -48 on 77 g)
 # xz5  (retired 11-21 23:15: CARRY_CAT 10 on xx9, -123 on 68 g)
@@ -91,3 +91,4 @@ ya2
 ya3
 ya4
 ya5
+ya6
