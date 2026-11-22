@@ -64,7 +64,7 @@
 # xx6  (xw6-based; idea re-entered on champion xw9 11-21 19:55)
 # xx7  (xw6-based GRAB_THREAT 8, +6 vs xw9 on 64 g; re-entered on xw9 as xy2 11-21 20:15)
 # xx8  (retired 11-21 19:55: xw6-based, below xw6)
-xx9
+# xx9  (retired 11-22 00:15: old champion, -29 vs xz2 on 1537 g)
 # xy0  (retired 11-21 21:15: KING_THREAT_D2 36 on xw9, +6 on 234 g, flat)
 # xy1  (retired 11-21 21:35: GRAB_MARGIN 5 on xw9, +10 on 210 g, flat)
 # xy2  (retired 11-21 21:55: below or superseded by champion xx9)
