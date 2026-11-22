@@ -204,7 +204,7 @@ public final class Cfg {
     public static final int WALL_BLIND_CAP = 6;
     /** Grab micro (GrabMicro) score weights: GRAB_THREAT per enemy that can grab us, GRAB_BITE for a bite; it acts
      *  only when the best option beats standing still by GRAB_MARGIN, and runs only with GRAB_BC bytecodes left. */
-    public static final int GRAB_THREAT = 25, GRAB_BITE = 20, GRAB_MARGIN = 10, GRAB_BC = 12000;
+    public static final int GRAB_THREAT = 15, GRAB_BITE = 20, GRAB_MARGIN = 10, GRAB_BC = 12000;
     /** With an enemy within 2 the grab micro also scores tiles and facings that hand our cheese to the king
      *  (+GM_DELIVER; 0 = off); with none worth it Baby.deliver keeps its facing (why 'G') while the bank holds DG_BANK.
      *  The micro's scoring stops with fewer than GM_LEFT bytecodes left. */
