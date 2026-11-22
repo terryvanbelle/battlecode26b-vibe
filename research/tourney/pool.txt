@@ -119,10 +119,10 @@
 # yc4  (retired 11-22 10:15: MAX_BABIES 14 settled level, -2 on 454 g; frees a slot)
 sw08
 # sw09  (retired 11-22 09:15: trap-first -34 on 230 g)
-sw10
+# sw10  (retired 11-22 11:55: king finisher on yb9, settled -11 vs sw08 on 678 g; its pairing with forward hold is sw12)
 # sw11  (retired 11-22 11:15: forward hold + trap-first on yb9, settled -28 vs sw08 on 414 g)
 sw12
-yc5
+# yc5  (retired 11-22 11:55: RUSH_UNTIL 400 on yb9, settled -19 vs sw08 on 320 g)
 # yc6  (retired 11-22 09:55: FORM_FROM 150 -174 on 49 g, 3 SE below)
 yc7
 # sw13  (retired 11-22 10:15: greed -102 on 51 g, 2 SE below; with the blitz failing, yb9 sits near the balance)
@@ -133,3 +133,5 @@ yd0
 # sw15  (retired 11-22 11:35: points endgame -62 vs sw08 on 176 g; points record 29-37 vs sw08 98-87)
 yd1
 sw16
+yd2
+sw17
