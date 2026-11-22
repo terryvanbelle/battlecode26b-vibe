@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 04:59 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 05:01 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -12,15 +12,15 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 04:59 
 | 2 | awu7\_awubot\_us | 2001.1 | 1861-1847 | accepted |
 | 3 | uravt\_Version35 | 1977.2 | 1873-1859 | accepted |
 | 4 | uravt\_Version41 | 1962.6 | 2029-1805 | accepted |
-| 5 | awu7\_awubot\_quals | 1924.9 | 1705-1646 | accepted |
+| 5 | awu7\_awubot\_quals | 1927.2 | 1705-1646 | accepted |
 | 6 | nubbbbbb\_testplayer | 1878.4 | 1641-1533 | accepted |
-| 7 | nzjt\_TheComplexMerlin | 1873.7 | 3044-2029 | accepted |
-| 8 | abcdezyxwv\_bestsofar | 1861.2 | 2113-1778 | accepted |
-| 9 | battlecode-archive\_testplayer | 1825.8 | 1689-1614 | accepted |
+| 7 | abcdezyxwv\_bestsofar | 1873.5 | 2113-1778 | accepted |
+| 8 | nzjt\_TheComplexMerlin | 1859.1 | 3044-2029 | accepted |
+| 9 | battlecode-archive\_testplayer | 1836.6 | 1689-1614 | accepted |
 | 10 | daannte\_v52\_ThisGuy | 1808.1 | 1714-1658 | accepted |
 | 11 | TeamSPAARK\_SPAARK | 1793.3 | 1724-1588 | accepted |
-| 12 | thewaxmango\_PhD | 1792.5 | 1691-1621 | accepted |
-| 13 | quesswho\_bot16 | 1783.1 | 1696-1661 | accepted |
+| 12 | quesswho\_bot16 | 1783.1 | 1696-1661 | accepted |
+| 13 | thewaxmango\_PhD | 1781.7 | 1691-1621 | accepted |
 | 14 | quesswho\_quals | 1776.7 | 1679-1516 | accepted |
 | 15 | daannte\_v47\_Skadoosh | 1763.1 | 1809-1692 | accepted |
 | 16 | bman12345678\_goonv23 | 1754.3 | 2208-1762 | accepted |
@@ -47,10 +47,10 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 04:59 
 | 37 | Naton-Cai\_ratplayer | 1304.4 | 1698-1734 | accepted |
 | 38 | Gavdingo\_v1 | 1299.1 | 1647-1668 | accepted |
 | 39 | vincentwang60\_javabot | 1252.5 | 1718-1777 | accepted |
-| 40 | Victor-Ramirez-Garcia\_battleca | 1224.4 | 1995-1332 | accepted |
+| 40 | Victor-Ramirez-Garcia\_battleca | 1218.8 | 1995-1332 | accepted |
 | 41 | bc26-example-copy | 1195.6 | 1606-1694 | accepted |
 | 42 | bc26-example | 1189.7 | 1611-1674 | accepted |
-| 43 | Camleaf\_mk1 | 1180.1 | 1618-1724 | accepted |
+| 43 | Camleaf\_mk1 | 1185.6 | 1618-1724 | accepted |
 | 44 | j2399\_weighted\_micro\_v9 | 1171.4 | 1661-1498 | accepted |
 | 45 | battlecode-archive\_result\_408 | 1164.1 | 1662-1635 | accepted |
 | 46 | justinottesen\_carbonara | 1161.3 | 1651-1655 | accepted |
