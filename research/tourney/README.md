@@ -12,6 +12,8 @@
 
 | swing | strategy | built on |
 |---|---|---|
-| sw01 | empire: up to 5 kings, formed at war too, no income test, cheaper formation, caps 20 | yb9 |
+| sw01 | empire: up to 5 kings, formed at war too, no income test, cheaper formation, caps 20 (retired: -197) | yb9 |
 | sw02 | blitz: rushers spawn index 2-25 until r700, caps and core 26 | yb9 |
 | sw03 | cat army: every baby after the first 3 fights cats, caps 22 | yb9 |
+| sw04 | empire v2: yb9's early game and gates, only the caps rise (5 kings, rich 2000/5, babies 20) | yb9 |
+| sw05 | home guard: every baby answers the king's alarm (ALERT_DIST2 3600), threat 50, defend 400, war cap 24 | yb9 |
