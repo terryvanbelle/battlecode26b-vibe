@@ -1214,3 +1214,6 @@ xw8,2026-11-21,xu2,THROW_MIN 120 (hold for a better throw by score instead of ti
 xw9,2026-11-21,xw6,MAX_BABIES 16 (xw5 idea: +39 vs xu2 on 226 g),tournament newcomer 17:52 PDT
 xx0,2026-11-21,xw6,"THROW_HOLD 8 (bracket the hold: 6 champion-1, 10 +62, 14 -161)",tournament newcomer 17:52 PDT
 xx1,2026-11-21,xw6,KING_RESERVE 900 (xw4 idea: +11 vs xu2 on 245 g),tournament newcomer 17:52 PDT
+xx2,2026-11-21,xw6,"THROW_FAR_PCT 70 (value far throws more; the throw line moved the champion)",tournament newcomer 18:29 PDT
+xx3,2026-11-21,xw6,"THROW_MIN 63 (with the longer hold, accept a smaller hit)",tournament newcomer 18:29 PDT
+xx4,2026-11-21,xw6,"GRAB_THREAT 15 (grab micro fears enemy grabbers less)",tournament newcomer 18:29 PDT

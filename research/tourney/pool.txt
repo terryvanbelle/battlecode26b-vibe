@@ -55,5 +55,8 @@ xw6
 # xw7  (retired 11-21 17:47: THROW_HOLD 14 on xu2, -161 on 81 g)
 # xw8  (xu2-based; superseded by champion xw6 11-21 17:50)
 xw9
-xx0
-xx1
+# xx0  (retired 11-21 18:27: THROW_HOLD 8 on xw6, -61 on 76 g)
+# xx1  (retired 11-21 18:27: KING_RESERVE 900 on xw6, -72 on 77 g)
+xx2
+xx3
+xx4
