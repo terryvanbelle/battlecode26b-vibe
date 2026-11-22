@@ -48,7 +48,7 @@ public final class Cfg {
     /** Hard floor under every spawn (king upkeep). */
     public static final int SPAWN_FLOOR = 300;
     /** With fewer than LOW_BABIES babies every floor drops to LOW_FLOOR: a king without rats has no income. */
-    public static final int LOW_BABIES = 8, LOW_FLOOR = 100;
+    public static final int LOW_BABIES = 8, LOW_FLOOR = 200;
     /** At war with enemies in the king's sight every spawn floor drops to SIEGE_FLOOR (0 = off). */
     public static final int SIEGE_FLOOR = 0;
     /** Last stand (0 = off): at the base baby cost (3 or fewer live babies) every spawn floor drops to LAST_FLOOR, so
