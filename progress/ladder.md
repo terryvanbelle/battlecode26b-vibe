@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 06:19 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 06:22 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -29,18 +29,18 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 06:19 
 | 19 | **vibe26b** | 1731.3 | 12680-11707 | accepted |
 | 20 | AdamTan12\_Icarus | 1718.3 | 2875-2982 | accepted |
 | 21 | AlexT101\_usqualsbot | 1713.6 | 2665-1959 | accepted |
-| 22 | VarunVejalla\_final4\_run\_away10 | 1692.4 | 2504-2797 | accepted |
-| 23 | thewaxmango\_collegejunior | 1692.2 | 2647-2534 | accepted |
-| 24 | HugoIngelsson\_YokoOno | 1650.9 | 2705-2686 | accepted |
+| 22 | thewaxmango\_collegejunior | 1692.2 | 2647-2534 | accepted |
+| 23 | VarunVejalla\_final4\_run\_away10 | 1687.0 | 2504-2797 | accepted |
+| 24 | HugoIngelsson\_YokoOno | 1656.3 | 2705-2686 | accepted |
 | 25 | HugoIngelsson\_Xzibit | 1589.8 | 2245-2822 | accepted |
 | 26 | spsquared\_TSPAARK\_QUALS | 1574.2 | 2227-3524 | accepted |
 | 27 | outercloudstudio\_v\_1\_18 | 1528.4 | 1683-2106 | accepted |
 | 28 | amcsz\_fighterrats | 1455.4 | 1683-1884 | accepted |
-| 29 | CS50Crab\_rapierV1 | 1438.5 | 1739-1969 | accepted |
+| 29 | CS50Crab\_rapierV1 | 1447.9 | 1739-1969 | accepted |
 | 30 | CS50Crab\_protoSaberV7 | 1434.4 | 1647-1626 | accepted |
 | 31 | PixelRifts\_mushakraj\_mk3 | 1382.6 | 1642-1760 | accepted |
-| 32 | XSercia\_genies | 1363.3 | 1708-1865 | accepted |
-| 33 | bc26vibe\_bot | 1358.0 | 1748-2074 | accepted |
+| 32 | bc26vibe\_bot | 1358.0 | 1748-2074 | accepted |
+| 33 | XSercia\_genies | 1353.9 | 1708-1865 | accepted |
 | 34 | C0derTang\_v6 | 1340.4 | 1638-1788 | accepted |
 | 35 | justinottesen\_alfredo | 1329.2 | 1567-1646 | accepted |
 | 36 | ask8000\_bumchit67 | 1326.2 | 1704-1842 | accepted |
