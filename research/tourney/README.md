@@ -17,3 +17,4 @@
 | sw03 | cat army: every baby after the first 3 fights cats, caps 22 | yb9 |
 | sw04 | empire v2: yb9's early game and gates, only the caps rise (5 kings, rich 2000/5, babies 20) | yb9 |
 | sw05 | home guard: every baby answers the king's alarm (ALERT_DIST2 3600), threat 50, defend 400, war cap 24 | yb9 |
+| sw06 | empire v3: sw04's king caps (5, rich 2000/5) with yb9's baby caps 16 | yb9 |
