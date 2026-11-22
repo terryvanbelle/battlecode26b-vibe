@@ -23,9 +23,10 @@
 | sw09 | trap-first: rat traps at dist2 40, from 40 cheese, reserve gate skipped within dist2 400 of our king (retired: -34) | yb9 |
 | sw10 | king finisher: carriers seek a king within 16 and hold for a king hit to the last round, THROW_MIN 60 (retired: -11 vs sw08, settled) | yb9 |
 | sw11 | forward hold + trap-first (sw08 + sw09) (retired: -28 vs sw08) | yb9 |
-| sw12 | pressure: forward hold + king finisher (sw08 + sw10) | yb9 |
+| sw12 | pressure: forward hold + king finisher (sw08 + sw10) (retired: -20 vs sw08, settled) | yb9 |
 | sw13 | greed: 10 gatherers first, 1 in 4 fights cats, 6 rushers (retired: -102) | yb9 |
 | sw14 | late surge: richer tiers open at bank 500 / 1500, war cap 20 | yb9 |
 | sw15 | points endgame: endgame kings from r1500, endgame cat damage from r1600, rescue from r1700 (retired: -62) | sw08 |
 | sw16 | cat endgame (points endgame v2): endgame cat damage from r1600 at war, r1200 in cooperation | sw08 |
 | sw17 | forward king: king seat and path guards 20 -> 5 (may sit nearer the bisector) | sw08 |
+| sw18 | cat feeding: CARRY_CAT 12, CAT_FEED 300 | sw08 |

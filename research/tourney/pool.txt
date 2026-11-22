@@ -121,7 +121,7 @@ sw08
 # sw09  (retired 11-22 09:15: trap-first -34 on 230 g)
 # sw10  (retired 11-22 11:55: king finisher on yb9, settled -11 vs sw08 on 678 g; its pairing with forward hold is sw12)
 # sw11  (retired 11-22 11:15: forward hold + trap-first on yb9, settled -28 vs sw08 on 414 g)
-sw12
+# sw12  (retired 11-22 12:15: forward hold + king finisher on yb9, settled -20 vs sw08 on 347 g)
 # yc5  (retired 11-22 11:55: RUSH_UNTIL 400 on yb9, settled -19 vs sw08 on 320 g)
 # yc6  (retired 11-22 09:55: FORM_FROM 150 -174 on 49 g, 3 SE below)
 yc7
@@ -129,9 +129,11 @@ yc7
 # yc8  (retired 11-22 10:35: GRAB_BITE 40 -39 vs new champion sw08 on 116 g, -17 vs yb9; dose past yc7 overshoots)
 sw14
 yc9
-yd0
+# yd0  (retired 11-22 12:15: GRAB_BITE 30 on sw08 -34 on 212 g; yc7's gain on yb9 did not carry)
 # sw15  (retired 11-22 11:35: points endgame -62 vs sw08 on 176 g; points record 29-37 vs sw08 98-87)
 yd1
 sw16
 yd2
 sw17
+yd3
+sw18
