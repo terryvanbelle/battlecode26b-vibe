@@ -241,3 +241,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:29) OK, you say that the human advantage is in new strategies.  I'm throwing that down as a challenge to you.  Can you start adding some big swings to the local tournament, instead of just incremental tunings?  Because we can play so many local games, it's low stakes to try something that's high-risk high-reward
 (06:35) I think this is a great idea.  Can you also distinguish between big swings and incremental changes in your candidate naming convention?
 (06:47) Looking at our last 7 submissions, I noticed they've all been submitted at a time that ends with a '6'.  This seems like it would be a big coincidence if it were random.  Are you doing something different now?
+(06:48) Ah, it's the prod.  No worries, carry on
