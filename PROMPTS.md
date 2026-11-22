@@ -247,3 +247,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:53) My thinking had been that if the VM was sitting idle for long stretches, I'd ask if you could run some local tournament matches on it to expand our local search.  But running the replica's ranked contests is a worthy use of the VM, so let's keep things as-is
 (08:51) Can you add the size of the local tournament to the prod messages?
 (09:12) Let's aim for about 50% incremental new ideas and 50% big swings in the local tournament additions.  Let's also aim for roughly 10 bots in the tournament
+(09:45) I really like this methodology.  Can you update TRAINING_ALGORITHM so that it reflects the way that we do things now?  No need to preserve the original wording of the doc

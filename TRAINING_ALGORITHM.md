@@ -1,268 +1,312 @@
 # TRAINING_ALGORITHM.md
 
-How this project converts compute into playing strength. Written for any season: no unit, resource, score, map or tool
-of a particular year appears here; `HANDOFF.md` maps each step onto this year's tools, numbers and paths. Each rule was
-paid for by a season that lacked it; where sources conflict, the later season and the measured result win.
+How this project converts compute into playing strength. This document is written for any season, so no unit,
+resource, map or tool of a particular year appears here. `HANDOFF.md` maps each step onto this year's tools and paths.
+Where a rule carries a number, it is the measured default (§8).
+
+**The method in one paragraph.** A continuous local tournament of our own builds, rated by Bradley-Terry, decides
+which build is the champion. Every new build is one change, or one coherent strategy, made on the champion. About half
+are small tunings and half are big swings. A build that clearly out-rates the champion replaces it. The new champion is
+submitted to the contest ladder at once, with no further gate. Field games on the ladder replica supply ideas and
+measure progress, but they never accept or reject a build. Local games are cheap, so the tournament can afford
+high-risk ideas: a failed swing costs a few hundred games and nothing else.
 
 ## 0. The objective and the instruments
 
-**Objective: absolute strength against an unseen field**, as the contest ladder measures it. Beating past builds is a
-means, never the goal: local wins often exploit the incumbent's own habits, and the field reverses them often enough
-that self-play may reject a change but never accept one. When instruments disagree, that is the finding.
+**Objective: absolute strength against an unseen field, as the contest ladder measures it.** The local tournament is
+how we get there. It is not the goal, so the ladder stays the scoreboard (§5).
 
-**Terms.** The *incumbent* is the last accepted build: the active submission and every candidate's baseline. A *cell* is
-an (opponent, map, side, seed) slot both play (ladder cells have no seed). Per cell, d = the candidate's mean cell score
-(§4) minus the incumbent's, each cell counted once; D counts cells with d ≠ 0; t = Σd / √Σd² (win/loss: net / √D). A
-*block* is cells scored once, after the last game; the incumbent's on the same cells is the *control block*.
+**Why the local tournament decides.** We used to accept a build only through a paired gate on the ladder. Three
+lessons ended that gate:
+- No local measure predicted gate success. On twelve builds, no local metric did better than chance, and our
+  re-implementations of field styles saturated (93-97% wins).
+- The gate spent hours of scarce ladder capacity per candidate.
+- The field's verdict on a narrow change was mostly cell noise.
+
+Replacing the gate with a fast local search gave 12 new champions in its first 22 hours. The ladder rating rose with
+them, with dips along the way, though the ladder rank held.
+
+**Terms.**
+- The *champion* is the tournament leader that holds the title. It is also the active submission, and the base of
+  every new build.
+- A *newcomer* is a build that is still being rated.
+- The *pool* is the set of builds currently being scheduled.
+- A *run* is a batch of tournament games played as one job.
 
 | instrument | answers | blind to |
 |---|---|---|
-| rules digest (engine-checked, each fact cited to file and line) | what is possible; what each action costs | what wins |
+| rules digest (from engine source, each fact cited to a file and line) | what is possible; what each action costs | what wins |
 | replay reader + the bot's decision counters | how one game unfolded; whether a mechanism fired | frequency, value |
-| paired self-play (vs the incumbent on seeded cells, identity-controlled) | regressions, crashes, a change's cost | what both builds share; changes meant for the field |
-| sparring archetypes (our re-implementations of field styles, each checked against the bot it models) | survival against one known style | everything else |
-| frozen roster (every accepted build) | does each build still beat its ancestors (non-transitivity) | the field |
-| ladder replica (downloaded field bots, contest rules and request limits, batch ratings; the only place field bots play) | strength; what the field punishes | why |
+| **local tournament** (our builds only, Bradley-Terry over every game) | which build is strongest against our own lineage | what the field punishes that we never do |
+| ladder replica (downloaded field bots, played under contest rules and request limits; the only place field bots play) | strength against the field; what the field does that we don't | why |
+| replay studies of field games (statistics across many replays, delegated) | which behaviours separate our wins from our losses | cause, until a build tests it |
 
 ## 1. Foundation first
 
-No strategy work until every item exists and has passed a test with a known answer; every past instrument failed on
-first use, and a strategy tried on a broken base measures the defect.
+No strategy work starts until each of these exists and has passed a test with a known answer. Every past instrument
+failed on its first use, and a strategy tried on a broken base only measures the defect.
 
-1. **Rules digest** from engine source, not spec: facts cited to file and line, spec/engine disagreements listed, each
-   action's legality checks and cost order (hidden limits and free actions live there), the order of execution within a
-   round. Tally how starter-versus-starter games end (win condition or tiebreak): the graded score must track that.
-2. **Map corpus**: every map (generated ones if few) with size, symmetry, spawn geometry, resources, hazards and key
-   distances; what holds on every map is a constant, never sensed.
-3. **Runner**: headless, parallel, wall-clock bounded, no network for bots, each game checked to have run as configured
-   (bad settings fall back silently). One row per game keyed by both code hashes, map, side and seed, labelled from what
-   played: winner, ending, rounds, graded scores, exceptions, overruns. Measure the concurrency knee and per-map cost.
-4. **Determinism**: every randomness source controlled, an explicit seed per game (add a seed axis if missing), residual
-   noise stated as the floor. **Identity control**: each verdict path scores the incumbent renamed (an *identity copy*)
-   at D = 0 or the floor, again after a tool change on it or a streak of rejects (§8).
-5. **Replay reader**: per-round team aggregates, event windows, unit lives, our logs; compute maxima, first-turn cost,
-   overruns per unit type; navigation stats; losses by cause, place and attacker; the first round teams stop mirroring;
-   a census row per team-game. Fixtures pin it to the engine; new counts are reconciled with independent ones.
-6. **Bot architecture**, layered (turn loop, globals, one constants file, communication schema, map memory, navigation,
-   a handler per role), each behaviour behind a switch defaulting to the incumbent's, with greppable decision tags per
-   stage. **Moves stay symmetric when sides switch, by default**: per-unit random streams seeded from side-invariant values; ties
-   broken relative to the unit's own surroundings, never by fixed direction order, sensor order, id or team, so mirror
-   self-play exposes asymmetry bugs. Break it on purpose, behind a switch, wherever a seat-dependent engine behaviour
-   (sense order, turn order, ids) gives one seat information or tempo: an edge on one seat is still an edge. From the
-   first commit, a compute monitor counting overruns, near-limit turns and caught exceptions by stage.
-7. **Snapshot tool**: each build frozen under its own name before its first gated game and kept as an opponent with a
-   one-line purpose; a check that the working bot, switches at default, repeats the incumbent's actions on fixed cells.
-8. **Field bots**: found, downloaded, security-scanned and compiled by script, source unread; one smoke game each.
-9. **Private replica of the contest ladder**, isolated so nothing (accounts, uploads, requests, load) reaches the
-   official contest, played **as a contestant** through its API: submit, scrimmage field bots, fetch results and
-   replays. In spare capacity field bots challenge each other so ratings settle.
-10. **Tooling**: one command regenerates ratings, charts, the attempts table and the handoff's state block, failing
-    loudly. Each process change (agent model or effort, method, gate, panel version) is a dated milestone on every
-    time-axis chart. One command runs comprehensive unit tests (bot logic, every tool) after every change; each change
-    updates its tests; optimisations are pinned to slow references; each check fails once before it is trusted.
-11. **Basics battery**: absolute bars as scheduled jobs with stored rows, run on every block and on the incumbent as
-    submitted; while a row fails, candidates come from it first.
-    - economy: no idle producer or gatherer, no stockpile above a stated cap, no producer starved or sealed in;
-    - movement without getting stuck: no unit idle, stalled N turns or latched in one state without a logged reason; no
-      oscillation or unreachable target; every multi-turn computation capped with a fallback;
-    - exploration and map symmetry: enemy start positions and fixed structures known exactly once observations allow; no
-      candidate symmetry dropped unrefuted; shared facts timed to the units that act on them, rare reports first;
-    - combat: focused fire, no friendly fire, no fight begun at a local disadvantage, no unforced death or idle contact;
-    - **zero compute overruns and exceptions** on each unit's worst and first turn, on the largest map and in crowded
-      fights, worst turns within the headroom bar (§8). Against a deterministic compute count every overrun is a defect
-      wherever it occurs; against a wall clock the bar binds the incumbent under contest-like load;
-    - play symmetry: self-mirror games on symmetric maps stay mirror images until the engine's execution order first
-      intervenes (that round reported per map), and a unit test expects each decision to mirror in a mirrored world (a
-      win split proves nothing). Fix an asymmetry by giving both sides the better side's behaviour.
+1. **Rules digest from engine source, not the spec.**
+   - Cite each fact to a file and line, and list every disagreement between spec and engine.
+   - For each action, record its legality checks and the order in which it charges costs. Hidden limits and free
+     actions live there.
+   - Record the order of execution within a round.
+   - Tally how starter-versus-starter games end, by win condition or tiebreak.
+2. **Map corpus**: size, symmetry, spawn geometry, resources and key distances for every map. Anything that holds on
+   every map is a constant, never something to sense.
+3. **Runner**.
+   - It is headless, parallel, bounded in wall-clock time, gives bots no network, and checks that each game ran as
+     configured.
+   - It writes one row per game: both builds, the map, the seats, the seed, the winner, how the game ended, the
+     rounds, exceptions, and per-side counters.
+   - Measure the concurrency knee and the cost of each map.
+4. **Determinism**: control every source of randomness and give each game an explicit seed, so a game can be replayed
+   exactly.
+5. **Replay reader**.
+   - Per-round team aggregates, event windows, unit lives and our own logs.
+   - Losses by cause, place and attacker.
+   - Fixtures pin it to the engine.
+6. **Bot architecture**.
+   - Layered: a turn loop, globals, one constants file, a communication schema, map memory, navigation, and a handler
+     per role.
+   - Every tunable is a named constant, so a new build is a short edit of one file (§2.3).
+   - Moves stay symmetric when sides switch, unless a seat-dependent engine behaviour gives one seat an edge worth
+     taking.
+   - A compute monitor counts overruns and exceptions per stage from the first commit.
+7. **Snapshot tool**: freeze each build under its own name with a reason line, kept forever as a possible opponent. A
+   variant tool takes the champion plus a list of constant edits, so a new build costs one command.
+8. **Field bots**: found, downloaded, security-scanned and compiled by script. Never read their source.
+9. **Private ladder replica**: isolated from the official contest and played **as a contestant** through its API.
+   Ranked matches run continuously against the field, and replays can be downloaded.
+10. **Tooling**.
+    - One command per job: rank, plan a run, add a bot, chart, refresh progress.
+    - Each tool fails loudly.
+    - Each process change is a dated milestone on every time-axis chart.
+    - Unit tests run after every tool change.
+11. **Basics battery** (absolute bars, run on the champion): no idle producer, no stuck unit, no unforced death, zero
+    compute overruns and exceptions. While a row fails, candidates come from it first.
 
-**Foundation bar**: from either side on every map the build beats the starter, except losses traced to causes outside
-the bot's control (a battery row that must not grow); it clears the battery; it is on the replica, calibrated against
-the whole field the day it is submitted. A build with no defence can sweep the starter, so the field is the real
-calibration. That build is the first incumbent. Then one correctness audit (§6.1) before the loop starts.
+**Foundation bar**: the build beats the starter from either side on every map, clears the battery, and is on the
+replica. That build is the first champion.
 
-## 2. The loop
+## 2. The loop: a continuous local tournament
 
-Each idea passes a **funnel**, cheapest stage first, dying at the first that refutes it: engine read, a count in games
-on disk (our random tie-breaks are free experiments), one-map probe, delivery block, local screen, ladder panel.
+### 2.1 The pool
 
-1. **Target**: the next source in §3, failing battery rows first.
-2. **Trace** the motivating game with the reader, confirm the symptom against a second opponent, count its trigger in
-   recent games (one replay is an outlier until counted), check we trail on that term, list mechanisms.
-3. **Pre-register** before coding, in the training log (else noise-level changes stay in): mechanism and what it
-   displaces; the counter showing it fires, and its expected rate; the changed branch reachable at observed values, with
-   more than one outcome; deciding instrument, bar and smallest detectable effect (if above the expected effect, do not
-   run it); falsifier; for a number, a dose series with a zero arm that plays like the incumbent.
-4. **One change per candidate, behind a switch**, so a verdict has one cause. Tests pass; at its default the build
-   replays the incumbent, switched on it differs exactly where intended. Freeze it as its own build before its first
-   gated game, so verdict and code hash belong to it.
-5. **Delivery**: one logged game where the mechanism can act, diffed against the incumbent's game on that seed; then a
-   short paired block whose counters, printed beside the screen's verdict, show it firing in most games and changing the
-   end result its chain aims at. An arm that does not deliver is never gated and closes as inert. Delivery proves
-   behaviour changed, not that it pays: component metrics have risen while wins fell.
-6. **Local screen** (rejects only): head-to-head with the incumbent on random (map, seed) cells from both sides (d = the
-   candidate's mean minus an even share), plus archetypes and the frozen roster. Reject at paired t ≤
-   −1.5 on the cell score (if graded, also at a one-sided sign test p < 0.05 on per-cell win/loss), at a new exception,
-   at a basics failure or battery rate worse than the incumbent's beyond noise, or, on a deterministic compute count, at
-   any new overrun. Simulate the joint false-reject rate at the D in use (the t bar alone swings 3-13% with D) and hold
-   it near one neutral in eight; a stricter bar costs more real gains than the panel time it saves.
-7. **Ladder panel** (the only gate that accepts): an unranked block on fresh cells against the panel (§5), each cell
-   from both sides (moving first can outweigh the change), scored by §4 against the control block. If a match plays
-   whatever build is active at creation, the candidate is active only then; automatic play that could pair us with a
-   candidate is paused, stray matches kept out of ratings.
-8. **Accept**, by one script so no step lapses: promote the frozen candidate; make it the active submission; play it
-   against the roster; refresh progress; archive a replay; commit and push within the hour; mine the new games. Refresh
-   again at its first ladder games and after every scored block, so the progress graphs stay current.
-9. **Reject**: delete the arm, or keep it behind a switch whose default provably replays the incumbent (pruned at
-   audits). The closed-directions ledger records the closing number, closure kind (refuted; below resolution, |t| < 1 at
-   the final block; blocked by a prerequisite; inert) and a checkable reopening condition, powered for the effect.
+- About **10 bots**: the champion plus about 9 newcomers, half incremental and half big swings (§3). When a bot
+  retires, replace it with the kind that is short.
+- A pool file lists the active bots. Retired bots stay listed as comments: they are no longer scheduled, but their games
+  still count in the fit, where they anchor the ratings.
+- **Naming** tells the two kinds apart at a glance. Incremental builds and big swings use different name prefixes,
+  numbered in order (this season: `yNN` and `swNN`). A table of swings, with each strategy and its fate, sits beside
+  the pool file.
 
-A *near-miss* is a delivered candidate rejected at t > 0. Near-misses with independent mechanisms can be combined into
-one new arm; changes merely not worse (t ≈ 0) never are, as such combinations have read clearly negative.
+### 2.2 Ratings and the champion
+
+- **One Bradley-Terry fit over every local game** played between bots that are in the pool or retired from it.
+  - Every game counts on the contest's map set, from any seat and any seed, so older runs seed the ladder.
+  - Each pairing is capped at a fixed number of games, so one heavily repeated pair cannot dominate.
+  - A weak prior keeps unplayed bots finite.
+  - Each bot reports its rating ± standard error and its games played.
+- **The champion changes when a bot with at least MIN_GAMES games leads the champion by more than one combined SE**,
+  √(SE₁² + SE₂²). The rank command prints the lead each bot needs and the games it still needs, and announces a new
+  champion. The margin is hysteresis: without it, two near-equal bots would trade the title on noise.
+- **Early ratings mean little.** Some measured swings:
+
+  | build | early | at 100-300 games |
+  |---|---|---|
+  | forward hold | +70 at 25 games, then −43 at 63 | +17 at 284 |
+  | king finisher | −190 at 12 games | +22 at 177 |
+
+  Never retire a bot, or get excited about one, before it has about 50 games.
+
+### 2.3 Building candidates
+
+- **Every build is made on the current champion**, so its rating difference has one cause. That cause is one change,
+  or one strategy when the build is a swing.
+- Make the build with the variant tool: the champion plus explicit constant edits, frozen under the new name. Diff its
+  constants against the champion's to confirm the edit and nothing else.
+- Enter it into the pool, and log it in the attempts table and the training log with its change and its motivation.
+
+### 2.4 Scheduling games
+
+- A run plans a fixed number of games, each with a random map, a random seed and random seats.
+- **Newcomers** with fewer than NEW_MIN games get half of each run, weighted by how many games they are short. Half of
+  those games are against the champion, the rest against the top bots.
+- **The other half** goes to pairs among the top TOP bots, weighted toward close ratings and large SEs. Those pairs
+  decide who is first.
+- **Re-plan queued runs whenever the pool changes.** Take the run off the queue first, so it cannot start while it is
+  being replaced.
+
+### 2.5 Crowning a champion
+
+Do all of the following in the same turn:
+1. Submit the new champion to the ladder.
+2. Record it in the champion file and the champion history (time, bot, base, change, submission id).
+3. Make the working bot a copy of it.
+4. Log the change, mark it accepted in the attempts table, and refresh and commit progress.
+
+There is no ladder gate. Expect the ladder rating to dip sometimes: the valleys are part of reaching higher ground, and
+the tournament, not the ladder, judges the build.
+
+### 2.6 Retiring bots
+
+- Retire a bot that sits far below the champion after enough games, normally 200 or more.
+- Retire earlier when a bot is more than about 2 SE below the champion and has 50 or more games: swings that collapse
+  rarely recover. Keep a bot that is level with the champion while the pool has room.
+- Comment the bot out with its reason. A failed swing gets a second version before its strategy is dropped (§3.2).
 
 ## 3. Where candidates come from
 
-Cycle through these sources, listed by past yield, so none is neglected; mix **incremental tweaks**, which repair what
-is broken, with **big swings**, which escape a local optimum.
+Aim for **half incremental tunings and half big swings**. Tunings repair and polish. Swings escape the local optimum,
+which is where a human team's edge has always been.
 
-1. **Own degeneracies** (no opponent needed): battery symptoms (§1.11) even below their bars, deaths by cause, a counter
-   that never fires (count units passing each precondition to see where they drop out). On the cadence (§8), play the
-   whole corpus from both sides against one strong bot (queued replica scrimmages) and sort maps by graded score: the
-   worst show basics failures the panel hides. Trace each resource to who took it, where and when: a lost race looks like slow gathering in aggregate.
-2. **The field**: what wins for the bots just above us. Contrast behaviour rates (patterns in context) of bots that beat
-   us with bots we beat; act where we differ from the first and match the second (request field-vs-field games on the
-   replica if need be). Per opponent and map, find the first round from which a lead in a metric predicts the winner; work on that
-   window. A metric that tracks the result is usually its consequence: it earns a diagnostic, never an allocation.
-   Diagnose losses a candidate can flip: opponents in the band and cells that differ by side or build. A loss tally
-   over the whole panel is dominated by the bots that beat us almost always; they are a source of ideas, never the target.
-   Rebuild an offence that beats us from its games (never its code), enter it on the replica, build the counter.
-3. **Capability gaps**: every engine action and rule we never use; every free action, idle cooldown or spare compute
-   gets a job. Sweep on the cadence, not only when stuck: past sweeps always found something material.
-4. **Ablation**, on the cadence and after any lineage change: once a switch's firing rate is counted, turn it off in a
-   candidate against the incumbent, which also prices the branch taken instead. If the incumbent loses ground to the
-   roster, ablate in pairs chosen by ancestry; some features matter only together.
-5. **Structural swings**: a different economy, opening, doctrine or architecture, or a field style adopted whole (traits
-   lifted singly rarely carry its strength), designed on paper from census numbers with a budget per funnel stage and a
-   kill criterion. A rewrite keeping proven infrastructure is allowed whenever the architecture caps progress.
+### 3.1 Incremental builds (one constant or one branch)
 
-Balance: at least one attempt in four is structural; three straight rejects in a functional area (economy, production
-mix, movement, exploration, communication, combat, defence, map adaptation) send the next attempt elsewhere. Repairs and
-cap removals carried over to the field in every past season, reallocations between unit types and constant tuning
-rarely: price a reallocation against what it displaces; give freed capacity a job. Never tune by self-play tournament.
+1. **Field study findings**: a behaviour that separates the champion's ladder wins from its losses, turned into one
+   change (for example, keeping the rush going longer when presence in the middle collapses after it).
+2. **Own degeneracies**: battery symptoms below their bars, deaths by cause, a counter that never fires.
+3. **Re-tests on the new base**: a change that lost on an old champion can win on a new one, so search the attempts
+   table first. Every repeat is labelled as one.
+4. **Ablation**: turn off a carried switch, which also prices the branch the bot takes instead.
+
+### 3.2 Big swings (a coherent strategy change)
+
+- **A swing is a strategy, not a dose**: a different economy, opening, army doctrine, target priority or style adopted
+  whole. It is usually a bundle of constants that only make sense together, or a new mechanism.
+- **Design swings from field evidence.** Watch what the bots ranked just above us do differently. Delegate a study of
+  many replays (a hundred or more games) that compares behaviour rates in our wins and our losses, then turn each
+  hypothesis into a swing.
+- **Price the economy before building.** A swing that grows the army must still afford it. Bigger armies starved in
+  45 of 83 losses of one blitz and in 15 of 30 of one empire.
+- **A losing swing gets a second version** that keeps its idea and fixes its first visible failure (starvation, early
+  merges, an over-extended cap). Drop the strategy only after two or three versions fail, and record why.
+- **Combine swings that hold level with the champion.** Two independent strategies that each match the champion are
+  the best bet for a pair. Bundling neutral tunings is not: those combinations read negative.
+- **Try opposites.** When an all-in style fails twice, enter its mirror (a greed build after a failed blitz). The
+  failure tells you which side of the trade-off the champion sits on.
+
+### 3.3 Balance
+
+- Keep at least one strategy-level swing in the pool at all times.
+- Three straight losers in one functional area (economy, production mix, movement, combat, defence, scouting) send the
+  next build elsewhere.
+- Repairs and cap removals have carried over to the field. Pure reallocations and constant tuning carry over less
+  often, but the tournament is cheap enough to try them anyway.
 
 ## 4. Statistics
 
-- **Cell score**: the graded objective where the season has one, else win/loss, fixed per panel version. A graded margin
-  carries several times a win's information and, when we rarely beat the panel, is the only signal; compute it from
-  replays if the site reports only wins. The contest counts wins, so each panel version checks that the graded score
-  predicts them, every verdict prints the win/loss net, and a graded accept with a negative net does not accept.
-- **A repeated cell is not new evidence**: deterministic or lopsided cells (most, in past seasons) repeat their result.
-  Pooling repeated blocks as independent multiplies t by about √blocks while reusing the few cells that changed, passing
-  neutral candidates 17-30% of the time, not the nominal 7%. Random opponents add mixed-sign cells: less power, no bias.
-- **Paired fresh-cell rule.** Each panel version draws numbered map sets once (three maps per opponent, both sides),
-  shared by every candidate; a candidate plays the sets in the reign's order, never one twice. The reference on a set is
-  the incumbent's own games there in this version, played once per reign before any candidate is scored there; never
-  another build's, an earlier version's or the ladder's games. t pools the candidate's blocks: from block 2 on, t ≥ 2
-  accepts (which needs D ≥ 4); blocks 1, 2, 3 reject at t ≤ 0, 1, 1.5; block 4 is final and rejects below 2 (below
-  resolution if |t| < 1). One block never accepts: with a dozen candidates a reign, one lucky block crowns noise.
-- **An accepting block is a biased reference.** When games are deterministic and outcomes chaotic (a small code change
-  reshuffles the contested cells), the block that crowned the incumbent is the draw that won, so it overstates the
-  incumbent on those cells, and replaying the incumbent only repeats it. Every candidate then scores low there (the
-  winner's curse), and a lucky crowning stalls the reign. So a reign orders its sets control blocks first and accepting
-  sets last, and an accepting set is re-anchored before anyone is scored on it: play a twin of the incumbent (the same
-  switches from the current code, or a changed tie-break salt) there and use the twin's games as the reference, except
-  that a candidate game repeating the crowning game exactly (same winner and length) scores 0 there: a candidate that
-  barely changes play replays the lucky draw, and the twin alone would credit it with that luck. Test
-  determinism once a season: the same pairing played twice gives the same game. A basics repair (a battery row turned to pass) instead accepts at t ≥ 0 after
-  block 2, its false accepts simulated apart. A real but narrow gain usually closes below resolution, not refuted (§8).
-- **Simulate every bar before relying on it**, results in `HANDOFF.md`: the screen's false-reject rate and how well
-  screen t predicts panel t; each panel design's false-accept rate (≈ 5%) and power at the effects we actually produce
-  (one to two cells in twenty), across shares of cells changed and opponent noise. A rule that cannot pass a real gain
-  is as defective as one that passes noise. Each pre-gate gets a null arm, a best-of-several statistic a simulated null.
-- **Narrow switches need targeted cells**, not more blocks where they idle. One acting only on maps known before play
-  replays the incumbent elsewhere, then plays the panel's opponents on its maps in fixed rotation (control first, same
-  rule, design simulated), judged per map and in the mean; its value is the effect times those maps' pool share.
-- **Local reads** add cells until D reaches the target (§8), since a switch that changes no decision yields identical
-  games (count them by diffing replays); D has no direction, so stopping on it does not bias t. Diagnostics compare with
-  the incumbent's games on the same cells, not the opponent in the same game, where side and noise pass for mechanisms.
-- **Cells that inspired a candidate cannot also judge it**: list them at pre-registration; require t ≥ 0 on the rest.
-- **No rule applies backwards**: rules are logged before their block; a candidate rejected under an older rule reopens
-  only on fresh blocks. Never read a running block or match, move a bar after seeing data or reinterpret a null.
-- **Ratings** come from one Bradley-Terry fit over every ladder game (each build its own player, repeated cells once,
-  games capped per pair, a weak prior, convergence checked, never compared across fits), reported as rating ± interval,
-  rank and expected score against the field. They never accept: builds meet different opponents, and an incumbent's
-  accepting blocks lift its own rating. The contest site's rating serves seeding only.
-- One game can filter an idea but never decide it, and first looks regress toward zero. A difference concentrated in one
-  direction on one map or side is real; one spread thin with mixed signs is noise.
+- **Bradley-Terry** with a weak prior and a per-pair game cap. Ratings are compared only within one fit, never across
+  fits.
+- **Use the lead over the champion with a combined SE, not the rank.** A bot can rank first and still not be champion.
+  A lead under one combined SE is a tie, and a tie keeps the champion.
+- **The tournament is self-play.** It finds builds that beat our own lineage, and the field may disagree. That
+  disagreement is accepted risk: it shows up as a ladder valley and is corrected by the next champions. The field
+  study keeps candidates aimed at what the field actually does.
+- **Repeated games**: games are deterministic per (pair, map, seed, seats). The random seed range times maps times
+  seats is large compared with the pair cap, so repeats are rare. Do not shrink the seed range.
+- **One game filters an idea but never decides it.** A replay shows that a mechanism fired, not that it pays.
+- **Ladder ratings** are zero-sum, with the field mean pinned. Ratings above the median drift upward as the season
+  spreads, so judge our progress by rank, or by the gap to reference places (#10, #15, #20), not by our raw rating.
 
 ## 5. Using the ladder like a contestant
 
-- Local self-play screens; replica scrimmages decide. Field bots play only on the replica, as scrimmages within its
-  request limits, as they would for a contestant; locally only our own builds and archetypes play. Requests the limit
-  refuses wait in a queue tagged with the build they measure. Only accepted builds play ranked games; a candidate gets
-  short unranked panels and is parked once its matches exist. Trials overlap; local work never waits on the ladder.
-- Panel opponents come from the band around our strength, measured by a calibration sweep of the incumbent against
-  the ladder (bots it beats 25-75% of the time; the rating list alone misplaces them), since a panel of only the strongest yields few discordant cells; stronger bots rotate in as the band is
-  beaten. Routine scrimmages of the incumbent meet bots above and below us on random maps and sides.
-- **Version the panel** when it saturates (an opponent's cell scores have no spread; on win/loss, an opponent at ≤ 10%
-  or ≥ 90%, or the panel above ~80%), turns map-narrow, or has mostly inspired candidates. Each version is its own
-  series, marked on every chart, so a panel change never reads as progress. Never quote standing from panel games alone.
-- Each downloaded match gets a brief write-up (what each side did, where the game turned) and a census row.
-- **Endgame**: no candidate trials within the endgame window (§8) of a deadline or seeding cutoff; the best accepted
-  build active; ranked games spent early enough to converge; floor over ceiling (collapsing on a fifth of maps loses
-  multi-game matches); nothing untested shipped late.
+- **Only the champion plays the ladder**, through continuous ranked matches. Field bots play only on the replica,
+  within its request limits, as they would for a contestant. Locally, only our own builds play.
+- **The ladder supplies ideas and a progress measure, never a verdict.**
+  - Check the champion's new matches at every cycle, and look closely at losses to the teams just above us.
+  - Use extra challenges only when a specific idea needs field evidence that ranked matches do not provide.
+- **Read progress as rank and as the gap to reference places**, on wall-clock charts that cover the whole history plus
+  a recent panel. Mark process changes as milestones.
+- **Keep the replica healthy**: its disk must stay above the floor, so automatic pruning of old replays runs when free
+  space drops. A full disk takes the replica down.
+- **Endgame**: near a deadline, stop crowning untested strategies, keep the best-rated champion active, and spend
+  ranked games early enough to converge.
 
-## 6. When nothing is accepted
+## 6. When the champion stops changing
 
-Enter at the plateau trigger (§8). Being stuck is the signal to try something new; stopping is never an outcome.
-Escalate in order, skipping nothing, sharing attempts with §3 (a structural swing still comes every fourth).
+Enter at the plateau trigger (§8). A stuck champion is the signal to try something new; stopping is never an outcome.
+Escalate in this order:
 
-1. **Correctness audit** of bot and instruments, one independent lens at a time: code never reached; rules and API,
-   including what the engine leaks; shared state, messaging and stale data; what replays show units doing; the
-   measurement pipeline. Each finding carries evidence, a fix, a regression test and a reviewer trying to refute it.
-   Repair measurement first, proven by an identity control; one broken basic is one instance of a class.
-2. Ablate everything carried (§3.4), then sweep engine and API for unused capabilities (§3.3).
-3. Re-watch field games (§3.2) for what earlier reads ignored; build and submit the archetype that beats us.
-4. Revisit principles from other years: the cross-year advice, the prior-season digest, `LEARNINGS.md`, and for anything
-   not yet digested the permitted prior-season sources (the handoff names them and what is off limits).
-5. Test near-misses in pairs, in case two pay off only together.
-6. A structural swing (§3.5); if the architecture is the ceiling, a rewrite. Rejection is normal.
+1. **More and bigger swings.** Raise the swing share, and design them from a fresh field study.
+2. **Correctness audit** of the bot and the instruments, one lens at a time: code never reached; rules and API; shared
+   state and stale data; what replays show units doing; the tournament pipeline itself. Check that a renamed copy of
+   the champion rates level with it.
+3. **Ablate everything carried**, then sweep the engine and API for capabilities we never use.
+4. **Revisit principles from other years**, through the permitted sources only (the handoff names them, and what is
+   off limits).
+5. **A rewrite**, keeping proven infrastructure, if the architecture is the ceiling.
 
-A closure condemns one implementation, not the idea; only an arithmetic or engine ceiling licenses abandoning a line.
-When every lever prices below resolution, change the design, not the dose.
+A failed build condemns one implementation, not the idea.
 
 ## 7. Operations
 
-- **Never idle**: at least three jobs queued, plus an idle filler playing the incumbent on new cells so charts stay
-  current, capped per pair so it cannot swamp the record. A watcher, re-armed every agent turn, wakes the session when
-  work finishes, a component stalls or crashes (checked by its own lock or API, not a process name), disk runs low or
-  the heartbeat fires. Never wait inside an agent turn for a job, an idea or an approval.
-- **Rules live in tools that refuse**; prose is forgotten: no paired read on mismatched cells, no score of an unfinished
-  block, no result row without code-hash provenance, a screen printing its own verdict, validated inputs and outputs (a
-  tested refusal beats a plausible result); output channels tested at size limits; exit statuses never masked.
-- **Process hygiene**: one semaphore (or a fixed split of the knee) for all game-starting paths per machine; private
-  build trees and temp files; check and act under one lock; kill by pid, not pattern; never edit a running script; check
-  disk before each block; one agent per working tree; delegate reading, not deciding; commit explicit paths.
-- **Owner**: every owner prompt verbatim in `PROMPTS.md`, timestamped from the system clock in the owner's zone; push
-  after every commit so progress is visible; any owner question, however short, triggers an audit and is answered from
-  data; declining a request on a self-imposed rule states that rule's measured cost.
-- **Records** hold measurements, not stories; nothing stale stays (fix it that day; annotate the superseded). Training
-  log, append-only, per attempt: target, trace, pre-registration, counters, run ids, gate numbers, decision, closures,
-  next step. Closed-directions ledger: grepped before each attempt, reopened only on a new premise. `LEARNINGS.md`: each
-  lesson with measurement and source, once confirmed. Attempts table: furthest funnel stage. `HANDOFF.md`, hand-kept,
-  dated: step-to-tool map (gaps listed), season values, simulations, closures, live run ids.
+### 7.1 The prod cycle (about every 20 minutes)
+
+1. Check the game machine: what is queued, what is running, and what has finished.
+2. Pull every finished or partial run, and rank.
+3. On a new champion, crown it (§2.5).
+4. Keep at least 5 runs queued past the next cycle, and de-duplicate the queue.
+5. Retire bots and add newcomers to keep about 10 bots, half incremental and half swings.
+6. Check the champion's new ladder matches for ideas.
+7. Log, commit and push.
+8. Refresh the charts, and check the replica's disk.
+9. **Report**:
+   - the tournament's size: games played, games added since the last cycle, active, retired and entered bots;
+   - every newcomer's change, rating ± SE, games, lead over the champion, the lead it needs, and the games it still
+     needs;
+   - the top 5;
+   - ladder rank, rating and time;
+   - replica disk and machine state.
+
+All times are in the owner's zone.
+
+### 7.2 Machines
+
+- The game machine plays local games only, and the replica machine runs the ladder only.
+- If either sits idle for long stretches, tell the owner.
+- Never wait inside a turn for a job, an idea or an approval.
+
+### 7.3 Hygiene
+
+- Rules live in tools that refuse; prose is forgotten.
+- Kill processes by pid, not by pattern.
+- Never edit a running script.
+- Take a run off the queue before re-planning it.
+- Stage and commit explicit paths, never everything.
+- Delegate reading, not deciding.
+
+### 7.4 The owner
+
+- Record every owner prompt verbatim in `PROMPTS.md`, timestamped from the system clock in the owner's zone.
+- Turn standing instructions into memory and into this document.
+- Push after every commit, so progress is visible.
+- Answer any question from data.
+- Make procedure decisions without asking, and log each one with its reason.
+
+### 7.5 Records
+
+- **Training log**, append-only: every cycle's numbers, every newcomer and retirement, every owner directive.
+- **Attempts table**: one row per build, with base, change, motivation and fate (newcomer, retired with numbers, or
+  accepted as champion).
+- **Champion history**, **pool file**, **swing table**, and the field-study write-ups.
+- Records hold measurements, not stories, and nothing stale stays.
 
 ## 8. Defaults
 
-Defaults, set by simulation; `HANDOFF.md` holds the season's, plus stall N, stockpile cap, endgame window, D target.
+`HANDOFF.md` holds the season's values where they differ.
 
 | parameter | default |
 |---|---|
-| compute | 0 overruns, 0 exceptions in the incumbent; headroom: each unit's worst turn ≤ 90% of the per-turn limit |
-| delivery block | 24 paired cells, extended once to 48 if delivery is still undecided |
-| local screen | 40 paired cells, both sides, extended until D reaches the target; joint false reject ≈ 1 neutral in 8 |
-| ladder panel block | 6-8 field bots in our band × 3 maps per numbered set × both sides |
-| panel rule | §4 bars; ≈ 5% neutral false accept; past simulations: power ≈ 13 / 22 / 44 / 65% when 5 / 10 / 20 / 30% of cells change (3 in 4 of them won) |
-| rating pair cap | 200 games |
-| balance | area switch after 3 straight rejects in one area; ≥ 1 structural attempt in 4 |
-| plateau, cadence | plateau after 8 straight rejects or 24 h without an accept; identity control re-run after 4 straight rejects; corpus run, capability sweep and ablation each at least once per 10 attempts |
-| operations | measured knee (≈ cores − 1) shared by all game-starting paths; one diagnostic game at a time on the session machine; watcher heartbeat ≤ 50 minutes |
+| pool size | about 10 bots: the champion + about 9 newcomers, half incremental, half swings |
+| champion rule | at least MIN_GAMES = 200 games, and a lead over the champion of more than √(SE₁² + SE₂²) |
+| newcomer share | bots under NEW_MIN = 40 games get half of each run; half of that against the champion |
+| top pairs | the other half among the top TOP = 6, weighted toward close ratings and large SEs |
+| run | 120 games, random map from the contest set, random seed in 0-9, random seats |
+| fit | Bradley-Terry, weak prior, at most 200 games per pair; retired bots' games kept |
+| retire | far below the champion after 200 or more games; or more than about 2 SE below after 50 or more; swings get a second version first |
+| queue | at least 5 runs queued past the next cycle |
+| cycle | about every 20 minutes: pull, rank, crown, queue, build, log, chart, report |
+| plateau | champion unchanged for 12 hours, or 10 straight newcomers below the champion: escalate (§6) |
+| compute | 0 overruns and 0 exceptions in the champion; each unit's worst turn at most 90% of the per-turn limit |
+| replica disk | at least 2 GB free; automatic pruning of old replays below 4 GB |
