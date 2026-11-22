@@ -1,8 +1,12 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-21 17:53 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched 2026-11-21 18:36 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
+
+Our position on the ladder over time (rebuilt from every team's rating history; `ladder-position.csv`):
+
+![ladder position](ladder-position.png)
 
 Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):
 
