@@ -1299,10 +1299,12 @@ yd4,2026-11-22,sw08,"RETREAT_HP 55 (from 40; forward-held fighters fall back to 
 sw19,2026-11-22,sw08,"BIG SWING combination of the two leaders on sw08: yd1 (FIGHT_POST 12, +45) + sw16 cat endgame (END_CAT 1600, END_CAT_COOP 1200, +31)",tournament newcomer 12:38 PDT
 yd5,2026-11-22,yd1,"FIGHT_POST 14 (dose between yd1's 12, which won, and yd2's 16, which lost)","RETIRED 11-22 13:35 PDT: -95 vs yd1 on 50 g"
 yd6,2026-11-22,yd1,"MAX_BABIES_WAR 18 (from 16; more fighters for the held posts)",tournament newcomer 12:58 PDT
-yd7,2026-11-22,yd1,"KING_RESERVE 300 (from 400; frees bank for spawns)",tournament newcomer 12:58 PDT
+yd7,2026-11-22,yd1,"KING_RESERVE 300 (from 400; frees bank for spawns)","RETIRED 11-22 14:35 PDT: -20 vs yd1 on 180 g (opposite dose ye1 entered)"
 sw20,2026-11-22,yd1,"BIG SWING forward king on the new champion (sw17 on sw08 led +29 on 130 g): KING_FRONT 5, KP_FRONT 5",tournament newcomer 12:58 PDT
 sw21,2026-11-22,yd1,"BIG SWING siege economy (replica: AlexT101 sieges our king with 7-14 rats): SIEGE_FLOOR 50 (spawn floors drop to 50 while enemies are in the king's sight at war) + DEF_TRAP_DIST2 400 (rat traps near our king skip the reserve gates)",tournament newcomer 13:18 PDT
 yd8,2026-11-22,yd1,"GATHER_FIRST 5 (from 6; one more early fighter for the held posts)",tournament newcomer 13:38 PDT
-yd9,2026-11-22,yd1,"ALERT_DIST2 400 (from 225; babies answer the king's alarm from farther: a mild home guard, unlike sw05's 3600 bundle)",tournament newcomer 13:38 PDT
+yd9,2026-11-22,yd1,"ALERT_DIST2 400 (from 225; babies answer the king's alarm from farther: a mild home guard, unlike sw05's 3600 bundle)","RETIRED 11-22 14:35 PDT: -83 vs yd1 on 82 g"
 sw22,2026-11-22,yd1,"BIG SWING throw doctrine (study H4: top teams throw far more): THROW_FAR_PCT 70 (from 40), THROW_MIN 60 (from 84), THROW_HOLD 5 (from 10): throw sooner and value long hits",tournament newcomer 14:18 PDT
 sw23,2026-11-22,yd1,"BIG SWING active king: KING_ROAM 10 (from 4) and KING_MINE_R2 900 (from 400): the king roams for cheese and may seat on a farther mine",tournament newcomer 14:18 PDT
+ye0,2026-11-22,yd1,"THROW_HOLD 5 (from 10; one piece of sw22's throw doctrine, which leads +40 on 42 g)",tournament newcomer 14:38 PDT
+ye1,2026-11-22,yd1,"KING_RESERVE 600 (from 400; replica: in 6 of #445's 7 recent losses to AlexT101/bman our bank was 0-50 while theirs was 445-5748; yd7's 300 lost locally)",tournament newcomer 14:40 PDT

@@ -141,10 +141,12 @@ yd1
 sw19
 # yd5  (retired 11-22 13:35: FIGHT_POST 14 -95 vs yd1 on 50 g)
 yd6
-yd7
+# yd7  (retired 11-22 14:35: KING_RESERVE 300 -20 vs yd1 on 180 g; the opposite dose ye1 600 replaces it)
 sw20
 sw21
 yd8
-yd9
+# yd9  (retired 11-22 14:35: ALERT_DIST2 400 -83 vs yd1 on 82 g, 2 SE)
 sw22
 sw23
+ye0
+ye1
