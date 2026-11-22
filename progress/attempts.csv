@@ -1290,12 +1290,12 @@ yc9,2026-11-22,yb9,"THROW_MIN 72 (from 84; sw10 king finisher, which leads yb9, 
 yd0,2026-11-22,sw08,"GRAB_BITE 30 (yc7 on yb9 led +41 on 117 g; ported to the new champion)","RETIRED 11-22 12:15 PDT: -34 vs sw08 on 212 g (yc7\'s gain on yb9 did not carry to sw08)"
 sw15,2026-11-22,sw08,"BIG SWING points endgame (sw08 loses more games on points than it wins on them): END_KING 1500 (from 1850), END_CAT 1600 (from 1850), CASH_END 1700 (from 1880): play for the round-2000 points earlier","RETIRED 11-22 11:35 PDT: -62 vs sw08 on 176 g; its points record fell (29-37 vs sw08 98-87)"
 yd1,2026-11-22,sw08,"FIGHT_POST 12 (from 8; dose on the champion's forward hold: more home-half mines count as contested posts)","ACCEPTED 11-22 12:55 PDT as local champion: +47 over sw08 on 230 g (needs > +25); submission 445"
-sw16,2026-11-22,sw08,"BIG SWING cat endgame (points endgame v2: sw15 lost on points; keep only the cat-damage push, drop the early endgame kings and rescue): END_CAT 1600 (from 1850), END_CAT_COOP 1200 (from 1500)",tournament newcomer 11:38 PDT
+sw16,2026-11-22,sw08,"BIG SWING cat endgame (points endgame v2: sw15 lost on points; keep only the cat-damage push, drop the early endgame kings and rescue): END_CAT 1600 (from 1850), END_CAT_COOP 1200 (from 1500)","RETIRED 11-22 14:15 PDT: settled level, +1 vs yd1 on 420 g (its pairing with yd1 is sw19)"
 yd2,2026-11-22,sw08,"FIGHT_POST 16 (dose: yd1 FIGHT_POST 12 leads sw08 +25 on 107 g)","RETIRED 11-22 12:55 PDT: -18 vs sw08 on 147 g"
 sw17,2026-11-22,sw08,"BIG SWING forward king (high risk): KING_FRONT 5 and KP_FRONT 5 (from 20): the king may seat and path nearer the bisector, closer to the held mines and the fight; the 20 guard was set because kings near the bisector were bitten to death","RETIRED 11-22 13:35 PDT: settled -25 vs yd1 on 224 g (ported to yd1 as sw20)"
 yd3,2026-11-22,sw08,"WAR_GATHER 1 (from 0; sw08 set 0 = everyone fights at war; 1 = gatherers ignore non-adjacent enemies but still face)","RETIRED 11-22 12:55 PDT: -57 vs sw08 on 68 g"
 sw18,2026-11-22,sw08,"BIG SWING cat feeding: carriers walk enemy rats to cats seen within 12 (from 6) and value a cat feed at 300 (from 150): kill grabbed rats on cats","RETIRED 11-22 12:55 PDT: -59 vs sw08 on 80 g"
-yd4,2026-11-22,sw08,"RETREAT_HP 55 (from 40; forward-held fighters fall back to the king sooner)",tournament newcomer 12:38 PDT
+yd4,2026-11-22,sw08,"RETREAT_HP 55 (from 40; forward-held fighters fall back to the king sooner)","RETIRED 11-22 14:15 PDT: -15 vs yd1 on 222 g"
 sw19,2026-11-22,sw08,"BIG SWING combination of the two leaders on sw08: yd1 (FIGHT_POST 12, +45) + sw16 cat endgame (END_CAT 1600, END_CAT_COOP 1200, +31)",tournament newcomer 12:38 PDT
 yd5,2026-11-22,yd1,"FIGHT_POST 14 (dose between yd1's 12, which won, and yd2's 16, which lost)","RETIRED 11-22 13:35 PDT: -95 vs yd1 on 50 g"
 yd6,2026-11-22,yd1,"MAX_BABIES_WAR 18 (from 16; more fighters for the held posts)",tournament newcomer 12:58 PDT
@@ -1304,3 +1304,5 @@ sw20,2026-11-22,yd1,"BIG SWING forward king on the new champion (sw17 on sw08 le
 sw21,2026-11-22,yd1,"BIG SWING siege economy (replica: AlexT101 sieges our king with 7-14 rats): SIEGE_FLOOR 50 (spawn floors drop to 50 while enemies are in the king's sight at war) + DEF_TRAP_DIST2 400 (rat traps near our king skip the reserve gates)",tournament newcomer 13:18 PDT
 yd8,2026-11-22,yd1,"GATHER_FIRST 5 (from 6; one more early fighter for the held posts)",tournament newcomer 13:38 PDT
 yd9,2026-11-22,yd1,"ALERT_DIST2 400 (from 225; babies answer the king's alarm from farther: a mild home guard, unlike sw05's 3600 bundle)",tournament newcomer 13:38 PDT
+sw22,2026-11-22,yd1,"BIG SWING throw doctrine (study H4: top teams throw far more): THROW_FAR_PCT 70 (from 40), THROW_MIN 60 (from 84), THROW_HOLD 5 (from 10): throw sooner and value long hits",tournament newcomer 14:18 PDT
+sw23,2026-11-22,yd1,"BIG SWING active king: KING_ROAM 10 (from 4) and KING_MINE_R2 900 (from 400): the king roams for cheese and may seat on a farther mine",tournament newcomer 14:18 PDT

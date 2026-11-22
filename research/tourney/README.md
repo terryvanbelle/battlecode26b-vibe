@@ -27,9 +27,11 @@
 | sw13 | greed: 10 gatherers first, 1 in 4 fights cats, 6 rushers (retired: -102) | yb9 |
 | sw14 | late surge: richer tiers open at bank 500 / 1500, war cap 20 (retired: -25 vs sw08) | yb9 |
 | sw15 | points endgame: endgame kings from r1500, endgame cat damage from r1600, rescue from r1700 (retired: -62) | sw08 |
-| sw16 | cat endgame (points endgame v2): endgame cat damage from r1600 at war, r1200 in cooperation | sw08 |
+| sw16 | cat endgame (points endgame v2): endgame cat damage from r1600 at war, r1200 in cooperation (retired: settled level, +1 vs yd1) | sw08 |
 | sw17 | forward king: king seat and path guards 20 -> 5 (may sit nearer the bisector) (retired: -25 vs yd1; ported as sw20) | sw08 |
 | sw18 | cat feeding: CARRY_CAT 12, CAT_FEED 300 (retired: -59 vs sw08) | sw08 |
 | sw19 | yd1 + sw16: posts at FIGHT_POST 12 + cat endgame | sw08 |
 | sw20 | forward king (sw17) on yd1 | yd1 |
 | sw21 | siege economy: SIEGE_FLOOR 50 + DEF_TRAP_DIST2 400 | yd1 |
+| sw22 | throw doctrine: far hits 70%, THROW_MIN 60, hold 5 | yd1 |
+| sw23 | active king: roam 10, home mine within dist2 900 | yd1 |

@@ -132,12 +132,12 @@
 # yd0  (retired 11-22 12:15: GRAB_BITE 30 on sw08 -34 on 212 g; yc7's gain on yb9 did not carry)
 # sw15  (retired 11-22 11:35: points endgame -62 vs sw08 on 176 g; points record 29-37 vs sw08 98-87)
 yd1
-sw16
+# sw16  (retired 11-22 14:15: cat endgame on sw08, settled level +1 vs yd1 on 420 g; its pairing with yd1 is sw19)
 # yd2  (retired 11-22 12:55: FIGHT_POST 16 -18 vs sw08 on 147 g; 12 is the better dose)
 # sw17  (retired 11-22 13:35: forward king on sw08, settled -25 vs yd1 on 224 g; its port to yd1 is sw20)
 # yd3  (retired 11-22 12:55: WAR_GATHER 1 -57 vs sw08 on 68 g)
 # sw18  (retired 11-22 12:55: cat feeding -59 vs sw08 on 80 g)
-yd4
+# yd4  (retired 11-22 14:15: RETREAT_HP 55 on sw08, -15 vs yd1 on 222 g)
 sw19
 # yd5  (retired 11-22 13:35: FIGHT_POST 14 -95 vs yd1 on 50 g)
 yd6
@@ -146,3 +146,5 @@ sw20
 sw21
 yd8
 yd9
+sw22
+sw23
