@@ -116,7 +116,7 @@ yb9
 # sw05  (retired 11-22 08:35: home guard -71 on 181 g)
 # sw06  (retired 11-22 08:35: empire v3 -67 on 103 g; empire failed in three versions)
 # sw07  (retired 11-22 08:15: blitz v2 -114 on 53 g; blitz failed in two versions)
-yc4
+# yc4  (retired 11-22 10:15: MAX_BABIES 14 settled level, -2 on 454 g; frees a slot)
 sw08
 # sw09  (retired 11-22 09:15: trap-first -34 on 230 g)
 sw10
@@ -125,5 +125,7 @@ sw12
 yc5
 # yc6  (retired 11-22 09:55: FORM_FROM 150 -174 on 49 g, 3 SE below)
 yc7
-sw13
+# sw13  (retired 11-22 10:15: greed -102 on 51 g, 2 SE below; with the blitz failing, yb9 sits near the balance)
 yc8
+sw14
+yc9

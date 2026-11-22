@@ -24,4 +24,5 @@
 | sw10 | king finisher: carriers seek a king within 16 and hold for a king hit to the last round, THROW_MIN 60 | yb9 |
 | sw11 | forward hold + trap-first (sw08 + sw09) | yb9 |
 | sw12 | pressure: forward hold + king finisher (sw08 + sw10) | yb9 |
-| sw13 | greed: 10 gatherers first, 1 in 4 fights cats, 6 rushers | yb9 |
+| sw13 | greed: 10 gatherers first, 1 in 4 fights cats, 6 rushers (retired: -102) | yb9 |
+| sw14 | late surge: richer tiers open at bank 500 / 1500, war cap 20 | yb9 |
