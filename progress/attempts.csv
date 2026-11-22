@@ -1219,3 +1219,5 @@ xx3,2026-11-21,xw6,"THROW_MIN 63 (with the longer hold, accept a smaller hit)",t
 xx4,2026-11-21,xw6,"GRAB_THREAT 15 (grab micro fears enemy grabbers less)",tournament newcomer 18:29 PDT
 xx5,2026-11-21,xw6,"THROW_HOLD 12 (8 and 14 lost to 10; 12 untested)",tournament newcomer 19:17 PDT
 xx6,2026-11-21,xw6,"KING_THREAT_D2 36 (the 26->30 step was a champion; probe further on the new base)",tournament newcomer 19:17 PDT
+xx7,2026-11-21,xw6,"GRAB_THREAT 8 (xx4 GRAB_THREAT 15 leads +57: probe further)",tournament newcomer 19:37 PDT
+xx8,2026-11-21,xw6,"GRAB_BITE 30 (grab micro values bites more; same micro as xx4)",tournament newcomer 19:37 PDT

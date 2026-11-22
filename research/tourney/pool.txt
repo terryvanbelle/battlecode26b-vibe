@@ -35,7 +35,7 @@ xt5
 # xt7  (retired 11-21 13:07: cap 17 on xs2, -154 on 65 g)
 # xt8  (FIGHT_EVERY 1 on xs2: re-entered on xt2 as xu1)
 # xu1  (retired 11-21 15:07: xt2-based, below or superseded)
-xu2
+# xu2  (retired 11-21 19:35: old champion, -50 vs xw6 on 1989 g)
 # xu3  (retired 11-21 15:07: xt2-based, below or superseded)
 # xu4  (retired 11-21 15:07: xt2-based, below or superseded)
 # xu5  (retired 11-21 15:07: xt2-based, below or superseded)
@@ -57,8 +57,10 @@ xw6
 xw9
 # xx0  (retired 11-21 18:27: THROW_HOLD 8 on xw6, -61 on 76 g)
 # xx1  (retired 11-21 18:27: KING_RESERVE 900 on xw6, -72 on 77 g)
-xx2
+# xx2  (retired 11-21 19:35: THROW_FAR_PCT 70 on xw6, -49 on 121 g)
 xx3
 xx4
-xx5
+# xx5  (retired 11-21 19:35: THROW_HOLD 12 on xw6, -133 on 61 g)
 xx6
+xx7
+xx8
