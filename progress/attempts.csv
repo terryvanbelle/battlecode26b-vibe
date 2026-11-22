@@ -1223,3 +1223,5 @@ xx7,2026-11-21,xw6,GRAB_THREAT 8 (xx4 GRAB_THREAT 15 leads +57: probe further),t
 xx8,2026-11-21,xw6,GRAB_BITE 30 (grab micro values bites more; same micro as xx4),tournament newcomer 19:37 PDT
 xx9,2026-11-21,xw9,GRAB_THREAT 15 (xx4 idea: +26 vs xw6 on 173 g),tournament newcomer 19:58 PDT
 xy0,2026-11-21,xw9,KING_THREAT_D2 36 (xx6 idea: +7 vs xw6 on 90 g),tournament newcomer 19:58 PDT
+xy1,2026-11-21,xw9,"GRAB_MARGIN 5 (grab micro acts on smaller edges; the grab weights are the live line)",tournament newcomer 20:17 PDT
+xy2,2026-11-21,xw9,"GRAB_THREAT 8 (xx7 idea: +37 vs xw6 early, +6 vs xw9)",tournament newcomer 20:17 PDT

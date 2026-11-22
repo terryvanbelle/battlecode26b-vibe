@@ -30,7 +30,7 @@
 # xt2  (retired 11-21 18:07: old champion, -53 vs xw6 on 1561 g)
 # xt3  (retired 11-21 14:27: -38 on 204 g)
 # xt4  (retired 11-21 13:47: -46 to -77 vs champion xt2)
-xt5
+# xt5  (retired 11-21 20:15: -61 vs xw9 on 1841 g)
 # xt6  (retired 11-21 13:47: -46 to -77 vs champion xt2)
 # xt7  (retired 11-21 13:07: cap 17 on xs2, -154 on 65 g)
 # xt8  (FIGHT_EVERY 1 on xs2: re-entered on xt2 as xu1)
@@ -62,7 +62,9 @@ xw9
 # xx4  (xw6-based; idea re-entered on champion xw9 11-21 19:55)
 # xx5  (retired 11-21 19:35: THROW_HOLD 12 on xw6, -133 on 61 g)
 # xx6  (xw6-based; idea re-entered on champion xw9 11-21 19:55)
-xx7
+# xx7  (xw6-based GRAB_THREAT 8, +6 vs xw9 on 64 g; re-entered on xw9 as xy2 11-21 20:15)
 # xx8  (retired 11-21 19:55: xw6-based, below xw6)
 xx9
 xy0
+xy1
+xy2
