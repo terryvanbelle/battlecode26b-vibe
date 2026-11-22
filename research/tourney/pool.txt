@@ -117,7 +117,7 @@
 # sw06  (retired 11-22 08:35: empire v3 -67 on 103 g; empire failed in three versions)
 # sw07  (retired 11-22 08:15: blitz v2 -114 on 53 g; blitz failed in two versions)
 # yc4  (retired 11-22 10:15: MAX_BABIES 14 settled level, -2 on 454 g; frees a slot)
-sw08
+# sw08  (retired 11-22 13:15: former champion, -36 vs yd1 on 1357 g; its games keep anchoring)
 # sw09  (retired 11-22 09:15: trap-first -34 on 230 g)
 # sw10  (retired 11-22 11:55: king finisher on yb9, settled -11 vs sw08 on 678 g; its pairing with forward hold is sw12)
 # sw11  (retired 11-22 11:15: forward hold + trap-first on yb9, settled -28 vs sw08 on 414 g)
@@ -143,3 +143,4 @@ yd5
 yd6
 yd7
 sw20
+sw21

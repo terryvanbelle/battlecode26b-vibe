@@ -32,3 +32,4 @@
 | sw18 | cat feeding: CARRY_CAT 12, CAT_FEED 300 (retired: -59 vs sw08) | sw08 |
 | sw19 | yd1 + sw16: posts at FIGHT_POST 12 + cat endgame | sw08 |
 | sw20 | forward king (sw17) on yd1 | yd1 |
+| sw21 | siege economy: SIEGE_FLOOR 50 + DEF_TRAP_DIST2 400 | yd1 |
