@@ -130,5 +130,6 @@ yc7
 sw14
 yc9
 yd0
-sw15
+# sw15  (retired 11-22 11:35: points endgame -62 vs sw08 on 176 g; points record 29-37 vs sw08 98-87)
 yd1
+sw16

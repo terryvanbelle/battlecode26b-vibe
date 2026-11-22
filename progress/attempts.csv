@@ -1288,5 +1288,6 @@ yc8,2026-11-22,yb9,"GRAB_BITE 40 (dose step after yc7 GRAB_BITE 30 led yb9 by +6
 sw14,2026-11-22,yb9,"BIG SWING late surge (study H3: top teams keep the army growing after r400): RICH_BANK 500 (from 1000), RICH2_BANK 1500 (from 3000), MAX_BABIES_WAR 20 (from 16): bank turns into bodies sooner",tournament newcomer 10:18 PDT
 yc9,2026-11-22,yb9,"THROW_MIN 72 (from 84; sw10 king finisher, which leads yb9, carries THROW_MIN 60 in its bundle)",tournament newcomer 10:18 PDT
 yd0,2026-11-22,sw08,"GRAB_BITE 30 (yc7 on yb9 led +41 on 117 g; ported to the new champion)",tournament newcomer 10:40 PDT
-sw15,2026-11-22,sw08,"BIG SWING points endgame (sw08 loses more games on points than it wins on them): END_KING 1500 (from 1850), END_CAT 1600 (from 1850), CASH_END 1700 (from 1880): play for the round-2000 points earlier",tournament newcomer 10:58 PDT
+sw15,2026-11-22,sw08,"BIG SWING points endgame (sw08 loses more games on points than it wins on them): END_KING 1500 (from 1850), END_CAT 1600 (from 1850), CASH_END 1700 (from 1880): play for the round-2000 points earlier","RETIRED 11-22 11:35 PDT: -62 vs sw08 on 176 g; its points record fell (29-37 vs sw08 98-87)"
 yd1,2026-11-22,sw08,"FIGHT_POST 12 (from 8; dose on the champion's forward hold: more home-half mines count as contested posts)",tournament newcomer 11:18 PDT
+sw16,2026-11-22,sw08,"BIG SWING cat endgame (points endgame v2: sw15 lost on points; keep only the cat-damage push, drop the early endgame kings and rescue): END_CAT 1600 (from 1850), END_CAT_COOP 1200 (from 1500)",tournament newcomer 11:38 PDT
