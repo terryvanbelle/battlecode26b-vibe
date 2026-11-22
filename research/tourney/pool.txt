@@ -113,8 +113,8 @@ yb9
 # sw02  (retired 11-22 07:35: blitz v1 -86 on 230 g; starving in 45 of 83 losses at caps 26; v2 = sw07)
 # sw03  (retired 11-22 07:55: cat army, -55 on 278 g)
 # sw04  (retired 11-22 07:40: empire v2 -73 on 155 g; replay study: top teams form 0-0.2 kings, empire unsupported; sw06 tests the rest)
-sw05
-sw06
+# sw05  (retired 11-22 08:35: home guard -71 on 181 g)
+# sw06  (retired 11-22 08:35: empire v3 -67 on 103 g; empire failed in three versions)
 # sw07  (retired 11-22 08:15: blitz v2 -114 on 53 g; blitz failed in two versions)
 yc4
 sw08
