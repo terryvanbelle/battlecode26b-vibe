@@ -23,3 +23,4 @@
 | sw09 | trap-first: rat traps at dist2 40, from 40 cheese, reserve gate skipped within dist2 400 of our king | yb9 |
 | sw10 | king finisher: carriers seek a king within 16 and hold for a king hit to the last round, THROW_MIN 60 | yb9 |
 | sw11 | forward hold + trap-first (sw08 + sw09) | yb9 |
+| sw12 | pressure: forward hold + king finisher (sw08 + sw10) | yb9 |
