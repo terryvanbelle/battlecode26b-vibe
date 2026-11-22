@@ -234,3 +234,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (05:54) Good morning!  I see from the graphs that you've improved a lot on the local and replica ELO, and no improvement on the ranking.  I'm pretty happy with that so far.  I suspect that there's a large cliff in the fitness landscape between us and the top bots, and we're slowly climbing up it
 (05:57) Yes, please do.  And let's get rid of the orange vertical bars, they're not really contributing
 (06:03) Actually, instead of using the past 24h, can you just hard code the start of the more recent graphs to 8am Nov 21?  That's about when we started this new approach
+(06:04) And can you add the ELO of the 10th, 15th and 20th place replica bots, for reference?

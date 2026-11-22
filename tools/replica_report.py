@@ -23,6 +23,7 @@ TEAM = G.TEAM
 PDT = ZoneInfo('America/Vancouver')
 # Start of the lower ('recent') panels: the local-tournament procedure began ~08:00 PDT 11-21 (owner 11-22).
 RECENT_FROM = dt.datetime(2026, 11, 21, 8, 0, tzinfo=PDT)
+REF_PLACES = (10, 15, 20)   # ladder places whose rating is drawn on rating-history.png for reference (owner 11-22)
 
 
 def ts(s):
@@ -63,7 +64,7 @@ def ladder_md(teams, wl, now):
 def history_md(hist, subs, now, marks=()):
     L = ['# Rating history (replica)', '',
          f'Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, '
-         f'over the whole history and since 11-21 08:00 PDT (the local tournament), with milestones dashed. Regenerate with `tools/replica_report.py`; data fetched '
+         f'over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 10, 15 and 20 for reference, with milestones dashed. Regenerate with `tools/replica_report.py`; data fetched '
          f'{now:%Y-%m-%d %H:%M} PDT. Times are Pacific.', '',
          '![rating history](rating-history.png)', '',
          'Our position on the ladder over time (rebuilt from every team\'s rating history; `ladder-position.csv`):', '',
@@ -87,7 +88,7 @@ def history_md(hist, subs, now, marks=()):
     return '\n'.join(L) + '\n'
 
 
-def charts(teams, hist, subs, out, marks=(), now=None):
+def charts(teams, hist, subs, out, marks=(), now=None, refs=None):
     try:
         import matplotlib
         matplotlib.use('Agg')
@@ -107,11 +108,11 @@ def charts(teams, hist, subs, out, marks=(), now=None):
     fig.tight_layout()
     fig.savefig(os.path.join(out, 'ladder.png'), dpi=110)
     plt.close(fig)
-    rating_chart(hist, out, marks, now)
+    rating_chart(hist, out, marks, now, refs)
     return True
 
 
-def rating_chart(hist, out, marks=(), now=None):
+def rating_chart(hist, out, marks=(), now=None, refs=None):
     """Two panels on wall-clock axes: our displayed rating over the whole history, and since RECENT_FROM."""
     import matplotlib
     matplotlib.use('Agg')
@@ -122,26 +123,33 @@ def rating_chart(hist, out, marks=(), now=None):
     now = now or hist[-1][0]
     t0 = RECENT_FROM
     fig, axs = plt.subplots(2, 1, figsize=(10, 7))
-    for k, ax in enumerate(axs):
-        hh = hist if k == 0 else [x for x in hist if x[0] >= t0]
-        if k == 1:   # carry the rating held at the window start, and hold the last one to now
+    for k_, ax in enumerate(axs):
+        hh = hist if k_ == 0 else [x for x in hist if x[0] >= t0]
+        if k_ == 1:   # carry the rating held at the window start, and hold the last one to now
             before = [x for x in hist if x[0] < t0]
             hh = ([(t0, before[-1][1])] if before else []) + hh
             hh = hh + [(now, hh[-1][1])] if hh else hist[-1:]
-        ax.plot([w for w, _ in hh], [r for _, r in hh], '-', color='#2a6fdb', lw=1.4)
-        pts = hist if k == 0 else [x for x in hist if x[0] >= t0]
+        for (k, rr), (c, ls) in zip(sorted((refs or {}).items()), (('#495057', '-'), ('#868e96', '--'), ('#868e96', ':'))):
+            rr = rr if k_ == 0 else [x for x in rr if x[0] >= t0]
+            if rr:
+                ax.step([w for w, _ in rr], [r for _, r in rr], where='post', color=c, lw=1.1, ls=ls, label=f'#{k} place')
+                ax.annotate(f'#{k}', rr[-1], xytext=(4, -3), textcoords='offset points', fontsize=7, color='#495057')
+        ax.plot([w for w, _ in hh], [r for _, r in hh], '-', color='#2a6fdb', lw=1.4, label=TEAM)
+        pts = hist if k_ == 0 else [x for x in hist if x[0] >= t0]
         ax.plot([w for w, _ in pts], [r for _, r in pts], 'o', color='#2a6fdb', ms=2.5)
-        if k == 1:
+        if k_ == 1:
             ax.set_xlim(t0, now + dt.timedelta(minutes=20))
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M\n%m-%d', tz=PDT))
             ax.set_title(f'since {RECENT_FROM:%m-%d %H:%M} PDT (local tournament)', fontsize=9)
         else:
             marks_on(ax, marks)
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d', tz=PDT))
-            ax.set_title(f'{TEAM} rating on the replica (dashed: milestones)')
+            ax.set_title(f'{TEAM} rating on the replica, with the ratings in ladder places {", ".join(f"#{k}" for k in REF_PLACES)} (dashed vertical: milestones)', fontsize=10)
         w, r = hh[-1]
         ax.annotate(f'{r:.1f}', (w, r), xytext=(-40, 8), textcoords='offset points', fontsize=8, color='#212529')
         ax.set_ylabel('displayed rating')
+        if k_ == 0:   # the lower panel is labeled by the #k tags at its right edge
+            ax.legend(loc='lower right', fontsize=8)
         ax.grid(color='#e9ecef')
     axs[1].set_xlabel('time (PDT)')
     if marks:
@@ -153,9 +161,8 @@ def rating_chart(hist, out, marks=(), now=None):
     plt.close(fig)
 
 
-def rank_history(s, ep, teams, hist):
-    """[(time, our rank, teams rated by then)] at each of our rated matches, from every ladder team's history."""
-    import bisect
+def other_histories(s, ep, teams):
+    """[(times, ratings)] of every ladder team except us, from /match/historical_rating/."""
     others = []
     for t in teams:
         if t['name'] == TEAM:
@@ -164,6 +171,29 @@ def rank_history(s, ep, teams, hist):
         h = sorted((ts(x['timestamp']), x['rating']) for x in raw)
         if h:
             others.append(([w for w, _ in h], [r for _, r in h]))
+    return others
+
+
+def place_ratings(others, hist, places=REF_PLACES, step_min=15, now=None):
+    """{k: [(time, rating of the team in place k)]} on a step_min grid, ranking every team rated by then (us included)."""
+    import bisect
+    if not hist:
+        return {}
+    allh = others + [([w for w, _ in hist], [r for _, r in hist])]
+    t, end = hist[0][0], now or hist[-1][0]
+    out = {k: [] for k in places}
+    while t <= end:
+        cur = sorted((rs[i - 1] for ws, rs in allh for i in [bisect.bisect_right(ws, t)] if i), reverse=True)
+        for k in places:
+            if len(cur) >= k:
+                out[k].append((t, cur[k - 1]))
+        t += dt.timedelta(minutes=step_min)
+    return out
+
+
+def rank_history(others, hist):
+    """[(time, our rank, teams rated by then)] at each of our rated matches, from every ladder team's history."""
+    import bisect
     out = []
     for when, mine in hist:
         n, above = 1, 0
@@ -247,8 +277,9 @@ def main(argv=None):
     open(os.path.join(a.out, 'ladder.md'), 'w').write(ladder_md(teams, wl, now))
     marks = MS.read()
     open(os.path.join(a.out, 'rating-history.md'), 'w').write(history_md(hist, subs, now, marks))
-    png = charts(teams, hist, subs, a.out, marks, now)
-    ranks = rank_history(s, ep, teams, hist)
+    others = other_histories(s, ep, teams)
+    png = charts(teams, hist, subs, a.out, marks, now, place_ratings(others, hist, now=now))
+    ranks = rank_history(others, hist)
     with open(os.path.join(a.out, 'ladder-position.csv'), 'w') as f:
         f.write('time_pdt,rank,teams\n')
         f.writelines(f'{w:%Y-%m-%d %H:%M:%S},{r},{n}\n' for w, r, n in ranks)
