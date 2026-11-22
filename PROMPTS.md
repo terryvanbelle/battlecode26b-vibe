@@ -245,3 +245,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:49) Are we keeping the VM busy with the replica runs as well?
 (06:51) No, I think I'd like to keep with our existing approach
 (06:53) My thinking had been that if the VM was sitting idle for long stretches, I'd ask if you could run some local tournament matches on it to expand our local search.  But running the replica's ranked contests is a worthy use of the VM, so let's keep things as-is
+(08:51) Can you add the size of the local tournament to the prod messages?

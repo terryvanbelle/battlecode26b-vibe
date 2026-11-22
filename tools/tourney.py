@@ -81,7 +81,7 @@ def champion():
 
 def cmd_rank(root):
     lad, n = ladder(root)
-    print(f'{n} games among {len(lad)} pool bots')
+    print(f'{n} games among {len(lad)} pool bots ({len(retired())} retired; {len(lad) + len(retired())} entered in all)')
     ch = champion()
     rc0 = dict(lad).get(ch)
     for i, (b, r) in enumerate(lad, 1):
