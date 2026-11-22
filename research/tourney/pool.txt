@@ -90,10 +90,11 @@ ya0
 # ya2  (retired 11-22 02:15: GRAB_THREAT 11 on ya0, -23 on 273 g)
 # ya3  (retired 11-22 02:15: KING_RESERVE 250 on ya0, -33 on 263 g)
 # ya4  (retired 11-22 02:35: DIG_RESERVE 200 on ya0, -35 on 236 g)
-ya5
+# ya5  (retired 11-22 02:55: AUSTERE_CORE 8 on ya0, +6 on 318 g, neutral)
 # ya6  (retired 11-22 02:35: AUSTERE_CORE 6 on ya0, +2 on 211 g, neutral)
-ya7
+# ya7  (retired 11-22 02:55: MAX_BABIES 17 on ya0, -6 on 276 g)
 ya8
 ya9
 yb0
 yb1
+yb2

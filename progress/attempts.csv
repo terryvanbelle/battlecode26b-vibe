@@ -1254,3 +1254,4 @@ ya8,2026-11-22,ya0,"WAR_NO_CAT_END 1600 (was 1200: fighters leave cats alone at 
 ya9,2026-11-22,ya0,"GATHER_CAT_DIST 32 (was 20: gatherers keep further from cats; cheeseguardians cat deaths 143/178)",tournament newcomer 02:38 PDT
 yb0,2026-11-22,ya0,"GATHER_CAT_DIST 13 (the other side of 20)",tournament newcomer 02:38 PDT
 yb1,2026-11-22,ya0,"King.throwDodge dodges every enemy baby carrying a robot (was: only one carrying ours). Engine hitTarget damages whatever a thrown rat lands on, either team; AlexT101 bots killed ya0s king with throws 3 times (35096 DefaultSmall 456 HP, 35148 DefaultSmall 458, starvation 438)",tournament newcomer 02:45 PDT
+yb2,2026-11-22,ya0,"KING_DODGE_R2 41 (was 25: the king dodges cats from further away)",tournament newcomer 02:58 PDT
