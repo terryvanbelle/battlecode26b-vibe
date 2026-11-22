@@ -29,5 +29,6 @@
 | sw15 | points endgame: endgame kings from r1500, endgame cat damage from r1600, rescue from r1700 (retired: -62) | sw08 |
 | sw16 | cat endgame (points endgame v2): endgame cat damage from r1600 at war, r1200 in cooperation | sw08 |
 | sw17 | forward king: king seat and path guards 20 -> 5 (may sit nearer the bisector) | sw08 |
-| sw18 | cat feeding: CARRY_CAT 12, CAT_FEED 300 | sw08 |
+| sw18 | cat feeding: CARRY_CAT 12, CAT_FEED 300 (retired: -59 vs sw08) | sw08 |
 | sw19 | yd1 + sw16: posts at FIGHT_POST 12 + cat endgame | sw08 |
+| sw20 | forward king (sw17) on yd1 | yd1 |

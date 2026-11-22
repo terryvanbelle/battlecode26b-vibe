@@ -124,7 +124,7 @@ sw08
 # sw12  (retired 11-22 12:15: forward hold + king finisher on yb9, settled -20 vs sw08 on 347 g)
 # yc5  (retired 11-22 11:55: RUSH_UNTIL 400 on yb9, settled -19 vs sw08 on 320 g)
 # yc6  (retired 11-22 09:55: FORM_FROM 150 -174 on 49 g, 3 SE below)
-yc7
+# yc7  (retired 11-22 12:55: GRAB_BITE 30 on yb9, +3 vs sw08 on 494 g, -44 vs new champion yd1)
 # sw13  (retired 11-22 10:15: greed -102 on 51 g, 2 SE below; with the blitz failing, yb9 sits near the balance)
 # yc8  (retired 11-22 10:35: GRAB_BITE 40 -39 vs new champion sw08 on 116 g, -17 vs yb9; dose past yc7 overshoots)
 # sw14  (retired 11-22 12:35: late surge on yb9, -25 vs sw08 on 283 g)
@@ -133,9 +133,13 @@ yc7
 # sw15  (retired 11-22 11:35: points endgame -62 vs sw08 on 176 g; points record 29-37 vs sw08 98-87)
 yd1
 sw16
-yd2
+# yd2  (retired 11-22 12:55: FIGHT_POST 16 -18 vs sw08 on 147 g; 12 is the better dose)
 sw17
-yd3
-sw18
+# yd3  (retired 11-22 12:55: WAR_GATHER 1 -57 vs sw08 on 68 g)
+# sw18  (retired 11-22 12:55: cat feeding -59 vs sw08 on 80 g)
 yd4
 sw19
+yd5
+yd6
+yd7
+sw20
