@@ -146,8 +146,8 @@ sw19
 # sw21  (retired 11-22 14:58: siege economy on yd1, -30 vs yd1 on 228 g)
 # yd8  (retired 11-22 15:15: GATHER_FIRST 5 on yd1, -49 vs sw19 on 223 g)
 # yd9  (retired 11-22 14:35: ALERT_DIST2 400 -83 vs yd1 on 82 g, 2 SE)
-sw22
-sw23
+# sw22  (retired 11-22 15:55: throw doctrine on yd1, settled -37 vs sw19 on 295 g)
+# sw23  (retired 11-22 15:55: active king on yd1, settled -23 vs sw19 on 268 g)
 # ye0  (retired 11-22 14:58: built on yd1, 0 games when sw19 took over; rebuilt on sw19 as ye2)
 # ye1  (retired 11-22 14:58: built on yd1, 0 games when sw19 took over; rebuilt on sw19 as ye3)
 ye2
@@ -156,3 +156,5 @@ sw24
 ye4
 sw25
 ye5
+ye6
+sw26

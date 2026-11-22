@@ -37,3 +37,4 @@
 | sw23 | active king: roam 10, home mine within dist2 900 | yd1 |
 | sw24 | king defence radius: threat dist2 64, defend dist2 225 | sw19 |
 | sw25 | no opening rush: 0 rushers (from 12), forward hold carries forward presence | sw19 |
+| sw26 | ye4 + sw24: END_CAT 1400 with the wider king defence | sw19 |
