@@ -109,6 +109,8 @@ yb9
 # yc1  (retired 11-22 06:33: SPAWN_FLOOR 375 on yb7, -0 on 174 g; base superseded)
 yc2
 yc3
-sw01
+# sw01  (retired 11-22 06:58: empire v1 -197 on 50 g: early merges thin the army, 32 king kills, starving in 14; v2 = sw04)
 sw02
 sw03
+sw04
+sw05
