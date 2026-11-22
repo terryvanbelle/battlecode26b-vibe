@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 20569 games in one fit as of 2026-11-22 05:17 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 20893 games in one fit as of 2026-11-22 05:37 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -16,5 +16,5 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-21 21:55 | xx9 | GRAB_THREAT 15 on xw9 | #438 | 1540 +- 9 | 1666 |
 | 2026-11-21 23:15 | xz2 | LOW_FLOOR 200 on xx9 | #439 | 1563 +- 10 | 1373 |
 | 2026-11-22 00:55 | ya0 | KING_RESERVE 400 on xz2 | #440 | 1592 +- 8 | 2087 |
-| 2026-11-22 03:55 | ya9 | GATHER_CAT_DIST 32 on ya0 | #441 | 1628 +- 12 | 801 |
-| 2026-11-22 04:55 | yb7 | CAT_DEFEND_R2 64 on ya9 | #442 | 1647 +- 18 | 361 |
+| 2026-11-22 03:55 | ya9 | GATHER_CAT_DIST 32 on ya0 | #441 | 1628 +- 11 | 923 |
+| 2026-11-22 04:55 | yb7 | CAT_DEFEND_R2 64 on ya9 | #442 | 1640 +- 14 | 582 |
