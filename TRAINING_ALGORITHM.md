@@ -253,9 +253,10 @@ A failed build condemns one implementation, not the idea.
 8. Refresh the charts, and check the replica's disk.
 9. **Report**:
    - the tournament's size: games played, games added since the last cycle, active, retired and entered bots;
-   - every newcomer's change, rating ± SE, games, lead over the champion, the lead it needs, and the games it still
-     needs;
-   - the top 5;
+   - one table of the whole pool sorted by rating, the champion marked in place: each bot's kind, base, change,
+     rating ± SE, games, lead over the champion, the lead it needs, and the games it still needs (no separate top-5
+     table: it only repeated the head of this one);
+   - what was retired or added since the last cycle, and why;
    - ladder rank, rating and time;
    - replica disk and machine state.
 
