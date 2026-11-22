@@ -184,7 +184,7 @@ public final class Cfg {
     // ---- combat: fighting enemy rats
 
     /** War role split: 0 everyone fights, 1 gatherers ignore non-adjacent enemies, 2 and never freeze to face. */
-    public static final int WAR_GATHER = 2;
+    public static final int WAR_GATHER = 0;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */
     public static final int RETREAT_HP = 40;
     /** A baby with AMMO_HP health or less, within AMMO_R of our king and dist2 AMMO_D2 of a healthier enemy rat, is
@@ -293,7 +293,7 @@ public final class Cfg {
     public static final int WANDER_R = 2;
     /** A FIGHT rat at war takes its mine from the contested home-half mines: those whose steps from the mirrored
      *  enemy start exceed those from home by at most FIGHT_POST (0 = off). */
-    public static final int FIGHT_POST = 0;
+    public static final int FIGHT_POST = 8;
     /** Trail home: the stall count and homing carry over a gap of up to TRAIL_GAP rounds between delivery turns (a
      *  loaded carrier skips rounds, so 0 restarted the count every skip). */
     public static final int TRAIL_GAP = 12;
