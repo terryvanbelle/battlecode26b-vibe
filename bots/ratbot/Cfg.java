@@ -10,7 +10,7 @@ public final class Cfg {
     // ---- spawning: how many babies the king keeps
 
     /** Baby cap in peace and at war. */
-    public static final int MAX_BABIES = 15, MAX_BABIES_WAR = 15;
+    public static final int MAX_BABIES = 16, MAX_BABIES_WAR = 16;
     /** With RICH_BANK or more banked the cap rises to RICH_BABIES (0 = off): a surplus buys bodies. */
     public static final int RICH_BABIES = 40, RICH_BANK = 1000;
     /** The RICH tiers open at this round (0 = from the start). */
