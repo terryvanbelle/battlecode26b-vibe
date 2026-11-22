@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 28908 games in one fit as of 2026-11-22 13:57 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 29227 games in one fit as of 2026-11-22 14:18 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -19,5 +19,5 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-22 03:55 | ya9 | GATHER_CAT_DIST 32 on ya0 | #441 | 1578 +- 10 | 1176 |
 | 2026-11-22 04:55 | yb7 | CAT_DEFEND_R2 64 on ya9 | #442 | 1575 +- 11 | 1175 |
 | 2026-11-22 06:17 | yb9 | throw dodge: dodge any carrying enemy rat on yb7 | #443 | 1580 +- 7 | 2740 |
-| 2026-11-22 10:36 | sw08 | forward hold: FIGHT_POST 8 + WAR_GATHER 0 (big swing) on yb9 | #444 | 1600 +- 9 | 1414 |
-| 2026-11-22 12:56 | yd1 | FIGHT_POST 12 on sw08 | #445 | 1632 +- 16 | 505 |
+| 2026-11-22 10:36 | sw08 | forward hold: FIGHT_POST 8 + WAR_GATHER 0 (big swing) on yb9 | #444 | 1599 +- 9 | 1423 |
+| 2026-11-22 12:56 | yd1 | FIGHT_POST 12 on sw08 | #445 | 1632 +- 14 | 616 |
