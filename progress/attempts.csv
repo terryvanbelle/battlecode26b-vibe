@@ -1264,3 +1264,6 @@ yb8,2026-11-22,yb7,KING_RESERVE 500 (yb6 idea: +34 vs ya9 on 193 g; replica star
 yb9,2026-11-22,yb7,King.throwDodge dodges every loaded enemy carrier (yb4 idea: +18 vs ya9 on 192 g),tournament newcomer 04:58 PDT
 yc0,2026-11-22,yb7,CAT_DEFEND_R2 100 (continue the champion change 36 to 64),tournament newcomer 04:58 PDT
 yc1,2026-11-22,yb7,"SPAWN_FLOOR 375 (was 300; replica starvations since KING_RESERVE 400: 35423 ZeroDay cheese out r1530, starved r1561)",tournament newcomer 05:40 PDT
+yb9,2026-11-22,yb7,"ACCEPTED as LOCAL TOURNAMENT CHAMPION 11-22 06:17 PDT (BT 1660+-23 on 234 games vs yb7 1634+-11, +26 > 25); submitted #443",ACCEPTED as local champion
+yc2,2026-11-22,yb9,THROW_DODGE 13 (the dodge now covers every loaded enemy carrier; 12 was inert when it covered only carriers of ours),tournament newcomer 06:20 PDT
+yc3,2026-11-22,yb9,THROW_DODGE 5 (other side of the same retune),tournament newcomer 06:20 PDT
