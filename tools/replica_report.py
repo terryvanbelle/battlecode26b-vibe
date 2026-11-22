@@ -6,7 +6,9 @@
 Writes progress/ladder.md + ladder.png (the Rankings page: galaxy's displayed rating, with each team's game W-L
 from the replica rows of progress/games.csv) and progress/rating-history.md + rating-history.png (our displayed
 rating after each rated match, from /match/historical_rating/, with our submissions and the milestones of
-progress/milestones.csv marked). Regenerate, do not edit. Charts need matplotlib (tools/.venv).
+progress/milestones.csv marked), and progress/ladder-position.png + ladder-position.csv (our rank on the ladder over
+time, rebuilt from every ladder team's rating history: at each of our rated matches, 1 + the teams whose latest rating
+by then is higher; owner 11-21). Regenerate, do not edit. Charts need matplotlib (tools/.venv).
 """
 import argparse, datetime as dt, os, sys
 from zoneinfo import ZoneInfo
@@ -61,7 +63,9 @@ def history_md(hist, subs, now, marks=()):
          f'Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, '
          f'with each submission marked at its upload. Regenerate with `tools/replica_report.py`; data fetched '
          f'{now:%Y-%m-%d %H:%M} PDT. Times are Pacific.', '',
-         '![rating history](rating-history.png)', '']
+         '![rating history](rating-history.png)', '',
+         'Our position on the ladder over time (rebuilt from every team\'s rating history; `ladder-position.csv`):', '',
+         '![ladder position](ladder-position.png)', '']
     if marks:
         L += ['Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):', '']
         L += [f'- {MS.tag(i)} {when:%Y-%m-%d %H:%M} PDT: {label}' for i, (when, label) in enumerate(marks)]
@@ -134,6 +138,86 @@ def charts(teams, hist, subs, out, marks=(), now=None):
     return True
 
 
+def rank_history(s, ep, teams, hist):
+    """[(time, our rank, teams rated by then)] at each of our rated matches, from every ladder team's history."""
+    import bisect
+    others = []
+    for t in teams:
+        if t['name'] == TEAM:
+            continue
+        raw = s.api('GET', f'/api/compete/{ep}/match/historical_rating/?team_id={t["id"]}')['team_rating']['rating_history']
+        h = sorted((ts(x['timestamp']), x['rating']) for x in raw)
+        if h:
+            others.append(([w for w, _ in h], [r for _, r in h]))
+    out = []
+    for when, mine in hist:
+        n, above = 1, 0
+        for ws, rs in others:
+            i = bisect.bisect_right(ws, when)
+            if i:
+                n += 1
+                above += rs[i - 1] > mine
+        out.append((when, above + 1, n))
+    return out
+
+
+def marks_on(ax, marks):
+    for i, (when, label) in enumerate(marks):
+        ax.axvline(when, color=MS.COLOR, ls='--', lw=1.3)
+        t = ax.text(when, 0.01, MS.tag(i), transform=ax.get_xaxis_transform(), va='bottom', ha='center', fontsize=7,
+                    color='white', clip_on=True, bbox=dict(boxstyle='round,pad=0.15', fc=MS.COLOR, ec='none'))
+        t.set_in_layout(False)
+
+
+def rank_chart(ranks, subs, out, marks=(), now=None, recent_h=24):
+    """Two panels on wall-clock axes: the whole history, and the last recent_h hours with each submission labeled."""
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    import matplotlib.dates as mdates
+    now = now or ranks[-1][0]
+    t0 = now - dt.timedelta(hours=recent_h)
+    fig, axs = plt.subplots(2, 1, figsize=(10, 7))
+    for k, ax in enumerate(axs):
+        rr = ranks if k == 0 else [x for x in ranks if x[0] >= t0] or ranks[-1:]
+        if k == 1:   # carry the rank held at the window start
+            before = [x for x in ranks if x[0] < t0]
+            if before:
+                rr = [(t0, before[-1][1], before[-1][2])] + rr
+            rr = rr + [(now, rr[-1][1], rr[-1][2])]
+        ax.step([w for w, _, _ in rr], [r for _, r, _ in rr], where='post', color='#2a6fdb', lw=1.6, label='our rank')
+        ax.step([w for w, _, _ in rr], [n for _, _, n in rr], where='post', color='#adb5bd', lw=1, label='teams rated')
+        ax.set_ylim(max(n for _, _, n in rr) + 1, 0.5)
+        if k == 1:
+            for sub in subs:
+                t = ts(sub['created'])
+                if t >= t0:
+                    ax.axvline(t, color='#d9480f', alpha=0.5, lw=1)
+                    ax.text(t, 1, f' #{sub["id"]} {sub["package"] or ""}', rotation=90, va='top', fontsize=7,
+                            color='#d9480f')
+            ax.set_xlim(t0, now + dt.timedelta(minutes=20))
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M', tz=PDT))
+            ax.set_title(f'last {recent_h} h (orange: submissions)', fontsize=9)
+        else:
+            marks_on(ax, marks)
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d', tz=PDT))
+            ax.set_title(f'{TEAM} position on the replica ladder (dashed: milestones)')
+        r = rr[-1]
+        ax.annotate(f'#{r[1]} of {r[2]}', (r[0], r[1]), xytext=(-60, -14), textcoords='offset points', fontsize=8,
+                    color='#212529')
+        ax.set_ylabel('ladder position (1 = top)')
+        ax.grid(color='#e9ecef')
+        ax.legend(loc='lower left', fontsize=8)
+    axs[1].set_xlabel('time (PDT)')
+    if marks:
+        fig.text(0.01, 0.005, 'Milestones: ' + MS.footnote(marks), fontsize=7, color=MS.COLOR, va='bottom', wrap=True)
+        fig.tight_layout(rect=(0, 0.05, 1, 1))
+    else:
+        fig.tight_layout()
+    fig.savefig(os.path.join(out, 'ladder-position.png'), dpi=110)
+    plt.close(fig)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('--out', default=os.path.join(REPO, 'progress'))
@@ -155,6 +239,12 @@ def main(argv=None):
     marks = MS.read()
     open(os.path.join(a.out, 'rating-history.md'), 'w').write(history_md(hist, subs, now, marks))
     png = charts(teams, hist, subs, a.out, marks, now)
+    ranks = rank_history(s, ep, teams, hist)
+    with open(os.path.join(a.out, 'ladder-position.csv'), 'w') as f:
+        f.write('time_pdt,rank,teams\n')
+        f.writelines(f'{w:%Y-%m-%d %H:%M:%S},{r},{n}\n' for w, r, n in ranks)
+    if png and ranks:
+        rank_chart(ranks, subs, a.out, marks, now)
     me = next((i for i, t in enumerate(teams, 1) if t['name'] == TEAM), None)
     print(f'ladder: {len(teams)} teams, {TEAM} #{me}; history: {len(hist)} rated matches, {len(subs)} submissions'
           f'{"" if png else " (no matplotlib: charts skipped)"}')

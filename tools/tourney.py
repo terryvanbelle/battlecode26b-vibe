@@ -10,6 +10,11 @@ and a change is submitted to the replica without any gate (prod does the submit)
   tourney.py rank [--runs-root DIR]        ladder with SE, games; flags a new champion
   tourney.py plan RUN [--games N]          write runs/RUN/cells.tsv: N games chosen where the ladder is least sure
   tourney.py add BOT                       enter BOT into the pool (it is scheduled first until it has NEW_MIN games)
+  tourney.py chart                         progress/local-elo.png + local-elo.md: every champion and candidate on a
+                                           wall-clock axis (owner 11-21: kept current at every prod)
+
+research/tourney/champions.csv is the champion history (time PDT, bot, base, change, submission); when champion.txt
+names a bot that is not its last row, chart appends it at champion.txt's modification time.
 
 Pairing: bots with fewer than NEW_MIN games get half the run, weighted by their missing games, half of those games
 against the champion and the rest against the current top TOP bots; the rest
@@ -131,6 +136,106 @@ def cmd_plan(run, n):
     print(f'{run}: {len(pairs)} games; ' + ' '.join(f'{b}:{k}' for b, k in c.most_common()))
 
 
+CHAMPS = os.path.join(R, 'research', 'tourney', 'champions.csv')
+
+
+def champ_history():
+    import csv, datetime as dt
+    from zoneinfo import ZoneInfo
+    pdt = ZoneInfo('America/Vancouver')
+    rows = list(csv.DictReader(open(CHAMPS)))
+    ch = champion()
+    if ch and (not rows or rows[-1]['bot'] != ch):   # a promotion not yet recorded: stamp it with champion.txt's mtime
+        when = dt.datetime.fromtimestamp(os.path.getmtime(CHAMP), pdt)
+        rows.append({'when_pdt': f'{when:%Y-%m-%d %H:%M}', 'bot': ch, 'base': rows[-1]['bot'] if rows else '',
+                     'change': '', 'submission': ''})
+        with open(CHAMPS, 'a') as f:
+            f.write(f"{rows[-1]['when_pdt']},{ch},{rows[-1]['base']},,\n")
+    for r in rows:
+        r['when'] = dt.datetime.strptime(r['when_pdt'], '%Y-%m-%d %H:%M').replace(tzinfo=pdt)
+    return rows
+
+
+def entry_times():
+    """bot -> when its snapshot was first committed (PDT), from one git log pass; uncommitted bots: directory mtime."""
+    import subprocess, datetime as dt
+    from zoneinfo import ZoneInfo
+    pdt = ZoneInfo('America/Vancouver')
+    out, t = {}, None
+    log = subprocess.run(['git', '-C', R, 'log', '--diff-filter=A', '--name-only', '--format=@%ct', '--',
+                          'bots/*/SNAPSHOT'], capture_output=True, text=True).stdout
+    for l in log.splitlines():
+        if l.startswith('@'):
+            t = dt.datetime.fromtimestamp(int(l[1:]), pdt)
+        elif l.startswith('bots/') and t:
+            out[l.split('/')[1]] = t   # git log is newest first: the last seen is the first add
+    for b in pool() + retired():
+        if b not in out and os.path.isdir(os.path.join(R, 'bots', b)):
+            out[b] = dt.datetime.fromtimestamp(os.path.getmtime(os.path.join(R, 'bots', b)), pdt)
+    return out
+
+
+def cmd_chart(out=os.path.join(R, 'progress')):
+    import datetime as dt
+    from zoneinfo import ZoneInfo
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    import matplotlib.dates as mdates
+    import milestones as MS
+    pdt = ZoneInfo('America/Vancouver')
+    gs = games()
+    rt = elolib.fit(gs) if gs else {}
+    hist = champ_history()
+    start, now = hist[0]['when'], dt.datetime.now(pdt)
+    ent = entry_times()
+    champs = {r['bot'] for r in hist}
+    cand = [(ent[b], rt[b]) for b in set(pool()) | set(retired())
+            if b in rt and b in ent and b not in champs and ent[b] >= start and rt[b].games >= 10]
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.scatter([w for w, _ in cand], [r.rating for _, r in cand], s=[8 + r.games / 8 for _, r in cand],
+               color='#adb5bd', alpha=0.7, label='candidates (at entry; size = games)', zorder=2)
+    xs, ys = [], []
+    for i, r in enumerate(hist):
+        b = r['bot']
+        if b not in rt:
+            continue
+        end = hist[i + 1]['when'] if i + 1 < len(hist) else now
+        xs += [r['when'], end]
+        ys += [rt[b].rating, rt[b].rating]
+        ax.errorbar([r['when']], [rt[b].rating], yerr=[rt[b].se], fmt='o', color='#2a6fdb', ms=6, capsize=3, zorder=4)
+        lab = b + (f" {r['change']}" if r['change'] else '') + (f" #{r['submission']}" if r['submission'] else '')
+        ax.annotate(lab, (r['when'], rt[b].rating), xytext=(4, 6), textcoords='offset points', fontsize=7.5,
+                    color='#212529')
+    ax.plot(xs, ys, color='#2a6fdb', lw=1.8, label='local champion (rating +- SE, current fit)', zorder=3)
+    for i, (when, label) in enumerate(m for m in MS.read() if m[0] >= start - dt.timedelta(hours=1)):
+        ax.axvline(when, color=MS.COLOR, ls='--', lw=1.3)
+    ax.set_xlim(start - dt.timedelta(minutes=30), now + dt.timedelta(minutes=30))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M', tz=pdt))
+    ax.set_xlabel('time (PDT)')
+    ax.set_ylabel('Bradley-Terry rating (local tournament)')
+    ax.set_title(f'Local tournament: champions and candidates ({len(gs)} games, {now:%m-%d %H:%M} PDT)')
+    ax.grid(color='#e9ecef')
+    ax.legend(loc='lower right', fontsize=8)
+    fig.autofmt_xdate()
+    fig.tight_layout()
+    fig.savefig(os.path.join(out, 'local-elo.png'), dpi=110)
+    plt.close(fig)
+    L = ['# Local tournament Elo', '',
+         f'Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all {len(gs)} games in '
+         f'one fit as of {now:%Y-%m-%d %H:%M} PDT, so every point is on the same scale; earlier champions are '
+         'shown at their current rating. Regenerate with `tools/tourney.py chart`.', '',
+         '![local elo](local-elo.png)', '',
+         '| Champion from (PDT) | Bot | Change on base | Submission | Rating +- SE | Games |', '|---|---|---|---:|---:|---:|']
+    for r in hist:
+        x = rt.get(r['bot'])
+        L.append(f"| {r['when_pdt']} | {r['bot']} | {r['change'] + (' on ' + r['base'] if r['base'] else '')} | "
+                 f"{('#' + r['submission']) if r['submission'] else ''} | "
+                 f"{f'{x.rating:.0f} +- {x.se:.0f}' if x else '-'} | {f'{x.games:.0f}' if x else '-'} |")
+    open(os.path.join(out, 'local-elo.md'), 'w').write('\n'.join(L) + '\n')
+    print(f'local-elo.png: {len(hist)} champions, {len(cand)} candidates')
+
+
 def cmd_add(bot):
     if bot in pool():
         print(f'{bot} already in pool'); return
@@ -148,5 +253,7 @@ if __name__ == '__main__':
         cmd_plan(a[1], int(a[a.index('--games') + 1]) if '--games' in a else 120)
     elif a[0] == 'add':
         cmd_add(a[1])
+    elif a[0] == 'chart':
+        cmd_chart()
     else:
         print(__doc__)

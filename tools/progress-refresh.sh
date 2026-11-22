@@ -46,6 +46,7 @@ step elo 600 2 "$PY" -I tools/elo.py
 step replica 600 1 "$PY" -I tools/replica_report.py
 step "replica milestones" 600 1 bash -c sync_milestones
 step chart 300 1 "$PY" -I tools/plot_progress.py
+step "local elo chart" 300 1 "$PY" tools/tourney.py chart
 step attempts 300 1 "$PY" -I tools/attempts.py render
 echo "== done $(TZ=America/Vancouver date '+%H:%M PDT')"
 if [ "${#FAILS[@]}" -gt 0 ]; then echo "!! failed steps: ${FAILS[*]} (their progress/ files are stale)"; exit 1; fi

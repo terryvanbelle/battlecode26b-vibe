@@ -229,3 +229,5 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (10:43) I'm good with that  [hourly low-disk replay prune]
 (10:44) I'd like you to add a report of free VM space to the prod
 (12:32) For each challenger, can you also show point difference from the champion, as well as points necessary to replace them?
+(18:33) Please add graphs to progress/ for local ELO whenever we have a new champion.  Also graphs for replica ELO and position on the ladder.  Use wall clock time for the horizontal axis for all of them
+(18:34) Make sure to keep these graphs up to date
