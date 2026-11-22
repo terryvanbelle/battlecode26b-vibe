@@ -1263,3 +1263,4 @@ yb7,2026-11-22,ya9,CAT_DEFEND_R2 64 (was 36: a cat within dist2 64 of our king d
 yb8,2026-11-22,yb7,KING_RESERVE 500 (yb6 idea: +34 vs ya9 on 193 g; replica starvations 5 of 12 king deaths at 400),tournament newcomer 04:58 PDT
 yb9,2026-11-22,yb7,King.throwDodge dodges every loaded enemy carrier (yb4 idea: +18 vs ya9 on 192 g),tournament newcomer 04:58 PDT
 yc0,2026-11-22,yb7,CAT_DEFEND_R2 100 (continue the champion change 36 to 64),tournament newcomer 04:58 PDT
+yc1,2026-11-22,yb7,"SPAWN_FLOOR 375 (was 300; replica starvations since KING_RESERVE 400: 35423 ZeroDay cheese out r1530, starved r1561)",tournament newcomer 05:40 PDT
