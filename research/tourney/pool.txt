@@ -102,11 +102,11 @@
 # yb4  (ya9-based throw dodge, +18 on 192; re-entered on champion yb7 as yb9 11-22 04:55)
 # yb5  (retired 11-22 04:55: GATHER_CAT_DIST 45 on ya9, +12 on 240 g)
 # yb6  (ya9-based KING_RESERVE 500, +34 on 193; re-entered on champion yb7 as yb8 11-22 04:55)
-# yb7  (retired 11-22 06:45: old champion, superseded by yb9)
+# yb7  (retired 11-22 06:33: old champion, superseded by yb9)
 # yb8  (retired 11-22 06:15: KING_RESERVE 500, -17 vs yb7 on 266 g)
 yb9
-# yc0  (retired 11-22 06:45: CAT_DEFEND_R2 100 on yb7, -4 on 283 g; base superseded)
-# yc1  (retired 11-22 06:45: SPAWN_FLOOR 375 on yb7, -0 on 174 g; base superseded)
+# yc0  (retired 11-22 06:33: CAT_DEFEND_R2 100 on yb7, -4 on 283 g; base superseded)
+# yc1  (retired 11-22 06:33: SPAWN_FLOOR 375 on yb7, -0 on 174 g; base superseded)
 yc2
 yc3
 sw01
