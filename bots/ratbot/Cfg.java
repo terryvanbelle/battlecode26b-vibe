@@ -216,7 +216,7 @@ public final class Cfg {
     public static final int THROW_BC = 7000;
     /** Throws: an enemy baby hit beyond tile 2 counts THROW_FAR_PCT percent; below a THROW_MIN score (42 = a
      *  point-blank wall or rat) the carrier holds for up to THROW_HOLD rounds after the grab. */
-    public static final int THROW_FAR_PCT = 40, THROW_MIN = 84, THROW_HOLD = 6;
+    public static final int THROW_FAR_PCT = 40, THROW_MIN = 84, THROW_HOLD = 10;
     /** A thrown rat that hits a cat dies outright: a cat first on the flight scores CAT_FEED at tiles 1-2, 60% at 3-4
      *  and 30% beyond (Baby.feedScore; 0 = the cat scores -50). */
     public static final int CAT_FEED = 150;
