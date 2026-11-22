@@ -1316,3 +1316,4 @@ sw25,2026-11-22,sw19,"BIG SWING no opening rush: RUSH_FROM 16 = RUSH_TO (0 rushe
 ye5,2026-11-22,sw19,"RUSH_UNTIL 200 (from 300; yc5's 400 lost -19, so the other direction)",tournament newcomer 15:38 PDT
 ye6,2026-11-22,sw19,"END_CAT 1200 (from 1600; dose line: ye4's 1400 leads +80 on 56 g)",tournament newcomer 15:58 PDT
 sw26,2026-11-22,sw19,"BIG SWING combination of the two early leaders on sw19: ye4 END_CAT 1400 (+80 on 56) + sw24 king defence radius KING_THREAT_D2 64, DEFEND_D2 225 (+71 on 57)",tournament newcomer 15:58 PDT
+sw27,2026-11-22,sw19,"BIG SWING conservative opening: RUSH_UNTIL 150 (from 300) + KING_RESERVE 600 (from 400) (replica 36502, #446's first match: lost DefaultSmall r270 and Nofreecheese r381 by king kill with bank 0-9 vs 365-411, rats 3 vs 5 and 8 vs 16 at r250, ~60 of ours killed by r300-380)",tournament newcomer 16:38 PDT
