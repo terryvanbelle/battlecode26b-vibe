@@ -1247,3 +1247,4 @@ ya1,2026-11-21,xz2,"END_KING 1600 (lone king forms a second from r1600, was 1850
 ya2,2026-11-22,ya0,GRAB_THREAT 11 (xz7 idea: +47 vs xz2 on 255 g),tournament newcomer 00:58 PDT
 ya3,2026-11-22,ya0,KING_RESERVE 250 (continue the champion change: 600 to 400 gained +55),tournament newcomer 00:58 PDT
 ya4,2026-11-22,ya0,"DIG_RESERVE 200 (the matching dig reserve, was 300)",tournament newcomer 00:58 PDT
+ya5,2026-11-22,ya0,"AUSTERE_CORE 8 (was 99 = no cut): while the kings project starvation the core count drops to 8; replica 35005: ya0 starved on DefaultMedium (cheese out r510) and popthecork (r577) vs AdamTan12_Finals",tournament newcomer 01:20 PDT
