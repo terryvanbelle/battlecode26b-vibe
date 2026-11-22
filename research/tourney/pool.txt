@@ -126,6 +126,7 @@ yc5
 # yc6  (retired 11-22 09:55: FORM_FROM 150 -174 on 49 g, 3 SE below)
 yc7
 # sw13  (retired 11-22 10:15: greed -102 on 51 g, 2 SE below; with the blitz failing, yb9 sits near the balance)
-yc8
+# yc8  (retired 11-22 10:35: GRAB_BITE 40 -39 vs new champion sw08 on 116 g, -17 vs yb9; dose past yc7 overshoots)
 sw14
 yc9
+yd0
