@@ -58,9 +58,11 @@ xw9
 # xx0  (retired 11-21 18:27: THROW_HOLD 8 on xw6, -61 on 76 g)
 # xx1  (retired 11-21 18:27: KING_RESERVE 900 on xw6, -72 on 77 g)
 # xx2  (retired 11-21 19:35: THROW_FAR_PCT 70 on xw6, -49 on 121 g)
-xx3
-xx4
+# xx3  (retired 11-21 19:55: xw6-based, below xw6)
+# xx4  (xw6-based; idea re-entered on champion xw9 11-21 19:55)
 # xx5  (retired 11-21 19:35: THROW_HOLD 12 on xw6, -133 on 61 g)
-xx6
+# xx6  (xw6-based; idea re-entered on champion xw9 11-21 19:55)
 xx7
-xx8
+# xx8  (retired 11-21 19:55: xw6-based, below xw6)
+xx9
+xy0

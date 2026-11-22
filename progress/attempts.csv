@@ -1211,13 +1211,15 @@ xw5,2026-11-21,xu2,MAX_BABIES 16 (xt5 idea: cap 16 on xs2 is #1 at +14 vs xu2),t
 xw6,2026-11-21,xu2,THROW_HOLD 10 (carriers hold longer for a better throw; pairs with the own-king throw finding),"ACCEPTED as LOCAL TOURNAMENT CHAMPION 11-21 17:50 PDT (BT 1611+-25 on 203 games vs xu2 1549+-9, +62 > 26); submitted #436"
 xw7,2026-11-21,xu2,THROW_HOLD 14 (xw6 THROW_HOLD 10 leads at +90/85 g: probe further),tournament newcomer 17:09 PDT
 xw8,2026-11-21,xu2,THROW_MIN 120 (hold for a better throw by score instead of time),tournament newcomer 17:09 PDT
-xw9,2026-11-21,xw6,MAX_BABIES 16 (xw5 idea: +39 vs xu2 on 226 g),tournament newcomer 17:52 PDT
+xw9,2026-11-21,xw6,MAX_BABIES 16 (xw5 idea: +39 vs xu2 on 226 g),"ACCEPTED as LOCAL TOURNAMENT CHAMPION 11-21 19:55 PDT (BT 1620+-18 on 369 games vs xw6 1587+-10, +33 > 21); submitted #437"
 xx0,2026-11-21,xw6,"THROW_HOLD 8 (bracket the hold: 6 champion-1, 10 +62, 14 -161)",tournament newcomer 17:52 PDT
 xx1,2026-11-21,xw6,KING_RESERVE 900 (xw4 idea: +11 vs xu2 on 245 g),tournament newcomer 17:52 PDT
-xx2,2026-11-21,xw6,"THROW_FAR_PCT 70 (value far throws more; the throw line moved the champion)",tournament newcomer 18:29 PDT
+xx2,2026-11-21,xw6,THROW_FAR_PCT 70 (value far throws more; the throw line moved the champion),tournament newcomer 18:29 PDT
 xx3,2026-11-21,xw6,"THROW_MIN 63 (with the longer hold, accept a smaller hit)",tournament newcomer 18:29 PDT
-xx4,2026-11-21,xw6,"GRAB_THREAT 15 (grab micro fears enemy grabbers less)",tournament newcomer 18:29 PDT
-xx5,2026-11-21,xw6,"THROW_HOLD 12 (8 and 14 lost to 10; 12 untested)",tournament newcomer 19:17 PDT
-xx6,2026-11-21,xw6,"KING_THREAT_D2 36 (the 26->30 step was a champion; probe further on the new base)",tournament newcomer 19:17 PDT
-xx7,2026-11-21,xw6,"GRAB_THREAT 8 (xx4 GRAB_THREAT 15 leads +57: probe further)",tournament newcomer 19:37 PDT
-xx8,2026-11-21,xw6,"GRAB_BITE 30 (grab micro values bites more; same micro as xx4)",tournament newcomer 19:37 PDT
+xx4,2026-11-21,xw6,GRAB_THREAT 15 (grab micro fears enemy grabbers less),tournament newcomer 18:29 PDT
+xx5,2026-11-21,xw6,THROW_HOLD 12 (8 and 14 lost to 10; 12 untested),tournament newcomer 19:17 PDT
+xx6,2026-11-21,xw6,KING_THREAT_D2 36 (the 26->30 step was a champion; probe further on the new base),tournament newcomer 19:17 PDT
+xx7,2026-11-21,xw6,GRAB_THREAT 8 (xx4 GRAB_THREAT 15 leads +57: probe further),tournament newcomer 19:37 PDT
+xx8,2026-11-21,xw6,GRAB_BITE 30 (grab micro values bites more; same micro as xx4),tournament newcomer 19:37 PDT
+xx9,2026-11-21,xw9,GRAB_THREAT 15 (xx4 idea: +26 vs xw6 on 173 g),tournament newcomer 19:58 PDT
+xy0,2026-11-21,xw9,KING_THREAT_D2 36 (xx6 idea: +7 vs xw6 on 90 g),tournament newcomer 19:58 PDT
