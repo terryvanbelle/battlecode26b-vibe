@@ -142,9 +142,9 @@ sw19
 # yd5  (retired 11-22 13:35: FIGHT_POST 14 -95 vs yd1 on 50 g)
 # yd6  (retired 11-22 14:58: MAX_BABIES_WAR 18 on yd1, -19 vs yd1 on 224 g)
 # yd7  (retired 11-22 14:35: KING_RESERVE 300 -20 vs yd1 on 180 g; the opposite dose ye1 600 replaces it)
-sw20
+# sw20  (retired 11-22 15:15: forward king on yd1, settled -20 vs sw19 on 336 g)
 # sw21  (retired 11-22 14:58: siege economy on yd1, -30 vs yd1 on 228 g)
-yd8
+# yd8  (retired 11-22 15:15: GATHER_FIRST 5 on yd1, -49 vs sw19 on 223 g)
 # yd9  (retired 11-22 14:35: ALERT_DIST2 400 -83 vs yd1 on 82 g, 2 SE)
 sw22
 sw23
@@ -153,3 +153,5 @@ sw23
 ye2
 ye3
 sw24
+ye4
+sw25
