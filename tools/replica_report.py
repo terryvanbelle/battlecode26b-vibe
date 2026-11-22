@@ -5,7 +5,7 @@
 
 Writes progress/ladder.md + ladder.png (the Rankings page: galaxy's displayed rating, with each team's game W-L
 from the replica rows of progress/games.csv) and progress/rating-history.md + rating-history.png (our displayed
-rating after each rated match, from /match/historical_rating/: whole history and last 24 h, milestones of
+rating after each rated match, from /match/historical_rating/: whole history and since RECENT_FROM, milestones of
 progress/milestones.csv dashed; no submission bars, owner 11-22), and progress/ladder-position.png + ladder-position.csv (our rank on the ladder over
 time, rebuilt from every ladder team's rating history: at each of our rated matches, 1 + the teams whose latest rating
 by then is higher; owner 11-21). Regenerate, do not edit. Charts need matplotlib (tools/.venv).
@@ -21,6 +21,8 @@ import milestones as MS
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEAM = G.TEAM
 PDT = ZoneInfo('America/Vancouver')
+# Start of the lower ('recent') panels: the local-tournament procedure began ~08:00 PDT 11-21 (owner 11-22).
+RECENT_FROM = dt.datetime(2026, 11, 21, 8, 0, tzinfo=PDT)
 
 
 def ts(s):
@@ -61,7 +63,7 @@ def ladder_md(teams, wl, now):
 def history_md(hist, subs, now, marks=()):
     L = ['# Rating history (replica)', '',
          f'Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, '
-         f'over the whole history and the last 24 hours, with milestones dashed. Regenerate with `tools/replica_report.py`; data fetched '
+         f'over the whole history and since 11-21 08:00 PDT (the local tournament), with milestones dashed. Regenerate with `tools/replica_report.py`; data fetched '
          f'{now:%Y-%m-%d %H:%M} PDT. Times are Pacific.', '',
          '![rating history](rating-history.png)', '',
          'Our position on the ladder over time (rebuilt from every team\'s rating history; `ladder-position.csv`):', '',
@@ -109,8 +111,8 @@ def charts(teams, hist, subs, out, marks=(), now=None):
     return True
 
 
-def rating_chart(hist, out, marks=(), now=None, recent_h=24):
-    """Two panels on wall-clock axes: our displayed rating over the whole history, and the last recent_h hours."""
+def rating_chart(hist, out, marks=(), now=None):
+    """Two panels on wall-clock axes: our displayed rating over the whole history, and since RECENT_FROM."""
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -118,7 +120,7 @@ def rating_chart(hist, out, marks=(), now=None, recent_h=24):
     if not hist:
         return
     now = now or hist[-1][0]
-    t0 = now - dt.timedelta(hours=recent_h)
+    t0 = RECENT_FROM
     fig, axs = plt.subplots(2, 1, figsize=(10, 7))
     for k, ax in enumerate(axs):
         hh = hist if k == 0 else [x for x in hist if x[0] >= t0]
@@ -131,8 +133,8 @@ def rating_chart(hist, out, marks=(), now=None, recent_h=24):
         ax.plot([w for w, _ in pts], [r for _, r in pts], 'o', color='#2a6fdb', ms=2.5)
         if k == 1:
             ax.set_xlim(t0, now + dt.timedelta(minutes=20))
-            ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M', tz=PDT))
-            ax.set_title(f'last {recent_h} h', fontsize=9)
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M\n%m-%d', tz=PDT))
+            ax.set_title(f'since {RECENT_FROM:%m-%d %H:%M} PDT (local tournament)', fontsize=9)
         else:
             marks_on(ax, marks)
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d', tz=PDT))
@@ -182,14 +184,14 @@ def marks_on(ax, marks):
         t.set_in_layout(False)
 
 
-def rank_chart(ranks, subs, out, marks=(), now=None, recent_h=24):
-    """Two panels on wall-clock axes: the whole history, and the last recent_h hours."""
+def rank_chart(ranks, subs, out, marks=(), now=None):
+    """Two panels on wall-clock axes: the whole history, and since RECENT_FROM."""
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     import matplotlib.dates as mdates
     now = now or ranks[-1][0]
-    t0 = now - dt.timedelta(hours=recent_h)
+    t0 = RECENT_FROM
     fig, axs = plt.subplots(2, 1, figsize=(10, 7))
     for k, ax in enumerate(axs):
         rr = ranks if k == 0 else [x for x in ranks if x[0] >= t0] or ranks[-1:]
@@ -203,8 +205,8 @@ def rank_chart(ranks, subs, out, marks=(), now=None, recent_h=24):
         ax.set_ylim(max(n for _, _, n in rr) + 1, 0.5)
         if k == 1:
             ax.set_xlim(t0, now + dt.timedelta(minutes=20))
-            ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M', tz=PDT))
-            ax.set_title(f'last {recent_h} h', fontsize=9)
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M\n%m-%d', tz=PDT))
+            ax.set_title(f'since {RECENT_FROM:%m-%d %H:%M} PDT (local tournament)', fontsize=9)
         else:
             marks_on(ax, marks)
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d', tz=PDT))
