@@ -48,9 +48,12 @@ xu2
 # xw0  (retired 11-21 16:07: LOW_BABIES 10 on xu2, -79 on 81 g)
 # xw1  (retired 11-21 16:47: SPAWN_FLOOR 200 on xu2, -19 on 215 g)
 # xw2  (retired 11-21 16:27: FORM_BABIES 15 on xu2, -25 on 257 g)
-xw4
+# xw4  (xu2-based; superseded by champion xw6 11-21 17:50)
 # xw3  (retired 11-21 17:27: own-king throw guard on xu2, -6 on 339 g)
-xw5
+# xw5  (xu2-based; superseded by champion xw6 11-21 17:50)
 xw6
-xw7
-xw8
+# xw7  (retired 11-21 17:47: THROW_HOLD 14 on xu2, -161 on 81 g)
+# xw8  (xu2-based; superseded by champion xw6 11-21 17:50)
+xw9
+xx0
+xx1
