@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 05:59 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 06:03 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -12,16 +12,16 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 05:59 
 | 2 | awu7\_awubot\_us | 2002.1 | 1861-1847 | accepted |
 | 3 | uravt\_Version35 | 1979.3 | 1873-1859 | accepted |
 | 4 | uravt\_Version41 | 1966.1 | 2029-1805 | accepted |
-| 5 | awu7\_awubot\_quals | 1922.1 | 1705-1646 | accepted |
+| 5 | awu7\_awubot\_quals | 1924.2 | 1705-1646 | accepted |
 | 6 | nubbbbbb\_testplayer | 1884.9 | 1641-1533 | accepted |
-| 7 | nzjt\_TheComplexMerlin | 1868.1 | 3044-2029 | accepted |
+| 7 | nzjt\_TheComplexMerlin | 1866.0 | 3044-2029 | accepted |
 | 8 | abcdezyxwv\_bestsofar | 1863.3 | 2113-1778 | accepted |
 | 9 | battlecode-archive\_testplayer | 1837.5 | 1689-1614 | accepted |
-| 10 | TeamSPAARK\_SPAARK | 1815.9 | 1724-1588 | accepted |
-| 11 | quesswho\_quals | 1789.9 | 1679-1516 | accepted |
-| 12 | thewaxmango\_PhD | 1789.2 | 1691-1621 | accepted |
-| 13 | daannte\_v52\_ThisGuy | 1786.8 | 1714-1658 | accepted |
-| 14 | quesswho\_bot16 | 1775.0 | 1696-1661 | accepted |
+| 10 | TeamSPAARK\_SPAARK | 1811.0 | 1724-1588 | accepted |
+| 11 | thewaxmango\_PhD | 1794.1 | 1691-1621 | accepted |
+| 12 | daannte\_v52\_ThisGuy | 1786.8 | 1714-1658 | accepted |
+| 13 | quesswho\_quals | 1785.4 | 1679-1516 | accepted |
+| 14 | quesswho\_bot16 | 1779.5 | 1696-1661 | accepted |
 | 15 | daannte\_v47\_Skadoosh | 1766.5 | 1809-1692 | accepted |
 | 16 | AlexT101\_finalsbot | 1762.2 | 1646-1600 | accepted |
 | 17 | AdamTan12\_Finals | 1755.2 | 2957-2680 | accepted |
@@ -31,22 +31,22 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 05:59 
 | 21 | AlexT101\_usqualsbot | 1710.1 | 2661-1954 | accepted |
 | 22 | VarunVejalla\_final4\_run\_away10 | 1695.4 | 2490-2790 | accepted |
 | 23 | thewaxmango\_collegejunior | 1692.2 | 2639-2527 | accepted |
-| 24 | HugoIngelsson\_YokoOno | 1649.7 | 2702-2683 | accepted |
+| 24 | HugoIngelsson\_YokoOno | 1650.9 | 2702-2683 | accepted |
 | 25 | HugoIngelsson\_Xzibit | 1590.3 | 2238-2820 | accepted |
-| 26 | spsquared\_TSPAARK\_QUALS | 1566.8 | 2222-3514 | accepted |
+| 26 | spsquared\_TSPAARK\_QUALS | 1565.6 | 2222-3514 | accepted |
 | 27 | outercloudstudio\_v\_1\_18 | 1528.4 | 1678-2102 | accepted |
-| 28 | amcsz\_fighterrats | 1476.7 | 1673-1870 | accepted |
-| 29 | CS50Crab\_protoSaberV7 | 1433.1 | 1642-1619 | accepted |
-| 30 | CS50Crab\_rapierV1 | 1432.9 | 1731-1959 | accepted |
+| 28 | amcsz\_fighterrats | 1471.2 | 1673-1870 | accepted |
+| 29 | CS50Crab\_rapierV1 | 1438.5 | 1731-1959 | accepted |
+| 30 | CS50Crab\_protoSaberV7 | 1433.1 | 1642-1619 | accepted |
 | 31 | PixelRifts\_mushakraj\_mk3 | 1380.3 | 1639-1757 | accepted |
-| 32 | XSercia\_genies | 1357.5 | 1695-1854 | accepted |
-| 33 | bc26vibe\_bot | 1348.8 | 1741-2069 | accepted |
+| 32 | XSercia\_genies | 1353.2 | 1695-1854 | accepted |
+| 33 | bc26vibe\_bot | 1353.1 | 1741-2069 | accepted |
 | 34 | ask8000\_bumchit67 | 1342.9 | 1698-1833 | accepted |
 | 35 | justinottesen\_alfredo | 1336.5 | 1558-1637 | accepted |
-| 36 | C0derTang\_v6 | 1327.8 | 1626-1779 | accepted |
-| 37 | Gavdingo\_v1 | 1327.8 | 1647-1668 | accepted |
+| 36 | Gavdingo\_v1 | 1328.8 | 1647-1668 | accepted |
+| 37 | C0derTang\_v6 | 1327.8 | 1626-1779 | accepted |
 | 38 | Naton-Cai\_ratplayer | 1299.0 | 1698-1734 | accepted |
-| 39 | vincentwang60\_javabot | 1237.4 | 1718-1777 | accepted |
+| 39 | vincentwang60\_javabot | 1236.5 | 1718-1777 | accepted |
 | 40 | Victor-Ramirez-Garcia\_battleca | 1205.6 | 1995-1332 | accepted |
 | 41 | Camleaf\_mk1 | 1200.3 | 1618-1724 | accepted |
 | 42 | bc26-example | 1189.7 | 1611-1674 | accepted |
