@@ -1242,5 +1242,8 @@ xz6,2026-11-21,xx9,KING_BITE_MAX 200 (king spends more cheese on killing bites),
 xz7,2026-11-21,xz2,GRAB_THREAT 11 (xz3 idea: +22 vs xx9 on 167 g),tournament newcomer 23:18 PDT
 xz8,2026-11-21,xz2,LOW_FLOOR 300 (probe the champion change further),tournament newcomer 23:18 PDT
 xz9,2026-11-21,xz2,"LOW_BABIES 10 (the low-floor threshold, now that LOW_FLOOR matters)",tournament newcomer 23:18 PDT
-ya0,2026-11-21,xz2,"KING_RESERVE 400 (the other side of 900, which lost twice)",tournament newcomer 23:18 PDT
+ya0,2026-11-21,xz2,"KING_RESERVE 400 (the other side of 900, which lost twice)","ACCEPTED as LOCAL TOURNAMENT CHAMPION 11-22 00:55 PDT (BT 1649+-23 on 238 games vs xz2 1594+-11, +55 > 25); submitted #440"
 ya1,2026-11-21,xz2,"END_KING 1600 (lone king forms a second from r1600, was 1850; replica 34861 cheeseguardians: xz2 lost on points with one king, its second king formed r646 and died r941, the opponent held two; kings weigh 0.5 of war points)",tournament newcomer 23:45 PDT
+ya2,2026-11-22,ya0,GRAB_THREAT 11 (xz7 idea: +47 vs xz2 on 255 g),tournament newcomer 00:58 PDT
+ya3,2026-11-22,ya0,KING_RESERVE 250 (continue the champion change: 600 to 400 gained +55),tournament newcomer 00:58 PDT
+ya4,2026-11-22,ya0,"DIG_RESERVE 200 (the matching dig reserve, was 300)",tournament newcomer 00:58 PDT
