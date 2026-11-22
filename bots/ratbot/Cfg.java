@@ -255,7 +255,7 @@ public final class Cfg {
     /** Squared distance (to the cat's 2x2 centre, doubled coords / 4) a gatherer keeps from cats. */
     public static final int GATHER_CAT_DIST = 32;
     /** A cat within dist2 CAT_DEFEND_R2 of one of our kings draws every rat that sees it, gatherers included (0 = off). */
-    public static final int CAT_DEFEND_R2 = 36;
+    public static final int CAT_DEFEND_R2 = 64;
     /** A rat whose walk to a cat has stalled CAT_REACH turns, or whose way there is a known detour, leaves cats alone
      *  for CAT_REACH_TTL rounds (0 = off). */
     public static final int CAT_REACH = 0, CAT_REACH_TTL = 100;
