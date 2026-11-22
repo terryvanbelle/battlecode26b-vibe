@@ -1234,8 +1234,12 @@ xy8,2026-11-21,xw9,WAR_FLOOR 450 (the spawn floor under attack; same cheese-rese
 xy9,2026-11-21,xw9,"SPAWN_FLOOR 375 (450 +65, 600 -61: bracket below)",tournament newcomer 21:37 PDT
 xz0,2026-11-21,xw9,LOW_FLOOR 200 (the spawn floor with few babies; same early-starvation line),tournament newcomer 21:37 PDT
 xz1,2026-11-21,xx9,SPAWN_FLOOR 450 (xy6 idea: +22 vs xw9 on 81 g),tournament newcomer 21:58 PDT
-xz2,2026-11-21,xx9,LOW_FLOOR 200 (xz0 idea),tournament newcomer 21:58 PDT
+xz2,2026-11-21,xx9,LOW_FLOOR 200 (xz0 idea),"ACCEPTED as LOCAL TOURNAMENT CHAMPION 11-21 23:15 PDT (BT 1616+-24 on 214 games vs xx9 1582+-11, +34 > 26); submitted #439"
 xz3,2026-11-21,xx9,GRAB_THREAT 11 (between 8 and 15),tournament newcomer 21:58 PDT
 xz4,2026-11-21,xx9,DEFEND_D2 144 (babies defend the king from further),tournament newcomer 21:58 PDT
-xz5,2026-11-21,xx9,"CARRY_CAT 10 (carriers walk enemy rats to a cat from further away)",tournament newcomer 22:37 PDT
-xz6,2026-11-21,xx9,"KING_BITE_MAX 200 (king spends more cheese on killing bites)",tournament newcomer 22:37 PDT
+xz5,2026-11-21,xx9,CARRY_CAT 10 (carriers walk enemy rats to a cat from further away),tournament newcomer 22:37 PDT
+xz6,2026-11-21,xx9,KING_BITE_MAX 200 (king spends more cheese on killing bites),tournament newcomer 22:37 PDT
+xz7,2026-11-21,xz2,GRAB_THREAT 11 (xz3 idea: +22 vs xx9 on 167 g),tournament newcomer 23:18 PDT
+xz8,2026-11-21,xz2,LOW_FLOOR 300 (probe the champion change further),tournament newcomer 23:18 PDT
+xz9,2026-11-21,xz2,"LOW_BABIES 10 (the low-floor threshold, now that LOW_FLOOR matters)",tournament newcomer 23:18 PDT
+ya0,2026-11-21,xz2,"KING_RESERVE 400 (the other side of 900, which lost twice)",tournament newcomer 23:18 PDT
