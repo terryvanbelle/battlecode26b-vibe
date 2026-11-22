@@ -117,7 +117,7 @@ def cmd_plan(run, n):
     pairs = []
     ch = champion()
     if new:   # weight by missing games (a fresh bot outweighs a half-rated one); half its games vs the champion
-        nw = [NEW_MIN - rate[b].games for b in new]
+        nw = [max(NEW_MIN - rate[b].games, NEW_MIN // 4) for b in new]   # floor: a bot 2 games short still plays (11-21 21:15)
         for k in range(n // 2):
             b = random.choices(new, nw)[0]
             opp = [t for t in top if t != b] or [x for x, _ in lad if x != b]
