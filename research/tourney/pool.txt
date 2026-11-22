@@ -104,7 +104,7 @@
 # yb6  (ya9-based KING_RESERVE 500, +34 on 193; re-entered on champion yb7 as yb8 11-22 04:55)
 # yb7  (retired 11-22 06:33: old champion, superseded by yb9)
 # yb8  (retired 11-22 06:15: KING_RESERVE 500, -17 vs yb7 on 266 g)
-yb9
+# yb9  (retired 11-22 10:55: former champion, -27 vs sw08 on 2652 g; its games keep anchoring the fit)
 # yc0  (retired 11-22 06:33: CAT_DEFEND_R2 100 on yb7, -4 on 283 g; base superseded)
 # yc1  (retired 11-22 06:33: SPAWN_FLOOR 375 on yb7, -0 on 174 g; base superseded)
 # yc2  (retired 11-22 07:55: THROW_DODGE 13, -27 on 296 g)
@@ -130,3 +130,4 @@ yc7
 sw14
 yc9
 yd0
+sw15

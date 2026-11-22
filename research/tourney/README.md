@@ -26,3 +26,4 @@
 | sw12 | pressure: forward hold + king finisher (sw08 + sw10) | yb9 |
 | sw13 | greed: 10 gatherers first, 1 in 4 fights cats, 6 rushers (retired: -102) | yb9 |
 | sw14 | late surge: richer tiers open at bank 500 / 1500, war cap 20 | yb9 |
+| sw15 | points endgame: endgame kings from r1500, endgame cat damage from r1600, rescue from r1700 | sw08 |
