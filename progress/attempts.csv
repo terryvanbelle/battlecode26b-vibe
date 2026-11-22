@@ -1313,3 +1313,4 @@ ye3,2026-11-22,sw19,"KING_RESERVE 600 (from 400; ye1 rebuilt on the new champion
 sw24,2026-11-22,sw19,"BIG SWING king defence radius: KING_THREAT_D2 64 (from 30), DEFEND_D2 225 (from 100): the king alarms earlier and more babies come home (replica: 3 of 7 recent losses were king kills by r156-r275)",tournament newcomer 14:59 PDT
 ye4,2026-11-22,sw19,"END_CAT 1400 (from 1600; the cat-endgame dose line: 1850 -> 1600 took the title in sw19)",tournament newcomer 15:18 PDT
 sw25,2026-11-22,sw19,"BIG SWING no opening rush: RUSH_FROM 16 = RUSH_TO (0 rushers, from 12): the forward-hold posts (FIGHT_POST 12) now give forward presence, so the 12 opening rushers may be wasted",tournament newcomer 15:18 PDT
+ye5,2026-11-22,sw19,"RUSH_UNTIL 200 (from 300; yc5's 400 lost -19, so the other direction)",tournament newcomer 15:38 PDT
