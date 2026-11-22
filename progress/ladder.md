@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 21 22:01 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 21 22:05 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -20,9 +20,9 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 21 22:01 
 | 10 | daannte\_v52\_ThisGuy | 1818.8 | 1678-1619 | accepted |
 | 11 | abcdezyxwv\_bestsofar | 1817.7 | 2054-1729 | accepted |
 | 12 | quesswho\_quals | 1794.5 | 1651-1484 | accepted |
-| 13 | TeamSPAARK\_SPAARK | 1781.8 | 1690-1556 | accepted |
+| 13 | TeamSPAARK\_SPAARK | 1785.7 | 1690-1556 | accepted |
 | 14 | daannte\_v47\_Skadoosh | 1778.6 | 1774-1652 | accepted |
-| 15 | quesswho\_bot16 | 1777.3 | 1648-1613 | accepted |
+| 15 | quesswho\_bot16 | 1773.4 | 1648-1613 | accepted |
 | 16 | AlexT101\_finalsbot | 1749.8 | 1605-1557 | accepted |
 | 17 | **vibe26b** | 1738.1 | 12649-11678 | accepted |
 | 18 | AlexT101\_usqualsbot | 1727.1 | 2598-1891 | accepted |
@@ -38,10 +38,10 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 21 22:01 
 | 28 | amcsz\_fighterrats | 1451.9 | 1629-1821 | accepted |
 | 29 | CS50Crab\_protoSaberV7 | 1435.6 | 1601-1576 | accepted |
 | 30 | CS50Crab\_rapierV1 | 1431.9 | 1699-1925 | accepted |
-| 31 | PixelRifts\_mushakraj\_mk3 | 1359.3 | 1595-1714 | accepted |
+| 31 | PixelRifts\_mushakraj\_mk3 | 1362.6 | 1595-1714 | accepted |
 | 32 | XSercia\_genies | 1357.8 | 1655-1810 | accepted |
 | 33 | justinottesen\_alfredo | 1345.0 | 1521-1599 | accepted |
-| 34 | bc26vibe\_bot | 1339.7 | 1702-2030 | accepted |
+| 34 | bc26vibe\_bot | 1336.4 | 1702-2030 | accepted |
 | 35 | Gavdingo\_v1 | 1336.2 | 1607-1621 | accepted |
 | 36 | C0derTang\_v6 | 1335.7 | 1589-1741 | accepted |
 | 37 | ask8000\_bumchit67 | 1326.2 | 1648-1790 | accepted |
@@ -52,8 +52,8 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 21 22:01 
 | 42 | Victor-Ramirez-Garcia\_battleca | 1206.6 | 1965-1302 | accepted |
 | 43 | bc26-example-copy | 1194.5 | 1569-1653 | accepted |
 | 44 | j2399\_weighted\_micro\_v9 | 1180.7 | 1633-1469 | accepted |
-| 45 | justinottesen\_carbonara | 1159.0 | 1597-1613 | accepted |
-| 46 | battlecode-archive\_result\_408 | 1146.0 | 1621-1604 | accepted |
+| 45 | justinottesen\_carbonara | 1162.6 | 1597-1613 | accepted |
+| 46 | battlecode-archive\_result\_408 | 1142.4 | 1621-1604 | accepted |
 | 47 | GuzziFlipFlops\_Hermesv8 | 1084.2 | 1628-1702 | accepted |
 | 48 | quanticsoul4772\_ratbot | 1062.3 | 1802-1429 | accepted |
 | 49 | seru9\_TOTAL\_AGGRO | 1060.9 | 1668-1611 | accepted |
