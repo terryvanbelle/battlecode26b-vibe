@@ -118,10 +118,11 @@ yb9
 # sw07  (retired 11-22 08:15: blitz v2 -114 on 53 g; blitz failed in two versions)
 yc4
 sw08
-sw09
+# sw09  (retired 11-22 09:15: trap-first -34 on 230 g)
 sw10
 sw11
 sw12
 yc5
 yc6
 yc7
+sw13

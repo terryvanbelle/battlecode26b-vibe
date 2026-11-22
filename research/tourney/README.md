@@ -20,7 +20,8 @@
 | sw06 | empire v3: sw04's king caps (5, rich 2000/5) with yb9's baby caps 16 (retired: -67) | yb9 |
 | sw07 | blitz v2: every baby from index 2 rushes until r700, caps 16 (retired: -114) | yb9 |
 | sw08 | forward hold: fighters take contested mines at war (FIGHT_POST 8), everyone fights (WAR_GATHER 0) | yb9 |
-| sw09 | trap-first: rat traps at dist2 40, from 40 cheese, reserve gate skipped within dist2 400 of our king | yb9 |
+| sw09 | trap-first: rat traps at dist2 40, from 40 cheese, reserve gate skipped within dist2 400 of our king (retired: -34) | yb9 |
 | sw10 | king finisher: carriers seek a king within 16 and hold for a king hit to the last round, THROW_MIN 60 | yb9 |
 | sw11 | forward hold + trap-first (sw08 + sw09) | yb9 |
 | sw12 | pressure: forward hold + king finisher (sw08 + sw10) | yb9 |
+| sw13 | greed: 10 gatherers first, 1 in 4 fights cats, 6 rushers | yb9 |
