@@ -79,4 +79,6 @@ xx9
 xz1
 xz2
 xz3
-xz4
+# xz4  (retired 11-21 22:35: DEFEND_D2 144 on xx9, -48 on 77 g)
+xz5
+xz6

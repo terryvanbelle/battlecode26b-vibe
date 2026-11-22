@@ -1237,3 +1237,5 @@ xz1,2026-11-21,xx9,SPAWN_FLOOR 450 (xy6 idea: +22 vs xw9 on 81 g),tournament new
 xz2,2026-11-21,xx9,LOW_FLOOR 200 (xz0 idea),tournament newcomer 21:58 PDT
 xz3,2026-11-21,xx9,GRAB_THREAT 11 (between 8 and 15),tournament newcomer 21:58 PDT
 xz4,2026-11-21,xx9,DEFEND_D2 144 (babies defend the king from further),tournament newcomer 21:58 PDT
+xz5,2026-11-21,xx9,"CARRY_CAT 10 (carriers walk enemy rats to a cat from further away)",tournament newcomer 22:37 PDT
+xz6,2026-11-21,xx9,"KING_BITE_MAX 200 (king spends more cheese on killing bites)",tournament newcomer 22:37 PDT
