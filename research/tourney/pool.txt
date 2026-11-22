@@ -49,7 +49,7 @@ xu2
 # xw1  (retired 11-21 16:47: SPAWN_FLOOR 200 on xu2, -19 on 215 g)
 # xw2  (retired 11-21 16:27: FORM_BABIES 15 on xu2, -25 on 257 g)
 xw4
-xw3
+# xw3  (retired 11-21 17:27: own-king throw guard on xu2, -6 on 339 g)
 xw5
 xw6
 xw7
