@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 06:05 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 06:06 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -43,9 +43,9 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 06:05 
 | 33 | bc26vibe\_bot | 1353.1 | 1741-2069 | accepted |
 | 34 | C0derTang\_v6 | 1340.4 | 1626-1779 | accepted |
 | 35 | ask8000\_bumchit67 | 1330.3 | 1698-1833 | accepted |
-| 36 | Gavdingo\_v1 | 1328.8 | 1647-1668 | accepted |
-| 37 | justinottesen\_alfredo | 1325.0 | 1558-1637 | accepted |
-| 38 | Naton-Cai\_ratplayer | 1299.0 | 1698-1734 | accepted |
+| 36 | justinottesen\_alfredo | 1325.0 | 1558-1637 | accepted |
+| 37 | Gavdingo\_v1 | 1315.7 | 1647-1668 | accepted |
+| 38 | Naton-Cai\_ratplayer | 1312.0 | 1698-1734 | accepted |
 | 39 | vincentwang60\_javabot | 1238.8 | 1718-1777 | accepted |
 | 40 | Victor-Ramirez-Garcia\_battleca | 1205.6 | 1995-1332 | accepted |
 | 41 | Camleaf\_mk1 | 1200.3 | 1618-1724 | accepted |
