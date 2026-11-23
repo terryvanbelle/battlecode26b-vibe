@@ -35,7 +35,7 @@ public final class Cfg {
     public static final int RUSH_FROM = 4, RUSH_TO = 16;
     /** Rush spawns stop at this round (0 = never): the spawn index is the live-baby count, so without it every
      *  replacement would be an attacker all game. */
-    public static final int RUSH_UNTIL = 300;
+    public static final int RUSH_UNTIL = 200;
     /** The king turns to face each spawn tile before it builds (newborns take its facing). */
     public static final boolean SYM_FACE = false;
     /** Bytecodes the king's first-turn sense leaves for the rest of that turn (5000 missed the round-2 spawn). */
@@ -263,7 +263,7 @@ public final class Cfg {
      *  seen or known cat (Baby.endCat). */
     public static final int END_CAT = 1400;
     /** END_CAT during cooperation, from this round (0 = off): cat damage weighs 0.5 of cooperation points. */
-    public static final int END_CAT_COOP = 1200;
+    public static final int END_CAT_COOP = 1000;
     /** A lone king's babies take END_CAT_COOP too, until this round (0 = off); with no cat known they walk to the map
      *  centre. */
     public static final int END_CAT_COOP_FREE = 1750;
