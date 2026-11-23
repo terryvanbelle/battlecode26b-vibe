@@ -189,11 +189,13 @@ sw38
 # yg5  (retired 11-22 22:38: INCOME_TRUST 50 on yf2, 18 g; rebuilt on sw38 as yh3)
 # yg6  (retired 11-22 22:38: END_CAT_COOP 800 on yf2, 22 g; rebuilt on sw38 as yh1)
 # sw40  (retired 11-22 22:38: KING_RESERVE 250 on yf2, 22 g; rebuilt on sw38 as sw41)
-yh1
-yh2
+# yh1  (retired 11-23 00:18: END_CAT_COOP 800, -1 vs sw38 on 207 g: no gain)
+# yh2  (retired 11-23 00:18: RUSH_UNTIL 150, -42 vs sw38 on 210 g)
 yh3
 sw41
 # yh4  (retired 11-22 23:38: SPAWN_MARGIN 50, -136 vs sw38 on 51 g, 2.6 SE)
 sw42
 sw43
 yh5
+yh6
+yh7
