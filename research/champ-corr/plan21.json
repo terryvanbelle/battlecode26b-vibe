@@ -1,0 +1,369 @@
+{
+ "opponent": "AlexT101_usqualsbot",
+ "local_opponent": "xk6",
+ "maps": [
+  "DefaultLarge",
+  "DefaultMedium",
+  "DefaultSmall",
+  "Meow",
+  "Nofreecheese",
+  "ZeroDay",
+  "arrows",
+  "cheesefarm",
+  "cheeseguardians",
+  "dirtfulcat",
+  "dirtpassageway",
+  "evileye",
+  "keepout",
+  "pipes",
+  "popthecork",
+  "rift",
+  "sittingducks",
+  "starvation",
+  "thunderdome",
+  "trapped",
+  "wallsofparadis"
+ ],
+ "local_runs": [
+  "cs001",
+  "cs002",
+  "cs003",
+  "cs004"
+ ],
+ "plan": [
+  {
+   "bot": "xr49",
+   "crowned_pdt": "11-21 09:13",
+   "replica_reused_a": [],
+   "replica_requests": [
+    [
+     "DefaultLarge",
+     "DefaultMedium",
+     "DefaultSmall",
+     "Meow",
+     "Nofreecheese",
+     "ZeroDay",
+     "arrows"
+    ],
+    [
+     "cheesefarm",
+     "cheeseguardians",
+     "dirtfulcat",
+     "dirtpassageway",
+     "evileye",
+     "keepout",
+     "pipes"
+    ],
+    [
+     "popthecork",
+     "rift",
+     "sittingducks",
+     "starvation",
+     "thunderdome",
+     "trapped",
+     "wallsofparadis"
+    ]
+   ]
+  },
+  {
+   "bot": "xu2",
+   "crowned_pdt": "11-21 15:07",
+   "replica_reused_a": [
+    "DefaultLarge",
+    "ZeroDay"
+   ],
+   "replica_requests": [
+    [
+     "DefaultMedium",
+     "DefaultSmall",
+     "Meow",
+     "Nofreecheese",
+     "arrows",
+     "cheesefarm",
+     "cheeseguardians",
+     "dirtfulcat",
+     "dirtpassageway"
+    ],
+    [
+     "evileye",
+     "keepout",
+     "pipes",
+     "popthecork",
+     "rift",
+     "sittingducks",
+     "starvation",
+     "thunderdome",
+     "trapped",
+     "wallsofparadis"
+    ]
+   ]
+  },
+  {
+   "bot": "xw9",
+   "crowned_pdt": "11-21 19:55",
+   "replica_reused_a": [
+    "DefaultLarge",
+    "ZeroDay",
+    "dirtpassageway",
+    "rift",
+    "wallsofparadis"
+   ],
+   "replica_requests": [
+    [
+     "DefaultMedium",
+     "DefaultSmall",
+     "Meow",
+     "Nofreecheese",
+     "arrows",
+     "cheesefarm",
+     "cheeseguardians",
+     "dirtfulcat"
+    ],
+    [
+     "evileye",
+     "keepout",
+     "pipes",
+     "popthecork",
+     "sittingducks",
+     "starvation",
+     "thunderdome",
+     "trapped"
+    ]
+   ]
+  },
+  {
+   "bot": "ya0",
+   "crowned_pdt": "11-22 00:55",
+   "replica_reused_a": [],
+   "replica_requests": [
+    [
+     "DefaultLarge",
+     "DefaultMedium",
+     "DefaultSmall",
+     "Meow",
+     "Nofreecheese",
+     "ZeroDay",
+     "arrows"
+    ],
+    [
+     "cheesefarm",
+     "cheeseguardians",
+     "dirtfulcat",
+     "dirtpassageway",
+     "evileye",
+     "keepout",
+     "pipes"
+    ],
+    [
+     "popthecork",
+     "rift",
+     "sittingducks",
+     "starvation",
+     "thunderdome",
+     "trapped",
+     "wallsofparadis"
+    ]
+   ]
+  },
+  {
+   "bot": "yb9",
+   "crowned_pdt": "11-22 06:17",
+   "replica_reused_a": [],
+   "replica_requests": [
+    [
+     "DefaultLarge",
+     "DefaultMedium",
+     "DefaultSmall",
+     "Meow",
+     "Nofreecheese",
+     "ZeroDay",
+     "arrows"
+    ],
+    [
+     "cheesefarm",
+     "cheeseguardians",
+     "dirtfulcat",
+     "dirtpassageway",
+     "evileye",
+     "keepout",
+     "pipes"
+    ],
+    [
+     "popthecork",
+     "rift",
+     "sittingducks",
+     "starvation",
+     "thunderdome",
+     "trapped",
+     "wallsofparadis"
+    ]
+   ]
+  },
+  {
+   "bot": "yd1",
+   "crowned_pdt": "11-22 12:56",
+   "replica_reused_a": [],
+   "replica_requests": [
+    [
+     "DefaultLarge",
+     "DefaultMedium",
+     "DefaultSmall",
+     "Meow",
+     "Nofreecheese",
+     "ZeroDay",
+     "arrows"
+    ],
+    [
+     "cheesefarm",
+     "cheeseguardians",
+     "dirtfulcat",
+     "dirtpassageway",
+     "evileye",
+     "keepout",
+     "pipes"
+    ],
+    [
+     "popthecork",
+     "rift",
+     "sittingducks",
+     "starvation",
+     "thunderdome",
+     "trapped",
+     "wallsofparadis"
+    ]
+   ]
+  },
+  {
+   "bot": "ye4",
+   "crowned_pdt": "11-22 16:57",
+   "replica_reused_a": [
+    "DefaultLarge",
+    "ZeroDay",
+    "dirtpassageway",
+    "rift",
+    "wallsofparadis"
+   ],
+   "replica_requests": [
+    [
+     "DefaultMedium",
+     "DefaultSmall",
+     "Meow",
+     "Nofreecheese",
+     "arrows",
+     "cheesefarm",
+     "cheeseguardians",
+     "dirtfulcat"
+    ],
+    [
+     "evileye",
+     "keepout",
+     "pipes",
+     "popthecork",
+     "sittingducks",
+     "starvation",
+     "thunderdome",
+     "trapped"
+    ]
+   ]
+  },
+  {
+   "bot": "sw38",
+   "crowned_pdt": "11-22 22:36",
+   "replica_reused_a": [
+    "DefaultLarge",
+    "ZeroDay",
+    "dirtpassageway",
+    "rift",
+    "wallsofparadis"
+   ],
+   "replica_requests": [
+    [
+     "DefaultMedium",
+     "DefaultSmall",
+     "Meow",
+     "Nofreecheese",
+     "arrows",
+     "cheesefarm",
+     "cheeseguardians",
+     "dirtfulcat"
+    ],
+    [
+     "evileye",
+     "keepout",
+     "pipes",
+     "popthecork",
+     "sittingducks",
+     "starvation",
+     "thunderdome",
+     "trapped"
+    ]
+   ]
+  },
+  {
+   "bot": "yk1",
+   "crowned_pdt": "11-23 06:36",
+   "replica_reused_a": [
+    "DefaultLarge",
+    "ZeroDay"
+   ],
+   "replica_requests": [
+    [
+     "DefaultMedium",
+     "DefaultSmall",
+     "Meow",
+     "Nofreecheese",
+     "arrows",
+     "cheesefarm",
+     "cheeseguardians",
+     "dirtfulcat",
+     "dirtpassageway"
+    ],
+    [
+     "evileye",
+     "keepout",
+     "pipes",
+     "popthecork",
+     "rift",
+     "sittingducks",
+     "starvation",
+     "thunderdome",
+     "trapped",
+     "wallsofparadis"
+    ]
+   ]
+  },
+  {
+   "bot": "sw54",
+   "crowned_pdt": "11-23 10:34",
+   "replica_reused_a": [
+    "DefaultLarge",
+    "ZeroDay"
+   ],
+   "replica_requests": [
+    [
+     "DefaultMedium",
+     "DefaultSmall",
+     "Meow",
+     "Nofreecheese",
+     "arrows",
+     "cheesefarm",
+     "cheeseguardians",
+     "dirtfulcat",
+     "dirtpassageway"
+    ],
+    [
+     "evileye",
+     "keepout",
+     "pipes",
+     "popthecork",
+     "rift",
+     "sittingducks",
+     "starvation",
+     "thunderdome",
+     "trapped",
+     "wallsofparadis"
+    ]
+   ]
+  }
+ ]
+}
