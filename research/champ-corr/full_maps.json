@@ -1,0 +1,1514 @@
+[
+{
+"match": 38460,
+"bot": "sw54",
+"package": "sw54",
+"map": "DefaultMedium",
+"won": true,
+"rounds": 1017
+},
+{
+"match": 38460,
+"bot": "sw54",
+"package": "sw54",
+"map": "DefaultSmall",
+"won": false,
+"rounds": 244
+},
+{
+"match": 38460,
+"bot": "sw54",
+"package": "sw54",
+"map": "Meow",
+"won": true,
+"rounds": 478
+},
+{
+"match": 38460,
+"bot": "sw54",
+"package": "sw54",
+"map": "Nofreecheese",
+"won": false,
+"rounds": 499
+},
+{
+"match": 38460,
+"bot": "sw54",
+"package": "sw54",
+"map": "arrows",
+"won": true,
+"rounds": 333
+},
+{
+"match": 38460,
+"bot": "sw54",
+"package": "sw54",
+"map": "cheesefarm",
+"won": false,
+"rounds": 1184
+},
+{
+"match": 38460,
+"bot": "sw54",
+"package": "sw54",
+"map": "cheeseguardians",
+"won": true,
+"rounds": 463
+},
+{
+"match": 38460,
+"bot": "sw54",
+"package": "sw54",
+"map": "dirtfulcat",
+"won": false,
+"rounds": 335
+},
+{
+"match": 38460,
+"bot": "sw54",
+"package": "sw54",
+"map": "dirtpassageway",
+"won": true,
+"rounds": 405
+},
+{
+"match": 38461,
+"bot": "sw54",
+"package": "sw54",
+"map": "evileye",
+"won": false,
+"rounds": 380
+},
+{
+"match": 38461,
+"bot": "sw54",
+"package": "sw54",
+"map": "keepout",
+"won": true,
+"rounds": 1241
+},
+{
+"match": 38461,
+"bot": "sw54",
+"package": "sw54",
+"map": "pipes",
+"won": false,
+"rounds": 2000
+},
+{
+"match": 38461,
+"bot": "sw54",
+"package": "sw54",
+"map": "popthecork",
+"won": true,
+"rounds": 248
+},
+{
+"match": 38461,
+"bot": "sw54",
+"package": "sw54",
+"map": "rift",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38461,
+"bot": "sw54",
+"package": "sw54",
+"map": "sittingducks",
+"won": true,
+"rounds": 839
+},
+{
+"match": 38461,
+"bot": "sw54",
+"package": "sw54",
+"map": "starvation",
+"won": false,
+"rounds": 354
+},
+{
+"match": 38461,
+"bot": "sw54",
+"package": "sw54",
+"map": "thunderdome",
+"won": true,
+"rounds": 95
+},
+{
+"match": 38461,
+"bot": "sw54",
+"package": "sw54",
+"map": "trapped",
+"won": true,
+"rounds": 261
+},
+{
+"match": 38461,
+"bot": "sw54",
+"package": "sw54",
+"map": "wallsofparadis",
+"won": false,
+"rounds": 1151
+},
+{
+"match": 38462,
+"bot": "xr49",
+"package": "xr49",
+"map": "DefaultLarge",
+"won": false,
+"rounds": 630
+},
+{
+"match": 38462,
+"bot": "xr49",
+"package": "xr49",
+"map": "DefaultMedium",
+"won": false,
+"rounds": 1180
+},
+{
+"match": 38462,
+"bot": "xr49",
+"package": "xr49",
+"map": "DefaultSmall",
+"won": false,
+"rounds": 199
+},
+{
+"match": 38462,
+"bot": "xr49",
+"package": "xr49",
+"map": "Meow",
+"won": false,
+"rounds": 383
+},
+{
+"match": 38462,
+"bot": "xr49",
+"package": "xr49",
+"map": "Nofreecheese",
+"won": false,
+"rounds": 493
+},
+{
+"match": 38462,
+"bot": "xr49",
+"package": "xr49",
+"map": "ZeroDay",
+"won": false,
+"rounds": 1651
+},
+{
+"match": 38462,
+"bot": "xr49",
+"package": "xr49",
+"map": "arrows",
+"won": true,
+"rounds": 579
+},
+{
+"match": 38463,
+"bot": "xr49",
+"package": "xr49",
+"map": "cheesefarm",
+"won": false,
+"rounds": 1099
+},
+{
+"match": 38463,
+"bot": "xr49",
+"package": "xr49",
+"map": "cheeseguardians",
+"won": false,
+"rounds": 1301
+},
+{
+"match": 38463,
+"bot": "xr49",
+"package": "xr49",
+"map": "dirtfulcat",
+"won": false,
+"rounds": 138
+},
+{
+"match": 38463,
+"bot": "xr49",
+"package": "xr49",
+"map": "dirtpassageway",
+"won": true,
+"rounds": 595
+},
+{
+"match": 38463,
+"bot": "xr49",
+"package": "xr49",
+"map": "evileye",
+"won": false,
+"rounds": 809
+},
+{
+"match": 38463,
+"bot": "xr49",
+"package": "xr49",
+"map": "keepout",
+"won": false,
+"rounds": 1626
+},
+{
+"match": 38463,
+"bot": "xr49",
+"package": "xr49",
+"map": "pipes",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38464,
+"bot": "xr49",
+"package": "xr49",
+"map": "popthecork",
+"won": true,
+"rounds": 630
+},
+{
+"match": 38464,
+"bot": "xr49",
+"package": "xr49",
+"map": "rift",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38464,
+"bot": "xr49",
+"package": "xr49",
+"map": "sittingducks",
+"won": false,
+"rounds": 1723
+},
+{
+"match": 38464,
+"bot": "xr49",
+"package": "xr49",
+"map": "starvation",
+"won": false,
+"rounds": 361
+},
+{
+"match": 38464,
+"bot": "xr49",
+"package": "xr49",
+"map": "thunderdome",
+"won": true,
+"rounds": 162
+},
+{
+"match": 38464,
+"bot": "xr49",
+"package": "xr49",
+"map": "trapped",
+"won": true,
+"rounds": 680
+},
+{
+"match": 38464,
+"bot": "xr49",
+"package": "xr49",
+"map": "wallsofparadis",
+"won": false,
+"rounds": 1287
+},
+{
+"match": 38465,
+"bot": "xu2",
+"package": "xu2",
+"map": "DefaultMedium",
+"won": false,
+"rounds": 1188
+},
+{
+"match": 38465,
+"bot": "xu2",
+"package": "xu2",
+"map": "DefaultSmall",
+"won": false,
+"rounds": 193
+},
+{
+"match": 38465,
+"bot": "xu2",
+"package": "xu2",
+"map": "Meow",
+"won": false,
+"rounds": 603
+},
+{
+"match": 38465,
+"bot": "xu2",
+"package": "xu2",
+"map": "Nofreecheese",
+"won": false,
+"rounds": 989
+},
+{
+"match": 38465,
+"bot": "xu2",
+"package": "xu2",
+"map": "arrows",
+"won": true,
+"rounds": 337
+},
+{
+"match": 38465,
+"bot": "xu2",
+"package": "xu2",
+"map": "cheesefarm",
+"won": false,
+"rounds": 939
+},
+{
+"match": 38465,
+"bot": "xu2",
+"package": "xu2",
+"map": "cheeseguardians",
+"won": false,
+"rounds": 1592
+},
+{
+"match": 38465,
+"bot": "xu2",
+"package": "xu2",
+"map": "dirtfulcat",
+"won": false,
+"rounds": 234
+},
+{
+"match": 38465,
+"bot": "xu2",
+"package": "xu2",
+"map": "dirtpassageway",
+"won": true,
+"rounds": 595
+},
+{
+"match": 38466,
+"bot": "xu2",
+"package": "xu2",
+"map": "evileye",
+"won": false,
+"rounds": 287
+},
+{
+"match": 38466,
+"bot": "xu2",
+"package": "xu2",
+"map": "keepout",
+"won": false,
+"rounds": 1480
+},
+{
+"match": 38466,
+"bot": "xu2",
+"package": "xu2",
+"map": "pipes",
+"won": false,
+"rounds": 1959
+},
+{
+"match": 38466,
+"bot": "xu2",
+"package": "xu2",
+"map": "popthecork",
+"won": true,
+"rounds": 406
+},
+{
+"match": 38466,
+"bot": "xu2",
+"package": "xu2",
+"map": "rift",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38466,
+"bot": "xu2",
+"package": "xu2",
+"map": "sittingducks",
+"won": false,
+"rounds": 2000
+},
+{
+"match": 38466,
+"bot": "xu2",
+"package": "xu2",
+"map": "starvation",
+"won": false,
+"rounds": 334
+},
+{
+"match": 38466,
+"bot": "xu2",
+"package": "xu2",
+"map": "thunderdome",
+"won": true,
+"rounds": 306
+},
+{
+"match": 38466,
+"bot": "xu2",
+"package": "xu2",
+"map": "trapped",
+"won": true,
+"rounds": 801
+},
+{
+"match": 38466,
+"bot": "xu2",
+"package": "xu2",
+"map": "wallsofparadis",
+"won": false,
+"rounds": 745
+},
+{
+"match": 38467,
+"bot": "xw9",
+"package": "xw9",
+"map": "DefaultMedium",
+"won": true,
+"rounds": 1761
+},
+{
+"match": 38467,
+"bot": "xw9",
+"package": "xw9",
+"map": "DefaultSmall",
+"won": false,
+"rounds": 261
+},
+{
+"match": 38467,
+"bot": "xw9",
+"package": "xw9",
+"map": "Meow",
+"won": false,
+"rounds": 953
+},
+{
+"match": 38467,
+"bot": "xw9",
+"package": "xw9",
+"map": "Nofreecheese",
+"won": false,
+"rounds": 1244
+},
+{
+"match": 38467,
+"bot": "xw9",
+"package": "xw9",
+"map": "arrows",
+"won": true,
+"rounds": 323
+},
+{
+"match": 38467,
+"bot": "xw9",
+"package": "xw9",
+"map": "cheesefarm",
+"won": false,
+"rounds": 666
+},
+{
+"match": 38467,
+"bot": "xw9",
+"package": "xw9",
+"map": "cheeseguardians",
+"won": true,
+"rounds": 926
+},
+{
+"match": 38467,
+"bot": "xw9",
+"package": "xw9",
+"map": "dirtfulcat",
+"won": false,
+"rounds": 274
+},
+{
+"match": 38468,
+"bot": "xw9",
+"package": "xw9",
+"map": "evileye",
+"won": false,
+"rounds": 508
+},
+{
+"match": 38468,
+"bot": "xw9",
+"package": "xw9",
+"map": "keepout",
+"won": false,
+"rounds": 2000
+},
+{
+"match": 38468,
+"bot": "xw9",
+"package": "xw9",
+"map": "pipes",
+"won": false,
+"rounds": 1428
+},
+{
+"match": 38468,
+"bot": "xw9",
+"package": "xw9",
+"map": "popthecork",
+"won": true,
+"rounds": 222
+},
+{
+"match": 38468,
+"bot": "xw9",
+"package": "xw9",
+"map": "sittingducks",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38468,
+"bot": "xw9",
+"package": "xw9",
+"map": "starvation",
+"won": false,
+"rounds": 324
+},
+{
+"match": 38468,
+"bot": "xw9",
+"package": "xw9",
+"map": "thunderdome",
+"won": true,
+"rounds": 191
+},
+{
+"match": 38468,
+"bot": "xw9",
+"package": "xw9",
+"map": "trapped",
+"won": true,
+"rounds": 333
+},
+{
+"match": 38469,
+"bot": "ya0",
+"package": "ya0",
+"map": "DefaultLarge",
+"won": true,
+"rounds": 140
+},
+{
+"match": 38469,
+"bot": "ya0",
+"package": "ya0",
+"map": "DefaultMedium",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38469,
+"bot": "ya0",
+"package": "ya0",
+"map": "DefaultSmall",
+"won": false,
+"rounds": 147
+},
+{
+"match": 38469,
+"bot": "ya0",
+"package": "ya0",
+"map": "Meow",
+"won": true,
+"rounds": 758
+},
+{
+"match": 38469,
+"bot": "ya0",
+"package": "ya0",
+"map": "Nofreecheese",
+"won": true,
+"rounds": 593
+},
+{
+"match": 38469,
+"bot": "ya0",
+"package": "ya0",
+"map": "ZeroDay",
+"won": false,
+"rounds": 1738
+},
+{
+"match": 38469,
+"bot": "ya0",
+"package": "ya0",
+"map": "arrows",
+"won": true,
+"rounds": 313
+},
+{
+"match": 38470,
+"bot": "ya0",
+"package": "ya0",
+"map": "cheesefarm",
+"won": false,
+"rounds": 995
+},
+{
+"match": 38470,
+"bot": "ya0",
+"package": "ya0",
+"map": "cheeseguardians",
+"won": false,
+"rounds": 2000
+},
+{
+"match": 38470,
+"bot": "ya0",
+"package": "ya0",
+"map": "dirtfulcat",
+"won": false,
+"rounds": 244
+},
+{
+"match": 38470,
+"bot": "ya0",
+"package": "ya0",
+"map": "dirtpassageway",
+"won": true,
+"rounds": 517
+},
+{
+"match": 38470,
+"bot": "ya0",
+"package": "ya0",
+"map": "evileye",
+"won": false,
+"rounds": 500
+},
+{
+"match": 38470,
+"bot": "ya0",
+"package": "ya0",
+"map": "keepout",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38470,
+"bot": "ya0",
+"package": "ya0",
+"map": "pipes",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38471,
+"bot": "ya0",
+"package": "ya0",
+"map": "popthecork",
+"won": true,
+"rounds": 404
+},
+{
+"match": 38471,
+"bot": "ya0",
+"package": "ya0",
+"map": "rift",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38471,
+"bot": "ya0",
+"package": "ya0",
+"map": "sittingducks",
+"won": false,
+"rounds": 2000
+},
+{
+"match": 38471,
+"bot": "ya0",
+"package": "ya0",
+"map": "starvation",
+"won": false,
+"rounds": 326
+},
+{
+"match": 38471,
+"bot": "ya0",
+"package": "ya0",
+"map": "thunderdome",
+"won": true,
+"rounds": 173
+},
+{
+"match": 38471,
+"bot": "ya0",
+"package": "ya0",
+"map": "trapped",
+"won": true,
+"rounds": 240
+},
+{
+"match": 38471,
+"bot": "ya0",
+"package": "ya0",
+"map": "wallsofparadis",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38472,
+"bot": "yb9",
+"package": "yb9",
+"map": "DefaultLarge",
+"won": false,
+"rounds": 575
+},
+{
+"match": 38472,
+"bot": "yb9",
+"package": "yb9",
+"map": "DefaultMedium",
+"won": false,
+"rounds": 1532
+},
+{
+"match": 38472,
+"bot": "yb9",
+"package": "yb9",
+"map": "DefaultSmall",
+"won": false,
+"rounds": 283
+},
+{
+"match": 38472,
+"bot": "yb9",
+"package": "yb9",
+"map": "Meow",
+"won": false,
+"rounds": 939
+},
+{
+"match": 38472,
+"bot": "yb9",
+"package": "yb9",
+"map": "Nofreecheese",
+"won": true,
+"rounds": 434
+},
+{
+"match": 38472,
+"bot": "yb9",
+"package": "yb9",
+"map": "ZeroDay",
+"won": false,
+"rounds": 1465
+},
+{
+"match": 38472,
+"bot": "yb9",
+"package": "yb9",
+"map": "arrows",
+"won": true,
+"rounds": 301
+},
+{
+"match": 38473,
+"bot": "yb9",
+"package": "yb9",
+"map": "cheesefarm",
+"won": false,
+"rounds": 738
+},
+{
+"match": 38473,
+"bot": "yb9",
+"package": "yb9",
+"map": "cheeseguardians",
+"won": false,
+"rounds": 2000
+},
+{
+"match": 38473,
+"bot": "yb9",
+"package": "yb9",
+"map": "dirtfulcat",
+"won": false,
+"rounds": 517
+},
+{
+"match": 38473,
+"bot": "yb9",
+"package": "yb9",
+"map": "dirtpassageway",
+"won": true,
+"rounds": 491
+},
+{
+"match": 38473,
+"bot": "yb9",
+"package": "yb9",
+"map": "evileye",
+"won": false,
+"rounds": 270
+},
+{
+"match": 38473,
+"bot": "yb9",
+"package": "yb9",
+"map": "keepout",
+"won": false,
+"rounds": 2000
+},
+{
+"match": 38473,
+"bot": "yb9",
+"package": "yb9",
+"map": "pipes",
+"won": false,
+"rounds": 2000
+},
+{
+"match": 38474,
+"bot": "yb9",
+"package": "yb9",
+"map": "popthecork",
+"won": true,
+"rounds": 430
+},
+{
+"match": 38474,
+"bot": "yb9",
+"package": "yb9",
+"map": "rift",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38474,
+"bot": "yb9",
+"package": "yb9",
+"map": "sittingducks",
+"won": true,
+"rounds": 1694
+},
+{
+"match": 38474,
+"bot": "yb9",
+"package": "yb9",
+"map": "starvation",
+"won": false,
+"rounds": 395
+},
+{
+"match": 38474,
+"bot": "yb9",
+"package": "yb9",
+"map": "thunderdome",
+"won": true,
+"rounds": 173
+},
+{
+"match": 38474,
+"bot": "yb9",
+"package": "yb9",
+"map": "trapped",
+"won": true,
+"rounds": 208
+},
+{
+"match": 38474,
+"bot": "yb9",
+"package": "yb9",
+"map": "wallsofparadis",
+"won": false,
+"rounds": 1275
+},
+{
+"match": 38475,
+"bot": "yd1",
+"package": "yd1",
+"map": "DefaultLarge",
+"won": true,
+"rounds": 1182
+},
+{
+"match": 38475,
+"bot": "yd1",
+"package": "yd1",
+"map": "DefaultMedium",
+"won": true,
+"rounds": 973
+},
+{
+"match": 38475,
+"bot": "yd1",
+"package": "yd1",
+"map": "DefaultSmall",
+"won": false,
+"rounds": 156
+},
+{
+"match": 38475,
+"bot": "yd1",
+"package": "yd1",
+"map": "Meow",
+"won": false,
+"rounds": 355
+},
+{
+"match": 38475,
+"bot": "yd1",
+"package": "yd1",
+"map": "Nofreecheese",
+"won": false,
+"rounds": 302
+},
+{
+"match": 38475,
+"bot": "yd1",
+"package": "yd1",
+"map": "ZeroDay",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38475,
+"bot": "yd1",
+"package": "yd1",
+"map": "arrows",
+"won": true,
+"rounds": 320
+},
+{
+"match": 38476,
+"bot": "yd1",
+"package": "yd1",
+"map": "cheesefarm",
+"won": false,
+"rounds": 1035
+},
+{
+"match": 38476,
+"bot": "yd1",
+"package": "yd1",
+"map": "cheeseguardians",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38476,
+"bot": "yd1",
+"package": "yd1",
+"map": "dirtfulcat",
+"won": true,
+"rounds": 361
+},
+{
+"match": 38476,
+"bot": "yd1",
+"package": "yd1",
+"map": "dirtpassageway",
+"won": true,
+"rounds": 524
+},
+{
+"match": 38476,
+"bot": "yd1",
+"package": "yd1",
+"map": "evileye",
+"won": false,
+"rounds": 239
+},
+{
+"match": 38476,
+"bot": "yd1",
+"package": "yd1",
+"map": "keepout",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38476,
+"bot": "yd1",
+"package": "yd1",
+"map": "pipes",
+"won": false,
+"rounds": 1239
+},
+{
+"match": 38477,
+"bot": "yd1",
+"package": "yd1",
+"map": "popthecork",
+"won": false,
+"rounds": 837
+},
+{
+"match": 38477,
+"bot": "yd1",
+"package": "yd1",
+"map": "rift",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38477,
+"bot": "yd1",
+"package": "yd1",
+"map": "sittingducks",
+"won": false,
+"rounds": 583
+},
+{
+"match": 38477,
+"bot": "yd1",
+"package": "yd1",
+"map": "starvation",
+"won": false,
+"rounds": 631
+},
+{
+"match": 38477,
+"bot": "yd1",
+"package": "yd1",
+"map": "thunderdome",
+"won": true,
+"rounds": 81
+},
+{
+"match": 38477,
+"bot": "yd1",
+"package": "yd1",
+"map": "trapped",
+"won": true,
+"rounds": 610
+},
+{
+"match": 38477,
+"bot": "yd1",
+"package": "yd1",
+"map": "wallsofparadis",
+"won": false,
+"rounds": 1031
+},
+{
+"match": 38478,
+"bot": "ye4",
+"package": "ye4",
+"map": "DefaultMedium",
+"won": true,
+"rounds": 973
+},
+{
+"match": 38478,
+"bot": "ye4",
+"package": "ye4",
+"map": "DefaultSmall",
+"won": false,
+"rounds": 156
+},
+{
+"match": 38478,
+"bot": "ye4",
+"package": "ye4",
+"map": "Meow",
+"won": false,
+"rounds": 355
+},
+{
+"match": 38478,
+"bot": "ye4",
+"package": "ye4",
+"map": "Nofreecheese",
+"won": false,
+"rounds": 302
+},
+{
+"match": 38478,
+"bot": "ye4",
+"package": "ye4",
+"map": "arrows",
+"won": true,
+"rounds": 320
+},
+{
+"match": 38478,
+"bot": "ye4",
+"package": "ye4",
+"map": "cheesefarm",
+"won": false,
+"rounds": 1035
+},
+{
+"match": 38478,
+"bot": "ye4",
+"package": "ye4",
+"map": "cheeseguardians",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38478,
+"bot": "ye4",
+"package": "ye4",
+"map": "dirtfulcat",
+"won": true,
+"rounds": 361
+},
+{
+"match": 38479,
+"bot": "ye4",
+"package": "ye4",
+"map": "evileye",
+"won": false,
+"rounds": 239
+},
+{
+"match": 38479,
+"bot": "ye4",
+"package": "ye4",
+"map": "keepout",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38479,
+"bot": "ye4",
+"package": "ye4",
+"map": "pipes",
+"won": false,
+"rounds": 1239
+},
+{
+"match": 38479,
+"bot": "ye4",
+"package": "ye4",
+"map": "popthecork",
+"won": false,
+"rounds": 837
+},
+{
+"match": 38479,
+"bot": "ye4",
+"package": "ye4",
+"map": "sittingducks",
+"won": false,
+"rounds": 583
+},
+{
+"match": 38479,
+"bot": "ye4",
+"package": "ye4",
+"map": "starvation",
+"won": false,
+"rounds": 631
+},
+{
+"match": 38479,
+"bot": "ye4",
+"package": "ye4",
+"map": "thunderdome",
+"won": true,
+"rounds": 81
+},
+{
+"match": 38479,
+"bot": "ye4",
+"package": "ye4",
+"map": "trapped",
+"won": true,
+"rounds": 610
+},
+{
+"match": 38501,
+"bot": "sw38",
+"package": "sw38",
+"map": "DefaultMedium",
+"won": true,
+"rounds": 602
+},
+{
+"match": 38501,
+"bot": "sw38",
+"package": "sw38",
+"map": "DefaultSmall",
+"won": false,
+"rounds": 156
+},
+{
+"match": 38501,
+"bot": "sw38",
+"package": "sw38",
+"map": "Meow",
+"won": false,
+"rounds": 689
+},
+{
+"match": 38501,
+"bot": "sw38",
+"package": "sw38",
+"map": "Nofreecheese",
+"won": false,
+"rounds": 1414
+},
+{
+"match": 38501,
+"bot": "sw38",
+"package": "sw38",
+"map": "arrows",
+"won": true,
+"rounds": 496
+},
+{
+"match": 38501,
+"bot": "sw38",
+"package": "sw38",
+"map": "cheesefarm",
+"won": false,
+"rounds": 772
+},
+{
+"match": 38501,
+"bot": "sw38",
+"package": "sw38",
+"map": "cheeseguardians",
+"won": false,
+"rounds": 1661
+},
+{
+"match": 38501,
+"bot": "sw38",
+"package": "sw38",
+"map": "dirtfulcat",
+"won": false,
+"rounds": 501
+},
+{
+"match": 38502,
+"bot": "sw38",
+"package": "sw38",
+"map": "evileye",
+"won": false,
+"rounds": 323
+},
+{
+"match": 38502,
+"bot": "sw38",
+"package": "sw38",
+"map": "keepout",
+"won": true,
+"rounds": 1853
+},
+{
+"match": 38502,
+"bot": "sw38",
+"package": "sw38",
+"map": "pipes",
+"won": false,
+"rounds": 1599
+},
+{
+"match": 38502,
+"bot": "sw38",
+"package": "sw38",
+"map": "popthecork",
+"won": true,
+"rounds": 433
+},
+{
+"match": 38502,
+"bot": "sw38",
+"package": "sw38",
+"map": "sittingducks",
+"won": true,
+"rounds": 1519
+},
+{
+"match": 38502,
+"bot": "sw38",
+"package": "sw38",
+"map": "starvation",
+"won": false,
+"rounds": 331
+},
+{
+"match": 38502,
+"bot": "sw38",
+"package": "sw38",
+"map": "thunderdome",
+"won": true,
+"rounds": 81
+},
+{
+"match": 38502,
+"bot": "sw38",
+"package": "sw38",
+"map": "trapped",
+"won": true,
+"rounds": 589
+},
+{
+"match": 38503,
+"bot": "yk1",
+"package": "yk1",
+"map": "DefaultMedium",
+"won": true,
+"rounds": 1150
+},
+{
+"match": 38503,
+"bot": "yk1",
+"package": "yk1",
+"map": "DefaultSmall",
+"won": false,
+"rounds": 156
+},
+{
+"match": 38503,
+"bot": "yk1",
+"package": "yk1",
+"map": "Meow",
+"won": false,
+"rounds": 637
+},
+{
+"match": 38503,
+"bot": "yk1",
+"package": "yk1",
+"map": "Nofreecheese",
+"won": true,
+"rounds": 421
+},
+{
+"match": 38503,
+"bot": "yk1",
+"package": "yk1",
+"map": "arrows",
+"won": true,
+"rounds": 444
+},
+{
+"match": 38503,
+"bot": "yk1",
+"package": "yk1",
+"map": "cheesefarm",
+"won": false,
+"rounds": 795
+},
+{
+"match": 38503,
+"bot": "yk1",
+"package": "yk1",
+"map": "cheeseguardians",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38503,
+"bot": "yk1",
+"package": "yk1",
+"map": "dirtfulcat",
+"won": false,
+"rounds": 257
+},
+{
+"match": 38503,
+"bot": "yk1",
+"package": "yk1",
+"map": "dirtpassageway",
+"won": true,
+"rounds": 539
+},
+{
+"match": 38504,
+"bot": "yk1",
+"package": "yk1",
+"map": "evileye",
+"won": false,
+"rounds": 611
+},
+{
+"match": 38504,
+"bot": "yk1",
+"package": "yk1",
+"map": "keepout",
+"won": false,
+"rounds": 1490
+},
+{
+"match": 38504,
+"bot": "yk1",
+"package": "yk1",
+"map": "pipes",
+"won": false,
+"rounds": 2000
+},
+{
+"match": 38504,
+"bot": "yk1",
+"package": "yk1",
+"map": "popthecork",
+"won": true,
+"rounds": 433
+},
+{
+"match": 38504,
+"bot": "yk1",
+"package": "yk1",
+"map": "rift",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38504,
+"bot": "yk1",
+"package": "yk1",
+"map": "sittingducks",
+"won": true,
+"rounds": 1472
+},
+{
+"match": 38504,
+"bot": "yk1",
+"package": "yk1",
+"map": "starvation",
+"won": false,
+"rounds": 651
+},
+{
+"match": 38504,
+"bot": "yk1",
+"package": "yk1",
+"map": "thunderdome",
+"won": true,
+"rounds": 81
+},
+{
+"match": 38504,
+"bot": "yk1",
+"package": "yk1",
+"map": "trapped",
+"won": true,
+"rounds": 213
+},
+{
+"match": 38504,
+"bot": "yk1",
+"package": "yk1",
+"map": "wallsofparadis",
+"won": true,
+"rounds": 2000
+}
+]

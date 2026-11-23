@@ -1,0 +1,228 @@
+{
+ "n": 10,
+ "local_vs_replica": {
+  "r": 0.5736999674577858,
+  "ci95": [
+   -0.08756483136643525,
+   0.8840109117466326
+  ],
+  "perm_p": 0.08587457062714686,
+  "spearman": 0.6276952790379394,
+  "spearman_perm_p": 0.057729711351443246
+ },
+ "rating_vs_replica": {
+  "r": 0.6502131323376898,
+  "ci95": [
+   0.03484337706288737,
+   0.9080819554192163
+  ],
+  "perm_p": 0.035859820700896494,
+  "spearman": 0.7033935166085081,
+  "spearman_perm_p": 0.027264863675681622
+ },
+ "rating_vs_local": {
+  "r": 0.9312416282699221,
+  "ci95": [
+   0.7291216867966781,
+   0.9839468855753822
+  ],
+  "perm_p": 0.00010499947500262499,
+  "spearman": 0.9085534756454653,
+  "spearman_perm_p": 0.0006699966500167499
+ },
+ "leave_one_out": {
+  "xr49": {
+   "local_vs_replica": 0.5522671703320511,
+   "rating_vs_replica": 0.5488123779041219
+  },
+  "xu2": {
+   "local_vs_replica": 0.5107819928820855,
+   "rating_vs_replica": 0.6004191717909141
+  },
+  "xw9": {
+   "local_vs_replica": 0.6062405924528318,
+   "rating_vs_replica": 0.6611292430449645
+  },
+  "ya0": {
+   "local_vs_replica": 0.8092329811725247,
+   "rating_vs_replica": 0.8658168018928142
+  },
+  "yb9": {
+   "local_vs_replica": 0.5256610444842464,
+   "rating_vs_replica": 0.6407325001706594
+  },
+  "yd1": {
+   "local_vs_replica": 0.5721206974644248,
+   "rating_vs_replica": 0.6609498355699459
+  },
+  "ye4": {
+   "local_vs_replica": 0.5948824548893127,
+   "rating_vs_replica": 0.6506392140842512
+  },
+  "sw38": {
+   "local_vs_replica": 0.5708916758772896,
+   "rating_vs_replica": 0.6646672904121234
+  },
+  "yk1": {
+   "local_vs_replica": 0.5493422890017939,
+   "rating_vs_replica": 0.6310320274950633
+  },
+  "sw54": {
+   "local_vs_replica": 0.46406219973420215,
+   "rating_vs_replica": 0.6139018276572833
+  }
+ },
+ "split_half": {
+  "local": {
+   "half_r": 0.5436442512777624,
+   "reliability": 0.7043646887263786
+  },
+  "replica": {
+   "half_r": 0.3387884566575712,
+   "reliability": 0.5061120074240748
+  }
+ },
+ "local_seats": {
+  "A_w": 129,
+  "B_w": 121,
+  "n_each": 210
+ },
+ "maps": {
+  "DefaultLarge": {
+   "local_w": 12,
+   "local_n": 20,
+   "replica_w": 6,
+   "replica_n": 10
+  },
+  "DefaultMedium": {
+   "local_w": 11,
+   "local_n": 20,
+   "replica_w": 7,
+   "replica_n": 10
+  },
+  "DefaultSmall": {
+   "local_w": 1,
+   "local_n": 20,
+   "replica_w": 0,
+   "replica_n": 10
+  },
+  "Meow": {
+   "local_w": 12,
+   "local_n": 20,
+   "replica_w": 2,
+   "replica_n": 10
+  },
+  "Nofreecheese": {
+   "local_w": 5,
+   "local_n": 20,
+   "replica_w": 3,
+   "replica_n": 10
+  },
+  "ZeroDay": {
+   "local_w": 11,
+   "local_n": 20,
+   "replica_w": 2,
+   "replica_n": 10
+  },
+  "arrows": {
+   "local_w": 15,
+   "local_n": 20,
+   "replica_w": 10,
+   "replica_n": 10
+  },
+  "cheesefarm": {
+   "local_w": 17,
+   "local_n": 20,
+   "replica_w": 0,
+   "replica_n": 10
+  },
+  "cheeseguardians": {
+   "local_w": 11,
+   "local_n": 20,
+   "replica_w": 5,
+   "replica_n": 10
+  },
+  "dirtfulcat": {
+   "local_w": 12,
+   "local_n": 20,
+   "replica_w": 2,
+   "replica_n": 10
+  },
+  "dirtpassageway": {
+   "local_w": 19,
+   "local_n": 20,
+   "replica_w": 10,
+   "replica_n": 10
+  },
+  "evileye": {
+   "local_w": 18,
+   "local_n": 20,
+   "replica_w": 0,
+   "replica_n": 10
+  },
+  "keepout": {
+   "local_w": 13,
+   "local_n": 20,
+   "replica_w": 5,
+   "replica_n": 10
+  },
+  "pipes": {
+   "local_w": 8,
+   "local_n": 20,
+   "replica_w": 2,
+   "replica_n": 10
+  },
+  "popthecork": {
+   "local_w": 17,
+   "local_n": 20,
+   "replica_w": 8,
+   "replica_n": 10
+  },
+  "rift": {
+   "local_w": 8,
+   "local_n": 20,
+   "replica_w": 10,
+   "replica_n": 10
+  },
+  "sittingducks": {
+   "local_w": 11,
+   "local_n": 20,
+   "replica_w": 5,
+   "replica_n": 10
+  },
+  "starvation": {
+   "local_w": 11,
+   "local_n": 20,
+   "replica_w": 0,
+   "replica_n": 10
+  },
+  "thunderdome": {
+   "local_w": 9,
+   "local_n": 20,
+   "replica_w": 10,
+   "replica_n": 10
+  },
+  "trapped": {
+   "local_w": 17,
+   "local_n": 20,
+   "replica_w": 10,
+   "replica_n": 10
+  },
+  "wallsofparadis": {
+   "local_w": 12,
+   "local_n": 20,
+   "replica_w": 2,
+   "replica_n": 10
+  }
+ },
+ "maps_local_vs_replica": {
+  "r": 0.26005848248675456,
+  "ci95": [
+   -0.19334071646811712,
+   0.6219307383315226
+  ],
+  "perm_p": 0.2593687031564842,
+  "spearman": 0.13507460766481422,
+  "spearman_perm_p": 0.5563922180389098
+ }
+}

@@ -1,0 +1,431 @@
+[
+ {
+  "bot": "sw54",
+  "submission": null,
+  "request": 33572,
+  "match": 38460,
+  "created": "2026-11-23T15:03:25.349178-05:00",
+  "maps": [
+   "DefaultMedium",
+   "DefaultSmall",
+   "Meow",
+   "Nofreecheese",
+   "arrows",
+   "cheesefarm",
+   "cheeseguardians",
+   "dirtfulcat",
+   "dirtpassageway"
+  ],
+  "requested_utc": "2026-11-23T20:03:24.584372+00:00"
+ },
+ {
+  "bot": "sw54",
+  "submission": null,
+  "request": 33573,
+  "match": 38461,
+  "created": "2026-11-23T15:03:25.905777-05:00",
+  "maps": [
+   "evileye",
+   "keepout",
+   "pipes",
+   "popthecork",
+   "rift",
+   "sittingducks",
+   "starvation",
+   "thunderdome",
+   "trapped",
+   "wallsofparadis"
+  ],
+  "requested_utc": "2026-11-23T20:03:25.805478+00:00"
+ },
+ {
+  "bot": "xr49",
+  "submission": 461,
+  "request": 33574,
+  "match": 38462,
+  "created": "2026-11-23T15:03:36.688647-05:00",
+  "maps": [
+   "DefaultLarge",
+   "DefaultMedium",
+   "DefaultSmall",
+   "Meow",
+   "Nofreecheese",
+   "ZeroDay",
+   "arrows"
+  ],
+  "requested_utc": "2026-11-23T20:03:36.597474+00:00"
+ },
+ {
+  "bot": "xr49",
+  "submission": null,
+  "request": 33575,
+  "match": 38463,
+  "created": "2026-11-23T15:03:37.207757-05:00",
+  "maps": [
+   "cheesefarm",
+   "cheeseguardians",
+   "dirtfulcat",
+   "dirtpassageway",
+   "evileye",
+   "keepout",
+   "pipes"
+  ],
+  "requested_utc": "2026-11-23T20:03:37.120757+00:00"
+ },
+ {
+  "bot": "xr49",
+  "submission": null,
+  "request": 33576,
+  "match": 38464,
+  "created": "2026-11-23T15:03:37.731286-05:00",
+  "maps": [
+   "popthecork",
+   "rift",
+   "sittingducks",
+   "starvation",
+   "thunderdome",
+   "trapped",
+   "wallsofparadis"
+  ],
+  "requested_utc": "2026-11-23T20:03:37.638172+00:00"
+ },
+ {
+  "bot": "xu2",
+  "submission": 462,
+  "request": 33577,
+  "match": 38465,
+  "created": "2026-11-23T15:03:48.473894-05:00",
+  "maps": [
+   "DefaultMedium",
+   "DefaultSmall",
+   "Meow",
+   "Nofreecheese",
+   "arrows",
+   "cheesefarm",
+   "cheeseguardians",
+   "dirtfulcat",
+   "dirtpassageway"
+  ],
+  "requested_utc": "2026-11-23T20:03:48.389852+00:00"
+ },
+ {
+  "bot": "xu2",
+  "submission": null,
+  "request": 33578,
+  "match": 38466,
+  "created": "2026-11-23T15:03:48.965237-05:00",
+  "maps": [
+   "evileye",
+   "keepout",
+   "pipes",
+   "popthecork",
+   "rift",
+   "sittingducks",
+   "starvation",
+   "thunderdome",
+   "trapped",
+   "wallsofparadis"
+  ],
+  "requested_utc": "2026-11-23T20:03:48.873602+00:00"
+ },
+ {
+  "bot": "xw9",
+  "submission": 463,
+  "request": 33579,
+  "match": 38467,
+  "created": "2026-11-23T15:03:59.825379-05:00",
+  "maps": [
+   "DefaultMedium",
+   "DefaultSmall",
+   "Meow",
+   "Nofreecheese",
+   "arrows",
+   "cheesefarm",
+   "cheeseguardians",
+   "dirtfulcat"
+  ],
+  "requested_utc": "2026-11-23T20:03:59.704222+00:00"
+ },
+ {
+  "bot": "xw9",
+  "submission": null,
+  "request": 33580,
+  "match": 38468,
+  "created": "2026-11-23T15:04:00.368496-05:00",
+  "maps": [
+   "evileye",
+   "keepout",
+   "pipes",
+   "popthecork",
+   "sittingducks",
+   "starvation",
+   "thunderdome",
+   "trapped"
+  ],
+  "requested_utc": "2026-11-23T20:04:00.274980+00:00"
+ },
+ {
+  "bot": "ya0",
+  "submission": 464,
+  "request": 33581,
+  "match": 38469,
+  "created": "2026-11-23T15:04:11.096231-05:00",
+  "maps": [
+   "DefaultLarge",
+   "DefaultMedium",
+   "DefaultSmall",
+   "Meow",
+   "Nofreecheese",
+   "ZeroDay",
+   "arrows"
+  ],
+  "requested_utc": "2026-11-23T20:04:11.009253+00:00"
+ },
+ {
+  "bot": "ya0",
+  "submission": null,
+  "request": 33582,
+  "match": 38470,
+  "created": "2026-11-23T15:04:11.617599-05:00",
+  "maps": [
+   "cheesefarm",
+   "cheeseguardians",
+   "dirtfulcat",
+   "dirtpassageway",
+   "evileye",
+   "keepout",
+   "pipes"
+  ],
+  "requested_utc": "2026-11-23T20:04:11.521504+00:00"
+ },
+ {
+  "bot": "ya0",
+  "submission": null,
+  "request": 33583,
+  "match": 38471,
+  "created": "2026-11-23T15:04:12.132429-05:00",
+  "maps": [
+   "popthecork",
+   "rift",
+   "sittingducks",
+   "starvation",
+   "thunderdome",
+   "trapped",
+   "wallsofparadis"
+  ],
+  "requested_utc": "2026-11-23T20:04:12.039376+00:00"
+ },
+ {
+  "bot": "yb9",
+  "submission": 465,
+  "request": 33584,
+  "match": 38472,
+  "created": "2026-11-23T15:04:22.906987-05:00",
+  "maps": [
+   "DefaultLarge",
+   "DefaultMedium",
+   "DefaultSmall",
+   "Meow",
+   "Nofreecheese",
+   "ZeroDay",
+   "arrows"
+  ],
+  "requested_utc": "2026-11-23T20:04:22.813596+00:00"
+ },
+ {
+  "bot": "yb9",
+  "submission": null,
+  "request": 33585,
+  "match": 38473,
+  "created": "2026-11-23T15:04:23.455238-05:00",
+  "maps": [
+   "cheesefarm",
+   "cheeseguardians",
+   "dirtfulcat",
+   "dirtpassageway",
+   "evileye",
+   "keepout",
+   "pipes"
+  ],
+  "requested_utc": "2026-11-23T20:04:23.358544+00:00"
+ },
+ {
+  "bot": "yb9",
+  "submission": null,
+  "request": 33586,
+  "match": 38474,
+  "created": "2026-11-23T15:04:23.973217-05:00",
+  "maps": [
+   "popthecork",
+   "rift",
+   "sittingducks",
+   "starvation",
+   "thunderdome",
+   "trapped",
+   "wallsofparadis"
+  ],
+  "requested_utc": "2026-11-23T20:04:23.879572+00:00"
+ },
+ {
+  "bot": "yd1",
+  "submission": 466,
+  "request": 33587,
+  "match": 38475,
+  "created": "2026-11-23T15:04:35.090328-05:00",
+  "maps": [
+   "DefaultLarge",
+   "DefaultMedium",
+   "DefaultSmall",
+   "Meow",
+   "Nofreecheese",
+   "ZeroDay",
+   "arrows"
+  ],
+  "requested_utc": "2026-11-23T20:04:34.998263+00:00"
+ },
+ {
+  "bot": "yd1",
+  "submission": null,
+  "request": 33588,
+  "match": 38476,
+  "created": "2026-11-23T15:04:35.589578-05:00",
+  "maps": [
+   "cheesefarm",
+   "cheeseguardians",
+   "dirtfulcat",
+   "dirtpassageway",
+   "evileye",
+   "keepout",
+   "pipes"
+  ],
+  "requested_utc": "2026-11-23T20:04:35.494426+00:00"
+ },
+ {
+  "bot": "yd1",
+  "submission": null,
+  "request": 33589,
+  "match": 38477,
+  "created": "2026-11-23T15:04:36.109964-05:00",
+  "maps": [
+   "popthecork",
+   "rift",
+   "sittingducks",
+   "starvation",
+   "thunderdome",
+   "trapped",
+   "wallsofparadis"
+  ],
+  "requested_utc": "2026-11-23T20:04:36.015726+00:00"
+ },
+ {
+  "bot": "ye4",
+  "submission": 467,
+  "request": 33590,
+  "match": 38478,
+  "created": "2026-11-23T15:04:46.863038-05:00",
+  "maps": [
+   "DefaultMedium",
+   "DefaultSmall",
+   "Meow",
+   "Nofreecheese",
+   "arrows",
+   "cheesefarm",
+   "cheeseguardians",
+   "dirtfulcat"
+  ],
+  "requested_utc": "2026-11-23T20:04:46.772704+00:00"
+ },
+ {
+  "bot": "ye4",
+  "submission": null,
+  "request": 33591,
+  "match": 38479,
+  "created": "2026-11-23T15:04:47.405764-05:00",
+  "maps": [
+   "evileye",
+   "keepout",
+   "pipes",
+   "popthecork",
+   "sittingducks",
+   "starvation",
+   "thunderdome",
+   "trapped"
+  ],
+  "requested_utc": "2026-11-23T20:04:47.320772+00:00"
+ },
+ {
+  "bot": "sw38",
+  "submission": 471,
+  "request": 33613,
+  "match": 38501,
+  "created": "2026-11-23T15:41:27.998966-05:00",
+  "maps": [
+   "DefaultMedium",
+   "DefaultSmall",
+   "Meow",
+   "Nofreecheese",
+   "arrows",
+   "cheesefarm",
+   "cheeseguardians",
+   "dirtfulcat"
+  ],
+  "requested_utc": "2026-11-23T20:41:27.705642+00:00"
+ },
+ {
+  "bot": "sw38",
+  "submission": null,
+  "request": 33614,
+  "match": 38502,
+  "created": "2026-11-23T15:41:28.773825-05:00",
+  "maps": [
+   "evileye",
+   "keepout",
+   "pipes",
+   "popthecork",
+   "sittingducks",
+   "starvation",
+   "thunderdome",
+   "trapped"
+  ],
+  "requested_utc": "2026-11-23T20:41:28.672409+00:00"
+ },
+ {
+  "bot": "yk1",
+  "submission": 472,
+  "request": 33615,
+  "match": 38503,
+  "created": "2026-11-23T15:41:36.284888-05:00",
+  "maps": [
+   "DefaultMedium",
+   "DefaultSmall",
+   "Meow",
+   "Nofreecheese",
+   "arrows",
+   "cheesefarm",
+   "cheeseguardians",
+   "dirtfulcat",
+   "dirtpassageway"
+  ],
+  "requested_utc": "2026-11-23T20:41:36.171921+00:00"
+ },
+ {
+  "bot": "yk1",
+  "submission": null,
+  "request": 33616,
+  "match": 38504,
+  "created": "2026-11-23T15:41:37.033661-05:00",
+  "maps": [
+   "evileye",
+   "keepout",
+   "pipes",
+   "popthecork",
+   "rift",
+   "sittingducks",
+   "starvation",
+   "thunderdome",
+   "trapped",
+   "wallsofparadis"
+  ],
+  "requested_utc": "2026-11-23T20:41:36.924192+00:00"
+ }
+]

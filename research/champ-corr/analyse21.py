@@ -150,6 +150,7 @@ def plot(done, st, nmaps):
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     import matplotlib.patheffects as pe
+    import matplotlib.transforms as mtrans
     import matplotlib.ticker as mt
     INK, INK2, MUTED, GRID, AXIS, SURF = '#0b0b0b', '#52514e', '#898781', '#e1e0d9', '#c3c2b7', '#fcfcfb'
     RAMP = ['#86b6ef', '#6da7ec', '#5598e7', '#3987e5', '#2a78d6', '#256abf', '#1c5cab', '#184f95', '#104281', '#0d366b']
@@ -163,7 +164,11 @@ def plot(done, st, nmaps):
         ax.set_facecolor(SURF)
         xs = [r[key] for r in done]
         rate = key == 'lr'
-        lo_x, hi_x = (-0.05, 1.05) if rate else (min(xs) - 0.1 * (max(xs) - min(xs)), max(xs) + 0.1 * (max(xs) - min(xs)))
+        if rate:
+            lo_x, hi_x = -0.05, 1.05
+        else:   # room for the ±1.96 SE whiskers
+            wl, wh = min(r[key] - 1.96 * r['bt_se'] for r in done), max(r[key] + 1.96 * r['bt_se'] for r in done)
+            lo_x, hi_x = wl - 0.04 * (wh - wl), wh + 0.04 * (wh - wl)
         groups = {}
         for r in done:
             groups.setdefault((round(r[key], 3), round(r['rr'], 3)), []).append(r)
@@ -211,7 +216,7 @@ def plot(done, st, nmaps):
         ax.set_title(f"Pearson r {c['r']:+.2f} (95% CI {c['ci95'][0]:+.2f} to {c['ci95'][1]:+.2f}), permutation p "
                      f"{c['perm_p']:.2f}; Spearman {c['spearman']:+.2f}", loc='left', color=INK, fontsize=10)
         jobs.append((ax, groups, pos))
-    axes[0].set_ylabel(f'win rate vs AlexT101_usqualsbot on the replica ({nmaps} games each: {nmaps} maps as team A)',
+    axes[0].set_ylabel(f'win rate vs AlexT101_usqualsbot on the replica ({nmaps} maps as team A)',
                        color=INK2, fontsize=9.5)
     fig.suptitle(f"Do local champions do better on the replica?  {st['n']} champions on all {nmaps} early maps",
                  x=0.012, y=0.985, ha='left', color=INK, fontsize=13, fontweight='bold')
@@ -223,7 +228,9 @@ def plot(done, st, nmaps):
     rend = fig.canvas.get_renderer()
     for ax, groups, pos in jobs:
         tr = ax.transData
-        taken = [tr.transform(p) for p in pos.values()]
+        # each marker as a box (s=80 with a 2-pt ring is about 11 pt across), so a label never covers a dot
+        half = 5.5 * fig.dpi / 72
+        taken = [mtrans.Bbox.from_extents(x - half, y - half, x + half, y + half) for x, y in (tr.transform(p) for p in pos.values())]
         boxes = []
         ab = ax.get_window_extent()
         for (gx, gy), rs in sorted(groups.items()):
@@ -236,7 +243,7 @@ def plot(done, st, nmaps):
                                 color=INK, zorder=5, path_effects=[pe.withStroke(linewidth=3, foreground=SURF)])
                 bb = t.get_window_extent(rend).expanded(1.05, 1.15)
                 inside = ab.x0 <= bb.x0 and bb.x1 <= ab.x1 and ab.y0 <= bb.y0 and bb.y1 <= ab.y1
-                clash = any(bb.overlaps(o) for o in boxes) or any(bb.contains(px, py) for px, py in taken)
+                clash = any(bb.overlaps(o) for o in boxes) or any(bb.overlaps(m) for m in taken)
                 if inside and not clash:
                     boxes.append(bb)
                     break
@@ -246,7 +253,8 @@ def plot(done, st, nmaps):
                             color=INK, zorder=5, path_effects=[pe.withStroke(linewidth=3, foreground=SURF)])
     out = os.path.join(HERE, 'champ-corr21.png')
     fig.savefig(out, dpi=150, facecolor=SURF)
-    print('wrote', out)
+    fig.savefig(os.path.join(os.path.dirname(os.path.dirname(HERE)), 'progress', 'champ-corr.png'), dpi=150, facecolor=SURF)
+    print('wrote', out, 'and progress/champ-corr.png')   # owner 11-23 14:04: the scatterplot in progress/
 
 
 if __name__ == '__main__':

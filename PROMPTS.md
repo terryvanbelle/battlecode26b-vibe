@@ -265,3 +265,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (12:45) That scatterplot gave better results than I was hoping for.  The last time we looked at this, we got a small negative correlation.  I think it's worth firming up the game count to get a more accurate picture
 (13:24) If you need to tweak the replica's hourly game limits a bit to squeeze in a few more games for the scatter plot, then you have my permission to do so
 (14:04) Please put the scatterplot in the progress/ directory
+(14:33) Hmmm, not bad.  Can you do a fit model to map local Elo to replica Elo?  If you can do that, then we should be able to predict how long it will take for our local tournament to produce a model that ranks 15th, or 10th, or 1st

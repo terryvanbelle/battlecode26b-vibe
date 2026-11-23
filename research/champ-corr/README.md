@@ -1,12 +1,104 @@
 # Local champions vs the replica: win rate vs xk6 against win rate vs AlexT101_usqualsbot
 
-**Owner request (11-23 11:48 PDT):** a scatterplot and correlation between local champions and the panel. For each
+**First owner request (11-23 11:48 PDT):** a scatterplot and correlation between local champions and the panel. For each
 champion, compare its win rate vs xk6 (local) with its win rate vs AlexT101_usqualsbot (replica). Use a sample of 10
 champions evenly spaced over time, with 5 games against each opponent.
 
-![scatter](champ-corr.png)
+## Results, 21 maps (11-23 14:28 PDT)
 
-## Results (11-23 12:19 PDT)
+**Owner request (12:45 PDT):** firm up the game count. Each of the same 10 champions played all 21 e21 maps: 42 games
+locally against xk6 (both seats) and 21 on the replica against AlexT101_usqualsbot (as team A). That is 420 local
+and 210 replica games. The scatterplot is also in [progress/champ-corr.png](../../progress/champ-corr.png) (owner 14:04).
+
+![scatter, 21 maps](champ-corr21.png)
+
+| bot | crowned (PDT) | local vs xk6: W-L (as A / as B) | replica vs AlexT101_usqualsbot: W-L | tournament rating |
+|---|---|---|---|---|
+| xr49 | 11-21 09:13 | 22-20 (52%; 12 / 10) | 7-14 (33%) | 1447 ± 10 |
+| xu2 | 11-21 15:07 | 20-22 (48%; 10 / 10) | 8-13 (38%) | 1461 ± 8 |
+| xw9 | 11-21 19:55 | 21-21 (50%; 12 / 9) | 10-11 (48%) | 1495 ± 8 |
+| ya0 | 11-22 00:55 | 23-19 (55%; 13 / 10) | 13-8 (62%) | 1504 ± 8 |
+| yb9 | 11-22 06:17 | 21-21 (50%; 11 / 10) | 8-13 (38%) | 1493 ± 7 |
+| yd1 | 11-22 12:56 | 26-16 (62%; 13 / 13) | 11-10 (52%) | 1524 ± 10 |
+| ye4 | 11-22 16:57 | 29-13 (69%; 14 / 15) | 10-11 (48%) | 1534 ± 9 |
+| sw38 | 11-22 22:36 | 24-18 (57%; 13 / 11) | 9-12 (43%) | 1527 ± 11 |
+| yk1 | 11-23 06:36 | 29-13 (69%; 15 / 14) | 11-10 (52%) | 1574 ± 9 |
+| sw54 | 11-23 10:34 | 35-7 (83%; 16 / 19) | 12-9 (57%) | 1657 ± 11 |
+
+**Correlations over the 10 champions:**
+
+| pair | Pearson r (95% CI) | permutation p | Spearman ρ (p) |
+|---|---|---|---|
+| local rate vs xk6 ~ replica rate | **+0.57** (-0.09 to +0.88) | 0.086 | +0.63 (0.058) |
+| tournament rating ~ replica rate | **+0.65** (+0.03 to +0.91) | 0.036 | +0.70 (0.027) |
+| tournament rating ~ local rate vs xk6 | **+0.93** (+0.73 to +0.98) | 0.000 | +0.91 (0.001) |
+
+- *Leave one out:* local ~ replica +0.46 (without sw54) to +0.81 (without ya0); rating ~ replica +0.55 (without xr49) to +0.87 (without ya0).
+- *Split-half reliability over maps* (odd against even maps, Spearman-Brown to 21): local 0.70,
+  replica 0.51. No correlation between the two measures can much exceed
+  √(0.70 × 0.51) ≈ 0.60.
+- *Seats:* 129 local wins of 210 as team A and 121 as team B.
+- *Per map:* the maps' local and replica win shares correlate at r +0.26 (p 0.26).
+
+**Per map,** the 10 champions together, sorted from the largest local-over-replica gap:
+
+| map | local wins vs xk6 (of 20) | replica wins vs AlexT101_usqualsbot (of 10) |
+|---|---|---|
+| evileye | 18 | 0 |
+| cheesefarm | 17 | 0 |
+| starvation | 11 | 0 |
+| Meow | 12 | 2 |
+| dirtfulcat | 12 | 2 |
+| wallsofparadis | 12 | 2 |
+| ZeroDay | 11 | 2 |
+| pipes | 8 | 2 |
+| keepout | 13 | 5 |
+| cheeseguardians | 11 | 5 |
+| sittingducks | 11 | 5 |
+| DefaultSmall | 1 | 0 |
+| popthecork | 17 | 8 |
+| DefaultLarge | 12 | 6 |
+| Nofreecheese | 5 | 3 |
+| dirtpassageway | 19 | 10 |
+| DefaultMedium | 11 | 7 |
+| trapped | 17 | 10 |
+| arrows | 15 | 10 |
+| thunderdome | 9 | 10 |
+| rift | 8 | 10 |
+
+**What it says:**
+- **The local tournament rating predicts the replica.** The rating and the replica rate correlate at r +0.65 (95% CI
+  +0.03 to +0.91, permutation p 0.036; Spearman +0.70, p 0.027). The local rate vs xk6 alone gives +0.57 (p 0.086):
+  the rating, built on every local game, measures local strength better than 42 games against one opponent.
+- **This is close to the most these two measures can show.** With the split-half reliabilities above, the ceiling is
+  about 0.60. An r of +0.57 to +0.65 at a ceiling of about 0.6 means nearly all of the replica variation the maps
+  can rank is ranked the same way locally. This ceiling is itself noisy (10 champions).
+- **The first pass said the same, more weakly:** r +0.63 (local rate) and +0.53 (rating) on about 5 games a side. The
+  11-21 study's r −0.36 measured something else: wins against 11 archetypes that every champion already beat, which
+  had saturated.
+- **ya0 is the outlier.** It is the best of the 10 on the replica (13-8) with a middling rating (1505). Without it, both
+  correlations rise above +0.8.
+- **Nine maps are decided the same way for every champion on the replica:** DefaultSmall, cheesefarm, evileye and
+  starvation always lost (0 of 10), arrows, dirtpassageway, rift, thunderdome and trapped always won (10 of 10). The
+  champions' replica rates move on the other 12.
+- **Maps that are easy against xk6 are not easy against AlexT101_usqualsbot.** evileye (18 of 20 locally) and
+  cheesefarm (17 of 20) are never won on the replica. rift (8 of 20) and thunderdome (9 of 20) are always won. These
+  are the flippable maps to study, starting with the replays of evileye and cheesefarm.
+
+## Local rating to replica rating (owner 14:33 PDT)
+
+The fit and the projection are in [progress/local-to-replica.md](../../progress/local-to-replica.md) and
+[progress/local-to-replica.png](../../progress/local-to-replica.png), written by
+[fit_local_replica.py](fit_local_replica.py) ([fit_local_replica.json](fit_local_replica.json)).
+- **The mapping**, from this study's 210 games and our 321 ranked ladder games since 11-21 08:20, fitted per game
+  with the replica's Elo odds: replica = 1747 + 0.53 × (local − 1550), slope ± 0.28.
+  A local point is worth about half a replica point.
+- **The projection** runs the champions' local pace (last 24 h or the whole run) through it, against the ladder places
+  held at today's rating or drifting at their 48-hour rate.
+
+## First pass: 5 games (11-23 12:19 PDT)
+
+![scatter](champ-corr.png)
 
 | bot | crowned (PDT) | local vs xk6 | replica vs AlexT101_usqualsbot | replica games: existing + top-up | tournament rating |
 |---|---|---|---|---|---|
@@ -61,7 +153,53 @@ champions evenly spaced over time, with 5 games against each opponent.
 **What would settle it:** each champion playing the same 21 e21 maps against AlexT101_usqualsbot. That is 10 replica
 matches (210 games, under the hourly request limit), and it removes the map mix.
 
-## Method
+## Method (21 maps)
+
+**The sample:** the same 10 champions as the first pass ([plan.json](plan.json)).
+
+**Local: 42 games vs xk6 on the box.**
+- Every champion played xk6 on all 21 e21 maps (tools/galaxy26/maps-early21.txt), once as team A and once as team B,
+  with seed 1.
+- Runs:
+  - cs001: the first pass, 5 maps as team A;
+  - cs002-cs004: the other 370 games, at the front of the box queue from 12:50 PDT.
+- [plan21.py](plan21.py) writes the cells and [plan21.json](plan21.json).
+- Both seats are played because the box's maps are not perfectly fair to both sides. The seat check (results) shows how
+  much this matters.
+
+**Replica: 21 games vs AlexT101_usqualsbot, with our bot as team A.**
+- *Unranked requests:* each champion played every e21 map it had not yet played as team A, in requests of at most 10
+  maps, as 24 requests of 7-10 maps ([replica_full.py](replica_full.py), [full.json](full.json), [full.log](full.log)).
+- *Reused games:* the first pass's top-up games were reused, 21 games on 5 maps.
+- *Existing ranked games* on random maps are not used here, which removes the map mix of the first pass.
+- *The request limit:* the run stopped at 13:04:58 PDT on HTTP 429. siarnaq counts requests plus match participations
+  of the past hour against the limit, so the unranked limit of 40 allows 20 requests an hour. With the owner's
+  permission (13:24 PDT), the unranked limit was raised to 50 for the remaining requests and restored to 40 at
+  13:41:48 PDT.
+- *Switching the active submission:*
+  - The script waited for a fresh ranked match, then made each old champion the active submission in turn, requested
+    its matches, and waited for each match to be created. A match's submission is fixed at creation.
+  - At the end it re-submitted the champion named in research/tourney/champion.txt.
+  - Ranked matches created while an old champion was active are listed in the results.
+- *Package check:* [fetch21.py](fetch21.py) reads every game's winner from the replay (Bc26Tool replay-info). It checks
+  that we are team A and that the replay's package is the champion requested ([full_maps.json](full_maps.json)).
+- *Determinism check:* xr49 played the same 21 maps as team A against the same opponent on 11-20, in its n3 panel
+  (submission 421). The groups were the same as this study's three requests:
+  - DefaultLarge to arrows: 1-6 (32916);
+  - cheesefarm to pipes: 2-5 (32922);
+  - popthecork to wallsofparadis: 4-3 (32899).
+
+  The replica plays one seed per map, so the same code against the same opponent should repeat these scores.
+
+**Statistics** ([analyse21.py](analyse21.py), [results21.tsv](results21.tsv), [stats21.json](stats21.json)).
+- As in the first pass: Pearson r with a Fisher 95% interval, a permutation p-value, Spearman ρ, and leave-one-out.
+- *Split-half reliability over maps:* the champions' rates on the odd-numbered maps against the even-numbered ones, and
+  the Spearman-Brown estimate for all 21. This measures how consistently the maps rank the champions, which bounds any
+  correlation between the two measures.
+- *Tournament rating:* the Bradley-Terry fit over every local game. xk6 is a retired pool bot, so the study's local
+  games enter it too.
+
+## Method (first pass)
 
 **The sample.**
 - 10 target times, evenly spaced from the first crowning (xr49, 11-21 09:13 PDT) to the last (sw54, 11-23 10:34).

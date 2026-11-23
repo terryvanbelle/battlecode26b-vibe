@@ -1,0 +1,67 @@
+11-23 12:48:11 PDT start: 24 requests, champion sw54 active
+11-23 13:03:24 PDT no ranked match in 15 minutes: switching starts anyway
+11-23 13:03:25 PDT sw54: request 33572 vs AlexT101_usqualsbot, 9 maps (status P)
+11-23 13:03:25 PDT sw54: match 38460 created 2026-11-23T15:03:25.349178-05:00
+11-23 13:03:25 PDT sw54: request 33573 vs AlexT101_usqualsbot, 10 maps (status P)
+11-23 13:03:26 PDT sw54: match 38461 created 2026-11-23T15:03:25.905777-05:00
+11-23 13:03:36 PDT xr49: submission 461 accepted, active
+11-23 13:03:36 PDT xr49: request 33574 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:03:36 PDT xr49: match 38462 created 2026-11-23T15:03:36.688647-05:00
+11-23 13:03:37 PDT xr49: request 33575 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:03:37 PDT xr49: match 38463 created 2026-11-23T15:03:37.207757-05:00
+11-23 13:03:37 PDT xr49: request 33576 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:03:37 PDT xr49: match 38464 created 2026-11-23T15:03:37.731286-05:00
+11-23 13:03:48 PDT xu2: submission 462 accepted, active
+11-23 13:03:48 PDT xu2: request 33577 vs AlexT101_usqualsbot, 9 maps (status P)
+11-23 13:03:48 PDT xu2: match 38465 created 2026-11-23T15:03:48.473894-05:00
+11-23 13:03:49 PDT xu2: request 33578 vs AlexT101_usqualsbot, 10 maps (status P)
+11-23 13:03:49 PDT xu2: match 38466 created 2026-11-23T15:03:48.965237-05:00
+11-23 13:03:59 PDT xw9: submission 463 accepted, active
+11-23 13:03:59 PDT xw9: request 33579 vs AlexT101_usqualsbot, 8 maps (status P)
+11-23 13:04:00 PDT xw9: match 38467 created 2026-11-23T15:03:59.825379-05:00
+11-23 13:04:00 PDT xw9: request 33580 vs AlexT101_usqualsbot, 8 maps (status P)
+11-23 13:04:00 PDT xw9: match 38468 created 2026-11-23T15:04:00.368496-05:00
+11-23 13:04:10 PDT ya0: submission 464 accepted, active
+11-23 13:04:11 PDT ya0: request 33581 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:04:11 PDT ya0: match 38469 created 2026-11-23T15:04:11.096231-05:00
+11-23 13:04:11 PDT ya0: request 33582 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:04:11 PDT ya0: match 38470 created 2026-11-23T15:04:11.617599-05:00
+11-23 13:04:12 PDT ya0: request 33583 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:04:12 PDT ya0: match 38471 created 2026-11-23T15:04:12.132429-05:00
+11-23 13:04:22 PDT yb9: submission 465 accepted, active
+11-23 13:04:22 PDT yb9: request 33584 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:04:23 PDT yb9: match 38472 created 2026-11-23T15:04:22.906987-05:00
+11-23 13:04:23 PDT yb9: request 33585 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:04:23 PDT yb9: match 38473 created 2026-11-23T15:04:23.455238-05:00
+11-23 13:04:24 PDT yb9: request 33586 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:04:24 PDT yb9: match 38474 created 2026-11-23T15:04:23.973217-05:00
+11-23 13:04:34 PDT yd1: submission 466 accepted, active
+11-23 13:04:35 PDT yd1: request 33587 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:04:35 PDT yd1: match 38475 created 2026-11-23T15:04:35.090328-05:00
+11-23 13:04:35 PDT yd1: request 33588 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:04:35 PDT yd1: match 38476 created 2026-11-23T15:04:35.589578-05:00
+11-23 13:04:36 PDT yd1: request 33589 vs AlexT101_usqualsbot, 7 maps (status P)
+11-23 13:04:36 PDT yd1: match 38477 created 2026-11-23T15:04:36.109964-05:00
+11-23 13:04:46 PDT ye4: submission 467 accepted, active
+11-23 13:04:46 PDT ye4: request 33590 vs AlexT101_usqualsbot, 8 maps (status P)
+11-23 13:04:47 PDT ye4: match 38478 created 2026-11-23T15:04:46.863038-05:00
+11-23 13:04:47 PDT ye4: request 33591 vs AlexT101_usqualsbot, 8 maps (status P)
+11-23 13:04:47 PDT ye4: match 38479 created 2026-11-23T15:04:47.405764-05:00
+11-23 13:04:57 PDT sw38: submission 468 accepted, active
+11-23 13:04:58 PDT STOPPED: ApiError('HTTP 429: {"detail":"You have requested too many scrimmages in the past hour."}')
+11-23 13:05:08 PDT restored sw54: submission 469 accepted=True
+11-23 13:05:08 PDT done: 20 matches in full.json
+11-23 13:26:01 PDT start: 4 requests, champion sw58 active
+11-23 13:41:15 PDT no ranked match in 15 minutes: switching starts anyway
+11-23 13:41:27 PDT sw38: submission 471 accepted, active
+11-23 13:41:28 PDT sw38: request 33613 vs AlexT101_usqualsbot, 8 maps (status P)
+11-23 13:41:28 PDT sw38: match 38501 created 2026-11-23T15:41:27.998966-05:00
+11-23 13:41:28 PDT sw38: request 33614 vs AlexT101_usqualsbot, 8 maps (status P)
+11-23 13:41:29 PDT sw38: match 38502 created 2026-11-23T15:41:28.773825-05:00
+11-23 13:41:35 PDT yk1: submission 472 accepted, active
+11-23 13:41:36 PDT yk1: request 33615 vs AlexT101_usqualsbot, 9 maps (status P)
+11-23 13:41:36 PDT yk1: match 38503 created 2026-11-23T15:41:36.284888-05:00
+11-23 13:41:37 PDT yk1: request 33616 vs AlexT101_usqualsbot, 10 maps (status P)
+11-23 13:41:37 PDT yk1: match 38504 created 2026-11-23T15:41:37.033661-05:00
+11-23 13:41:43 PDT restored sw58: submission 473 accepted=True
+11-23 13:41:43 PDT done: 24 matches in full.json

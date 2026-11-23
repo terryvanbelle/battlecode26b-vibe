@@ -1,0 +1,616 @@
+{
+ "now": "2026-11-23T14:52:18.934470-07:00",
+ "L0": 1550.0,
+ "yardstick": {
+  "team": "AlexT101_usqualsbot",
+  "rating": 1739.9868984891243,
+  "drift_per_day": 10.16019766685404
+ },
+ "fits": {
+  "A": {
+   "intercept": 1739.7313511372547,
+   "slope": 0.6935653463207654,
+   "se_intercept": 27.076761354470463,
+   "se_slope": 0.42949486026983635,
+   "games": 210
+  },
+  "B": {
+   "intercept": 1751.4126526243385,
+   "slope": 0.40318573687534015,
+   "se_intercept": 22.33371608357413,
+   "se_slope": 0.36713948980079547,
+   "games": 321
+  },
+  "J": {
+   "intercept": 1747.0091300312506,
+   "slope": 0.5253212723670476,
+   "se_intercept": 17.211317936340848,
+   "se_slope": 0.2786703226609137,
+   "games": 531
+  }
+ },
+ "ladder_matches": 107,
+ "unmatched_matches": 0,
+ "paces": {
+  "recent": {
+   "per_day": 153.80577921260533,
+   "se_per_day": 23.528073774738665,
+   "champions": 11
+  },
+  "all": {
+   "per_day": 84.6868184701718,
+   "se_per_day": 6.699488603968382,
+   "champions": 26
+  }
+ },
+ "champion": {
+  "bot": "yl19",
+  "local": 1683.0,
+  "local_se": 17.0,
+  "predicted": {
+   "A": 1831.9755421979164,
+   "B": 1805.0363556287589,
+   "J": 1816.876859256068
+  }
+ },
+ "ours": {
+  "rating": 1760.7777536950048,
+  "place": 17
+ },
+ "targets": {
+  "15": {
+   "rating": 1774.4802935055832,
+   "drift_per_day": 11.968555176393771
+  },
+  "10": {
+   "rating": 1855.41900091045,
+   "drift_per_day": 26.8490548927613
+  },
+  "1": {
+   "rating": 2204.538586787276,
+   "drift_per_day": 42.81784388396549
+  }
+ },
+ "champions": {
+  "xk6": {
+   "crowned": "2026-11-21T08:20:00-07:00",
+   "local": 1427.0,
+   "local_se": 11.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": null,
+   "ladder_se": null,
+   "ladder_games": 0,
+   "ladder_wins": null
+  },
+  "xr49": {
+   "crowned": "2026-11-21T09:13:00-07:00",
+   "local": 1447.0,
+   "local_se": 10.0,
+   "study": 1625.4642029518143,
+   "study_wl": [
+    7,
+    21
+   ],
+   "ladder": 1530.7474323311822,
+   "ladder_se": 151.90981960530368,
+   "ladder_games": 6,
+   "ladder_wins": 2
+  },
+  "xs2": {
+   "crowned": "2026-11-21T11:12:00-07:00",
+   "local": 1463.0,
+   "local_se": 8.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1838.9343639218005,
+   "ladder_se": 116.16227072682968,
+   "ladder_games": 12,
+   "ladder_wins": 9
+  },
+  "xt2": {
+   "crowned": "2026-11-21T13:27:00-07:00",
+   "local": 1463.0,
+   "local_se": 9.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1772.297460424227,
+   "ladder_se": 91.58283739399728,
+   "ladder_games": 15,
+   "ladder_wins": 9
+  },
+  "xu2": {
+   "crowned": "2026-11-21T15:07:00-07:00",
+   "local": 1461.0,
+   "local_se": 8.0,
+   "study": 1659.620961376839,
+   "study_wl": [
+    8,
+    21
+   ],
+   "ladder": 1646.0503554411632,
+   "ladder_se": 101.77483141400012,
+   "ladder_games": 12,
+   "ladder_wins": 5
+  },
+  "xw6": {
+   "crowned": "2026-11-21T17:50:00-07:00",
+   "local": 1495.0,
+   "local_se": 9.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1822.5472510940585,
+   "ladder_se": 122.89225598151015,
+   "ladder_games": 9,
+   "ladder_wins": 6
+  },
+  "xw9": {
+   "crowned": "2026-11-21T19:55:00-07:00",
+   "local": 1495.0,
+   "local_se": 8.0,
+   "study": 1724.1834819756548,
+   "study_wl": [
+    10,
+    21
+   ],
+   "ladder": 1788.0552772210112,
+   "ladder_se": 73.30544618245169,
+   "ladder_games": 24,
+   "ladder_wins": 15
+  },
+  "xx9": {
+   "crowned": "2026-11-21T21:55:00-07:00",
+   "local": 1485.0,
+   "local_se": 9.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": null,
+   "ladder_se": null,
+   "ladder_games": 0,
+   "ladder_wins": null
+  },
+  "xz2": {
+   "crowned": "2026-11-21T23:15:00-07:00",
+   "local": 1493.0,
+   "local_se": 10.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1604.4846318261345,
+   "ladder_se": 122.84163682962752,
+   "ladder_games": 9,
+   "ladder_wins": 3
+  },
+  "ya0": {
+   "crowned": "2026-11-22T00:55:00-07:00",
+   "local": 1504.0,
+   "local_se": 8.0,
+   "study": 1820.3528356014097,
+   "study_wl": [
+    13,
+    21
+   ],
+   "ladder": 1702.9504428470923,
+   "ladder_se": 60.72330672143018,
+   "ladder_games": 33,
+   "ladder_wins": 17
+  },
+  "ya9": {
+   "crowned": "2026-11-22T03:55:00-07:00",
+   "local": 1515.0,
+   "local_se": 10.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1769.3148915151344,
+   "ladder_se": 101.85243153832906,
+   "ladder_games": 12,
+   "ladder_wins": 7
+  },
+  "yb7": {
+   "crowned": "2026-11-22T04:55:00-07:00",
+   "local": 1504.0,
+   "local_se": 11.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1813.7516643808283,
+   "ladder_se": 150.46135545442044,
+   "ladder_games": 6,
+   "ladder_wins": 4
+  },
+  "yb9": {
+   "crowned": "2026-11-22T06:17:00-07:00",
+   "local": 1493.0,
+   "local_se": 7.0,
+   "study": 1659.620961376839,
+   "study_wl": [
+    8,
+    21
+   ],
+   "ladder": 1670.8545505431339,
+   "ladder_se": 63.96950186908708,
+   "ladder_games": 30,
+   "ladder_wins": 14
+  },
+  "sw08": {
+   "crowned": "2026-11-22T10:36:00-07:00",
+   "local": 1505.0,
+   "local_se": 9.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1826.3249018666586,
+   "ladder_se": 95.22981830688305,
+   "ladder_games": 15,
+   "ladder_wins": 10
+  },
+  "yd1": {
+   "crowned": "2026-11-22T12:56:00-07:00",
+   "local": 1524.0,
+   "local_se": 10.0,
+   "study": 1755.7903150025938,
+   "study_wl": [
+    11,
+    21
+   ],
+   "ladder": 1736.5996484531345,
+   "ladder_se": 66.93029090548848,
+   "ladder_games": 27,
+   "ladder_wins": 14
+  },
+  "sw19": {
+   "crowned": "2026-11-22T14:56:00-07:00",
+   "local": 1536.0,
+   "local_se": 10.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1582.5850330480444,
+   "ladder_se": 212.75997575386998,
+   "ladder_games": 3,
+   "ladder_wins": 1
+  },
+  "ye4": {
+   "crowned": "2026-11-22T16:57:00-07:00",
+   "local": 1533.0,
+   "local_se": 9.0,
+   "study": 1724.1834819756548,
+   "study_wl": [
+    10,
+    21
+   ],
+   "ladder": 1585.385879693327,
+   "ladder_se": 86.88938210613158,
+   "ladder_games": 18,
+   "ladder_wins": 6
+  },
+  "yf2": {
+   "crowned": "2026-11-22T20:56:00-07:00",
+   "local": 1533.0,
+   "local_se": 11.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1779.7408369319153,
+   "ladder_se": 107.77590011783808,
+   "ladder_games": 12,
+   "ladder_wins": 8
+  },
+  "sw38": {
+   "crowned": "2026-11-22T22:36:00-07:00",
+   "local": 1526.0,
+   "local_se": 11.0,
+   "study": 1692.3123354014408,
+   "study_wl": [
+    9,
+    21
+   ],
+   "ladder": 1746.3469155796324,
+   "ladder_se": 84.89760079616212,
+   "ladder_games": 18,
+   "ladder_wins": 11
+  },
+  "yh3": {
+   "crowned": "2026-11-23T00:36:00-07:00",
+   "local": 1549.0,
+   "local_se": 13.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1821.5422564775986,
+   "ladder_se": 106.4325227274619,
+   "ladder_games": 12,
+   "ladder_wins": 8
+  },
+  "yh6": {
+   "crowned": "2026-11-23T02:16:00-07:00",
+   "local": 1593.0,
+   "local_se": 9.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1499.9736574484084,
+   "ladder_se": 139.29583953644547,
+   "ladder_games": 9,
+   "ladder_wins": 2
+  },
+  "yk1": {
+   "crowned": "2026-11-23T06:36:00-07:00",
+   "local": 1573.0,
+   "local_se": 9.0,
+   "study": 1755.7903150025938,
+   "study_wl": [
+    11,
+    21
+   ],
+   "ladder": null,
+   "ladder_se": null,
+   "ladder_games": 0,
+   "ladder_wins": null
+  },
+  "sw53": {
+   "crowned": "2026-11-23T09:14:00-07:00",
+   "local": 1604.0,
+   "local_se": 11.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1608.9362095413478,
+   "ladder_se": 212.75997575386998,
+   "ladder_games": 3,
+   "ladder_wins": 1
+  },
+  "sw54": {
+   "crowned": "2026-11-23T10:34:00-07:00",
+   "local": 1656.0,
+   "local_se": 10.0,
+   "study": 1787.6614615768078,
+   "study_wl": [
+    12,
+    21
+   ],
+   "ladder": 1841.7115409568296,
+   "ladder_se": 87.0426682536811,
+   "ladder_games": 18,
+   "ladder_wins": 12
+  },
+  "sw58": {
+   "crowned": "2026-11-23T13:06:00-07:00",
+   "local": 1649.0,
+   "local_se": 15.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": null,
+   "ladder_se": null,
+   "ladder_games": 0,
+   "ladder_wins": null
+  },
+  "yl19": {
+   "crowned": "2026-11-23T14:03:00-07:00",
+   "local": 1683.0,
+   "local_se": 17.0,
+   "study": null,
+   "study_wl": null,
+   "ladder": 1867.6791762189132,
+   "ladder_se": 122.84062202645651,
+   "ladder_games": 9,
+   "ladder_wins": 6
+  }
+ },
+ "projection": {
+  "A": {
+   "15": {
+    "local_needed_now": 1600.1019010719972,
+    "reached_now_share": 0.77345,
+    "recent/fixed": [
+     0.0,
+     0.0,
+     40.288085154213604
+    ],
+    "recent/drift": [
+     0.0,
+     0.0,
+     43.50496162070864
+    ],
+    "all/fixed": [
+     0.0,
+     0.0,
+     71.51496462479889
+    ],
+    "all/drift": [
+     0.0,
+     0.0,
+     83.61439951729868
+    ]
+   },
+   "10": {
+    "local_needed_now": 1716.8013697438846,
+    "reached_now_share": 0.37335,
+    "recent/fixed": [
+     0.0,
+     5.3781262936402525,
+     132.0305533056681
+    ],
+    "recent/drift": [
+     0.0,
+     6.4185127986609025,
+     675.0072658279672
+    ],
+    "all/fixed": [
+     0.0,
+     9.768290398275823,
+     235.89521419374918
+    ],
+    "all/drift": [
+     0.0,
+     13.646669445349659,
+     10000000.0
+    ]
+   },
+   "1": {
+    "local_needed_now": 2220.17078940829,
+    "reached_now_share": 0.0,
+    "recent/fixed": [
+     34.972747103933536,
+     84.91286621188996,
+     535.9928971318215
+    ],
+    "recent/drift": [
+     41.99198968651237,
+     123.59562986827325,
+     10000000.0
+    ],
+    "all/fixed": [
+     64.32167904797286,
+     152.7935958207543,
+     967.7449087230726
+    ],
+    "all/drift": [
+     93.4426864577926,
+     345.66225821173725,
+     10000000.0
+    ]
+   }
+  },
+  "B": {
+   "15": {
+    "local_needed_now": 1607.2134348303518,
+    "reached_now_share": 0.68285,
+    "recent/fixed": [
+     0.0,
+     0.0,
+     10000000.0
+    ],
+    "recent/drift": [
+     0.0,
+     0.0,
+     10000000.0
+    ],
+    "all/fixed": [
+     0.0,
+     0.0,
+     10000000.0
+    ],
+    "all/drift": [
+     0.0,
+     0.0,
+     10000000.0
+    ]
+   },
+   "10": {
+    "local_needed_now": 1807.9613780292752,
+    "reached_now_share": 0.213,
+    "recent/fixed": [
+     0.0,
+     19.910749438833882,
+     10000000.0
+    ],
+    "recent/drift": [
+     0.0,
+     27.596928788853084,
+     10000000.0
+    ],
+    "all/fixed": [
+     0.0,
+     35.59017547825508,
+     10000000.0
+    ],
+    "all/drift": [
+     0.0,
+     70.52091445281783,
+     10000000.0
+    ]
+   },
+   "1": {
+    "local_needed_now": 2673.863997954467,
+    "reached_now_share": 0.0,
+    "recent/fixed": [
+     56.168547079754084,
+     158.22161552516405,
+     10000000.0
+    ],
+    "recent/drift": [
+     73.71351742518257,
+     342.9658877899657,
+     10000000.0
+    ],
+    "all/fixed": [
+     103.58710230387635,
+     282.1274126455249,
+     10000000.0
+    ],
+    "all/drift": [
+     185.16357610600906,
+     7807.109091821238,
+     10000000.0
+    ]
+   }
+  },
+  "J": {
+   "15": {
+    "local_needed_now": 1602.2940244748706,
+    "reached_now_share": 0.8076,
+    "recent/fixed": [
+     0.0,
+     0.0,
+     16.953118800961352
+    ],
+    "recent/drift": [
+     0.0,
+     0.0,
+     18.123444409277262
+    ],
+    "all/fixed": [
+     0.0,
+     0.0,
+     30.720814380103096
+    ],
+    "all/drift": [
+     0.0,
+     0.0,
+     35.14642614077819
+    ]
+   },
+   "10": {
+    "local_needed_now": 1756.3687053652231,
+    "reached_now_share": 0.2063,
+    "recent/fixed": [
+     0.0,
+     12.062488653888263,
+     93.27990069245362
+    ],
+    "recent/drift": [
+     0.0,
+     15.286428008492713,
+     286.09552664765994
+    ],
+    "all/fixed": [
+     0.0,
+     22.047113018767398,
+     166.80093472121501
+    ],
+    "all/drift": [
+     0.0,
+     35.4820567955482,
+     10000000.0
+    ]
+   },
+   "1": {
+    "local_needed_now": 2420.951702934932,
+    "reached_now_share": 0.0,
+    "recent/fixed": [
+     57.75407932131149,
+     119.15318089973877,
+     430.1663802786466
+    ],
+    "recent/drift": [
+     75.84208324423133,
+     204.3551618084934,
+     10000000.0
+    ],
+    "all/fixed": [
+     106.3776566426717,
+     212.38619338148328,
+     764.5222386534402
+    ],
+    "all/drift": [
+     189.61125505672769,
+     831.549559658506,
+     10000000.0
+    ]
+   }
+  }
+ }
+}
