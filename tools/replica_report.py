@@ -23,6 +23,7 @@ TEAM = G.TEAM
 PDT = ZoneInfo('America/Vancouver')
 # Start of the lower ('recent') panels: the local-tournament procedure began ~08:00 PDT 11-21 (owner 11-22).
 RECENT_FROM = dt.datetime(2026, 11, 21, 8, 0, tzinfo=PDT)
+TOP_MIN = 1400   # lower y limit of rating-history.png's whole-history panel (owner 11-22)
 REF_PLACES = (10, 15, 20)   # ladder places whose rating is drawn on rating-history.png for reference (owner 11-22)
 
 
@@ -144,6 +145,7 @@ def rating_chart(hist, out, marks=(), now=None, refs=None):
             ax.set_title(f'since {RECENT_FROM:%m-%d %H:%M} PDT (local tournament)', fontsize=9)
         else:
             marks_on(ax, marks)
+            ax.set_ylim(bottom=TOP_MIN)   # owner 11-22: the first-day climb from ~250 squashed the scale
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d', tz=PDT))
             ax.set_title(f'{TEAM} rating on the replica, with the ratings in ladder places {", ".join(f"#{k}" for k in REF_PLACES)} (dashed vertical: milestones)', fontsize=10)
         w, r = hh[-1]
