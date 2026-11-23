@@ -165,7 +165,7 @@
 # ye9  (retired 11-22 17:55: FIGHT_EVERY 3 on ye4, -109 vs ye4 on 74 g, > 2 SE)
 # sw29  (retired 11-22 18:35: insurance king on ye4, -53 vs ye4 on 180 g)
 # yf0  (retired 11-22 18:15: THREAT_THROW 3 on ye4, -137 vs ye4 on 62 g, > 2 SE)
-sw30
+# sw30  (retired 11-22 21:38: RUSH_UNTIL 200 + END_CAT_COOP 1000 on ye4, -14 vs yf2 on 546 g; sw38 carries it on yf2)
 # yf1  (retired 11-22 19:25: DELIVER_AT 20 on ye4, -54 vs ye4 on 172 g)
 # sw31  (retired 11-22 18:15: full loads LOAD_AT 40 on ye4, -102 vs ye4 on 62 g, > 2 SE)
 yf2
@@ -184,3 +184,4 @@ sw38
 yg1
 yg2
 yg3
+yg4

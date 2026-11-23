@@ -1323,7 +1323,7 @@ sw28,2026-11-22,ye4,"BIG SWING economy opening: GATHER_FIRST 8 (from 6), RUSH_FR
 ye9,2026-11-22,ye4,"FIGHT_EVERY 3 (from 2): one in 3 later babies fights cats, not one in 2","RETIRED 11-22 17:55 PDT: -109 vs ye4 on 74 g (> 2 SE)"
 sw29,2026-11-22,ye4,"BIG SWING insurance king: FORM_BABIES 12 (from 16), FORM_WAR_FROM 150 (from 300): a second king forms sooner, income/bank gates and FORM_MAX 3 kept (unlike empire sw01) (replica: our early losses are kills of our only king, kingsAt r100/r250 = 1)","RETIRED 11-22 18:35 PDT: -53 vs ye4 on 180 g"
 yf0,2026-11-22,ye4,"THREAT_THROW 3 (from 2): a holding carrier throws when an enemy baby with free hands is within 3, not 2","RETIRED 11-22 18:15 PDT: -137 vs ye4 on 62 g (> 2 SE)"
-sw30,2026-11-22,ye4,"BIG SWING combination on ye4: ye5 RUSH_UNTIL 200 (+9 on 227) + ye8 END_CAT_COOP 1000 (+23 on 51)",tournament newcomer 17:38 PDT
+sw30,2026-11-22,ye4,"BIG SWING combination on ye4: ye5 RUSH_UNTIL 200 (+9 on 227) + ye8 END_CAT_COOP 1000 (+23 on 51)","RETIRED 11-22 21:38 PDT: -14 vs yf2 on 546 g (sw38 carries it on yf2)"
 yf1,2026-11-22,ye4,"DELIVER_AT 20 (from 30): gatherers head home with less raw: faster banking, less cheese lost with a dead carrier (replica: early losses end with bank 0)","RETIRED 11-22 19:25 PDT: -54 vs ye4 on 172 g"
 sw31,2026-11-22,ye4,"BIG SWING full loads: LOAD_AT 40 (from off): a gatherer heads home only with 40 raw, replacing the DELIVER_AT 30 / DELIVER_IDLE 10 rule (fewer trips, more time mining)","RETIRED 11-22 18:15 PDT: -102 vs ye4 on 62 g (> 2 SE)"
 yf2,2026-11-22,ye4,"DEFEND_D2 225 (from 100): babies within 15 of an alerting king defend it (half of sw24; replica 36659 DefaultSmall: our king killed r156 with 16 v 16 rats at r100)","ACCEPTED 11-22 20:56 PDT as local champion: +22 vs ye4 on 422 g (needed > 19); submission 448"
@@ -1342,3 +1342,4 @@ sw38,2026-11-22,yf2,"BIG SWING: sw30's pair on the new champion: RUSH_UNTIL 200 
 yg1,2026-11-22,yf2,"AUSTERE_FROM 0 (from 60): sw34's austerity-off ablation on the new champion (sw34 +7 vs ye4 on 306)",tournament newcomer 20:58 PDT
 yg2,2026-11-22,yf2,"DEFEND_D2 400 (from 225): further along the direction that made yf2 champion (100 -> 225 gained +22)",tournament newcomer 21:18 PDT
 yg3,2026-11-22,yf2,"KING_THREAT_D2 50 (from 30): the king raises its alert for enemies a little farther out, so defenders come earlier against the siege",tournament newcomer 21:18 PDT
+yg4,2026-11-22,yf2,"CODE (King.spawn, one line): under siege a new rat spawns on the far side of the king from the sensed enemy instead of toward it (early-kill study: the siege grabs our fresh spawns next to the king, median 13 rounds old, and throws them into it; 32% of king damage)",tournament newcomer 21:38 PDT
