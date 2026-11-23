@@ -216,7 +216,7 @@ yh6
 # yj6  (retired 11-23 05:18: DIG_RESERVE 200, -36 vs yh6 on 234 g)
 # yj7  (retired 11-23 05:18: TRAP_SURPLUS 50, -18 vs yh6 on 207 g)
 # yj8  (retired 11-23 05:38: KING_BITE_FLOOR 200, -18 vs yh6 on 230 g)
-yj9
+# yj9  (retired 11-23 05:58: RUSH_TO 12, -58 vs yh6 on 234 g)
 yk1
 sw48  # sparring (big army imitation, exempt from retirement)
 yk2
@@ -224,3 +224,4 @@ yk3
 yk4
 yk5
 yk6
+yk7
