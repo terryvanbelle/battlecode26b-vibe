@@ -249,3 +249,4 @@ yl15  # sw54 + CORE_OVER_CAP: the core boot is not cut by the baby cap (audit of
 yl16  # sw54 + WAR_CAP_ALL: MAX_BABIES_WAR caps the whole war, not only siege (audit of sw54)
 sw58  # BIG SWING: sw54 + kill finishing (FINISH_K 8, FINISH_FLOOR 100): sw56's change ported to the champion
 sw59  # BIG SWING: sw54 + trap-first (profile H2; sw09's BABY_TRAP_DIST2 40, RAT_TRAP_MIN_CHEESE 40, DEF_TRAP_DIST2 400) with the forward front H2 needed
+yl17  # sw54 + reserve 200: every spawn floor and KING_RESERVE 200 (from 300; replica 38282 lost 0-3 with banks of 150-300 under the floor and armies of 3-9)
