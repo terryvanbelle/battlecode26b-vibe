@@ -179,10 +179,13 @@ sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; no
 # yf6  (retired 11-22 20:58: AMMO 80/5 defence, -93 vs yf2 on 67 g, 2 SE)
 # yf7  (retired 11-22 21:58: KING_FRONT 40 on ye4, -13 vs yf2 on 216 g)
 sw36
-sw37
+# sw37  (retired 11-22 22:18: sw30 pair + yf2 + WAR_FLOOR 450 on ye4, -3 vs yf2 on 227 g; sw38/sw39 carry it)
 sw38
 yg1
-yg2
+# yg2  (retired 11-22 22:18: DEFEND_D2 400, -85 vs yf2 on 122 g, 2.6 SE)
 yg3
-yg4
+# yg4  (retired 11-22 22:18: spawn away from besiegers (code), -149 vs yf2 on 52 g, 3 SE)
 sw39
+yg5
+yg6
+sw40
