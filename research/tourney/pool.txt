@@ -171,10 +171,10 @@ sw30
 yf2
 # sw32  (retired 11-22 20:17: guard posture GUARD_DIST2 25 + AMMO_D2 13, -26 vs ye4 on 262 g)
 # yf3  (retired 11-22 20:58: WAR_FLOOR 450, -21 vs yf2 on 340 g)
-yf4
+# yf4  (retired 11-22 21:17: INCOME_TRUST 60, -16 vs yf2 on 418 g; sw36 carries it)
 # sw33  (retired 11-22 20:17: AUSTERE_CORE 12, -17 vs ye4 on 219 g)
 # yf5  (retired 11-22 20:38: control clone of ye4, -34 on 253 g, 1.5 SE: no tournament bias found)
-sw34
+# sw34  (retired 11-22 21:17: AUSTERE_FROM 0 on ye4, -19 vs yf2 on 351 g; yg1 carries it on yf2)
 sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; not retired by the usual rule
 # yf6  (retired 11-22 20:58: AMMO 80/5 defence, -93 vs yf2 on 67 g, 2 SE)
 yf7
@@ -182,3 +182,5 @@ sw36
 sw37
 sw38
 yg1
+yg2
+yg3
