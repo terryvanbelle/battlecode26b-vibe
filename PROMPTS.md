@@ -264,3 +264,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (11:51) Do you not already have their win record vs. AlexT101_usqualsbot?
 (12:45) That scatterplot gave better results than I was hoping for.  The last time we looked at this, we got a small negative correlation.  I think it's worth firming up the game count to get a more accurate picture
 (13:24) If you need to tweak the replica's hourly game limits a bit to squeeze in a few more games for the scatter plot, then you have my permission to do so
+(14:04) Please put the scatterplot in the progress/ directory
