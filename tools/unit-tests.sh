@@ -29,7 +29,8 @@ for t in "$REPO"/test/ratbot/*.java; do
     if [ "$BOT" != ratbot ] && [ -f "$o" ]; then TESTS+=("$o"); else TESTS+=("$t"); fi
 done
 if [ "$BOT" != ratbot ] && [ -d "$REPO/test/$BOT" ]; then
-    for t in "$REPO"/test/"$BOT"/*.java; do [ -f "$REPO/test/ratbot/$(basename "$t")" ] || TESTS+=("$t"); done
+    # an empty test/BOT (its tests moved to test/ratbot at a crowning) leaves the glob unexpanded: skip it
+    for t in "$REPO"/test/"$BOT"/*.java; do [ -f "$t" ] || continue; [ -f "$REPO/test/ratbot/$(basename "$t")" ] || TESTS+=("$t"); done
 fi
 "$JDK/bin/javac" -nowarn --release 21 -proc:none -d "$OUT/classes" -cp "$ENGINE" "$SRC"/*.java "${TESTS[@]}"
 echo "unit-tests: bots/$BOT"

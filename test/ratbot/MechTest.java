@@ -240,7 +240,10 @@ public class MechTest {
                 reset(); W = 30; H = 30; install(); at(400);
                 Sym.mask = Sym.ROT; G.coop = false;
                 Baby.home = p(3, 3); Baby.role = role == 0 ? Baby.FIGHT : Baby.GATHER; Baby.postMargin = Cfg.FIGHT_POST;
-                Baby.myMineCount = 0; Baby.mineShift = 0; Baby.slot = s;
+                // slot bits 12-13 = 3: no raider (Cfg.RAID_SHARE, sw53 champion 11-23). With slot = s (bits 0) every
+                // rat here raided under RAID_SHARE 2 and took the enemy twin of its mine, on purpose: RaidTest covers
+                // raiders. s | 3 << 12 keeps the picks (12288 is a multiple of 2 and 3)
+                Baby.myMineCount = 0; Baby.mineShift = 0; Baby.slot = s | 3 << 12;
                 Comms.numMines = 0;
                 for (MapLocation m : new MapLocation[] {back, p(12, 12), p(14, 10)}) Comms.mines[Comms.numMines++] = m;
                 MapLocation pick = Baby.pickMine();
@@ -248,7 +251,8 @@ public class MechTest {
             }
         }
         check(!fight.contains(back) && fight.size() == 2, "fight post: fighters at war take only the contested home mines " + fight);
-        check(gather.contains(back), "fight post: gatherers spread over every mine " + gather);
+        // RAID_SHARE 4 (sw55) leaves no slot that does not raid: every gatherer at war takes a twin, so skip
+        if (RaidTest.share() < 4) check(gather.contains(back), "fight post: gatherers spread over every mine " + gather);
         Comms.numMines = 0;
     }
 

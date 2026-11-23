@@ -4,12 +4,18 @@ import battlecode.common.*;
 
 import static ratbot.BotTest.*;
 
-/** yl7 = yk1 + Cfg.FWD_TRAP: a rat trap laid from the enemy half skips the KING_RESERVE and austerity gates
- *  (`bash tools/unit-tests.sh yl7`; move to test/ratbot/ if yl7 is crowned). */
+/** Cfg.FWD_TRAP (sw53, champion 11-23; first in sw51, rated alone as yl7): a rat trap laid from the enemy half skips
+ *  the KING_RESERVE and austerity gates. Moved from test/yl7 at sw53's crowning; the switch is read by reflection so
+ *  that bots without it (yk1 line) run the suite with FWD_TRAP off: the gate holds on both halves. */
 public class FwdTrapTest {
     static MapLocation p(int x, int y) { return new MapLocation(x, y); }
 
+    static boolean fwd() {
+        try { return Cfg.class.getField("FWD_TRAP").getBoolean(null); } catch (ReflectiveOperationException e) { return false; }
+    }
+
     public static void main(String[] args) throws Exception {
+        boolean fwd = fwd();
         int reserve = Math.min(Cfg.KING_RESERVE, 2 * (2000 - 300)) + 20;
         boolean[][] laid = new boolean[2][2];
         for (int budget = 0; budget < 2; budget++)
@@ -25,9 +31,9 @@ public class FwdTrapTest {
                 laid[budget][side] = Baby.tryRatTrap();
             }
         check(!laid[1][0], "FWD_TRAP: below the reserve, no trap from the home half (the gate holds)");
-        check(laid[1][1] == Cfg.FWD_TRAP, "FWD_TRAP: below the reserve, a trap from the enemy half skips the gate");
+        check(laid[1][1] == fwd, "FWD_TRAP: below the reserve, a trap from the enemy half skips the gate");
         check(laid[0][0] == !(Cfg.AUSTERE_FROM > 0), "FWD_TRAP: austere, no trap from the home half (the gate holds)");
-        check(laid[0][1] == Cfg.FWD_TRAP, "FWD_TRAP: austere, a trap from the enemy half skips the gate");
+        check(laid[0][1] == (fwd || !(Cfg.AUSTERE_FROM > 0)), "FWD_TRAP: austere, a trap from the enemy half skips the gate");
         Comms.numKings = 0; Baby.nearestEnemy = null;
         System.out.println("FwdTrapTest: " + (checks - fails) + "/" + checks + " passed");
         System.exit(fails == 0 ? 0 : 1);

@@ -217,7 +217,7 @@
 # yj7  (retired 11-23 05:18: TRAP_SURPLUS 50, -18 vs yh6 on 207 g)
 # yj8  (retired 11-23 05:38: KING_BITE_FLOOR 200, -18 vs yh6 on 230 g)
 # yj9  (retired 11-23 05:58: RUSH_TO 12, -58 vs yh6 on 234 g)
-yk1
+yk1  # former champion (11-23 06:36 to 09:14 PDT)
 # sw48 (retired 11-23 07:20 PDT: sparring premise wrong: plays the champion's game with more bodies; research/field/sparring-gap)
 # yk2  (retired 11-23 06:45: KING_BITE_FLOOR 100 on yh6, -1 vs yh6 on 137 g)
 # yk3  (retired 11-23 06:18: KING_BITE_MAX 200, -75 vs yh6 on 104 g, 2.1 SE)
@@ -231,12 +231,14 @@ yl1
 # yl2  (retired 11-23 08:13 PDT: RICH_BANK 500 on yk1, -34 vs yk1 on 157 g, past one combined SE (31); yl1 keeps the RICH_BANK line)
 # yl3  (retired 11-23 08:13 PDT: FORM_FROM 50 on yk1, -37 vs yk1 on 157 g, past one combined SE (31))
 # yl4 (retired 11-23 08:57 PDT: -16 vs yk1 on 344 g, no path to the +22 it needs; the yk1 audit found the FIGHT_POST filter nearly inert in yk1, so FIGHT_POST 8 vs 10 barely changes play; room for big swing sw55)
-sw50
+# sw50 (retired 11-23 09:33 PDT: -50 vs sw53 on 396 g, 2 SE; its bank on bodies goes on in sw54, built on sw53)
 sw52  # sparring: siege imitation, sw35 fixed (exempt from retirement)
 sw53  # CHAMPION 11-23 09:14 PDT (the sparring partner crowned: yk1 + raiders RAID_SHARE 2 + forward traps FWD_TRAP)
-yl5  # audit fixes on yk1 (research/audit/2026-11-23-yk1.md)
+# yl5 (retired 11-23 09:33 PDT: -149 vs sw53 on 120 g, about 4 SE, before 200 games; the audit bundle's diagnosis goes on in runs/sp005)
 # yl6 (retired 11-23 08:51 PDT: 17-38, -144 vs yk1 on 55 g; it differs from yl5 only by WAR_GATHER 1, so yl5 alone carries the audit bundle while runs/sp005 finds the fix that loses)
 yl7  # yk1 + FWD_TRAP (sw53's forward traps alone, raiders off)
 yl11  # yk1 + sw53's raiders alone (RAID_SHARE 2, FWD_TRAP off)
 sw54  # BIG SWING: sw53's raiders + forward traps with sw50's bank on bodies
 sw55  # BIG SWING: all forward at war (RAID_SHARE 4 + forward traps)
+yl12  # sw53 + RAID_POST 10: raiders take the twins of contested home mines (audit of sw53)
+sw56  # BIG SWING: sw53 + kill finishing (FINISH_K 8, FINISH_FLOOR 100), raiders near the enemy king
