@@ -1363,7 +1363,7 @@ yi2,2026-11-23,yh3,"INCOME_WINDOW 150 (from 100): a longer, steadier income aver
 yi4,2026-11-23,yh3,"CHEESE_BITE_SURPLUS 300 (from 600; never tried): babies bite with cheese at half the projected surplus, so more damage to besiegers and kings (yi3 LOW_BABIES 10 withdrawn before play: tried 3 times in the tournament already, xu8/xw0/xz9)","RETIRED 11-23 02:18 PDT: +7 vs yh3 on 154 g; rebuilt on yh6 as yj2"
 yi5,2026-11-23,yh3,"INCOME_WINDOW 200 (from 100): further along yi2 (150: +65 on 58; 60: -55)","RETIRED 11-23 02:18 PDT: +34 vs yh3 on 34 g; rebuilt on yh6 as yj1"
 yi6,2026-11-23,yh3,"INCOME_TRUST 20 (from 50): further along the trust line (40: +12 on 320, 30: +48 on 173)","RETIRED 11-23 02:18 PDT: -144 vs yh6 on 40 g (2.4 SE): trust 20 overshoots; 30 is the best tried"
-sw45,2026-11-23,yh3,"BIG SWING stack of the two leaders on yh3: yh6 INCOME_TRUST 30 (+48 on 173) + yi2 INCOME_WINDOW 150 (+38 on 102)",tournament newcomer 01:58 PDT
+sw45,2026-11-23,yh3,"BIG SWING stack of the two leaders on yh3: yh6 INCOME_TRUST 30 (+48 on 173) + yi2 INCOME_WINDOW 150 (+38 on 102)","RETIRED 11-23 03:18 PDT: -44 vs yh6 on 218 g: the 150-round income window does not add on trust 30"
 yj1,2026-11-23,yh6,"INCOME_WINDOW 200 (yi5 rebuilt on yh6)",tournament newcomer 02:18 PDT
 yj2,2026-11-23,yh6,"CHEESE_BITE_SURPLUS 300 (yi4 rebuilt on yh6)",tournament newcomer 02:18 PDT
 yj3,2026-11-23,yh6,"INCOME_TRUST 25 (from 30): between the best (30) and an overshoot (20 at -144)",tournament newcomer 02:18 PDT
@@ -1371,3 +1371,4 @@ sw46,2026-11-23,yh6,"BIG SWING RUSH_TO 20 (from 16): 16 rushers instead of 12 in
 yj4,2026-11-23,yh6,"TRAP_SURPLUS 100 (from 200; tried once before): babies place cat traps on half the projected surplus",tournament newcomer 02:38 PDT
 yj5,2026-11-23,yh6,"END_CAT 1300 (from 1400): the cat-endgame dose line (1850 -> 1600 -> 1400 each took the title; 1200 lost): bracket between",tournament newcomer 02:38 PDT
 sw47,2026-11-23,yh6,"BIG SWING aggressive kill finishing: FINISH_K 8, FINISH_FLOOR 100 (from 5, 200): a baby pays up to 64 cheese above a 100 bank to bite for a kill (top-profile: top teams finish kings early; our rushers reach the king but do not finish it)",tournament newcomer 02:58 PDT
+yj6,2026-11-23,yh6,"DIG_RESERVE 200 (from 300; ya4 tried it on ya0 with no recorded result): digs may spend down to 200 per king",tournament newcomer 03:18 PDT
