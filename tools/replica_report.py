@@ -113,7 +113,8 @@ def charts(teams, hist, subs, out, marks=(), now=None, refs=None):
 
 
 def rating_chart(hist, out, marks=(), now=None, refs=None):
-    """Two panels on wall-clock axes: our displayed rating over the whole history, and since RECENT_FROM."""
+    """Three panels on wall-clock axes: our displayed rating over the whole history, the same since RECENT_FROM, and
+    (owner 11-22) our rating minus the rating held in each REF_PLACES place since RECENT_FROM (place_gaps)."""
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -122,8 +123,8 @@ def rating_chart(hist, out, marks=(), now=None, refs=None):
         return
     now = now or hist[-1][0]
     t0 = RECENT_FROM
-    fig, axs = plt.subplots(2, 1, figsize=(10, 7))
-    for k_, ax in enumerate(axs):
+    fig, axs = plt.subplots(3, 1, figsize=(10, 10), gridspec_kw={'height_ratios': (1, 1, 0.8)})
+    for k_, ax in enumerate(axs[:2]):
         hh = hist if k_ == 0 else [x for x in hist if x[0] >= t0]
         if k_ == 1:   # carry the rating held at the window start, and hold the last one to now
             before = [x for x in hist if x[0] < t0]
@@ -151,10 +152,25 @@ def rating_chart(hist, out, marks=(), now=None, refs=None):
         if k_ == 0:   # the lower panel is labeled by the #k tags at its right edge
             ax.legend(loc='lower right', fontsize=8)
         ax.grid(color='#e9ecef')
-    axs[1].set_xlabel('time (PDT)')
+    ax = axs[2]
+    gaps = place_gaps(hist, refs or {}, t0)
+    for (k, gg), (c, ls) in zip(sorted(gaps.items()), (('#495057', '-'), ('#868e96', '--'), ('#868e96', ':'))):
+        if gg:
+            ax.step([w for w, _ in gg], [g for _, g in gg], where='post', color=c, lw=1.3, ls=ls, label=f'us minus #{k}')
+            ax.annotate(f'{gg[-1][1]:+.0f} vs #{k}', gg[-1], xytext=(4, -3), textcoords='offset points', fontsize=7,
+                        color='#212529')
+    ax.axhline(0, color='#2a6fdb', lw=1)
+    ax.set_xlim(t0, now + dt.timedelta(minutes=20))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M\n%m-%d', tz=PDT))
+    ax.set_title(f'our rating minus the rating in ladder places {", ".join(f"#{k}" for k in REF_PLACES)} '
+                 f'(above 0: we are rated above that place), since {RECENT_FROM:%m-%d %H:%M} PDT', fontsize=9)
+    ax.set_ylabel('rating difference')
+    ax.legend(loc='lower left', fontsize=8)
+    ax.grid(color='#e9ecef')
+    axs[2].set_xlabel('time (PDT)')
     if marks:
         fig.text(0.01, 0.005, 'Milestones: ' + MS.footnote(marks), fontsize=7, color=MS.COLOR, va='bottom', wrap=True)
-        fig.tight_layout(rect=(0, 0.05, 1, 1))
+        fig.tight_layout(rect=(0, 0.04, 1, 1))
     else:
         fig.tight_layout()
     fig.savefig(os.path.join(out, 'rating-history.png'), dpi=110)
@@ -188,6 +204,18 @@ def place_ratings(others, hist, places=REF_PLACES, step_min=15, now=None):
             if len(cur) >= k:
                 out[k].append((t, cur[k - 1]))
         t += dt.timedelta(minutes=step_min)
+    return out
+
+
+def place_gaps(hist, refs, t0=None):
+    """{k: [(time, our rating - place k's rating)]} at the times of refs[k] (place_ratings' grid) from t0 on, our
+    rating being the last one we held at that time (none before our first rated match)."""
+    import bisect
+    ws = [w for w, _ in hist]
+    out = {}
+    for k, rr in refs.items():
+        out[k] = [(w, hist[i - 1][1] - r) for w, r in rr if (t0 is None or w >= t0)
+                  for i in [bisect.bisect_right(ws, w)] if i]
     return out
 
 

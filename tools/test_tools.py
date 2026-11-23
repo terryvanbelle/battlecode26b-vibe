@@ -270,6 +270,9 @@ hm = rp.history_md(hist, [{'id': 5, 'package': 'p', 'accepted': True, 'created':
 check('| #5 | p | 2026-10-28 04:00 | yes | 900 | 1 |' in hm and 'latest rating 1,000' in hm, "replica history md")
 hm2 = rp.history_md(hist, [], now, [(mst.parse('2026-10-28 06:38'), 'effort switch')])
 check('- M1 2026-10-28 06:38 PDT: effort switch' in hm2 and 'Milestones' not in hm, "replica history md milestones")
+t9, t11, t13 = (rp.ts(f'2026-10-28T{h}:00:00+00:00') for h in ('09', '11', '13'))
+pg = rp.place_gaps(hist, {10: [(t9, 950.0), (t11, 950.0), (t13, 980.0)]}, t11)
+check(pg == {10: [(t11, -50.0), (t13, 20.0)]}, f"place gaps: our held rating minus place k, from t0, none before us {pg}")
 # milestones: add/read round trip, placement between time-ordered items, drawn on progress.png and rating-history.png
 mst = load('milestones')
 with tempfile.TemporaryDirectory() as d:
