@@ -209,6 +209,7 @@ sw45
 yj1
 yj2
 yj3
-sw46
+# sw46  (retired 11-23 02:58: RUSH_TO 20, -89 vs yh6 on 93 g, 2.3 SE)
 yj4
 yj5
+sw47
