@@ -62,3 +62,4 @@
 | sw47 | FINISH_K 8 + FINISH_FLOOR 100 on yh6 (babies pay more cheese to finish kills) | yh6 |
 | sw48 | SPARRING: MAX_BABIES 24/24 on yh6 (imitates the replica opponents' 20-30 rat armies) | yh6 |
 | sw49 | spend the bank on bodies: RICH_BANK 600, MAX_BABIES_WAR 20, CORE_BABIES 20, KING_RESERVE 300 on yh6 | yh6 |
+| sw50 | sw49 on yk1: RICH_BANK 600, MAX_BABIES_WAR 20, CORE_BABIES 20, KING_RESERVE 300 | yk1 |
