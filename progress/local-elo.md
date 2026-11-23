@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 40115 games in one fit as of 2026-11-23 01:37 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 40425 games in one fit as of 2026-11-23 01:58 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -12,7 +12,7 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-21 13:27 | xt2 | MAX_BABIES 15 on xs2 | #434 | 1457 +- 9 | 1689 |
 | 2026-11-21 15:07 | xu2 | KING_THREAT_D2 30 on xt2 | #435 | 1458 +- 8 | 2042 |
 | 2026-11-21 17:50 | xw6 | THROW_HOLD 10 on xu2 | #436 | 1496 +- 9 | 1747 |
-| 2026-11-21 19:55 | xw9 | MAX_BABIES 16 on xw6 | #437 | 1502 +- 8 | 1872 |
+| 2026-11-21 19:55 | xw9 | MAX_BABIES 16 on xw6 | #437 | 1501 +- 8 | 1872 |
 | 2026-11-21 21:55 | xx9 | GRAB_THREAT 15 on xw9 | #438 | 1494 +- 9 | 1666 |
 | 2026-11-21 23:15 | xz2 | LOW_FLOOR 200 on xx9 | #439 | 1508 +- 10 | 1373 |
 | 2026-11-22 00:55 | ya0 | KING_RESERVE 400 on xz2 | #440 | 1526 +- 8 | 2087 |
@@ -22,7 +22,7 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-22 10:36 | sw08 | forward hold: FIGHT_POST 8 + WAR_GATHER 0 (big swing) on yb9 | #444 | 1545 +- 9 | 1424 |
 | 2026-11-22 12:56 | yd1 | FIGHT_POST 12 on sw08 | #445 | 1567 +- 10 | 1210 |
 | 2026-11-22 14:56 | sw19 | FIGHT_POST 12 + cat endgame END_CAT 1600 END_CAT_COOP 1200 (big swing) on sw08 | #446 | 1581 +- 10 | 1188 |
-| 2026-11-22 16:57 | ye4 | END_CAT 1400 on sw19 | #447 | 1586 +- 9 | 1488 |
-| 2026-11-22 20:56 | yf2 | DEFEND_D2 225 on ye4 | #448 | 1593 +- 11 | 1035 |
-| 2026-11-22 22:36 | sw38 | RUSH_UNTIL 200 + END_CAT_COOP 1000 on yf2 | #449 | 1594 +- 11 | 942 |
-| 2026-11-23 00:36 | yh3 | INCOME_TRUST 50 on sw38 | #450 | 1619 +- 16 | 483 |
+| 2026-11-22 16:57 | ye4 | END_CAT 1400 on sw19 | #447 | 1585 +- 9 | 1488 |
+| 2026-11-22 20:56 | yf2 | DEFEND_D2 225 on ye4 | #448 | 1592 +- 11 | 1035 |
+| 2026-11-22 22:36 | sw38 | RUSH_UNTIL 200 + END_CAT_COOP 1000 on yf2 | #449 | 1595 +- 11 | 944 |
+| 2026-11-23 00:36 | yh3 | INCOME_TRUST 50 on sw38 | #450 | 1626 +- 15 | 553 |
