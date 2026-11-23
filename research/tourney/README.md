@@ -52,3 +52,4 @@
 | sw38 | yf2 + RUSH_UNTIL 200 + END_CAT_COOP 1000 (sw30 on the new champion) | yf2 |
 | sw39 | yf2 + RUSH_UNTIL 200 + END_CAT_COOP 1000 + INCOME_TRUST 60 (sw38 + sw36 stacked) | yf2 |
 | sw40 | KING_RESERVE 250 on yf2 (spend down further for bodies) | yf2 |
+| sw41 | KING_RESERVE 250 on sw38 | sw38 |

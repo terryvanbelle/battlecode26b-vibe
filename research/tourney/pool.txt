@@ -168,7 +168,7 @@
 # sw30  (retired 11-22 21:38: RUSH_UNTIL 200 + END_CAT_COOP 1000 on ye4, -14 vs yf2 on 546 g; sw38 carries it on yf2)
 # yf1  (retired 11-22 19:25: DELIVER_AT 20 on ye4, -54 vs ye4 on 172 g)
 # sw31  (retired 11-22 18:15: full loads LOAD_AT 40 on ye4, -102 vs ye4 on 62 g, > 2 SE)
-yf2
+# yf2  (retired 11-22 22:38: ex-champion, -33 vs sw38 on 895 g)
 # sw32  (retired 11-22 20:17: guard posture GUARD_DIST2 25 + AMMO_D2 13, -26 vs ye4 on 262 g)
 # yf3  (retired 11-22 20:58: WAR_FLOOR 450, -21 vs yf2 on 340 g)
 # yf4  (retired 11-22 21:17: INCOME_TRUST 60, -16 vs yf2 on 418 g; sw36 carries it)
@@ -178,14 +178,18 @@ yf2
 sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; not retired by the usual rule
 # yf6  (retired 11-22 20:58: AMMO 80/5 defence, -93 vs yf2 on 67 g, 2 SE)
 # yf7  (retired 11-22 21:58: KING_FRONT 40 on ye4, -13 vs yf2 on 216 g)
-sw36
+# sw36  (retired 11-22 22:38: yf2 + INCOME_TRUST 60, -16 vs sw38 on 274 g; sw39 carries it on sw38)
 # sw37  (retired 11-22 22:18: sw30 pair + yf2 + WAR_FLOOR 450 on ye4, -3 vs yf2 on 227 g; sw38/sw39 carry it)
 sw38
-yg1
+# yg1  (retired 11-22 22:38: AUSTERE_FROM 0 on yf2, -70 vs sw38 on 228 g)
 # yg2  (retired 11-22 22:18: DEFEND_D2 400, -85 vs yf2 on 122 g, 2.6 SE)
 yg3
 # yg4  (retired 11-22 22:18: spawn away from besiegers (code), -149 vs yf2 on 52 g, 3 SE)
 sw39
-yg5
-yg6
-sw40
+# yg5  (retired 11-22 22:38: INCOME_TRUST 50 on yf2, 18 g; rebuilt on sw38 as yh3)
+# yg6  (retired 11-22 22:38: END_CAT_COOP 800 on yf2, 22 g; rebuilt on sw38 as yh1)
+# sw40  (retired 11-22 22:38: KING_RESERVE 250 on yf2, 22 g; rebuilt on sw38 as sw41)
+yh1
+yh2
+yh3
+sw41
