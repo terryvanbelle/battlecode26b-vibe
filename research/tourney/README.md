@@ -44,3 +44,4 @@
 | sw30 | ye5 + ye8 on ye4: rush ends r200, coop cat push r1000 | ye4 |
 | sw31 | full loads: gatherers go home only with 40 raw | ye4 |
 | sw32 | guard posture: face enemies within dist2 25, ammo distance 13 | ye4 |
+| sw33 | austerity core: a broke king keeps 12 core babies, not 18 | ye4 |
