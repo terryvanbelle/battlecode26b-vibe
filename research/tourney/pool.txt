@@ -220,8 +220,9 @@ yh6
 yk1
 sw48  # sparring (big army imitation, exempt from retirement)
 yk2
-yk3
+# yk3  (retired 11-23 06:18: KING_BITE_MAX 200, -75 vs yh6 on 104 g, 2.1 SE)
 yk4
 yk5
 yk6
 yk7
+yk8
