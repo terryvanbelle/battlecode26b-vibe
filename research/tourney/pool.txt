@@ -183,7 +183,7 @@ sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; no
 sw38
 # yg1  (retired 11-22 22:38: AUSTERE_FROM 0 on yf2, -70 vs sw38 on 228 g)
 # yg2  (retired 11-22 22:18: DEFEND_D2 400, -85 vs yf2 on 122 g, 2.6 SE)
-yg3
+# yg3  (retired 11-22 22:58: KING_THREAT_D2 50 on yf2, -18 vs sw38 on 226 g)
 # yg4  (retired 11-22 22:18: spawn away from besiegers (code), -149 vs yf2 on 52 g, 3 SE)
 sw39
 # yg5  (retired 11-22 22:38: INCOME_TRUST 50 on yf2, 18 g; rebuilt on sw38 as yh3)
@@ -193,3 +193,5 @@ yh1
 yh2
 yh3
 sw41
+yh4
+sw42
