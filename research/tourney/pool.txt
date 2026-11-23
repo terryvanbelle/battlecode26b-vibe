@@ -177,3 +177,5 @@ yf5
 sw34
 sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; not retired by the usual rule
 yf6
+yf7
+sw36

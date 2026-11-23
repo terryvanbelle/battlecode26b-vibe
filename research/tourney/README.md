@@ -47,3 +47,4 @@
 | sw33 | austerity core: a broke king keeps 12 core babies, not 18 | ye4 |
 | sw34 | ablation: austerity off | ye4 |
 | sw35 | SPARRING: imitation of the opponents' grab-and-throw siege (rush all game, carry to the king); exempt from retirement | ye4 |
+| sw36 | combination: yf2 DEFEND_D2 225 + yf4 INCOME_TRUST 60 | ye4 |
