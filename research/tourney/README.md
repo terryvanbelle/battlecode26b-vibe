@@ -7,6 +7,7 @@
 ## Candidate names (owner 11-22)
 
 - **yNN** (yb9, yc2, yc3, yc4 ...): incremental candidates, one change on the champion.
+- **sparring** (sw35, sw48): imitations of a tactic replica opponents beat us with (owner 11-22); kept in the pool, exempt from retirement, so defences get rated against them.
 - **swNN** (sw01, sw02 ...): big swings, a coherent strategy change on the champion (a bundle of settings or a new
   mechanism). High-risk by design: a losing swing gets a second version before its strategy is dropped.
 
@@ -60,3 +61,4 @@
 | sw46 | RUSH_TO 20 on yh6 (16 opening rushers, not 12) | yh6 |
 | sw47 | FINISH_K 8 + FINISH_FLOOR 100 on yh6 (babies pay more cheese to finish kills) | yh6 |
 | sw48 | SPARRING: MAX_BABIES 24/24 on yh6 (imitates the replica opponents' 20-30 rat armies) | yh6 |
+| sw49 | spend the bank on bodies: RICH_BANK 600, MAX_BABIES_WAR 20, CORE_BABIES 20, KING_RESERVE 300 on yh6 | yh6 |

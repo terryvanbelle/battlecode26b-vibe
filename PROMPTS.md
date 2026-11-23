@@ -253,3 +253,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (19:03) Can you add another subgraph to rating-history.png?  I'd like to see our replica ELO minus the replica ELO's of the 10th, 15th, and 20th place bots
 (19:31) Please set the minimum ELO on the top panel of rating-history.png to 1400
 (06:31) Good morning!  What happened overnight?
+(06:35) What happened to our categories?  Yesterday we had "incremental" vs. "swing".  Now I see "small" vs. "sparring"
