@@ -7,7 +7,8 @@ Where a rule carries a number, it is the measured default (§8).
 **The method in one paragraph.** A continuous local tournament of our own builds, rated by Bradley-Terry, decides
 which build is the champion. Every new build is one change, or one coherent strategy, made on the champion. About half
 are small tunings and half are big swings. A build that clearly out-rates the champion replaces it. The new champion is
-submitted to the contest ladder at once, with no further gate. Field games on the ladder replica supply ideas and
+submitted to the contest ladder at once, with no further gate. It is then audited for bugs and test coverage, and its
+fixes compete as newcomers instead of being patched in. Field games on the ladder replica supply ideas and
 measure progress, but they never accept or reject a build. Local games are cheap, so the tournament can afford
 high-risk ideas: a failed swing costs a few hundred games and nothing else.
 
@@ -145,6 +146,7 @@ Do all of the following in the same turn:
 2. Record it in the champion file and the champion history (time, bot, base, change, submission id).
 3. Make the working bot a copy of it.
 4. Log the change, mark it accepted in the attempts table, and refresh and commit progress.
+5. Once the queue is full, audit it (§2.7).
 
 There is no ladder gate. Expect the ladder rating to dip sometimes: the valleys are part of reaching higher ground, and
 the tournament, not the ladder, judges the build.
@@ -155,6 +157,45 @@ the tournament, not the ladder, judges the build.
 - Retire earlier when a bot is more than about 2 SE below the champion and has 50 or more games: swings that collapse
   rarely recover. Keep a bot that is level with the champion while the pool has room.
 - Comment the bot out with its reason. A failed swing gets a second version before its strategy is dropped (§3.2).
+
+### 2.7 Auditing a new champion
+
+Audit every new champion in the cycle that crowns it, once the queue is full (§7.1), so the game machine never waits on
+the audit. The tournament rewards a build's net effect, so a winning change can carry a defect, and every later build
+inherits whatever the champion carries.
+
+1. **Bugs.** Read the champion's diff from the previous champion. Also read everything each changed line reaches: its
+   callers, and every constant it reads, inherited ones included. Look for:
+   - logic slips: guards in the wrong order, a missing role or phase check, a predicate that does not do what its
+     comment says;
+   - mirror slips: a choice that differs between the two seats on a symmetric map (§1.6);
+   - latent special values: a constant whose current value is safe, while another value (0, a negative, a value past
+     its range) misbehaves or means something undocumented;
+   - dead or misleading code: unreachable branches, a test written out twice, labels and comments that no longer fit.
+
+   Write one report per champion with these sections: active bugs, mirror check, latent values, misleading or dead
+   code, checked and kept (with the data that kept each item), tests, and fix newcomers.
+2. **Test compliance.** Move the champion's own unit tests into the shared suite. The whole suite must pass with the
+   working bot equal to the champion.
+   - Change a test only where the champion changed that behaviour on purpose, and say so in the report.
+   - A failing test is either a bug or a deliberate change. Decide which before touching it.
+3. **Coverage.** Every mechanism and constant the champion adds or changes gets a unit test, and the report lists what
+   is still untested.
+   - A test finds a new constant by name at run time. Older pool bots that lack it then still run the shared suite,
+     and skip that test.
+   - Tests honour special values, for example a cap of 0 meaning none.
+4. **Fixes enter the tournament as newcomers on the champion**, one fix per build or one bundle, and the tournament
+   decides. Never patch the champion directly, because a long-lived bug can be load-bearing.
+   - *What happened the first time:* the first audit found 9 active bugs, 6 mirror slips and 19 latent values. The
+     bundle of all those fixes rated 118 below the champion it fixed. Screens that split the bundle found no part that
+     won against that champion (43-48% head to head).
+   - *When a fix bundle loses:* split it, and screen the parts against the old champion before dropping any fix.
+   - *A fix that wins its screen* enters on the current champion as a newcomer of its own.
+5. **Behaviour-neutral cleanups take no tournament slot.** These are comments, labels, or a test written out twice.
+   They ride along in the next newcomer built on the champion, so the champion stays identical to its submission.
+
+This audit covers only what the crowning changed, and it takes about one cycle. The plateau's correctness audit (§6)
+covers the whole bot and the instruments.
 
 ## 3. Where candidates come from
 
@@ -247,16 +288,19 @@ A failed build condemns one implementation, not the idea.
 2. Pull every finished or partial run, and rank.
 3. On a new champion, crown it (§2.5).
 4. Keep at least 5 runs queued past the next cycle, and de-duplicate the queue.
-5. Retire bots and add newcomers to keep about 10 bots, half incremental and half swings.
-6. Check the champion's new ladder matches for ideas.
-7. Log, commit and push.
-8. Refresh the charts, and check the replica's disk.
-9. **Report**:
+5. After a crowning, audit the new champion (§2.7), and enter any fix as a newcomer.
+6. Retire bots and add newcomers to keep about 10 bots, half incremental and half swings.
+7. Check the champion's new ladder matches for ideas.
+8. Log, commit and push.
+9. Refresh the charts, and check the replica's disk.
+10. **Report**:
    - the tournament's size: games played, games added since the last cycle, active, retired and entered bots;
    - one table of the whole pool sorted by rating, the champion marked in place: each bot's kind, base, change,
      rating ± SE, games, lead over the champion, the lead it needs, and the games it still needs (no separate top-5
      table: it only repeated the head of this one);
    - what was retired or added since the last cycle, and why;
+   - after a crowning, the audit's outcome: bugs found, unit tests passing (N of N), coverage gaps left, and fix
+     newcomers entered;
    - ladder rank, rating and time;
    - replica disk and machine state.
 
@@ -290,7 +334,8 @@ All times are in the owner's zone.
 - **Training log**, append-only: every cycle's numbers, every newcomer and retirement, every owner directive.
 - **Attempts table**: one row per build, with base, change, motivation and fate (newcomer, retired with numbers, or
   accepted as champion).
-- **Champion history**, **pool file**, **swing table**, and the field-study write-ups.
+- **Champion history**, **pool file**, **swing table**, **audit reports** (one per champion), and the field-study
+  write-ups.
 - Records hold measurements, not stories, and nothing stale stays.
 
 ## 8. Defaults
@@ -306,6 +351,7 @@ All times are in the owner's zone.
 | run | 120 games, random map from the contest set, random seed in 0-9, random seats |
 | fit | Bradley-Terry, weak prior, at most 200 games per pair; retired bots' games kept |
 | retire | far below the champion after 200 or more games; or more than about 2 SE below after 50 or more; swings get a second version first |
+| new-champion audit | every crowning, in the same cycle once the queue is full: a bug audit of the diff and of everything it reaches; the shared unit suite passes on the champion; a test for every new mechanism and constant; fixes enter as newcomers (§2.7) |
 | queue | at least 5 runs queued past the next cycle |
 | cycle | about every 20 minutes: pull, rank, crown, queue, build, log, chart, report |
 | plateau | champion unchanged for 12 hours, or 10 straight newcomers below the champion: escalate (§6) |
