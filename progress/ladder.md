@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 02:21 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 02:25 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -20,10 +20,10 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 02:21 
 | 10 | daannte\_v52\_ThisGuy | 1833.5 | 1842-1779 | accepted |
 | 11 | thewaxmango\_PhD | 1831.8 | 1794-1716 | accepted |
 | 12 | TeamSPAARK\_SPAARK | 1822.7 | 1853-1711 | accepted |
-| 13 | quesswho\_bot16 | 1786.6 | 1807-1769 | accepted |
-| 14 | quesswho\_quals | 1785.0 | 1798-1637 | accepted |
+| 13 | quesswho\_quals | 1796.1 | 1798-1637 | accepted |
+| 14 | quesswho\_bot16 | 1786.6 | 1807-1769 | accepted |
 | 15 | daannte\_v47\_Skadoosh | 1782.8 | 1920-1800 | accepted |
-| 16 | AdamTan12\_Icarus | 1759.1 | 2987-3089 | accepted |
+| 16 | AdamTan12\_Icarus | 1748.0 | 2987-3089 | accepted |
 | 17 | AlexT101\_finalsbot | 1737.4 | 1748-1705 | accepted |
 | 18 | bman12345678\_goonv23 | 1735.2 | 2315-1880 | accepted |
 | 19 | thewaxmango\_collegejunior | 1734.0 | 2794-2660 | accepted |
@@ -35,30 +35,30 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 02:21 
 | 25 | HugoIngelsson\_Xzibit | 1650.5 | 2389-2927 | accepted |
 | 26 | outercloudstudio\_v\_1\_18 | 1553.5 | 1805-2236 | accepted |
 | 27 | spsquared\_TSPAARK\_QUALS | 1547.5 | 2344-3653 | accepted |
-| 28 | amcsz\_fighterrats | 1425.2 | 1809-2028 | accepted |
+| 28 | CS50Crab\_protoSaberV7 | 1424.5 | 1746-1746 | accepted |
 | 29 | CS50Crab\_rapierV1 | 1423.7 | 1861-2102 | accepted |
-| 30 | CS50Crab\_protoSaberV7 | 1420.3 | 1746-1746 | accepted |
+| 30 | amcsz\_fighterrats | 1421.1 | 1809-2028 | accepted |
 | 31 | PixelRifts\_mushakraj\_mk3 | 1400.7 | 1761-1863 | accepted |
 | 32 | XSercia\_genies | 1341.5 | 1801-1970 | accepted |
 | 33 | bc26vibe\_bot | 1339.9 | 1850-2191 | accepted |
-| 34 | C0derTang\_v6 | 1330.3 | 1754-1912 | accepted |
+| 34 | C0derTang\_v6 | 1332.6 | 1754-1912 | accepted |
 | 35 | justinottesen\_alfredo | 1329.2 | 1709-1786 | accepted |
 | 36 | ask8000\_bumchit67 | 1283.0 | 1823-1969 | accepted |
-| 37 | Gavdingo\_v1 | 1281.7 | 1774-1796 | accepted |
+| 37 | Gavdingo\_v1 | 1279.4 | 1774-1796 | accepted |
 | 38 | Naton-Cai\_ratplayer | 1266.2 | 1828-1871 | accepted |
 | 39 | vincentwang60\_javabot | 1264.3 | 1853-1909 | accepted |
 | 40 | bc26-example-copy | 1216.9 | 1718-1810 | accepted |
 | 41 | j2399\_weighted\_micro\_v9 | 1216.0 | 1801-1622 | accepted |
 | 42 | bc26-example | 1210.2 | 1734-1794 | accepted |
 | 43 | Camleaf\_mk1 | 1198.5 | 1738-1841 | accepted |
-| 44 | Victor-Ramirez-Garcia\_battleca | 1181.8 | 2116-1460 | accepted |
+| 44 | Victor-Ramirez-Garcia\_battleca | 1190.1 | 2116-1460 | accepted |
 | 45 | justinottesen\_carbonara | 1135.6 | 1804-1796 | accepted |
 | 46 | battlecode-archive\_result\_408 | 1099.7 | 1800-1764 | accepted |
-| 47 | GuzziFlipFlops\_Hermesv8 | 1073.6 | 1820-1867 | accepted |
-| 48 | quanticsoul4772\_ratbot | 1066.3 | 1994-1573 | accepted |
-| 49 | seru9\_TOTAL\_AGGRO | 951.5 | 1842-1767 | accepted |
-| 50 | anicolao\_myplayer | 714.3 | 1056-2010 | accepted |
-| 51 | j2399\_weighted\_path | 654.4 | 855-1680 | accepted |
+| 47 | quanticsoul4772\_ratbot | 1066.3 | 1994-1573 | accepted |
+| 48 | GuzziFlipFlops\_Hermesv8 | 1065.2 | 1820-1867 | accepted |
+| 49 | seru9\_TOTAL\_AGGRO | 955.2 | 1842-1767 | accepted |
+| 50 | anicolao\_myplayer | 716.2 | 1056-2010 | accepted |
+| 51 | j2399\_weighted\_path | 648.8 | 855-1680 | accepted |
 | 52 | Krak9n\_robot | 429.0 | 369-1749 | accepted |
 | 53 | StuxnetStudios\_skaven | 0.0 | 0-0 | none |
 | 54 | winkelmantanner\_genetic1 | 0.0 | 0-0 | none |
