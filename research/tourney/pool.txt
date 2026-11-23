@@ -198,9 +198,11 @@ yh3
 # sw43  (retired 11-23 01:38: KING_RESERVE 250 + INCOME_TRUST 50, -18 vs yh3 on 242 g)
 yh5
 yh6
-yh7
+# yh7  (retired 11-23 01:58: INCOME_WINDOW 60 (on sw38), -46 vs yh3 on 262 g)
 yi1
-sw44
+# sw44  (retired 11-23 01:58: CORE_BABIES 22, -6 vs yh3 on 231 g: no gain)
 yi2
 yi4
 yi5
+yi6
+sw45
