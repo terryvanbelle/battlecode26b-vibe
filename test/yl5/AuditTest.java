@@ -11,7 +11,8 @@ import static ratbot.BotTest.*;
  *
  * The latent fixes make each documented special value of a Cfg switch do what its doc says (yk1's values never use
  * them; sw35 did: RUSH_LIFE 0 gave it no rush). The active ones: FIGHT_POST filters a fighter's war mine to the
- * contested home-half mines whatever else the team knows; the spawn's babies estimate subtracts every formed king;
+ * contested home-half mines whatever else the team knows; WAR_GATHER 0 sends war gatherers at enemies in reach;
+ * the spawn's babies estimate subtracts every formed king; the coop endgame centre tile is mirrored;
  * the rescue bar counts the promotion; cat distances and the side frame are mirror-invariant; the throw dodge breaks
  * ties away from the carrier; TrapRisk allocates at the engine's price; a late scout seeks. Plain main; exit code 1
  * on failure. (Bite cheese: test/yl5/CheeseTest.java.)
@@ -284,6 +285,39 @@ public class AuditTest {
         Baby.scout = false; Sym.mask = Sym.ROT | Sym.HOR | Sym.VER;
     }
 
+
+    /** WAR_GATHER (active in yk1: 0 played as 1): a gatherer at war with an enemy rat 2 tiles off, which sees it. */
+    static void testWarGather() throws GameActionException {
+        boolean[] engaged = new boolean[2];
+        for (int wg = 0; wg <= 1; wg++) {
+            reset(); W = 30; H = 30; install();
+            me = p(10, 10); at(400); G.coop = false; health = 100;
+            Baby.role = Baby.GATHER; Baby.hunting = false; Baby.eKing = null; Baby.home = p(3, 3);
+            RobotInfo e = new RobotInfo(9, Team.B, UnitType.BABY_RAT, 100, p(12, 12), Direction.SOUTHWEST, 0, 0, null);
+            robots.put(e.location, e);
+            Baby.nearestEnemy = e;
+            Baby.warGather = wg;
+            engaged[wg] = Baby.war();
+        }
+        Baby.warGather = Cfg.WAR_GATHER; Baby.nearestEnemy = null;
+        check(engaged[0], "WAR_GATHER 0: a gatherer at war engages an enemy 2 tiles off (yk1: kept gathering)");
+        check(!engaged[1], "WAR_GATHER 1: a gatherer keeps gathering unless the enemy is adjacent");
+    }
+
+    /** The coop endgame cat target: twin homes get mirrored centre tiles, even and odd sides. */
+    static void testCentreTile() {
+        boolean ok = true;
+        for (int[] wh : new int[][] {{30, 24}, {31, 25}, {45, 35}}) {
+            reset(); W = wh[0]; H = wh[1]; install();
+            for (int s : new int[] {Sym.ROT, Sym.HOR, Sym.VER})
+                for (MapLocation h : new MapLocation[] {p(3, 4), p(W - 5, 2), p(7, H - 3)}) {
+                    MapLocation t = Baby.centreTile(h, G.cx2, G.cy2), u = Baby.centreTile(G.mirror(h, s), G.cx2, G.cy2);
+                    ok &= G.mirror(t, s).equals(u);
+                }
+        }
+        check(ok, "centreTile: twin homes get mirrored centre tiles on even and odd sides (yk1: (cx2/2, cy2/2) for both)");
+    }
+
     public static void main(String[] args) throws Exception {
         testRushSwitches();
         testBreakRound();
@@ -306,6 +340,8 @@ public class AuditTest {
         testTrapRiskAlloc();
         testFeedOff();
         testLateScoutSeeks();
+        testWarGather();
+        testCentreTile();
         System.out.println("AuditTest: " + (checks - fails) + "/" + checks + " passed");
         System.exit(fails == 0 ? 0 : 1);
     }
