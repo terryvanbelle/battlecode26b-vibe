@@ -195,7 +195,7 @@ yh3
 # sw41  (retired 11-23 00:38: KING_RESERVE 250 on sw38, -42 vs yh3 on 267 g; sw43 = yh3 + KING_RESERVE 250 carries it)
 # yh4  (retired 11-22 23:38: SPAWN_MARGIN 50, -136 vs sw38 on 51 g, 2.6 SE)
 # sw42  (retired 11-23 00:38: CORE_SMALL 16 on sw38, -11 vs sw38 on 194 g)
-sw43
+# sw43  (retired 11-23 01:38: KING_RESERVE 250 + INCOME_TRUST 50, -18 vs yh3 on 242 g)
 yh5
 yh6
 yh7
@@ -203,3 +203,4 @@ yi1
 sw44
 yi2
 yi4
+yi5
