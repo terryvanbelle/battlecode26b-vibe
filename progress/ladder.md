@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 09:48 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 09:54 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -14,18 +14,18 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 09:48 
 | 4 | awu7\_awubot\_quals | 1981.5 | 1846-1781 | accepted |
 | 5 | uravt\_Version35 | 1980.3 | 2023-2021 | accepted |
 | 6 | nzjt\_TheComplexMerlin | 1896.1 | 3199-2192 | accepted |
-| 7 | abcdezyxwv\_bestsofar | 1864.5 | 2262-1926 | accepted |
-| 8 | nubbbbbb\_testplayer | 1862.8 | 1795-1703 | accepted |
-| 9 | battlecode-archive\_testplayer | 1859.7 | 1860-1788 | accepted |
+| 7 | nubbbbbb\_testplayer | 1866.7 | 1795-1703 | accepted |
+| 8 | abcdezyxwv\_bestsofar | 1864.5 | 2262-1926 | accepted |
+| 9 | battlecode-archive\_testplayer | 1855.9 | 1860-1788 | accepted |
 | 10 | daannte\_v52\_ThisGuy | 1846.2 | 1878-1812 | accepted |
 | 11 | TeamSPAARK\_SPAARK | 1845.0 | 1890-1740 | accepted |
-| 12 | quesswho\_bot16 | 1813.0 | 1858-1811 | accepted |
-| 13 | thewaxmango\_PhD | 1808.3 | 1828-1757 | accepted |
-| 14 | quesswho\_quals | 1807.7 | 1839-1674 | accepted |
-| 15 | daannte\_v47\_Skadoosh | 1803.5 | 1958-1834 | accepted |
-| 16 | AlexT101\_finalsbot | 1748.4 | 1786-1745 | accepted |
+| 12 | quesswho\_bot16 | 1828.3 | 1858-1811 | accepted |
+| 13 | thewaxmango\_PhD | 1812.2 | 1828-1757 | accepted |
+| 14 | daannte\_v47\_Skadoosh | 1801.4 | 1958-1834 | accepted |
+| 15 | quesswho\_quals | 1794.8 | 1839-1674 | accepted |
+| 16 | AlexT101\_finalsbot | 1745.9 | 1786-1745 | accepted |
 | 17 | AdamTan12\_Finals | 1739.2 | 3107-2827 | accepted |
-| 18 | bman12345678\_goonv23 | 1738.0 | 2356-1920 | accepted |
+| 18 | bman12345678\_goonv23 | 1736.2 | 2356-1920 | accepted |
 | 19 | **vibe26b** | 1733.0 | 12760-11777 | accepted |
 | 20 | AlexT101\_usqualsbot | 1725.5 | 2816-2102 | accepted |
 | 21 | thewaxmango\_collegejunior | 1725.0 | 2843-2713 | accepted |
@@ -57,8 +57,8 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 09:48 
 | 47 | GuzziFlipFlops\_Hermesv8 | 1074.9 | 1870-1913 | accepted |
 | 48 | quanticsoul4772\_ratbot | 1073.5 | 2041-1610 | accepted |
 | 49 | seru9\_TOTAL\_AGGRO | 938.8 | 1881-1794 | accepted |
-| 50 | anicolao\_myplayer | 705.8 | 1076-2047 | accepted |
+| 50 | anicolao\_myplayer | 709.7 | 1076-2047 | accepted |
 | 51 | j2399\_weighted\_path | 632.9 | 865-1712 | accepted |
-| 52 | Krak9n\_robot | 416.4 | 373-1775 | accepted |
+| 52 | Krak9n\_robot | 412.6 | 373-1775 | accepted |
 | 53 | StuxnetStudios\_skaven | 0.0 | 0-0 | none |
 | 54 | winkelmantanner\_genetic1 | 0.0 | 0-0 | none |
