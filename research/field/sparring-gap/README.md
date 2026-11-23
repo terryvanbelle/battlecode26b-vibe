@@ -94,6 +94,25 @@ our king.
   * **forward traps** (FWD_TRAP): a rat trap laid from the enemy half skips the KING_RESERVE and austerity gates.
 * Retired: sw35 (broken) and sw48 (premise wrong; plays like the champion).
 
+## Check of the rebuilt partners (runs/sp003 and sp004, 14 games each against yk1, both seats; 11-23 08:30 PDT)
+
+Each cell is the sparring bot's value / yk1's, per game in the window (`windows-local-sw52.txt`, `windows-local-sw53.txt`).
+
+| bot | result | window | forward rat-turns | rat-turns near the enemy king | traps | forward traps | king bites |
+|---|---|---|---|---|---|---|---|
+| sw52 | 6-8 | r201-400 | 20% / 11% | 146 / 20 | 6.4 / 9.5 | 3.1 / 3.8 | 1.3 / 1.9 |
+| sw52 | | r401-800 | 16% / 10% | 298 / 9 | 12.8 / 16.6 | 7.2 / 6.4 | 4.2 / 1.4 |
+| sw53 | 11-3 | r201-400 | 14% / 11% | 29 / 0.3 | 8.4 / 9.6 | 5.1 / 3.9 | 0.8 / 0.0 |
+| sw53 | | r401-800 | 13% / 11% | 35 / 25 | 19.9 / 16.5 | 11.4 / 6.9 | 0.9 / 0.6 |
+| sw53 | | r801-2000 | 13% / 9% | 28 / 11 | 36.0 / 32.2 | 24.8 / 9.8 | 1.1 / 0.7 |
+
+* **sw52 now sieges.** Its rushers sit at the enemy king from r200 (15-30 times yk1's presence there) and bite it three
+  times as often in r401-800. The sw35 bug is gone. It still loses: 6-8 here, -115 vs yk1 in the tournament.
+* **sw53 lays forward traps but barely holds ground.** It lays 1.6-2.5 times yk1's traps in the enemy half from r400,
+  but is forward only 13-14% of rat-turns against the replica winners' 25-28%. It beats yk1 11-3 here and leads it
+  by +28 in the tournament. The trap half of the imitation matters more than the raid half, so FWD_TRAP (a rat trap
+  laid from the enemy half skips the reserve and austerity gates) is the first candidate for the champion line.
+
 ## Files
 
 * `scripts/rep.py`, `scripts/loc.py`, `scripts/cmp.py`: per-game totals, replica vs local (`summary-compare.txt`).
