@@ -125,6 +125,47 @@ King damage per game, by cause:
   baby's guard facing counts the ones it cannot see.
 - **yl23, SIEGE_FLOOR 100:** every spawn floor drops to 100 while enemies are in the king's sight at war.
 
+## How our babies die, and the throws (11-23 16:40 PDT)
+
+These are yl19's 15 replica games since its submission #474 at 14:04 (5 matches, 8 won, 7 lost). The scripts are
+`grabs_both.py` (grabs in both directions) and `throws.py` (how each side's throws end), run on the downloaded
+replays.
+
+**Deaths.** Our babies die mostly by **throwLand**: grabbed, thrown, and killed by the landing.
+
+| first 300 rounds | our babies killed by their throws | theirs killed by ours |
+|---|---|---|
+| per lost game | 17-45 | 8-28 |
+
+The two goonv23 losses were rushes. On dirtfulcat (r156) and thunderdome (r141) our 15-19 babies fell to 4 by
+r95-r105 while they kept 8-12. Rat traps were about even between the sides (30-38 laid by each in 100 rounds).
+
+**Grabs and throws, 7 lost games (8 won games in brackets):**
+
+| | they grab ours | we grab theirs |
+|---|---|---|
+| grabs | 1,413 (1,489) | 979 (1,360) |
+| from behind the victim's cone | 65% (64%) | 62% (68%) |
+| victim mean health | 52 (53) | 55 (53) |
+| grabbed rats that die on landing | 55% (44%) | 38% (33%) |
+| throws | 1,161 (1,073) | 690 (1,036) |
+| throws that hit something the round they are thrown | 36% (38%) | 14% (17%) |
+
+- *Same victims, different throws.* The victims' health is the same on both sides. The enemy's throws hit something
+  at once (42 damage at tile 2, the engine's hitTarget) 2.3 times as often as ours.
+- *Why ours wait.* Our carriers hold their captive for up to THROW_HOLD 10 rounds for a robot hit worth THROW_MIN
+  84. That doctrine won locally against every shorter hold and lower minimum (THROW_HOLD 3-14, THROW_MIN 60-120,
+  sw22), so it stays.
+- *The newcomer.* yl24 (THROW_KILL 84) ends the hold only when a flight kills the captive, as a point-blank wall
+  does to a rat at 42 health or less.
+
+**Mechanism checks (6 local games each vs yl19: evileye, DefaultSmall and starvation, seeds 1-2, the candidate as
+team A).**
+- *sw61 king's eyes:* no measurable effect. Grabs near our king came from behind 57% of the time with and without the
+  eyes (39 and 41 per 1,000 rounds), and our own rats thrown into our king did 356 damage a game against yl19's 348.
+  sw62 played the same six games as sw61.
+- *yl24:* won 4 of 6 (the yl19 mirror won 2). Throw kills were 257 against 255, on 637 throws against 607.
+
 ## Local rating to replica rating (owner 14:33 PDT)
 
 The fit and the projection are in [progress/local-to-replica.md](../../progress/local-to-replica.md) and

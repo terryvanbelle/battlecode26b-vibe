@@ -238,7 +238,7 @@
 # yl6 (retired 11-23 08:51 PDT: 17-38, -144 vs yk1 on 55 g; it differs from yl5 only by WAR_GATHER 1, so yl5 alone carries the audit bundle while runs/sp005 finds the fix that loses)
 # yl7 (retired 11-23 10:41 PDT: -97 vs sw54 on 190 g, about 2.7 SE; FWD_TRAP alone on yk1, the trap half of sw53)
 # yl11 (retired 11-23 11:15 PDT: -50 vs sw54 on 342 g, about 1.9 SE; yk1 + raiders alone, two generations back)
-sw54  # CHAMPION 11-23 10:34 PDT (big swing: sw53's raiders + forward traps with sw50's bank on bodies)
+# sw54  (retired 11-23 16:32: -34 vs yl19 on 1465 g (2.3 SE); the base of yl16-yl20 and sw58-sw59, superseded by yl19 = sw54 + FINISH_FLOOR 100) # CHAMPION 11-23 10:34 PDT (big swing: sw53's raiders + forward traps with sw50's bank on bodies)
 # sw55 (retired 11-23 10:41 PDT: -80 vs sw54 on 134 g, about 2 SE; all forward at war (RAID_SHARE 4) lost to sw53's 2; with yl13 (1) the raider share is swept: 2 is best)
 # yl12  (retired 11-23 13:27: -43 vs sw58 on 597 g (1.6 SE), on sw53, two champions back; its fix on sw54, yl14, was retired) # sw53 + RAID_POST 10: raiders take the twins of contested home mines (audit of sw53)
 # sw56 (retired 11-23 12:10 PDT: -30 vs sw54 on 436 g, about 1.4 SE; kill finishing on sw53, superseded by sw58, the same change on the champion)
@@ -246,7 +246,7 @@ sw54  # CHAMPION 11-23 10:34 PDT (big swing: sw53's raiders + forward traps with
 # sw57  (retired 11-23 13:27: -56 vs sw58 on 543 g (2.1 SE); on sw53) # BIG SWING: all cheese into rats: no rat traps (TRAP_CAP 0) + sw50's bank on bodies, on sw53
 # yl14 (retired 11-23 12:10 PDT: -51 vs sw54 on 220 g, about 1.8 SE; the raider-post fix (RAID_POST 10) on sw54 loses, while yl12 (the same fix on sw53) is -15)
 # yl15  (retired 11-23 14:06: -56 vs yl19 on 439 g (1.9 SE); its CORE_OVER_CAP fix never led sw54) # sw54 + CORE_OVER_CAP: the core boot is not cut by the baby cap (audit of sw54: CORE_BABIES 20 kept only 16 outside siege)
-yl16  # sw54 + WAR_CAP_ALL: MAX_BABIES_WAR caps the whole war, not only siege (audit of sw54)
+# yl16  (retired 11-23 16:32: -34 vs yl19 on 893 g (2.0 SE); level with its base sw54, so WAR_CAP_ALL is neutral) # sw54 + WAR_CAP_ALL: MAX_BABIES_WAR caps the whole war, not only siege (audit of sw54)
 sw58  # BIG SWING: sw54 + kill finishing (FINISH_K 8, FINISH_FLOOR 100): sw56's change ported to the champion
 sw59  # BIG SWING: sw54 + trap-first (profile H2; sw09's BABY_TRAP_DIST2 40, RAT_TRAP_MIN_CHEESE 40, DEF_TRAP_DIST2 400) with the forward front H2 needed
 yl17  # sw54 + reserve 200: every spawn floor and KING_RESERVE 200 (from 300; replica 38282 lost 0-3 with banks of 150-300 under the floor and armies of 3-9)
@@ -257,4 +257,6 @@ yl20  # sw54 + SCOUT_MINES 5 (from 4): scouts keep looking until 5 home mines ar
 sw60  # BIG SWING trap-first on the new champion: sw58 + sw59's BABY_TRAP_DIST2 40, RAT_TRAP_MIN_CHEESE 40, DEF_TRAP_DIST2 400 (replica 11-23: AlexT101_finalsbot laid 2.7x our traps on ZeroDay, bman 144 to our 54 on arrows)
 yl22  # yl19 + FINISH_LEAST (audit of yl19): babies and the king pay (k-1)^2+1 cheese for +k bite damage, the least that kills, not k*k (up to 8 a baby kill at FINISH_K 5, 18 a king kill); Cfg and King doc fixes
 yl23  # yl19 + SIEGE_FLOOR 100 (from 0): at war with enemies in the king's sight every spawn floor drops to 100; replica 21-map study: on evileye/starvation the besieged king held 100-200 cheese under the 200-300 floors with 4 babies to AlexT101's 8 and died (38461, 38504); sw21 had it at 50 bundled with DEF_TRAP_DIST2 400
-sw61  # BIG SWING king's eyes (new mechanism, KING_EYES 3): the alerting king writes its 3 nearest open enemy babies (Comms.EYE0, slots 20-22) and a baby's guard facing counts the ones it cannot see; replica 21-map study losses: 46% of our king's damage is our own babies thrown into it, 63% of the grabs come from behind the victim's cone
+# sw61  (retired 11-23 15:58: superseded by sw62 after 16 g, -109 +- 85; its guardTurn let a farther eye beat a nearer enemy seen at the turn start, against its own doc) # BIG SWING king's eyes (new mechanism, KING_EYES 3): the alerting king writes its 3 nearest open enemy babies (Comms.EYE0, slots 20-22) and a baby's guard facing counts the ones it cannot see; replica 21-map study losses: 46% of our king's damage is our own babies thrown into it, 63% of the grabs come from behind the victim's cone
+sw62  # BIG SWING king's eyes, fixed (sw61 + one ordering fix): the alerting king writes its 3 nearest open enemy babies (slots 20-22) and guardTurn faces the nearest threat among those in view, those seen at the turn start and the king's eyes; replica losses: 46% of our king's damage is our own babies thrown into it, 63% of grabs from behind
+yl24  # yl19 + THROW_KILL 84 (new switch, Baby.tryThrow): a flight that kills the carried enemy rat (its health at or below the hit's damage, 10 for a landing) ends the THROW_MIN/THROW_HOLD hold and is thrown now; CARRY_KING/CAT holds unchanged. yl19's replica games 11-23: the enemy's throws hit something the round they are thrown 2.3x as often as ours (36-38% vs 14-17%), and 44-55% of the rats they grab die on landing against 33-38% of ours
