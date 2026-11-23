@@ -252,3 +252,4 @@ sw59  # BIG SWING: sw54 + trap-first (profile H2; sw09's BABY_TRAP_DIST2 40, RAT
 yl17  # sw54 + reserve 200: every spawn floor and KING_RESERVE 200 (from 300; replica 38282 lost 0-3 with banks of 150-300 under the floor and armies of 3-9)
 yl18  # sw54 + FINISH_K 8 alone (from 5): half of sw58, which leads sw54 by +47 on 104 g
 yl19  # sw54 + FINISH_FLOOR 100 alone (from 200): the other half of sw58
+yl20  # sw54 + SCOUT_MINES 5 (from 4): scouts keep looking until 5 home mines are known; cheesefarm has 5, and replica losses 38236/38282 first picked the 5th (26,12) at r390-441 while Finals/collegejunior took 2.0-2.8k there
