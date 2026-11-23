@@ -156,13 +156,15 @@
 ye4
 # sw25  (retired 11-22 17:15: no opening rush on sw19, settled -29 vs ye4 on 266 g)
 ye5
-ye6
+# ye6  (retired 11-22 17:55: END_CAT 1200 on sw19, settled -18 vs ye4 on 260 g)
 # sw26  (retired 11-22 17:35: ye4 + sw24 king defence, settled -7 vs ye4 on 209 g)
 # sw27  (retired 11-22 17:15: conservative opening on sw19, -107 vs ye4 on 78 g, > 2 SE)
 ye7
 ye8
 sw28
-ye9
+# ye9  (retired 11-22 17:55: FIGHT_EVERY 3 on ye4, -109 vs ye4 on 74 g, > 2 SE)
 sw29
 yf0
 sw30
+yf1
+sw31

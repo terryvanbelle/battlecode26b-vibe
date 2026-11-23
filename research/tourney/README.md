@@ -42,3 +42,4 @@
 | sw28 | economy opening: 8 gatherers first, 8 rushers, rush ends r200 | ye4 |
 | sw29 | insurance king: second king from 12 babies, at war from r150 | ye4 |
 | sw30 | ye5 + ye8 on ye4: rush ends r200, coop cat push r1000 | ye4 |
+| sw31 | full loads: gatherers go home only with 40 raw | ye4 |
