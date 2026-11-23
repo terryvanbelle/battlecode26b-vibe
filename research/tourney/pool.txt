@@ -155,12 +155,12 @@
 # sw24  (retired 11-22 16:55: king defence radius on sw19, settled +0 vs sw19 on 189 g; its pairing with ye4 is sw26)
 ye4
 # sw25  (retired 11-22 17:15: no opening rush on sw19, settled -29 vs ye4 on 266 g)
-ye5
+# ye5  (retired 11-22 18:55: RUSH_UNTIL 200 on sw19, settled -3 vs ye4 on 454 g; carried on in sw30)
 # ye6  (retired 11-22 17:55: END_CAT 1200 on sw19, settled -18 vs ye4 on 260 g)
 # sw26  (retired 11-22 17:35: ye4 + sw24 king defence, settled -7 vs ye4 on 209 g)
 # sw27  (retired 11-22 17:15: conservative opening on sw19, -107 vs ye4 on 78 g, > 2 SE)
 # ye7  (retired 11-22 18:35: RUSH_UNTIL 200 on ye4, settled -11 vs ye4 on 210 g)
-ye8
+# ye8  (retired 11-22 18:55: END_CAT_COOP 1000 on ye4, settled -8 vs ye4 on 258 g; carried on in sw30)
 # sw28  (retired 11-22 18:35: economy opening on ye4, settled -34 vs ye4 on 239 g)
 # ye9  (retired 11-22 17:55: FIGHT_EVERY 3 on ye4, -109 vs ye4 on 74 g, > 2 SE)
 # sw29  (retired 11-22 18:35: insurance king on ye4, -53 vs ye4 on 180 g)
@@ -173,3 +173,5 @@ sw32
 yf3
 yf4
 sw33
+yf5
+sw34

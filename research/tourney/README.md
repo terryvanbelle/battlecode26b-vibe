@@ -45,3 +45,4 @@
 | sw31 | full loads: gatherers go home only with 40 raw | ye4 |
 | sw32 | guard posture: face enemies within dist2 25, ammo distance 13 | ye4 |
 | sw33 | austerity core: a broke king keeps 12 core babies, not 18 | ye4 |
+| sw34 | ablation: austerity off | ye4 |
