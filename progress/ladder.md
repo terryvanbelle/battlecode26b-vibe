@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 13:29 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 13:32 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -35,10 +35,10 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 13:29 
 | 25 | HugoIngelsson\_Xzibit | 1608.5 | 2430-2979 | accepted |
 | 26 | spsquared\_TSPAARK\_QUALS | 1552.2 | 2403-3720 | accepted |
 | 27 | outercloudstudio\_v\_1\_18 | 1512.2 | 1863-2304 | accepted |
-| 28 | amcsz\_fighterrats | 1425.0 | 1867-2090 | accepted |
-| 29 | CS50Crab\_protoSaberV7 | 1420.0 | 1814-1825 | accepted |
+| 28 | CS50Crab\_protoSaberV7 | 1431.1 | 1814-1825 | accepted |
+| 29 | amcsz\_fighterrats | 1425.0 | 1867-2090 | accepted |
 | 30 | CS50Crab\_rapierV1 | 1407.6 | 1927-2177 | accepted |
-| 31 | PixelRifts\_mushakraj\_mk3 | 1395.3 | 1817-1918 | accepted |
+| 31 | PixelRifts\_mushakraj\_mk3 | 1384.1 | 1817-1918 | accepted |
 | 32 | XSercia\_genies | 1344.9 | 1867-2036 | accepted |
 | 33 | justinottesen\_alfredo | 1329.7 | 1755-1836 | accepted |
 | 34 | bc26vibe\_bot | 1325.3 | 1896-2241 | accepted |
@@ -46,8 +46,8 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 23 13:29 
 | 36 | C0derTang\_v6 | 1309.5 | 1821-1986 | accepted |
 | 37 | Gavdingo\_v1 | 1274.3 | 1829-1852 | accepted |
 | 38 | Naton-Cai\_ratplayer | 1258.5 | 1889-1933 | accepted |
-| 39 | vincentwang60\_javabot | 1258.3 | 1926-1980 | accepted |
-| 40 | j2399\_weighted\_micro\_v9 | 1239.6 | 1853-1669 | accepted |
+| 39 | vincentwang60\_javabot | 1253.6 | 1926-1980 | accepted |
+| 40 | j2399\_weighted\_micro\_v9 | 1244.3 | 1853-1669 | accepted |
 | 41 | bc26-example | 1212.6 | 1807-1868 | accepted |
 | 42 | Victor-Ramirez-Garcia\_battleca | 1207.8 | 2181-1515 | accepted |
 | 43 | bc26-example-copy | 1178.7 | 1781-1876 | accepted |
