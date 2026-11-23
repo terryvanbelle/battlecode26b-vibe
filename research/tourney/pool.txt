@@ -173,9 +173,10 @@ yf2
 yf3
 yf4
 # sw33  (retired 11-22 20:17: AUSTERE_CORE 12, -17 vs ye4 on 219 g)
-yf5
+# yf5  (retired 11-22 20:38: control clone of ye4, -34 on 253 g, 1.5 SE: no tournament bias found)
 sw34
 sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; not retired by the usual rule
 yf6
 yf7
 sw36
+sw37
