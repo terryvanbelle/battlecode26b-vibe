@@ -1359,3 +1359,5 @@ yh6,2026-11-23,sw38,"INCOME_TRUST 30 (from 75): further along the income-trust l
 yh7,2026-11-23,sw38,"INCOME_WINDOW 60 (from 100): income rate measured over a shorter window, so the projection reacts sooner when income collapses under siege",tournament newcomer 00:18 PDT
 yi1,2026-11-23,yh3,"WAR_FLOOR 200 (from 300): spawn deeper into the bank under attack (yf3's WAR_FLOOR 450 was -21, so try the other way)",tournament newcomer 00:38 PDT
 sw44,2026-11-23,yh3,"BIG SWING CORE_BABIES 22 (from 18): a larger core population always spawned (lower income trust gained twice: the champion line wants more bodies early)",tournament newcomer 00:38 PDT
+yi2,2026-11-23,yh3,"INCOME_WINDOW 150 (from 100): a longer, steadier income average (the shorter window, yh7 at 60, is -88)",tournament newcomer 00:58 PDT
+yi4,2026-11-23,yh3,"CHEESE_BITE_SURPLUS 300 (from 600; never tried): babies bite with cheese at half the projected surplus, so more damage to besiegers and kings (yi3 LOW_BABIES 10 withdrawn before play: tried 3 times in the tournament already, xu8/xw0/xz9)",tournament newcomer 01:02 PDT
