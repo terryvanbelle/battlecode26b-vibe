@@ -235,5 +235,7 @@ sw50
 sw52  # sparring: siege imitation, sw35 fixed (exempt from retirement)
 sw53  # sparring: raiders + forward traps (exempt from retirement)
 yl5  # audit fixes on yk1 (research/audit/2026-11-23-yk1.md)
-yl6  # yl5 with WAR_GATHER 1, as yk1 played it
+# yl6 (retired 11-23 08:51 PDT: 17-38, -144 vs yk1 on 55 g; it differs from yl5 only by WAR_GATHER 1, so yl5 alone carries the audit bundle while runs/sp005 finds the fix that loses)
 yl7  # yk1 + FWD_TRAP (sw53's forward traps alone, raiders off)
+yl11  # yk1 + sw53's raiders alone (RAID_SHARE 2, FWD_TRAP off)
+sw54  # BIG SWING: sw53's raiders + forward traps with sw50's bank on bodies

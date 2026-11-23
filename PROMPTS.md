@@ -256,3 +256,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (06:35) What happened to our categories?  Yesterday we had "incremental" vs. "swing".  Now I see "small" vs. "sparring"
 (06:49) Something is still wrong with your sparring bots, since they're worse than the champion, and yet the bots they imitate beat our champion.  Can you see if you can figure out the behavioral difference that explains this discrepancy?
 (07:18) Can you also do a bug audit on yk1?  If you find any bugs, fix them and add the fixed version to the local tournament.  Also make sure the unit tests are current
+(08:48) OK, good.  I'd like you to add a clause to the prod telling it to check for bugs and test compliance/coverage whenever we pick a new champion
