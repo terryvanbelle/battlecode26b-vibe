@@ -218,7 +218,7 @@ def cmd_chart(out=os.path.join(R, 'progress')):
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.scatter([w for w, _ in cand], [r.rating for _, r in cand], s=[8 + r.games / 8 for _, r in cand],
                color='#adb5bd', alpha=0.7, label='candidates (at entry; size = games)', zorder=2)
-    xs, ys = [], []
+    xs, ys, labels = [], [], []
     for i, r in enumerate(hist):
         b = r['bot']
         if b not in rt:
@@ -227,9 +227,7 @@ def cmd_chart(out=os.path.join(R, 'progress')):
         xs += [r['when'], end]
         ys += [rt[b].rating, rt[b].rating]
         ax.errorbar([r['when']], [rt[b].rating], yerr=[rt[b].se], fmt='o', color='#2a6fdb', ms=6, capsize=3, zorder=4)
-        lab = b + (f" {r['change']}" if r['change'] else '') + (f" #{r['submission']}" if r['submission'] else '')
-        ax.annotate(lab, (r['when'], rt[b].rating), xytext=(4, 6), textcoords='offset points', fontsize=7.5,
-                    color='#212529')
+        labels.append((r['when'], rt[b].rating, rt[b].se, ys[-3] if len(ys) > 2 else rt[b].rating, b))
     ax.plot(xs, ys, color='#2a6fdb', lw=1.8, label='local champion (rating +- SE, current fit)', zorder=3)
     for i, (when, label) in enumerate(m for m in MS.read() if m[0] >= start - dt.timedelta(hours=1)):
         ax.axvline(when, color=MS.COLOR, ls='--', lw=1.3)
@@ -242,6 +240,32 @@ def cmd_chart(out=os.path.join(R, 'progress')):
     ax.legend(loc='lower right', fontsize=8)
     fig.autofmt_xdate()
     fig.tight_layout()
+    # Champion labels: the bot name only (local-elo.md's table gives each change and submission). They are placed
+    # after the layout, so they never shrink the plot: owner 11-23, the full change text beside every point squeezed
+    # the axes to half the figure. Each name takes the first spot beside its point that stays inside the axes and
+    # clear of the legend, of every champion's marker, error bar and step up, and of the names already placed.
+    import matplotlib.patheffects as pe
+    from matplotlib.transforms import Bbox
+    rend = fig.canvas.get_renderer()
+    box = ax.get_window_extent(rend)
+    taken = [ax.get_legend().get_window_extent(rend)]
+    for when, rating, se, prev, _ in labels:
+        x = mdates.date2num(when)
+        (x0, y0), (_, y1) = ax.transData.transform([(x, min(rating - se, prev)), (x, max(rating + se, prev))])
+        taken.append(Bbox([[x0 - 5, y0 - 5], [x0 + 5, y1 + 5]]))   # 5 px: the 3 pt caps and the 6 pt marker
+    spots = [((5, 4), 'left', 'bottom'), ((5, -4), 'left', 'top'), ((-5, 4), 'right', 'bottom'),
+             ((-5, -4), 'right', 'top'), ((0, 9), 'center', 'bottom'), ((0, -9), 'center', 'top')]
+    halo = [pe.withStroke(linewidth=2.5, foreground='white')]
+    for when, rating, se, prev, b in labels:
+        for k, (off, ha, va) in enumerate(spots):
+            t = ax.annotate(b, (when, rating), xytext=off, textcoords='offset points', ha=ha, va=va, fontsize=8,
+                            color='#212529', zorder=5, path_effects=halo)
+            bb = t.get_window_extent(rend)
+            inside = box.x0 <= bb.x0 and bb.x1 <= box.x1 and box.y0 <= bb.y0 and bb.y1 <= box.y1
+            if inside and not any(bb.overlaps(o) for o in taken) or k == len(spots) - 1:
+                taken.append(bb)
+                break
+            t.remove()
     fig.savefig(os.path.join(out, 'local-elo.png'), dpi=110)
     plt.close(fig)
     L = ['# Local tournament Elo', '',
