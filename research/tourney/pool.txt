@@ -164,7 +164,9 @@ ye8
 sw28
 # ye9  (retired 11-22 17:55: FIGHT_EVERY 3 on ye4, -109 vs ye4 on 74 g, > 2 SE)
 sw29
-yf0
+# yf0  (retired 11-22 18:15: THREAT_THROW 3 on ye4, -137 vs ye4 on 62 g, > 2 SE)
 sw30
 yf1
-sw31
+# sw31  (retired 11-22 18:15: full loads LOAD_AT 40 on ye4, -102 vs ye4 on 62 g, > 2 SE)
+yf2
+sw32
