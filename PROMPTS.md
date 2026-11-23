@@ -249,3 +249,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (09:12) Let's aim for about 50% incremental new ideas and 50% big swings in the local tournament additions.  Let's also aim for roughly 10 bots in the tournament
 (09:45) I really like this methodology.  Can you update TRAINING_ALGORITHM so that it reflects the way that we do things now?  No need to preserve the original wording of the doc
 (10:44) In the prod, is the top-5 table just a prefix of the Recent ideas tried table, potentially with the champion?  If so, it's not really serving any purpose, and can be removed
+(18:59) A while back you mentioned that we have a blind spot, in that we can't learn defences against tactics that we don't run locally.  That's true, but you can always adopt the tactic that an opponent uses against us, and that should win locally.  Then you can work on learning a defence against it, right?
