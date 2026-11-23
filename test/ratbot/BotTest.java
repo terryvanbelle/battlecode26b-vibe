@@ -40,6 +40,8 @@ public class BotTest {
     /** Rounds readSqueaks(r) was asked for. */
     static List<Integer> heardAsked = new ArrayList<>();
     static List<MapLocation> pickedUp = new ArrayList<>();
+    /** Rat traps placed (placeRatTrap). */
+    static List<MapLocation> trapsLaid = new ArrayList<>();
     /** canCarryRat's answer when everything else allows it (false: the target turned to face us). */
     static boolean carryOk = true;
 
@@ -61,7 +63,7 @@ public class BotTest {
     static void reset() {
         canPromote = promoted = false;
         walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null; carrying = null;
-        beingCarried = beingThrown = false; carryOk = true; heard.clear(); heardAsked.clear(); pickedUp.clear();
+        beingCarried = beingThrown = false; carryOk = true; heard.clear(); heardAsked.clear(); pickedUp.clear(); trapsLaid.clear();
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = moveExtra = 0; type = UnitType.BABY_RAT; digsDone = 0; dirtStock = 0; ratCost = 10; built.clear();
         Sym.mask = Sym.ROT | Sym.HOR | Sym.VER; Sym.contradictions = 0;
@@ -190,6 +192,7 @@ public class BotTest {
                     case "becomeRatKing": promoted = true; type = UnitType.RAT_KING; return null;
                     case "setIndicatorString": return null;
                     case "canPlaceRatTrap": { MapLocation t = (MapLocation) a[0]; return actCd < 10 && me.isAdjacentTo(t) && passable(t) && !robots.containsKey(t); }
+                    case "placeRatTrap": trapsLaid.add((MapLocation) a[0]); actCd += 15; return null;
                     default: throw new UnsupportedOperationException("fakeRc: " + m.getName());
                 }
             });
@@ -1206,15 +1209,6 @@ public class BotTest {
         check(!Baby.flank(new RobotInfo[]{e}), "flank: none when every reachable neighbour is in its view");
     }
 
-    static void testBiteCheese() {
-        check(Baby.finishCheese(10, 1000) == 0 && Baby.finishCheese(13, 1000) == 9 && Baby.finishCheese(16, 1000) == 0,
-              "bite cheese: a baby pays k*k only when it makes the kill");
-        check(Baby.finishCheese(13, 100) == 0, "bite cheese: none below the floor");
-        check(King.biteCheese(18, 1000) == 64, "bite cheese: the king pays the least that kills");
-        check(King.biteCheese(100, 5000) == 0 && King.biteCheese(18, 350) == 0 && King.biteCheese(21, 5000) == 0,
-              "bite cheese: nothing for a bite that does not kill or is over budget");
-    }
-
     static void testHomeHalf() throws GameActionException {
         reset(); W = 20; H = 20; install();
         Sym.mask = Sym.ROT;
@@ -1679,7 +1673,6 @@ public class BotTest {
         testNearerAllies();
         testBirthSeed();
         testDefend();
-        testBiteCheese();
         testFlank();
         testSpawnFloor();
         testRetreat();

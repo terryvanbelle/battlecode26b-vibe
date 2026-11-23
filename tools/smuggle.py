@@ -21,7 +21,9 @@ import argparse, collections, json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import game_report as GR  # noqa: E402
 
-WHY = "-CDEHKMPSWacdfghkmprswyzxTRAeJG"
+# yl5 on (audit 11-23): F (cat feed walk) and Q (cash move) took the slots of H and h, which no bot has set since the
+# s-line; earlier bots wrote F and Q as 31 (unknown) and never 4 or 15, so this alphabet decodes them exactly too
+WHY = "-CDEFKMPSWacdfgQkmprswyzxTRAeJG"
 KWHY = "-nsfcbd"
 TAG_MIN_LEFT = 400              # Debug.TAG_MIN_LEFT: no pad with fewer bytecodes left
 LIMIT = {'KING': 20000}         # bytecode limit by type (others 17500)

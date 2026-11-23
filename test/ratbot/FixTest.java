@@ -120,7 +120,8 @@ public class FixTest {
         Comms.numKings = 0;
     }
 
-    /** K7: the spawn's babies estimate subtracts promotions (numKings - 1): two kings at the core count boot one more. */
+    /** K7: the spawn's babies estimate subtracts promotions: two kings at the core count boot one more. yk1 counts
+     *  them as numKings - 1; from yl5 as the shared FORMED counter (index 20, unused before yl5), set here too. */
     static void testK7Babies() throws GameActionException {
         for (int kings = 1; kings <= 2; kings++) {
             reset(); W = 20; H = 20; install();   // 400 tiles: core = CORE_SMALL
@@ -128,6 +129,7 @@ public class FixTest {
             ratCost = 10 + 10 * Cfg.CORE_SMALL / 4;   // babies estimate = CORE_SMALL with one king
             global = ratCost + kings * Math.max(Cfg.CORE_FLOOR, Cfg.KING_RESERVE) + 10;
             Comms.numKings = kings;
+            shared[20] = kings - 1;   // Comms.FORMED from yl5: the promotions so far
             Econ.n = 0; Econ.sum = 0;
             King.spawn(new RobotInfo[0], new RobotInfo[0]);
             if (kings == 1) check(built.isEmpty(), "K7: one king at the core count does not boot a spawn (" + King.spawnWhy + ")");

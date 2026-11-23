@@ -447,11 +447,14 @@ _dj = open(os.path.join(REPO, 'bots', 'ratbot', 'Debug.java')).read()
 _bj = open(os.path.join(REPO, 'bots', 'ratbot', 'Baby.java')).read()
 _kj = open(os.path.join(REPO, 'bots', 'ratbot', 'King.java')).read()
 _m = _re.search(r'WHY = "([^"]*)", KWHY = "([^"]*)"', _dj)
-check(_m is not None and _m.group(1) == sg.WHY and _m.group(2) == sg.KWHY, "smuggle alphabets match Debug.java")
+# a champion from before yl5 has H and h where F and Q are now (both unused by it): the same decoding
+_why = _m.group(1) if _m else ''
+check(_m is not None and sg.WHY in (_why, _why.replace('H', 'F').replace('h', 'Q')) and _m.group(2) == sg.KWHY,
+      "smuggle alphabets match Debug.java")
 check(all(x in _dj for x in ('Baby.role == Baby.FIGHT ? 32 : 0', 'King.sawEnemy ? 32 : 0', 'Integer.bitCount(v) % 2 == 0 ? v : v | 64',
                              '& 127', 'TAG_MIN_LEFT = %d;' % sg.TAG_MIN_LEFT)), "smuggle layout matches Debug.tagValue / tag")
-# 'Q' and 'F' have no slot (all 31 five-bit indices are taken; 31 means unknown): they decode as '?'
-check(set(_re.findall(r"\bwhy = '(.)'", _bj)) - {'Q', 'F'} <= set(sg.WHY) and set(_re.findall(r"spawnWhy = '(.)'", _kj)) <= set(sg.KWHY)
+# before yl5, 'Q' and 'F' had no slot in Debug.WHY (they were written as 31, unknown)
+check(set(_re.findall(r"\bwhy = '(.)'", _bj)) - (set() if 'F' in _why else {'Q', 'F'}) <= set(sg.WHY) and set(_re.findall(r"spawnWhy = '(.)'", _kj)) <= set(sg.KWHY)
       and len(sg.WHY) <= 31 and len(sg.KWHY) <= 31, "smuggle: every Baby.why / King.spawnWhy code has an index")
 _rt = all(sg.decode(1000 * 128 + sg.encode(c, h, k), k) == (c, h) for k, al in ((False, sg.WHY), (True, sg.KWHY)) for c in al for h in (False, True))
 check(_rt, "smuggle encode/decode round trip for every code and flag")

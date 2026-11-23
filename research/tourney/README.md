@@ -2,7 +2,9 @@
 
 - `pool.txt`: active bots, one per line; `# NAME (reason)` lines are retired bots (tools/tourney.py reads the second
   word of every `#` line as a retired name, so no other comments go there).
-- `champion.txt`: the current local champion (bots/ratbot is a copy of it); `champions.csv`: every champion.
+- `champion.txt`: the current local champion (bots/ratbot is a copy of it); `champions.csv`: every champion. A bot with
+  its own unit tests has them in test/NAME/ (`bash tools/unit-tests.sh NAME`; same-named files replace test/ratbot's):
+  when it is crowned, move test/NAME/*.java into test/ratbot/ so the default `bash tools/unit-tests.sh` keeps them.
 
 ## Candidate names (owner 11-22)
 
