@@ -1369,9 +1369,10 @@ yj2,2026-11-23,yh6,"CHEESE_BITE_SURPLUS 300 (yi4 rebuilt on yh6)","RETIRED 11-23
 yj3,2026-11-23,yh6,"INCOME_TRUST 25 (from 30): between the best (30) and an overshoot (20 at -144)","RETIRED 11-23 03:38 PDT: -14 vs yh6 on 211 g: trust 30 stays the best"
 sw46,2026-11-23,yh6,"BIG SWING RUSH_TO 20 (from 16): 16 rushers instead of 12 in the opening (the siege imitation sw35 with rushers all game was near champion strength when entered)","RETIRED 11-23 02:58 PDT: -89 vs yh6 on 93 g (2.3 SE): more opening rushers is worse"
 yj4,2026-11-23,yh6,"TRAP_SURPLUS 100 (from 200; tried once before): babies place cat traps on half the projected surplus",tournament newcomer 02:38 PDT
-yj5,2026-11-23,yh6,"END_CAT 1300 (from 1400): the cat-endgame dose line (1850 -> 1600 -> 1400 each took the title; 1200 lost): bracket between",tournament newcomer 02:38 PDT
+yj5,2026-11-23,yh6,"END_CAT 1300 (from 1400): the cat-endgame dose line (1850 -> 1600 -> 1400 each took the title; 1200 lost): bracket between","RETIRED 11-23 04:18 PDT: -29 vs yh6 on 214 g: END_CAT 1400 stays"
 sw47,2026-11-23,yh6,"BIG SWING aggressive kill finishing: FINISH_K 8, FINISH_FLOOR 100 (from 5, 200): a baby pays up to 64 cheese above a 100 bank to bite for a kill (top-profile: top teams finish kings early; our rushers reach the king but do not finish it)",tournament newcomer 02:58 PDT
 yj6,2026-11-23,yh6,"DIG_RESERVE 200 (from 300; ya4 tried it on ya0 with no recorded result): digs may spend down to 200 per king",tournament newcomer 03:18 PDT
 yj7,2026-11-23,yh6,"TRAP_SURPLUS 50 (from 200): further along yj4 (100: +26 on 103)",tournament newcomer 03:38 PDT
 yj8,2026-11-23,yh6,"KING_BITE_FLOOR 200 (from 300; never tried): a king bites with cheese for a kill down to a 200 bank",tournament newcomer 03:38 PDT
 yj9,2026-11-23,yh6,"RUSH_TO 12 (from 16): 8 opening rushers, not 12 (16 rushers sw46: -89; 0 rushers sw25: -29; replica 37553/37554 losses: our rats fall from 12-16 to 4 between r100 and r250 while theirs hold, then the king dies r151-r611)",tournament newcomer 03:41 PDT
+yk1,2026-11-23,yh6,"FIGHT_POST 10 (from 12; untried between 8 and 12: 12 won the title, 14 and 16 lost): fewer home-half mines count as contested posts, so fewer rats stand forward (replica 37553/37554: our rats fall from 12-16 to 4 by r250)",tournament newcomer 04:18 PDT
