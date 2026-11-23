@@ -206,11 +206,14 @@ yh6
 # yi5  (retired 11-23 02:18: INCOME_WINDOW 200 on yh3, 34 g; rebuilt on yh6 as yj1)
 # yi6  (retired 11-23 02:18: INCOME_TRUST 20, -144 vs yh6 on 40 g, 2.4 SE)
 # sw45  (retired 11-23 03:18: INCOME_TRUST 30 + INCOME_WINDOW 150, -44 vs yh6 on 218 g)
-yj1
-yj2
-yj3
+# yj1  (retired 11-23 03:38: INCOME_WINDOW 200, -17 vs yh6 on 221 g)
+# yj2  (retired 11-23 03:38: CHEESE_BITE_SURPLUS 300, -25 vs yh6 on 199 g)
+# yj3  (retired 11-23 03:38: INCOME_TRUST 25, -14 vs yh6 on 211 g)
 # sw46  (retired 11-23 02:58: RUSH_TO 20, -89 vs yh6 on 93 g, 2.3 SE)
 yj4
 yj5
 sw47
 yj6
+yj7
+yj8
+yj9
