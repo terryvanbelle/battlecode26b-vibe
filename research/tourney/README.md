@@ -39,3 +39,4 @@
 | sw25 | no opening rush: 0 rushers (from 12), forward hold carries forward presence | sw19 |
 | sw26 | ye4 + sw24: END_CAT 1400 with the wider king defence | sw19 |
 | sw27 | conservative opening: rush ends r150, king reserve 600 | sw19 |
+| sw28 | economy opening: 8 gatherers first, 8 rushers, rush ends r200 | ye4 |

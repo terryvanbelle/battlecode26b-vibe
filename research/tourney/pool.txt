@@ -150,12 +150,15 @@ sw19
 # sw23  (retired 11-22 15:55: active king on yd1, settled -23 vs sw19 on 268 g)
 # ye0  (retired 11-22 14:58: built on yd1, 0 games when sw19 took over; rebuilt on sw19 as ye2)
 # ye1  (retired 11-22 14:58: built on yd1, 0 games when sw19 took over; rebuilt on sw19 as ye3)
-ye2
-ye3
-sw24
+# ye2  (retired 11-22 16:55: THROW_HOLD 5 on sw19, settled -6 on 189 g)
+# ye3  (retired 11-22 16:55: KING_RESERVE 600 on sw19, settled -5 on 233 g)
+# sw24  (retired 11-22 16:55: king defence radius on sw19, settled +0 vs sw19 on 189 g; its pairing with ye4 is sw26)
 ye4
 sw25
 ye5
 ye6
 sw26
 sw27
+ye7
+ye8
+sw28

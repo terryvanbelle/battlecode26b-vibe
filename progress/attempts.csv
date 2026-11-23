@@ -1308,12 +1308,15 @@ sw22,2026-11-22,yd1,"BIG SWING throw doctrine (study H4: top teams throw far mor
 sw23,2026-11-22,yd1,"BIG SWING active king: KING_ROAM 10 (from 4) and KING_MINE_R2 900 (from 400): the king roams for cheese and may seat on a farther mine","RETIRED 11-22 15:55 PDT: settled -23 vs sw19 on 268 g"
 ye0,2026-11-22,yd1,"THROW_HOLD 5 (from 10; one piece of sw22's throw doctrine, which leads +40 on 42 g)","RETIRED 11-22 14:58 PDT: built on yd1, 0 games when sw19 took over; rebuilt as ye2"
 ye1,2026-11-22,yd1,"KING_RESERVE 600 (from 400; replica: in 6 of #445's 7 recent losses to AlexT101/bman our bank was 0-50 while theirs was 445-5748; yd7's 300 lost locally)","RETIRED 11-22 14:58 PDT: built on yd1, 0 games when sw19 took over; rebuilt as ye3"
-ye2,2026-11-22,sw19,"THROW_HOLD 5 (from 10; ye0 rebuilt on the new champion)",tournament newcomer 14:59 PDT
-ye3,2026-11-22,sw19,"KING_RESERVE 600 (from 400; ye1 rebuilt on the new champion; replica losses ended with our bank 0-50)",tournament newcomer 14:59 PDT
-sw24,2026-11-22,sw19,"BIG SWING king defence radius: KING_THREAT_D2 64 (from 30), DEFEND_D2 225 (from 100): the king alarms earlier and more babies come home (replica: 3 of 7 recent losses were king kills by r156-r275)",tournament newcomer 14:59 PDT
-ye4,2026-11-22,sw19,"END_CAT 1400 (from 1600; the cat-endgame dose line: 1850 -> 1600 took the title in sw19)",tournament newcomer 15:18 PDT
+ye2,2026-11-22,sw19,"THROW_HOLD 5 (from 10; ye0 rebuilt on the new champion)","RETIRED 11-22 16:55 PDT: settled -6 vs sw19 on 189 g"
+ye3,2026-11-22,sw19,"KING_RESERVE 600 (from 400; ye1 rebuilt on the new champion; replica losses ended with our bank 0-50)","RETIRED 11-22 16:55 PDT: settled -5 vs sw19 on 233 g"
+sw24,2026-11-22,sw19,"BIG SWING king defence radius: KING_THREAT_D2 64 (from 30), DEFEND_D2 225 (from 100): the king alarms earlier and more babies come home (replica: 3 of 7 recent losses were king kills by r156-r275)","RETIRED 11-22 16:55 PDT: settled +0 vs sw19 on 189 g (pairing with ye4 is sw26)"
+ye4,2026-11-22,sw19,"END_CAT 1400 (from 1600; the cat-endgame dose line: 1850 -> 1600 took the title in sw19)","ACCEPTED as local champion 11-22 16:55 PDT: +28 vs sw19 on 202 g (needed > +27); submitted #447"
 sw25,2026-11-22,sw19,"BIG SWING no opening rush: RUSH_FROM 16 = RUSH_TO (0 rushers, from 12): the forward-hold posts (FIGHT_POST 12) now give forward presence, so the 12 opening rushers may be wasted",tournament newcomer 15:18 PDT
 ye5,2026-11-22,sw19,"RUSH_UNTIL 200 (from 300; yc5's 400 lost -19, so the other direction)",tournament newcomer 15:38 PDT
 ye6,2026-11-22,sw19,"END_CAT 1200 (from 1600; dose line: ye4's 1400 leads +80 on 56 g)",tournament newcomer 15:58 PDT
 sw26,2026-11-22,sw19,"BIG SWING combination of the two early leaders on sw19: ye4 END_CAT 1400 (+80 on 56) + sw24 king defence radius KING_THREAT_D2 64, DEFEND_D2 225 (+71 on 57)",tournament newcomer 15:58 PDT
 sw27,2026-11-22,sw19,"BIG SWING conservative opening: RUSH_UNTIL 150 (from 300) + KING_RESERVE 600 (from 400) (replica 36502, #446's first match: lost DefaultSmall r270 and Nofreecheese r381 by king kill with bank 0-9 vs 365-411, rats 3 vs 5 and 8 vs 16 at r250, ~60 of ours killed by r300-380)",tournament newcomer 16:38 PDT
+ye7,2026-11-22,ye4,"RUSH_UNTIL 200 (from 300; ye5 on sw19 leads +28 on 119 g): port to the new champion",tournament newcomer 16:58 PDT
+ye8,2026-11-22,ye4,"END_CAT_COOP 1000 (from 1200; the cat-endgame line keeps winning: END_CAT 1850->1600->1400 took two titles)",tournament newcomer 16:58 PDT
+sw28,2026-11-22,ye4,"BIG SWING economy opening: GATHER_FIRST 8 (from 6), RUSH_FROM 8 (8 rushers, not 12), RUSH_UNTIL 200 (from 300) (replica: our early losses end with bank 0 and ~60 rats lost by r300)",tournament newcomer 16:58 PDT
