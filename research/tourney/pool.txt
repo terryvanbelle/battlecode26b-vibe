@@ -180,7 +180,7 @@ sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; no
 # yf7  (retired 11-22 21:58: KING_FRONT 40 on ye4, -13 vs yf2 on 216 g)
 # sw36  (retired 11-22 22:38: yf2 + INCOME_TRUST 60, -16 vs sw38 on 274 g; sw39 carries it on sw38)
 # sw37  (retired 11-22 22:18: sw30 pair + yf2 + WAR_FLOOR 450 on ye4, -3 vs yf2 on 227 g; sw38/sw39 carry it)
-sw38
+# sw38  (retired 11-23 00:38: ex-champion, -47 vs yh3 on 827 g)
 # yg1  (retired 11-22 22:38: AUSTERE_FROM 0 on yf2, -70 vs sw38 on 228 g)
 # yg2  (retired 11-22 22:18: DEFEND_D2 400, -85 vs yf2 on 122 g, 2.6 SE)
 # yg3  (retired 11-22 22:58: KING_THREAT_D2 50 on yf2, -18 vs sw38 on 226 g)
@@ -192,10 +192,12 @@ sw38
 # yh1  (retired 11-23 00:18: END_CAT_COOP 800, -1 vs sw38 on 207 g: no gain)
 # yh2  (retired 11-23 00:18: RUSH_UNTIL 150, -42 vs sw38 on 210 g)
 yh3
-sw41
+# sw41  (retired 11-23 00:38: KING_RESERVE 250 on sw38, -42 vs yh3 on 267 g; sw43 = yh3 + KING_RESERVE 250 carries it)
 # yh4  (retired 11-22 23:38: SPAWN_MARGIN 50, -136 vs sw38 on 51 g, 2.6 SE)
-sw42
+# sw42  (retired 11-23 00:38: CORE_SMALL 16 on sw38, -11 vs sw38 on 194 g)
 sw43
 yh5
 yh6
 yh7
+yi1
+sw44
