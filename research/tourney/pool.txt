@@ -185,7 +185,7 @@ sw38
 # yg2  (retired 11-22 22:18: DEFEND_D2 400, -85 vs yf2 on 122 g, 2.6 SE)
 # yg3  (retired 11-22 22:58: KING_THREAT_D2 50 on yf2, -18 vs sw38 on 226 g)
 # yg4  (retired 11-22 22:18: spawn away from besiegers (code), -149 vs yf2 on 52 g, 3 SE)
-sw39
+# sw39  (retired 11-22 23:38: INCOME_TRUST 60 on sw38, -13 vs sw38 on 275 g)
 # yg5  (retired 11-22 22:38: INCOME_TRUST 50 on yf2, 18 g; rebuilt on sw38 as yh3)
 # yg6  (retired 11-22 22:38: END_CAT_COOP 800 on yf2, 22 g; rebuilt on sw38 as yh1)
 # sw40  (retired 11-22 22:38: KING_RESERVE 250 on yf2, 22 g; rebuilt on sw38 as sw41)
@@ -193,5 +193,7 @@ yh1
 yh2
 yh3
 sw41
-yh4
+# yh4  (retired 11-22 23:38: SPAWN_MARGIN 50, -136 vs sw38 on 51 g, 2.6 SE)
 sw42
+sw43
+yh5

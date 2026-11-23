@@ -1343,7 +1343,7 @@ yg1,2026-11-22,yf2,"AUSTERE_FROM 0 (from 60): sw34's austerity-off ablation on t
 yg2,2026-11-22,yf2,"DEFEND_D2 400 (from 225): further along the direction that made yf2 champion (100 -> 225 gained +22)","RETIRED 11-22 22:18 PDT: -85 vs yf2 on 122 g (2.6 SE): defending from 20 tiles overshoots"
 yg3,2026-11-22,yf2,"KING_THREAT_D2 50 (from 30): the king raises its alert for enemies a little farther out, so defenders come earlier against the siege","RETIRED 11-22 22:58 PDT: -18 vs sw38 on 226 g"
 yg4,2026-11-22,yf2,"CODE (King.spawn, one line): under siege a new rat spawns on the far side of the king from the sensed enemy instead of toward it (early-kill study: the siege grabs our fresh spawns next to the king, median 13 rounds old, and throws them into it; 32% of king damage)","RETIRED 11-22 22:18 PDT: -149 vs yf2 on 52 g (3 SE): spawning away from the enemy is much worse; fresh rats must join the fight"
-sw39,2026-11-22,yf2,"BIG SWING stack of the three leaders on yf2: sw38 RUSH_UNTIL 200 + END_CAT_COOP 1000 (+36 on 127) and sw36 INCOME_TRUST 60 (+18 on 176)",tournament newcomer 21:58 PDT
+sw39,2026-11-22,yf2,"BIG SWING stack of the three leaders on yf2: sw38 RUSH_UNTIL 200 + END_CAT_COOP 1000 (+36 on 127) and sw36 INCOME_TRUST 60 (+18 on 176)","RETIRED 11-22 23:38 PDT: -13 vs sw38 on 275 g"
 yg5,2026-11-22,yf2,"INCOME_TRUST 50 (from 75): further along sw36's INCOME_TRUST 60 (+20 vs yf2 on 231)","RETIRED 11-22 22:38 PDT: 18 g on the old champion; rebuilt on sw38 as yh3"
 yg6,2026-11-22,yf2,"END_CAT_COOP 800 (from 1200): further along the coop cat push (1000 is half of sw38's +32)","RETIRED 11-22 22:38 PDT: +17 vs yf2 on 22 g; rebuilt on sw38 as yh1"
 sw40,2026-11-22,yf2,"BIG SWING KING_RESERVE 250 (from 400): every optional spend leaves less per king, so more rats sooner (early-kill study defence: our bodies fall behind under siege)","RETIRED 11-22 22:38 PDT: 22 g on the old champion; rebuilt on sw38 as sw41"
@@ -1351,5 +1351,7 @@ yh1,2026-11-22,sw38,"END_CAT_COOP 800 (from 1000): further along the coop cat pu
 yh2,2026-11-22,sw38,"RUSH_UNTIL 150 (from 200): further along the shorter rush that made sw38",tournament newcomer 22:38 PDT
 yh3,2026-11-22,sw38,"INCOME_TRUST 50 (from 75): further along sw36/sw39's INCOME_TRUST 60",tournament newcomer 22:38 PDT
 sw41,2026-11-22,sw38,"BIG SWING KING_RESERVE 250 (from 400): less reserve per king, more rats sooner (early-kill study: our bodies fall behind under siege)",tournament newcomer 22:38 PDT
-yh4,2026-11-22,sw38,"SPAWN_MARGIN 50 (from 100; never tried): a spawn over the floors needs less projected surplus, so more rats",tournament newcomer 22:58 PDT
+yh4,2026-11-22,sw38,"SPAWN_MARGIN 50 (from 100; never tried): a spawn over the floors needs less projected surplus, so more rats","RETIRED 11-22 23:38 PDT: -136 vs sw38 on 51 g (2.6 SE): spawning on a thinner margin is much worse"
 sw42,2026-11-22,sw38,"BIG SWING CORE_SMALL 16 (from 12): on maps of 441 tiles or fewer the king keeps 16 core babies, not 12 (early-kill study: the siege kills on small maps, median r283, while our babies fall 10 -> 3.4)",tournament newcomer 22:58 PDT
+sw43,2026-11-22,sw38,"BIG SWING stack of the two leaders on sw38: yh3 INCOME_TRUST 50 (+66 on 73) + sw41 KING_RESERVE 250 (+37 on 58)",tournament newcomer 23:38 PDT
+yh5,2026-11-22,sw38,"INCOME_TRUST 40 (from 75): further along yh3's INCOME_TRUST 50",tournament newcomer 23:38 PDT

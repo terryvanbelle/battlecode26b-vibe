@@ -54,3 +54,4 @@
 | sw40 | KING_RESERVE 250 on yf2 (spend down further for bodies) | yf2 |
 | sw41 | KING_RESERVE 250 on sw38 | sw38 |
 | sw42 | CORE_SMALL 16 on sw38 (more core rats on small maps) | sw38 |
+| sw43 | sw38 + INCOME_TRUST 50 + KING_RESERVE 250 (yh3 + sw41 stacked) | sw38 |
