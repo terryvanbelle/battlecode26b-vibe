@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 44338 games in one fit as of 2026-11-23 06:17 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 44609 games in one fit as of 2026-11-23 06:44 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -23,7 +23,8 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-22 12:56 | yd1 | FIGHT_POST 12 on sw08 | #445 | 1550 +- 10 | 1210 |
 | 2026-11-22 14:56 | sw19 | FIGHT_POST 12 + cat endgame END_CAT 1600 END_CAT_COOP 1200 (big swing) on sw08 | #446 | 1563 +- 10 | 1188 |
 | 2026-11-22 16:57 | ye4 | END_CAT 1400 on sw19 | #447 | 1562 +- 9 | 1488 |
-| 2026-11-22 20:56 | yf2 | DEFEND_D2 225 on ye4 | #448 | 1566 +- 11 | 1035 |
+| 2026-11-22 20:56 | yf2 | DEFEND_D2 225 on ye4 | #448 | 1565 +- 11 | 1035 |
 | 2026-11-22 22:36 | sw38 | RUSH_UNTIL 200 + END_CAT_COOP 1000 on yf2 | #449 | 1564 +- 11 | 944 |
-| 2026-11-23 00:36 | yh3 | INCOME_TRUST 50 on sw38 | #450 | 1587 +- 13 | 714 |
-| 2026-11-23 02:16 | yh6 | INCOME_TRUST 30 on sw38 | #451 | 1637 +- 9 | 1422 |
+| 2026-11-23 00:36 | yh3 | INCOME_TRUST 50 on sw38 | #450 | 1586 +- 13 | 714 |
+| 2026-11-23 02:16 | yh6 | INCOME_TRUST 30 on sw38 | #451 | 1634 +- 9 | 1499 |
+| 2026-11-23 06:36 | yk1 | FIGHT_POST 10 on yh6 | #452 | 1658 +- 22 | 264 |
