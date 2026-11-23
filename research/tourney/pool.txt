@@ -154,11 +154,13 @@ sw19
 # ye3  (retired 11-22 16:55: KING_RESERVE 600 on sw19, settled -5 on 233 g)
 # sw24  (retired 11-22 16:55: king defence radius on sw19, settled +0 vs sw19 on 189 g; its pairing with ye4 is sw26)
 ye4
-sw25
+# sw25  (retired 11-22 17:15: no opening rush on sw19, settled -29 vs ye4 on 266 g)
 ye5
 ye6
 sw26
-sw27
+# sw27  (retired 11-22 17:15: conservative opening on sw19, -107 vs ye4 on 78 g, > 2 SE)
 ye7
 ye8
 sw28
+ye9
+sw29

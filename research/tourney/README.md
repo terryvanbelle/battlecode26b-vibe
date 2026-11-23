@@ -40,3 +40,4 @@
 | sw26 | ye4 + sw24: END_CAT 1400 with the wider king defence | sw19 |
 | sw27 | conservative opening: rush ends r150, king reserve 600 | sw19 |
 | sw28 | economy opening: 8 gatherers first, 8 rushers, rush ends r200 | ye4 |
+| sw29 | insurance king: second king from 12 babies, at war from r150 | ye4 |
