@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 22:40 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 22:44 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -28,28 +28,28 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 22:40 
 | 18 | AlexT101\_usqualsbot | 1737.8 | 2758-2043 | accepted |
 | 19 | AlexT101\_finalsbot | 1724.4 | 1724-1684 | accepted |
 | 20 | AdamTan12\_Finals | 1716.0 | 3057-2787 | accepted |
-| 21 | **vibe26b** | 1709.3 | 12730-11759 | accepted |
-| 22 | thewaxmango\_collegejunior | 1707.8 | 2769-2640 | accepted |
-| 23 | VarunVejalla\_final4\_run\_away10 | 1706.7 | 2609-2887 | accepted |
+| 21 | thewaxmango\_collegejunior | 1711.8 | 2769-2640 | accepted |
+| 22 | **vibe26b** | 1709.3 | 12730-11759 | accepted |
+| 23 | VarunVejalla\_final4\_run\_away10 | 1702.7 | 2609-2887 | accepted |
 | 24 | HugoIngelsson\_YokoOno | 1683.9 | 2820-2775 | accepted |
 | 25 | HugoIngelsson\_Xzibit | 1643.2 | 2367-2913 | accepted |
 | 26 | spsquared\_TSPAARK\_QUALS | 1542.7 | 2322-3630 | accepted |
 | 27 | outercloudstudio\_v\_1\_18 | 1534.3 | 1777-2216 | accepted |
-| 28 | CS50Crab\_protoSaberV7 | 1467.3 | 1728-1707 | accepted |
+| 28 | CS50Crab\_protoSaberV7 | 1477.1 | 1728-1707 | accepted |
 | 29 | amcsz\_fighterrats | 1419.5 | 1784-2005 | accepted |
-| 30 | CS50Crab\_rapierV1 | 1403.1 | 1822-2063 | accepted |
-| 31 | PixelRifts\_mushakraj\_mk3 | 1399.5 | 1744-1847 | accepted |
+| 30 | PixelRifts\_mushakraj\_mk3 | 1399.5 | 1744-1847 | accepted |
+| 31 | CS50Crab\_rapierV1 | 1393.3 | 1822-2063 | accepted |
 | 32 | bc26vibe\_bot | 1357.1 | 1825-2159 | accepted |
 | 33 | XSercia\_genies | 1352.8 | 1783-1949 | accepted |
 | 34 | justinottesen\_alfredo | 1324.1 | 1684-1763 | accepted |
 | 35 | ask8000\_bumchit67 | 1314.4 | 1806-1944 | accepted |
 | 36 | C0derTang\_v6 | 1298.3 | 1729-1895 | accepted |
-| 37 | Naton-Cai\_ratplayer | 1280.8 | 1813-1850 | accepted |
-| 38 | Gavdingo\_v1 | 1278.7 | 1753-1775 | accepted |
-| 39 | j2399\_weighted\_micro\_v9 | 1244.3 | 1784-1600 | accepted |
-| 40 | vincentwang60\_javabot | 1236.2 | 1825-1889 | accepted |
-| 41 | bc26-example | 1226.4 | 1715-1774 | accepted |
-| 42 | bc26-example-copy | 1193.6 | 1692-1785 | accepted |
+| 37 | Gavdingo\_v1 | 1280.9 | 1753-1775 | accepted |
+| 38 | Naton-Cai\_ratplayer | 1280.8 | 1813-1850 | accepted |
+| 39 | vincentwang60\_javabot | 1249.1 | 1825-1889 | accepted |
+| 40 | j2399\_weighted\_micro\_v9 | 1244.3 | 1784-1600 | accepted |
+| 41 | bc26-example | 1224.2 | 1715-1774 | accepted |
+| 42 | bc26-example-copy | 1180.7 | 1692-1785 | accepted |
 | 43 | Victor-Ramirez-Garcia\_battleca | 1176.3 | 2091-1437 | accepted |
 | 44 | justinottesen\_carbonara | 1166.4 | 1791-1776 | accepted |
 | 45 | battlecode-archive\_result\_408 | 1138.4 | 1769-1732 | accepted |
