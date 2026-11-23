@@ -9,7 +9,7 @@
 ## Candidate names (owner 11-22)
 
 - **yNN** (yb9, yc2, yc3, yc4 ...): incremental candidates, one change on the champion.
-- **sparring** (sw52, sw53; earlier sw35, sw48): imitations of a tactic replica opponents beat us with (owner 11-22); kept in the pool, exempt from retirement, so defences get rated against them. Build them from replay evidence of what the opponents' units do, and check the imitation's behaviour in replays before trusting it: sw35 never rushed (a RUSH_LIFE 0 bug) and sw48 played the champion's game (research/field/sparring-gap).
+- **Imitations** of a tactic replica opponents beat us with (owner 11-22) are built as swings (swNN). Build them from replay evidence of what the opponents' units do, and check the imitation's behaviour in replays before trusting it: sw35 never rushed (a RUSH_LIFE 0 bug) and sw48 played the champion's game (research/field/sparring-gap). Until 11-23 they formed a separate "sparring" kind (sw35, sw48, sw52, sw53), exempt from retirement. The owner dropped the category on 11-23 at about 10:00 PDT. An imitation weaker than the champion does not reproduce what beats us. A stronger one wins the tournament, as sw53 did, and every later bot inherits the tactic. So imitations now retire like any swing.
 - **swNN** (sw01, sw02 ...): big swings, a coherent strategy change on the champion (a bundle of settings or a new
   mechanism). High-risk by design: a losing swing gets a second version before its strategy is dropped.
 
@@ -66,5 +66,9 @@
 | sw49 | spend the bank on bodies: RICH_BANK 600, MAX_BABIES_WAR 20, CORE_BABIES 20, KING_RESERVE 300 on yh6 | yh6 |
 | sw50 | sw49 on yk1: RICH_BANK 600, MAX_BABIES_WAR 20, CORE_BABIES 20, KING_RESERVE 300 | yk1 |
 | sw51 | SPARRING (diagnostic only, not entered): raiders from FIGHT rats + forward traps (code) | yk1 |
-| sw52 | SPARRING: sw35's siege with its bug fixed (RUSH_UNTIL 2001, RUSH_LIFE 2001, CARRY_KING 10/1, traps from 50) | yk1 |
-| sw53 | SPARRING: raiders (half the gatherers and fighters hold enemy-half mines at war) + forward traps skip the reserve gate (code) | sw51 |
+| sw52 | imitation: sw35's siege with its bug fixed (RUSH_UNTIL 2001, RUSH_LIFE 2001, CARRY_KING 10/1, traps from 50) (retired 11-23: -94 vs sw53 on 499) | yk1 |
+| sw53 | imitation: raiders (half the gatherers and fighters hold enemy-half mines at war) + forward traps skip the reserve gate (code) (CHAMPION 11-23 09:14) | sw51 |
+| sw54 | sw53's raiders and forward traps with sw50's bank on bodies | sw53 |
+| sw55 | all forward at war: RAID_SHARE 4 (every gatherer and fighter raids) | sw53 |
+| sw56 | kill finishing on the raider line: FINISH_K 8, FINISH_FLOOR 100 | sw53 |
+| sw57 | all cheese into rats: no rat traps (TRAP_CAP 0) + sw50's bank on bodies | sw53 |

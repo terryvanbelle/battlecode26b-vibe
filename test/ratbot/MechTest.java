@@ -155,7 +155,8 @@ public class MechTest {
             Baby.nearestEnemy = baby(50, Team.B, e, null);
             Comms.numKings = 1; Comms.kings[0] = c[2] == 1 ? p(5, 9) : p(25, 25);
             boolean laid = Baby.tryRatTrap();
-            check(laid == (c[4] == 1) && trapsLaid.size() == c[4], "trap gates: cheese " + c[0] + " budget " + c[1]
+            int want = Cfg.TRAP_CAP > 0 ? c[4] : 0;   // TRAP_CAP 0 (sw57, 11-23): no rat traps at all
+            check(laid == (want == 1) && trapsLaid.size() == want, "trap gates: cheese " + c[0] + " budget " + c[1]
                   + (c[2] == 1 ? " near our king" : "") + ": " + (laid ? "trap at " + trapsLaid : "none"));
         }
         // too far for a trap

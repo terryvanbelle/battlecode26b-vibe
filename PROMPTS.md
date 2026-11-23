@@ -258,3 +258,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (07:18) Can you also do a bug audit on yk1?  If you find any bugs, fix them and add the fixed version to the local tournament.  Also make sure the unit tests are current
 (08:48) OK, good.  I'd like you to add a clause to the prod telling it to check for bugs and test compliance/coverage whenever we pick a new champion
 (09:41) Can you do something about the labels in local-elo.png?  They're reducing the amount of horizontal space available for the graph itself
+(10:06) I'm not sure we need a separate sparring category in the local tournament.  For example, now that sw53 is champion, we've fixed that blind spot for good, since all future bots will descend from it
