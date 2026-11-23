@@ -169,10 +169,10 @@ sw30
 # yf1  (retired 11-22 19:25: DELIVER_AT 20 on ye4, -54 vs ye4 on 172 g)
 # sw31  (retired 11-22 18:15: full loads LOAD_AT 40 on ye4, -102 vs ye4 on 62 g, > 2 SE)
 yf2
-sw32
+# sw32  (retired 11-22 20:17: guard posture GUARD_DIST2 25 + AMMO_D2 13, -26 vs ye4 on 262 g)
 yf3
 yf4
-sw33
+# sw33  (retired 11-22 20:17: AUSTERE_CORE 12, -17 vs ye4 on 219 g)
 yf5
 sw34
 sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; not retired by the usual rule
