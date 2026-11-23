@@ -57,3 +57,4 @@
 | sw43 | sw38 + INCOME_TRUST 50 + KING_RESERVE 250 (yh3 + sw41 stacked) | sw38 |
 | sw44 | CORE_BABIES 22 on yh3 | yh3 |
 | sw45 | yh3 + INCOME_TRUST 30 + INCOME_WINDOW 150 (yh6 + yi2 stacked) | yh3 |
+| sw46 | RUSH_TO 20 on yh6 (16 opening rushers, not 12) | yh6 |

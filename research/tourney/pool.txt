@@ -191,18 +191,22 @@ sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; no
 # sw40  (retired 11-22 22:38: KING_RESERVE 250 on yf2, 22 g; rebuilt on sw38 as sw41)
 # yh1  (retired 11-23 00:18: END_CAT_COOP 800, -1 vs sw38 on 207 g: no gain)
 # yh2  (retired 11-23 00:18: RUSH_UNTIL 150, -42 vs sw38 on 210 g)
-yh3
+# yh3  (retired 11-23 02:18: ex-champion, -61 vs yh6 on 661 g)
 # sw41  (retired 11-23 00:38: KING_RESERVE 250 on sw38, -42 vs yh3 on 267 g; sw43 = yh3 + KING_RESERVE 250 carries it)
 # yh4  (retired 11-22 23:38: SPAWN_MARGIN 50, -136 vs sw38 on 51 g, 2.6 SE)
 # sw42  (retired 11-23 00:38: CORE_SMALL 16 on sw38, -11 vs sw38 on 194 g)
 # sw43  (retired 11-23 01:38: KING_RESERVE 250 + INCOME_TRUST 50, -18 vs yh3 on 242 g)
-yh5
+# yh5  (retired 11-23 02:18: INCOME_TRUST 40, -40 vs yh6 on 381 g)
 yh6
 # yh7  (retired 11-23 01:58: INCOME_WINDOW 60 (on sw38), -46 vs yh3 on 262 g)
-yi1
+# yi1  (retired 11-23 02:18: WAR_FLOOR 200, -64 vs yh6 on 231 g)
 # sw44  (retired 11-23 01:58: CORE_BABIES 22, -6 vs yh3 on 231 g: no gain)
-yi2
-yi4
-yi5
-yi6
+# yi2  (retired 11-23 02:18: INCOME_WINDOW 150 on yh3, -5 vs yh6 on 138 g; sw45 = yh6 + INCOME_WINDOW 150 carries it)
+# yi4  (retired 11-23 02:18: CHEESE_BITE_SURPLUS 300 on yh3, 154 g; rebuilt on yh6 as yj2)
+# yi5  (retired 11-23 02:18: INCOME_WINDOW 200 on yh3, 34 g; rebuilt on yh6 as yj1)
+# yi6  (retired 11-23 02:18: INCOME_TRUST 20, -144 vs yh6 on 40 g, 2.4 SE)
 sw45
+yj1
+yj2
+yj3
+sw46
