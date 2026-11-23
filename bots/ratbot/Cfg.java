@@ -10,9 +10,9 @@ public final class Cfg {
     // ---- spawning: how many babies the king keeps
 
     /** Baby cap in peace and at war. */
-    public static final int MAX_BABIES = 16, MAX_BABIES_WAR = 16;
+    public static final int MAX_BABIES = 16, MAX_BABIES_WAR = 20;   // sw54: sw50's bank on bodies
     /** With RICH_BANK or more banked the cap rises to RICH_BABIES (0 = off): a surplus buys bodies. */
-    public static final int RICH_BABIES = 40, RICH_BANK = 1000;
+    public static final int RICH_BABIES = 40, RICH_BANK = 600;   // sw54: sw50's bank on bodies
     /** The RICH tiers open at this round (0 = from the start). */
     public static final int RICH_FROM = 300;
     /** RICH_FROM applies only on maps of at least this many tiles (0: every map). */
@@ -21,7 +21,7 @@ public final class Cfg {
      *  spawn price, so a big bank is best turned into rats. */
     public static final int RICH2_BABIES = 80, RICH2_BANK = 3000;
     /** Live babies kept unconditionally (while CORE_FLOOR cheese remain) before the income test applies. */
-    public static final int CORE_BABIES = 18, CORE_FLOOR = 300;
+    public static final int CORE_BABIES = 20, CORE_FLOOR = 300;   // sw54: sw50's bank on bodies
     /** On maps of CORE_SMALL_AREA tiles or fewer (0 = off) the core count is CORE_SMALL: small maps starved the king
      *  paying for 18 babies at a rising price. */
     public static final int CORE_SMALL = 12, CORE_SMALL_AREA = 441;
@@ -63,7 +63,7 @@ public final class Cfg {
     public static final int INCOME_WINDOW = 100;
     /** Every optional spend (spawns over the floors, babies' traps away from a king) leaves KING_RESERVE per king,
      *  never more than the upkeep to round 2000 (0 = off); digs leave DIG_RESERVE. Starvation was the top loss cause. */
-    public static final int KING_RESERVE = 400, DIG_RESERVE = 300;
+    public static final int KING_RESERVE = 300, DIG_RESERVE = 300;   // sw54: sw50's bank on bodies
     /** Austerity from round AUSTERE_FROM (0 = off) while the kings' projection (Comms.BUDGET) is 0 or less: babies lay
      *  no rat traps and no cat traps away from a king, and the king's core count drops to AUSTERE_CORE (99: no cut). */
     public static final int AUSTERE_FROM = 60, AUSTERE_CORE = 99;
@@ -294,7 +294,9 @@ public final class Cfg {
     /** A FIGHT rat at war takes its mine from the contested home-half mines: those whose steps from the mirrored
      *  enemy start exceed those from home by at most FIGHT_POST (0 = off). */
     public static final int FIGHT_POST = 10;
-    /** SPARRING sw53 (replica study 11-23, research/field/sparring-gap): raiders. A gatherer or fighter at war whose
+    /** BIG SWING sw54 (11-23): sw53's raiders and forward traps (profile H1: hold the front after the rush) with sw50's
+     *  bank on bodies (H3: keep the army growing; the profile reads H3 as downstream of H1, so sw50's spending, -29 on
+     *  yk1, may pay with the raiders' income). sw53 (replica study 11-23, research/field/sparring-gap): raiders. A gatherer or fighter at war whose
      *  slot draws below RAID_SHARE of 4 takes the enemy twin (mirror) of its home mine instead of the mine itself (a
      *  fighter's: of its contested home mine), so about RAID_SHARE/4 of the non-rushers hold the enemy half (0 = off). */
     public static final int RAID_SHARE = 2;
