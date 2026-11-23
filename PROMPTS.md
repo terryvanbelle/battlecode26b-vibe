@@ -254,3 +254,5 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (19:31) Please set the minimum ELO on the top panel of rating-history.png to 1400
 (06:31) Good morning!  What happened overnight?
 (06:35) What happened to our categories?  Yesterday we had "incremental" vs. "swing".  Now I see "small" vs. "sparring"
+(06:49) Something is still wrong with your sparring bots, since they're worse than the champion, and yet the bots they imitate beat our champion.  Can you see if you can figure out the behavioral difference that explains this discrepancy?
+(07:18) Can you also do a bug audit on yk1?  If you find any bugs, fix them and add the fixed version to the local tournament.  Also make sure the unit tests are current

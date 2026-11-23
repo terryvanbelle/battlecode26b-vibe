@@ -1,0 +1,5 @@
+name=sw53
+source=bots/sw51
+source_sha=76064acdfc4f
+commit=cf7562fd
+created=2026-11-23 07:15 PDT

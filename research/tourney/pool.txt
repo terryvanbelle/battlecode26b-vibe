@@ -175,7 +175,7 @@
 # sw33  (retired 11-22 20:17: AUSTERE_CORE 12, -17 vs ye4 on 219 g)
 # yf5  (retired 11-22 20:38: control clone of ye4, -34 on 253 g, 1.5 SE: no tournament bias found)
 # sw34  (retired 11-22 21:17: AUSTERE_FROM 0 on ye4, -19 vs yf2 on 351 g; yg1 carries it on yf2)
-sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; not retired by the usual rule
+# sw35 (retired 11-23 07:2x PDT: broken sparring bot: RUSH_LIFE 0 made every rusher give up on its second turn, so it never rushed; research/field/sparring-gap)
 # yf6  (retired 11-22 20:58: AMMO 80/5 defence, -93 vs yf2 on 67 g, 2 SE)
 # yf7  (retired 11-22 21:58: KING_FRONT 40 on ye4, -13 vs yf2 on 216 g)
 # sw36  (retired 11-22 22:38: yf2 + INCOME_TRUST 60, -16 vs sw38 on 274 g; sw39 carries it on sw38)
@@ -218,7 +218,7 @@ sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; no
 # yj8  (retired 11-23 05:38: KING_BITE_FLOOR 200, -18 vs yh6 on 230 g)
 # yj9  (retired 11-23 05:58: RUSH_TO 12, -58 vs yh6 on 234 g)
 yk1
-sw48  # sparring (big army imitation, exempt from retirement)
+# sw48 (retired 11-23 07:2x PDT: sparring premise wrong: plays the champion's game with more bodies; research/field/sparring-gap)
 # yk2  (retired 11-23 06:45: KING_BITE_FLOOR 100 on yh6, -1 vs yh6 on 137 g)
 # yk3  (retired 11-23 06:18: KING_BITE_MAX 200, -75 vs yh6 on 104 g, 2.1 SE)
 # yk4  (retired 11-23 06:45: SPAWN_MARGIN 150 on yh6, +5 vs yh6 on 97 g)
@@ -232,3 +232,5 @@ yl2
 yl3
 yl4
 sw50
+sw52  # sparring: siege imitation, sw35 fixed (exempt from retirement)
+sw53  # sparring: raiders + forward traps (exempt from retirement)

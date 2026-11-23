@@ -7,7 +7,7 @@
 ## Candidate names (owner 11-22)
 
 - **yNN** (yb9, yc2, yc3, yc4 ...): incremental candidates, one change on the champion.
-- **sparring** (sw35, sw48): imitations of a tactic replica opponents beat us with (owner 11-22); kept in the pool, exempt from retirement, so defences get rated against them.
+- **sparring** (sw52, sw53; earlier sw35, sw48): imitations of a tactic replica opponents beat us with (owner 11-22); kept in the pool, exempt from retirement, so defences get rated against them. Build them from replay evidence of what the opponents' units do, and check the imitation's behaviour in replays before trusting it: sw35 never rushed (a RUSH_LIFE 0 bug) and sw48 played the champion's game (research/field/sparring-gap).
 - **swNN** (sw01, sw02 ...): big swings, a coherent strategy change on the champion (a bundle of settings or a new
   mechanism). High-risk by design: a losing swing gets a second version before its strategy is dropped.
 
@@ -63,3 +63,6 @@
 | sw48 | SPARRING: MAX_BABIES 24/24 on yh6 (imitates the replica opponents' 20-30 rat armies) | yh6 |
 | sw49 | spend the bank on bodies: RICH_BANK 600, MAX_BABIES_WAR 20, CORE_BABIES 20, KING_RESERVE 300 on yh6 | yh6 |
 | sw50 | sw49 on yk1: RICH_BANK 600, MAX_BABIES_WAR 20, CORE_BABIES 20, KING_RESERVE 300 | yk1 |
+| sw51 | SPARRING (diagnostic only, not entered): raiders from FIGHT rats + forward traps (code) | yk1 |
+| sw52 | SPARRING: sw35's siege with its bug fixed (RUSH_UNTIL 2001, RUSH_LIFE 2001, CARRY_KING 10/1, traps from 50) | yk1 |
+| sw53 | SPARRING: raiders (half the gatherers and fighters hold enemy-half mines at war) + forward traps skip the reserve gate (code) | sw51 |
