@@ -294,6 +294,13 @@ public final class Cfg {
     /** A FIGHT rat at war takes its mine from the contested home-half mines: those whose steps from the mirrored
      *  enemy start exceed those from home by at most FIGHT_POST (0 = off). */
     public static final int FIGHT_POST = 10;
+    /** SPARRING sw53 (replica study 11-23, research/field/sparring-gap): raiders. A gatherer or fighter at war whose
+     *  slot draws below RAID_SHARE of 4 takes the enemy twin (mirror) of its home mine instead of the mine itself (a
+     *  fighter's: of its contested home mine), so about RAID_SHARE/4 of the non-rushers hold the enemy half (0 = off). */
+    public static final int RAID_SHARE = 2;
+    /** SPARRING sw51: a rat trap laid from the enemy half skips the KING_RESERVE and austerity gates (the teams that
+     *  beat us lay 54-76% of their traps in our half, at 2-3x our rate). */
+    public static final boolean FWD_TRAP = true;
     /** Trail home: the stall count and homing carry over a gap of up to TRAIL_GAP rounds between delivery turns (a
      *  loaded carrier skips rounds, so 0 restarted the count every skip). */
     public static final int TRAIL_GAP = 12;

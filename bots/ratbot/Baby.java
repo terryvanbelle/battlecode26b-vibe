@@ -785,7 +785,8 @@ public final class Baby {
         RobotController rc = G.rc;
         if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= Cfg.TRAP_CAP) return false;
         if (rc.getAllCheese() < Econ.floor(Cfg.RAT_TRAP_MIN_CHEESE)) return false;
-        if ((rc.getAllCheese() < King.reserve(Cfg.KING_RESERVE) + 20 || King.austere()) && !nearKing(nearestEnemy.location, Cfg.DEF_TRAP_DIST2)) return false;
+        if ((rc.getAllCheese() < King.reserve(Cfg.KING_RESERVE) + 20 || King.austere()) && !nearKing(nearestEnemy.location, Cfg.DEF_TRAP_DIST2)
+                && !(Cfg.FWD_TRAP && !homeHalf(G.me))) return false;
         int d0 = G.me.distanceSquaredTo(nearestEnemy.location);
         if (d0 > Cfg.BABY_TRAP_DIST2) return false;
         MapLocation best = trapTile(rc.getLocation(), rc.getDirection(), nearestEnemy.location, d0, true);
@@ -1217,7 +1218,7 @@ public final class Baby {
      *  there is no mine to go to; true when this took the turn. */
     private static boolean mineMove() throws GameActionException {
         if (mineTarget != null && Comms.numMines != minesAtPick) mineTarget = null;
-        if (postMargin > 0 && role == FIGHT && coopAtPick && !G.coop) mineTarget = null;
+        if ((postMargin > 0 && role == FIGHT || Cfg.RAID_SHARE > 0 && ((slot >>> 12) & 3) < Cfg.RAID_SHARE) && coopAtPick && !G.coop) mineTarget = null;
         // a newborn's first turn (~12.6k spent by here) without the bytecodes for pickMine (~300 per known mine) and
         // the walk after it waits: picking next turn beats overrunning into it
         if (mineTarget == null && G.round == birthRound
@@ -1755,7 +1756,15 @@ public final class Baby {
         }
         coopAtPick = G.coop;
         minesAtPick = Comms.numMines;
-        return cand[(slot % m + mineShift) % m];
+        MapLocation pick = cand[(slot % m + mineShift) % m];
+        // Cfg.RAID_SHARE: a raider holds the enemy twin of its contested home mine
+        if (raider() && homeHalf(pick)) pick = G.mirror(pick, firstSym());
+        return pick;
+    }
+
+    /** Cfg.RAID_SHARE: this rat is a raider (a gatherer or fighter at war, RAID_SHARE in 4 by slot). */
+    static boolean raider() {
+        return Cfg.RAID_SHARE > 0 && (role == FIGHT || role == GATHER) && !G.coop && ((slot >>> 12) & 3) < Cfg.RAID_SHARE;
     }
 
     /** Cfg.LOAD_AT: a gatherer carrying raw cheese heads home once it holds at least the load, or late in the game. */

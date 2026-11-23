@@ -233,7 +233,7 @@ yl1
 # yl4 (retired 11-23 08:57 PDT: -16 vs yk1 on 344 g, no path to the +22 it needs; the yk1 audit found the FIGHT_POST filter nearly inert in yk1, so FIGHT_POST 8 vs 10 barely changes play; room for big swing sw55)
 sw50
 sw52  # sparring: siege imitation, sw35 fixed (exempt from retirement)
-sw53  # sparring: raiders + forward traps (exempt from retirement)
+sw53  # CHAMPION 11-23 09:14 PDT (the sparring partner crowned: yk1 + raiders RAID_SHARE 2 + forward traps FWD_TRAP)
 yl5  # audit fixes on yk1 (research/audit/2026-11-23-yk1.md)
 # yl6 (retired 11-23 08:51 PDT: 17-38, -144 vs yk1 on 55 g; it differs from yl5 only by WAR_GATHER 1, so yl5 alone carries the audit bundle while runs/sp005 finds the fix that loses)
 yl7  # yk1 + FWD_TRAP (sw53's forward traps alone, raiders off)
