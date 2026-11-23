@@ -58,7 +58,7 @@ public final class Cfg {
     // ---- economy: income estimate, reserves, austerity
 
     /** Fraction (percent) of measured income trusted when projecting forward. */
-    public static final int INCOME_TRUST = 50;
+    public static final int INCOME_TRUST = 30;
     /** Rounds of income history in the rate estimate. */
     public static final int INCOME_WINDOW = 100;
     /** Every optional spend (spawns over the floors, babies' traps away from a king) leaves KING_RESERVE per king,
