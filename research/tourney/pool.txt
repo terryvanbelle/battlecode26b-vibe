@@ -210,7 +210,7 @@ yh6
 # yj2  (retired 11-23 03:38: CHEESE_BITE_SURPLUS 300, -25 vs yh6 on 199 g)
 # yj3  (retired 11-23 03:38: INCOME_TRUST 25, -14 vs yh6 on 211 g)
 # sw46  (retired 11-23 02:58: RUSH_TO 20, -89 vs yh6 on 93 g, 2.3 SE)
-yj4
+# yj4  (retired 11-23 04:38: TRAP_SURPLUS 100, -1 vs yh6 on 259 g: level, no gain)
 # yj5  (retired 11-23 04:18: END_CAT 1300, -29 vs yh6 on 214 g)
 sw47
 yj6
@@ -218,3 +218,4 @@ yj7
 yj8
 yj9
 yk1
+sw48  # sparring (big army imitation, exempt from retirement)
