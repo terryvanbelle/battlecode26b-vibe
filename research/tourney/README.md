@@ -50,3 +50,4 @@
 | sw36 | combination: yf2 DEFEND_D2 225 + yf4 INCOME_TRUST 60 | ye4 |
 | sw37 | stack: sw30 (RUSH_UNTIL 200, END_CAT_COOP 1000) + yf2 DEFEND_D2 225 + yf3 WAR_FLOOR 450 | ye4 |
 | sw38 | yf2 + RUSH_UNTIL 200 + END_CAT_COOP 1000 (sw30 on the new champion) | yf2 |
+| sw39 | yf2 + RUSH_UNTIL 200 + END_CAT_COOP 1000 + INCOME_TRUST 60 (sw38 + sw36 stacked) | yf2 |

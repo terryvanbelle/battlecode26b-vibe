@@ -177,7 +177,7 @@ yf2
 # sw34  (retired 11-22 21:17: AUSTERE_FROM 0 on ye4, -19 vs yf2 on 351 g; yg1 carries it on yf2)
 sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; not retired by the usual rule
 # yf6  (retired 11-22 20:58: AMMO 80/5 defence, -93 vs yf2 on 67 g, 2 SE)
-yf7
+# yf7  (retired 11-22 21:58: KING_FRONT 40 on ye4, -13 vs yf2 on 216 g)
 sw36
 sw37
 sw38
@@ -185,3 +185,4 @@ yg1
 yg2
 yg3
 yg4
+sw39
