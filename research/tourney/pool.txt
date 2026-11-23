@@ -153,7 +153,7 @@
 # ye2  (retired 11-22 16:55: THROW_HOLD 5 on sw19, settled -6 on 189 g)
 # ye3  (retired 11-22 16:55: KING_RESERVE 600 on sw19, settled -5 on 233 g)
 # sw24  (retired 11-22 16:55: king defence radius on sw19, settled +0 vs sw19 on 189 g; its pairing with ye4 is sw26)
-ye4
+# ye4  (retired 11-22 20:58: ex-champion, -22 vs yf2 on 1406 g)
 # sw25  (retired 11-22 17:15: no opening rush on sw19, settled -29 vs ye4 on 266 g)
 # ye5  (retired 11-22 18:55: RUSH_UNTIL 200 on sw19, settled -3 vs ye4 on 454 g; carried on in sw30)
 # ye6  (retired 11-22 17:55: END_CAT 1200 on sw19, settled -18 vs ye4 on 260 g)
@@ -170,13 +170,15 @@ sw30
 # sw31  (retired 11-22 18:15: full loads LOAD_AT 40 on ye4, -102 vs ye4 on 62 g, > 2 SE)
 yf2
 # sw32  (retired 11-22 20:17: guard posture GUARD_DIST2 25 + AMMO_D2 13, -26 vs ye4 on 262 g)
-yf3
+# yf3  (retired 11-22 20:58: WAR_FLOOR 450, -21 vs yf2 on 340 g)
 yf4
 # sw33  (retired 11-22 20:17: AUSTERE_CORE 12, -17 vs ye4 on 219 g)
 # yf5  (retired 11-22 20:38: control clone of ye4, -34 on 253 g, 1.5 SE: no tournament bias found)
 sw34
 sw35  # sparring partner (owner 11-22): imitation of the siege that beats us; not retired by the usual rule
-yf6
+# yf6  (retired 11-22 20:58: AMMO 80/5 defence, -93 vs yf2 on 67 g, 2 SE)
 yf7
 sw36
 sw37
+sw38
+yg1
