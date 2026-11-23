@@ -46,3 +46,4 @@
 | sw32 | guard posture: face enemies within dist2 25, ammo distance 13 | ye4 |
 | sw33 | austerity core: a broke king keeps 12 core babies, not 18 | ye4 |
 | sw34 | ablation: austerity off | ye4 |
+| sw35 | SPARRING: imitation of the opponents' grab-and-throw siege (rush all game, carry to the king); exempt from retirement | ye4 |
