@@ -1,6 +1,6 @@
 # Galaxy replica ladder
 
-Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 21:01 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
+Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 21:05 PDT. Written by `tools/replica_report.py`: regenerate it, do not edit it.
 
 **Rating** is the replica's displayed rating (galaxy's penalized Elo, which starts every team low and climbs over its first rated matches); it is not the Bradley-Terry fit of `progress/ELO.md`. Games W-L counts the replica games in `progress/games.csv`. Our team is **vibe26b**.
 
@@ -9,8 +9,8 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 21:01 
 | # | Team | Rating | Games W-L | Submission |
 |---:|---|---:|---|---|
 | 1 | IvanGeffner\_basic51 | 2189.3 | 2646-1386 | accepted |
-| 2 | awu7\_awubot\_us | 2066.6 | 1935-1923 | accepted |
-| 3 | uravt\_Version41 | 1984.8 | 2112-1887 | accepted |
+| 2 | awu7\_awubot\_us | 2059.8 | 1935-1923 | accepted |
+| 3 | uravt\_Version41 | 1991.6 | 2112-1887 | accepted |
 | 4 | awu7\_awubot\_quals | 1955.9 | 1791-1728 | accepted |
 | 5 | uravt\_Version35 | 1952.7 | 1959-1959 | accepted |
 | 6 | nzjt\_TheComplexMerlin | 1868.8 | 3131-2122 | accepted |
@@ -39,20 +39,20 @@ Snapshot of the Rankings page of our private galaxy replica, taken Nov 22 21:01 
 | 29 | amcsz\_fighterrats | 1440.5 | 1773-1986 | accepted |
 | 30 | CS50Crab\_rapierV1 | 1422.3 | 1815-2049 | accepted |
 | 31 | PixelRifts\_mushakraj\_mk3 | 1415.8 | 1735-1832 | accepted |
-| 32 | bc26vibe\_bot | 1354.3 | 1819-2153 | accepted |
-| 33 | XSercia\_genies | 1345.2 | 1779-1947 | accepted |
-| 34 | justinottesen\_alfredo | 1329.2 | 1672-1751 | accepted |
-| 35 | ask8000\_bumchit67 | 1318.9 | 1805-1942 | accepted |
+| 32 | XSercia\_genies | 1356.7 | 1779-1947 | accepted |
+| 33 | bc26vibe\_bot | 1354.3 | 1819-2153 | accepted |
+| 34 | ask8000\_bumchit67 | 1318.9 | 1805-1942 | accepted |
+| 35 | justinottesen\_alfredo | 1317.7 | 1672-1751 | accepted |
 | 36 | C0derTang\_v6 | 1304.6 | 1722-1887 | accepted |
 | 37 | Naton-Cai\_ratplayer | 1271.3 | 1806-1845 | accepted |
-| 38 | Gavdingo\_v1 | 1263.9 | 1747-1772 | accepted |
-| 39 | vincentwang60\_javabot | 1256.1 | 1820-1879 | accepted |
-| 40 | j2399\_weighted\_micro\_v9 | 1253.9 | 1774-1589 | accepted |
+| 38 | vincentwang60\_javabot | 1265.8 | 1820-1879 | accepted |
+| 39 | Gavdingo\_v1 | 1263.9 | 1747-1772 | accepted |
+| 40 | j2399\_weighted\_micro\_v9 | 1255.3 | 1774-1589 | accepted |
 | 41 | bc26-example-copy | 1192.7 | 1682-1777 | accepted |
-| 42 | bc26-example | 1188.7 | 1692-1761 | accepted |
-| 43 | Victor-Ramirez-Garcia\_battleca | 1185.9 | 2079-1425 | accepted |
+| 42 | Victor-Ramirez-Garcia\_battleca | 1188.5 | 2079-1425 | accepted |
+| 43 | bc26-example | 1177.5 | 1692-1761 | accepted |
 | 44 | justinottesen\_carbonara | 1175.1 | 1779-1761 | accepted |
-| 45 | battlecode-archive\_result\_408 | 1144.8 | 1758-1716 | accepted |
+| 45 | battlecode-archive\_result\_408 | 1142.2 | 1758-1716 | accepted |
 | 46 | Camleaf\_mk1 | 1128.2 | 1702-1820 | accepted |
 | 47 | GuzziFlipFlops\_Hermesv8 | 1097.1 | 1775-1831 | accepted |
 | 48 | quanticsoul4772\_ratbot | 1048.4 | 1955-1552 | accepted |
