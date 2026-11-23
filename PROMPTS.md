@@ -252,3 +252,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (18:59) A while back you mentioned that we have a blind spot, in that we can't learn defences against tactics that we don't run locally.  That's true, but you can always adopt the tactic that an opponent uses against us, and that should win locally.  Then you can work on learning a defence against it, right?
 (19:03) Can you add another subgraph to rating-history.png?  I'd like to see our replica ELO minus the replica ELO's of the 10th, 15th, and 20th place bots
 (19:31) Please set the minimum ELO on the top panel of rating-history.png to 1400
+(06:31) Good morning!  What happened overnight?
