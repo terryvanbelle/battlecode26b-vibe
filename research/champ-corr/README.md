@@ -85,6 +85,46 @@ and 210 replica games. The scatterplot is also in [progress/champ-corr.png](../.
   cheesefarm (17 of 20) are never won on the replica. rift (8 of 20) and thunderdome (9 of 20) are always won. These
   are the flippable maps to study, starting with the replays of evileye and cheesefarm.
 
+## How our king dies (11-23 15:50 PDT)
+
+**Data.** The 21-map study's 189 replica games against AlexT101_usqualsbot: 101 lost, 88 won. All 10 champions lost
+every game on evileye, cheesefarm, starvation and DefaultSmall (40 games). Scripts: `kingdmg.py` (king damage by cause,
+from actions.tsv) and `grabs.py` (every enemy grab of our babies, the victim's state from turns.tsv). Both run with
+tools/.venv/bin/python.
+
+**Almost every game ends in a king kill** (RATKING_DESTROYED in all 40 games on the four always-lost maps).
+
+King damage per game, by cause:
+
+| games | whose king | our own babies thrown into it | bites | rat traps | their babies thrown | total |
+|---|---|---|---|---|---|---|
+| 40, the 4 always-lost maps | ours | 282 | 194 | 25 | 15 | 516 |
+| 101 lost | ours | 244 | 200 | 66 | 24 | 534 |
+| 101 lost | theirs | 53 | 35 | 4 | 0 | 92 |
+| 88 won | ours | 67 | 45 | 18 | 16 | 145 |
+| 88 won | theirs | 201 | 101 | 9 | 0 | 311 |
+
+- **The kill is a throw.** The enemy grabs one of our babies and throws it into our king (about 42 damage a hit, point
+  blank). When we win we do the same to theirs.
+- **The grabs.** In the 101 losses the enemy grabbed 15,408 of our babies, 152 a game:
+  - 63% from behind the victim's 90-degree cone (the engine lets a rat grab an enemy that cannot see it, or a weaker one);
+  - 30% by a healthier enemy in view;
+  - 7% unclear from the dumps.
+- **The ones thrown into our king.** 732 grabs (7 a game) ended there within 12 rounds:
+  - 90% were grabbed within 6 tiles of our king, inside its 360-degree view (dist2 25);
+  - 65% from behind;
+  - not mostly newborns (14% were 5 rounds old or less) nor gatherers carrying cheese (13%); about half had 50 hp or
+    less.
+- **Hidden rat traps are minor:** 66 a game in losses. Enemy traps are invisible to us, and a king triggers one by moving
+  any of its 9 tiles into the trap's dist2 2.
+- **The besieged king hoards.** On evileye (38461, 38504) our bank sat at 100-200 with 3-4 babies against their 8 from
+  r200. That is under the 200-300 spawn floors, and the king died still holding 89-170 cheese.
+
+**Newcomers from this (one change each on yl19):**
+- **sw61, the king's eyes (KING_EYES 3):** the alerting king writes its 3 nearest enemy babies into free slots 20-22. A
+  baby's guard facing counts the ones it cannot see.
+- **yl23, SIEGE_FLOOR 100:** every spawn floor drops to 100 while enemies are in the king's sight at war.
+
 ## Local rating to replica rating (owner 14:33 PDT)
 
 The fit and the projection are in [progress/local-to-replica.md](../../progress/local-to-replica.md) and
