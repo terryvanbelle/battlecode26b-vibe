@@ -138,7 +138,7 @@
 # yd3  (retired 11-22 12:55: WAR_GATHER 1 -57 vs sw08 on 68 g)
 # sw18  (retired 11-22 12:55: cat feeding -59 vs sw08 on 80 g)
 # yd4  (retired 11-22 14:15: RETREAT_HP 55 on sw08, -15 vs yd1 on 222 g)
-sw19
+# sw19  (retired 11-22 17:35: former champion #446, settled -11 vs ye4 on 1121 g)
 # yd5  (retired 11-22 13:35: FIGHT_POST 14 -95 vs yd1 on 50 g)
 # yd6  (retired 11-22 14:58: MAX_BABIES_WAR 18 on yd1, -19 vs yd1 on 224 g)
 # yd7  (retired 11-22 14:35: KING_RESERVE 300 -20 vs yd1 on 180 g; the opposite dose ye1 600 replaces it)
@@ -157,10 +157,12 @@ ye4
 # sw25  (retired 11-22 17:15: no opening rush on sw19, settled -29 vs ye4 on 266 g)
 ye5
 ye6
-sw26
+# sw26  (retired 11-22 17:35: ye4 + sw24 king defence, settled -7 vs ye4 on 209 g)
 # sw27  (retired 11-22 17:15: conservative opening on sw19, -107 vs ye4 on 78 g, > 2 SE)
 ye7
 ye8
 sw28
 ye9
 sw29
+yf0
+sw30
