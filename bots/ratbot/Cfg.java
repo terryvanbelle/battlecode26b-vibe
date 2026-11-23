@@ -112,7 +112,7 @@ public final class Cfg {
     public static final int PLUG_LEFT = 3000;
     /** A king bites with cheese only to make a kill: up to KING_BITE_MAX above KING_BITE_FLOOR banked. A baby pays up
      *  to FINISH_K * FINISH_K above FINISH_FLOOR. */
-    public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 5, FINISH_FLOOR = 200;
+    public static final int KING_BITE_MAX = 100, KING_BITE_FLOOR = 300, FINISH_K = 8, FINISH_FLOOR = 100;   // sw58: sw56 kill finishing, ported to sw54
     /** Enemy rats within KING_THREAT_D2 of a king count as its threat (Comms.ALERT); a baby within DEFEND_D2 of an
      *  alerting king defends it. */
     public static final int KING_THREAT_D2 = 30, DEFEND_D2 = 225;

@@ -263,3 +263,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (11:48) Can you do a scatterplot and correlation between local champions and on the panel?  For each champion, let's compare win rate vs. xk6 versus win rate vs. AlexT101_usqualsbot.  Don't do all champions, let's say a sample of 10, evenly spaced over time, with 5 games each opponent
 (11:51) Do you not already have their win record vs. AlexT101_usqualsbot?
 (12:45) That scatterplot gave better results than I was hoping for.  The last time we looked at this, we got a small negative correlation.  I think it's worth firming up the game count to get a more accurate picture
+(13:24) If you need to tweak the replica's hourly game limits a bit to squeeze in a few more games for the scatter plot, then you have my permission to do so
