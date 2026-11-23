@@ -1,0 +1,354 @@
+{
+ "opponent": "AlexT101_usqualsbot",
+ "maps": [
+  "DefaultLarge",
+  "ZeroDay",
+  "dirtpassageway",
+  "rift",
+  "wallsofparadis"
+ ],
+ "plan": [
+  {
+   "bot": "xr49",
+   "crowned_pdt": "11-21 09:13",
+   "champion_sub": 432,
+   "replica_games": 45,
+   "replica_record": [
+    {
+     "match": 33589,
+     "sub": 432,
+     "ranked": true,
+     "maps": [
+      "Nofreecheese",
+      "ZeroDay",
+      "pipes"
+     ],
+     "won": 0,
+     "lost": 3
+    },
+    {
+     "match": 32926,
+     "sub": 421,
+     "ranked": false,
+     "maps": [
+      "cheesefarm",
+      "cheeseguardians",
+      "dirtfulcat",
+      "dirtpassageway",
+      "evileye",
+      "keepout",
+      "pipes"
+     ],
+     "won": 4,
+     "lost": 3
+    },
+    {
+     "match": 32922,
+     "sub": 421,
+     "ranked": false,
+     "maps": [
+      "cheesefarm",
+      "cheeseguardians",
+      "dirtfulcat",
+      "dirtpassageway",
+      "evileye",
+      "keepout",
+      "pipes"
+     ],
+     "won": 2,
+     "lost": 5
+    },
+    {
+     "match": 32919,
+     "sub": 421,
+     "ranked": false,
+     "maps": [
+      "DefaultLarge",
+      "DefaultMedium",
+      "DefaultSmall",
+      "Meow",
+      "Nofreecheese",
+      "ZeroDay",
+      "arrows"
+     ],
+     "won": 2,
+     "lost": 5
+    },
+    {
+     "match": 32916,
+     "sub": 421,
+     "ranked": false,
+     "maps": [
+      "DefaultLarge",
+      "DefaultMedium",
+      "DefaultSmall",
+      "Meow",
+      "Nofreecheese",
+      "ZeroDay",
+      "arrows"
+     ],
+     "won": 1,
+     "lost": 6
+    },
+    {
+     "match": 32902,
+     "sub": 421,
+     "ranked": false,
+     "maps": [
+      "popthecork",
+      "rift",
+      "sittingducks",
+      "starvation",
+      "thunderdome",
+      "trapped",
+      "wallsofparadis"
+     ],
+     "won": 6,
+     "lost": 1
+    },
+    {
+     "match": 32899,
+     "sub": 421,
+     "ranked": false,
+     "maps": [
+      "popthecork",
+      "rift",
+      "sittingducks",
+      "starvation",
+      "thunderdome",
+      "trapped",
+      "wallsofparadis"
+     ],
+     "won": 4,
+     "lost": 3
+    }
+   ],
+   "topup_maps": []
+  },
+  {
+   "bot": "xu2",
+   "crowned_pdt": "11-21 15:07",
+   "champion_sub": 435,
+   "replica_games": 3,
+   "replica_record": [
+    {
+     "match": 34263,
+     "sub": 435,
+     "ranked": true,
+     "maps": [
+      "cheeseguardians",
+      "Nofreecheese",
+      "thunderdome"
+     ],
+     "won": 1,
+     "lost": 2
+    }
+   ],
+   "topup_maps": [
+    "DefaultLarge",
+    "ZeroDay"
+   ]
+  },
+  {
+   "bot": "xw9",
+   "crowned_pdt": "11-21 19:55",
+   "champion_sub": 437,
+   "replica_games": 0,
+   "replica_record": [],
+   "topup_maps": [
+    "DefaultLarge",
+    "ZeroDay",
+    "dirtpassageway",
+    "rift",
+    "wallsofparadis"
+   ]
+  },
+  {
+   "bot": "ya0",
+   "crowned_pdt": "11-22 00:55",
+   "champion_sub": 440,
+   "replica_games": 6,
+   "replica_record": [
+    {
+     "match": 35169,
+     "sub": 440,
+     "ranked": true,
+     "maps": [
+      "DefaultMedium",
+      "dirtpassageway",
+      "evileye"
+     ],
+     "won": 1,
+     "lost": 2
+    },
+    {
+     "match": 35096,
+     "sub": 440,
+     "ranked": true,
+     "maps": [
+      "rift",
+      "DefaultSmall",
+      "cheeseguardians"
+     ],
+     "won": 1,
+     "lost": 2
+    }
+   ],
+   "topup_maps": []
+  },
+  {
+   "bot": "yb9",
+   "crowned_pdt": "11-22 06:17",
+   "champion_sub": 443,
+   "replica_games": 9,
+   "replica_record": [
+    {
+     "match": 35722,
+     "sub": 443,
+     "ranked": true,
+     "maps": [
+      "starvation",
+      "trapped",
+      "thunderdome"
+     ],
+     "won": 2,
+     "lost": 1
+    },
+    {
+     "match": 35618,
+     "sub": 443,
+     "ranked": true,
+     "maps": [
+      "DefaultSmall",
+      "ZeroDay",
+      "cheesefarm"
+     ],
+     "won": 0,
+     "lost": 3
+    },
+    {
+     "match": 35560,
+     "sub": 443,
+     "ranked": true,
+     "maps": [
+      "cheesefarm",
+      "sittingducks",
+      "evileye"
+     ],
+     "won": 0,
+     "lost": 3
+    }
+   ],
+   "topup_maps": []
+  },
+  {
+   "bot": "yd1",
+   "crowned_pdt": "11-22 12:56",
+   "champion_sub": 445,
+   "replica_games": 6,
+   "replica_record": [
+    {
+     "match": 36265,
+     "sub": 445,
+     "ranked": true,
+     "maps": [
+      "ZeroDay",
+      "thunderdome",
+      "pipes"
+     ],
+     "won": 1,
+     "lost": 2
+    },
+    {
+     "match": 36254,
+     "sub": 445,
+     "ranked": true,
+     "maps": [
+      "DefaultLarge",
+      "DefaultMedium",
+      "DefaultSmall"
+     ],
+     "won": 1,
+     "lost": 2
+    }
+   ],
+   "topup_maps": []
+  },
+  {
+   "bot": "ye4",
+   "crowned_pdt": "11-22 16:57",
+   "champion_sub": 447,
+   "replica_games": 0,
+   "replica_record": [],
+   "topup_maps": [
+    "DefaultLarge",
+    "ZeroDay",
+    "dirtpassageway",
+    "rift",
+    "wallsofparadis"
+   ]
+  },
+  {
+   "bot": "sw38",
+   "crowned_pdt": "11-22 22:36",
+   "champion_sub": 449,
+   "replica_games": 0,
+   "replica_record": [],
+   "topup_maps": [
+    "DefaultLarge",
+    "ZeroDay",
+    "dirtpassageway",
+    "rift",
+    "wallsofparadis"
+   ]
+  },
+  {
+   "bot": "yk1",
+   "crowned_pdt": "11-23 06:36",
+   "champion_sub": 452,
+   "replica_games": 3,
+   "replica_record": [
+    {
+     "match": 37954,
+     "sub": 452,
+     "ranked": true,
+     "maps": [
+      "thunderdome",
+      "starvation",
+      "popthecork"
+     ],
+     "won": 3,
+     "lost": 0
+    }
+   ],
+   "topup_maps": [
+    "DefaultLarge",
+    "ZeroDay"
+   ]
+  },
+  {
+   "bot": "sw54",
+   "crowned_pdt": "11-23 10:34",
+   "champion_sub": 454,
+   "replica_games": 3,
+   "replica_record": [
+    {
+     "match": 38252,
+     "sub": 454,
+     "ranked": true,
+     "maps": [
+      "Meow",
+      "popthecork",
+      "arrows"
+     ],
+     "won": 3,
+     "lost": 0
+    }
+   ],
+   "topup_maps": [
+    "DefaultLarge",
+    "ZeroDay"
+   ]
+  }
+ ]
+}

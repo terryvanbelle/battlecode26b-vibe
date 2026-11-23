@@ -1,0 +1,107 @@
+{
+ "n": 10,
+ "local_vs_replica": {
+  "r": 0.6264439706160432,
+  "ci95": [
+   -0.005268672127704173,
+   0.9007822655982363
+  ],
+  "perm_p": 0.056714716426417865,
+  "spearman": 0.5814861645428299,
+  "spearman_perm_p": 0.08790456047719761
+ },
+ "rating_vs_replica": {
+  "r": 0.5315372177102812,
+  "ci95": [
+   -0.14744249458650263,
+   0.870003894879761
+  ],
+  "perm_p": 0.10963445182774086,
+  "spearman": 0.33875945640442845,
+  "spearman_perm_p": 0.3348933255333723
+ },
+ "rating_vs_local": {
+  "r": 0.5164318906052932,
+  "ci95": [
+   -0.1677481873660691,
+   0.8648491617982859
+  ],
+  "perm_p": 0.1279443602781986,
+  "spearman": 0.43693144875265144,
+  "spearman_perm_p": 0.21743391283043584
+ },
+ "leave_one_out": {
+  "xr49": {
+   "local_vs_replica": 0.6519588191065946,
+   "rating_vs_replica": 0.5380640611610455
+  },
+  "xu2": {
+   "local_vs_replica": 0.6208993116781795,
+   "rating_vs_replica": 0.6697435657837114
+  },
+  "xw9": {
+   "local_vs_replica": 0.8271557394838588,
+   "rating_vs_replica": 0.5828582426309665
+  },
+  "ya0": {
+   "local_vs_replica": 0.7014264916522494,
+   "rating_vs_replica": 0.5397618006850677
+  },
+  "yb9": {
+   "local_vs_replica": 0.5130280656028343,
+   "rating_vs_replica": 0.5532829117961346
+  },
+  "yd1": {
+   "local_vs_replica": 0.5720077483115232,
+   "rating_vs_replica": 0.5667719488290894
+  },
+  "ye4": {
+   "local_vs_replica": 0.6208993116781795,
+   "rating_vs_replica": 0.5322547490137666
+  },
+  "sw38": {
+   "local_vs_replica": 0.6617849886269007,
+   "rating_vs_replica": 0.5491769023206383
+  },
+  "yk1": {
+   "local_vs_replica": 0.6208993116781795,
+   "rating_vs_replica": 0.5016875895132465
+  },
+  "sw54": {
+   "local_vs_replica": 0.36629711995775055,
+   "rating_vs_replica": 0.10102957604368541
+  }
+ },
+ "maps": {
+  "DefaultLarge": {
+   "local_w": 6,
+   "local_n": 10,
+   "replica_w": 4,
+   "replica_n": 6
+  },
+  "ZeroDay": {
+   "local_w": 1,
+   "local_n": 10,
+   "replica_w": 1,
+   "replica_n": 6
+  },
+  "dirtpassageway": {
+   "local_w": 10,
+   "local_n": 10,
+   "replica_w": 3,
+   "replica_n": 3
+  },
+  "rift": {
+   "local_w": 4,
+   "local_n": 10,
+   "replica_w": 3,
+   "replica_n": 3
+  },
+  "wallsofparadis": {
+   "local_w": 7,
+   "local_n": 10,
+   "replica_w": 0,
+   "replica_n": 3
+  }
+ }
+}

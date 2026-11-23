@@ -1,0 +1,170 @@
+[
+{
+"match": 38346,
+"bot": "sw54",
+"package": "sw54",
+"map": "DefaultLarge",
+"won": true,
+"rounds": 333
+},
+{
+"match": 38346,
+"bot": "sw54",
+"package": "sw54",
+"map": "ZeroDay",
+"won": false,
+"rounds": 1317
+},
+{
+"match": 38347,
+"bot": "xu2",
+"package": "xu2",
+"map": "DefaultLarge",
+"won": true,
+"rounds": 259
+},
+{
+"match": 38347,
+"bot": "xu2",
+"package": "xu2",
+"map": "ZeroDay",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38348,
+"bot": "xw9",
+"package": "xw9",
+"map": "DefaultLarge",
+"won": true,
+"rounds": 357
+},
+{
+"match": 38348,
+"bot": "xw9",
+"package": "xw9",
+"map": "ZeroDay",
+"won": false,
+"rounds": 1569
+},
+{
+"match": 38348,
+"bot": "xw9",
+"package": "xw9",
+"map": "dirtpassageway",
+"won": true,
+"rounds": 809
+},
+{
+"match": 38348,
+"bot": "xw9",
+"package": "xw9",
+"map": "rift",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38348,
+"bot": "xw9",
+"package": "xw9",
+"map": "wallsofparadis",
+"won": false,
+"rounds": 1155
+},
+{
+"match": 38349,
+"bot": "ye4",
+"package": "ye4",
+"map": "DefaultLarge",
+"won": true,
+"rounds": 1182
+},
+{
+"match": 38349,
+"bot": "ye4",
+"package": "ye4",
+"map": "ZeroDay",
+"won": false,
+"rounds": 2000
+},
+{
+"match": 38349,
+"bot": "ye4",
+"package": "ye4",
+"map": "dirtpassageway",
+"won": true,
+"rounds": 524
+},
+{
+"match": 38349,
+"bot": "ye4",
+"package": "ye4",
+"map": "rift",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38349,
+"bot": "ye4",
+"package": "ye4",
+"map": "wallsofparadis",
+"won": false,
+"rounds": 1031
+},
+{
+"match": 38350,
+"bot": "sw38",
+"package": "sw38",
+"map": "DefaultLarge",
+"won": false,
+"rounds": 759
+},
+{
+"match": 38350,
+"bot": "sw38",
+"package": "sw38",
+"map": "ZeroDay",
+"won": false,
+"rounds": 1076
+},
+{
+"match": 38350,
+"bot": "sw38",
+"package": "sw38",
+"map": "dirtpassageway",
+"won": true,
+"rounds": 445
+},
+{
+"match": 38350,
+"bot": "sw38",
+"package": "sw38",
+"map": "rift",
+"won": true,
+"rounds": 2000
+},
+{
+"match": 38350,
+"bot": "sw38",
+"package": "sw38",
+"map": "wallsofparadis",
+"won": false,
+"rounds": 951
+},
+{
+"match": 38351,
+"bot": "yk1",
+"package": "yk1",
+"map": "DefaultLarge",
+"won": false,
+"rounds": 461
+},
+{
+"match": 38351,
+"bot": "yk1",
+"package": "yk1",
+"map": "ZeroDay",
+"won": false,
+"rounds": 2000
+}
+]

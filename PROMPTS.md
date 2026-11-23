@@ -260,3 +260,5 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (09:41) Can you do something about the labels in local-elo.png?  They're reducing the amount of horizontal space available for the graph itself
 (10:06) I'm not sure we need a separate sparring category in the local tournament.  For example, now that sw53 is champion, we've fixed that blind spot for good, since all future bots will descend from it
 (10:25) Can you update TRAINING_ALGORITHM to cover our bugfix procedure for new champions?
+(11:48) Can you do a scatterplot and correlation between local champions and on the panel?  For each champion, let's compare win rate vs. xk6 versus win rate vs. AlexT101_usqualsbot.  Don't do all champions, let's say a sample of 10, evenly spaced over time, with 5 games each opponent
+(11:51) Do you not already have their win record vs. AlexT101_usqualsbot?

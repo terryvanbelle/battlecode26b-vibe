@@ -1,0 +1,83 @@
+[
+ {
+  "bot": "sw54",
+  "submission": null,
+  "request": 33458,
+  "match": 38346,
+  "created": "2026-11-23T13:54:53.260401-05:00",
+  "maps": [
+   "DefaultLarge",
+   "ZeroDay"
+  ],
+  "requested_utc": "2026-11-23T18:54:52.565253+00:00"
+ },
+ {
+  "bot": "xu2",
+  "submission": 455,
+  "request": 33459,
+  "match": 38347,
+  "created": "2026-11-23T13:55:04.062189-05:00",
+  "maps": [
+   "DefaultLarge",
+   "ZeroDay"
+  ],
+  "requested_utc": "2026-11-23T18:55:03.960518+00:00"
+ },
+ {
+  "bot": "xw9",
+  "submission": 456,
+  "request": 33460,
+  "match": 38348,
+  "created": "2026-11-23T13:55:14.870367-05:00",
+  "maps": [
+   "DefaultLarge",
+   "ZeroDay",
+   "dirtpassageway",
+   "rift",
+   "wallsofparadis"
+  ],
+  "requested_utc": "2026-11-23T18:55:14.770176+00:00"
+ },
+ {
+  "bot": "ye4",
+  "submission": 457,
+  "request": 33461,
+  "match": 38349,
+  "created": "2026-11-23T13:55:25.698575-05:00",
+  "maps": [
+   "DefaultLarge",
+   "ZeroDay",
+   "dirtpassageway",
+   "rift",
+   "wallsofparadis"
+  ],
+  "requested_utc": "2026-11-23T18:55:25.602708+00:00"
+ },
+ {
+  "bot": "sw38",
+  "submission": 458,
+  "request": 33462,
+  "match": 38350,
+  "created": "2026-11-23T13:55:36.461160-05:00",
+  "maps": [
+   "DefaultLarge",
+   "ZeroDay",
+   "dirtpassageway",
+   "rift",
+   "wallsofparadis"
+  ],
+  "requested_utc": "2026-11-23T18:55:36.371165+00:00"
+ },
+ {
+  "bot": "yk1",
+  "submission": 459,
+  "request": 33463,
+  "match": 38351,
+  "created": "2026-11-23T13:55:47.238600-05:00",
+  "maps": [
+   "DefaultLarge",
+   "ZeroDay"
+  ],
+  "requested_utc": "2026-11-23T18:55:47.129008+00:00"
+ }
+]
