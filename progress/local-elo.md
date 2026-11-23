@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 34113 games in one fit as of 2026-11-22 19:31 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 34412 games in one fit as of 2026-11-22 19:37 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -13,13 +13,13 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-21 15:07 | xu2 | KING_THREAT_D2 30 on xt2 | #435 | 1463 +- 8 | 2042 |
 | 2026-11-21 17:50 | xw6 | THROW_HOLD 10 on xu2 | #436 | 1502 +- 9 | 1747 |
 | 2026-11-21 19:55 | xw9 | MAX_BABIES 16 on xw6 | #437 | 1508 +- 8 | 1872 |
-| 2026-11-21 21:55 | xx9 | GRAB_THREAT 15 on xw9 | #438 | 1502 +- 9 | 1666 |
+| 2026-11-21 21:55 | xx9 | GRAB_THREAT 15 on xw9 | #438 | 1501 +- 9 | 1666 |
 | 2026-11-21 23:15 | xz2 | LOW_FLOOR 200 on xx9 | #439 | 1517 +- 10 | 1373 |
 | 2026-11-22 00:55 | ya0 | KING_RESERVE 400 on xz2 | #440 | 1536 +- 8 | 2087 |
 | 2026-11-22 03:55 | ya9 | GATHER_CAT_DIST 32 on ya0 | #441 | 1556 +- 10 | 1176 |
 | 2026-11-22 04:55 | yb7 | CAT_DEFEND_R2 64 on ya9 | #442 | 1551 +- 11 | 1175 |
 | 2026-11-22 06:17 | yb9 | throw dodge: dodge any carrying enemy rat on yb7 | #443 | 1550 +- 7 | 2740 |
 | 2026-11-22 10:36 | sw08 | forward hold: FIGHT_POST 8 + WAR_GATHER 0 (big swing) on yb9 | #444 | 1566 +- 9 | 1424 |
-| 2026-11-22 12:56 | yd1 | FIGHT_POST 12 on sw08 | #445 | 1593 +- 10 | 1210 |
+| 2026-11-22 12:56 | yd1 | FIGHT_POST 12 on sw08 | #445 | 1592 +- 10 | 1210 |
 | 2026-11-22 14:56 | sw19 | FIGHT_POST 12 + cat endgame END_CAT 1600 END_CAT_COOP 1200 (big swing) on sw08 | #446 | 1609 +- 10 | 1188 |
-| 2026-11-22 16:57 | ye4 | END_CAT 1400 on sw19 | #447 | 1622 +- 11 | 1010 |
+| 2026-11-22 16:57 | ye4 | END_CAT 1400 on sw19 | #447 | 1622 +- 11 | 1111 |
