@@ -213,11 +213,13 @@ yh6
 # yj4  (retired 11-23 04:38: TRAP_SURPLUS 100, -1 vs yh6 on 259 g: level, no gain)
 # yj5  (retired 11-23 04:18: END_CAT 1300, -29 vs yh6 on 214 g)
 # sw47  (retired 11-23 04:58: FINISH_K 8 + FINISH_FLOOR 100, -4 vs yh6 on 239 g: level)
-yj6
-yj7
+# yj6  (retired 11-23 05:18: DIG_RESERVE 200, -36 vs yh6 on 234 g)
+# yj7  (retired 11-23 05:18: TRAP_SURPLUS 50, -18 vs yh6 on 207 g)
 yj8
 yj9
 yk1
 sw48  # sparring (big army imitation, exempt from retirement)
 yk2
 yk3
+yk4
+yk5

@@ -1371,11 +1371,13 @@ sw46,2026-11-23,yh6,"BIG SWING RUSH_TO 20 (from 16): 16 rushers instead of 12 in
 yj4,2026-11-23,yh6,"TRAP_SURPLUS 100 (from 200; tried once before): babies place cat traps on half the projected surplus","RETIRED 11-23 04:38 PDT: -1 vs yh6 on 259 g: level"
 yj5,2026-11-23,yh6,"END_CAT 1300 (from 1400): the cat-endgame dose line (1850 -> 1600 -> 1400 each took the title; 1200 lost): bracket between","RETIRED 11-23 04:18 PDT: -29 vs yh6 on 214 g: END_CAT 1400 stays"
 sw47,2026-11-23,yh6,"BIG SWING aggressive kill finishing: FINISH_K 8, FINISH_FLOOR 100 (from 5, 200): a baby pays up to 64 cheese above a 100 bank to bite for a kill (top-profile: top teams finish kings early; our rushers reach the king but do not finish it)","RETIRED 11-23 04:58 PDT: -4 vs yh6 on 239 g: level"
-yj6,2026-11-23,yh6,"DIG_RESERVE 200 (from 300; ya4 tried it on ya0 with no recorded result): digs may spend down to 200 per king",tournament newcomer 03:18 PDT
-yj7,2026-11-23,yh6,"TRAP_SURPLUS 50 (from 200): further along yj4 (100: +26 on 103)",tournament newcomer 03:38 PDT
+yj6,2026-11-23,yh6,"DIG_RESERVE 200 (from 300; ya4 tried it on ya0 with no recorded result): digs may spend down to 200 per king","RETIRED 11-23 05:18 PDT: -36 vs yh6 on 234 g"
+yj7,2026-11-23,yh6,"TRAP_SURPLUS 50 (from 200): further along yj4 (100: +26 on 103)","RETIRED 11-23 05:18 PDT: -18 vs yh6 on 207 g"
 yj8,2026-11-23,yh6,"KING_BITE_FLOOR 200 (from 300; never tried): a king bites with cheese for a kill down to a 200 bank",tournament newcomer 03:38 PDT
 yj9,2026-11-23,yh6,"RUSH_TO 12 (from 16): 8 opening rushers, not 12 (16 rushers sw46: -89; 0 rushers sw25: -29; replica 37553/37554 losses: our rats fall from 12-16 to 4 between r100 and r250 while theirs hold, then the king dies r151-r611)",tournament newcomer 03:41 PDT
 yk1,2026-11-23,yh6,"FIGHT_POST 10 (from 12; untried between 8 and 12: 12 won the title, 14 and 16 lost): fewer home-half mines count as contested posts, so fewer rats stand forward (replica 37553/37554: our rats fall from 12-16 to 4 by r250)",tournament newcomer 04:18 PDT
 sw48,2026-11-23,yh6,"SPARRING big army (owner 11-22 imitate the opponents' tactic): MAX_BABIES 24 / MAX_BABIES_WAR 24 (from 16). Replica 37611 vs AlexT101: their rats 18-22 by r250-r500 and 30 at r2000 against our flat 16; locally caps above 16 lost because no pool bot builds a big army. Kept in the pool as a sparring partner if it does not win",tournament newcomer 04:38 PDT
 yk2,2026-11-23,yh6,"KING_BITE_FLOOR 100 (from 300): further along yj8 (200: +37 on 129)",tournament newcomer 04:58 PDT
 yk3,2026-11-23,yh6,"KING_BITE_MAX 200 (from 100): the king may pay up to 200 cheese for a killing bite (yj8's king-bite line, other knob)",tournament newcomer 04:58 PDT
+yk4,2026-11-23,yh6,"SPAWN_MARGIN 150 (from 100; 50 was -136 on sw38): a spawn over the floors needs more projected surplus",tournament newcomer 05:18 PDT
+yk5,2026-11-23,yh6,"CARRY_CAP 300 (from 200; never re-tuned since xd4): non-attackers carry up to 300 per pickup",tournament newcomer 05:18 PDT
