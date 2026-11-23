@@ -293,7 +293,7 @@ public final class Cfg {
     public static final int WANDER_R = 2;
     /** A FIGHT rat at war takes its mine from the contested home-half mines: those whose steps from the mirrored
      *  enemy start exceed those from home by at most FIGHT_POST (0 = off). */
-    public static final int FIGHT_POST = 12;
+    public static final int FIGHT_POST = 10;
     /** Trail home: the stall count and homing carry over a gap of up to TRAIL_GAP rounds between delivery turns (a
      *  loaded carrier skips rounds, so 0 restarted the count every skip). */
     public static final int TRAIL_GAP = 12;
