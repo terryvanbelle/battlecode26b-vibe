@@ -149,7 +149,7 @@ public class MechTest {
         for (int[] c : cases) {
             reset(); W = 30; H = 30; install();
             at(300); G.coop = false;
-            Baby.trapOk = true;
+            Baby.trapOk = true; Baby.home = p(5, 5);   // the rat (5, 5) in its home half (FWD_TRAP, yl7: skips the gates in the enemy half)
             global = c[0]; shared[Comms.BUDGET] = c[1];
             MapLocation e = p(5, 5 + c[3]);
             Baby.nearestEnemy = baby(50, Team.B, e, null);
@@ -159,7 +159,7 @@ public class MechTest {
                   + (c[2] == 1 ? " near our king" : "") + ": " + (laid ? "trap at " + trapsLaid : "none"));
         }
         // too far for a trap
-        reset(); W = 30; H = 30; install(); at(300); G.coop = false;
+        reset(); W = 30; H = 30; install(); at(300); G.coop = false; Baby.home = p(5, 5);
         global = 5000; shared[Comms.BUDGET] = 5; Comms.numKings = 1; Comms.kings[0] = p(25, 25);
         int far = 1;
         while (far * far <= Cfg.BABY_TRAP_DIST2) far++;

@@ -236,3 +236,4 @@ sw52  # sparring: siege imitation, sw35 fixed (exempt from retirement)
 sw53  # sparring: raiders + forward traps (exempt from retirement)
 yl5  # audit fixes on yk1 (research/audit/2026-11-23-yk1.md)
 yl6  # yl5 with WAR_GATHER 1, as yk1 played it
+yl7  # yk1 + FWD_TRAP (sw53's forward traps alone, raiders off)
