@@ -241,12 +241,14 @@
 sw54  # CHAMPION 11-23 10:34 PDT (big swing: sw53's raiders + forward traps with sw50's bank on bodies)
 # sw55 (retired 11-23 10:41 PDT: -80 vs sw54 on 134 g, about 2 SE; all forward at war (RAID_SHARE 4) lost to sw53's 2; with yl13 (1) the raider share is swept: 2 is best)
 yl12  # sw53 + RAID_POST 10: raiders take the twins of contested home mines (audit of sw53)
-sw56  # BIG SWING: sw53 + kill finishing (FINISH_K 8, FINISH_FLOOR 100), raiders near the enemy king
+# sw56 (retired 11-23 12:10 PDT: -30 vs sw54 on 436 g, about 1.4 SE; kill finishing on sw53, superseded by sw58, the same change on the champion)
 # yl13 (retired 11-23 11:15 PDT: -76 vs sw54 on 183 g, about 2.4 SE; RAID_SHARE 1 on sw53: the raider share is swept, 2 is best)
 sw57  # BIG SWING: all cheese into rats: no rat traps (TRAP_CAP 0) + sw50's bank on bodies, on sw53
-yl14  # sw54 + RAID_POST 10: yl12's raider-post fix (audit of sw53) ported to the new champion
+# yl14 (retired 11-23 12:10 PDT: -51 vs sw54 on 220 g, about 1.8 SE; the raider-post fix (RAID_POST 10) on sw54 loses, while yl12 (the same fix on sw53) is -15)
 yl15  # sw54 + CORE_OVER_CAP: the core boot is not cut by the baby cap (audit of sw54: CORE_BABIES 20 kept only 16 outside siege)
 yl16  # sw54 + WAR_CAP_ALL: MAX_BABIES_WAR caps the whole war, not only siege (audit of sw54)
 sw58  # BIG SWING: sw54 + kill finishing (FINISH_K 8, FINISH_FLOOR 100): sw56's change ported to the champion
 sw59  # BIG SWING: sw54 + trap-first (profile H2; sw09's BABY_TRAP_DIST2 40, RAT_TRAP_MIN_CHEESE 40, DEF_TRAP_DIST2 400) with the forward front H2 needed
 yl17  # sw54 + reserve 200: every spawn floor and KING_RESERVE 200 (from 300; replica 38282 lost 0-3 with banks of 150-300 under the floor and armies of 3-9)
+yl18  # sw54 + FINISH_K 8 alone (from 5): half of sw58, which leads sw54 by +47 on 104 g
+yl19  # sw54 + FINISH_FLOOR 100 alone (from 200): the other half of sw58
