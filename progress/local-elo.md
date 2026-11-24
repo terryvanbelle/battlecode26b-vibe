@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 78406 games in one fit as of 2026-11-24 15:35 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 78406 games in one fit as of 2026-11-24 15:57 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -39,3 +39,4 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-24 07:35 | sw72 | PREY_WEAKEST + PREY_TRAP (sw68's hunt rework on sw69: hunters chase the weakest weaker enemy baby; a rat a healthier enemy hunter watches traps it first - gate-free; swing) on sw69 | #479 | 1662 +- 13 | 768 |
 | 2026-11-24 08:36 | sw71 | CAT_YIELD_R2 20 + PREY_TRAP + LOW_FLOOR 50 (the brawl bundle on yl33 = yl25 + PREY_WEAKEST: at war a rat with an enemy baby within dist2 20 is not drawn to a cat at our king; a rat a healthier enemy hunter watches traps it first; spawns spend down to 50 under 8 babies; no STANDOFF_EQ; swing) on yl33 | #480 | 1706 +- 8 | 2409 |
 | 2026-11-24 11:29 | yl50 | LOW_FLOOR 20 (from 50; snapvar: under LOW_BABIES 8 babies the king spawns down to a 20 bank instead of 50; incremental) on sw71 | #481 | 1719 +- 10 | 1346 |
+| 2026-11-24 15:36 | yl54 | LOW_BABIES 12 (from 8; snapvar: the LOW_FLOOR 20 spend-down applies under 12 babies instead of 8; incremental) on yl50 | #482 | 1738 +- 16 | 475 |

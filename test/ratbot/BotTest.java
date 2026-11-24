@@ -1212,9 +1212,9 @@ public class BotTest {
     static void testSpawnFloor() throws GameActionException {
         reset(); install();
         type = UnitType.RAT_KING; G.coop = false; G.round = 300; global = Cfg.SPAWN_FLOOR - 100;
-        ratCost = 40; // 12+ babies: the spawn floor holds
+        ratCost = 10 + 10 * ((Cfg.LOW_BABIES + 3) / 4); // LOW_BABIES+ babies (40 at 12, yl54; 50 at 16, yl55): the spawn floor holds
         King.spawn(new RobotInfo[0], new RobotInfo[0]);
-        check(built.isEmpty(), "spawn: a king with a dozen babies keeps its floor");
+        check(built.isEmpty(), "spawn: a king with LOW_BABIES (" + Cfg.LOW_BABIES + ") babies keeps its floor");
         ratCost = 20; global = Cfg.LOW_FLOOR + 100; // 4+ babies: too few to earn, the floor drops
         King.spawn(new RobotInfo[0], new RobotInfo[0]);
         check(built.size() == 1, "spawn: a king with few babies spends its reserve on rats (" + built + ")");

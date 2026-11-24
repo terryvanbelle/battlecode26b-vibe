@@ -1,15 +1,15 @@
 package ratbot;
 
 /**
- * yl44's spawn floor with few babies (Cfg.LOW_FLOOR 20: sw69's dose arm, from 50; sw69 took it from 200; 11-24). Under LOW_BABIES (8) live babies every
+ * yl54 = yl50 + LOW_BABIES 12 (11-24; from 8): the LOW_FLOOR 20 band widens to 8-11 babies (rat cost 30). Under LOW_BABIES (12) live babies every
  * spawn floor (core boot, war, the hard floor) is LOW_FLOOR per king; with 0-3 babies (rat cost 10) LAST_FLOOR holds
- * instead, so LOW_FLOOR is the floor of the 4-7 band (rat cost 20). Replica 39142 vs AlexT101_usqualsbot: we sat at 4
+ * instead, so LOW_FLOOR is the floor of the 4-11 band (rat cost 20-30; audit 11-24: was "4-7"). Replica 39142 vs AlexT101_usqualsbot: we sat at 4
  * babies for 300 rounds with a 98-208 bank under the 220 bar, while usqualsbot spent down to about 50 and kept 8.
  * Uses BankTest.spawn: one King.spawn on a 30x30 map with no income history, so only the core boot can build.
  */
 public class LowFloorTest {
     public static void main(String[] args) throws Exception {
-        BotTest.check(Cfg.LOW_FLOOR == 20, "low floor: LOW_FLOOR 20 (yl50 = sw71 + yl44's dose, from 50; " + Cfg.LOW_FLOOR + ")");
+        BotTest.check(Cfg.LOW_FLOOR == 20 && Cfg.LOW_BABIES == 12, "low floor: LOW_FLOOR 20, LOW_BABIES 12 (yl54 = yl50 + LOW_BABIES 12, from 8; " + Cfg.LOW_BABIES + ")");
         int f = Cfg.LOW_FLOOR, r = 300;
         // one king, 4 babies (cost 20): the boot builds from 20 + LOW_FLOOR
         char w = BankTest.spawn(4, 1, 20 + f, false, false, r);
@@ -18,12 +18,19 @@ public class LowFloorTest {
         BotTest.check(w != 'b', "low floor: 4 babies, bank " + (20 + f - 1) + ": under the floor, no build (" + w + ")");
         w = BankTest.spawn(7, 1, 150, false, false, r);
         BotTest.check(w == 'b', "low floor: 7 babies, bank 150 (under yl32's 220 bar): builds (" + w + ")");
-        // 8 babies: not low; the core floor (at least KING_RESERVE) holds as before
-        int hi = 30 + Math.max(Cfg.CORE_FLOOR, Cfg.KING_RESERVE);
-        w = BankTest.spawn(8, 1, hi - 1, false, false, r);
-        BotTest.check(w != 'b', "low floor: 8 babies, bank " + (hi - 1) + ": the full floor holds (" + w + ")");
-        w = BankTest.spawn(8, 1, hi, false, false, r);
-        BotTest.check(w == 'b', "low floor: 8 babies, bank " + hi + ": builds (" + w + ")");
+        // yl54: 8 babies (cost 30) are low now: the boot builds from 30 + LOW_FLOOR
+        w = BankTest.spawn(8, 1, 30 + f, false, false, r);
+        BotTest.check(w == 'b', "low floor: 8 babies, bank " + (30 + f) + ": low now, builds (" + w + ")");
+        w = BankTest.spawn(11, 1, 30 + f - 1, false, false, r);
+        BotTest.check(w != 'b', "low floor: 11 babies, bank " + (30 + f - 1) + ": under the floor, no build (" + w + ")");
+        w = BankTest.spawn(8, 1, 30 + f, false, true, r);
+        BotTest.check(w == 'b', "low floor: at war, 8 babies, bank " + (30 + f) + ": builds (" + w + ")");
+        // 12 babies (cost 40): not low; the core floor (at least KING_RESERVE) holds as before
+        int hi = 40 + Math.max(Cfg.CORE_FLOOR, Cfg.KING_RESERVE);
+        w = BankTest.spawn(12, 1, hi - 1, false, false, r);
+        BotTest.check(w != 'b', "low floor: 12 babies, bank " + (hi - 1) + ": the full floor holds (" + w + ")");
+        w = BankTest.spawn(12, 1, hi, false, false, r);
+        BotTest.check(w == 'b', "low floor: 12 babies, bank " + hi + ": builds (" + w + ")");
         // two kings: the floor is per king (the estimate 4 - 1 = 3 is still low)
         w = BankTest.spawn(4, 2, 20 + 2 * f, false, false, r);
         BotTest.check(w == 'b', "low floor: two kings, bank " + (20 + 2 * f) + ": builds (" + w + ")");

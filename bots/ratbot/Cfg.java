@@ -48,7 +48,7 @@ public final class Cfg {
     /** Hard floor under every spawn (king upkeep). */
     public static final int SPAWN_FLOOR = 300;
     /** With fewer than LOW_BABIES babies every floor drops to LOW_FLOOR: a king without rats has no income. */
-    public static final int LOW_BABIES = 8, LOW_FLOOR = 20;   // yl50 = sw71 + LOW_FLOOR 20 alone (yl44's dose; sw73 = sw71 + STANDOFF_EQ + LOW_FLOOR 20). sw71 (sw69's value, from 200): usqualsbot spends down to ~50 and keeps 8 babies
+    public static final int LOW_BABIES = 12, LOW_FLOOR = 20;   // yl54 = yl50 + LOW_BABIES 12 (from 8: the spend-down band also covers 8-11 babies; replica 40515 sittingducks: with 8-17 babies the king kept the 300 floor while the army bled out). yl50 = sw71 + LOW_FLOOR 20 alone (yl44's dose; sw73 = sw71 + STANDOFF_EQ + LOW_FLOOR 20). sw71 (sw69's value, from 200): usqualsbot spends down to ~50 and keeps 8 babies
     /** At war with enemies in the king's sight every spawn floor drops to SIEGE_FLOOR (0 = off). */
     public static final int SIEGE_FLOOR = 0;
     /** Last stand (0 = off): at the base baby cost (3 or fewer live babies) every spawn floor drops to LAST_FLOOR, so
