@@ -1164,10 +1164,16 @@ public class BotTest {
         reset(); install();
         Baby.nearestEnemy = enemyRat(50, 5, 7, 100);
         check(!Baby.retreat(), "retreat: a healthy rat does not retreat");
-        health = 30;
+        // reads Cfg.RETREAT_HP (0 = never: yl25, 11-23)
+        health = Cfg.RETREAT_HP > 0 ? Math.min(30, Cfg.RETREAT_HP) : 1;
         Comms.kings[0] = new MapLocation(5, 0); Comms.numKings = 1;
-        check(Baby.retreat(), "retreat: a wounded rat near an enemy falls back");
-        check(me.y < 5, "retreat: it moved toward its king (at " + me + ")");
+        if (Cfg.RETREAT_HP > 0) {
+            check(Baby.retreat(), "retreat: a wounded rat near an enemy falls back");
+            check(me.y < 5, "retreat: it moved toward its king (at " + me + ")");
+        } else {
+            check(!Baby.retreat(), "retreat: RETREAT_HP 0 never retreats, even at 1 health");
+            check(me.equals(new MapLocation(5, 5)), "retreat: RETREAT_HP 0 leaves the rat where it is (at " + me + ")");
+        }
     }
 
     static void testSpawnFloor() throws GameActionException {
