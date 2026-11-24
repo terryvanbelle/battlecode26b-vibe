@@ -70,6 +70,29 @@ public class CatYieldTest {
         Comms.kings[0] = new MapLocation(25, 15);
         check(!Baby.catAtKing(theCat.location), "cat yield: setup: with our king at (25,15) the cat is not at our king");
 
+        // (audit 11-24, sw71 crowned) a gatherer yields too
+        world(false, rat(85, 5, 7, 100));
+        Baby.role = Baby.GATHER;
+        check(Baby.catYield(), "cat yield: a gatherer with an enemy baby at dist2 4 yields too");
+        m = move();
+        check(m != 'g', "cat yield: ... and the cat at our king does not draw it (mv=" + m + ")");
+
+        // (audit 11-24) an enemy baby behind a wall is not Baby.nearestEnemy (findEnemies skips walled rats past dist2 2),
+        // so it is no reason to yield: the cat at our king still draws the rat
+        Method find = Baby.class.getDeclaredMethod("findEnemies", RobotInfo[].class);
+        find.setAccessible(true);
+        world(false);
+        for (int x = 3; x <= 7; x++) Sym.record(x, 6, true, false, false);
+        RobotInfo hid = rat(86, 5, 7, 100);
+        robots.put(hid.location, hid);
+        Baby.wbRound = -1;
+        check(Baby.walled(G.me, hid.location), "cat yield: setup: the wall row y=6 hides (5,7)");
+        find.invoke(null, (Object) new RobotInfo[]{hid, theCat});
+        check(Baby.nearestEnemy == null && !Baby.catYield(),
+              "cat yield: an enemy baby behind a wall at dist2 4 is no reason to yield (nearest " + Baby.nearestEnemy + ")");
+        m = move();
+        check(m == 'g', "cat yield: ... so the cat at our king draws the rat (mv=" + m + ")");
+
         G.coop = true; Comms.numKings = 0; Baby.cat = null; Baby.nearestEnemy = null;
         System.out.println("CatYieldTest: " + (checks - fails) + "/" + checks + " passed");
         System.exit(fails == 0 ? 0 : 1);
