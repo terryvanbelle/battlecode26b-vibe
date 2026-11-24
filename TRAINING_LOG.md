@@ -12298,8 +12298,10 @@
     - Ahead of sw71: sw73 +6 on 806 (needs > +16), yl49 +6 on 81 (needs > +40), yl46 +0 on 612.
     - Behind: yl48 -14 on 223, sw74 -19 on 154, yl47 -36 on 363 (1.75 SE). yl50 unrated.
   - *Replica since 09:00 (sw71):* 40415 1-2 vs usqualsbot, 40467 2-1 vs Icarus, 40492 3-0 vs usqualsbot, 40515 1-2 vs Icarus (1765.4 -> 1772.1).
-  - *How the 4 lost games ended:* our king starved in 3. 40415 sittingducks r1216, 40515 dirtfulcat r272 and 40515 sittingducks r954
-    ended in 'starve'; 40415 wallsofparadis ended in a throwHit at r1431. Counting 40375, the king starved in 4 of today's 7 losses.
+  - *How the 5 lost games ended:* our king starved in 4. 40415 sittingducks r1216, 40467 DefaultMedium r743, 40515 dirtfulcat r272 and 40515 sittingducks r954
+    ended in 'starve'; 40415 wallsofparadis ended in a throwHit at r1431.
+    - 40467 DefaultMedium: the king's health held at 198 with 0 cheese to r720, then fell about 10 a round to -2 at r743; it took 12 bites in its last 60 rounds.
+    - With 40375 (dirtfulcat starved r172, evileye killed r281, wallsofparadis lost on points at r2000), the king starved in 5 of sw71's 8 lost games to 10:17.
     Per window ($S/econ.py):
     - 40515 dirtfulcat: both banks fell to 0-270 by r75. Icarus's income came back at 80-375 per 25 rounds; ours stayed at 0-70.
       We went from 7 babies at r100 to 1 at r176.
@@ -12337,7 +12339,7 @@
     - Not the old RISK_IN_FIGHT (s8h, 10-29): that kept the full 150-round mask in fights and was rejected on a screen (-8.1 pts).
     - test/sw75/FightRiskTest 15/15 (with FIGHT_RISK 0 five fail, among them war() stepping into the band of a weaker facing enemy). Unit tests 2115/2115 in 15 classes.
   - *Replica 40561 (10:42 PDT), 2-1 vs AlexT101_finalsbot (1772.1 -> 1775.5):* won Meow (their king bitten r969) and thunderdome (r116).
-    - Lost popthecork at r618: our king starved without taking damage. That makes 5 king starvations in today's 8 lost games.
+    - Lost popthecork at r618: our king starved without taking damage. That makes 6 king starvations in sw71's 9 lost games (40375-40561); 2 kings were killed and 1 game was lost on points.
     - popthecork (30x40, mirrored left-right): 8 of the 10 mines sit inside a walled bottle whose only way in is a dirt-plugged neck (the cork, x 13-16, y 33-37).
       The census gives minesFree 2 (only (2,23) and (27,23) can be reached without digging).
     - AlexT101 dug the cork at r8-22 (8 tiles) and again at r98-103 and r168. We dug (15,37), (14,36), (14,37) at r32-46 and (14,33) at r214.
@@ -12355,3 +12357,11 @@
   - *sw76 (SWING, bundle of the two leaders):* yl49 (sw71 + ODDS 2) + CAT_YIELD_R2 0 (yl46's one difference from sw71: no cat yield), both +10 vs sw71 at 10:55.
     - Built from a source copy of yl49 with the one Cfg change.
     - test/sw76/OddsTest (yl49's, 27/27) and test/sw76/CatYieldTest (overrides sw71's; yield off, 9/9; five checks fail on sw71).
+    - yl46's diff from sw71 (checked): no catYield() and no CAT_YIELD_R2; its STANDOFF_EQ false gives sw71's own standoff (eh >= h). So the cat yield is yl46's one behavioural difference.
+    - Smoke vs sw71 6-2 (dirtfulcat 2-0, evileye 1-1, DefaultSmall 2-0, starvation 1-1). DefaultSmall s1/s2 and dirtfulcat s1 end at the sw71 mirror's rounds (176, 143, 197).
+      Clean: no turn at the limit for sw76 and no exception. sw71's king had 1 at the limit in its dirtfulcat s2 loss (inherited).
+    - Entered 11:21 PDT (`tourney.py add sw76`).
+  - *Pool after 11:21:* 8 bots. Incremental: yl46, yl48, yl49, yl50, yl51. Swings: sw71 (champion), sw73, sw76 (bundle).
+  - *Box:* tr604 (re-planned), tr605, tr606 queued 11:03-11:18 and already started by 11:21. tr607-tr610 are planned one after another (sw76 gets its newcomer games).
+  - *Replica losses (verified 11:15):* in sw71's 9 lost games (40375-40561), the king starved in 6. 2 kings were killed (40375 evileye r281 by our own rats thrown into it; 40415 wallsofparadis throwHit r1431), and 40375 wallsofparadis was lost on points.
+  - *VM:* 4.4 GB free (77% used). Prune count still 4 (last 05:17 UTC); it has not fired since the last prod.
