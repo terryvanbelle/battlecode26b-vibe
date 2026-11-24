@@ -12086,3 +12086,21 @@
     - tr557-tr564 planned; the box takes runs within minutes.
     - Replica #18 of 54 at 1763.9 (snapshot 05:54).
     - VM 5.0 GB free (74%). The prune last ran at 22:17 PDT on 11-23 (4 runs in all).
+
+- **11-24 06:00-06:31 PDT, PROD: no new champion; sw69 holds. New: yl45 (raiders off). Retired: yl42.**
+  - *Pulls and rank:* pulled tr540-tr560. sw69 1696 +- 12 on 871 g (474-397). The nearest challengers are yl32 -16 (needs > +15), yl33 -17 and sw68 -20. Tournament: 68,411 games, 11 pool bots, 278 retired, 289 entered.
+  - *Replica 40046 (sw69 #478 vs AlexT101_finalsbot, 1-2):* confirmed as sw69 by g0.meta.json packageA. On dirtfulcat (lost at r183):
+    - We were at war within the first 40 rounds.
+    - Our deliveries froze at 60 from r40 to r120 while finalsbot's rose to 600 by r150. The bank fell 2300 to 0, babies hit 0 by r150 and the king starved at r183.
+    - 15 of our 22 trap deaths by r200 were on finalsbot's half. 7 were within Chebyshev 3 of (20,17), the enemy twin of our mine (9,17), which RAID_SHARE 2 sends raiders to.
+    - Our rats spent 136 turns within 2 of (20,17) by r160 and made 3 of their 19 pickups there.
+    - Over the 3-game match, finalsbot laid 154 rat traps to our 92. Both teams lay about 3/4 of their traps beyond dist2 36 of their own king, nearly all (96% ours, 88% theirs) with an enemy rat adjacent (dist2 <= 2), and about 87% fire within 5 rounds.
+  - *New: yl45* = sw69 + RAID_SHARE 0: raiders off, so every gatherer and fighter at war keeps its home-half mine.
+    - The share was swept on yk1 on 11-23 (0: 1607, 1: -76 vs sw54, 2: 1634, 4: 1403). It was never re-tested on the yl25/yl32/sw69 line.
+    - test/yl45/RaidOffTest has 17 checks: the share is 0, and every slot and role keeps its home mine at war. RaidTest skips its pick checks at share 0. Unit tests 2073/2073 in 11 classes.
+    - Smoke vs sw69 2-6 (dirtfulcat 0-2, evileye 1-1, DefaultSmall 1-1, starvation 0-2), clean (tags NEAR only, no overruns, max 19301).
+    - Its rats spent 24% of their turns to r300 on the enemy half, against sw69's 28%. Entered anyway: 8 games are a sanity check, and the tournament decides.
+  - *Retired for pool size (12 to 11): yl42*, -25 vs sw69 on 253 g. It tied sw67 for lowest with 200+ games. Retiring the incremental one keeps the kinds at 6 incremental and 5 swings (procedure decision).
+  - *Pool 11:* incremental yl32, yl33, yl34, yl43, yl44, yl45; swings sw67, sw68, sw69 (champion), sw71, sw72.
+  - *Box:* tr565-tr566 planned at 06:00, tr567 planned at 06:30 with yl45 in the pool. tr563-tr566 were waiting at 06:21.
+  - *Replica:* #16 of 54 at 1775.6 (snapshot 06:18; it was #18 at 1763.9 at 05:54). VM 5.0 GB free (74%); the prune has not run since 22:17 PDT on 11-23.
