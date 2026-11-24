@@ -11911,3 +11911,13 @@
   - Retired: yl19 (-41 on 1962 g, 3.2 combined SE) and sw60 (-42 on 1659 g, 3.1 SE), both far below the champion for 600+ games. Pool 10: incremental yl25 (champion), yl26, yl29, yl31, yl32; swings sw63, sw64, sw65, sw66, sw67.
   - Box: tr492-494 (waiting, planned with yl19/sw60) were dequeued and re-planned with yl32/sw67; tr491 had started; tr495 added.
   - 22:42 rank (60,611 games): yl32 +74 on 48 g (30-18; needs > +52, 152 more games), sw67 +19 on 51, sw64 +13 on 822 (needs > +16), yl25 1692 +- 10 champion; yl31 -32 on 100 (47-53). Early, but the two standoff arms split as the grab rule predicts: holding off a healthier enemy (it can grab us) matters; stepping in on an equal one gains. Box: tr495-498 waiting (tr492-494 started).
+
+- 22:48 PDT (11-23): PROD 22:42 (it fired as the previous one closed). No new champion: yl25 1692 +- 10 on 1346 g; yl32 +59 on 53 (needs > +49, 147 more), sw67 +17 on 59, sw64 +14 on 825 (needs > +16); yl31 -37 on 104. No retirements: no pool bot is 2 SE below (sw65 -27 on 646 is 1.6 SE).
+  - Replica 39382 vs AdamTan12_Icarus (n3), 1-2: lost cheesefarm (r513) and starvation (r556), both king starvations; won wallsofparadis on points. Rank #18.
+    - Icarus wins the bite fights: our rats died by bite 43 and 27 times on the two lost maps (theirs 2 and 7).
+    - Duel table (tools: scratchpad duelhp.py/firstbite.py; a duel = an opposing pair whose first contact is a bite): first strikes are split evenly, but our rats begin duels 15-18 health lower on average (61-65 vs 76-81).
+    - In 35-45% of the duels our rat began 30+ lower; we lost about 95% of those (41-1, 28-6, 46-1 by any death within 40 rounds), and Icarus struck first in about 60% of them. It picks off our wounded. Even level duels went 26-8 and 22-5 their way on the lost maps, where they had about twice our rat-turns.
+    - Bite damage is flat (10 + ceil(sqrt(cheese)); the 8s and 6s are bites capped at the victim's health); focus fire is rare on both sides.
+    - Who starts the war does not separate our results since yl25's submission (27 replica games: we struck first by r40 5-3, they did 7-5).
+  - New: yl33 = yl25 + PREY_WEAKEST (Baby.prey: the weakest weaker enemy in dist2 20, the nearest of equals, instead of the nearest). It imitates the pick-off; bites already take the lowest-health adjacent enemy. PreyWeakestTest 6/6, unit tests 2037/2037. Smoke vs yl25 running (mech33). Pool 11 (incremental yl25, yl26, yl29, yl31, yl32, yl33; swings sw63-sw67).
+  - Box: tr497-498 (waiting) were dequeued and re-planned with yl33; tr495 had started; tr499 added.
