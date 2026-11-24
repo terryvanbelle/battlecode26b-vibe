@@ -1,7 +1,7 @@
 package ratbot;
 
 /**
- * sw69's spawn floor with few babies (Cfg.LOW_FLOOR 50, from 200; 11-24). Under LOW_BABIES (8) live babies every
+ * yl44's spawn floor with few babies (Cfg.LOW_FLOOR 20: sw69's dose arm, from 50; sw69 took it from 200; 11-24). Under LOW_BABIES (8) live babies every
  * spawn floor (core boot, war, the hard floor) is LOW_FLOOR per king; with 0-3 babies (rat cost 10) LAST_FLOOR holds
  * instead, so LOW_FLOOR is the floor of the 4-7 band (rat cost 20). Replica 39142 vs AlexT101_usqualsbot: we sat at 4
  * babies for 300 rounds with a 98-208 bank under the 220 bar, while usqualsbot spent down to about 50 and kept 8.
@@ -9,7 +9,7 @@ package ratbot;
  */
 public class LowFloorTest {
     public static void main(String[] args) throws Exception {
-        BotTest.check(Cfg.LOW_FLOOR == 50, "low floor: LOW_FLOOR 50 (sw69; " + Cfg.LOW_FLOOR + ")");
+        BotTest.check(Cfg.LOW_FLOOR == 20, "low floor: LOW_FLOOR 20 (yl50 = sw71 + yl44's dose, from 50; " + Cfg.LOW_FLOOR + ")");
         int f = Cfg.LOW_FLOOR, r = 300;
         // one king, 4 babies (cost 20): the boot builds from 20 + LOW_FLOOR
         char w = BankTest.spawn(4, 1, 20 + f, false, false, r);

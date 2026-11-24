@@ -12293,7 +12293,7 @@
     yl47 -29 on 336 (1.3 SE), sw74 -41 on 128, yl49 -47 on 43, yl50 unrated. No retirement: no bot is 2 combined SE below sw71.
   - *Pool:* 8 bots. Incremental: yl46, yl47, yl48, yl49, yl50. Swings: sw71 (champion), sw73, sw74 (the new mechanism).
   - *VM:* 4.5 GB free (76% used); prune count still 4.
-- **11-24 10:17-10:40 PDT, PROD: no new champion; yl51 = sw71 + CARRY_BITE 60 enters (loaded enemy gatherers bitten first)**
+- **11-24 10:17-12:00 PDT, PROD: NEW CHAMPION yl50 (sw71 + LOW_FLOOR 20; submitted #481; audit clean); newcomers yl51 (CARRY_BITE 60), sw76 (bundle: ODDS 2 + no cat yield) and yl52 (yl50 + no cat yield); sw75 (FIGHT_RISK 3) not entered after a 0-8 smoke; yl47 and sw74 retired**
   - *Rank 10:18 (72,877 g):* sw71 1724 +- 10 on 1123 g holds.
     - Ahead of sw71: sw73 +6 on 806 (needs > +16), yl49 +6 on 81 (needs > +40), yl46 +0 on 612.
     - Behind: yl48 -14 on 223, sw74 -19 on 154, yl47 -36 on 363 (1.75 SE). yl50 unrated.
@@ -12365,3 +12365,27 @@
   - *Box:* tr604 (re-planned), tr605, tr606 queued 11:03-11:18 and already started by 11:21. tr607-tr610 are planned one after another (sw76 gets its newcomer games).
   - *Replica losses (verified 11:15):* in sw71's 9 lost games (40375-40561), the king starved in 6. 2 kings were killed (40375 evileye r281 by our own rats thrown into it; 40415 wallsofparadis throwHit r1431), and 40375 wallsofparadis was lost on points.
   - *VM:* 4.4 GB free (77% used). Prune count still 4 (last 05:17 UTC); it has not fired since the last prod.
+  - *Rank 11:28 PDT (74,081 g; tr593, tr597, tr601-tr603 pulled DONE, tr598-tr600 and tr604-tr606 partial): NEW CHAMPION yl50.*
+    - yl50 = sw71 + LOW_FLOOR 20 (snapvar; under 8 babies the king spawns down to a 20 bank, not 50).
+    - It led sw71 by +27 on 202 g (114-88; 1746 +- 25 vs 1719 +- 9) against the > +26 it needed.
+    - Submitted as #481 (accepted) at 11:29. champion.txt = yl50; a champions.csv row added; bots/ratbot = yl50 (Cfg.java line 51 only).
+    - The rest vs yl50: yl46 -15 on 896, sw73 -23 on 1082, sw71 -27 on 1463, yl49 -30 on 414, yl48 -56 on 540 (1.96 SE), yl51 -60 on 135, sw76 unrated.
+    - No retirement: yl48 is 1.96 combined SE down, just under 2, and yl51 has 135 games.
+    - LOW_FLOOR dose response on sw71: 50 (sw71) vs 20 (yl50) +27. sw73 (sw71 + STANDOFF_EQ + LOW_FLOOR 20) is -23 vs yl50, so STANDOFF_EQ costs about that much on top.
+  - *Audit (research/audit/2026-11-24-yl50.md):* no bugs.
+    - LOW_FLOOR is read only in King.spawnFloor, which serves the core boot, war spawn and hard floor alike. `low` (from the rat cost) holds exactly under 8 babies with one king.
+    - Not a bug: LOW_FLOOR now equals LAST_FLOOR (20). At 0-3 babies spawnFloor returns min(20, 20) either way, so LAST_FLOOR is inert in yl50.
+    - Tests: test/ratbot/LowFloorTest (sw71's, LOW_FLOOR 50) replaced by test/yl50's copy (LOW_FLOOR 20, same 12 checks). The value was changed on purpose. test/yl50 is gone.
+    - unit-tests.sh on ratbot = yl50: 2100/2100 bot checks in 14 classes; all tool tests pass.
+    - Untested: the SIEGE_FLOOR > 0 branch (off), and surplus-path spawns with few babies (BankTest has no income history). The 0-3 baby check cannot tell LAST_FLOOR from LOW_FLOOR now that both are 20.
+    - No fix newcomers.
+  - *Box:* tr607-tr610 were planned with sw71 as champion, so their newcomer half-games are against sw71, not yl50. That is fine for the BT fit; plans from tr611 use yl50.
+  - *yl52 (incremental, snapvar on the new champion):* yl50 + CAT_YIELD_R2 0, i.e. no cat yield.
+    - A cat at our king draws every rat that sees it, at war too. This is yl46's one behavioural change on sw71 (+11 vs sw71 on 896 g), stacked on yl50's LOW_FLOOR 20 (+27 vs sw71).
+    - test/yl52/CatYieldTest (sw76's, 9/9; overrides test/ratbot's 16 yield checks); unit tests 2093/2093 in 14 classes.
+    - Smoke vs yl50 4-4 (dirtfulcat 2-0, evileye 0-2, DefaultSmall 2-0, starvation 0-2). Clean: no turn at the limit for yl52 and no exception.
+      yl50's king had 1 at the limit in its dirtfulcat s2 loss at r106 (inherited from sw71).
+    - Entered 11:56 PDT (`tourney.py add yl52`).
+  - *Pool after 11:56:* 9 bots. Incremental: yl50 (champion), yl46, yl48, yl49, yl51, yl52. Swings: sw71, sw73, sw76.
+  - *Box:* tr611 (the first plan with yl50 as champion) queued at 11:35; tr608-tr610 were waiting then.
+  - *Progress:* progress-refresh ran 11:36-11:56. Its local elo chart step timed out at 300 s with a smoke and unit tests on both cores; charts-refresh redraws it.
