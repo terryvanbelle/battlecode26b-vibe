@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 60634 games in one fit as of 2026-11-23 22:53 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 60953 games in one fit as of 2026-11-23 23:06 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -25,11 +25,11 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-22 16:57 | ye4 | END_CAT 1400 on sw19 | #447 | 1524 +- 9 | 1530 |
 | 2026-11-22 20:56 | yf2 | DEFEND_D2 225 on ye4 | #448 | 1523 +- 11 | 1035 |
 | 2026-11-22 22:36 | sw38 | RUSH_UNTIL 200 + END_CAT_COOP 1000 on yf2 | #449 | 1515 +- 11 | 986 |
-| 2026-11-23 00:36 | yh3 | INCOME_TRUST 50 on sw38 | #450 | 1537 +- 13 | 714 |
+| 2026-11-23 00:36 | yh3 | INCOME_TRUST 50 on sw38 | #450 | 1538 +- 13 | 714 |
 | 2026-11-23 02:16 | yh6 | INCOME_TRUST 30 on sw38 | #451 | 1580 +- 9 | 1606 |
 | 2026-11-23 06:36 | yk1 | FIGHT_POST 10 on yh6 | #452 | 1555 +- 9 | 1378 |
 | 2026-11-23 09:14 | sw53 | RAID_SHARE 2 + FWD_TRAP (raiders + forward traps; sparring partner crowned) on yk1 | #453 | 1583 +- 11 | 944 |
 | 2026-11-23 10:34 | sw54 | MAX_BABIES_WAR 20 + RICH_BANK 600 + CORE_BABIES 20 + KING_RESERVE 300 (sw50's bank on bodies on the raider line; big swing) on sw53 | #454 | 1629 +- 9 | 1525 |
-| 2026-11-23 13:06 | sw58 | FINISH_K 8 + FINISH_FLOOR 100 (sw56's kill finishing ported to sw54; big swing) on sw54 | #470 | 1642 +- 8 | 1862 |
-| 2026-11-23 14:03 | yl19 | FINISH_FLOOR 100 alone (from 200; sw58's floor without its FINISH_K 8) on sw54 | #474 | 1651 +- 8 | 2021 |
-| 2026-11-23 18:08 | yl25 | RETREAT_HP 0 (from 40: wounded babies no longer walk back to our king; incremental) on yl19 | #475 | 1692 +- 10 | 1346 |
+| 2026-11-23 13:06 | sw58 | FINISH_K 8 + FINISH_FLOOR 100 (sw56's kill finishing ported to sw54; big swing) on sw54 | #470 | 1643 +- 8 | 1862 |
+| 2026-11-23 14:03 | yl19 | FINISH_FLOOR 100 alone (from 200; sw58's floor without its FINISH_K 8) on sw54 | #474 | 1651 +- 8 | 2038 |
+| 2026-11-23 18:08 | yl25 | RETREAT_HP 0 (from 40: wounded babies no longer walk back to our king; incremental) on yl19 | #475 | 1693 +- 9 | 1406 |
