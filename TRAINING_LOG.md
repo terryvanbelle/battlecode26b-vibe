@@ -12196,3 +12196,27 @@
     - tr578 was dequeued (not started: cells.tsv only on the box), re-planned with yl46 at 60 of 120 games, and queued 07:57.
     - tr579 and tr580 planned and queued by 08:06. The box took tr575-tr577; tr578-tr580 are waiting.
   - *Pool:* 10 bots, 6 incremental (yl32, yl33, yl43, yl44, yl45, yl46) and 4 swings (sw69, sw71, sw72, sw73). Newcomers: yl45, sw73, yl46.
+
+- **11-24 08:10-08:35 PDT, PROD: no new champion (sw72 holds); replica 40272 read; yl32 retired; newcomer yl47 = sw72 + CAT_YIELD_R2 20; tr581-tr584.**
+  - *Rank 08:11 (70,718 g):* sw72 1711 +- 20 on 317 g holds; sw71 +23 (needs > +25); sw73 +10 on 174 g.
+  - *Rank 08:22 (70,813 g; tr576 pulled DONE, tr577-tr579 partial):* sw72 1712 +- 19 on 352 g holds; sw71 +19 (needs > +24); yl46 +34 on 38 g (needs > +59); sw73 +9 on 189 g.
+  - *Replica 40272 (sw72's first match, W 2-1 vs AlexT101_finalsbot): ZeroDay was lost by our king starving at r1738.*
+    - From r400 our bank stayed at 150-570 against their 1000-2500. Our babies fell from 8 to 1 after r1400. Our cat damage was higher (5505 vs 2183).
+    - Our rat deaths on ZeroDay: trap 155 (33 before r400, 96 in r400-1399, 26 after), throwLand 60, crush 20, pounce 20, throwHit 17, bite 10, scratch 6.
+    - Enemy trap hits on us over the 3 games: 640 (412 on ZeroDay). 530 were laid by rats and 28 by kings; 547 hit away from both kings; 553 fired within 150 rounds of the lay.
+    - Who saw the lay: the victim 202, another of our rats 172, nobody 167; 19 victims were thrown onto the trap and 38 were not yet born. So 374 of the 640 hits were on traps one of our rats saw laid.
+    - Engine check: enemy traps cannot be sensed or probed. getMapInfo reads gw.getTrap(loc, our team), and assertCanPlaceTrap checks only our own team's traps. TrapRisk's front-tile marks remain the only model.
+    - attempts.csv has 38 TrapRisk rows (RISK_GATHER, RISK_IN_FIGHT, RISK_FRESH, RISK_ADAPT, RISK_TTL, RISK_ROWS, FIGHT_RISK_TTL and others). Only the s7d literal and z5h's TTL 40 passed. No newcomer from this finding this turn.
+  - *Late starvation in the local tournament (tr540-tr579: 4308 games, all at war):*
+    - 1685 games reached r1400. 422 of those ended in a king kill, and in 237 of those the loser's bank was <= 5 (starved).
+    - The starved losers ended with a median of 1 baby against the winner's 40, and had transferred 9975 cheese against 17330.
+    - Only 31 of the 237 would have led on points with one king each. Late starvation is mostly a lost economy, not a lost points lead, so a king-survival guard would flip few games.
+  - *popthecork 40185 g2 (replica, sw69 era):* of our 164 cat bites in r85-170, 152 had no enemy baby within dist2 20, so CAT_YIELD_R2 20 would not have changed most of them. Our king was hit by thrown rats at r73-169 and bitten at r163-166 and r322-356, and starved at r357.
+  - *Retired 08:28 PDT:* yl32. It was -41 vs sw72 on 1892 g (966-926; SE 8 vs 19), 2.04 combined SE below. Its STANDOFF_EQ lives on in the champion.
+  - *Newcomer yl47 = sw72 + CAT_YIELD_R2 20 alone*, splitting both sw71's and sw73's leads over sw72 together with yl46.
+    - *Build:* sw73's source with LOW_FLOOR set back to 50, via snapshot.sh. With package names masked, the diff from sw72 is Baby.catYield, its call in urgentMove's cat branch, and the Cfg line.
+    - *Tests:* test/yl47/CatYieldTest (sw73's copy, 11 checks). Unit tests 2098/2098 in 14 classes.
+    - *Smoke vs sw72:* 4-4 (dirtfulcat 0-2, evileye 1-1, DefaultSmall 2-0, starvation 1-1; all king kills). Clean: tags NEAR only, no turn at the bytecode limit, max 19173.
+    - Added to the tournament by 08:30.
+  - *Box:* tr581 and tr582 were planned and queued 08:11-08:20; tr583 and tr584 (with yl47: 60 + 12 games) at 08:30-08:32.
+  - *Pool:* 10 bots: 6 incremental (yl33, yl43, yl44, yl45, yl46, yl47) and 4 swings (sw69, sw71, sw72, sw73). Newcomers being rated: yl45, sw73, yl46, yl47.
