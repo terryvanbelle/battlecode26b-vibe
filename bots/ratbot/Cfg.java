@@ -193,13 +193,11 @@ public final class Cfg {
     /** Guard facing: with an enemy rat within this dist2, steps strafe to keep facing it and a turn ends facing it
      *  (rats are grabbed from behind; 0 = off). */
     public static final int GUARD_DIST2 = 13;
-    /** yl32, the standoff's health test (false = as through yl25: Baby.war's standoff holds against a watching enemy
-     *  baby with at least our health). true: it holds only against one with more health than ours, so a fighter walks
-     *  to an equal one. The engine lets a rat grab a watching enemy only when that enemy has less health
-     *  (HEALTH_GRAB_THRESHOLD 0), so neither of two equal rats can grab the other from the front; the one that steps
-     *  in bites on arrival and wins the even bite race by one bite. A healthier enemy is still held off (it could grab
-     *  us), unlike yl31 (STANDOFF false: no standoff at all). */
-    public static final boolean STANDOFF_EQ = true;
+    /** yl33, prey by health (false = as through yl25: Baby.prey is the NEAREST weaker enemy baby within dist2 20).
+     *  true: the WEAKEST one (lowest health; the nearest of equals), so hunters finish the most wounded enemy first.
+     *  Imitates AdamTan12_Icarus (replica 39382, 11-23): in 35-45% of our rat duels our rat began 30+ health lower,
+     *  we lost about 95% of those, and Icarus struck first in about 60% of them. */
+    public static final boolean PREY_WEAKEST = true;
     /** Rescue only for a rat within RESCUE_KING_R of our nearest king (the rescue walk and tryCarry's carrier bonus);
      *  the enemy carrier must be within dist2 RESCUE_D2. */
     public static final int RESCUE_KING_R = 7;

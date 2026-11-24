@@ -11967,3 +11967,34 @@
   - *Not built:* the rift cat share. Replica record since match 38000 is 148 W (35 on points) vs 152 L (14 on points), so the tiebreak is a net plus and cat share is not the top loss behaviour; END_CAT and END_CAT_COOP doses were already walked (1200, 1300 and 800 lost).
   - *Replica:* #16 of 54 at 1780.1 (00:48 snapshot). VM 5.7 GB free (70%), prune count still 4 (last 22:17). Box: tr512-tr514 started; tr515-tr519 planned and waiting.
   - *Housekeeping:* two attempts.csv edits this turn broke field counts (yl26: a doubled comma before a quoted field; yl36: commas in an unquoted field). Both were fixed in place before commit; the file has 1444 rows of 5 fields.
+- 01:45 PDT (11-24): PROD 01:05. Champion yl32 holds (no new champion).
+  - *Rank* (01:05, 63196 games): yl33 +22 vs yl32 on 238 g (133-105; needs > +28), yl34 -6 on 219, sw66 -12 on 794, sw67 -15 on 550, sw64 -16 on 1297, sw68 -35 on 121, yl36 -65 on 60, yl35 -74 on 101, sw69 and yl37 0 g.
+  - *Rift study* (replica 39577 lost rift on points; all 7 local rift games in tr513 went to r2000 on points):
+    - The map: long vertical walls. The central channel (x 23-36) opens to each half only through two-tile dirt gaps, (21-22, 6-7) and its twin (37-38, 22-23). Beyond them the x=42 wall has a dirt tile at rows 4-5.
+    - Replica: none of our rats got past x=36 from r500 to r1000, although we had 43 babies to Icarus's 21-24 and the war began at r493. Both armies stayed home; Icarus won the cat-damage share.
+    - Local yl32 mirror: the same. Both armies kept 93-95% of rat-turns at home. The rats at the wall are raiders (RAID_SHARE) bound for the enemy twins of their mines, (47,3), (46,15), (53,17) and (48,24).
+    - One raider planned a 22-tile reverse Flow path from (26,6) to (47,3) straight through the x=37-38 wall (Flow takes unknown tiles as open). It dropped the path at (36,2), walked down the wall face toward the gap, and died to enemy raiders at (36,14).
+    - Sym.record never writes terrain onto unseen twins, so a baby plans through every enemy-side wall it has not itself seen. That breaks the owner rule to mirror knowledge.
+  - *New: sw70 (SWING, new mechanism).* SYM_FILL 200, u5x's Sym.fill/backfill of 11-02 ported to yl32. Babies copy seen walls and dirt onto unseen twins where every live symmetry agrees; it runs at the end of the turn with 6000 bytecodes to spare, before Flow.work.
+    - u5x (with SYM_KING_GAP) was rejected on 11-02 by one replica block (D 9 net -5) and never tournament-rated; the code was deleted in the owner #36 cleanup.
+    - New SymFillTest 15/15, unit tests 2055/2055. Smoke vs yl32 3-3; no exceptions or overruns (rat mean bytecodes +1.1-1.3k, max 17041).
+    - Rift pair vs yl32 1-1 on points: 25 and 155 rat-turns past the far wall vs yl32's 2 and 0. It helps the raiders' planning but does not break the stall alone; both armies stay about 94% at home.
+  - *Retired for pool size (12 to 11):* sw64 (-16 on 1297 g, 0.8 combined SE); its king trap sense lives on in sw66 and sw67. Pool: incremental yl32-yl37, swings sw66-sw70.
+  - *Replica:* no new matches since 39577 (00:35); #16 of 54 at 1780.1 (01:09 snapshot). VM 5.7 GB free (70%), prune count still 4 (last 22:17). Box: tr516 and tr517 started; tr518-tr521 waiting, tr522-tr523 planned.
+- 02:28 PDT (11-24): PROD 01:05, continued. NEW CHAMPION yl33 (yl25 + PREY_WEAKEST: a hunter chases the weakest weaker enemy baby within dist2 20, the nearest of equals) at 02:03, after pulling tr516-tr522.
+  - *Crowning:* +30 vs yl32 on 315 g (175-140; needed > +24). Submitted #477 (accepted). bots/ratbot = yl33; champion.txt, champions.csv row and attempts ACCEPTED written.
+  - *Lineage:* yl33 was built on yl25 before yl32's crowning, so the crown drops STANDOFF_EQ. yl38 (yl32 + PREY_WEAKEST) is therefore yl33 + STANDOFF_EQ and tests the stack directly.
+  - *New at 01:57: yl38* (yl32 + PREY_WEAKEST alone, yl33's code verbatim) was meant as the missing arm of the hunt rework:
+    - yl33 led yl32 while sw68 (+ PREY_TRAP) trailed it, which pointed at PREY_TRAP as the drag.
+    - PreyWeakestTest 6/6, unit tests 2046/2046. Smoke vs yl32 4-2; no exceptions or overruns.
+  - *Audit* (research/audit/2026-11-24-yl33.md):
+    - *Bugs:* one latent logic slip, and no crash, mirror slip or special value. A gatherer hunts prey only within dist2 8, but PREY_WEAKEST ranks dist2 20 by health. So a weaker rat at dist2 9-20 hides a nearer weaker one at 3-8, and the gatherer hunts neither. Adjacent grabs (tryCarry) and fighters are unaffected.
+    - *Tests:* PreyWeakestTest moved to test/ratbot and got 2 new checks (the weakest rat behind a wall is passed over). StandoffEqTest moved to test/yl32, since yl33 has no STANDOFF_EQ. Unit tests 2039/2039 bot checks plus 864/864 tool checks.
+    - *Coverage gaps:* findEnemies on the champion, the hunt that follows, and the WALL_BLIND_CAP cut-off.
+  - *Procedure decision:* the pool bots built on yl32 (sw68, sw69, yl37, sw70, yl38) stay as they are, and the tournament judges them against yl33 directly. New candidates go on yl33.
+  - *New: yl39* (fix newcomer on yl33, FIX_GATHER_PREY): a gatherer's prey is the weakest within its dist2 8. GatherPreyTest 8/8 (findEnemies through reflection), unit tests 2047/2047. Smoke vs yl33 5-1; no exceptions or overruns.
+  - *Retired for pool size:*
+    - yl35 at 01:57: -74 vs yl32 on 101 g (1.9 SE), the lowest active bot.
+    - yl36 at 02:25: -116 vs yl33 on 132 g (3.1 SE); -86 vs its base yl32.
+  - *Pool 11:* incremental yl32, yl33 (champion), yl34, yl37, yl38, yl39; swings sw66, sw67, sw68, sw69, sw70.
+  - *Box:* tr527-tr530 planned; tr527 gives yl38 60 games and tr529 gives yl39 60.

@@ -27,3 +27,4 @@ when_pdt,bot,base,change,submission
 2026-11-23 14:03,yl19,sw54,FINISH_FLOOR 100 alone (from 200; sw58's floor without its FINISH_K 8),474
 2026-11-23 18:08,yl25,yl19,RETREAT_HP 0 (from 40: wounded babies no longer walk back to our king; incremental),475
 2026-11-24 00:05,yl32,yl25,STANDOFF_EQ (the standoff holds only against a healthier enemy; an equal one is walked to and bitten first; incremental),476
+2026-11-24 02:03,yl33,yl25,PREY_WEAKEST (a hunter chases the weakest weaker enemy baby within dist2 20 - the lowest health then the nearest - instead of the nearest; incremental),477

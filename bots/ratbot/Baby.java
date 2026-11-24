@@ -1446,9 +1446,8 @@ public final class Baby {
                 // standoff: stepping into the front of an enemy that sees us (and is not weaker) walks onto its
                 // traps and into a grab; hold, face it and let it come (flank and prey moves still engage)
                 // (not against a rat at our threatened king: it is biting the king while we wait)
-                // (Cfg.STANDOFF_EQ, yl32: only against a healthier one; an equal one cannot grab us, we walk in)
                 boolean atKing = threatened != null && nearestEnemy.location.distanceSquaredTo(threatened) <= Cfg.KING_THREAT_D2;
-                if (!hunting && !atKing && sees(nearestEnemy, G.me) && standoffFoe(nearestEnemy.health, G.rc.getHealth())) {
+                if (!hunting && !atKing && sees(nearestEnemy, G.me) && nearestEnemy.health >= G.rc.getHealth()) {
                     Direction f = G.me.directionTo(nearestEnemy.location);
                     if (G.rc.getDirection() != f && G.rc.canTurn(f)) { G.rc.turn(f); G.facing = f; }
                     return true;
@@ -1465,12 +1464,6 @@ public final class Baby {
             }
         }
         return false;
-    }
-
-    /** The standoff holds against a watching enemy baby with health eh when we have h: eh >= h, or with
-     *  Cfg.STANDOFF_EQ (yl32) eh > h only (an equal one cannot grab us from the front: we walk in and bite first). */
-    static boolean standoffFoe(int eh, int h) {
-        return Cfg.STANDOFF_EQ ? eh > h : eh >= h;
     }
 
     /** Debug count: war turns with a threatened king near us. */
@@ -1605,14 +1598,17 @@ public final class Baby {
         return false;
     }
 
-    /** The nearest enemy baby within dist2 20 that we could ratnap (health below hp) and no wall hides, or null. */
+    /** The nearest enemy baby within dist2 20 that we could ratnap (health below hp) and no wall hides, or null.
+     *  Cfg.PREY_WEAKEST (yl33): the weakest such baby instead, the nearest of equals. */
     static RobotInfo prey(RobotInfo[] robots, int hp) {
         RobotInfo prey = null;
         int pd = Integer.MAX_VALUE;
         for (RobotInfo r : robots) {
             if (r.team != G.them || r.type != UnitType.BABY_RAT || r.health >= hp) continue;
             int d = G.me.distanceSquaredTo(r.location);
-            if (d <= 20 && d < pd && !(d > 2 && walled(G.me, r.location))) { pd = d; prey = r; }
+            // Cfg.PREY_WEAKEST (yl33): the lowest health first, then the nearest (d <= 20 < 64)
+            int k = Cfg.PREY_WEAKEST ? r.health * 64 + d : d;
+            if (d <= 20 && k < pd && !(d > 2 && walled(G.me, r.location))) { pd = k; prey = r; }
         }
         return prey;
     }
