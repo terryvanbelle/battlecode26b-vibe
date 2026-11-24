@@ -274,3 +274,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (12:17) OK, so it's only used to catch crashes and bytecode-limits?  I don't like the idea of adding an extra quality-based gate to the local tournament
 (12:19) It's fine if you want to avoid wasting time on crashes, but don't take it beyond that
 (12:19) If you're having difficulty finding ideas, I'd like you to re-read the top-level documents in the github repository terryvanbelle/battlecode-vibe
+(13:22) This is insufficient output from a prod.  I want the same level of detail on every prod that  you were giving me this morning
