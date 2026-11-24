@@ -8,7 +8,7 @@ import static ratbot.BotTest.*;
  * yl55 = yl54 + LOW_BABIES 16 (11-24; from 12): the LOW_FLOOR 20 band widens to 12-15 babies (rat cost 40). Under
  * LOW_BABIES (16) live babies every spawn floor (core boot, war, the hard floor) is LOW_FLOOR per king; with 0-3
  * babies (rat cost 10) LAST_FLOOR holds instead, so LOW_FLOOR is the floor of the 4-15 band (rat cost 20-40).
- * Evidence: the 11-24 profile of 171 replica games: in our losses we kept 12 babies at r1000 to their 21, and they
+ * Evidence: the 11-22 profile of 171 replica games (research/field/top-profile): in our losses we kept 12 babies at r1000 to their 21, and they
  * spawned 39 to our 30 in r401-800.
  * New in yl55: LOW_BABIES 16 is above CORE_SMALL 12, so on maps of at most CORE_SMALL_AREA tiles 12-15 babies are
  * low but not core: the core boot does not build there, and only the war spawn (an enemy in the king's view) and the
