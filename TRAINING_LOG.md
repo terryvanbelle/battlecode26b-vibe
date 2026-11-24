@@ -12030,3 +12030,23 @@
     - Pool 10: incremental yl32, yl33, yl34, yl38, yl39, yl42; swings sw66, sw67, sw68, sw69. The next candidate should be a swing.
     - tr546-tr548 queued.
     - Replica #16 of 54 at 1781.4 (snapshot 04:29).
+- 04:59 PDT (11-24): PROD 04:31. No new champion: yl33 holds at 1685 +- 11 on 945 g. sw69 leads it by +13 (needs > +19) and sw68 by +11 (needs > +17). Pulled tr503-tr546 (10 late finishers plus the running runs).
+  - *Replica study, the brawl (39741, 39836 and 39883 vs AdamTan12_Icarus):*
+    - Replay death records give the victim (d), cause (e) and killer (f, g); kings starve as cause 'starve'.
+    - By r200 our babies bit the cat 92-187 times to Icarus's 20-23. Most of those bites came with the cat within dist2 64 of our king (CAT_DEFEND, Baby.urgentMove's first branch), and 21-87 of them with an enemy baby within dist2 20 of the biter.
+    - Icarus bit our rats 50-52 times to our 29-33 (dirtfulcat, DefaultLarge).
+    - On dirtfulcat by r100 its bites killed 12 of ours to our 1, its rat traps 13 to our 7 (it laid 42 to our 24), and the cat 10 of ours to its 5. Our throws killed 24 of its rats to its 11 of ours.
+    - Replica replays carry no indicator strings, so move reasons come only from local games.
+  - *New: yl43* (yl33 + CAT_YIELD_R2 20): at war a rat with an enemy baby within dist2 20 skips the CAT_DEFEND draw.
+    - CatYieldTest 11/11, unit tests 2050/2050.
+    - Smoke vs yl33 4-4 (dirtfulcat added); clean.
+    - Locally it cuts the war mv=g turns with an enemy near (224 vs 486 over 6 war games). Rat bites do not clearly rise, and it lost 50 rats to the cat by r300 to yl33's 43: yielding rats lose approachCat's spot outside the cat's lane.
+    - The z3n/zds forms (11-06/08) were never tournament-rated.
+  - *New: sw71* (BIG SWING, the brawl bundle on yl33): + CAT_YIELD_R2 20 + PREY_TRAP (yl34's diff) + LOW_FLOOR 50 (sw69).
+    - It stacks the switches behind the two bots leading yl33 with the replica brawl fix.
+    - test/sw71 (CatYield 11/11, PreyTrap 17/17, LowFloor 9/9); unit tests 2076/2076 in 11 classes.
+    - Smoke vs yl33 4-4 (each map 1-1); clean.
+  - *Retired for pool size: yl39* (the yl33 audit fix FIX_GATHER_PREY): -26 vs yl33 on 307 g, the lowest bot with 200+ games.
+  - *Pool 11:* incremental yl32, yl33 (champion), yl34, yl38, yl42, yl43; swings sw66, sw67, sw68, sw69, sw71.
+  - *Box:* tr549-tr552 queued (tr551 gives yl43 60 games); tr553-tr554 planning.
+  - *Correction:* in the replies of this turn I gave estimated times (04:52-05:12) for status lines sent at 04:38-04:45; the log and attempts times come from the clock.
