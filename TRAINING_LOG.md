@@ -12104,3 +12104,19 @@
   - *Pool 11:* incremental yl32, yl33, yl34, yl43, yl44, yl45; swings sw67, sw68, sw69 (champion), sw71, sw72.
   - *Box:* tr565-tr566 planned at 06:00, tr567 planned at 06:30 with yl45 in the pool. tr563-tr566 were waiting at 06:21.
   - *Replica:* #16 of 54 at 1775.6 (snapshot 06:18; it was #18 at 1763.9 at 05:54). VM 5.0 GB free (74%); the prune has not run since 22:17 PDT on 11-23.
+
+- **11-24 06:31-06:40 PDT, PROD: no new champion; sw69 holds. No pool change.**
+  - *Pulls and rank:* pulled tr552, tr556-tr563 (tr558, tr560, tr561 done; the rest partial). 68,975 games.
+    - sw69 1693 +- 11 on 994 g (532-462).
+    - yl44 (LOW_FLOOR 20) leads it by +13 on 143 g (77-66). It needs > +31 and 57 more games.
+    - The other newcomers: sw71 -15 on 149 g, yl43 -16 on 193 g, sw72 -19 on 55 g, yl45 0 games (60 queued in tr567).
+  - *Box:* tr568 planned and queued (06:34). tr564 started at 06:33; tr565-tr568 wait.
+  - *Replica:* one new match, 40120 (06:06) vs AdamTan12_Finals: won 3-0 (starvation, trapped, arrows), 1763.9 to 1775.6. #15 of 54 at the 06:33 snapshot. VM 4.9 GB free (74%); the prune has not run since 22:17 PDT on 11-23.
+  - *Idea backlog: rats thrown into kings (40046, 40005).* Damage to each king by source (scratchpad kingdmg.py; match.json `team_a` is already the per-game A side, so `reversed` is not applied):
+    - 40046 evileye (lost at r686): finalsbot threw our own rats into our king 13 times for 502 damage, plus 60 in bites. We threw theirs into their king 5 times (198). Our king died to a throw hit.
+    - 40046 thunderdome (won at r84): we killed their king with 12 throw hits (440) plus 160 in bites.
+    - 40005 cheesefarm (yl33, lost at r524): goonv23 killed our king with 9 throw hits (322) plus 230 in bites.
+    - In evileye our king sat on the top edge (centre y 1-3, 92 moves in 686 rounds). In 9 of the 14 hits it had not moved in the 3 rounds before. The throwers stood Chebyshev 2-5 from its centre.
+    - King.throwDodge (THROW_DODGE 9) steps only when a step lowers its exposure to the carriers' flights, and at the edge often none does.
+    - Tried before: the dodge itself (yb1/yb4/yb9 kept), THROW_DODGE 5 and 13 (-27 each), KING_DODGE_R2 41, the king's block (sw63, sw65), king's eyes (sw61/62), RETREAT_HP 0 (yl25, kept). Not built this turn: about ten attempts in this area have lost, and 5 newcomers are still being rated. The open question is the edge: a king that leaves the map edge before the carriers arrive.
+  - *Ruled out:* LOW_BABIES (the band of yl44's line): 10 was tried four times in the tournament (yl37 retired at -45); 12 and 16 were rejected on older lines.
