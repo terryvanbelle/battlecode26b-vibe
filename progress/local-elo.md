@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 66265 games in one fit as of 2026-11-24 04:29 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 66831 games in one fit as of 2026-11-24 05:00 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -32,6 +32,6 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-23 10:34 | sw54 | MAX_BABIES_WAR 20 + RICH_BANK 600 + CORE_BABIES 20 + KING_RESERVE 300 (sw50's bank on bodies on the raider line; big swing) on sw53 | #454 | 1613 +- 9 | 1525 |
 | 2026-11-23 13:06 | sw58 | FINISH_K 8 + FINISH_FLOOR 100 (sw56's kill finishing ported to sw54; big swing) on sw54 | #470 | 1625 +- 8 | 1862 |
 | 2026-11-23 14:03 | yl19 | FINISH_FLOOR 100 alone (from 200; sw58's floor without its FINISH_K 8) on sw54 | #474 | 1634 +- 8 | 2055 |
-| 2026-11-23 18:08 | yl25 | RETREAT_HP 0 (from 40: wounded babies no longer walk back to our king; incremental) on yl19 | #475 | 1673 +- 8 | 1939 |
-| 2026-11-24 00:05 | yl32 | STANDOFF_EQ (the standoff holds only against a healthier enemy; an equal one is walked to and bitten first; incremental) on yl25 | #476 | 1685 +- 10 | 1101 |
-| 2026-11-24 02:03 | yl33 | PREY_WEAKEST (a hunter chases the weakest weaker enemy baby within dist2 20 - the lowest health then the nearest - instead of the nearest; incremental) on yl25 | #477 | 1693 +- 12 | 815 |
+| 2026-11-23 18:08 | yl25 | RETREAT_HP 0 (from 40: wounded babies no longer walk back to our king; incremental) on yl19 | #475 | 1673 +- 8 | 2001 |
+| 2026-11-24 00:05 | yl32 | STANDOFF_EQ (the standoff holds only against a healthier enemy; an equal one is walked to and bitten first; incremental) on yl25 | #476 | 1685 +- 10 | 1238 |
+| 2026-11-24 02:03 | yl33 | PREY_WEAKEST (a hunter chases the weakest weaker enemy baby within dist2 20 - the lowest health then the nearest - instead of the nearest; incremental) on yl25 | #477 | 1685 +- 11 | 945 |
