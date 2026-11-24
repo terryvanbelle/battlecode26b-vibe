@@ -1,5 +1,6 @@
-"""sw63 mechanism check in local games (team 1 = the first bot): the king's blocks (Debug.KWHY 'B', index 7 of the
-bytecode tag), enemy throws hitting our king and their damage. Usage: python block_check.py REPLAY..."""
+"""sw63/sw64 mechanism check in local games (team 1 = the first bot): the king's blocks (Debug.KWHY 'B', index 7 of the
+bytecode tag), enemy throws hitting our king and their damage, enemy rat traps our king fired and their damage.
+Usage: python block_check.py REPLAY..."""
 import json, os, sys, collections
 sys.path.insert(0, '/home/terryvanbelle/projects/vibe/2026b/tools')
 import game_report as gr
@@ -17,6 +18,8 @@ for p in sys.argv[1:]:
         h = f.readline().rstrip('\n').split('\t'); ix = {x: i for i, x in enumerate(h)}
         for l in f:
             c = l.rstrip('\n').split('\t'); c += [''] * (len(h) - len(c))
+            if c[ix['action']] == 'trigger' and c[ix['type']] == 'KING' and c[ix['team']] == '1' and c[ix['g']] == 'rat':
+                X['enemy traps our king fired (sw64)'] += 1; X['  their damage to our king '] += int(c[ix['f']] or 0)
             if c[ix['action']] == 'throwHit' and c[ix['d']] == '1' and c[ix['g']] == '2':
                 if c[ix['c']] == 'KING': X['enemy throws hitting our king'] += 1; X['  their damage to our king'] += int(c[ix['b']] or 0)
                 elif c[ix['c']] == 'RAT': X['enemy throws hitting our babies'] += 1

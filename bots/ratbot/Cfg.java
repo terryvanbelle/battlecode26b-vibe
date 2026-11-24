@@ -186,7 +186,7 @@ public final class Cfg {
     /** War role split: 0 everyone fights, 1 gatherers ignore non-adjacent enemies, 2 and never freeze to face. */
     public static final int WAR_GATHER = 0;
     /** Health at or below which a baby near enemies retreats to its king (0 = never). */
-    public static final int RETREAT_HP = 40;
+    public static final int RETREAT_HP = 0;
     /** A baby with AMMO_HP health or less, within AMMO_R of our king and dist2 AMMO_D2 of a healthier enemy rat, is
      *  ammunition the enemy could throw at our king: it moves away. */
     public static final int AMMO_HP = 50, AMMO_R = 3, AMMO_D2 = 8;

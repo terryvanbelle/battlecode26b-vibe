@@ -1176,6 +1176,30 @@ public class BotTest {
         }
     }
 
+    /** AMMO (Baby.ammo, ammoAway): a baby with AMMO_HP or less within AMMO_R of our king's centre and dist2 AMMO_D2 of a
+     *  healthier enemy rat is ammunition the enemy could grab from the front and throw at our king: it steps away from
+     *  the king. Added at the yl25 audit (11-23): with RETREAT_HP 0 this is the one rule that moves wounded babies
+     *  near our king. */
+    static void testAmmo() throws GameActionException {
+        int hp = Cfg.AMMO_HP, d2 = Cfg.AMMO_D2, r = Cfg.AMMO_R;
+        check(Baby.ammo(hp, hp + 1, d2, r), "ammo: at AMMO_HP, a healthier enemy at AMMO_D2, AMMO_R from our king: ammunition");
+        check(!Baby.ammo(hp + 1, hp + 2, d2, r), "ammo: above AMMO_HP: not ammunition");
+        check(!Baby.ammo(hp, hp, d2, r), "ammo: an enemy no healthier cannot grab it from the front: not ammunition");
+        check(!Baby.ammo(hp, hp + 1, d2 + 1, r), "ammo: the enemy beyond AMMO_D2: not ammunition");
+        check(!Baby.ammo(hp, hp + 1, d2, r + 1), "ammo: beyond AMMO_R of our king: not ammunition");
+        // a wounded baby 2 north of our king's centre, a healthier enemy 2 east of it: it steps away from the king
+        reset(); me = new MapLocation(10, 7); health = Math.min(hp, 30); install(); G.coop = false;
+        Comms.kings[0] = new MapLocation(10, 5); Comms.numKings = 1;
+        Baby.nearestEnemy = enemyRat(50, 12, 7, 100);
+        check(Baby.ammoAway(), "ammo: a wounded baby near our king and a healthier enemy moves");
+        check(me.y > 7, "ammo: it stepped away from our king (at " + me + ")");
+        // the same baby at full health stays
+        reset(); me = new MapLocation(10, 7); health = 100; install(); G.coop = false;
+        Comms.kings[0] = new MapLocation(10, 5); Comms.numKings = 1;
+        Baby.nearestEnemy = enemyRat(50, 12, 7, 100);
+        check(!Baby.ammoAway() && me.equals(new MapLocation(10, 7)), "ammo: a healthy baby near our king stays (at " + me + ")");
+    }
+
     static void testSpawnFloor() throws GameActionException {
         reset(); install();
         type = UnitType.RAT_KING; G.coop = false; G.round = 300; global = Cfg.SPAWN_FLOOR - 100;
@@ -1682,6 +1706,7 @@ public class BotTest {
         testFlank();
         testSpawnFloor();
         testRetreat();
+        testAmmo();
         testThrowDirection();
         testBiteTargets();
         testTransferReach();
