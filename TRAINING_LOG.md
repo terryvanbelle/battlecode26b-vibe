@@ -12122,3 +12122,22 @@
   - *Ruled out:* LOW_BABIES (the band of yl44's line): 10 was tried four times in the tournament (yl37 retired at -45); 12 and 16 were rejected on older lines.
 
 - **11-24 06:49 PDT, owner: milestone markers off rating-history.png.** tools/replica_report.py `rating_chart` no longer draws the dashed milestone lines, their M-tags, the "(dashed vertical: milestones)" title note or the footnote. `charts()` lost its `marks` argument. ladder-position.png (`rank_chart`), progress.png and ATTEMPTS.md keep their milestones. rating-history.md now lists the milestones as the ladder-position chart's. The test_tools check now asserts that the rating chart calls neither `marks_on` nor the footnote; test_tools 111/111. Redrawn at 06:51: #14 of 54 at 1778.8.
+
+- **11-24 06:54-07:20 PDT, PROD: no new champion; sw69 holds. New: sw73 (BIG SWING, the leaders' stack). Retired: sw67.**
+  - *Pulls and rank:* pulled tr552, tr556, tr557, tr559, tr562-tr566 (tr552, tr562, tr563 done; the rest partial). 69,351 games.
+    - sw69 1697 +- 11 on 1066 g (575-491).
+    - Three bots lead it: sw71 (the brawl bundle on yl33) +21 on 229 g, needing > +25; sw72 (sw69 + PREY_WEAKEST + PREY_TRAP) +18 on 77 g, needing > +41 and 123 more games; yl44 (LOW_FLOOR 20) +6 on 219 g.
+  - *Retired: sw67*, -29 vs sw69 on 1727 g, about 2.1 combined SE below (the > 2 SE rule).
+  - *New: sw73* (BIG SWING) = sw72 + CAT_YIELD_R2 20 (yl43's code: Baby.catYield and one guarded line) + LOW_FLOOR 20 (yl44's dose).
+    - It stacks the changes of the three bots leading the champion. sw71's other difference from sw69, no STANDOFF_EQ, is not taken.
+    - Its diff from sw72 is exactly yl43's Baby.java diff, the CAT_YIELD_R2 block and the LOW_FLOOR value.
+    - test/sw73 holds sw72's three tests, yl43's CatYieldTest and yl44's LowFloorTest. Unit tests 2087/2087 in 13 classes.
+    - Smoke vs sw69 8-0 (each map 2-0), clean (tags NEAR only, no overruns, max 19429).
+  - *Pool 11:* incremental yl32, yl33, yl34, yl43, yl44, yl45; swings sw68, sw69 (champion), sw71, sw72, sw73.
+  - *Box:* tr569 and tr570 planned at 06:55-06:57. The box took tr567-tr569 by 07:13. tr571-tr573 were planned and queued in sequence at 07:13-07:14, with sw73 in the pool (60 of tr571's 120 games). tr570-tr573 wait.
+  - *Replica:* 40176 (06:38) beat AdamTan12_Icarus 2-1; 40182 (06:41) beat quesswho_quals 2-1; 40185 (06:43) lost to quesswho_quals 1-2. #14 of 54 at 1778.8 (snapshot 07:02).
+  - *Idea backlog from 40185 (sw69 vs quesswho_quals):*
+    - Nofreecheese (lost at r634): an enemy rat trap finished our king, after 250 damage from 7 of our rats thrown into it and 150 from bites.
+    - popthecork (lost at r357): one cat (#3) crushed 21 of our rats from r97 to r167. They stood along the left edge (x 2-3, y 8-22), far from our king at (6,32). Cats crushed 3 of theirs all game.
+    - Our bank was 210 against their 771 at r200, and our king starved at r357.
+    - Open question: why our rats stayed in that cat's path (lane avoidance, or rats drawn to the cat).
