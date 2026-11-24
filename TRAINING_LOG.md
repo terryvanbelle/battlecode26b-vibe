@@ -12116,7 +12116,7 @@
     - 40046 evileye (lost at r686): finalsbot threw our own rats into our king 13 times for 502 damage, plus 60 in bites. We threw theirs into their king 5 times (198). Our king died to a throw hit.
     - 40046 thunderdome (won at r84): we killed their king with 12 throw hits (440) plus 160 in bites.
     - 40005 cheesefarm (yl33, lost at r524): goonv23 killed our king with 9 throw hits (322) plus 230 in bites.
-    - In evileye our king sat on the top edge (centre y 1-3, 92 moves in 686 rounds). In 9 of the 14 hits it had not moved in the 3 rounds before. The throwers stood Chebyshev 2-5 from its centre.
+    - In evileye our king sat on the top edge (centre y 1-3, 92 moves in 686 rounds). 8 of the 14 hits found it on the tile it had held for the 3 rounds before. 4 came in the round it stepped after 3 still rounds, and 2 came 1-2 rounds after a step. The throwers stood Chebyshev 2-5 from its centre. (Correction: the first version of this entry, and the 06:36 status line, said 9 of 14 without an exact count.)
     - King.throwDodge (THROW_DODGE 9) steps only when a step lowers its exposure to the carriers' flights, and at the edge often none does.
     - Tried before: the dodge itself (yb1/yb4/yb9 kept), THROW_DODGE 5 and 13 (-27 each), KING_DODGE_R2 41, the king's block (sw63, sw65), king's eyes (sw61/62), RETREAT_HP 0 (yl25, kept). Not built this turn: about ten attempts in this area have lost, and 5 newcomers are still being rated. The open question is the edge: a king that leaves the map edge before the carriers arrive.
   - *Ruled out:* LOW_BABIES (the band of yl44's line): 10 was tried four times in the tournament (yl37 retired at -45); 12 and 16 were rejected on older lines.
