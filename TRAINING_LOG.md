@@ -12256,7 +12256,7 @@
   - *Pool:* 6 bots: 3 incremental newcomers (yl46, yl47, yl48) and 3 swings (sw71 champion, sw72, sw73).
   - *Rank 09:08 (71,684 g; tr572, tr579, tr582 and tr583 pulled DONE, tr577, tr580, tr581, tr584 and tr585 partial):* sw71 1733 +- 14 on 654 g holds. sw73 -4 (needs > +22), yl46 -28 on 193 g, yl47 -35 on 72 g, sw72 -44 on 587 g.
   - *Retired 09:09 PDT:* sw72 (-44 on 587 g, 2.24 combined SE). The pool is 5: sw71, sw73, yl46, yl47, yl48. tr589 queued; tr587-tr589 are waiting.
-- **11-24 09:12-09:50 PDT, PROD: no new champion; new mechanism ODDS (local odds at war) enters as sw74 (swing) and yl49 (dose); yl50 = sw71 + LOW_FLOOR 20**
+- **11-24 09:12-10:15 PDT, PROD: no new champion; new mechanism ODDS (local odds at war) enters as sw74 (swing) and yl49 (dose); yl50 = sw71 + LOW_FLOOR 20**
   - *Rank 09:13 (71,768 g):* sw71 1733 +- 13 on 687 g holds. sw73 +3 on 444 (needs > +21), yl46 -19 on 225, yl47 -29 on 81, yl48 unrated.
   - *Replica 40375 (sw71's first match, 0-3 vs goonv23), why we lose the grab war:*
     - Engine (RobotControllerImpl.assertCanCarryRat): a rat grabs an adjacent enemy in its own sight that cannot see it, or that has less health.
@@ -12266,7 +12266,7 @@
     - Blind grabs of our rats ($S/blind.py, 223 where the grabber is placed): the grabber was within Chebyshev 2 at the end of our turn in 222.
       It was outside our cone in 185, although guardTurn faces the nearest enemy. Enemy babies within Chebyshev 2 of our rat: 3+ in 119, 2 in 47,
       1 in 57. So the main loss is our rat alone among 2-3 of theirs: facing one leaves the others free.
-    - Their throws hit something (46 damage, stun 20) 78-98% of the time, ours 60-100%.
+    - Their throws hit something (46 damage, stun 20) 78-98% of the time, ours 64-100%.
     - Evileye to r280: we spawned 77 to their 52, picked up 1150 cheese to their 1590 and transferred 360 to their 1045.
       Our king took 376 from 10 of our own rats thrown into it and died at r281.
     - Dirtfulcat: our bank went 2035 -> 1 by r160 with 0 babies; the king starved at r172 under bites.
@@ -12284,3 +12284,12 @@
     - yl44 (sw69 + LOW_FLOOR 20) only matched sw69, but sw69 lacked the cat yield.
     - test/yl50/LowFloorTest (yl44's, LOW_FLOOR 20); unit tests 2100/2100 in 14 classes.
   - *Box:* the queue had emptied by 09:31 (tr587-589 taken). tr590 (current pool), tr591 and tr592 (with sw74) were queued 09:33-09:45.
+  - *Smokes and adds:*
+    - yl49: smoke vs sw71 7-1, clean. Only evileye and starvation play differently from the sw71 mirror (the rarer hold). Added 09:56.
+    - yl50: smoke vs sw71 5-3, clean. Added 10:08.
+    - In every smoke the only bytecode-limit hits are sw71's own king, 3 times in its dirtfulcat loss at r122 (inherited).
+  - *Box:* tr593-tr598 planned and queued 09:56-10:10. The box starts queued runs almost at once (6-12 jobs each), so 3 are kept waiting.
+  - *Rank 10:12 (72,780 g):* sw71 1723 +- 11 on 1094 g holds. sw73 +10 on 785 (needs > +16), yl46 +1 on 582, yl48 -13 on 200,
+    yl47 -29 on 336 (1.3 SE), sw74 -41 on 128, yl49 -47 on 43, yl50 unrated. No retirement: no bot is 2 combined SE below sw71.
+  - *Pool:* 8 bots. Incremental: yl46, yl47, yl48, yl49, yl50. Swings: sw71 (champion), sw73, sw74 (the new mechanism).
+  - *VM:* 4.5 GB free (76% used); prune count still 4.
