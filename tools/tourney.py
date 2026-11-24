@@ -17,7 +17,7 @@ research/tourney/champions.csv is the champion history (time PDT, bot, base, cha
 names a bot that is not its last row, chart appends it at champion.txt's modification time.
 
 Pairing: bots with fewer than NEW_MIN games get half the run, weighted by their missing games, half of those games
-against the champion and the rest against the current top TOP bots (TOP covers the ~10-bot pool); the rest
+against the champion and the rest against the current top TOP bots (TOP 20 covers the whole pool); the rest
 goes to pairs among the top TOP, weighted toward close ratings and large standard errors (the places that decide
 first place). Each game: a random map of the 21, a random map seed in 0..SEEDS-1, random seats.
 """
@@ -29,7 +29,9 @@ R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 POOL = os.path.join(R, 'research', 'tourney', 'pool.txt')
 CHAMP = os.path.join(R, 'research', 'tourney', 'champion.txt')
 MAPS = open(os.path.join(R, 'tools', 'galaxy26', 'maps-early21.txt')).read().split()
-MIN_GAMES, NEW_MIN, TOP, SEEDS = 200, 40, 10, 10   # TOP 6 -> 10 (11-22 10:55): with a ~10-bot pool every bot keeps getting games
+MIN_GAMES, NEW_MIN, TOP, SEEDS = 200, 40, 20, 10   # TOP 6 -> 10 (11-22 10:55): with a ~10-bot pool every bot keeps getting games
+# TOP 10 -> 20 (11-24 13:33): with 11 pool bots the lowest-rated bot past NEW_MIN (played + planned) fell out of the top 10
+# and got no games at all (yl53 none in tr623-tr625, sw77 none in tr626-tr628), so it could never reach MIN_GAMES
 
 
 def pool():
