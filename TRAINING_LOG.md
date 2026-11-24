@@ -12050,3 +12050,32 @@
   - *Pool 11:* incremental yl32, yl33 (champion), yl34, yl38, yl42, yl43; swings sw66, sw67, sw68, sw69, sw71.
   - *Box:* tr549-tr552 queued (tr551 gives yl43 60 games); tr553-tr554 planning.
   - *Correction:* in the replies of this turn I gave estimated times (04:52-05:12) for status lines sent at 04:38-04:45; the log and attempts times come from the clock.
+- 05:40 PDT (11-24): PROD 05:03. **NEW CHAMPION sw69** (yl32 + LOW_FLOOR 50, usqualsbot's spend-down).
+  - *Crowning:* after pulling tr537-tr550, sw69 led yl33 by +17 on 685 g (375-310), against the > +17 it needed (1702 +- 13 vs 1684 +- 11).
+  - *Submitted* to the replica as #478 (accepted 05:04). bots/ratbot = sw69. Recorded in champion.txt, champions.csv and attempts (ACCEPTED); progress refreshed.
+  - *Audit (research/audit/2026-11-24-sw69.md):* no bugs.
+    - sw69's diff from yl33 has three parts. LOW_FLOOR 50 is read only in King.spawnFloor. STANDOFF_EQ is byte-identical to the yl32 code audited at 00:05. PREY_WEAKEST is gone, which restores yl25's nearest prey and makes yl39's gatherer fix moot.
+    - The core boot is the only path that applies the low floor: LOW_BABIES 8 is at most every core count.
+    - Comment nit: Cfg's "every floor drops to LOW_FLOOR" is untrue at 0-3 babies, where LAST_FLOOR 20 holds.
+  - *Tests:*
+    - git mv: test/sw69/LowFloorTest to test/ratbot; test/yl32/StandoffEqTest back to test/ratbot; test/ratbot/PreyWeakestTest to test/yl33 (sw69 has no PREY_WEAKEST).
+    - New: PreyNearestTest (11 checks: the nearest weaker prey, walls, findEnemies' gatherer gate at dist2 8).
+    - LowFloorTest gets 3 new checks: the war spawn's floor at 4 babies, and the boot-path invariant.
+    - Unit tests on sw69: 2049/2049 in 9 classes before the audit, 2063/2063 in 10 after; tool tests all pass.
+  - *New: yl44* = sw69 + LOW_FLOOR 20. It is the dose arm along the champion's own change: the 4-7 band spends down to LAST_FLOOR 20 too.
+    - Unit tests 2063/2063.
+    - Smoke vs sw69 2-2 at entry (dirtfulcat 1-1, evileye 1-1; seat A won all four).
+  - *New: yl44 and sw72* entered at 05:39 with the smoke still running. Precedent: sw68 at 23:44. Both carry code that has already played (sw69's and sw68's).
+  - *New: sw72* (BIG SWING) = sw68 + LOW_FLOOR 50 = sw69 + PREY_WEAKEST + PREY_TRAP: the stack of the tournament's #1 and #2.
+    - Its Baby.java diff from sw69 is byte-identical to sw68's diff from yl32.
+    - test/sw72: PreyWeakestTest, PreyTrapTest and a PreyNearestTest override. Unit tests 2076/2076 in 12 classes.
+  - *Retired for pool size (13 to 11):*
+    - yl38: -32 vs sw69 on 292 g, the lowest bot with 200+ games;
+    - sw66: -27 on 1568 g, the next lowest.
+  - *Pool 11:* incremental yl32, yl33, yl34, yl42, yl43, yl44; swings sw67, sw68, sw69 (champion), sw71, sw72. Pool bots built on yl32 or yl33 stay as they are, and new candidates are built on sw69 (procedure decision, as at yl33's crowning).
+  - *Replica, two new losses:*
+    - 40005 (04:59, #477 yl33) vs bman12345678_goonv23: 0-3 (ZeroDay on points at r2000; cheesefarm at r524; starvation at r1844).
+    - 40046 (05:21, most likely #478 sw69) vs AlexT101_finalsbot: 1-2 (dirtfulcat lost at r183 again, evileye at r686, thunderdome won at r84).
+    - Rating 1781.4 to 1763.9.
+  - *Box:* tr553-tr556 queued at 05:13; tr557-tr558 planning.
+  - *Correction:* the 05:19 status line was an estimate (the clock was last read at 05:13, and read 05:18 right after). Times now come from `date` only.
