@@ -12142,7 +12142,7 @@
     - Our bank was 210 against their 771 at r200, and our king starved at r357.
     - Open question: why our rats stayed in that cat's path (lane avoidance, or rats drawn to the cat).
 
-- **11-24 07:15-07:23 PDT, PROD: no new champion; sw69 holds. No pool change.**
+- **11-24 07:15-07:20 PDT, PROD: no new champion; sw69 holds. No pool change.**
   - *Pulls and rank:* pulled tr556, tr557, tr565, tr566, tr567 (done) and tr559, tr564, tr568-tr571 (partial). 69,740 games.
     - sw69 1692 +- 10 on 1139 g.
     - sw72 +31 on 142 g. That equals the +31 it needs without exceeding it, and it needs 58 more games to reach 200.
