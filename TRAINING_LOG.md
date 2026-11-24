@@ -11998,3 +11998,30 @@
     - yl36 at 02:25: -116 vs yl33 on 132 g (3.1 SE); -86 vs its base yl32.
   - *Pool 11:* incremental yl32, yl33 (champion), yl34, yl37, yl38, yl39; swings sw66, sw67, sw68, sw69, sw70.
   - *Box:* tr527-tr530 planned; tr527 gives yl38 60 games and tr529 gives yl39 60.
+- 04:25 PDT (11-24): PROD 01:05, continued. Champion yl33 holds (03:20 rank: 1697 +- 14 on 588 g; yl32 -1, sw69 -6).
+  - *Replica rift study (losses to AdamTan12_Icarus 39577, 39663, 39670, all on points at war at r2000):* through r600-r1150 we banked 1500-3000 with 21-50 babies and formed no third king.
+    - The income test wants about 23 cheese a round at 2 kings, and rift gives 13-15.
+    - rich() wants 3000 banked, and the RICH2 cap pins the bank just under it.
+    - One more king turns 39663 and 39670 from 46-53 into 51-48.
+  - *Dropped: yl40* (END_KING_MAX 3: the r1850 endgame site past the second king). The engine allows no new king after round 1200 once a team has 2 (RAT_KING_CUTOFF_ROUND 1200, MAX_NUMBER_OF_RAT_KINGS_AFTER_CUTOFF 2).
+    - So its site never promotes and only parks babies: 2989 baby-turns of formKing after r1850.
+    - Rift pair vs yl33 1-1, smoke 4-2. Never entered.
+  - *Not entered: yl41* (CUT_KING at bank 1500: from r1000 to r1150 the lead king names one more site with no income test).
+    - CutKingTest 13/13, unit tests 2052/2052.
+    - Inert locally: our local rift games bank 500-900 at r1000-1150. Its smoke and rift pair matched yl40's game for game.
+  - *New: yl42* (yl33 + CUT_KING at bank 600; CUT_KING_FROM 1000, CUT_KING_MAX 3).
+    - CutKingTest 13/13, unit tests 2052/2052.
+    - Rift pair vs yl33 2-0, where yl40 and yl41 split it: the third king formed at r1066 (seat A) and r1106 (seat B); won 52.6-47.4 and 54.2-45.8 with kings 3-2.
+    - Cost: the merges cut babies (26 to 12) and transfer (24.4k vs 26.6k).
+    - Smoke vs yl33 4-2, the same as yl33's (the switch waits for r1000). No exceptions (NEAR tags only) or overruns (king max 19685).
+  - *Retired for pool size: yl37* (LOW_BABIES 10 on yl32): -45 vs yl33 on 302 g (1.8 combined SE), the lowest bot with 200+ games.
+  - *Replica since yl33 (#477):* 4-3 in matches.
+    - Wins: Icarus 39741, goonv23 39757 and 39830, finalsbot 39927.
+    - Losses: Icarus 39836 and 39883, finalsbot 39891.
+    - All 7 lost games were single-king games: we lost the baby brawl (babies 16 to 5-6 vs 13-15 by r100-r200 on dirtfulcat, thunderdome and DefaultLarge), then the bank ran out.
+    - On dirtfulcat (39836 and 39883, identical: replica seeds are fixed) and thunderdome our king starved at r233 and r207. There it lost 10 health a round with no enemy near; bank 0 from r160.
+    - On dirtfulcat the cat also killed about 10 of our babies at 60-100 health while we did 1720 cat damage to Icarus's 208.
+    - Idea source for the next candidates: the early brawl and the starvation spiral.
+  - *Pool 11:* incremental yl32, yl33 (champion), yl34, yl38, yl39, yl42; swings sw66, sw67, sw68, sw69, sw70.
+  - *Box:* tr535-tr545 planned (tr544 gives yl42 60 games); tr546-tr548 planning.
+  - *VM:* 5.3 GB free (72%); the prune count is still 4 (last 22:17 PDT).
