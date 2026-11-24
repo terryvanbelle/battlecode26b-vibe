@@ -1182,6 +1182,15 @@ public class BotTest {
      *  near our king. */
     static void testAmmo() throws GameActionException {
         int hp = Cfg.AMMO_HP, d2 = Cfg.AMMO_D2, r = Cfg.AMMO_R;
+        if (hp <= 0) {
+            // AMMO_HP 0 = off (yl26, 11-23): a baby at 1 health next to our king and a healthier enemy stays
+            check(!Baby.ammo(1, 100, 1, 1), "ammo: AMMO_HP 0 never counts a living baby as ammunition");
+            reset(); me = new MapLocation(10, 7); health = 1; install(); G.coop = false;
+            Comms.kings[0] = new MapLocation(10, 5); Comms.numKings = 1;
+            Baby.nearestEnemy = enemyRat(50, 12, 7, 100);
+            check(!Baby.ammoAway() && me.equals(new MapLocation(10, 7)), "ammo: AMMO_HP 0 leaves a wounded baby where it is (at " + me + ")");
+            return;
+        }
         check(Baby.ammo(hp, hp + 1, d2, r), "ammo: at AMMO_HP, a healthier enemy at AMMO_D2, AMMO_R from our king: ammunition");
         check(!Baby.ammo(hp + 1, hp + 2, d2, r), "ammo: above AMMO_HP: not ammunition");
         check(!Baby.ammo(hp, hp, d2, r), "ammo: an enemy no healthier cannot grab it from the front: not ammunition");

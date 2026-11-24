@@ -164,8 +164,9 @@ Audit every new champion in the cycle that crowns it, once the queue is full (§
 the audit. The tournament rewards a build's net effect, so a winning change can carry a defect, and every later build
 inherits whatever the champion carries.
 
-1. **Bugs.** Read the champion's diff from the previous champion. Also read everything each changed line reaches: its
-   callers, and every constant it reads, inherited ones included. Look for:
+1. **Bugs, in the new code only.** Read the champion's diff from the previous champion (for a changed constant, the
+   lines that read it). Code the champion inherits was checked when it entered and is not re-read (owner, 11-23: a
+   full read every crowning was overkill). Look for:
    - logic slips: guards in the wrong order, a missing role or phase check, a predicate that does not do what its
      comment says;
    - mirror slips: a choice that differs between the two seats on a symmetric map (§1.6);
@@ -173,8 +174,7 @@ inherits whatever the champion carries.
      its range) misbehaves or means something undocumented;
    - dead or misleading code: unreachable branches, a test written out twice, labels and comments that no longer fit.
 
-   Write one report per champion with these sections: active bugs, mirror check, latent values, misleading or dead
-   code, checked and kept (with the data that kept each item), tests, and fix newcomers.
+   Write a short report per champion: what changed, bugs found in it, tests, and fix newcomers.
 2. **Test compliance.** Move the champion's own unit tests into the shared suite. The whole suite must pass with the
    working bot equal to the champion.
    - Change a test only where the champion changed that behaviour on purpose, and say so in the report.
@@ -351,7 +351,7 @@ All times are in the owner's zone.
 | run | 120 games, random map from the contest set, random seed in 0-9, random seats |
 | fit | Bradley-Terry, weak prior, at most 200 games per pair; retired bots' games kept |
 | retire | far below the champion after 200 or more games; or more than about 2 SE below after 50 or more; swings get a second version first |
-| new-champion audit | every crowning, in the same cycle once the queue is full: a bug audit of the diff and of everything it reaches; the shared unit suite passes on the champion; a test for every new mechanism and constant; fixes enter as newcomers (§2.7) |
+| new-champion audit | every crowning, in the same cycle once the queue is full: a bug check of the new code only (its diff from the previous champion); the shared unit suite passes on the champion; a test for every new mechanism and constant; fixes enter as newcomers (§2.7) |
 | queue | at least 5 runs queued past the next cycle |
 | cycle | about every 20 minutes: pull, rank, crown, queue, build, log, chart, report |
 | plateau | champion unchanged for 12 hours, or 10 straight newcomers below the champion: escalate (§6) |
