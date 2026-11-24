@@ -12389,3 +12389,9 @@
   - *Pool after 11:56:* 9 bots. Incremental: yl50 (champion), yl46, yl48, yl49, yl51, yl52. Swings: sw71, sw73, sw76.
   - *Box:* tr611 (the first plan with yl50 as champion) queued at 11:35; tr608-tr610 were waiting then.
   - *Progress:* progress-refresh ran 11:36-11:56. Its local elo chart step timed out at 300 s with a smoke and unit tests on both cores; charts-refresh redraws it.
+  - *Rank 12:04 PDT (74,717 g; tr600, tr604, tr606 and tr607 pulled DONE, tr598, tr599, tr605, tr608 and tr609 partial):* yl50 1753 +- 17 on 401 g (227-174) holds.
+    - The rest vs yl50: yl46 -23 on 1039, sw73 -34 on 1230, sw71 -37 on 1653 (1.88 SE), yl51 -44 on 195, yl49 -47 on 604, sw76 -54 on 96, yl48 -63 on 719. yl52 unrated.
+    - Retired 12:05 (> 2 combined SE below yl50 after 200+ games): yl48 -63 on 719 g (2.90 SE) and yl49 -47 on 604 g (2.08 SE).
+    - tr611-tr613 had not started, and 46-67 of each run's 120 games were on the two retirees. All three were dequeued, their old cells kept as cells.replaced-1206.tsv, then re-planned for the 7-bot pool and queued.
+  - *Pool after 12:05:* 7 bots. Incremental: yl50 (champion), yl46, yl51, yl52. Swings: sw71, sw73, sw76.
+  - *Charts (12:01):* charts-refresh redrew local-elo (33 champions, 244 candidates), rating-history and ladder-position and pushed them. Replica: #17 of 54, 1775.5, snapshot 12:01 PDT.
