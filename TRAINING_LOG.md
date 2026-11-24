@@ -12220,3 +12220,37 @@
     - Added to the tournament by 08:30.
   - *Box:* tr581 and tr582 were planned and queued 08:11-08:20; tr583 and tr584 (with yl47: 60 + 12 games) at 08:30-08:32.
   - *Pool:* 10 bots: 6 incremental (yl33, yl43, yl44, yl45, yl46, yl47) and 4 swings (sw69, sw71, sw72, sw73). Newcomers being rated: yl45, sw73, yl46, yl47.
+
+- **11-24 08:35-09:10 PDT, PROD: NEW CHAMPION sw71 (submitted #480); audit clean; 5 bots retired; newcomer yl48 (time-aware endgame king bar); replica 40357 read.**
+  - *Crowning (08:36):* after pulling tr568, tr569, tr572, tr575 and tr577-tr582 (71,139 g), sw71 led sw72 by +34 on 547 g (317-230; 1734 +- 15 vs 1701 +- 17), against the > +23 it needed.
+    - Submitted as #480 (accepted). champion.txt = sw71; a champions.csv row added; bots/ratbot = sw71 (Baby.java and Cfg.java changed).
+    - sw71 = yl33 + CAT_YIELD_R2 20 + PREY_TRAP + LOW_FLOOR 50, i.e. sw72 - STANDOFF_EQ + CAT_YIELD_R2 20. yl46 (sw72 with STANDOFF_EQ off) plays sw71 without CAT_YIELD and was +36 vs sw72 on 74 g, so the lead seems to come mostly from the standoff.
+  - *Audit (research/audit/2026-11-24-sw71.md):* no bugs.
+    - catYield equals the turn's `engaged` flag at war (nearestEnemy: the nearest unwalled enemy baby or the prey).
+    - The removed STANDOFF_EQ leaves yl25's standoff line byte-identical.
+    - Not a bug: from END_CAT (r1400), endCat's own nearEnemy(8) can still walk a rat that yields to an enemy at dist2 9-20 to the cat.
+    - Tests: CatYieldTest moved to test/ratbot (+5 checks: a gatherer yields; a walled enemy is no reason to yield). New StandoffTest (6). sw72's StandoffEqTest moved to test/sw72, with copies for yl47 and sw73.
+    - test/sw71's LowFloorTest (a subset of test/ratbot's) and PreyTrapTest (identical) were removed.
+    - unit-tests.sh on ratbot = sw71: 2100/2100 bot checks in 14 classes; all tool tests pass.
+    - No fix newcomers.
+  - *Retired 08:38 PDT* (> 2 combined SE below sw71): sw69 (-45 on 1426 g), yl44 (-47 on 582 g), yl33 (-53 on 1771 g), yl43 (-60 on 581 g), and yl45 early (-117 on 180 g, 3.84 SE).
+    - The pool is 5: sw71, sw72, sw73, yl46, yl47, plus newcomers from here on.
+    - tr584 and tr585 were dequeued (not started), re-planned for that pool and queued; tr586 queued too.
+  - *Replica 40357 (sw72 vs bman12345678_goonv23, L 1-2: ZeroDay W, arrows L, pipes L):*
+    - **arrows** was lost on points at r2000 although we led cheese transferred (10668 vs 7138) and cat damage (4412 vs 3588).
+      - goonv23 formed a second king between r1800 and r2000. Their bank went 194 to 32, and kings decided it: 2/3 of the 0.5 king weight to our 1/3.
+      - Our bank was 162 at r1800 and 102 at r2000, under END_KING_CHEESE 400. The engine's king costs only 50 (RAT_KING_UPGRADE_CHEESE_COST). An empty bank costs a king 10 of its 600 health a round.
+    - **pipes** was lost when our king starved at r1341. Their babies grew 14 to 50 while ours fell from 31 at r400 to 4. Cheese transferred 6278 vs 14373.
+    - **ZeroDay** was won on points with 2 kings to 1: we formed our second king between r1800 and r2000 from a bank of 850.
+  - *Local tr540-tr589:* 262 of 1404 points games were won by the side with more kings (210 of them 2 vs 1). The loser's end bank was in [60, 400) in 156 of those.
+  - *Newcomer yl48 = sw71 + END_KING_TIME* (new switch, King.endKingBar):
+    - END_KING's bank bar falls with the rounds left, as CASH_END's does: min(400, max(CASH_FLOOR 60, 4 * (2000 - round - 55) + 10)). That is 390 at r1850, 190 at r1900, and 60 from r1945.
+    - The bar covers the two kings' upkeep from 55 rounds on; a starving king outlives 60 rounds.
+    - test/yl48/EndKingTest (14 checks).
+    - *Smoke vs sw71:* 6-2 (dirtfulcat 2-0, evileye 1-1, DefaultSmall 2-0, starvation 1-1). Every game ended in a king kill before r1850, so the switch never acted and the score is noise.
+    - Clean for yl48: no turn at the bytecode limit, max 18949. sw71's own king hit the limit 3 times (max 20006) in its dirtfulcat loss at r122, under attack (kingHpMin 20); that is inherited code.
+    - Added to the tournament at 09:00: 60 games in tr587, 38 in tr588.
+  - *Also in 40357:* our rats died to being thrown far more than theirs (throwLand: ZeroDay 153 vs 67, arrows 80 vs 25, pipes 53 vs 27). On arrows cat pounces killed 88 of ours vs 41 of theirs. Next to read: whether their grabs come from behind (sight) or from a health edge.
+  - *Progress:* progress-refresh done 09:07.
+  - *Box:* tr587 and tr588 were planned and queued 09:01-09:07; tr586 was waiting.
+  - *Pool:* 6 bots: 4 incremental (yl46, yl47, yl48 newcomers; no rated incremental yet) and 3 swings (sw71 champion, sw72, sw73).
