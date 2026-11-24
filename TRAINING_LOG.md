@@ -12079,3 +12079,10 @@
     - Rating 1781.4 to 1763.9.
   - *Box:* tr553-tr556 queued at 05:13; tr557-tr558 planning.
   - *Correction:* the 05:19 status line was an estimate (the clock was last read at 05:13, and read 05:18 right after). Times now come from `date` only.
+  - *05:56 addendum:*
+    - Smoke vs sw69, both clean (game_report tags NEAR only, no overruns):
+      - yl44 4-4, each map 1-1, max 19301;
+      - sw72 4-4 (dirtfulcat 1-1, evileye 0-2, DefaultSmall 2-0, starvation 1-1), max 19429.
+    - tr557-tr564 planned; the box takes runs within minutes.
+    - Replica #18 of 54 at 1763.9 (snapshot 05:54).
+    - VM 5.0 GB free (74%). The prune last ran at 22:17 PDT on 11-23 (4 runs in all).
