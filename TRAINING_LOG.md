@@ -12141,3 +12141,17 @@
     - popthecork (lost at r357): one cat (#3) crushed 21 of our rats from r97 to r167. They stood along the left edge (x 2-3, y 8-22), far from our king at (6,32). Cats crushed 3 of theirs all game.
     - Our bank was 210 against their 771 at r200, and our king starved at r357.
     - Open question: why our rats stayed in that cat's path (lane avoidance, or rats drawn to the cat).
+
+- **11-24 07:15-07:23 PDT, PROD: no new champion; sw69 holds. No pool change.**
+  - *Pulls and rank:* pulled tr556, tr557, tr565, tr566, tr567 (done) and tr559, tr564, tr568-tr571 (partial). 69,740 games.
+    - sw69 1692 +- 10 on 1139 g.
+    - sw72 +31 on 142 g. That equals the +31 it needs without exceeding it, and it needs 58 more games to reach 200.
+    - sw71 +16 on 295 g (needs > +23); yl44 -6 on 302 g.
+    - yl45 (raiders off) -33 on its first 60 g (28-32); sw73 has 1 game.
+  - *Box:* tr574 and tr575 planned and queued (07:16-07:17).
+  - *Replica:* no new matches since 40185 (06:43). #15 of 54 at 1778.8 (snapshot 07:19).
+  - *Idea backlog, 40185 popthecork root cause:* our king sat on the left edge (x 1-2, y 24-28) when cat #3 came down that edge (y 3 to 24, r90-r140).
+    - 150 of our 164 cat bites in r85-r170 came with the cat within dist2 64 of our king, and 153 were by rats within Chebyshev 8 of it. That is CAT_DEFEND_R2 (a cat at our king draws every rat that sees it).
+    - The cat crushed 21 of ours. Our cat damage rose from 120 to 1660 by r180, theirs from 90 to 690. Our bank fell from 1250 to 250 and our babies from 14 to 7. The king starved at r357.
+    - History: CAT_DEFEND_R2 went from 36 to 64 with yb7 (champion 11-22, +35); 100 was tried (yc0). The yield forms (z3n, zds, yl43's CAT_YIELD_R2 in yl43/sw71/sw73) give way only to a nearby enemy baby, and none was near here.
+    - Open idea: limit CAT_DEFEND itself at war (only with enough babies, or only the K nearest rats), so a lone cat cannot eat the army.
