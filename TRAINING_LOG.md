@@ -12188,7 +12188,7 @@
 - **11-24 07:53-08:08 PDT, newcomer yl46 = sw72 + STANDOFF_EQ off; tr578 re-planned; tr579-tr580.**
   - *Why:* sw71 leads sw72 by +12 on 381 g (07:48 rank). It differs from sw72 in two switches: CAT_YIELD_R2 20 (on) and STANDOFF_EQ (absent, i.e. off).
     - CAT_YIELD_R2 alone was -21 vs yl33 (yl43, 427 g), so the lead may come from the standoff.
-    - attempts.csv has no STANDOFF_EQ-off test on the prey line (grep: yl32 brought it in; sw68 and sw72 kept it; sw71 is the only bot without it, and it carries CAT_YIELD).
+    - attempts.csv has no STANDOFF_EQ-off test on the prey line (grep: yl32 brought it in, sw68 and sw72 kept it, and no bot switches it off; yl33, yl43 and sw71 lack it because they were built on yl25's line, and sw71 is the only one of them with PREY_TRAP and LOW_FLOOR 50, plus CAT_YIELD).
   - *Build:* snapvar, Cfg only. It differs from sw72 in Cfg line 207 alone (all other files identical, bots/ratbot restored).
   - *Tests:* test/yl46/StandoffEqTest (8 checks): an equal watcher is held off and faced, as in yl25. Unit tests 2086/2086 in 13 classes.
   - *Smoke vs sw72:* 5-3 (dirtfulcat 1-1, evileye 1-1, DefaultSmall 1-1, starvation 2-0; all king kills). Clean: tags NEAR only, no turn at the bytecode limit, max 19173.
