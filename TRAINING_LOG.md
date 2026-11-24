@@ -12155,3 +12155,10 @@
     - The cat crushed 21 of ours. Our cat damage rose from 120 to 1660 by r180, theirs from 90 to 690. Our bank fell from 1250 to 250 and our babies from 14 to 7. The king starved at r357.
     - History: CAT_DEFEND_R2 went from 36 to 64 with yb7 (champion 11-22, +35); 100 was tried (yc0). The yield forms (z3n, zds, yl43's CAT_YIELD_R2 in yl43/sw71/sw73) give way only to a nearby enemy baby, and none was near here.
     - Open idea: limit CAT_DEFEND itself at war (only with enough babies, or only the K nearest rats), so a lone cat cannot eat the army.
+
+- **11-24 07:35 PDT, NEW LOCAL CHAMPION sw72 (was sw69), submitted #479 (accepted).**
+  - *Rank after pulling tr559, tr564, tr568-tr572:* 70,072 games. sw72 1732 +- 24 on 205 g (118-87) leads sw69 1693 +- 10 by +39, needing > +26.
+  - *What sw72 is:* sw69 + PREY_WEAKEST + PREY_TRAP, sw68's hunt rework (yl33's switch and yl34's switch, both built on yl25) on the spend-down champion. Its Baby.java diff from sw69 is byte-identical to sw68's from yl32.
+  - bots/ratbot = sw72 (package ratbot; 0 files differ). research/tourney/champion.txt and champions.csv updated. progress-refresh run.
+  - *Standings behind it:* sw71 +30 vs sw69 on 345 g, sw73 -1 on 60 g, yl44 -9, yl33 -10, yl45 -29 on 70 g, yl43 -36.
+  - *Audit (owner 11-23 clause, incremental):* see the 07:40 entry below.

@@ -48,7 +48,7 @@ public final class Cfg {
     /** Hard floor under every spawn (king upkeep). */
     public static final int SPAWN_FLOOR = 300;
     /** With fewer than LOW_BABIES babies every floor drops to LOW_FLOOR: a king without rats has no income. */
-    public static final int LOW_BABIES = 8, LOW_FLOOR = 50;   // sw69 (from 200): usqualsbot spends down to ~50 and keeps 8 babies
+    public static final int LOW_BABIES = 8, LOW_FLOOR = 50;   // sw72 = sw68 + sw69 (from 200): usqualsbot spends down to ~50 and keeps 8 babies
     /** At war with enemies in the king's sight every spawn floor drops to SIEGE_FLOOR (0 = off). */
     public static final int SIEGE_FLOOR = 0;
     /** Last stand (0 = off): at the base baby cost (3 or fewer live babies) every spawn floor drops to LAST_FLOOR, so
@@ -193,6 +193,11 @@ public final class Cfg {
     /** Guard facing: with an enemy rat within this dist2, steps strafe to keep facing it and a turn ends facing it
      *  (rats are grabbed from behind; 0 = off). */
     public static final int GUARD_DIST2 = 13;
+    /** yl33, prey by health (false = as through yl25: Baby.prey is the NEAREST weaker enemy baby within dist2 20).
+     *  true: the WEAKEST one (lowest health; the nearest of equals), so hunters finish the most wounded enemy first.
+     *  Imitates AdamTan12_Icarus (replica 39382, 11-23): in 35-45% of our rat duels our rat began 30+ health lower,
+     *  we lost about 95% of those, and Icarus struck first in about 60% of them. */
+    public static final boolean PREY_WEAKEST = true;
     /** yl32, the standoff's health test (false = as through yl25: Baby.war's standoff holds against a watching enemy
      *  baby with at least our health). true: it holds only against one with more health than ours, so a fighter walks
      *  to an equal one. The engine lets a rat grab a watching enemy only when that enemy has less health
@@ -310,6 +315,15 @@ public final class Cfg {
     /** SPARRING sw51: a rat trap laid from the enemy half skips the KING_RESERVE and austerity gates (the teams that
      *  beat us lay 54-76% of their traps in our half, at 2-3x our rate). */
     public static final boolean FWD_TRAP = true;
+    /** yl34, the hunted rat's trap (false = as through yl25: a baby's rat trap aims at nearestEnemy, its prey while
+     *  hunting, behind the KING_RESERVE and austerity gates away from our king and the enemy half). true: a hunter
+     *  (Baby.hunterOf: a healthier enemy baby with free hands that sees us from dist2 3-8, so it can step next to us
+     *  and grab us) is the trap's target first, and that trap skips the reserve and austerity gates (the
+     *  RAT_TRAP_MIN_CHEESE floor stays). Local smoke games 11-23 (yl25 vs yl33, 6 games): 389 of yl25's 722 grabbed
+     *  rats had watched such an enemy in the 3 rounds before the grab, and 32 of them laid a trap (89 were under the
+     *  reserve gate, 64 aimed at a weaker prey). Replica: AdamTan12_Icarus and VarunVejalla trap the hunters that
+     *  come for their weaker rats (39382, 39395: 40-55% of the traps we fire). */
+    public static final boolean PREY_TRAP = true;
     /** Trail home: the stall count and homing carry over a gap of up to TRAIL_GAP rounds between delivery turns (a
      *  loaded carrier skips rounds, so 0 restarted the count every skip). */
     public static final int TRAIL_GAP = 12;

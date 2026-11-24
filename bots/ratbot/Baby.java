@@ -86,6 +86,7 @@ public final class Baby {
         }
         nearestEnemy = null;
         hunting = false;
+        hunter = null;
         if (!G.coop) findEnemies(robots);
         Debug.mark(30);
         // the birth turn has paid Sym.init and its allocations already: it bails at NB_BAIL
@@ -161,6 +162,9 @@ public final class Baby {
                 hunting = true;
             }
         }
+        // Cfg.PREY_TRAP (yl34): a healthier enemy coming for us is the rat trap's first target (after prey(), so
+        // its wall traces never use up prey()'s share of WALL_BLIND_CAP)
+        if (Cfg.PREY_TRAP) hunter = hunterOf(robots, G.me, rc.getHealth());
         rescueT = null;
         nearK = false;
         if (rc.getCarrying() == null) {
@@ -780,20 +784,46 @@ public final class Baby {
         return false;
     }
 
-    /** Rat trap on the front tile nearest an approaching enemy rat (50 damage + stun when it enters the 3x3). */
+    /** Rat trap on the front tile nearest an approaching enemy rat (50 damage + stun when it enters the 3x3).
+     *  Cfg.PREY_TRAP (yl34): first one in front of this turn's hunter, with no reserve or austerity gate. */
     static boolean tryRatTrap() throws GameActionException {
         RobotController rc = G.rc;
-        if (nearestEnemy == null || !rc.isActionReady() || rc.getNumberRatTraps() >= Cfg.TRAP_CAP) return false;
+        if (!rc.isActionReady() || rc.getNumberRatTraps() >= Cfg.TRAP_CAP) return false;
         if (rc.getAllCheese() < Econ.floor(Cfg.RAT_TRAP_MIN_CHEESE)) return false;
+        if (hunter != null && ratTrapAt(hunter)) return true;
+        if (nearestEnemy == null) return false;
         if ((rc.getAllCheese() < King.reserve(Cfg.KING_RESERVE) + 20 || King.austere()) && !nearKing(nearestEnemy.location, Cfg.DEF_TRAP_DIST2)
                 && !(Cfg.FWD_TRAP && !homeHalf(G.me))) return false;
-        int d0 = G.me.distanceSquaredTo(nearestEnemy.location);
+        return ratTrapAt(nearestEnemy);
+    }
+
+    /** A rat trap on our front tile next to enemy e (within BABY_TRAP_DIST2 of us); false when there is none. */
+    static boolean ratTrapAt(RobotInfo e) throws GameActionException {
+        RobotController rc = G.rc;
+        int d0 = G.me.distanceSquaredTo(e.location);
         if (d0 > Cfg.BABY_TRAP_DIST2) return false;
-        MapLocation best = trapTile(rc.getLocation(), rc.getDirection(), nearestEnemy.location, d0, true);
+        MapLocation best = trapTile(rc.getLocation(), rc.getDirection(), e.location, d0, true);
         if (best == null) return false;
         rc.placeRatTrap(best);
         ratTraps++;
         return true;
+    }
+
+    /** Cfg.PREY_TRAP (yl34): this turn's hunter (hunterOf), or null. */
+    static RobotInfo hunter;
+
+    /** The nearest enemy baby with free hands and more health than hp that sees me from dist2 3-8, no wall between
+     *  (it can step next to us and grab us: a grab needs the target in sight and, if it sees the grabber, with less
+     *  health), or null. Adjacent ones are out: they grab without a step, so no trap can catch them. */
+    static RobotInfo hunterOf(RobotInfo[] robots, MapLocation me, int hp) {
+        RobotInfo h = null;
+        int hd = Integer.MAX_VALUE;
+        for (RobotInfo r : robots) {
+            if (r.team != G.them || r.type != UnitType.BABY_RAT || r.health <= hp || r.carryingRobot != null) continue;
+            int d = me.distanceSquaredTo(r.location);
+            if (d > 2 && d <= 8 && d < hd && sees(r, me) && !walled(me, r.location)) { hd = d; h = r; }
+        }
+        return h;
     }
 
     /** e is within d2 of our nearest king (Cfg.DEF_TRAP_DIST2; 0 = never). */
@@ -1605,14 +1635,17 @@ public final class Baby {
         return false;
     }
 
-    /** The nearest enemy baby within dist2 20 that we could ratnap (health below hp) and no wall hides, or null. */
+    /** The nearest enemy baby within dist2 20 that we could ratnap (health below hp) and no wall hides, or null.
+     *  Cfg.PREY_WEAKEST (yl33): the weakest such baby instead, the nearest of equals. */
     static RobotInfo prey(RobotInfo[] robots, int hp) {
         RobotInfo prey = null;
         int pd = Integer.MAX_VALUE;
         for (RobotInfo r : robots) {
             if (r.team != G.them || r.type != UnitType.BABY_RAT || r.health >= hp) continue;
             int d = G.me.distanceSquaredTo(r.location);
-            if (d <= 20 && d < pd && !(d > 2 && walled(G.me, r.location))) { pd = d; prey = r; }
+            // Cfg.PREY_WEAKEST (yl33): the lowest health first, then the nearest (d <= 20 < 64)
+            int k = Cfg.PREY_WEAKEST ? r.health * 64 + d : d;
+            if (d <= 20 && k < pd && !(d > 2 && walled(G.me, r.location))) { pd = k; prey = r; }
         }
         return prey;
     }

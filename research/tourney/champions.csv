@@ -29,3 +29,4 @@ when_pdt,bot,base,change,submission
 2026-11-24 00:05,yl32,yl25,STANDOFF_EQ (the standoff holds only against a healthier enemy; an equal one is walked to and bitten first; incremental),476
 2026-11-24 02:03,yl33,yl25,PREY_WEAKEST (a hunter chases the weakest weaker enemy baby within dist2 20 - the lowest health then the nearest - instead of the nearest; incremental),477
 2026-11-24 05:04,sw69,yl32,LOW_FLOOR 50 (with fewer than LOW_BABIES 8 babies every spawn floor drops to 50 from 200 - usqualsbot's spend-down; on yl32 = yl25 + STANDOFF_EQ; swing),478
+2026-11-24 07:35,sw72,sw69,PREY_WEAKEST + PREY_TRAP (sw68's hunt rework on sw69: hunters chase the weakest weaker enemy baby; a rat a healthier enemy hunter watches traps it first - gate-free; swing),479
