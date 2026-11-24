@@ -12253,4 +12253,6 @@
   - *Also in 40357:* our rats died to being thrown far more than theirs (throwLand: ZeroDay 153 vs 67, arrows 80 vs 25, pipes 53 vs 27). On arrows cat pounces killed 88 of ours vs 41 of theirs. Next to read: whether their grabs come from behind (sight) or from a health edge.
   - *Progress:* progress-refresh done 09:07.
   - *Box:* tr587 and tr588 were planned and queued 09:01-09:07; tr586 was waiting.
-  - *Pool:* 6 bots: 4 incremental (yl46, yl47, yl48 newcomers; no rated incremental yet) and 3 swings (sw71 champion, sw72, sw73).
+  - *Pool:* 6 bots: 3 incremental newcomers (yl46, yl47, yl48) and 3 swings (sw71 champion, sw72, sw73).
+  - *Rank 09:08 (71,684 g; tr572, tr579, tr582 and tr583 pulled DONE, tr577, tr580, tr581, tr584 and tr585 partial):* sw71 1733 +- 14 on 654 g holds. sw73 -4 (needs > +22), yl46 -28 on 193 g, yl47 -35 on 72 g, sw72 -44 on 587 g.
+  - *Retired 09:09 PDT:* sw72 (-44 on 587 g, 2.24 combined SE). The pool is 5: sw71, sw73, yl46, yl47, yl48. tr589 queued; tr587-tr589 are waiting.
