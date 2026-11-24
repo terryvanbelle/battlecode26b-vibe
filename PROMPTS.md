@@ -268,3 +268,9 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (14:33) Hmmm, not bad.  Can you do a fit model to map local Elo to replica Elo?  If you can do that, then we should be able to predict how long it will take for our local tournament to produce a model that ranks 15th, or 10th, or 1st
 (19:48) I think maybe the bug checks are overkill.  We only need an incremental bug check for the new code added for the current champion version
 (06:49) Can you take the milestone markers off of rating-history.png?
+(12:02) Can I see the normal output from a prod, e.g. the tournament bots
+(12:14) I notice the tournament size dropping below 10 recently.  Are you having difficulty finding new ideas to replenish it?
+(12:16) Also, I see you referring to an "8-game check against sw71".  What is this referring to?
+(12:17) OK, so it's only used to catch crashes and bytecode-limits?  I don't like the idea of adding an extra quality-based gate to the local tournament
+(12:19) It's fine if you want to avoid wasting time on crashes, but don't take it beyond that
+(12:19) If you're having difficulty finding ideas, I'd like you to re-read the top-level documents in the github repository terryvanbelle/battlecode-vibe
