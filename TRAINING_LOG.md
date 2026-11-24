@@ -12184,3 +12184,15 @@
   - *Rank 07:48 (70,231 g):* sw72 1719 +- 22 on 241 g holds; sw71 +12 (needs > +29); sw69 -25; sw73 -26 on 60 g; yl45 -48 on 77 g.
   - *Retired 07:49 PDT* (> 2 combined SE below sw72 after 200+ g): yl34 (-54 on 1569 g) and sw68 (-51 on 1432 g). The pool is now 9: 5 incremental, 4 swings.
   - *Box:* tr577 and tr578 planned and queued 07:49-07:50. tr575-tr578 are waiting.
+
+- **11-24 07:53-08:08 PDT, newcomer yl46 = sw72 + STANDOFF_EQ off; tr578 re-planned; tr579-tr580.**
+  - *Why:* sw71 leads sw72 by +12 on 381 g (07:48 rank). It differs from sw72 in two switches: CAT_YIELD_R2 20 (on) and STANDOFF_EQ (absent, i.e. off).
+    - CAT_YIELD_R2 alone was -21 vs yl33 (yl43, 427 g), so the lead may come from the standoff.
+    - attempts.csv has no STANDOFF_EQ-off test on the prey line (grep: yl32 brought it in; sw68 and sw72 kept it; sw71 is the only bot without it, and it carries CAT_YIELD).
+  - *Build:* snapvar, Cfg only. It differs from sw72 in Cfg line 207 alone (all other files identical, bots/ratbot restored).
+  - *Tests:* test/yl46/StandoffEqTest (8 checks): an equal watcher is held off and faced, as in yl25. Unit tests 2086/2086 in 13 classes.
+  - *Smoke vs sw72:* 5-3 (dirtfulcat 1-1, evileye 1-1, DefaultSmall 1-1, starvation 2-0; all king kills). Clean: tags NEAR only, no turn at the bytecode limit, max 19173.
+  - *Tournament:* added 07:54.
+    - tr578 was dequeued (not started: cells.tsv only on the box), re-planned with yl46 at 60 of 120 games, and queued 07:57.
+    - tr579 and tr580 planned and queued by 08:06. The box took tr575-tr577; tr578-tr580 are waiting.
+  - *Pool:* 10 bots, 6 incremental (yl32, yl33, yl43, yl44, yl45, yl46) and 4 swings (sw69, sw71, sw72, sw73). Newcomers: yl45, sw73, yl46.
