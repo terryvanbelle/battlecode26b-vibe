@@ -276,3 +276,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (12:19) If you're having difficulty finding ideas, I'd like you to re-read the top-level documents in the github repository terryvanbelle/battlecode-vibe
 (13:22) This is insufficient output from a prod.  I want the same level of detail on every prod that  you were giving me this morning
 (13:26) The last full report came over an hour ago, so don't use that as an excuse
+(15:08) I just got an email about a security vulnerability in Gradle.  Can you check whether we're susceptible?
