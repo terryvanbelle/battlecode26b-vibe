@@ -11933,3 +11933,22 @@
   - Pool 12 (incremental yl25, yl26, yl29, yl31, yl32, yl33, yl34; swings sw63-sw67), two over the target of 10 until sw63 (1.9 SE) or a newcomer drops out. Procedure call: no early retirement below 2 SE.
   - Box: tr498 and tr499 had started by 23:16, so dequeuing tr500-501 left the queue empty; tr500-502 re-planned with yl34 and queued.
 - 23:40 PDT rank (after pulling tr485-502): no new champion; yl25 1690 +- 9 on 1568 g. yl32 +31 on 182 g already clears its needed lead (> +27) and needs 18 more games to reach 200; yl34 +40 on its first 33 g (19-14; needs > +60, 167 more); sw67 +14 on 221; yl33 +13 on 60; sw64 +1 on 1001. No retirements: sw63 -25 on 1238 is 1.9 combined SE below. Replica: 3-0 wins over VarunVejalla_final4_run_away10 (39432; they laid 394 rat traps to our 138 on keepout and still lost) and twice over AdamTan12_Finals (39433, 39437): #16 of 54 at 1778.5 (23:40 snapshot), from #20. Box: tr503-506 waiting (tr501 started 23:27, tr502 23:30); load 19.4. VM 5.9 GB free (69% used); the prune last ran at 22:17 (4 runs in all; it does not fire every hour).
+- 00:18 PDT (11-24): PROD 23:41. NEW CHAMPION yl32 (yl25 + STANDOFF_EQ: the standoff holds only against a healthier enemy) at 00:05: +36 vs yl25 on 271 g (149-122; needed > +23); submitted #476 (accepted); bots/ratbot = yl32, champion.txt, champions.csv row, attempts ACCEPTED. Audit research/audit/2026-11-24-yl32.md:
+  - *Bugs:* none active. Two comment nits are left for a cleanup bundle, since they change no play:
+    - the Cfg claim that the rat that steps in "bites on arrival" holds only from Chebyshev 2;
+    - the inherited war() phrase "(and is not weaker)" is now stale.
+  - *Tests:* StandoffEqTest moved to test/ratbot and got one new check (an equal watcher one step away is walked to and bitten on arrival). Unit tests 2040/2040 bot checks plus 864/864 tool checks; no existing test changed.
+  - *Coverage:* still untested are the full-turn path through actAfterMove and war()'s inherited role/raw gate and atKing exemption.
+  - *Fix newcomers:* none.
+- Newcomers this turn:
+  - *sw68 (BIG SWING on yl32):* the yl33 PREY_WEAKEST + yl34 PREY_TRAP bundle, code copied verbatim. Tests 2062/2062. Smoke vs yl32 2-4 (won DefaultSmall both sides by king kill; lost evileye and starvation both sides); no exception tags.
+  - *yl35 (on yl32, STRIKE_FIRST):* the standoff no longer holds against a watching, healthier enemy baby one step away whose health is in our bite bucket (ceil(h/10)) while our action is ready. We take a forward step that ends adjacent with it in our cone, then actAfterMove bites.
+    - Engine basis: a grab needs target health + HEALTH_GRAB_THRESHOLD (0) < grabber health. A healthier enemy that steps in therefore grabs us on arrival, while our first bite (10) erases a lead of up to 9.
+    - Built on yl32 before its crowning (procedure decision: yl32 already cleared its lead and was 9 games short).
+    - StrikeFirstTest 18/18, unit tests 2057/2057. Smoke vs yl32 3-3 (each map split); no exception tags.
+- Retired:
+  - sw63 at 23:42: -27 vs yl25 on 1252 g, 2.1 combined SE.
+  - sw65 at 00:12: -50 vs yl32 on 943 g, 2.1 SE.
+  - For pool size (13 to 10) at 00:12: yl31 (-42 vs yl32 on 358 g, 1.5 SE; the no-standoff arm, whose question yl32 answered) and yl29 (-41 on 572 g, 1.6 SE).
+- Pool 10: yl25, yl26, yl32, yl33, yl34, yl35 incremental; sw64, sw66, sw67, sw68 swings.
+- Box: tr507 re-planned (dequeued) to give sw68 60 games, tr509 gives yl35 60; tr506-511 planned since 23:37, tr512 planning. Replica: no ladder matches since 23:17.

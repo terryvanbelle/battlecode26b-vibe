@@ -1446,8 +1446,9 @@ public final class Baby {
                 // standoff: stepping into the front of an enemy that sees us (and is not weaker) walks onto its
                 // traps and into a grab; hold, face it and let it come (flank and prey moves still engage)
                 // (not against a rat at our threatened king: it is biting the king while we wait)
+                // (Cfg.STANDOFF_EQ, yl32: only against a healthier one; an equal one cannot grab us, we walk in)
                 boolean atKing = threatened != null && nearestEnemy.location.distanceSquaredTo(threatened) <= Cfg.KING_THREAT_D2;
-                if (!hunting && !atKing && sees(nearestEnemy, G.me) && nearestEnemy.health >= G.rc.getHealth()) {
+                if (!hunting && !atKing && sees(nearestEnemy, G.me) && standoffFoe(nearestEnemy.health, G.rc.getHealth())) {
                     Direction f = G.me.directionTo(nearestEnemy.location);
                     if (G.rc.getDirection() != f && G.rc.canTurn(f)) { G.rc.turn(f); G.facing = f; }
                     return true;
@@ -1464,6 +1465,12 @@ public final class Baby {
             }
         }
         return false;
+    }
+
+    /** The standoff holds against a watching enemy baby with health eh when we have h: eh >= h, or with
+     *  Cfg.STANDOFF_EQ (yl32) eh > h only (an equal one cannot grab us from the front: we walk in and bite first). */
+    static boolean standoffFoe(int eh, int h) {
+        return Cfg.STANDOFF_EQ ? eh > h : eh >= h;
     }
 
     /** Debug count: war turns with a threatened king near us. */
