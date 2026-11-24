@@ -125,6 +125,46 @@ King damage per game, by cause:
   baby's guard facing counts the ones it cannot see.
 - **yl23, SIEGE_FLOOR 100:** every spawn floor drops to 100 while enemies are in the king's sight at war.
 
+## Our king under siege, and the king's block (11-23 17:39 PDT)
+
+The 40 replica losses on the four maps every champion loses to AlexT101_usqualsbot (cheesefarm, DefaultSmall, evileye,
+starvation), with a siege round meaning an enemy baby within dist2 30 of our king's centre (`siege.py`,
+`blockable.py`):
+
+| measure | value |
+|---|---|
+| siege rounds | 9,215 |
+| our babies on the king's 16-tile ring | 0-2 in 76% of siege rounds, 5 or more in 6% |
+| our babies within 4 tiles | 0-3 in 51% of siege rounds |
+| enemy babies on our ring (where they bite the king from) | none in 74%, one in 23% |
+| enemy throws that hit our king | 326, 8.2 a game |
+| thrown from 3 / 4 / 5 / 6 / 7+ tiles (Chebyshev from the centre) | 94 / 98 / 44 / 27 / 51 |
+| from 3-6 tiles, the carrier in our king's view the round before | 173 (53%) |
+
+**Engine facts the block rests on:**
+- A baby bites only from an adjacent tile, so an enemy must stand on the king's ring to bite it.
+- The king spawns only onto its ring (dist2 8 from its centre).
+- A thrown rat flies straight from its carrier, 2 tiles a round for up to 8 tiles, and stops at the first robot or
+  impassable tile.
+- Robots act in ID order, so the king acts before every baby.
+
+**A guard ring is out of reach.** It would block bites and throws, but it needs 16 babies where we have 0-2.
+
+**The king's block (sw63) is cheap.** When an enemy carrier 3-6 tiles out would hit the king, the king spawns a
+newborn on the ring tile the flight crosses, facing the carrier. The newborn takes the hit instead (100 health against
+the king's 600), and it stands there through the carrier's turn this round and the next.
+
+**Local check, 6 games vs yl19** (`block_check.py`, against yl19's own 6 games on the same cells):
+
+| per game | sw63 | yl19 |
+|---|---|---|
+| king blocks | 9.7 | – |
+| enemy throws hitting our king | 3.7 | 8.7 |
+| their damage to our king | 130 | 348 |
+| enemy throws hitting our babies | 42.0 | 32.7 |
+
+sw63 won 4-2.
+
 ## How our babies die, and the throws (11-23 16:40 PDT)
 
 These are yl19's 15 replica games since its submission #474 at 14:04 (5 matches, 8 won, 7 lost). The scripts are
