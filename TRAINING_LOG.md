@@ -11952,3 +11952,4 @@
   - For pool size (13 to 10) at 00:12: yl31 (-42 vs yl32 on 358 g, 1.5 SE; the no-standoff arm, whose question yl32 answered) and yl29 (-41 on 572 g, 1.6 SE).
 - Pool 10: yl25, yl26, yl32, yl33, yl34, yl35 incremental; sw64, sw66, sw67, sw68 swings.
 - Box: tr507 re-planned (dequeued) to give sw68 60 games, tr509 gives yl35 60; tr506-511 planned since 23:37, tr512 planning. Replica: no ladder matches since 23:17.
+- 00:23 PDT rank (vs the new champion): yl32 1712 +- 19 on 323 g. yl34 -2 on 72 g (needs > +45), sw67 -10 on 389, yl33 -13 on 70, sw66 -18, sw64 -24, yl25 -26 on 1733, yl26 -28, sw68 -69 on its first 59 g (26-33; 1.4 combined SE, kept), yl35 0 g (first 60 in tr509). Replica: 2-1 wins over AlexT101_finalsbot (39512, 23:57) and bman12345678_goonv23 (39525, 00:07); #16 of 54 at 1785.2 (00:20 snapshot). VM 5.8 GB free (70%); no prune since 22:17. Box: tr509-512 waiting, load 20.3.
