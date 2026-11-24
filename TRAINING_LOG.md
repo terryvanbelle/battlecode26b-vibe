@@ -12161,4 +12161,26 @@
   - *What sw72 is:* sw69 + PREY_WEAKEST + PREY_TRAP, sw68's hunt rework (yl33's switch and yl34's switch, both built on yl25) on the spend-down champion. Its Baby.java diff from sw69 is byte-identical to sw68's from yl32.
   - bots/ratbot = sw72 (package ratbot; 0 files differ). research/tourney/champion.txt and champions.csv updated. progress-refresh run.
   - *Standings behind it:* sw71 +30 vs sw69 on 345 g, sw73 -1 on 60 g, yl44 -9, yl33 -10, yl45 -29 on 70 g, yl43 -36.
-  - *Audit (owner 11-23 clause, incremental):* see the 07:40 entry below.
+  - *Audit (owner 11-23 clause, incremental):* see the audit entry below and research/audit/2026-11-24-sw72.md.
+
+- **11-24 07:41-07:52 PDT, sw72 audit (owner 11-23 clause, incremental): no bugs; 2087/2087 bot checks; yl34 and sw68 retired; tr577-tr578.**
+  - *Scope:* sw72's diff from sw69 is PREY_TRAP (new code, never audited, since yl34 and sw68 were never champions) and PREY_WEAKEST (prey() byte-identical to yl33's, audited at yl33's crowning).
+  - *Engine checks:*
+    - The grab rule needs target health + HEALTH_GRAB_THRESHOLD 0 < grabber health when the target senses the grabber. hunterOf's strictly-healthier test matches it.
+    - Traps fire only on a move into their 3x3, so excluding an adjacent watcher is right.
+    - The hunter ring (dist2 4, 5, 8) is inside BABY_TRAP_DIST2 13.
+    - A hunter ahead of us has every approach step inside the trap's 3x3; a hunter beside us has 2 of 3; a hunter behind us gets no tile and falls to the gated path.
+  - *Nits:*
+    - The docs say "dist2 3-8", which is dist2 4, 5 and 8 in effect.
+    - Of two equidistant hunters, the first in sensing order is trapped.
+    - Past WALL_BLIND_CAP, a walled hunter counts as open.
+  - *Known slip back on the champion:* the yl33 audit's gatherer prey slip returns with PREY_WEAKEST. Its fix yl39 was already judged (-26 on 307 g, retired), so it is not re-entered. The new PreyHuntTest pins the slip.
+  - *Tests:*
+    - test/ratbot/PreyNearestTest (sw69's) moved to test/sw69/.
+    - test/sw72's PreyNearestTest (override: PREY_WEAKEST on), PreyTrapTest and PreyWeakestTest moved to test/ratbot/.
+    - New test/ratbot/PreyHuntTest: 11 checks covering findEnemies with both switches, the stale hunter, a wall, and a hunter behind us.
+    - unit-tests.sh on ratbot = sw72: 2087/2087 bot checks in 13 classes; tools all pass (test_tools 111/111).
+  - *Fix newcomers:* none.
+  - *Rank 07:48 (70,231 g):* sw72 1719 +- 22 on 241 g holds; sw71 +12 (needs > +29); sw69 -25; sw73 -26 on 60 g; yl45 -48 on 77 g.
+  - *Retired 07:49 PDT* (> 2 combined SE below sw72 after 200+ g): yl34 (-54 on 1569 g) and sw68 (-51 on 1432 g). The pool is now 9: 5 incremental, 4 swings.
+  - *Box:* tr577 and tr578 planned and queued 07:49-07:50. tr575-tr578 are waiting.
