@@ -12293,3 +12293,65 @@
     yl47 -29 on 336 (1.3 SE), sw74 -41 on 128, yl49 -47 on 43, yl50 unrated. No retirement: no bot is 2 combined SE below sw71.
   - *Pool:* 8 bots. Incremental: yl46, yl47, yl48, yl49, yl50. Swings: sw71 (champion), sw73, sw74 (the new mechanism).
   - *VM:* 4.5 GB free (76% used); prune count still 4.
+- **11-24 10:17-10:40 PDT, PROD: no new champion; yl51 = sw71 + CARRY_BITE 60 enters (loaded enemy gatherers bitten first)**
+  - *Rank 10:18 (72,877 g):* sw71 1724 +- 10 on 1123 g holds.
+    - Ahead of sw71: sw73 +6 on 806 (needs > +16), yl49 +6 on 81 (needs > +40), yl46 +0 on 612.
+    - Behind: yl48 -14 on 223, sw74 -19 on 154, yl47 -36 on 363 (1.75 SE). yl50 unrated.
+  - *Replica since 09:00 (sw71):* 40415 1-2 vs usqualsbot, 40467 2-1 vs Icarus, 40492 3-0 vs usqualsbot, 40515 1-2 vs Icarus (1765.4 -> 1772.1).
+  - *How the 4 lost games ended:* our king starved in 3. 40415 sittingducks r1216, 40515 dirtfulcat r272 and 40515 sittingducks r954
+    ended in 'starve'; 40415 wallsofparadis ended in a throwHit at r1431. Counting 40375, the king starved in 4 of today's 7 losses.
+    Per window ($S/econ.py):
+    - 40515 dirtfulcat: both banks fell to 0-270 by r75. Icarus's income came back at 80-375 per 25 rounds; ours stayed at 0-70.
+      We went from 7 babies at r100 to 1 at r176.
+    - 40515 sittingducks: a slow bleed. From r650 our babies went 17 -> 0 and our income per 50 rounds 440 -> 0.
+      Icarus grew to 32 babies with income of 640-900.
+      While we had 8-17 babies the king kept the 300 floor (WAR/SPAWN/CORE floors = KING_RESERVE 300) and spawned what income allowed.
+    - Where cheese is picked up ($S/pickhalf.py, sittingducks vs Icarus): Icarus took 130-1140 per 100 rounds on our half, we took 0-160 on theirs.
+      RAID_SHARE 2 is on; its dose was swept on 11-23 (0, 1, 4 all lost).
+    - 40415 sittingducks vs usqualsbot: they kept 16-27 babies to our 9-14 and laid 17-35 rat traps per 100 rounds to our 3-10.
+      We lost about twice as many rats per window (8-15 vs 3-7).
+  - *yl51 (incremental, snapvar):* sw71 + CARRY_BITE 60 (u5p's value from 11-02; never in the local tournament).
+    - Baby.biteScore ranks an adjacent enemy baby carrying raw cheese as up to 60 health weaker, so a loaded poacher is bitten first and its cheese drops.
+    - test/yl51/CarryBiteTest 9/9 (with CARRY_BITE 0, five checks fail); unit tests 2109/2109 in 15 classes.
+    - Smoke vs sw71 5-3 (dirtfulcat 2-0, evileye 1-1, DefaultSmall 1-1, starvation 1-1). Only DefaultSmall s2 plays differently from the sw71 mirror (sw71 wins at r215, not r143).
+      Clean: no turn at the limit for yl51; sw71's king's 3 in its dirtfulcat loss at r122 are inherited.
+    - Entered 10:36 PDT (`tourney.py add yl51`). Engine check: a killed rat's carried cheese drops on its tile (GameWorld.java:1159-1161), so the targeting returns poached cheese to our half.
+  - *Also measured in 40515 sittingducks (scratch bites.py, trapchain.py, killcause.py), for later:*
+    - Both teams bit enemy babies about equally often (us 151, Icarus 157), but their bites killed 62 of ours and ours killed 9 of theirs.
+    - The bite row's `e` field is the kill flag; `d` is the damage dealt, below 10 when the target had less health left.
+    - Bite damage is 10 + ceil(sqrt(cheese spent)) (InternalRobot.java:608-612). Icarus spent cheese on only 5 of its bites (`d` 12).
+    - Rat traps: 50 damage, 30-round stun, cost 20, at most 25 live (TrapType.java:12). Enemy traps are invisible to sensing (RobotControllerImpl.java:77).
+    - Icarus laid 127 rat traps to our 48. Our babies tripped 121 traps to their 78; 46 of ours died on the trap itself.
+    - So most of the bite-kill gap is not trap-then-bite (2 cases). Our rats reach the bite-kill range worn down by trap and throw damage over their lives.
+    - Trap-first swings (sw09, sw11, sw59, sw60) all retired 28-67 points down, so more trapping is not a fresh bet.
+    - The 11-22 profile agent (research/field/top-profile) reported its finished run again; its H1 (the opponent holds our half after the rush, then out-earns us and our king starves) is the same pattern as 40515.
+  - *sw75 (SWING, new mechanism FIGHT_RISK 3, built from a source copy of sw71):*
+    - In a fight (an enemy baby within dist2 20, Baby's `engaged`), sw71 drops the TrapRisk avoid mask entirely.
+      sw75 keeps the marks of the last 3 rounds (new Baby.fightRisk -> TrapRisk.mask(me, 3)), so a rat in a fight does not step within Chebyshev 1 of the front tiles of an enemy baby it saw lately.
+    - Why: a baby lays rat traps only on its three front tiles, and a trap fires only when a rat moves into the 3x3 around it.
+      GameWorld.placeTrap never fires one; RobotControllerImpl.processTrapsAtLocation runs on a move.
+    - Of the 8 tiles next to an enemy, only its 3 back tiles are outside its front band.
+    - Evidence (scratch trapage0.py, exact trap tile), Icarus traps tripped by our babies:
+      - 40515 sittingducks: 121 trips, 95 within 0-3 rounds of being laid (77 within 0-1), 114 with an enemy baby in view.
+      - 40515 dirtfulcat: 45 trips, 36 within 0-3 (29 within 0-1), 43 with an enemy in view.
+    - Not the old RISK_IN_FIGHT (s8h, 10-29): that kept the full 150-round mask in fights and was rejected on a screen (-8.1 pts).
+    - test/sw75/FightRiskTest 15/15 (with FIGHT_RISK 0 five fail, among them war() stepping into the band of a weaker facing enemy). Unit tests 2115/2115 in 15 classes.
+  - *Replica 40561 (10:42 PDT), 2-1 vs AlexT101_finalsbot (1772.1 -> 1775.5):* won Meow (their king bitten r969) and thunderdome (r116).
+    - Lost popthecork at r618: our king starved without taking damage. That makes 5 king starvations in today's 8 lost games.
+    - popthecork (30x40, mirrored left-right): 8 of the 10 mines sit inside a walled bottle whose only way in is a dirt-plugged neck (the cork, x 13-16, y 33-37).
+      The census gives minesFree 2 (only (2,23) and (27,23) can be reached without digging).
+    - AlexT101 dug the cork at r8-22 (8 tiles) and again at r98-103 and r168. We dug (15,37), (14,36), (14,37) at r32-46 and (14,33) at r214.
+    - From r101 their rats spent 243-478 turns per 50 rounds in the bottle area to our 38-161 (scratch cork.py; crude box x 5-24, y 5-30).
+    - Their income per 50 rounds was 240-1540; ours stayed at 80-120 (pickups: theirs 1,020-2,060 per 100 rounds on their half, ours 120-360 on ours).
+    - So popthecork is a race to open and hold the bottle, and we lose it. A candidate for a later newcomer: an early cork dig or bottle claim, gated to maps whose census shows few free mines.
+  - *sw75 smoke vs sw71: 0-8* (dirtfulcat 0-2, evileye 0-2, DefaultSmall 0-2, starvation 0-2). Clean: no turn at the limit, no exception.
+    - NOT ENTERED (procedure decision, 11:00 PDT). 0 of 8 has p 0.004 at an even match and fits a rating 150+ below sw71, so 200 tournament games would only retire it.
+    - Keeping off every enemy's front band in a fight cedes the approach. The trap evidence stands for a narrower form: gatherers only, or only steps that do not reach an enemy.
+  - *Rank 10:55 PDT (73,402 g; after pulling tr586-tr601):* sw71 1723 +- 10 on 1290 g holds.
+    - yl49 +10 on 235 (needs > +25); yl46 +10 on 740 (needs > +16); sw73 -3 on 915; yl50 -4 on 74; yl48 -12 on 359; yl51 -167 on 17 (5-12, early).
+    - Retired at 11:00 (> 2 combined SE below sw71 after 200+ games): yl47 -39 on 498 g (2.12 SE) and sw74 -51 on 284 g (2.22 SE).
+    - ODDS dose response: ODDS 1 (sw74) -51, ODDS 2 (yl49) +10.
+    - tr604 was still queued, with about 40% of its games on the two retirees. Dequeued, old cells kept as runs/tr604/cells.replaced-1100.tsv, re-planned for the 7-bot pool and queued.
+  - *sw76 (SWING, bundle of the two leaders):* yl49 (sw71 + ODDS 2) + CAT_YIELD_R2 0 (yl46's one difference from sw71: no cat yield), both +10 vs sw71 at 10:55.
+    - Built from a source copy of yl49 with the one Cfg change.
+    - test/sw76/OddsTest (yl49's, 27/27) and test/sw76/CatYieldTest (overrides sw71's; yield off, 9/9; five checks fail on sw71).
