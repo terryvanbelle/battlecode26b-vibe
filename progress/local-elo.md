@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 78406 games in one fit as of 2026-11-24 15:57 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 78907 games in one fit as of 2026-11-24 16:03 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -16,8 +16,8 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-21 21:55 | xx9 | GRAB_THREAT 15 on xw9 | #438 | 1470 +- 9 | 1666 |
 | 2026-11-21 23:15 | xz2 | LOW_FLOOR 200 on xx9 | #439 | 1479 +- 10 | 1373 |
 | 2026-11-22 00:55 | ya0 | KING_RESERVE 400 on xz2 | #440 | 1489 +- 8 | 2129 |
-| 2026-11-22 03:55 | ya9 | GATHER_CAT_DIST 32 on ya0 | #441 | 1499 +- 10 | 1176 |
-| 2026-11-22 04:55 | yb7 | CAT_DEFEND_R2 64 on ya9 | #442 | 1488 +- 11 | 1175 |
+| 2026-11-22 03:55 | ya9 | GATHER_CAT_DIST 32 on ya0 | #441 | 1500 +- 10 | 1176 |
+| 2026-11-22 04:55 | yb7 | CAT_DEFEND_R2 64 on ya9 | #442 | 1489 +- 11 | 1175 |
 | 2026-11-22 06:17 | yb9 | throw dodge: dodge any carrying enemy rat on yb7 | #443 | 1476 +- 7 | 2782 |
 | 2026-11-22 10:36 | sw08 | forward hold: FIGHT_POST 8 + WAR_GATHER 0 (big swing) on yb9 | #444 | 1488 +- 9 | 1424 |
 | 2026-11-22 12:56 | yd1 | FIGHT_POST 12 on sw08 | #445 | 1504 +- 10 | 1252 |
@@ -28,7 +28,7 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-23 00:36 | yh3 | INCOME_TRUST 50 on sw38 | #450 | 1518 +- 13 | 714 |
 | 2026-11-23 02:16 | yh6 | INCOME_TRUST 30 on sw38 | #451 | 1558 +- 9 | 1606 |
 | 2026-11-23 06:36 | yk1 | FIGHT_POST 10 on yh6 | #452 | 1523 +- 9 | 1378 |
-| 2026-11-23 09:14 | sw53 | RAID_SHARE 2 + FWD_TRAP (raiders + forward traps; sparring partner crowned) on yk1 | #453 | 1545 +- 11 | 944 |
+| 2026-11-23 09:14 | sw53 | RAID_SHARE 2 + FWD_TRAP (raiders + forward traps; sparring partner crowned) on yk1 | #453 | 1546 +- 11 | 944 |
 | 2026-11-23 10:34 | sw54 | MAX_BABIES_WAR 20 + RICH_BANK 600 + CORE_BABIES 20 + KING_RESERVE 300 (sw50's bank on bodies on the raider line; big swing) on sw53 | #454 | 1584 +- 9 | 1525 |
 | 2026-11-23 13:06 | sw58 | FINISH_K 8 + FINISH_FLOOR 100 (sw56's kill finishing ported to sw54; big swing) on sw54 | #470 | 1593 +- 8 | 1862 |
 | 2026-11-23 14:03 | yl19 | FINISH_FLOOR 100 alone (from 200; sw58's floor without its FINISH_K 8) on sw54 | #474 | 1601 +- 8 | 2055 |
@@ -36,7 +36,7 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-24 00:05 | yl32 | STANDOFF_EQ (the standoff holds only against a healthier enemy; an equal one is walked to and bitten first; incremental) on yl25 | #476 | 1650 +- 8 | 2035 |
 | 2026-11-24 02:03 | yl33 | PREY_WEAKEST (a hunter chases the weakest weaker enemy baby within dist2 20 - the lowest health then the nearest - instead of the nearest; incremental) on yl25 | #477 | 1659 +- 8 | 1882 |
 | 2026-11-24 05:04 | sw69 | LOW_FLOOR 50 (with fewer than LOW_BABIES 8 babies every spawn floor drops to 50 from 200 - usqualsbot's spend-down; on yl32 = yl25 + STANDOFF_EQ; swing) on yl32 | #478 | 1665 +- 9 | 1522 |
-| 2026-11-24 07:35 | sw72 | PREY_WEAKEST + PREY_TRAP (sw68's hunt rework on sw69: hunters chase the weakest weaker enemy baby; a rat a healthier enemy hunter watches traps it first - gate-free; swing) on sw69 | #479 | 1662 +- 13 | 768 |
-| 2026-11-24 08:36 | sw71 | CAT_YIELD_R2 20 + PREY_TRAP + LOW_FLOOR 50 (the brawl bundle on yl33 = yl25 + PREY_WEAKEST: at war a rat with an enemy baby within dist2 20 is not drawn to a cat at our king; a rat a healthier enemy hunter watches traps it first; spawns spend down to 50 under 8 babies; no STANDOFF_EQ; swing) on yl33 | #480 | 1706 +- 8 | 2409 |
-| 2026-11-24 11:29 | yl50 | LOW_FLOOR 20 (from 50; snapvar: under LOW_BABIES 8 babies the king spawns down to a 20 bank instead of 50; incremental) on sw71 | #481 | 1719 +- 10 | 1346 |
-| 2026-11-24 15:36 | yl54 | LOW_BABIES 12 (from 8; snapvar: the LOW_FLOOR 20 spend-down applies under 12 babies instead of 8; incremental) on yl50 | #482 | 1738 +- 16 | 475 |
+| 2026-11-24 07:35 | sw72 | PREY_WEAKEST + PREY_TRAP (sw68's hunt rework on sw69: hunters chase the weakest weaker enemy baby; a rat a healthier enemy hunter watches traps it first - gate-free; swing) on sw69 | #479 | 1661 +- 13 | 768 |
+| 2026-11-24 08:36 | sw71 | CAT_YIELD_R2 20 + PREY_TRAP + LOW_FLOOR 50 (the brawl bundle on yl33 = yl25 + PREY_WEAKEST: at war a rat with an enemy baby within dist2 20 is not drawn to a cat at our king; a rat a healthier enemy hunter watches traps it first; spawns spend down to 50 under 8 babies; no STANDOFF_EQ; swing) on yl33 | #480 | 1706 +- 7 | 2496 |
+| 2026-11-24 11:29 | yl50 | LOW_FLOOR 20 (from 50; snapvar: under LOW_BABIES 8 babies the king spawns down to a 20 bank instead of 50; incremental) on sw71 | #481 | 1721 +- 9 | 1436 |
+| 2026-11-24 15:36 | yl54 | LOW_BABIES 12 (from 8; snapvar: the LOW_FLOOR 20 spend-down applies under 12 babies instead of 8; incremental) on yl50 | #482 | 1733 +- 15 | 575 |
