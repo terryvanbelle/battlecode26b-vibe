@@ -12025,3 +12025,8 @@
   - *Pool 11:* incremental yl32, yl33 (champion), yl34, yl38, yl39, yl42; swings sw66, sw67, sw68, sw69, sw70.
   - *Box:* tr535-tr545 planned (tr544 gives yl42 60 games); tr546-tr548 planning.
   - *VM:* 5.3 GB free (72%); the prune count is still 4 (last 22:17 PDT).
+  - *04:28 rank (after pulling tr530-tr545):* the champion yl33 holds at 1693 +- 12 on 815 g. sw68 leads it by +9 (needs > +18) and sw69 by +7 (needs > +20).
+    - Retired: sw70 (SYM_FILL swing), -52 vs yl33 on 399 g (2.5 combined SE).
+    - Pool 10: incremental yl32, yl33, yl34, yl38, yl39, yl42; swings sw66, sw67, sw68, sw69. The next candidate should be a swing.
+    - tr546-tr548 queued.
+    - Replica #16 of 54 at 1781.4 (snapshot 04:29).
