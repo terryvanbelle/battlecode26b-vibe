@@ -267,3 +267,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (14:04) Please put the scatterplot in the progress/ directory
 (14:33) Hmmm, not bad.  Can you do a fit model to map local Elo to replica Elo?  If you can do that, then we should be able to predict how long it will take for our local tournament to produce a model that ranks 15th, or 10th, or 1st
 (19:48) I think maybe the bug checks are overkill.  We only need an incremental bug check for the new code added for the current champion version
+(06:49) Can you take the milestone markers off of rating-history.png?

@@ -5,9 +5,9 @@
 
 Writes progress/ladder.md + ladder.png (the Rankings page: galaxy's displayed rating, with each team's game W-L
 from the replica rows of progress/games.csv) and progress/rating-history.md + rating-history.png (our displayed
-rating after each rated match, from /match/historical_rating/: whole history and since RECENT_FROM, milestones of
-progress/milestones.csv dashed; no submission bars, owner 11-22), and progress/ladder-position.png + ladder-position.csv (our rank on the ladder over
-time, rebuilt from every ladder team's rating history: at each of our rated matches, 1 + the teams whose latest rating
+rating after each rated match, from /match/historical_rating/: whole history and since RECENT_FROM; no milestone
+markers, owner 11-24 06:49, and no submission bars, owner 11-22), and progress/ladder-position.png + ladder-position.csv
+(our rank on the ladder over time, milestones of progress/milestones.csv dashed, rebuilt from every ladder team's rating history: at each of our rated matches, 1 + the teams whose latest rating
 by then is higher; owner 11-21). Regenerate, do not edit. Charts need matplotlib (tools/.venv).
 """
 import argparse, datetime as dt, os, sys
@@ -65,13 +65,13 @@ def ladder_md(teams, wl, now):
 def history_md(hist, subs, now, marks=()):
     L = ['# Rating history (replica)', '',
          f'Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, '
-         f'over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 10, 15 and 20 for reference, with milestones dashed. Regenerate with `tools/replica_report.py`; data fetched '
+         f'over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 10, 15 and 20 for reference. Regenerate with `tools/replica_report.py`; data fetched '
          f'{now:%Y-%m-%d %H:%M} PDT. Times are Pacific.', '',
          '![rating history](rating-history.png)', '',
          'Our position on the ladder over time (rebuilt from every team\'s rating history; `ladder-position.csv`):', '',
          '![ladder position](ladder-position.png)', '']
     if marks:
-        L += ['Milestones (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):', '']
+        L += ['Milestones on the ladder-position chart (dashed lines tagged M1, M2, ...; `progress/milestones.csv`):', '']
         L += [f'- {MS.tag(i)} {when:%Y-%m-%d %H:%M} PDT: {label}' for i, (when, label) in enumerate(marks)]
         L.append('')
     if hist:
@@ -89,7 +89,7 @@ def history_md(hist, subs, now, marks=()):
     return '\n'.join(L) + '\n'
 
 
-def charts(teams, hist, subs, out, marks=(), now=None, refs=None):
+def charts(teams, hist, subs, out, now=None, refs=None):
     try:
         import matplotlib
         matplotlib.use('Agg')
@@ -109,13 +109,14 @@ def charts(teams, hist, subs, out, marks=(), now=None, refs=None):
     fig.tight_layout()
     fig.savefig(os.path.join(out, 'ladder.png'), dpi=110)
     plt.close(fig)
-    rating_chart(hist, out, marks, now, refs)
+    rating_chart(hist, out, now, refs)
     return True
 
 
-def rating_chart(hist, out, marks=(), now=None, refs=None):
+def rating_chart(hist, out, now=None, refs=None):
     """Three panels on wall-clock axes: our displayed rating over the whole history, the same since RECENT_FROM, and
-    (owner 11-22) our rating minus the rating held in each REF_PLACES place since RECENT_FROM (place_gaps)."""
+    (owner 11-22) our rating minus the rating held in each REF_PLACES place since RECENT_FROM (place_gaps). No
+    milestone markers (owner 11-24 06:49: taken off this chart; ladder-position.png keeps them)."""
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -144,10 +145,9 @@ def rating_chart(hist, out, marks=(), now=None, refs=None):
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M\n%m-%d', tz=PDT))
             ax.set_title(f'since {RECENT_FROM:%m-%d %H:%M} PDT (local tournament)', fontsize=9)
         else:
-            marks_on(ax, marks)
             ax.set_ylim(bottom=TOP_MIN)   # owner 11-22: the first-day climb from ~250 squashed the scale
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d', tz=PDT))
-            ax.set_title(f'{TEAM} rating on the replica, with the ratings in ladder places {", ".join(f"#{k}" for k in REF_PLACES)} (dashed vertical: milestones)', fontsize=10)
+            ax.set_title(f'{TEAM} rating on the replica, with the ratings in ladder places {", ".join(f"#{k}" for k in REF_PLACES)} ', fontsize=10)
         w, r = hh[-1]
         ax.annotate(f'{r:.1f}', (w, r), xytext=(-40, 8), textcoords='offset points', fontsize=8, color='#212529')
         ax.set_ylabel('displayed rating')
@@ -170,11 +170,7 @@ def rating_chart(hist, out, marks=(), now=None, refs=None):
     ax.legend(loc='lower left', fontsize=8)
     ax.grid(color='#e9ecef')
     axs[2].set_xlabel('time (PDT)')
-    if marks:
-        fig.text(0.01, 0.005, 'Milestones: ' + MS.footnote(marks), fontsize=7, color=MS.COLOR, va='bottom', wrap=True)
-        fig.tight_layout(rect=(0, 0.04, 1, 1))
-    else:
-        fig.tight_layout()
+    fig.tight_layout()
     fig.savefig(os.path.join(out, 'rating-history.png'), dpi=110)
     plt.close(fig)
 
@@ -308,7 +304,7 @@ def main(argv=None):
     marks = MS.read()
     open(os.path.join(a.out, 'rating-history.md'), 'w').write(history_md(hist, subs, now, marks))
     others = other_histories(s, ep, teams)
-    png = charts(teams, hist, subs, a.out, marks, now, place_ratings(others, hist, now=now))
+    png = charts(teams, hist, subs, a.out, now, place_ratings(others, hist, now=now))
     ranks = rank_history(others, hist)
     with open(os.path.join(a.out, 'ladder-position.csv'), 'w') as f:
         f.write('time_pdt,rank,teams\n')

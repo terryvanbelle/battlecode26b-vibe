@@ -273,7 +273,8 @@ check('- M1 2026-10-28 06:38 PDT: effort switch' in hm2 and 'Milestones' not in 
 t9, t11, t13 = (rp.ts(f'2026-10-28T{h}:00:00+00:00') for h in ('09', '11', '13'))
 pg = rp.place_gaps(hist, {10: [(t9, 950.0), (t11, 950.0), (t13, 980.0)]}, t11)
 check(pg == {10: [(t11, -50.0), (t13, 20.0)]}, f"place gaps: our held rating minus place k, from t0, none before us {pg}")
-# milestones: add/read round trip, placement between time-ordered items, drawn on progress.png and rating-history.png
+# milestones: add/read round trip, placement between time-ordered items, drawn on progress.png (not rating-history.png,
+# owner 11-24 06:49)
 mst = load('milestones')
 with tempfile.TemporaryDirectory() as d:
     mp = os.path.join(d, 'm.csv')
@@ -340,8 +341,16 @@ with tempfile.TemporaryDirectory() as d:
         h = [(rp0.ts('2026-10-28T12:00:00+00:00'), 900.0), (rp0.ts('2026-10-28T13:00:00+00:00'), 950.0)]
         sb = [{'id': 5, 'package': 'p', 'accepted': True, 'created': '2026-10-28T11:30:00+00:00'}]
         tm = [{'name': 'o', 'rating': 1400.0, 'active': True}, {'name': rp0.TEAM, 'rating': 950.0, 'active': True}]
-        check(rp0.charts(tm, h, sb, d, mk, mst.parse('2026-10-28 07:10')) and os.path.getsize(os.path.join(d, 'rating-history.png')) > 1000,
-              "rating-history.png with milestones")
+        # owner 11-24 06:49: rating-history.png carries no milestone markers (no dashed lines, no footnote)
+        drawn, mo, fn = [], rp0.marks_on, rp0.MS.footnote
+        rp0.marks_on = lambda ax, marks: drawn.append('marks_on')
+        rp0.MS.footnote = lambda marks: drawn.append('footnote') or ''
+        try:
+            ok = rp0.charts(tm, h, sb, d, mst.parse('2026-10-28 07:10'))
+        finally:
+            rp0.marks_on, rp0.MS.footnote = mo, fn
+        check(ok and os.path.getsize(os.path.join(d, 'rating-history.png')) > 1000 and drawn == [],
+              f"rating-history.png without milestones {drawn}")
     except ImportError:
         pass
 # game_report.timeline on a synthetic tsv dir

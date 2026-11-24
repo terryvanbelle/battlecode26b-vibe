@@ -7,7 +7,8 @@ so a change in performance can be lined up against them.
   milestones.py json [OUT]                               the replica website's /milestones.json (tools/galaxy26)
 
 progress/milestones.csv columns: date (PDT, YYYY-MM-DD HH:MM), label. Hand-kept. Read by tools/plot_progress.py
-(progress.png), tools/replica_report.py (rating-history.png) and tools/attempts.py (ATTEMPTS.md rows).
+(progress.png), tools/replica_report.py (ladder-position.png; rating-history.png has none since owner 11-24) and
+tools/attempts.py (ATTEMPTS.md rows).
 """
 import argparse, csv, datetime as dt, json, os, sys
 from zoneinfo import ZoneInfo
