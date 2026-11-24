@@ -48,7 +48,7 @@ public final class Cfg {
     /** Hard floor under every spawn (king upkeep). */
     public static final int SPAWN_FLOOR = 300;
     /** With fewer than LOW_BABIES babies every floor drops to LOW_FLOOR: a king without rats has no income. */
-    public static final int LOW_BABIES = 8, LOW_FLOOR = 50;   // sw72 = sw68 + sw69 (from 200): usqualsbot spends down to ~50 and keeps 8 babies
+    public static final int LOW_BABIES = 8, LOW_FLOOR = 50;   // sw71 (sw69's value, from 200): usqualsbot spends down to ~50 and keeps 8 babies
     /** At war with enemies in the king's sight every spawn floor drops to SIEGE_FLOOR (0 = off). */
     public static final int SIEGE_FLOOR = 0;
     /** Last stand (0 = off): at the base baby cost (3 or fewer live babies) every spawn floor drops to LAST_FLOOR, so
@@ -198,13 +198,6 @@ public final class Cfg {
      *  Imitates AdamTan12_Icarus (replica 39382, 11-23): in 35-45% of our rat duels our rat began 30+ health lower,
      *  we lost about 95% of those, and Icarus struck first in about 60% of them. */
     public static final boolean PREY_WEAKEST = true;
-    /** yl32, the standoff's health test (false = as through yl25: Baby.war's standoff holds against a watching enemy
-     *  baby with at least our health). true: it holds only against one with more health than ours, so a fighter walks
-     *  to an equal one. The engine lets a rat grab a watching enemy only when that enemy has less health
-     *  (HEALTH_GRAB_THRESHOLD 0), so neither of two equal rats can grab the other from the front; the one that steps
-     *  in bites on arrival and wins the even bite race by one bite. A healthier enemy is still held off (it could grab
-     *  us), unlike yl31 (STANDOFF false: no standoff at all). */
-    public static final boolean STANDOFF_EQ = true;
     /** Rescue only for a rat within RESCUE_KING_R of our nearest king (the rescue walk and tryCarry's carrier bonus);
      *  the enemy carrier must be within dist2 RESCUE_D2. */
     public static final int RESCUE_KING_R = 7;
@@ -268,6 +261,14 @@ public final class Cfg {
     public static final int GATHER_CAT_DIST = 32;
     /** A cat within dist2 CAT_DEFEND_R2 of one of our kings draws every rat that sees it, gatherers included (0 = off). */
     public static final int CAT_DEFEND_R2 = 64;
+    /** yl43 (11-24): at war CAT_DEFEND gives way for a rat with an enemy baby within dist2 CAT_YIELD_R2 (0 = off;
+     *  Baby.catYield). Replica vs AdamTan12_Icarus 39741, 39836 and 39883 (39883's games at war from r12-25): by r200
+     *  our babies bit the cat 92-187 times to Icarus's 20-23, mostly with the cat at our king (CAT_DEFEND), and 21-87
+     *  of those bites with an enemy baby within dist2 20 of the biter. On dirtfulcat and DefaultLarge Icarus bit our
+     *  rats 50-52 times to our 29-33; on dirtfulcat its bites killed 12 of ours by r100 to our 1, while the cat killed
+     *  10 of ours to its 5. Earlier forms of this switch (z3n, zds, 11-06/08 at CAT_DEFEND_R2 36) were judged by
+     *  archetype screens, never by the tournament. */
+    public static final int CAT_YIELD_R2 = 20;
     /** A rat whose walk to a cat has stalled CAT_REACH turns, or whose way there is a known detour, leaves cats alone
      *  for CAT_REACH_TTL rounds (0 = off). */
     public static final int CAT_REACH = 0, CAT_REACH_TTL = 100;
