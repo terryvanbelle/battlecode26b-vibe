@@ -277,3 +277,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (13:22) This is insufficient output from a prod.  I want the same level of detail on every prod that  you were giving me this morning
 (13:26) The last full report came over an hour ago, so don't use that as an excuse
 (15:08) I just got an email about a security vulnerability in Gradle.  Can you check whether we're susceptible?
+(17:36) Can you add Elo for #5 to rating-history.md?

@@ -24,7 +24,9 @@ PDT = ZoneInfo('America/Vancouver')
 # Start of the lower ('recent') panels: the local-tournament procedure began ~08:00 PDT 11-21 (owner 11-22).
 RECENT_FROM = dt.datetime(2026, 11, 21, 8, 0, tzinfo=PDT)
 TOP_MIN = 1400   # lower y limit of rating-history.png's whole-history panel (owner 11-22)
-REF_PLACES = (10, 15, 20)   # ladder places whose rating is drawn on rating-history.png for reference (owner 11-22)
+REF_PLACES = (5, 10, 15, 20)   # ladder places whose rating is drawn on rating-history.png for reference (owner 11-22; #5 owner 11-24 17:36)
+# line colour and style of each reference place (#10/#15/#20 as drawn since 11-22; #5, the highest, dash-dot)
+REF_STYLE = {5: ('#212529', '-.'), 10: ('#495057', '-'), 15: ('#868e96', '--'), 20: ('#868e96', ':')}
 
 
 def ts(s):
@@ -62,10 +64,16 @@ def ladder_md(teams, wl, now):
     return '\n'.join(L) + '\n'
 
 
-def history_md(hist, subs, now, marks=()):
+def places_text(places=REF_PLACES):
+    """'5, 10, 15 and 20'"""
+    p = [str(k) for k in places]
+    return p[0] if len(p) == 1 else ', '.join(p[:-1]) + ' and ' + p[-1]
+
+
+def history_md(hist, subs, now, marks=(), refs=None):
     L = ['# Rating history (replica)', '',
          f'Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, '
-         f'over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 10, 15 and 20 for reference. Regenerate with `tools/replica_report.py`; data fetched '
+         f'over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places {places_text()} for reference. Regenerate with `tools/replica_report.py`; data fetched '
          f'{now:%Y-%m-%d %H:%M} PDT. Times are Pacific.', '',
          '![rating history](rating-history.png)', '',
          'Our position on the ladder over time (rebuilt from every team\'s rating history; `ladder-position.csv`):', '',
@@ -76,6 +84,15 @@ def history_md(hist, subs, now, marks=()):
         L.append('')
     if hist:
         L.append(f'{len(hist)} rated matches; latest rating {hist[-1][1]:,.0f} ({hist[-1][0]:%Y-%m-%d %H:%M} PDT).')
+        L.append('')
+    last = {k: rr[-1] for k, rr in sorted((refs or {}).items()) if rr}
+    if last:   # owner 11-24 17:36: the rating in each reference place, now, beside ours
+        when = max(w for w, _ in last.values())
+        L += [f'Ratings in the reference ladder places at {when:%Y-%m-%d %H:%M} PDT (the latest point of the chart\'s place lines):', '',
+              '| Ladder place | Rating | Us minus that place |', '|---:|---:|---:|']
+        mine = [r for w, r in hist if w <= when]
+        for k, (w, r) in last.items():
+            L.append(f'| #{k} | {r:,.1f} | {(f"{mine[-1] - r:+,.1f}" if mine else "-")} |')
         L.append('')
     L += ['| Submission | Build | Uploaded (PDT) | Accepted | Rating at upload | Rated matches since |',
           '|---:|---|---|---|---:|---:|']
@@ -132,7 +149,8 @@ def rating_chart(hist, out, now=None, refs=None):
             before = [x for x in hist if x[0] < t0]
             hh = ([(t0, before[-1][1])] if before else []) + hh
             hh = hh + [(now, hh[-1][1])] if hh else hist[-1:]
-        for (k, rr), (c, ls) in zip(sorted((refs or {}).items()), (('#495057', '-'), ('#868e96', '--'), ('#868e96', ':'))):
+        for k, rr in sorted((refs or {}).items()):
+            c, ls = REF_STYLE.get(k, ('#868e96', ':'))
             rr = rr if k_ == 0 else [x for x in rr if x[0] >= t0]
             if rr:
                 ax.step([w for w, _ in rr], [r for _, r in rr], where='post', color=c, lw=1.1, ls=ls, label=f'#{k} place')
@@ -156,7 +174,8 @@ def rating_chart(hist, out, now=None, refs=None):
         ax.grid(color='#e9ecef')
     ax = axs[2]
     gaps = place_gaps(hist, refs or {}, t0)
-    for (k, gg), (c, ls) in zip(sorted(gaps.items()), (('#495057', '-'), ('#868e96', '--'), ('#868e96', ':'))):
+    for k, gg in sorted(gaps.items()):
+        c, ls = REF_STYLE.get(k, ('#868e96', ':'))
         if gg:
             ax.step([w for w, _ in gg], [g for _, g in gg], where='post', color=c, lw=1.3, ls=ls, label=f'us minus #{k}')
             ax.annotate(f'{gg[-1][1]:+.0f} vs #{k}', gg[-1], xytext=(4, -3), textcoords='offset points', fontsize=7,
@@ -302,9 +321,10 @@ def main(argv=None):
     wl = wl_from_games(G.read(a.games)) if os.path.exists(a.games) else {}
     open(os.path.join(a.out, 'ladder.md'), 'w').write(ladder_md(teams, wl, now))
     marks = MS.read()
-    open(os.path.join(a.out, 'rating-history.md'), 'w').write(history_md(hist, subs, now, marks))
     others = other_histories(s, ep, teams)
-    png = charts(teams, hist, subs, a.out, now, place_ratings(others, hist, now=now))
+    refs = place_ratings(others, hist, now=now)
+    open(os.path.join(a.out, 'rating-history.md'), 'w').write(history_md(hist, subs, now, marks, refs))
+    png = charts(teams, hist, subs, a.out, now, refs)
     ranks = rank_history(others, hist)
     with open(os.path.join(a.out, 'ladder-position.csv'), 'w') as f:
         f.write('time_pdt,rank,teams\n')
