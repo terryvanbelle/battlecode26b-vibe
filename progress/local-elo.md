@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 79835 games in one fit as of 2026-11-24 17:01 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 80234 games in one fit as of 2026-11-24 17:19 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -31,12 +31,12 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-23 09:14 | sw53 | RAID_SHARE 2 + FWD_TRAP (raiders + forward traps; sparring partner crowned) on yk1 | #453 | 1544 +- 11 | 944 |
 | 2026-11-23 10:34 | sw54 | MAX_BABIES_WAR 20 + RICH_BANK 600 + CORE_BABIES 20 + KING_RESERVE 300 (sw50's bank on bodies on the raider line; big swing) on sw53 | #454 | 1582 +- 9 | 1525 |
 | 2026-11-23 13:06 | sw58 | FINISH_K 8 + FINISH_FLOOR 100 (sw56's kill finishing ported to sw54; big swing) on sw54 | #470 | 1590 +- 8 | 1862 |
-| 2026-11-23 14:03 | yl19 | FINISH_FLOOR 100 alone (from 200; sw58's floor without its FINISH_K 8) on sw54 | #474 | 1599 +- 8 | 2055 |
-| 2026-11-23 18:08 | yl25 | RETREAT_HP 0 (from 40: wounded babies no longer walk back to our king; incremental) on yl19 | #475 | 1635 +- 8 | 2001 |
+| 2026-11-23 14:03 | yl19 | FINISH_FLOOR 100 alone (from 200; sw58's floor without its FINISH_K 8) on sw54 | #474 | 1598 +- 8 | 2055 |
+| 2026-11-23 18:08 | yl25 | RETREAT_HP 0 (from 40: wounded babies no longer walk back to our king; incremental) on yl19 | #475 | 1634 +- 8 | 2001 |
 | 2026-11-24 00:05 | yl32 | STANDOFF_EQ (the standoff holds only against a healthier enemy; an equal one is walked to and bitten first; incremental) on yl25 | #476 | 1647 +- 8 | 2035 |
-| 2026-11-24 02:03 | yl33 | PREY_WEAKEST (a hunter chases the weakest weaker enemy baby within dist2 20 - the lowest health then the nearest - instead of the nearest; incremental) on yl25 | #477 | 1656 +- 8 | 1882 |
+| 2026-11-24 02:03 | yl33 | PREY_WEAKEST (a hunter chases the weakest weaker enemy baby within dist2 20 - the lowest health then the nearest - instead of the nearest; incremental) on yl25 | #477 | 1655 +- 8 | 1882 |
 | 2026-11-24 05:04 | sw69 | LOW_FLOOR 50 (with fewer than LOW_BABIES 8 babies every spawn floor drops to 50 from 200 - usqualsbot's spend-down; on yl32 = yl25 + STANDOFF_EQ; swing) on yl32 | #478 | 1662 +- 9 | 1522 |
 | 2026-11-24 07:35 | sw72 | PREY_WEAKEST + PREY_TRAP (sw68's hunt rework on sw69: hunters chase the weakest weaker enemy baby; a rat a healthier enemy hunter watches traps it first - gate-free; swing) on sw69 | #479 | 1658 +- 13 | 768 |
-| 2026-11-24 08:36 | sw71 | CAT_YIELD_R2 20 + PREY_TRAP + LOW_FLOOR 50 (the brawl bundle on yl33 = yl25 + PREY_WEAKEST: at war a rat with an enemy baby within dist2 20 is not drawn to a cat at our king; a rat a healthier enemy hunter watches traps it first; spawns spend down to 50 under 8 babies; no STANDOFF_EQ; swing) on yl33 | #480 | 1701 +- 7 | 2643 |
-| 2026-11-24 11:29 | yl50 | LOW_FLOOR 20 (from 50; snapvar: under LOW_BABIES 8 babies the king spawns down to a 20 bank instead of 50; incremental) on sw71 | #481 | 1717 +- 9 | 1620 |
-| 2026-11-24 15:36 | yl54 | LOW_BABIES 12 (from 8; snapvar: the LOW_FLOOR 20 spend-down applies under 12 babies instead of 8; incremental) on yl50 | #482 | 1731 +- 12 | 817 |
+| 2026-11-24 08:36 | sw71 | CAT_YIELD_R2 20 + PREY_TRAP + LOW_FLOOR 50 (the brawl bundle on yl33 = yl25 + PREY_WEAKEST: at war a rat with an enemy baby within dist2 20 is not drawn to a cat at our king; a rat a healthier enemy hunter watches traps it first; spawns spend down to 50 under 8 babies; no STANDOFF_EQ; swing) on yl33 | #480 | 1701 +- 7 | 2684 |
+| 2026-11-24 11:29 | yl50 | LOW_FLOOR 20 (from 50; snapvar: under LOW_BABIES 8 babies the king spawns down to a 20 bank instead of 50; incremental) on sw71 | #481 | 1718 +- 9 | 1698 |
+| 2026-11-24 15:36 | yl54 | LOW_BABIES 12 (from 8; snapvar: the LOW_FLOOR 20 spend-down applies under 12 babies instead of 8; incremental) on yl50 | #482 | 1731 +- 12 | 898 |
