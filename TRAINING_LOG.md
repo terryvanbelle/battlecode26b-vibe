@@ -12642,3 +12642,56 @@
     - Charts 00:29: #19 of 54 at 1771.9 (Skadoosh #15 1794.8, goonv23 #17 1787.0, Icarus #18 1775.8, usqualsbot #21 1753.2).
   - *VM 00:30:* 5.0 GB free, 74% used. The prune log still has 5 done lines (the last at 16:17 PDT), so it has not fired since the last prod.
   - *Box 00:31:* tr722 started 00:25 and tr723 at 00:30 (tr720 ended 00:30); queued tr724, tr725, tr726 (tr727 being planned).
+- **11-25 00:33 - 01:58 PDT, PROD: no new champion (sw83 1739 +- 10 on 1257); sw80 retired (2.11 combined SE below); new swing sw90 (famine brake: once the king starves, the spend-down floor holds 4 cheese per starved turn); grab-victim and local starvation studies; tr728-tr737 planned; replica #21 of 54 after three more losses (AdamTan12_Icarus 1-2, thewaxmango_collegejunior 1-2 and 0-3).**
+  - *Rank 00:34 PDT (88,137 g; tr709, tr719, tr720 DONE; tr712, tr716, tr717, tr721, tr722, tr723 partial; 10 pool bots):* sw83 1748 +- 11 on 1076 champion; sw89 -4 on 58 (needs > +46); sw86 -5 on 289; sw85 -20 on 458; sw87 -22 on 163; sw81 -23 on 1503; sw82 -23 on 1136; sw84 -26 on 808; yl56 -28 on 1348; sw80 -30 on 1300. No new champion.
+  - *Retired 00:37:* sw80 (-30 on 1300 g, 662-638; SE 10 vs 11, 2.11 combined SE), more than 2 combined SE below sw83 after 200+ games; sw83 had 1076 g, past the ~400 g wait. yl56 was next at 1.94.
+  - *Rank 01:34-01:40 PDT (89,118 g; tr712, tr716, tr717, tr722-tr724, tr726, tr728, tr730 DONE; tr721 118, tr725 65, tr727 40, tr729 46 partial; 10 pool bots, 308 retired, 318 entered):* sw83 1739 +- 10 on 1257 (658-599) champion; sw87 -1 on 383 (needs > +20); sw86 -1 on 501 (> +18); sw85 -5 on 679; sw84 -10 on 1021; sw82 -15 on 1374; yl56 -17 on 1540; sw81 -18 on 1690 (1.39 combined SE, the closest to retirement); sw89 1706 +- 27 on 163 (-33, needs > +29 and 37 more games); sw90 unplayed. No new champion, no retirement.
+  - *Why grab victims are weaker (scratch weakwhy.py; replica sw83 vs bman12345678_goonv23, 9 games, and vs daannte_v47_Skadoosh, 5 distinct games):*
+    - goonv23 grabbed our free rats 1150 times, we theirs 721. Our victim was weaker than its grabber in 74% (mean health 50 vs 76; the grabber at full health 45%). Theirs: 70% (55 vs 82; 61%).
+    - The damage our weaker victims had taken came from enemy rat traps 39% (23.1 a victim), landing after being thrown 36% (21.7), thrown rats hitting them 11%, bites 11%, cats 3%. goonv23's victims: landing 38%, traps 28% (16.3), thrown-rat hits 20% (11.9).
+    - Skadoosh: 683 grabs of ours to 582 of theirs; ours weaker in 76%, from landing 43%, thrown-rat hits 21%, traps 17%, bites 16%.
+    - Health rules are swept (RETREAT_HP 0-60, AMMO_HP, WOUNDED_HP, wounded flee xf6), so no newcomer from this.
+  - *How sw83's local games end (its 1076 tournament games to 00:34):* 72% with a king destroyed (413 W, 357 L; median r485), 28% on points at r2000 (163 W, 142 L). The loser's king starved in 412 of the 770 king kills (sw83's own king in 189 of its 357 such losses), was bitten in 203 and killed by thrown rats in 163. Worst maps: sittingducks 40% of 45, Meow 44% of 55, cheeseguardians 45% of 47, DefaultLarge 46% of 57, starvation 46% of 56.
+  - *8 starvation losses replayed (scratch famine.py, starvetrace.py, famblock2.py):*
+    - sw83's starvation losses in tr716-tr722 were re-run locally with replays (one per map). The replays reproduce the tournament results.
+    - The famine (bank under 2 at a round end) lasted 17-61 turns per game. Deliveries during it ran 2.8-3.5 a round, above the king's upkeep of 2.
+    - After the first starved turn, 6 of the 8 kings kept buying babies in the LOW_FLOOR 20 band. First order, a floor of 20 + 4 per starved turn would have blocked 9-13 spawns (220-360 cheese) in those 6. On cheesefarm and starvation no such spawn followed (pure income failure).
+    - popthecork: two deliverers held 200 raw each for 150+ rounds inside the map's dirt-corked bottle, out of reach of our king. That is per-map, not a lever.
+    - Engine (InternalRobot.processEndOfTurn): the king's upkeep is taken right after its own code; under 2 banked it loses 10 health instead. So a spawn that leaves 20 buys 10 rounds; after that each starved round costs a tenth of a 600-health king's buffer.
+  - *New swing sw90 = sw83 + FAMINE 200 (entered 01:17):*
+    - *Mechanism:* King.countStarved counts this king's starved turns at the start of each turn (Econ.prevEnd, the bank Econ.endTurn saw after every spend, under 2). King.spawnFloor's low band (under LOW_BABIES 12) is LOW_FLOOR 20 + FAMINE% x 2 per starved turn, per king.
+    - *Unchanged:* LAST_FLOOR's band (rat cost 10) and the 12+ band. With no starved turn the floors are sw83's.
+    - *Checked before building:* RESERVE_ROUNDS 300 (u6e, u9i; an always-on reserve that thinned the army), KING_RESERVE 600 (xj5), FLOOR_PER_KING (s6c, xh7), the LOW_FLOOR, LOW_BABIES and LAST_FLOOR doses (sw69, sw71, yl50, yl54, yl55, z3t), austerity (sw33, sw34, yg1). No switch keyed to the king's own starvation (grep famine, king health, KING_HP, runway, horizon).
+    - *Tests:* unit tests 2169/2169 in 17 classes (test/sw90/FamineTest 23/23); LowFloorTest, BankTest and MechTest are unchanged. Smoke clean (8 games vs yl54: no exceptions, no turn at the bytecode limit; peaks rat 16,785, king 18,949).
+    - *Mechanism check (the 8 replayed cells with sw90 in sw83's seat):* all 8 still lost. The king lived longer in 5:
+      - popthecork r779 -> r875;
+      - dirtpassageway r357 -> r432;
+      - DefaultLarge r453 -> r515;
+      - trapped r667 -> r920;
+      - evileye r553 -> r757 (a thrown rat killed it).
+    - It lived shorter in 2 (DefaultMedium r1007 -> r947, starvation r478 -> r442), and cheesefarm was identical (no low-band spawn after the famine began). The brake delays a lost economy but flipped none of these 8; the tournament judges it on all games, wins included.
+  - *Runs:*
+    - tr728-tr730 were planned at 00:44-00:52 with the 9-bot pool.
+    - tr731-tr733 at 01:17-01:32 with sw90, which is in 60, 11 and 4 of their cells; the queue had emptied at 01:15 (the box was running tr726-tr730).
+    - tr734-tr735 at 01:41-01:46 and tr736-tr737 at 01:46-01:49.
+  - *Replica (3 matches since 41854, all lost; scratch famblock_rep.py):*
+    - 41911 (01:00) vs AdamTan12_Icarus 1-2, 1771.9 -> 1767.7:
+      - ZeroDay L (r1788, our king starved; bank 0 vs 1528);
+      - popthecork W (r519, a thrown rat killed their king);
+      - wallsofparadis L (r2000 on points; transfers 9,302 vs 18,591, babies peak 35 vs 62).
+    - 41919 (01:04) vs thewaxmango_collegejunior 1-2, -> 1762.6:
+      - ZeroDay L (r1745, starved);
+      - evileye L (r296, king bitten);
+      - pipes W (r2000 on points; transfers 24,601 vs 16,215).
+    - 41950 (01:21) vs thewaxmango_collegejunior 0-3, -> 1750.0:
+      - DefaultMedium L (r842, a thrown rat);
+      - Meow L (r1237, bitten; they grabbed 518 to our 339);
+      - wallsofparadis L (r1616, starved).
+    - *Famine check (FAMINE 200, first order, on our replica starvation deaths since 41782):*
+      - The two ZeroDays and thunderdome had no low-band spawn after the famine began, so sw90's brake would not engage there. On ZeroDay the army collapsed late (babies 12 -> 2 and 16 -> 0 over r1650-1750) while spawns held the bank at 40-80, and then no income came.
+      - 41950 wallsofparadis starved from r909 to r1616 with 51 low-band spawns after the famine began; sw90's floor blocks 41 of them (1,220 cheese).
+      - DefaultMedium (thrown rat, r842) had 10 after its famine began (11 blocked, 300 cheese), Meow 7 (3 blocked).
+    - Charts 01:49: #21 of 54 at 1750.0.
+  - *VM 01:51:* 4.9 GB free, 75% used. The prune log has 5 done lines (the last at 16:17 PDT, 6.1 GB free), so it has not fired since the last prod.
+  - *Box 01:50:* tr733 started 01:38 and tr734 at 01:47 (tr731 ended 01:47); queued tr735, tr736, tr737.
+  - *Laptop 01:52:* 1.5 GB free (95% used); git holds 4,655 loose objects (211 MB), which git's auto gc will pack.
