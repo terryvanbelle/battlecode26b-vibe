@@ -1,6 +1,6 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 10, 15 and 20 for reference. Regenerate with `tools/replica_report.py`; data fetched 2026-11-24 16:37 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 10, 15 and 20 for reference. Regenerate with `tools/replica_report.py`; data fetched 2026-11-24 17:02 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
 
