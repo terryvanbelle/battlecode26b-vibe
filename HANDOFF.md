@@ -134,7 +134,9 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
     - Every replica tool (tools/galaxy26 contest.py, client.py, field.py, verify.sh; the ladder and rating charts of
       tools/charts-refresh.sh; tools/progress-refresh.sh) fails until a full redeploy (`tools/galaxy26/deploy/deploy.sh`
       builds a fresh, empty database: new accounts, field bots resubmitted).
-  - **Laptop:** the session's PROD crons are deleted. The replica secrets (~/.bc26b-replica-password,
+  - **Laptop:** the session's PROD crons are deleted, and the replica drain loop (tools/galaxy26/drain-loop.sh, up
+    since 11-19 15:07; each pass ran contest.py drain and an ssh spool bump that could start the VM) was stopped at
+    07:54 with `touch build/drain.stop`. The replica secrets (~/.bc26b-replica-password,
     ~/.bc26b-galaxy-team, ~/.bc26-galaxy/) are still there, unused.
   - **Next idea, not built:** finish trapped enemies (TRAINING_LOG, 11-25 06:59 entry). In 24 replica games our rat
     traps hit enemy babies 1,360 times and we bit the victim within 4 rounds in 5.5%; the field bit 15% of its 1,909
