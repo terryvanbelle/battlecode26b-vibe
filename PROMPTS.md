@@ -278,3 +278,4 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (13:26) The last full report came over an hour ago, so don't use that as an excuse
 (15:08) I just got an email about a security vulnerability in Gradle.  Can you check whether we're susceptible?
 (17:36) Can you add Elo for #5 to rating-history.md?
+(18:48) You can spend more than 20 minutes devising a new strategy to add to the local tournament.  Take as much time as you need, even if that means the tournament decreases in size in the short run
