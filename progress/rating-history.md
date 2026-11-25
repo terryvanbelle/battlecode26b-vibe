@@ -1,6 +1,6 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 5, 10, 15 and 20 for reference. Regenerate with `tools/replica_report.py`; data fetched 2026-11-24 17:57 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 5, 10, 15 and 20 for reference. Regenerate with `tools/replica_report.py`; data fetched 2026-11-24 18:18 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
 
@@ -16,16 +16,16 @@ Milestones on the ladder-position chart (dashed lines tagged M1, M2, ...; `progr
 - M4 2026-10-28 08:50 PDT: method: benchmark games only on the replica; local games are self-play
 - M5 2026-10-31 07:46 PDT: panel: v4 (8 opponents u2g beats 25-75%)
 
-818 rated matches; latest rating 1,794 (2026-11-24 17:36 PDT).
+819 rated matches; latest rating 1,797 (2026-11-24 18:04 PDT).
 
-Ratings in the reference ladder places at 2026-11-24 17:49 PDT (the latest point of the chart's place lines):
+Ratings in the reference ladder places at 2026-11-24 18:04 PDT (the latest point of the chart's place lines):
 
 | Ladder place | Rating | Us minus that place |
 |---:|---:|---:|
 | #5 | 1,936.6 | -143.1 |
-| #10 | 1,863.9 | -70.3 |
+| #10 | 1,857.4 | -63.8 |
 | #15 | 1,793.6 | +0.0 |
-| #20 | 1,755.0 | +38.6 |
+| #20 | 1,752.6 | +41.0 |
 
 | Submission | Build | Uploaded (PDT) | Accepted | Rating at upload | Rated matches since |
 |---:|---|---|---|---:|---:|
@@ -451,4 +451,4 @@ Ratings in the reference ladder places at 2026-11-24 17:49 PDT (the latest point
 | #479 | sw72 | 2026-11-24 07:35 | yes | 1,779 | 2 |
 | #480 | sw71 | 2026-11-24 08:36 | yes | 1,778 | 6 |
 | #481 | yl50 | 2026-11-24 11:28 | yes | 1,775 | 6 |
-| #482 | yl54 | 2026-11-24 15:36 | yes | 1,788 | 4 |
+| #482 | yl54 | 2026-11-24 15:36 | yes | 1,788 | 5 |
