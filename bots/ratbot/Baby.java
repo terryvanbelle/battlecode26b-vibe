@@ -49,6 +49,11 @@ public final class Baby {
 
     /** Debug counts (indicator string); picked also marks pickups for idle(). */
     public static int delivered, bitesCat, bitesRat, trapsPlaced, picked;
+    /** Cfg.SENTRY_LOOK: the round of this rat's last pickup (take). */
+    static int pickRound = -100;
+    /** Cfg.SENTRY: the mine whose post walk stalled, and the round it did (this rat wanders there for 100 rounds). */
+    static MapLocation sentryOff;
+    static int sentryOffRound;
 
     /** One turn: refresh team state and senses, act before moving (throw, grab, bite, trap, squeak), promote or move,
      *  then act again from the new tile. Debug.mark(k) numbers the stages for the overrun locator. */
@@ -490,10 +495,11 @@ public final class Baby {
         if (role != ATTACK) {
             int room = Cfg.CARRY_CAP - rc.getRawCheese();
             if (room <= 0) return;
-            if (rc.senseMapInfo(l).getCheeseAmount() > room) { rc.pickUpCheese(l, room); picked++; return; }
+            if (rc.senseMapInfo(l).getCheeseAmount() > room) { rc.pickUpCheese(l, room); picked++; pickRound = G.round; return; }
         }
         rc.pickUpCheese(l);
         picked++;
+        pickRound = G.round;
     }
 
     /** A pile we may take: any, except that an attacker carries at most ATK_CARRY. */
@@ -1143,7 +1149,11 @@ public final class Baby {
         if (loadAt > 0) {
             // full loads: no trip home with a part load; with no pile in sight the gatherer stays at its mine
             if (fullLoad(raw, late, loadAt) && deliver()) return;
-        } else if ((raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= Cfg.DELIVER_IDLE))) && deliver()) return;
+        } else if (raw >= Cfg.DELIVER_AT || (raw > 0 && (late || cheeseTarget == null && raw >= Cfg.DELIVER_IDLE))) {
+            // Cfg.SENTRY_LOOK (sw83): a part load looks around for SENTRY_LOOK rounds after its pickup before the trip
+            if (Cfg.SENTRY_LOOK > 0 && look(raw, late)) { why = 'L'; return; }
+            if (deliver()) return;
+        }
         if (Comms.numMines == 0 && myMineCount > 0) {
             // we found a mine nobody else knows: squeaks only reach the king from dist2 16, so carry the news home
             MapLocation k = Comms.nearestKing(G.me);
@@ -1268,6 +1278,8 @@ public final class Baby {
         if (held || atMine(mineTarget, Cfg.MINE_KING_R)) {
             wanderRound = G.round; wanderMine = mineTarget;
             if (role == GATHER && startSeek(mineTarget) && seek()) { why = 'x'; return true; }
+            // Cfg.SENTRY (sw82): hold near a mine no king holds and sweep its spawn square
+            if (Cfg.SENTRY > 0 && sentry(mineTarget)) { why = 'Y'; return true; }
             // wander around the mine, facing outward to see new cheese
             wanderAround(mineTarget);
             why = 'W';
@@ -2085,6 +2097,43 @@ public final class Baby {
                 exploreTarget = new MapLocation(clampX(m.x + fu * (G.rand(span) - r)), clampY(m.y + fv * (G.rand(span) - r)));
         }
         Nav.goTo(exploreTarget);
+    }
+
+    /** Cfg.SENTRY (sw82): at mine m, which no king of ours holds (one within Chebyshev 2 of m sees the square itself),
+     *  with no enemy rat in view (nearestEnemy, Nav.guard) and nothing carried: walk to within SENTRY_R of m, then
+     *  hold and sweep. False (wander as before) at a king's mine, with an enemy near, carrying, or at a mine whose post
+     *  walk has stalled in the last 100 rounds (Nav.stall over 6, wanderAround's re-draw bar: sentryOff, so a blocked
+     *  post does not flip between the walk and the wander). */
+    static boolean sentry(MapLocation m) throws GameActionException {
+        if (nearestEnemy != null || Nav.guard != null || G.rc.getCarrying() != null) return false;
+        if (m.equals(sentryOff) && G.round - sentryOffRound < 100) return false;
+        for (int k = 0; k < Comms.numKings; k++) if (G.cheb(Comms.kings[k], m) <= 2) return false;
+        if (G.cheb(G.me, m) > Cfg.SENTRY_R) {
+            if (m.equals(Nav.target) && Nav.stall > 6) { sentryOff = m; sentryOffRound = G.round; return false; }
+            Nav.goTo(m);
+            return true;
+        }
+        sweep();
+        return true;
+    }
+
+    /** Cfg.SENTRY_LOOK (sw83): a rat on our half with a part load (raw under DELIVER_AT), no pile in sight, no enemy
+     *  rat in view and nothing carried sweeps in place instead of heading home, in the first SENTRY_LOOK rounds after
+     *  its last pickup (the pickup turn's cone was read already, so 3 turns face the other three quadrants). */
+    static boolean look(int raw, boolean late) throws GameActionException {
+        if (late || raw >= Cfg.DELIVER_AT || cheeseTarget != null || G.round - pickRound >= Cfg.SENTRY_LOOK) return false;
+        if (nearestEnemy != null || Nav.guard != null || G.rc.getCarrying() != null || !homeHalf(G.me)) return false;
+        sweep();
+        return true;
+    }
+
+    /** Turn 90 degrees clockwise when the turn is ready (no move: a turn costs no movement cooldown); four turns face
+     *  every quadrant. */
+    static void sweep() throws GameActionException {
+        Direction f = G.rc.getDirection();
+        if (f == null || f == Direction.CENTER) f = Direction.NORTH;
+        Direction t = f.rotateRight().rotateRight();
+        if (G.rc.canTurn(t)) { G.rc.turn(t); G.facing = t; }
     }
 
     /** At mine m: within Chebyshev 2, or within kingR (when > 0) if one of our kings sits within 2 of m. */

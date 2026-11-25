@@ -466,8 +466,9 @@ check(_m is not None and sg.WHY in (_why, _why.replace('H', 'F').replace('h', 'Q
       "smuggle alphabets match Debug.java")
 check(all(x in _dj for x in ('Baby.role == Baby.FIGHT ? 32 : 0', 'King.sawEnemy ? 32 : 0', 'Integer.bitCount(v) % 2 == 0 ? v : v | 64',
                              '& 127', 'TAG_MIN_LEFT = %d;' % sg.TAG_MIN_LEFT)), "smuggle layout matches Debug.tagValue / tag")
-# before yl5, 'Q' and 'F' had no slot in Debug.WHY (they were written as 31, unknown)
-check(set(_re.findall(r"\bwhy = '(.)'", _bj)) - (set() if 'F' in _why else {'Q', 'F'}) <= set(sg.WHY) and set(_re.findall(r"spawnWhy = '(.)'", _kj)) <= set(sg.KWHY)
+# before yl5, 'Q' and 'F' had no slot in Debug.WHY (they were written as 31, unknown); sw82's 'Y' (Baby.sentry) and
+# sw83's 'L' (Baby.look) have none either (audit 2026-11-24-sw83: written as 31, unknown, so they decode as '?')
+check(set(_re.findall(r"\bwhy = '(.)'", _bj)) - (set() if 'F' in _why else {'Q', 'F'}) - {c for c in 'YL' if c not in _why} <= set(sg.WHY) and set(_re.findall(r"spawnWhy = '(.)'", _kj)) <= set(sg.KWHY)
       and len(sg.WHY) <= 31 and len(sg.KWHY) <= 31, "smuggle: every Baby.why / King.spawnWhy code has an index")
 _rt = all(sg.decode(1000 * 128 + sg.encode(c, h, k), k) == (c, h) for k, al in ((False, sg.WHY), (True, sg.KWHY)) for c in al for h in (False, True))
 check(_rt, "smuggle encode/decode round trip for every code and flag")

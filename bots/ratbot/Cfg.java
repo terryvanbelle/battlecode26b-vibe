@@ -304,6 +304,20 @@ public final class Cfg {
     /** Baby.wanderAround draws its tile within WANDER_R of the mine (0 = 3); atMine holds at 2, so a ring-3 draw sent
      *  the rat out and back. */
     public static final int WANDER_R = 2;
+    /** Mine sentry (sw82, 0 = off): at a mine no king of ours holds (a king within Chebyshev 2 of it sees the square
+     *  itself), with no enemy rat in view and nothing carried, a rat in the at-mine state holds within SENTRY_R of the
+     *  mine and turns 90 degrees a round instead of wandering, so its cone sweeps the mine's 9x9 spawn square (69 of
+     *  its 81 tiles lie within dist2 20 of the centre) every 4 rounds; sense2 reads each new cone. Replica 11-24 (174
+     *  games since 11-23 14:04): only 34% of our home mines' spawns lay in one of our cones at spawn; seen piles were
+     *  picked 95% of the time within 3.3 rounds, unseen ones after 25.9; 80% of the piles raiders took from our half
+     *  were piles we never saw. */
+    public static final int SENTRY = 1, SENTRY_R = 1;
+    /** Look before a part-load trip (sw83, 0 = off): a rat on our half holding under DELIVER_AT raw with no pile in
+     *  sight, no enemy rat in view and nothing carried turns 90 degrees a round for the first SENTRY_LOOK rounds after
+     *  its last pickup (Baby.pickRound) before it heads home (DELIVER_IDLE). Local games (sw81 vs yl54): 81% of baby
+     *  transfers are a single 20-pile, and after 22% of the own-half pickups that leave 10-29 raw another pile lay
+     *  within dist2 20 outside the rat's cone. */
+    public static final int SENTRY_LOOK = 3;
     /** A FIGHT rat at war takes its mine from the contested home-half mines: those whose steps from the mirrored
      *  enemy start exceed those from home by at most FIGHT_POST (0 = off). */
     public static final int FIGHT_POST = 10;

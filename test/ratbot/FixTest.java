@@ -337,7 +337,10 @@ public class FixTest {
             me = p(10 - Cfg.WANDER_R - 1, 5); G.startTurn();   // one past atMine's ring
             Baby.wanderMine = m; Baby.wanderRound = G.round - gap;
             Baby.moveDecision();
-            if (gap == 3) check(Baby.why == 'W' && Baby.wanderRound == G.round, "E5: a wander 3 rounds back holds the chain (" + Baby.why + ")");
+            // sw82 (Cfg.SENTRY): the held chain now runs the sentry, which walks back to its post (why 'Y') where
+            // yl54 wandered ('W'); the chain itself (wanderRound) holds as before
+            if (gap == 3) check(Baby.why == (Cfg.SENTRY > 0 ? 'Y' : 'W') && Baby.wanderRound == G.round
+                    && G.cheb(me, m) <= Cfg.WANDER_R + 1, "E5: a wander 3 rounds back holds the chain (" + Baby.why + ", " + me + ")");
             else check(Baby.why == 'M', "E5: 4 rounds back the rat walks back to the mine (" + Baby.why + ")");
         }
         Comms.numMines = 0;
