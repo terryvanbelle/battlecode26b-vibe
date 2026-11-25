@@ -438,6 +438,15 @@ public final class Cfg {
     public static final int BC_BAIL = 3500;
     /** A turn the grab micro scored without acting ends under GM_BAIL bytecodes left (else BC_BAIL). */
     public static final int GM_BAIL = 6500;
+    /** Bite before a bail (sw91, false = off): a war turn that ends early for bytecodes (BC_BAIL before the actions,
+     *  or the micro's GM_BAIL/BC_BAIL after it when the micro did not act) first bites the best enemy already in reach
+     *  inside our cone, without turning: a king tile first (lowest health), then the lowest Baby.biteScore. The bite
+     *  takes no movement and its 10 action cooldown is spent by the next turn. Replica 11-25 (sw83 vs AdamTan12_Icarus
+     *  and thewaxmango_collegejunior, 9 games): in our ready war turns with an enemy baby adjacent in our cone we bit
+     *  8% and did nothing 18.5% (they bit 40%, nothing 6%); locally 70% of sw83's such idle turns were bytecode bails.
+     *  BAIL_BITE_LEFT: the bytecodes left that the bite needs (the end-of-turn tag needs Debug.TAG_MIN_LEFT 400). */
+    public static final boolean BAIL_BITE = true;
+    public static final int BAIL_BITE_LEFT = 1500;
     /** The re-sense after moving (Baby.sense2) needs SENSE2_LEFT bytecodes left; a baby's indicator string is built
      *  only with IND_LEFT left (0 = always). */
     public static final int SENSE2_LEFT = 6000, IND_LEFT = 1000;

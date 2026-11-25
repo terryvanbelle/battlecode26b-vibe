@@ -55,6 +55,7 @@ public final class Debug {
         sb.append(" sym=").append(Sym.mask);
         if (Sym.contradictions > 0) sb.append(" SYMX=").append(Sym.contradictions);
         if (!G.king && Baby.lowBc > 0) sb.append(" lb=").append(Baby.lowBc);
+        if (!G.king && Baby.bailBites > 0) sb.append(" bb=").append(Baby.bailBites);
         if (!G.king && Nav.bfQuit > 0) sb.append(" bq=1");
         if (!G.king && Baby.defends > 0) sb.append(" df=").append(Baby.defends);
         if (!G.king && Baby.rescues > 0) sb.append(" rs=").append(Baby.rescues);

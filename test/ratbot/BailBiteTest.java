@@ -29,7 +29,7 @@ public class BailBiteTest {
         carrying = null; actCd = 0; moveCd = 0; turnCd = 0; carryOk = true;
         Nav.avoid = 0; Nav.guard = null; GrabMicro.round = -1; GrabMicro.evalRound = -1;
         for (RobotInfo e : es) robots.put(e.location, e);
-        bitten.clear();
+        bitten.clear(); bitePaid.clear();
     }
 
     /** One Baby.turn with `left` bytecodes left throughout; gm: the grab micro scored this round without acting. */
@@ -151,6 +151,34 @@ public class BailBiteTest {
         bb = Baby.bailBites;
         turn(mid, false);
         check(bitten.size() == 1 && Baby.bailBites == bb, "bail bite: no bail: biteEnemies bites, not bailBite (" + bitten + ")");
+
+        // the finishing bite is paid as biteEnemies pays it (finishCheese): an enemy k over a plain bite's 10, with the
+        // bank at FINISH_FLOOR or more, gets k*k cheese; under FINISH_FLOOR, or too healthy to finish, a plain bite
+        int k = Math.min(4, Cfg.FINISH_K);
+        world(Direction.NORTH, baby(81, 10, 9, 10 + k, Direction.SOUTH));
+        global = Cfg.FINISH_FLOOR + 100;
+        turn(early, false);
+        check(bitten.size() == 1 && bitePaid.equals(java.util.List.of(k * k)),
+              "bail bite: a finishing bite on a " + (10 + k) + "-health enemy pays " + k * k + " cheese (" + bitePaid + ")");
+        world(Direction.NORTH, baby(81, 10, 9, 10 + k, Direction.SOUTH));
+        global = Cfg.FINISH_FLOOR - 1;
+        turn(early, false);
+        check(bitten.size() == 1 && bitePaid.equals(java.util.List.of(0)), "bail bite: under FINISH_FLOOR a plain bite (" + bitePaid + ")");
+        world(Direction.NORTH, baby(81, 10, 9, 10 + Cfg.FINISH_K + 1, Direction.SOUTH));
+        global = Cfg.FINISH_FLOOR + 100;
+        turn(early, false);
+        check(bitten.size() == 1 && bitePaid.equals(java.util.List.of(0)), "bail bite: too healthy to finish: a plain bite (" + bitePaid + ")");
+
+        // an attacker is hostile in cooperation too (Baby.hostile): before BREAK_ROUND it bites through the bail, as its
+        // pre-move bite (biteEnemies) would
+        world(Direction.NORTH, baby(81, 10, 9, 100, Direction.SOUTH));
+        round = Cfg.BREAK_ROUND - 1; G.startTurn(); G.coop = true;
+        Baby.role = Baby.ATTACK;
+        turn(early, false);
+        int roleAfter = Baby.role;
+        Baby.role = Baby.GATHER;
+        check(roleAfter == Baby.ATTACK && bitten.size() == 1 && bitten.get(0).equals(p(10, 9)),
+              "bail bite: an attacker in cooperation before BREAK_ROUND bites (" + bitten + ")");
 
         robots.clear(); carryOk = true; carrying = null; G.coop = true;
         System.out.println("BailBiteTest: " + (BotTest.checks - BotTest.fails) + "/" + BotTest.checks + " passed");

@@ -95,7 +95,13 @@ public final class Baby {
         if (!G.coop) findEnemies(robots);
         Debug.mark(30);
         // the birth turn has paid Sym.init and its allocations already: it bails at NB_BAIL
-        if (Flow.left() < (G.round == birthRound ? Cfg.NB_BAIL : Cfg.BC_BAIL)) { lowBc++; return; }
+        if (Flow.left() < (G.round == birthRound ? Cfg.NB_BAIL : Cfg.BC_BAIL)) {
+            // Cfg.BAIL_BITE (sw91): a hostile turn out of bytecodes bites an enemy already in reach first (as the pre-move
+            // bite would; not the birth turn)
+            if (Cfg.BAIL_BITE && G.round != birthRound && hostile()) bailBite();
+            lowBc++;
+            return;
+        }
         Nav.guard = null;
         if (!G.coop && nearestEnemy != null && rc.getCarrying() == null
                 && G.me.distanceSquaredTo(nearestEnemy.location) <= Cfg.GUARD_DIST2) Nav.guard = nearestEnemy.location;
@@ -190,7 +196,12 @@ public final class Baby {
         boolean saving = rescueT != null && rc.isMovementReady() && rc.isActionReady();
         if (hostile && !saving) {
             if (GrabMicro.act(robots)) saving = true;
-            if (Clock.getBytecodesLeft() < (GrabMicro.evalRound == G.round && GrabMicro.round != G.round ? Cfg.GM_BAIL : Cfg.BC_BAIL)) { lowBc++; return false; }
+            if (Clock.getBytecodesLeft() < (GrabMicro.evalRound == G.round && GrabMicro.round != G.round ? Cfg.GM_BAIL : Cfg.BC_BAIL)) {
+                // Cfg.BAIL_BITE (sw91): the micro did not act (or kept the action for a rescue): bite in reach first
+                if (Cfg.BAIL_BITE && !saving) bailBite();
+                lowBc++;
+                return false;
+            }
         }
         if (!G.coop && trapOk && !saving) tryRatTrap();
         Debug.mark(5);
@@ -893,6 +904,38 @@ public final class Baby {
             return true;
         }
         return false;
+    }
+
+    /** Debug count: bites made by bailBite. */
+    public static int bailBites;
+
+    /** Cfg.BAIL_BITE (sw91): before a turn ends early for bytecodes, bite the best enemy already in reach inside our cone
+     *  without turning (a king tile first by health, then the lowest biteScore, as biteEnemies ranks them; ties: the
+     *  first sensed), with finishCheese when that turns the bite into a kill. Nothing under Cfg.BAIL_BITE_LEFT
+     *  bytecodes left or with the action not ready. True when it bit. */
+    static boolean bailBite() throws GameActionException {
+        RobotController rc = G.rc;
+        if (Clock.getBytecodesLeft() < Cfg.BAIL_BITE_LEFT || !rc.isActionReady()) return false;
+        MapLocation me = rc.getLocation();
+        RobotInfo best = null;
+        MapLocation bt = null;
+        int bs = Integer.MAX_VALUE;
+        // dist2 8: a king's centre two tiles away has a tile next to us
+        for (RobotInfo r : rc.senseNearbyRobots(8, G.them)) {
+            if (r.team != G.them) continue;
+            MapLocation t = r.location;
+            if (r.type == UnitType.RAT_KING) t = kingTile(rc, me, t);
+            else if (me.distanceSquaredTo(t) > 2) continue;
+            if (!rc.canAttack(t)) continue;
+            int s = r.type == UnitType.RAT_KING ? r.health : biteScore(r.health, r.cheeseAmount, Cfg.CARRY_BITE);
+            if (s < bs) { bs = s; best = r; bt = t; }
+        }
+        if (best == null) return false;
+        int c = best.type == UnitType.BABY_RAT ? finishCheese(best.health, rc.getGlobalCheese()) : 0;
+        if (c > 0 && rc.canAttack(bt, c)) rc.attack(bt, c); else rc.attack(bt);
+        bitesRat++;
+        bailBites++;
+        return true;
     }
 
     /** A baby rat's bite rank (lower first): 1000 + hp, less its loot up to cap (Cfg.CARRY_BITE), never under 1001. */

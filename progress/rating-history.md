@@ -1,6 +1,6 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 5, 10, 15 and 20 for reference. Regenerate with `tools/replica_report.py`; data fetched 2026-11-25 02:48 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 5, 10, 15 and 20 for reference. Regenerate with `tools/replica_report.py`; data fetched 2026-11-25 04:32 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
 
@@ -16,16 +16,16 @@ Milestones on the ladder-position chart (dashed lines tagged M1, M2, ...; `progr
 - M4 2026-10-28 08:50 PDT: method: benchmark games only on the replica; local games are self-play
 - M5 2026-10-31 07:46 PDT: panel: v4 (8 opponents u2g beats 25-75%)
 
-835 rated matches; latest rating 1,750 (2026-11-25 01:21 PDT).
+841 rated matches; latest rating 1,793 (2026-11-25 04:23 PDT).
 
-Ratings in the reference ladder places at 2026-11-25 02:34 PDT (the latest point of the chart's place lines):
+Ratings in the reference ladder places at 2026-11-25 04:19 PDT (the latest point of the chart's place lines):
 
 | Ladder place | Rating | Us minus that place |
 |---:|---:|---:|
-| #5 | 1,974.8 | -224.8 |
-| #10 | 1,850.9 | -100.9 |
-| #15 | 1,805.5 | -55.6 |
-| #20 | 1,757.3 | -7.3 |
+| #5 | 1,998.5 | -208.7 |
+| #10 | 1,857.4 | -67.6 |
+| #15 | 1,810.9 | -21.2 |
+| #20 | 1,754.3 | +35.4 |
 
 | Submission | Build | Uploaded (PDT) | Accepted | Rating at upload | Rated matches since |
 |---:|---|---|---|---:|---:|
@@ -452,4 +452,5 @@ Ratings in the reference ladder places at 2026-11-25 02:34 PDT (the latest point
 | #480 | sw71 | 2026-11-24 08:36 | yes | 1,778 | 6 |
 | #481 | yl50 | 2026-11-24 11:28 | yes | 1,775 | 6 |
 | #482 | yl54 | 2026-11-24 15:36 | yes | 1,788 | 13 |
-| #483 | sw83 | 2026-11-24 21:53 | yes | 1,793 | 8 |
+| #483 | sw83 | 2026-11-24 21:53 | yes | 1,793 | 12 |
+| #484 | sw91 | 2026-11-25 03:53 | yes | 1,778 | 2 |

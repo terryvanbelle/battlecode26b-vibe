@@ -31,6 +31,8 @@ public class BotTest {
     static List<Integer> squeaks = new ArrayList<>();
     static int digsDone, dirtStock;
     static List<MapLocation> bitten = new ArrayList<>();
+    /** The cheese paid with each bite in bitten (attack(loc, c); 0 for attack(loc)). */
+    static List<Integer> bitePaid = new ArrayList<>();
     static Direction thrown;
     static RobotInfo carrying;
     /** This rat is being carried / thrown (TrapRisk's grounded test). */
@@ -62,7 +64,7 @@ public class BotTest {
 
     static void reset() {
         canPromote = promoted = false;
-        walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); thrown = null; carrying = null;
+        walls.clear(); dirt.clear(); cheeseAt.clear(); robots.clear(); Arrays.fill(shared, 0); squeaks.clear(); bitten.clear(); bitePaid.clear(); thrown = null; carrying = null;
         beingCarried = beingThrown = false; carryOk = true; heard.clear(); heardAsked.clear(); pickedUp.clear(); trapsLaid.clear();
         me = new MapLocation(5, 5); facing = Direction.NORTH; health = 100; round = 1; global = 1000; raw = 0;
         moveCd = turnCd = actCd = moveExtra = 0; type = UnitType.BABY_RAT; digsDone = 0; dirtStock = 0; ratCost = 10; built.clear();
@@ -169,7 +171,7 @@ public class BotTest {
                     case "senseRobotAtLocation": return robots.get((MapLocation) a[0]);
                     case "canThrowRat": { MapLocation t = me.add(facing); return actCd < 10 && passable(t) && !robots.containsKey(t); }
                     case "throwRat": thrown = facing; actCd += 20; return null;
-                    case "attack": bitten.add((MapLocation) a[0]); actCd += 10; return null;
+                    case "attack": bitten.add((MapLocation) a[0]); bitePaid.add(a.length > 1 ? (Integer) a[1] : 0); actCd += 10; return null;
                     case "squeak": squeaks.add((Integer) a[0]); return true;
                     case "readSqueaks": {
                         int r = (Integer) a[0];
