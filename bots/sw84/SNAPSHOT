@@ -1,0 +1,6 @@
+name=sw84
+source=/tmp/claude-1000/-home-terryvanbelle-projects-vibe-2026b/1ea0725a-5f48-42b2-b7f4-18e816a438fe/scratchpad/sw84src/ratbot
+source_sha=7768e6fdf755
+commit=5cdaa777
+created=2026-11-24 20:59 PDT
+fixed=2026-11-24 21:09 PDT (before any tournament game: Baby.afterKill, the enemy picture refreshed after a kill bite)
