@@ -1,6 +1,6 @@
 # Local tournament Elo
 
-Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 95502 games in one fit as of 2026-11-25 07:35 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
+Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py`), all 95502 games in one fit as of 2026-11-25 07:52 PDT, so every point is on the same scale; earlier champions are shown at their current rating. Regenerate with `tools/tourney.py chart`.
 
 ![local elo](local-elo.png)
 
@@ -42,3 +42,4 @@ Bradley-Terry ratings of our own bots in the local tournament (`tools/tourney.py
 | 2026-11-24 15:36 | yl54 | LOW_BABIES 12 (from 8; snapvar: the LOW_FLOOR 20 spend-down applies under 12 babies instead of 8; incremental) on yl50 | #482 | 1696 +- 7 | 2411 |
 | 2026-11-24 21:53 | sw83 | SENTRY 1 + SENTRY_R 1 + SENTRY_LOOK 3 (sw82 = yl54 + the mine sentry: at a mine no king of ours holds, with no enemy rat in view and nothing carried, a rat in the at-mine state walks to within Chebyshev 1 of the mine and holds, turning 90 degrees a round; sw83 adds the look: a rat on our half with a part load (10-29 raw), no pile in sight and no enemy in view turns 90 degrees a round for the 3 rounds after its last pickup before the trip home; swing) on sw82 | #483 | 1718 +- 8 | 2024 |
 | 2026-11-25 03:53 | sw91 | BAIL_BITE + BAIL_BITE_LEFT 1500 (sw91 = sw83 + the bite before a bail: a hostile turn that ends early for bytecodes (BC_BAIL before the actions, or GM_BAIL/BC_BAIL after the grab micro when it did not act) first bites the best enemy already in reach inside its cone, without turning or moving; swing) on sw83 | #484 | 1768 +- 11 | 1846 |
+| 2026-11-25 07:39 | sw96 | CUT_KING_FROM 1000 + CUT_KING_MAX 3 + CUT_KING_BANK 1200 + CUT_KING_MIN 2 (sw96 = sw91 + a third king before the engine's r1200 cut: from r1000 to r1150 with exactly 2 kings, 16 babies and 1,200 banked, the lead king names a formation site with no income test; swing) on sw91 | #none (replica deleted at the 11-25 shutdown) | 1795 +- 19 | 451 |

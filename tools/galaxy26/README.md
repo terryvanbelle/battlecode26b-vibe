@@ -1,5 +1,12 @@
 # tools/galaxy26: the private Battlecode 2026 contest site
 
+> **Torn down 2026-11-25 07:38-07:39 PDT (owner):** every bc26 replica unit and its unit file, the database (Postgres
+> cluster 15/bc26), /srv/bc26-galaxy, /opt/bc26-galaxy, /etc/bc26-galaxy, /home/bc26replica, the service users and the
+> replay-prune cron were deleted from `battlecode-dev`, together with the 2023 replica (its units, files, users and
+> /usr/local/bin/caddy) and the stage in the operator home. Everything below describes the deployment as it was.
+> `deploy/deploy.sh` (a full `galaxy-setup.sh all`) would rebuild it on an empty database: untested after the teardown.
+> Until then `contest.py`, `client.py`, `field.py`, `verify.sh` and `tools/progress-refresh.sh` fail.
+
 The bc26 replica is a private copy of the official judging site, galaxy (siarnaq backend and React frontend), plus a
 local stand-in for saturn, the game runner. It runs on the VM `battlecode-dev` and plays only the pinned Battlecode
 2026 Java engine (`engine/battlecode26-java-1.2.6.jar`, sha256 in `engine/SHA256SUMS`) on the 74 maps in `maps/`.

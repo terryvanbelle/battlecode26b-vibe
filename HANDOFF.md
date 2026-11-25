@@ -97,6 +97,8 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
   `research/progress.tsv` (gauntlet metrics), `PROMPTS.md`. GAP: closed-directions ledger is the attempts outcomes.
 
 ## Compute (2026-11-18, owner #35/#36)
+- **Shut down 2026-11-25 (owner):** the box tournament is stopped and the replica is deleted; see the State section
+  below. The two bullets that follow describe the setup as it was.
 - **Replica**: the only place panel or field games run (4 execute slots on the VM). Never more.
 - **Windows box** (WSL2, 20 threads, 8 GB; `ssh -i ~/.ssh/wsl_box terry@100.93.26.126`, Tailscale, from the laptop
   only): every local game and analysis, never replica matches. `tools/box.sh queue RUN` / `start` / `status` /
@@ -106,10 +108,39 @@ battlecode26-vibe except running its bot as an opponent, competitor code is scan
 ## Owner #36 plan (2026-11-18)
 1. Fix all bugs (audit: research/audit/findings-*.md, verified), behind FIX_* switches while their effect is tested on the box.
 2. More tests (port test/ratbot/BotTest.java; one test per fixed bug), then refactor for clarity, then delete FIX_* flags and dead branches.
-3. Then a panel run on the replica to see where we stand.
+3. Then a panel run on the replica to see where we stand; afterwards update all graphs in progress/ (owner).
 4. Deferred features (owner): K6/E1 newborn squeak timing / role-parity opening change: consider only after 1-3.
 
-## State (2026-11-12 09:55 PST; TRAINING_LOG.md has the history, older states are in this file's git history)
+## State (2026-11-25 07:55 PDT: shut down by the owner; TRAINING_LOG.md has the history)
+- **Shut down (owner 11-25 07:26 and 07:33).** Nothing of ours runs anywhere.
+  - **Local tournament (Windows box):** stopped 07:29-07:30 PDT. runs/screenq.txt there is empty and
+    `build/screenq.stop` is set; every queue worker, arena and game was killed. Pool (research/tourney/pool.txt): sw96
+    (champion), sw91, sw94, sw95; sw93 was retired at the final rank. Final rank 07:39 PDT (95,502 games): sw96
+    1795 +- 19 on 451, sw91 1768 +- 11 on 1,846, sw94 1768 +- 15 on 1,521, sw95 1747 +- 19 on 442.
+    - Restart: `tools/box.sh start` (removes the stop file), then plan and queue runs (`python3 tools/tourney.py plan
+      trNNN --games 120`, `tools/box.sh queue trNNN`). runs/tr785-790 were planned with sw93 still in the pool and
+      never played (uncommitted): re-plan them first.
+  - **Champion:** sw96 = sw91 + a third king before the r1200 cut (audit: research/audit/2026-11-25-sw96.md);
+    bots/ratbot = sw96. Never submitted: the replica was deleted before the final rank. The last submission on the
+    replica was sw91 (#484).
+  - **Replica: deleted** (owner 07:33). On battlecode-dev every bc26 and bc23 (2023) replica unit is stopped, disabled
+    and removed, and these are gone: the database (Postgres cluster 15/bc26, siarnaq26), /srv/bc26-galaxy (replays,
+    storage), /opt/bc26-galaxy, /etc/bc26-galaxy, /home/bc26replica, the 2023 replica's files, the service users, the
+    replay-prune cron, and our folders in the operator home (~/projects/vibe/2026b, ~/projects/vibe/bc26b-benchmarks,
+    ~/bc26-galaxy-stage, ~/bc26-galaxy-build, ~/bc26-shots, ~/.bc26-galaxy-field). The rest of the operator home was not
+    touched (it holds bc26-era leftovers that are never read). The VM itself is still running (13 GB free).
+    - Last ladder: #16 of 54, 1792.0 (snapshot 07:35 PDT, progress/ladder.md). Our 514 downloaded replica matches stay
+      on the laptop (~/projects/vibe/bc26b-galaxy-replays); the VM-era run results are in build/vmruns.
+    - Every replica tool (tools/galaxy26 contest.py, client.py, field.py, verify.sh; the ladder and rating charts of
+      tools/charts-refresh.sh; tools/progress-refresh.sh) fails until a full redeploy (`tools/galaxy26/deploy/deploy.sh`
+      builds a fresh, empty database: new accounts, field bots resubmitted).
+  - **Laptop:** the session's PROD crons are deleted. The replica secrets (~/.bc26b-replica-password,
+    ~/.bc26b-galaxy-team, ~/.bc26-galaxy/) are still there, unused.
+  - **Next idea, not built:** finish trapped enemies (TRAINING_LOG, 11-25 06:59 entry). In 24 replica games our rat
+    traps hit enemy babies 1,360 times and we bit the victim within 4 rounds in 5.5%; the field bit 15% of its 1,909
+    hits on ours. With one of our free babies next to the victim we bit it in 2.6% of hits over its stun, the field 11.5%.
+
+## Earlier state (2026-11-12 09:55 PST, superseded; older states are in this file's git history)
 - **Shut down (09:55 11-12, owner #33).** Nothing is running: the replica, the VM jobs and the laptop drain loop are
   all stopped.
   - **Replica:** stopped with `galaxy-setup.sh stop`, plus `bc26-replica-caddy` and `postgresql@15-bc26`. The units

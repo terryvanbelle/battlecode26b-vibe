@@ -1,5 +1,8 @@
 # battlecode26b-vibe
 
+**Status (2026-11-25 07:55 PDT): shut down by the owner.** The local tournament is stopped and the replica ladder is
+deleted; the final champion is sw96 (`bots/ratbot`); the last replica rank was #16 of 54. See `HANDOFF.md`.
+
 Practice season for MIT Battlecode 2026 ("Uneasy Alliances"), built from scratch (clean room: the earlier
 battlecode26-vibe effort and 2026 post-mortems are never read).
 

@@ -145,6 +145,20 @@ public final class Cfg {
     /** Endgame king (0 = off): from round END_KING a lone king names a site for a second whenever 7 babies and
      *  END_KING_CHEESE are there, with no income test. Living kings weigh 0.5 of the war points at round 2000. */
     public static final int END_KING = 1850, END_KING_CHEESE = 400;
+    /** sw95 (yl42's switch on sw91, 11-25), a king before the cut (CUT_KING_FROM 0 = off). The engine allows no new
+     *  king after round 1200 (RAT_KING_CUTOFF_ROUND) once a team has 2, and living kings weigh 0.5 of the war points at
+     *  round 2000. From CUT_KING_FROM to round 1150 (King.FORM_LAST_ROUND), with fewer than CUT_KING_MAX kings,
+     *  FORM_BABIES babies and CUT_KING_BANK banked, the lead king names one more formation site with no income test.
+     *  Evidence: sw91's tournament points games are 2 kings to 2 in 114 of 128 and lost 47 of those, most by under 10
+     *  points (3 kings to 2 is +10); yl42 (this switch on yl33) won 42 of 43 points games it ended with 3 kings; replica
+     *  points losses 42170 (2 kings to 4), 41854 (2 to 3), 41566 (1 to 4). */
+    /** sw96 (sw95's switch with a guard, 11-25): the cut-king rule names only the third king (CUT_KING_MIN kings
+     *  already live) and only from CUT_KING_BANK 1200 banked (FORM3_BANK, the generic rule's third-king bank; sw95 600).
+     *  sw95's smoke (pipes s1): one king and 560 banked at r1000, two sites in 25 rounds made kings 2 and 3 (16 babies
+     *  absorbed); every spawn floor is Econ.floor(f) = f x kings, so from then on a baby needed cost + 900 banked,
+     *  spawning stopped near 14 babies, income fell from 13 to 3 a round and the three kings starved by r1455. yl42's
+     *  late king-destroyed losses: 42 of 72 by starvation (yl33 54 of 150). */
+    public static final int CUT_KING_FROM = 1000, CUT_KING_MAX = 3, CUT_KING_BANK = 1200, CUT_KING_MIN = 2;
     /** Rescue formation (run only as CASH_END's endgame rescue): a baby CASH_FAR+ from every king, that sees
      *  CASH_N - 1 more of ours within CASH_R, none heavier, leads a formation on a clear 3x3 at or beside itself and squeaks it (SQ_CASH); babies within CASH_PULL walk in. The
      *  promotion banks every rat's raw cheese in the 3x3. A site lives CASH_TTL rounds, then no rescue for CASH_TTL

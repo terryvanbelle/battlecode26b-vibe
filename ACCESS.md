@@ -1,5 +1,10 @@
 # ACCESS.md: how to look at the bc26 scrimmage ladder
 
+> **Deleted 2026-11-25 07:38-07:39 PDT (owner):** at the shutdown the replica site, its database and its storage were
+> removed from `battlecode-dev`, so the site below no longer answers. The final ladder is `progress/ladder.md` (snapshot
+> 07:35 PDT: vibe26b #16 of 54, 1792.0). This page describes the site as it was; a redeploy (`tools/galaxy26/README.md`)
+> would start from an empty database.
+
 Our practice contest runs on a private copy of the Battlecode website on our VM `battlecode-dev`: galaxy's own
 frontend and backend, the same pages as play.battlecode.org, with the Battlecode 2026 engine 1.2.6. Nothing there
 touches the real play.battlecode.org. How it is built and run: `tools/galaxy26/README.md`.

@@ -896,6 +896,19 @@ public final class King {
             openFormSite();
             return;
         }
+        // Cfg.CUT_KING_FROM (sw95, yl42's switch on sw91): the engine allows no new king after round 1200 once a team
+        // has 2, and kings weigh 0.5 of the war points at round 2000, so a rich bank names one more site before the cut,
+        // with no income test (sw96: only the third king, from CUT_KING_MIN kings and CUT_KING_BANK banked)
+        if (cutKing(G.round, Comms.numKings, babies, G.rc.getGlobalCheese(), formStart)) {
+            formSite = pickFormSite(G.me);
+            if (formSite == null) {
+                int s = guessSym();
+                formSite = ringSite(G.me, G.mirror(start, s));
+            }
+            if (formSite == null) return;
+            openFormSite();
+            return;
+        }
         if (G.round < Cfg.FORM_FROM || G.round > FORM_LAST_ROUND || G.round - formStart < Cfg.FORM_TTL + Cfg.FORM_RETRY
                 || babies < Cfg.FORM_BABIES || G.rc.getGlobalCheese() < Cfg.FORM_CHEESE) return;
         // Cfg.FORM3_BANK: a third or later king only from a bank that still feeds the respawn after the merge
@@ -928,6 +941,14 @@ public final class King {
     static boolean rich() {
         return G.round <= FORM_LAST_ROUND && Comms.numKings < Math.min(Cfg.FORM_RICH_MAX, Comms.KING_SLOTS)
             && G.rc.getGlobalCheese() >= Cfg.FORM_RICH_BANK;
+    }
+
+    /** Cfg.CUT_KING_FROM (sw95, from yl42): one more king's site is due before the engine's round-1200 cut (babies
+     *  from the rat cost, last site's start formStart); sw96: only from Cfg.CUT_KING_MIN kings. */
+    static boolean cutKing(int round, int kings, int babies, int cheese, int formStart) {
+        return Cfg.CUT_KING_FROM > 0 && round >= Cfg.CUT_KING_FROM && round <= FORM_LAST_ROUND && kings < Cfg.CUT_KING_MAX
+            && kings >= Cfg.CUT_KING_MIN
+            && babies >= Cfg.FORM_BABIES && cheese >= Cfg.CUT_KING_BANK && round - formStart > Cfg.FORM_TTL;
     }
 
     /** Cfg.END_KING: a lone king's endgame site is due (babies from the rat cost, last site's start formStart). */

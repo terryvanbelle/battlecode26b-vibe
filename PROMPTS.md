@@ -281,3 +281,5 @@ I'd like your initial focus to be fixing all bugs, writing more tests, and then 
 (18:48) You can spend more than 20 minutes devising a new strategy to add to the local tournament.  Take as much time as you need, even if that means the tournament decreases in size in the short run
 
 (06:12) Good morning!  How did we do overnight?
+(07:26) OK, time to shut down.  Please update all docs and push to github.  Turn down all processes on the VM and clean out local storage there.  Shut down the local tournament on the box.
+(07:33) Continue with the shutdown.  Delete the replica database and 2023 replica
