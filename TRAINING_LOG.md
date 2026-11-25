@@ -12695,3 +12695,38 @@
   - *VM 01:51:* 4.9 GB free, 75% used. The prune log has 5 done lines (the last at 16:17 PDT, 6.1 GB free), so it has not fired since the last prod.
   - *Box 01:50:* tr733 started 01:38 and tr734 at 01:47 (tr731 ended 01:47); queued tr735, tr736, tr737.
   - *Laptop 01:52:* 1.5 GB free (95% used); git holds 4,655 loose objects (211 MB), which git's auto gc will pack.
+- **11-25 01:54 - 02:49 PDT, PROD: no new champion (sw83 1733 +- 9 on 1514 at 02:39; sw87 leads it by 8 on 617, needs > +17); no retirement; new swing sw91 (bail bite: a war turn that ends early for bytecodes first bites an enemy already in reach); contact-turn, replica fingerprint, famine-carry, KING_MEET, backstab and points studies; tr738-tr746 planned; replica #21 of 54 at 1750.0, no new matches since 41950.**
+  - *Rank 01:55 PDT (89,534 g; tr721, tr731, tr732 DONE; tr725 97, tr727 68, tr729 79, tr733 24, tr734 55, tr735 2 partial; 10 pool bots, 308 retired, 318 entered):* sw87 1737 +- 16 on 467 (+2 over sw83, needs > +19); sw83 1735 +- 10 on 1347 (700-647) champion; sw86 -2 on 579; sw84 -6 on 1100; sw85 -8 on 761; sw89 -9 on 256; sw82 -13 on 1469; yl56 -15 on 1610; sw81 -16 on 1758; sw90 1716 +- 40 on 76 (-19, needs > +41 and 124 more games). No new champion.
+  - *Rank 02:39 PDT (90,307 g; tr725, tr727, tr729, tr734-tr737 DONE; tr733 96, tr738 26, tr739 24, tr740 86, tr741 21, tr742 5 partial; 11 pool bots, 308 retired, 319 entered):* sw87 1741 +- 14 on 617 (324-293; +8 over sw83, needs > +17); sw83 1733 +- 9 on 1514 (784-730) champion; sw84 -3 on 1265; sw85 -5 on 932; sw86 -6 on 755; sw89 -7 on 423; sw82 -10 on 1634; sw81 -16 on 1910; yl56 -18 on 1748; sw90 1701 +- 30 on 133 (-32, needs > +31 and 67 more games); sw91 1681 +- 72 on 22 (10-12; -53, needs > +73 and 178 more games). No new champion.
+  - *Margins (scratch margin.py):* at 02:45 on the 02:39 ratings the closest to retirement is yl56 (-18.1, 1.45 combined SE), then sw81 (-15.7, 1.27) and sw90 (-32.0, 1.02, 133 games); none is past 2, so nothing was retired (at 02:24 on the 01:55 ratings: sw81 1.22, yl56 1.14).
+  - *Replica fingerprint (scratch fingerprint.py, econrep.py; 24 games in 41620-41950 vs bman12345678_goonv23, daannte_v47_Skadoosh, AdamTan12_Icarus and thewaxmango_collegejunior; DefaultSmall's seed twice):*
+    - They out-grab and out-bite us: 4,882 grabs to our 3,648 (0.75x; we out-grabbed in 4 games) and 2,714 bites of rats to our 1,823 (0.67x; we out-bit in 6).
+    - The long losses fell behind in transfers after r400: 41629 pipes 3,469 vs 8,204 at r800 (babies 10 vs 37); 41854 wallsofparadis 4,315 vs 6,262 at r800. 41854 rift was even (15,016 vs 14,859 at r1200) and was lost on points.
+  - *Famine carries (scratch famraw.py, the 8 replayed local sw83 starvation losses):* from the first famine round our babies carried 4-477 raw a round (starvation 4, cheesefarm 6, evileye 36, DefaultLarge 78, DefaultMedium 113, dirtpassageway 165, trapped 217, popthecork 477). Most of it was already on its way home (mv d: 56-100% where the breakdown printed in full), mostly 5-20+ tiles from the king. A famine recall would add no trips.
+  - *KING_MEET (the king walks to its deliverers):* tried as xk1 (11-12; its km89 logs were lost). The engine's RAT_KING movement cooldown is 40, one step every 4 rounds, too slow to matter. Dropped.
+  - *Backstab (local tournament, the 3,925 games in tr700-tr735 with a backstab):* the side that broke cooperation won 51.0% (2,002). Before r50 (3,142 games) it won 51.9%, at r50-199 48-49%, later 39-45%. By grab 51.3%, by bite 50.9%. Not a lever.
+  - *Points games (local tournament):* in 1,725 games decided on points, the component that helped the winner most was cat damage in 939, transfers in 546 and kings in 240.
+  - *Contact turns (scratch contact3.py):*
+    - *Method:* live state in turn order. Robots are dropped at their die event (the victim is field a) or after a round without a row. A ready war contact turn is a free baby with its action ready (previous acd under 20) and an enemy baby adjacent inside its 90-degree cone, out of cooperation.
+    - *Replica 41911, 41919, 41950 (sw83 vs AdamTan12_Icarus 1-2, thewaxmango_collegejunior 1-2 and 0-3):*
+      - We bit 8.1%, grabbed 64.0%, did something else 9.4% and nothing 18.5% of 1,344.
+      - Icarus: 40.2%, 46.4%, 6.9% and 6.5% of 448.
+      - collegejunior: 40.2%, 53.3%, 0.6% and 6.0% of 1,628.
+      - Against a not-weaker enemy we bit 15% and idled 31%; collegejunior bit 70% and idled 6%.
+    - *Our replica idle turns:* 44% carry the bail signature (11,000+ bytecodes used, no move, no turn). Decoded WHY: m 34%, M 18%, f 11%. 90% ended with the action still ready.
+    - *Local (the 8 sw83 starvation-loss replays):* sw83 bit 21.0%, grabbed 55.6% and did nothing 17.3% of 1,037. 70% of the idle turns were bytecode bails (lb rose that turn); every bail had the signature, and 5% of the other idle turns did.
+    - *Mechanism (sw83):* when the grab micro scores staying and biting best, it does not act (it acts only on a grab or a move MARGIN better). The GM_BAIL check (6,500 left, xf3 11-11) then ends the turn before biteEnemies. The BC_BAIL check (3,500) at the start of the turn ends it before any action. A bite in such a turn costs no movement, and its cooldown is spent by the next turn.
+    - *Checked before building:* no attempt touched the bail. sw84 KILL_BITE bites a killable rat instead of grabbing it, which is a different change.
+  - *New swing sw91 = sw83 + BAIL_BITE (entered 02:33):*
+    - *Mechanism:* Baby.bailBite runs at Baby.turn's BC_BAIL bail (not on the birth turn, and only when hostile) and at actBeforeMove's GM_BAIL/BC_BAIL bail after the micro (unless a rescue keeps the action). With the action ready and BAIL_BITE_LEFT 1,500 left, it bites the best enemy already in reach inside the cone without turning: a king tile first, then the lowest biteScore, with finishCheese.
+    - *Tests:* unit tests 2168/2168 in 17 classes (test/sw91/BailBiteTest 22/22). Untested: the !saving guard.
+    - *Smoke:* clean (8 games vs yl54: no exceptions, no turn at the bytecode limit; peaks rat 16,785, king 19,234).
+    - *Mechanism check:* the bb counter shows 35 bites in sw91's 98 bytecode bails, over 34,912 baby turns. On sw90's smoke cells, ready contact turns were idle 4.6% of 779 with bites 29.9% (sw90: 16.2% and 19.7% of 822). The games diverge, though: yl54's own bail-idle contact turns also fell (96 to 30), so part of the drop is game state.
+  - *Runs:*
+    - tr738-tr740 were planned 01:55-01:56 with the 10-bot pool (sw90 in 31-35 cells each).
+    - tr741-tr743 at 02:34-02:37 with sw91 (in 60, 8 and 4 cells).
+    - tr744-tr746 at 02:41-02:46 with the 11-bot pool (sw91 in 27, 33 and 24 cells); the queue had dropped to tr743 alone at 02:39.
+  - *Replica:* no matches since 41950 (01:21). Charts 02:48: #21 of 54 at 1750.0 (commit 117312d0).
+  - *VM 02:34:* 4.8 GB free, 75% used. The prune log still has 5 done lines (the last at 16:17 PDT), so it has not fired since the last prod.
+  - *Box 02:49:* tr743 started 02:46 (tr740 ended 02:46); queued tr744, tr745, tr746.
+  - *Laptop 02:34:* 1.5 GB free (95% used); git holds 4,661 loose objects (213 MB).
