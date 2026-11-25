@@ -1,6 +1,6 @@
 # Rating history (replica)
 
-Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 5, 10, 15 and 20 for reference. Regenerate with `tools/replica_report.py`; data fetched 2026-11-24 22:20 PDT. Times are Pacific.
+Our displayed rating on the replica after each rated match, from `/api/compete/bc26/match/historical_rating/`, over the whole history and since 11-21 08:00 PDT (the local tournament), with the ratings held in ladder places 5, 10, 15 and 20 for reference. Regenerate with `tools/replica_report.py`; data fetched 2026-11-24 22:48 PDT. Times are Pacific.
 
 ![rating history](rating-history.png)
 
@@ -18,14 +18,14 @@ Milestones on the ladder-position chart (dashed lines tagged M1, M2, ...; `progr
 
 829 rated matches; latest rating 1,792 (2026-11-24 22:00 PDT).
 
-Ratings in the reference ladder places at 2026-11-24 22:19 PDT (the latest point of the chart's place lines):
+Ratings in the reference ladder places at 2026-11-24 22:34 PDT (the latest point of the chart's place lines):
 
 | Ladder place | Rating | Us minus that place |
 |---:|---:|---:|
-| #5 | 1,932.2 | -139.9 |
-| #10 | 1,854.9 | -62.6 |
+| #5 | 1,936.6 | -144.3 |
+| #10 | 1,861.2 | -68.9 |
 | #15 | 1,792.3 | +0.0 |
-| #20 | 1,759.4 | +32.9 |
+| #20 | 1,761.3 | +31.0 |
 
 | Submission | Build | Uploaded (PDT) | Accepted | Rating at upload | Rated matches since |
 |---:|---|---|---|---:|---:|
